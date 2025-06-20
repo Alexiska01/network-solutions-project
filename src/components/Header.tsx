@@ -6,6 +6,8 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isSwitchesSubmenuOpen, setIsSwitchesSubmenuOpen] = useState(false);
+  const [isCorporateLanSubmenuOpen, setIsCorporateLanSubmenuOpen] =
+    useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
     null,
   );
@@ -120,23 +122,26 @@ const Header = () => {
                                             <div
                                               className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
                                               onClick={() => {
-                                                // Добавим состояние для третьего уровня
+                                                setIsCorporateLanSubmenuOpen(
+                                                  !isCorporateLanSubmenuOpen,
+                                                );
                                               }}
                                             >
                                               {nestedItem.name}
                                             </div>
                                             {/* Третий уровень меню */}
-                                            {corporateLanItems.map(
-                                              (thirdLevelItem) => (
-                                                <Link
-                                                  key={thirdLevelItem.path}
-                                                  to={thirdLevelItem.path}
-                                                  className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
-                                                >
-                                                  {thirdLevelItem.name}
-                                                </Link>
-                                              ),
-                                            )}
+                                            {isCorporateLanSubmenuOpen &&
+                                              corporateLanItems.map(
+                                                (thirdLevelItem) => (
+                                                  <Link
+                                                    key={thirdLevelItem.path}
+                                                    to={thirdLevelItem.path}
+                                                    className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                                  >
+                                                    {thirdLevelItem.name}
+                                                  </Link>
+                                                ),
+                                              )}
                                           </>
                                         ) : (
                                           <Link
