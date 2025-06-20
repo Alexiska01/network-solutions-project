@@ -23,11 +23,10 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <img
-                src="https://cdn.poehali.dev/files/b849ecf5-4b63-47d7-b906-9efe2e78f2f3.png"
-                alt="iDATA"
-                className="h-8 w-auto"
-              />
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">iD</span>
+              </div>
+              <span className="text-xl font-bold">iDATA</span>
             </div>
             <p className="text-gray-400 mb-4">
               Профессиональные решения для корпоративных сетей
