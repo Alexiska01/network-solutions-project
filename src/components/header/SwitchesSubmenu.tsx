@@ -282,12 +282,15 @@ const SwitchesSubmenu = ({
                               dropdownState.isLeafLevelSubmenuOpen && (
                                 <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
                                   <div className="py-2">
-                                    <div className="px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600">
-                                      Серия Leaf 1
-                                    </div>
-                                    <div className="px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600">
-                                      Серия Leaf 2
-                                    </div>
+                                    {leafLevelSeries.map((series) => (
+                                      <Link
+                                        key={series.path}
+                                        to={series.path}
+                                        className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                      >
+                                        {series.name}
+                                      </Link>
+                                    ))}
                                   </div>
                                 </div>
                               )}
