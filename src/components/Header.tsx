@@ -83,49 +83,42 @@ const Header = () => {
                     {isProductsDropdownOpen && (
                       <div className="absolute left-0 top-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-72">
                         <div className="py-2">
-                          {productSubmenuItems.map((subItem) => (
-                            <div key={subItem.path} className="relative">
+                          {productSubmenuItems.map((subItem, index) => (
+                            <div key={subItem.path}>
                               {subItem.hasNestedSubmenu ? (
-                                <div
-                                  className="relative"
-                                  onMouseEnter={() => {
-                                    if (switchesTimeout) {
-                                      clearTimeout(switchesTimeout);
-                                      setSwitchesTimeout(null);
-                                    }
-                                    setIsSwitchesSubmenuOpen(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    const timeout = setTimeout(() => {
-                                      setIsSwitchesSubmenuOpen(false);
-                                    }, 150);
-                                    setSwitchesTimeout(timeout);
-                                  }}
-                                >
-                                  <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer">
+                                <>
+                                  <div
+                                    className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
+                                    onMouseEnter={() => {
+                                      if (switchesTimeout) {
+                                        clearTimeout(switchesTimeout);
+                                        setSwitchesTimeout(null);
+                                      }
+                                      setIsSwitchesSubmenuOpen(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      const timeout = setTimeout(() => {
+                                        setIsSwitchesSubmenuOpen(false);
+                                      }, 150);
+                                      setSwitchesTimeout(timeout);
+                                    }}
+                                  >
                                     <span>{subItem.name}</span>
-                                    <Icon name="ChevronRight" size={16} />
+                                    <Icon name="ChevronDown" size={16} />
                                   </div>
 
-                                  {/* Nested Submenu */}
-                                  {isSwitchesSubmenuOpen && (
-                                    <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64">
-                                      <div className="py-2">
-                                        {switchesSubmenuItems.map(
-                                          (nestedItem) => (
-                                            <Link
-                                              key={nestedItem.path}
-                                              to={nestedItem.path}
-                                              className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
-                                            >
-                                              {nestedItem.name}
-                                            </Link>
-                                          ),
-                                        )}
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
+                                  {/* Inline submenu items */}
+                                  {isSwitchesSubmenuOpen &&
+                                    switchesSubmenuItems.map((nestedItem) => (
+                                      <Link
+                                        key={nestedItem.path}
+                                        to={nestedItem.path}
+                                        className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                      >
+                                        {nestedItem.name}
+                                      </Link>
+                                    ))}
+                                </>
                               ) : (
                                 <Link
                                   to={subItem.path}
