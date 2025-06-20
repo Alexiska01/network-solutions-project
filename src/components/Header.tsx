@@ -225,6 +225,10 @@ const Header = () => {
                                                                   setIsAccessLevelSubmenuOpen(
                                                                     !isAccessLevelSubmenuOpen,
                                                                   );
+                                                                  // Закрываем подменю уровня распределения
+                                                                  setIsDistributionLevelSubmenuOpen(
+                                                                    false,
+                                                                  );
                                                                 }}
                                                               >
                                                                 <span>
@@ -279,6 +283,10 @@ const Header = () => {
                                                                 onClick={() => {
                                                                   setIsDistributionLevelSubmenuOpen(
                                                                     !isDistributionLevelSubmenuOpen,
+                                                                  );
+                                                                  // Закрываем подменю уровня доступа
+                                                                  setIsAccessLevelSubmenuOpen(
+                                                                    false,
                                                                   );
                                                                 }}
                                                               >
