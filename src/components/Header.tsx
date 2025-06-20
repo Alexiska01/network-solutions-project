@@ -90,7 +90,13 @@ const Header = () => {
                   >
                     <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center space-x-1">
                       <span>{item.name}</span>
-                      <Icon name="ChevronDown" size={16} />
+                      <Icon
+                        name="ChevronDown"
+                        size={16}
+                        className={`transition-transform duration-200 ${
+                          isProductsDropdownOpen ? "rotate-180" : ""
+                        }`}
+                      />
                     </button>
 
                     {/* Dropdown Menu */}
@@ -193,6 +199,12 @@ const Header = () => {
                   <Link
                     to={item.path}
                     className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+                    onClick={() => {
+                      // Закрываем все подменю при переходе на другие пункты
+                      setIsProductsDropdownOpen(false);
+                      setIsSwitchesSubmenuOpen(false);
+                      setIsCorporateLanSubmenuOpen(false);
+                    }}
                   >
                     {item.name}
                   </Link>
