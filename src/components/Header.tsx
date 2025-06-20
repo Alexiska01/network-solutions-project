@@ -6,6 +6,12 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isSwitchesSubmenuOpen, setIsSwitchesSubmenuOpen] = useState(false);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
+    null,
+  );
+  const [switchesTimeout, setSwitchesTimeout] = useState<NodeJS.Timeout | null>(
+    null,
+  );
 
   const productSubmenuItems = [
     { name: "Коммутаторы", path: "/products/switches", hasNestedSubmenu: true },
@@ -54,8 +60,19 @@ const Header = () => {
                 {item.hasSubmenu ? (
                   <div
                     className="relative"
-                    onMouseEnter={() => setIsProductsDropdownOpen(true)}
-                    onMouseLeave={() => setIsProductsDropdownOpen(false)}
+                    onMouseEnter={() => {
+                      if (dropdownTimeout) {
+                        clearTimeout(dropdownTimeout);
+                        setDropdownTimeout(null);
+                      }
+                      setIsProductsDropdownOpen(true);
+                    }}
+                    onMouseLeave={() => {
+                      const timeout = setTimeout(() => {
+                        setIsProductsDropdownOpen(false);
+                      }, 150);
+                      setDropdownTimeout(timeout);
+                    }}
                   >
                     <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center space-x-1">
                       <span>{item.name}</span>
@@ -64,19 +81,26 @@ const Header = () => {
 
                     {/* Dropdown Menu */}
                     {isProductsDropdownOpen && (
-                      <div className="absolute left-0 top-full mt-1 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in">
+                      <div className="absolute left-0 top-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-72">
                         <div className="py-2">
                           {productSubmenuItems.map((subItem) => (
                             <div key={subItem.path} className="relative">
                               {subItem.hasNestedSubmenu ? (
                                 <div
                                   className="relative"
-                                  onMouseEnter={() =>
-                                    setIsSwitchesSubmenuOpen(true)
-                                  }
-                                  onMouseLeave={() =>
-                                    setIsSwitchesSubmenuOpen(false)
-                                  }
+                                  onMouseEnter={() => {
+                                    if (switchesTimeout) {
+                                      clearTimeout(switchesTimeout);
+                                      setSwitchesTimeout(null);
+                                    }
+                                    setIsSwitchesSubmenuOpen(true);
+                                  }}
+                                  onMouseLeave={() => {
+                                    const timeout = setTimeout(() => {
+                                      setIsSwitchesSubmenuOpen(false);
+                                    }, 150);
+                                    setSwitchesTimeout(timeout);
+                                  }}
                                 >
                                   <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer">
                                     <span>{subItem.name}</span>
@@ -85,7 +109,7 @@ const Header = () => {
 
                                   {/* Nested Submenu */}
                                   {isSwitchesSubmenuOpen && (
-                                    <div className="absolute left-full top-0 ml-1 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in">
+                                    <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64">
                                       <div className="py-2">
                                         {switchesSubmenuItems.map(
                                           (nestedItem) => (
