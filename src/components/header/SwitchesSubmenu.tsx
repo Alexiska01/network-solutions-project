@@ -111,7 +111,7 @@ const SwitchesSubmenu = ({
                                   className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
                                   onClick={handleAccessLevelToggle}
                                 >
-                                  <span>{thirdLevelItem.name}</span>
+                                  <span>{dataCenterItem.name}</span>
                                   <Icon
                                     name="ChevronRight"
                                     size={16}
@@ -148,7 +148,7 @@ const SwitchesSubmenu = ({
                                   className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
                                   onClick={handleDistributionLevelToggle}
                                 >
-                                  <span>{thirdLevelItem.name}</span>
+                                  <span>{dataCenterItem.name}</span>
                                   <Icon
                                     name="ChevronRight"
                                     size={16}
@@ -178,14 +178,14 @@ const SwitchesSubmenu = ({
                               </div>
                             )}
 
-                            {thirdLevelItem.name ===
+                            {dataCenterItem.name ===
                               "Коммутаторы уровня Leaf" && (
                               <div className="relative">
                                 <div
                                   className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
                                   onClick={handleLeafLevelToggle}
                                 >
-                                  <span>{thirdLevelItem.name}</span>
+                                  <span>{dataCenterItem.name}</span>
                                   <Icon
                                     name="ChevronRight"
                                     size={16}
@@ -243,7 +243,7 @@ const SwitchesSubmenu = ({
                                   className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
                                   onClick={handleSpineLevelToggle}
                                 >
-                                  <span>{thirdLevelItem.name}</span>
+                                  <span>{dataCenterItem.name}</span>
                                   <Icon
                                     name="ChevronRight"
                                     size={16}
@@ -273,14 +273,14 @@ const SwitchesSubmenu = ({
                               </div>
                             )}
 
-                            {thirdLevelItem.name ===
+                            {dataCenterItem.name ===
                               "Коммутаторы уровня Leaf" && (
                               <div className="relative">
                                 <div
                                   className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
                                   onClick={handleLeafLevelToggle}
                                 >
-                                  <span>{thirdLevelItem.name}</span>
+                                  <span>{dataCenterItem.name}</span>
                                   <Icon
                                     name="ChevronRight"
                                     size={16}
