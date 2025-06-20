@@ -73,9 +73,16 @@ export const dataCentersItems = [
   {
     name: "Коммутаторы уровня Spine",
     path: "/products/switches/spine-level",
+    hasSubmenu: true,
   },
   {
     name: "Коммутаторы уровня Leaf",
     path: "/products/switches/leaf-level",
   },
+];
+
+export const spineLevelSeries = [
+  { name: "Коммутаторы серии IDS8030", path: "/products/switches/ids8030" },
+  { name: "Коммутаторы серии IDS8010", path: "/products/switches/ids8010" },
+  { name: "Коммутаторы серии IDS6150", path: "/products/switches/ids6150" },
 ];
