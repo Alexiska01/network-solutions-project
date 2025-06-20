@@ -89,18 +89,10 @@ const Header = () => {
                                 <>
                                   <div
                                     className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
-                                    onMouseEnter={() => {
-                                      if (switchesTimeout) {
-                                        clearTimeout(switchesTimeout);
-                                        setSwitchesTimeout(null);
-                                      }
-                                      setIsSwitchesSubmenuOpen(true);
-                                    }}
-                                    onMouseLeave={() => {
-                                      const timeout = setTimeout(() => {
-                                        setIsSwitchesSubmenuOpen(false);
-                                      }, 150);
-                                      setSwitchesTimeout(timeout);
+                                    onClick={() => {
+                                      setIsSwitchesSubmenuOpen(
+                                        !isSwitchesSubmenuOpen,
+                                      );
                                     }}
                                   >
                                     <span>{subItem.name}</span>
@@ -114,18 +106,6 @@ const Header = () => {
                                         key={nestedItem.path}
                                         to={nestedItem.path}
                                         className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
-                                        onMouseEnter={() => {
-                                          if (switchesTimeout) {
-                                            clearTimeout(switchesTimeout);
-                                            setSwitchesTimeout(null);
-                                          }
-                                        }}
-                                        onMouseLeave={() => {
-                                          const timeout = setTimeout(() => {
-                                            setIsSwitchesSubmenuOpen(false);
-                                          }, 150);
-                                          setSwitchesTimeout(timeout);
-                                        }}
                                       >
                                         {nestedItem.name}
                                       </Link>
@@ -135,6 +115,9 @@ const Header = () => {
                                 <Link
                                   to={subItem.path}
                                   className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                  onClick={() =>
+                                    setIsSwitchesSubmenuOpen(false)
+                                  }
                                 >
                                   {subItem.name}
                                 </Link>
