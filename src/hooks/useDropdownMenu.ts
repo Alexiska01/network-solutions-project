@@ -1,37 +1,70 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
+
+export interface DropdownState {
+  isProductsDropdownOpen: boolean;
+  isRoutersSubmenuOpen: boolean;
+  isSwitchesSubmenuOpen: boolean;
+  isAccessLevelSubmenuOpen: boolean;
+  isDistributionLevelSubmenuOpen: boolean;
+  isCorporateLanSubmenuOpen: boolean;
+  isDataCentersSubmenuOpen: boolean;
+  isSpineLevelSubmenuOpen: boolean;
+  isLeafLevelSubmenuOpen: boolean;
+}
 
 export const useDropdownMenu = () => {
-  const [dropdownState, setDropdownState] = useState<Record<string, boolean>>(
-    {},
-  );
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [dropdownState, setDropdownState] = useState<DropdownState>({
+    isProductsDropdownOpen: false,
+    isRoutersSubmenuOpen: false,
+    isSwitchesSubmenuOpen: false,
+    isAccessLevelSubmenuOpen: false,
+    isDistributionLevelSubmenuOpen: false,
+    isCorporateLanSubmenuOpen: false,
+    isDataCentersSubmenuOpen: false,
+    isSpineLevelSubmenuOpen: false,
+    isLeafLevelSubmenuOpen: false,
+  });
 
-  const updateDropdownState = useCallback((key: string, value: boolean) => {
-    setDropdownState((prev) => ({ ...prev, [key]: value }));
-  }, []);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
+    null,
+  );
 
   const closeAllSubmenus = useCallback(() => {
-    setDropdownState({});
+    setDropdownState({
+      isProductsDropdownOpen: false,
+      isRoutersSubmenuOpen: false,
+      isSwitchesSubmenuOpen: false,
+      isAccessLevelSubmenuOpen: false,
+      isDistributionLevelSubmenuOpen: false,
+      isCorporateLanSubmenuOpen: false,
+      isDataCentersSubmenuOpen: false,
+      isSpineLevelSubmenuOpen: false,
+      isLeafLevelSubmenuOpen: false,
+    });
   }, []);
 
   const cancelCloseTimeout = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
     }
-  }, []);
+  }, [dropdownTimeout]);
 
   const scheduleCloseAllSubmenus = useCallback(() => {
-    timeoutRef.current = setTimeout(() => {
-      closeAllSubmenus();
-    }, 300);
-  }, [closeAllSubmenus]);
+    cancelCloseTimeout();
+    const timeout = setTimeout(closeAllSubmenus, 150);
+    setDropdownTimeout(timeout);
+  }, [cancelCloseTimeout, closeAllSubmenus]);
+
+  const updateDropdownState = useCallback((updates: Partial<DropdownState>) => {
+    setDropdownState((prev) => ({ ...prev, ...updates }));
+  }, []);
 
   return {
     dropdownState,
-    updateDropdownState,
     closeAllSubmenus,
     cancelCloseTimeout,
     scheduleCloseAllSubmenus,
+    updateDropdownState,
   };
 };

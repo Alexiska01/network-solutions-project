@@ -42,6 +42,12 @@ const Header = () => {
             onClose={handleMobileMenuClose}
           />
         </div>
+
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          onToggle={handleMobileMenuToggle}
+          onClose={handleMobileMenuClose}
+        />
       </div>
     </header>
   );
