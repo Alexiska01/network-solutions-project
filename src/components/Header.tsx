@@ -123,12 +123,21 @@ const Header = () => {
                                     className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
                                     onClick={() => {
                                       if (subItem.name === "Коммутаторы") {
+                                        // Закрываем подменю маршрутизаторов при открытии коммутаторов
+                                        setIsRoutersSubmenuOpen(false);
                                         setIsSwitchesSubmenuOpen(
                                           !isSwitchesSubmenuOpen,
                                         );
+                                        // Закрываем третий уровень если переключаемся
+                                        if (!isSwitchesSubmenuOpen) {
+                                          setIsCorporateLanSubmenuOpen(false);
+                                        }
                                       } else if (
                                         subItem.name === "Маршрутизаторы"
                                       ) {
+                                        // Закрываем все подменю коммутаторов при открытии маршрутизаторов
+                                        setIsSwitchesSubmenuOpen(false);
+                                        setIsCorporateLanSubmenuOpen(false);
                                         setIsRoutersSubmenuOpen(
                                           !isRoutersSubmenuOpen,
                                         );
