@@ -6,7 +6,7 @@ const Logo = () => {
       <img
         src="https://cdn.poehali.dev/files/0eff40a3-b365-4fad-b10d-9f08d095a1f8.png"
         alt="iDATA"
-        className="h-8 w-auto sm:h-10"
+        className="h-5 w-auto sm:h-7"
       />
     </Link>
   );
