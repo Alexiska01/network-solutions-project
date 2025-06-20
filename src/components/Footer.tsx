@@ -26,7 +26,7 @@ const Footer = () => {
               <img
                 src="https://cdn.poehali.dev/files/af5eb132-2315-4857-b3f2-92c6d3b24788.png"
                 alt="iDATA"
-                className="h-8 w-auto"
+                className="h-8 w-auto rounded-0 object-contain py-0 mx-0"
               />
             </div>
             <p className="text-gray-400 mb-4">
