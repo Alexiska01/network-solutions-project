@@ -205,7 +205,7 @@ const Header = () => {
                                         {nestedItem.hasThirdLevel ? (
                                           <>
                                             <div
-                                              className="flex items-center justify-between px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-blue-500 cursor-pointer bg-gray-100"
+                                              className="flex items-center justify-between px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-green-500 cursor-pointer bg-white"
                                               onClick={() => {
                                                 setIsCorporateLanSubmenuOpen(
                                                   !isCorporateLanSubmenuOpen,
@@ -225,7 +225,7 @@ const Header = () => {
                                             </div>
                                             {/* Третий уровень меню */}
                                             {isCorporateLanSubmenuOpen && (
-                                              <div className="bg-gray-50 border-l-4 border-gray-300">
+                                              <div className="bg-gray-100 border-l-4 border-blue-500">
                                                 {/* Существующие пункты меню */}
                                                 {corporateLanItems.map(
                                                   (thirdLevelItem) => (
@@ -374,7 +374,7 @@ const Header = () => {
                                           <Link
                                             key={nestedItem.path}
                                             to={nestedItem.path}
-                                            className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-blue-500 bg-gray-100"
+                                            className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-green-500 bg-white"
                                           >
                                             {nestedItem.name}
                                           </Link>
@@ -389,7 +389,7 @@ const Header = () => {
                                       <Link
                                         key={nestedItem.path}
                                         to={nestedItem.path}
-                                        className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-blue-500 bg-gray-100"
+                                        className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-green-500 bg-white"
                                       >
                                         {nestedItem.name}
                                       </Link>
