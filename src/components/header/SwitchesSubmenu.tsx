@@ -8,6 +8,7 @@ import {
   distributionLevelSeries,
   dataCentersItems,
   spineLevelSeries,
+  leafLevelSeries,
 } from "./navigationData";
 
 interface SwitchesSubmenuProps {
@@ -51,6 +52,12 @@ const SwitchesSubmenu = ({
   const handleSpineLevelToggle = () => {
     updateDropdownState({
       isSpineLevelSubmenuOpen: !dropdownState.isSpineLevelSubmenuOpen,
+    });
+  };
+
+  const handleLeafLevelToggle = () => {
+    updateDropdownState({
+      isLeafLevelSubmenuOpen: !dropdownState.isLeafLevelSubmenuOpen,
     });
   };
 
@@ -170,6 +177,43 @@ const SwitchesSubmenu = ({
                                 )}
                               </div>
                             )}
+
+                            {dataCenterItem.name ===
+                              "Коммутаторы уровня Leaf" && (
+                              <div className="relative">
+                                <div
+                                  className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
+                                  onClick={handleLeafLevelToggle}
+                                >
+                                  <span>{dataCenterItem.name}</span>
+                                  <Icon
+                                    name="ChevronRight"
+                                    size={16}
+                                    className={`transition-transform duration-300 ${
+                                      dropdownState.isLeafLevelSubmenuOpen
+                                        ? "rotate-90"
+                                        : ""
+                                    }`}
+                                  />
+                                </div>
+
+                                {dropdownState.isLeafLevelSubmenuOpen && (
+                                  <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
+                                    <div className="py-2">
+                                      {leafLevelSeries.map((series) => (
+                                        <Link
+                                          key={series.path}
+                                          to={series.path}
+                                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                        >
+                                          {series.name}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            )}
                           </>
                         ) : (
                           <Link
@@ -215,6 +259,43 @@ const SwitchesSubmenu = ({
                                   <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
                                     <div className="py-2">
                                       {spineLevelSeries.map((series) => (
+                                        <Link
+                                          key={series.path}
+                                          to={series.path}
+                                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                        >
+                                          {series.name}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {dataCenterItem.name ===
+                              "Коммутаторы уровня Leaf" && (
+                              <div className="relative">
+                                <div
+                                  className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
+                                  onClick={handleLeafLevelToggle}
+                                >
+                                  <span>{dataCenterItem.name}</span>
+                                  <Icon
+                                    name="ChevronRight"
+                                    size={16}
+                                    className={`transition-transform duration-300 ${
+                                      dropdownState.isLeafLevelSubmenuOpen
+                                        ? "rotate-90"
+                                        : ""
+                                    }`}
+                                  />
+                                </div>
+
+                                {dropdownState.isLeafLevelSubmenuOpen && (
+                                  <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
+                                    <div className="py-2">
+                                      {leafLevelSeries.map((series) => (
                                         <Link
                                           key={series.path}
                                           to={series.path}

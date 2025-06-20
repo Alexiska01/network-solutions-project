@@ -9,6 +9,7 @@ export interface DropdownState {
   isCorporateLanSubmenuOpen: boolean;
   isDataCentersSubmenuOpen: boolean;
   isSpineLevelSubmenuOpen: boolean;
+  isLeafLevelSubmenuOpen: boolean;
 }
 
 export const useDropdownMenu = () => {
@@ -21,6 +22,7 @@ export const useDropdownMenu = () => {
     isCorporateLanSubmenuOpen: false,
     isDataCentersSubmenuOpen: false,
     isSpineLevelSubmenuOpen: false,
+    isLeafLevelSubmenuOpen: false,
   });
 
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
@@ -37,6 +39,7 @@ export const useDropdownMenu = () => {
       isCorporateLanSubmenuOpen: false,
       isDataCentersSubmenuOpen: false,
       isSpineLevelSubmenuOpen: false,
+      isLeafLevelSubmenuOpen: false,
     });
   }, []);
 
