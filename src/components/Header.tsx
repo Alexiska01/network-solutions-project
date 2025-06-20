@@ -7,6 +7,8 @@ const Header = () => {
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isRoutersSubmenuOpen, setIsRoutersSubmenuOpen] = useState(false);
   const [isSwitchesSubmenuOpen, setIsSwitchesSubmenuOpen] = useState(false);
+  const [isAccessLevelSubmenuOpen, setIsAccessLevelSubmenuOpen] =
+    useState(false);
   const [isCorporateLanSubmenuOpen, setIsCorporateLanSubmenuOpen] =
     useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
@@ -50,11 +52,19 @@ const Header = () => {
     {
       name: "Коммутаторы уровня доступа",
       path: "/products/switches/corporate-lan/access-level",
+      hasSubmenu: true,
     },
     {
       name: "Коммутаторы уровня распределения",
       path: "/products/switches/corporate-lan/distribution-level",
     },
+  ];
+
+  const accessLevelSeries = [
+    { name: "Коммутаторы серии IDS3530", path: "/products/switches/ids3530" },
+    { name: "Коммутаторы серии IDS3730", path: "/products/switches/ids3730" },
+    { name: "Коммутаторы серии IDS4530", path: "/products/switches/ids4530" },
+    { name: "Коммутаторы серии IDS6012", path: "/products/switches/ids6012" },
   ];
 
   const navigationItems = [
@@ -225,13 +235,72 @@ const Header = () => {
                                                 {/* Существующие пункты меню */}
                                                 {corporateLanItems.map(
                                                   (thirdLevelItem) => (
-                                                    <Link
+                                                    <div
                                                       key={thirdLevelItem.path}
-                                                      to={thirdLevelItem.path}
-                                                      className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                                      className="relative"
                                                     >
-                                                      {thirdLevelItem.name}
-                                                    </Link>
+                                                      {thirdLevelItem.hasSubmenu ? (
+                                                        <>
+                                                          <div
+                                                            className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
+                                                            onClick={() => {
+                                                              setIsAccessLevelSubmenuOpen(
+                                                                !isAccessLevelSubmenuOpen,
+                                                              );
+                                                            }}
+                                                          >
+                                                            <span>
+                                                              {
+                                                                thirdLevelItem.name
+                                                              }
+                                                            </span>
+                                                            <Icon
+                                                              name="ChevronRight"
+                                                              size={16}
+                                                              className={`transition-transform duration-300 ${
+                                                                isAccessLevelSubmenuOpen
+                                                                  ? "rotate-90"
+                                                                  : ""
+                                                              }`}
+                                                            />
+                                                          </div>
+
+                                                          {/* Вертикальное подменю справа */}
+                                                          {isAccessLevelSubmenuOpen && (
+                                                            <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
+                                                              <div className="py-2">
+                                                                {accessLevelSeries.map(
+                                                                  (series) => (
+                                                                    <Link
+                                                                      key={
+                                                                        series.path
+                                                                      }
+                                                                      to={
+                                                                        series.path
+                                                                      }
+                                                                      className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                                                    >
+                                                                      {
+                                                                        series.name
+                                                                      }
+                                                                    </Link>
+                                                                  ),
+                                                                )}
+                                                              </div>
+                                                            </div>
+                                                          )}
+                                                        </>
+                                                      ) : (
+                                                        <Link
+                                                          to={
+                                                            thirdLevelItem.path
+                                                          }
+                                                          className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                                        >
+                                                          {thirdLevelItem.name}
+                                                        </Link>
+                                                      )}
+                                                    </div>
                                                   ),
                                                 )}
                                               </div>
@@ -289,6 +358,7 @@ const Header = () => {
                       setIsProductsDropdownOpen(false);
                       setIsSwitchesSubmenuOpen(false);
                       setIsRoutersSubmenuOpen(false);
+                      setIsAccessLevelSubmenuOpen(false);
                       setIsCorporateLanSubmenuOpen(false);
                     }}
                   >
