@@ -5,6 +5,7 @@ import Icon from "@/components/ui/icon";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
+  const [isRoutersSubmenuOpen, setIsRoutersSubmenuOpen] = useState(false);
   const [isSwitchesSubmenuOpen, setIsSwitchesSubmenuOpen] = useState(false);
   const [isCorporateLanSubmenuOpen, setIsCorporateLanSubmenuOpen] =
     useState(false);
@@ -17,7 +18,11 @@ const Header = () => {
 
   const productSubmenuItems = [
     { name: "Коммутаторы", path: "/products/switches", hasNestedSubmenu: true },
-    { name: "Маршрутизаторы", path: "/products/routers" },
+    {
+      name: "Маршрутизаторы",
+      path: "/products/routers",
+      hasNestedSubmenu: true,
+    },
     { name: "Беспроводное оборудование", path: "/products/wireless" },
     { name: "Программное обеспечение", path: "/products/software" },
     {
@@ -34,6 +39,13 @@ const Header = () => {
     },
   ];
 
+  const routersSubmenuItems = [
+    {
+      name: "Маршрутизаторы для распределенных сетей связи",
+      path: "/products/routers/distributed-networks",
+    },
+  ];
+
   const corporateLanItems = [
     {
       name: "Коммутаторы уровня доступа",
@@ -46,7 +58,7 @@ const Header = () => {
   ];
 
   const navigationItems = [
-    { name: "Продукты и технологии", path: "/products", hasSubmenu: true },
+    { name: "Оборудование iDATA", path: "/products", hasSubmenu: true },
     { name: "Гарантия и сервис", path: "/warranty-service" },
     { name: "Программное обеспечение", path: "/software" },
     { name: "Документация", path: "/documentation" },
@@ -110,9 +122,17 @@ const Header = () => {
                                   <div
                                     className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
                                     onClick={() => {
-                                      setIsSwitchesSubmenuOpen(
-                                        !isSwitchesSubmenuOpen,
-                                      );
+                                      if (subItem.name === "Коммутаторы") {
+                                        setIsSwitchesSubmenuOpen(
+                                          !isSwitchesSubmenuOpen,
+                                        );
+                                      } else if (
+                                        subItem.name === "Маршрутизаторы"
+                                      ) {
+                                        setIsRoutersSubmenuOpen(
+                                          !isRoutersSubmenuOpen,
+                                        );
+                                      }
                                     }}
                                   >
                                     <span>{subItem.name}</span>
@@ -120,15 +140,19 @@ const Header = () => {
                                       name="ChevronDown"
                                       size={16}
                                       className={`transition-transform duration-200 ${
-                                        isSwitchesSubmenuOpen
+                                        (subItem.name === "Коммутаторы" &&
+                                          isSwitchesSubmenuOpen) ||
+                                        (subItem.name === "Маршрутизаторы" &&
+                                          isRoutersSubmenuOpen)
                                           ? "rotate-180"
                                           : ""
                                       }`}
                                     />
                                   </div>
 
-                                  {/* Inline submenu items */}
-                                  {isSwitchesSubmenuOpen &&
+                                  {/* Inline submenu items for Switches */}
+                                  {subItem.name === "Коммутаторы" &&
+                                    isSwitchesSubmenuOpen &&
                                     switchesSubmenuItems.map((nestedItem) => (
                                       <div key={nestedItem.path}>
                                         {nestedItem.hasThirdLevel ? (
@@ -177,14 +201,28 @@ const Header = () => {
                                         )}
                                       </div>
                                     ))}
+
+                                  {/* Inline submenu items for Routers */}
+                                  {subItem.name === "Маршрутизаторы" &&
+                                    isRoutersSubmenuOpen &&
+                                    routersSubmenuItems.map((nestedItem) => (
+                                      <Link
+                                        key={nestedItem.path}
+                                        to={nestedItem.path}
+                                        className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                      >
+                                        {nestedItem.name}
+                                      </Link>
+                                    ))}
                                 </>
                               ) : (
                                 <Link
                                   to={subItem.path}
                                   className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
-                                  onClick={() =>
-                                    setIsSwitchesSubmenuOpen(false)
-                                  }
+                                  onClick={() => {
+                                    setIsSwitchesSubmenuOpen(false);
+                                    setIsRoutersSubmenuOpen(false);
+                                  }}
                                 >
                                   {subItem.name}
                                 </Link>
@@ -203,6 +241,7 @@ const Header = () => {
                       // Закрываем все подменю при переходе на другие пункты
                       setIsProductsDropdownOpen(false);
                       setIsSwitchesSubmenuOpen(false);
+                      setIsRoutersSubmenuOpen(false);
                       setIsCorporateLanSubmenuOpen(false);
                     }}
                   >
