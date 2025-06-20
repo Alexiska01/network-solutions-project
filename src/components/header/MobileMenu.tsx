@@ -14,20 +14,21 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       {/* Mobile menu button */}
       <button
         onClick={onToggle}
-        className="lg:hidden p-2 text-gray-700 hover:text-blue-600"
+        className="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors"
+        aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
       >
-        <Icon name={isOpen ? "X" : "Menu"} size={24} />
+        <Icon name={isOpen ? "X" : "Menu"} size={20} />
       </button>
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="lg:hidden py-4 border-t border-gray-100">
-          <nav className="flex flex-col space-y-2">
+        <div className="lg:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-lg z-50">
+          <nav className="flex flex-col py-2 px-4 max-w-7xl mx-auto">
             {navigationItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+                className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-3 py-3 text-sm font-medium transition-colors rounded-md"
                 onClick={onClose}
               >
                 {item.name}
