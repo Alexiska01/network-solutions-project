@@ -230,12 +230,22 @@ const SwitchesSubmenu = ({
                             )}
                           </>
                         ) : (
-                          <Link
-                            to={dataCenterItem.path}
-                            className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600"
-                          >
-                            {dataCenterItem.name}
-                          </Link>
+                          <div className="relative">
+                            {dataCenterItem.name ===
+                            "Коммутаторы уровня Leaf" ? (
+                              <div className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 cursor-pointer">
+                                <span>{dataCenterItem.name}</span>
+                                <Icon name="ChevronRight" size={16} />
+                              </div>
+                            ) : (
+                              <Link
+                                to={dataCenterItem.path}
+                                className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600"
+                              >
+                                {dataCenterItem.name}
+                              </Link>
+                            )}
+                          </div>
                         )}
                       </div>
                     ))}
