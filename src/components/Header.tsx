@@ -110,7 +110,15 @@ const Header = () => {
                                     }}
                                   >
                                     <span>{subItem.name}</span>
-                                    <Icon name="ChevronDown" size={16} />
+                                    <Icon
+                                      name="ChevronDown"
+                                      size={16}
+                                      className={`transition-transform duration-200 ${
+                                        isSwitchesSubmenuOpen
+                                          ? "rotate-180"
+                                          : ""
+                                      }`}
+                                    />
                                   </div>
 
                                   {/* Inline submenu items */}
