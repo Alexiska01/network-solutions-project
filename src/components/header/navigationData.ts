@@ -80,10 +80,10 @@ export const dataCentersItems = [
   },
   {
     name: "Коммутаторы уровня Spine",
-    path: "/products/switches/data-centers/spine",
+    path: "/products/switches/data-centers/spine-level",
   },
   {
     name: "Коммутаторы уровня Leaf",
-    path: "/products/switches/data-centers/leaf",
+    path: "/products/switches/data-centers/leaf-level",
   },
 ];
