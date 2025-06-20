@@ -23,9 +23,11 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">iD</span>
-              </div>
+              <img
+                src="https://cdn.poehali.dev/files/0eff40a3-b365-4fad-b10d-9f08d095a1f8.png"
+                alt="iDATA"
+                className="w-8 h-8 rounded-lg object-contain"
+              />
               <span className="text-xl font-bold">iDATA</span>
             </div>
             <p className="text-gray-400 mb-4">
