@@ -6,6 +6,7 @@ import {
   corporateLanItems,
   accessLevelSeries,
   distributionLevelSeries,
+  dataCentersItems,
 } from "./navigationData";
 
 interface SwitchesSubmenuProps {
@@ -172,6 +173,22 @@ const SwitchesSubmenu = ({
                           </Link>
                         )}
                       </div>
+                    ))}
+                  </div>
+                )}
+
+              {/* Третий уровень меню для центров обработки данных */}
+              {nestedItem.name === "Коммутаторы для центров обработки данных" &&
+                dropdownState.isDataCentersSubmenuOpen && (
+                  <div className="border-l-4 border-blue-600 bg-gray-100">
+                    {dataCentersItems.map((dataCenterItem) => (
+                      <Link
+                        key={dataCenterItem.path}
+                        to={dataCenterItem.path}
+                        className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600"
+                      >
+                        {dataCenterItem.name}
+                      </Link>
                     ))}
                   </div>
                 )}
