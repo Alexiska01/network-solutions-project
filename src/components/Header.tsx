@@ -20,6 +20,33 @@ const Header = () => {
     null,
   );
 
+  // Функция для закрытия всех подменю
+  const closeAllSubmenus = () => {
+    setIsProductsDropdownOpen(false);
+    setIsSwitchesSubmenuOpen(false);
+    setIsRoutersSubmenuOpen(false);
+    setIsCorporateLanSubmenuOpen(false);
+    setIsAccessLevelSubmenuOpen(false);
+    setIsDistributionLevelSubmenuOpen(false);
+  };
+
+  // Функция для отмены таймера закрытия
+  const cancelCloseTimeout = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+  };
+
+  // Функция для установки таймера закрытия всех подменю
+  const scheduleCloseAllSubmenus = () => {
+    cancelCloseTimeout();
+    const timeout = setTimeout(() => {
+      closeAllSubmenus();
+    }, 150);
+    setDropdownTimeout(timeout);
+  };
+
   const productSubmenuItems = [
     { name: "Коммутаторы", path: "/products/switches", hasNestedSubmenu: true },
     {
@@ -106,18 +133,10 @@ const Header = () => {
                   <div
                     className="relative"
                     onMouseEnter={() => {
-                      if (dropdownTimeout) {
-                        clearTimeout(dropdownTimeout);
-                        setDropdownTimeout(null);
-                      }
+                      cancelCloseTimeout();
                       setIsProductsDropdownOpen(true);
                     }}
-                    onMouseLeave={() => {
-                      const timeout = setTimeout(() => {
-                        setIsProductsDropdownOpen(false);
-                      }, 150);
-                      setDropdownTimeout(timeout);
-                    }}
+                    onMouseLeave={scheduleCloseAllSubmenus}
                   >
                     <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center space-x-1">
                       <span>{item.name}</span>
