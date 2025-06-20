@@ -71,25 +71,11 @@ export const distributionLevelSeries = [
 
 export const dataCentersItems = [
   {
-    name: "Коммутаторы для корпоративных ЛВС",
-    path: "/products/switches/corporate-lan",
-    hasSubmenu: true,
-  },
-  {
-    name: "Коммутаторы для центров обработки данных",
-    path: "/products/switches/data-centers",
-    hasSubmenu: true,
-  },
-  {
     name: "Коммутаторы уровня Spine",
     path: "/products/switches/spine-level",
   },
   {
     name: "Коммутаторы уровня Leaf",
     path: "/products/switches/leaf-level",
-  },
-  {
-    name: "Коммутаторы с сертификацией ТОРП",
-    path: "/products/switches/torp-certified",
   },
 ];
