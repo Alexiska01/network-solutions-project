@@ -205,7 +205,7 @@ const Header = () => {
                                         {nestedItem.hasThirdLevel ? (
                                           <>
                                             <div
-                                              className="flex items-center justify-between px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-green-500 cursor-pointer bg-white"
+                                              className="flex items-center justify-between px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-4 border-blue-500 cursor-pointer"
                                               onClick={() => {
                                                 setIsCorporateLanSubmenuOpen(
                                                   !isCorporateLanSubmenuOpen,
@@ -225,7 +225,7 @@ const Header = () => {
                                             </div>
                                             {/* Третий уровень меню */}
                                             {isCorporateLanSubmenuOpen && (
-                                              <div className="bg-gray-100 border-l-4 border-blue-500">
+                                              <div className="border-l-4 border-green-500 bg-white">
                                                 {/* Существующие пункты меню */}
                                                 {corporateLanItems.map(
                                                   (thirdLevelItem) => (
