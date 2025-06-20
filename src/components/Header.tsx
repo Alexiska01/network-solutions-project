@@ -120,6 +120,14 @@ const Header = () => {
       name: "Коммутаторы для виртуализации",
       path: "/products/switches/data-centers/virtualization",
     },
+    {
+      name: "Коммутаторы уровня Spine",
+      path: "/products/switches/data-centers/spine",
+    },
+    {
+      name: "Коммутаторы уровня Leaf",
+      path: "/products/switches/data-centers/leaf",
+    },
   ];
 
   const navigationItems = [
