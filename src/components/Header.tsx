@@ -28,6 +28,18 @@ const Header = () => {
     {
       name: "Коммутаторы для корпоративных ЛВС",
       path: "/products/switches/corporate-lan",
+      hasThirdLevel: true,
+    },
+  ];
+
+  const corporateLanItems = [
+    {
+      name: "Коммутаторы уровня доступа",
+      path: "/products/switches/corporate-lan/access-level",
+    },
+    {
+      name: "Коммутаторы уровня распределения",
+      path: "/products/switches/corporate-lan/distribution-level",
     },
   ];
 
@@ -102,13 +114,40 @@ const Header = () => {
                                   {/* Inline submenu items */}
                                   {isSwitchesSubmenuOpen &&
                                     switchesSubmenuItems.map((nestedItem) => (
-                                      <Link
-                                        key={nestedItem.path}
-                                        to={nestedItem.path}
-                                        className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
-                                      >
-                                        {nestedItem.name}
-                                      </Link>
+                                      <div key={nestedItem.path}>
+                                        {nestedItem.hasThirdLevel ? (
+                                          <>
+                                            <div
+                                              className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
+                                              onClick={() => {
+                                                // Добавим состояние для третьего уровня
+                                              }}
+                                            >
+                                              {nestedItem.name}
+                                            </div>
+                                            {/* Третий уровень меню */}
+                                            {corporateLanItems.map(
+                                              (thirdLevelItem) => (
+                                                <Link
+                                                  key={thirdLevelItem.path}
+                                                  to={thirdLevelItem.path}
+                                                  className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                                >
+                                                  {thirdLevelItem.name}
+                                                </Link>
+                                              ),
+                                            )}
+                                          </>
+                                        ) : (
+                                          <Link
+                                            key={nestedItem.path}
+                                            to={nestedItem.path}
+                                            className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                          >
+                                            {nestedItem.name}
+                                          </Link>
+                                        )}
+                                      </div>
                                     ))}
                                 </>
                               ) : (
