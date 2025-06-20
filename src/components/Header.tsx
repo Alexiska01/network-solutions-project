@@ -205,7 +205,7 @@ const Header = () => {
                                         {nestedItem.hasThirdLevel ? (
                                           <>
                                             <div
-                                              className="flex items-center justify-between px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-4 border-blue-500 cursor-pointer"
+                                              className="flex items-center justify-between px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-50 border-l-4 border-blue-300 cursor-pointer"
                                               onClick={() => {
                                                 setIsCorporateLanSubmenuOpen(
                                                   !isCorporateLanSubmenuOpen,
@@ -225,7 +225,7 @@ const Header = () => {
                                             </div>
                                             {/* Третий уровень меню */}
                                             {isCorporateLanSubmenuOpen && (
-                                              <div className="border-l-4 border-green-500 bg-white">
+                                              <div className="border-l-4 border-blue-600 bg-gray-100">
                                                 {/* Существующие пункты меню */}
                                                 {corporateLanItems.map(
                                                   (thirdLevelItem) => (
@@ -239,7 +239,7 @@ const Header = () => {
                                                             "Коммутаторы уровня доступа" && (
                                                             <div className="relative">
                                                               <div
-                                                                className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
+                                                                className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
                                                                 onClick={() => {
                                                                   setIsAccessLevelSubmenuOpen(
                                                                     !isAccessLevelSubmenuOpen,
@@ -298,7 +298,7 @@ const Header = () => {
                                                             "Коммутаторы уровня распределения" && (
                                                             <div className="relative">
                                                               <div
-                                                                className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
+                                                                className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
                                                                 onClick={() => {
                                                                   setIsDistributionLevelSubmenuOpen(
                                                                     !isDistributionLevelSubmenuOpen,
@@ -359,7 +359,7 @@ const Header = () => {
                                                           to={
                                                             thirdLevelItem.path
                                                           }
-                                                          className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                                          className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600"
                                                         >
                                                           {thirdLevelItem.name}
                                                         </Link>
@@ -374,7 +374,7 @@ const Header = () => {
                                           <Link
                                             key={nestedItem.path}
                                             to={nestedItem.path}
-                                            className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-green-500 bg-white"
+                                            className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-blue-300 bg-gray-50"
                                           >
                                             {nestedItem.name}
                                           </Link>
@@ -389,7 +389,7 @@ const Header = () => {
                                       <Link
                                         key={nestedItem.path}
                                         to={nestedItem.path}
-                                        className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-green-500 bg-white"
+                                        className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-blue-300 bg-gray-50"
                                       >
                                         {nestedItem.name}
                                       </Link>
