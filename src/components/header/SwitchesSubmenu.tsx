@@ -223,7 +223,7 @@ const SwitchesSubmenu = ({
                                   <span className="leading-tight">
                                     Коммутаторы уровня
                                     <br />
-                                    Leaf
+                                    Spine
                                   </span>
                                   <Icon
                                     name="ChevronRight"
