@@ -7,6 +7,7 @@ import {
   accessLevelSeries,
   distributionLevelSeries,
   dataCentersItems,
+  spineLevelSeries,
 } from "./navigationData";
 
 interface SwitchesSubmenuProps {
@@ -44,6 +45,12 @@ const SwitchesSubmenu = ({
       isDistributionLevelSubmenuOpen:
         !dropdownState.isDistributionLevelSubmenuOpen,
       isAccessLevelSubmenuOpen: false,
+    });
+  };
+
+  const handleSpineLevelToggle = () => {
+    updateDropdownState({
+      isSpineLevelSubmenuOpen: !dropdownState.isSpineLevelSubmenuOpen,
     });
   };
 
@@ -182,13 +189,55 @@ const SwitchesSubmenu = ({
                 dropdownState.isDataCentersSubmenuOpen && (
                   <div className="border-l-4 border-blue-600 bg-gray-100">
                     {dataCentersItems.map((dataCenterItem) => (
-                      <Link
-                        key={dataCenterItem.path}
-                        to={dataCenterItem.path}
-                        className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600"
-                      >
-                        {dataCenterItem.name}
-                      </Link>
+                      <div key={dataCenterItem.path} className="relative">
+                        {dataCenterItem.hasSubmenu ? (
+                          <>
+                            {dataCenterItem.name ===
+                              "Коммутаторы уровня Spine" && (
+                              <div className="relative">
+                                <div
+                                  className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
+                                  onClick={handleSpineLevelToggle}
+                                >
+                                  <span>{dataCenterItem.name}</span>
+                                  <Icon
+                                    name="ChevronRight"
+                                    size={16}
+                                    className={`transition-transform duration-300 ${
+                                      dropdownState.isSpineLevelSubmenuOpen
+                                        ? "rotate-90"
+                                        : ""
+                                    }`}
+                                  />
+                                </div>
+
+                                {dropdownState.isSpineLevelSubmenuOpen && (
+                                  <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
+                                    <div className="py-2">
+                                      {spineLevelSeries.map((series) => (
+                                        <Link
+                                          key={series.path}
+                                          to={series.path}
+                                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                        >
+                                          {series.name}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <Link
+                            to={dataCenterItem.path}
+                            className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600"
+                          >
+                            {dataCenterItem.name}
+                          </Link>
+                        )}
+                      </div>
                     ))}
                   </div>
                 )}
