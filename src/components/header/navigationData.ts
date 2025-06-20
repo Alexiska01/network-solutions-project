@@ -86,3 +86,7 @@ export const spineLevelSeries = [
   { name: "Коммутаторы серии IDS8010", path: "/products/switches/ids8010" },
   { name: "Коммутаторы серии IDS6150", path: "/products/switches/ids6150" },
 ];
+
+export const leafLevelSeries = [
+  { name: "Коммутаторы серии IDS6130", path: "/products/switches/ids6130" },
+];
