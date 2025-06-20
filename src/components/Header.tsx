@@ -13,6 +13,8 @@ const Header = () => {
     useState(false);
   const [isCorporateLanSubmenuOpen, setIsCorporateLanSubmenuOpen] =
     useState(false);
+  const [isDataCentersSubmenuOpen, setIsDataCentersSubmenuOpen] =
+    useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
     null,
   );
@@ -28,6 +30,7 @@ const Header = () => {
     setIsCorporateLanSubmenuOpen(false);
     setIsAccessLevelSubmenuOpen(false);
     setIsDistributionLevelSubmenuOpen(false);
+    setIsDataCentersSubmenuOpen(false);
   };
 
   // Функция для отмены таймера закрытия
@@ -71,6 +74,7 @@ const Header = () => {
     {
       name: "Коммутаторы для центров обработки данных",
       path: "/products/switches/data-centers",
+      hasThirdLevel: true,
     },
     {
       name: "Коммутаторы с сертификацией ТОРП",
@@ -196,6 +200,7 @@ const Header = () => {
                                         // Закрываем третий уровень если переключаемся
                                         if (!isSwitchesSubmenuOpen) {
                                           setIsCorporateLanSubmenuOpen(false);
+                                          setIsDataCentersSubmenuOpen(false);
                                         }
                                       } else if (
                                         subItem.name === "Маршрутизаторы"
@@ -203,6 +208,7 @@ const Header = () => {
                                         // Закрываем все подменю коммутаторов при открытии маршрутизаторов
                                         setIsSwitchesSubmenuOpen(false);
                                         setIsCorporateLanSubmenuOpen(false);
+                                        setIsDataCentersSubmenuOpen(false);
                                         setIsRoutersSubmenuOpen(
                                           !isRoutersSubmenuOpen,
                                         );
@@ -234,9 +240,27 @@ const Header = () => {
                                             <div
                                               className="flex items-center justify-between px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-50 border-l-4 border-blue-300 cursor-pointer"
                                               onClick={() => {
-                                                setIsCorporateLanSubmenuOpen(
-                                                  !isCorporateLanSubmenuOpen,
-                                                );
+                                                if (
+                                                  nestedItem.name ===
+                                                  "Коммутаторы для корпоративных ЛВС"
+                                                ) {
+                                                  setIsCorporateLanSubmenuOpen(
+                                                    !isCorporateLanSubmenuOpen,
+                                                  );
+                                                  setIsDataCentersSubmenuOpen(
+                                                    false,
+                                                  );
+                                                } else if (
+                                                  nestedItem.name ===
+                                                  "Коммутаторы для центров обработки данных"
+                                                ) {
+                                                  setIsDataCentersSubmenuOpen(
+                                                    !isDataCentersSubmenuOpen,
+                                                  );
+                                                  setIsCorporateLanSubmenuOpen(
+                                                    false,
+                                                  );
+                                                }
                                               }}
                                             >
                                               <span>{nestedItem.name}</span>
@@ -244,158 +268,169 @@ const Header = () => {
                                                 name="ChevronRight"
                                                 size={16}
                                                 className={`transition-transform duration-300 ${
-                                                  isCorporateLanSubmenuOpen
+                                                  (nestedItem.name ===
+                                                    "Коммутаторы для корпоративных ЛВС" &&
+                                                    isCorporateLanSubmenuOpen) ||
+                                                  (nestedItem.name ===
+                                                    "Коммутаторы для центров обработки данных" &&
+                                                    isDataCentersSubmenuOpen)
                                                     ? "rotate-180"
                                                     : ""
                                                 }`}
                                               />
                                             </div>
-                                            {/* Третий уровень меню */}
-                                            {isCorporateLanSubmenuOpen && (
-                                              <div className="border-l-4 border-blue-600 bg-gray-100">
-                                                {/* Существующие пункты меню */}
-                                                {corporateLanItems.map(
-                                                  (thirdLevelItem) => (
-                                                    <div
-                                                      key={thirdLevelItem.path}
-                                                      className="relative"
-                                                    >
-                                                      {thirdLevelItem.hasSubmenu ? (
-                                                        <>
-                                                          {thirdLevelItem.name ===
-                                                            "Коммутаторы уровня доступа" && (
-                                                            <div className="relative">
-                                                              <div
-                                                                className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
-                                                                onClick={() => {
-                                                                  setIsAccessLevelSubmenuOpen(
-                                                                    !isAccessLevelSubmenuOpen,
-                                                                  );
-                                                                  // Закрываем подменю уровня распределения
-                                                                  setIsDistributionLevelSubmenuOpen(
-                                                                    false,
-                                                                  );
-                                                                }}
-                                                              >
-                                                                <span>
-                                                                  {
-                                                                    thirdLevelItem.name
-                                                                  }
-                                                                </span>
-                                                                <Icon
-                                                                  name="ChevronRight"
-                                                                  size={16}
-                                                                  className={`transition-transform duration-300 ${
-                                                                    isAccessLevelSubmenuOpen
-                                                                      ? "rotate-90"
-                                                                      : ""
-                                                                  }`}
-                                                                />
-                                                              </div>
-
-                                                              {/* Вертикальное подменю справа */}
-                                                              {isAccessLevelSubmenuOpen && (
-                                                                <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
-                                                                  <div className="py-2">
-                                                                    {accessLevelSeries.map(
-                                                                      (
-                                                                        series,
-                                                                      ) => (
-                                                                        <Link
-                                                                          key={
-                                                                            series.path
-                                                                          }
-                                                                          to={
-                                                                            series.path
-                                                                          }
-                                                                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
-                                                                        >
-                                                                          {
-                                                                            series.name
-                                                                          }
-                                                                        </Link>
-                                                                      ),
-                                                                    )}
-                                                                  </div>
+                                            {/* Третий уровень меню для корпоративных ЛВС */}
+                                            {nestedItem.name ===
+                                              "Коммутаторы для корпоративных ЛВС" &&
+                                              isCorporateLanSubmenuOpen && (
+                                                <div className="border-l-4 border-blue-600 bg-gray-100">
+                                                  {/* Существующие пункты меню */}
+                                                  {corporateLanItems.map(
+                                                    (thirdLevelItem) => (
+                                                      <div
+                                                        key={
+                                                          thirdLevelItem.path
+                                                        }
+                                                        className="relative"
+                                                      >
+                                                        {thirdLevelItem.hasSubmenu ? (
+                                                          <>
+                                                            {thirdLevelItem.name ===
+                                                              "Коммутаторы уровня доступа" && (
+                                                              <div className="relative">
+                                                                <div
+                                                                  className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
+                                                                  onClick={() => {
+                                                                    setIsAccessLevelSubmenuOpen(
+                                                                      !isAccessLevelSubmenuOpen,
+                                                                    );
+                                                                    // Закрываем подменю уровня распределения
+                                                                    setIsDistributionLevelSubmenuOpen(
+                                                                      false,
+                                                                    );
+                                                                  }}
+                                                                >
+                                                                  <span>
+                                                                    {
+                                                                      thirdLevelItem.name
+                                                                    }
+                                                                  </span>
+                                                                  <Icon
+                                                                    name="ChevronRight"
+                                                                    size={16}
+                                                                    className={`transition-transform duration-300 ${
+                                                                      isAccessLevelSubmenuOpen
+                                                                        ? "rotate-90"
+                                                                        : ""
+                                                                    }`}
+                                                                  />
                                                                 </div>
-                                                              )}
-                                                            </div>
-                                                          )}
-                                                          {thirdLevelItem.name ===
-                                                            "Коммутаторы уровня распределения" && (
-                                                            <div className="relative">
-                                                              <div
-                                                                className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
-                                                                onClick={() => {
-                                                                  setIsDistributionLevelSubmenuOpen(
-                                                                    !isDistributionLevelSubmenuOpen,
-                                                                  );
-                                                                  // Закрываем подменю уровня доступа
-                                                                  setIsAccessLevelSubmenuOpen(
-                                                                    false,
-                                                                  );
-                                                                }}
-                                                              >
-                                                                <span>
-                                                                  {
-                                                                    thirdLevelItem.name
-                                                                  }
-                                                                </span>
-                                                                <Icon
-                                                                  name="ChevronRight"
-                                                                  size={16}
-                                                                  className={`transition-transform duration-300 ${
-                                                                    isDistributionLevelSubmenuOpen
-                                                                      ? "rotate-90"
-                                                                      : ""
-                                                                  }`}
-                                                                />
-                                                              </div>
 
-                                                              {/* Вертикальное подменю справа для уровня распределения */}
-                                                              {isDistributionLevelSubmenuOpen && (
-                                                                <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
-                                                                  <div className="py-2">
-                                                                    {distributionLevelSeries.map(
-                                                                      (
-                                                                        series,
-                                                                      ) => (
-                                                                        <Link
-                                                                          key={
-                                                                            series.path
-                                                                          }
-                                                                          to={
-                                                                            series.path
-                                                                          }
-                                                                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
-                                                                        >
-                                                                          {
-                                                                            series.name
-                                                                          }
-                                                                        </Link>
-                                                                      ),
-                                                                    )}
+                                                                {/* Вертикальное подменю справа */}
+                                                                {isAccessLevelSubmenuOpen && (
+                                                                  <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
+                                                                    <div className="py-2">
+                                                                      {accessLevelSeries.map(
+                                                                        (
+                                                                          series,
+                                                                        ) => (
+                                                                          <Link
+                                                                            key={
+                                                                              series.path
+                                                                            }
+                                                                            to={
+                                                                              series.path
+                                                                            }
+                                                                            className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                                                          >
+                                                                            {
+                                                                              series.name
+                                                                            }
+                                                                          </Link>
+                                                                        ),
+                                                                      )}
+                                                                    </div>
                                                                   </div>
+                                                                )}
+                                                              </div>
+                                                            )}
+                                                            {thirdLevelItem.name ===
+                                                              "Коммутаторы уровня распределения" && (
+                                                              <div className="relative">
+                                                                <div
+                                                                  className="flex items-center justify-between px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600 hover:border-blue-600 cursor-pointer"
+                                                                  onClick={() => {
+                                                                    setIsDistributionLevelSubmenuOpen(
+                                                                      !isDistributionLevelSubmenuOpen,
+                                                                    );
+                                                                    // Закрываем подменю уровня доступа
+                                                                    setIsAccessLevelSubmenuOpen(
+                                                                      false,
+                                                                    );
+                                                                  }}
+                                                                >
+                                                                  <span>
+                                                                    {
+                                                                      thirdLevelItem.name
+                                                                    }
+                                                                  </span>
+                                                                  <Icon
+                                                                    name="ChevronRight"
+                                                                    size={16}
+                                                                    className={`transition-transform duration-300 ${
+                                                                      isDistributionLevelSubmenuOpen
+                                                                        ? "rotate-90"
+                                                                        : ""
+                                                                    }`}
+                                                                  />
                                                                 </div>
-                                                              )}
-                                                            </div>
-                                                          )}
-                                                        </>
-                                                      ) : (
-                                                        <Link
-                                                          to={
-                                                            thirdLevelItem.path
-                                                          }
-                                                          className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600"
-                                                        >
-                                                          {thirdLevelItem.name}
-                                                        </Link>
-                                                      )}
-                                                    </div>
-                                                  ),
-                                                )}
-                                              </div>
-                                            )}
+
+                                                                {/* Вертикальное подменю справа для уровня распределения */}
+                                                                {isDistributionLevelSubmenuOpen && (
+                                                                  <div className="absolute left-full top-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-64 ml-2">
+                                                                    <div className="py-2">
+                                                                      {distributionLevelSeries.map(
+                                                                        (
+                                                                          series,
+                                                                        ) => (
+                                                                          <Link
+                                                                            key={
+                                                                              series.path
+                                                                            }
+                                                                            to={
+                                                                              series.path
+                                                                            }
+                                                                            className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                                                          >
+                                                                            {
+                                                                              series.name
+                                                                            }
+                                                                          </Link>
+                                                                        ),
+                                                                      )}
+                                                                    </div>
+                                                                  </div>
+                                                                )}
+                                                              </div>
+                                                            )}
+                                                          </>
+                                                        ) : (
+                                                          <Link
+                                                            to={
+                                                              thirdLevelItem.path
+                                                            }
+                                                            className="block px-12 py-3 text-sm text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors bg-gray-100 border-l-2 border-blue-600"
+                                                          >
+                                                            {
+                                                              thirdLevelItem.name
+                                                            }
+                                                          </Link>
+                                                        )}
+                                                      </div>
+                                                    ),
+                                                  )}
+                                                </div>
+                                              )}
                                           </>
                                         ) : (
                                           <Link
