@@ -21,13 +21,22 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="lg:hidden py-4 border-t border-gray-100">
-          <nav className="flex flex-col space-y-2">
+        <div className="lg:hidden fixed inset-0 top-0 left-0 w-full h-full bg-white z-50 overflow-y-auto">
+          <div className="flex justify-between items-center h-16 px-4 border-b border-gray-100">
+            <div className="text-xl font-bold text-gray-900">Меню</div>
+            <button
+              onClick={onClose}
+              className="p-2 text-gray-700 hover:text-blue-600"
+            >
+              <Icon name="X" size={24} />
+            </button>
+          </div>
+          <nav className="flex flex-col p-4">
             {navigationItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+                className="text-gray-700 hover:text-blue-600 px-3 py-4 text-lg font-medium border-b border-gray-100 last:border-b-0"
                 onClick={onClose}
               >
                 {item.name}
