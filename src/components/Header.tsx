@@ -4,9 +4,21 @@ import Icon from "@/components/ui/icon";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
+
+  const productSubmenuItems = [
+    { name: "Коммутаторы", path: "/products/switches" },
+    { name: "Маршрутизаторы", path: "/products/routers" },
+    { name: "Беспроводное оборудование", path: "/products/wireless" },
+    { name: "Программное обеспечение", path: "/products/software" },
+    {
+      name: "Кабельные сборки и трансиверы",
+      path: "/products/cables-transceivers",
+    },
+  ];
 
   const navigationItems = [
-    { name: "Продукты и технологии", path: "/products" },
+    { name: "Продукты и технологии", path: "/products", hasSubmenu: true },
     { name: "Гарантия и сервис", path: "/warranty-service" },
     { name: "Программное обеспечение", path: "/software" },
     { name: "Документация", path: "/documentation" },
@@ -30,13 +42,44 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-8">
             {navigationItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                {item.name}
-              </Link>
+              <div key={item.path} className="relative group">
+                {item.hasSubmenu ? (
+                  <div
+                    className="relative"
+                    onMouseEnter={() => setIsProductsDropdownOpen(true)}
+                    onMouseLeave={() => setIsProductsDropdownOpen(false)}
+                  >
+                    <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center space-x-1">
+                      <span>{item.name}</span>
+                      <Icon name="ChevronDown" size={16} />
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    {isProductsDropdownOpen && (
+                      <div className="absolute left-0 top-full mt-1 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in">
+                        <div className="py-2">
+                          {productSubmenuItems.map((subItem) => (
+                            <Link
+                              key={subItem.path}
+                              to={subItem.path}
+                              className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                            >
+                              {subItem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </div>
             ))}
           </nav>
 
