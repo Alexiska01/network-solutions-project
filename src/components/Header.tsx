@@ -5,15 +5,23 @@ import Icon from "@/components/ui/icon";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
+  const [isSwitchesSubmenuOpen, setIsSwitchesSubmenuOpen] = useState(false);
 
   const productSubmenuItems = [
-    { name: "Коммутаторы", path: "/products/switches" },
+    { name: "Коммутаторы", path: "/products/switches", hasNestedSubmenu: true },
     { name: "Маршрутизаторы", path: "/products/routers" },
     { name: "Беспроводное оборудование", path: "/products/wireless" },
     { name: "Программное обеспечение", path: "/products/software" },
     {
       name: "Кабельные сборки и трансиверы",
       path: "/products/cables-transceivers",
+    },
+  ];
+
+  const switchesSubmenuItems = [
+    {
+      name: "Коммутаторы для корпоративных ЛВС",
+      path: "/products/switches/corporate-lan",
     },
   ];
 
@@ -59,13 +67,50 @@ const Header = () => {
                       <div className="absolute left-0 top-full mt-1 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in">
                         <div className="py-2">
                           {productSubmenuItems.map((subItem) => (
-                            <Link
-                              key={subItem.path}
-                              to={subItem.path}
-                              className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
-                            >
-                              {subItem.name}
-                            </Link>
+                            <div key={subItem.path} className="relative">
+                              {subItem.hasNestedSubmenu ? (
+                                <div
+                                  className="relative"
+                                  onMouseEnter={() =>
+                                    setIsSwitchesSubmenuOpen(true)
+                                  }
+                                  onMouseLeave={() =>
+                                    setIsSwitchesSubmenuOpen(false)
+                                  }
+                                >
+                                  <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer">
+                                    <span>{subItem.name}</span>
+                                    <Icon name="ChevronRight" size={16} />
+                                  </div>
+
+                                  {/* Nested Submenu */}
+                                  {isSwitchesSubmenuOpen && (
+                                    <div className="absolute left-full top-0 ml-1 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in">
+                                      <div className="py-2">
+                                        {switchesSubmenuItems.map(
+                                          (nestedItem) => (
+                                            <Link
+                                              key={nestedItem.path}
+                                              to={nestedItem.path}
+                                              className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                            >
+                                              {nestedItem.name}
+                                            </Link>
+                                          ),
+                                        )}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              ) : (
+                                <Link
+                                  to={subItem.path}
+                                  className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                >
+                                  {subItem.name}
+                                </Link>
+                              )}
+                            </div>
                           ))}
                         </div>
                       </div>
