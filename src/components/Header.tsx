@@ -120,14 +120,23 @@ const Header = () => {
                                         {nestedItem.hasThirdLevel ? (
                                           <>
                                             <div
-                                              className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
+                                              className="flex items-center justify-between px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
                                               onClick={() => {
                                                 setIsCorporateLanSubmenuOpen(
                                                   !isCorporateLanSubmenuOpen,
                                                 );
                                               }}
                                             >
-                                              {nestedItem.name}
+                                              <span>{nestedItem.name}</span>
+                                              <Icon
+                                                name="ChevronDown"
+                                                size={16}
+                                                className={`transition-transform duration-200 ${
+                                                  isCorporateLanSubmenuOpen
+                                                    ? "rotate-180"
+                                                    : ""
+                                                }`}
+                                              />
                                             </div>
                                             {/* Третий уровень меню */}
                                             {isCorporateLanSubmenuOpen &&
