@@ -114,6 +114,18 @@ const Header = () => {
                                         key={nestedItem.path}
                                         to={nestedItem.path}
                                         className="block px-8 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                                        onMouseEnter={() => {
+                                          if (switchesTimeout) {
+                                            clearTimeout(switchesTimeout);
+                                            setSwitchesTimeout(null);
+                                          }
+                                        }}
+                                        onMouseLeave={() => {
+                                          const timeout = setTimeout(() => {
+                                            setIsSwitchesSubmenuOpen(false);
+                                          }, 150);
+                                          setSwitchesTimeout(timeout);
+                                        }}
                                       >
                                         {nestedItem.name}
                                       </Link>
