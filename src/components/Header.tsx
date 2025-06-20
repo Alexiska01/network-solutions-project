@@ -68,6 +68,14 @@ const Header = () => {
       path: "/products/switches/corporate-lan",
       hasThirdLevel: true,
     },
+    {
+      name: "Коммутаторы для центров обработки данных",
+      path: "/products/switches/data-centers",
+    },
+    {
+      name: "Коммутаторы с сертификацией ТОРП",
+      path: "/products/switches/torp-certified",
+    },
   ];
 
   const routersSubmenuItems = [
