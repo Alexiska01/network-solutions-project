@@ -111,6 +111,17 @@ const Header = () => {
     { name: "Коммутаторы серии IDS6032", path: "/products/switches/ids6032" },
   ];
 
+  const dataCentersItems = [
+    {
+      name: "Коммутаторы для высокопроизводительных вычислений",
+      path: "/products/switches/data-centers/high-performance",
+    },
+    {
+      name: "Коммутаторы для виртуализации",
+      path: "/products/switches/data-centers/virtualization",
+    },
+  ];
+
   const navigationItems = [
     { name: "Оборудование iDATA", path: "/products", hasSubmenu: true },
     { name: "Гарантия и сервис", path: "/warranty-service" },
