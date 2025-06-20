@@ -8,6 +8,7 @@ import {
   distributionLevelSeries,
   dataCentersItems,
   spineLevelSeries,
+  leafLevelSeries,
 } from "./navigationData";
 
 interface SwitchesSubmenuProps {
