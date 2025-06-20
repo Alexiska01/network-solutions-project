@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 
 const Logo = () => {
   return (
-    <Link to="/" className="flex items-center space-x-2">
-      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-        <span className="text-white font-bold text-sm">iD</span>
-      </div>
-      <span className="text-xl font-bold text-gray-900">iDATA</span>
+    <Link to="/" className="flex items-center">
+      <img
+        src="https://cdn.poehali.dev/files/2f45b896-23be-4410-ba2a-7ae9852dae2a.png"
+        alt="iDATA"
+        className="h-8 w-auto sm:h-10"
+      />
     </Link>
   );
 };
