@@ -12,8 +12,9 @@ const SeriesCatalog3530Component = () => {
             IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
             инфраструктуры
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto">
-            До 760 Вт PoE+, uplink 10G, фиксированные блоки питания
+          <p className="md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto text-lg">
+            До 760 Вт PoE+, фиксированные блоки питания, uplink 10G — всё в
+            одной платформе
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
