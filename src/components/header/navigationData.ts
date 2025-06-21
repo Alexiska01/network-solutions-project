@@ -5,7 +5,6 @@ export const navigationItems = [
   { name: "Документация", path: "/documentation" },
   { name: "Отраслевые решения", path: "/vertical-solutions" },
   { name: "Сетевая архитектура", path: "/network-architecture" },
-  { name: "Контакты", path: "/contacts" },
 ];
 
 export const productSubmenuItems = [
