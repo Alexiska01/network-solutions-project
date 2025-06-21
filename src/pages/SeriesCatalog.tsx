@@ -9,158 +9,139 @@ const SeriesCatalog = () => {
     {
       id: "ids3730-24p-4x",
       name: "IDS3730-24P-4X",
-      image:
-        "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop",
-      description: "24 порта Gigabit PoE+, 4 порта SFP+",
-      specs: [
-        "24 x 10/100/1000 PoE+",
-        "4 x 10G SFP+",
-        "Бюджет PoE: 370W",
-        "L2/L3 функции",
-      ],
+      description: "24×1G PoE+, 4×10G SFP+, PoE 370 Вт",
+      link: "/models/ids3730-24p-4x.html",
     },
     {
       id: "ids3730-48p-6x",
       name: "IDS3730-48P-6X",
-      image:
-        "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop",
-      description: "48 портов Gigabit PoE+, 6 портов SFP+",
-      specs: [
-        "48 x 10/100/1000 PoE+",
-        "6 x 10G SFP+",
-        "Бюджет PoE: 740W",
-        "Стекирование",
-      ],
+      description: "48×1G PoE+, 6×10G SFP+, PoE 740 Вт",
+      link: "/models/ids3730-48p-6x.html",
     },
     {
       id: "ids3730-24f-4x",
       name: "IDS3730-24F-4X",
-      image:
-        "https://images.unsplash.com/photo-1606904825846-647eb8fc762e?w=400&h=300&fit=crop",
-      description: "24 порта SFP Gigabit, 4 порта SFP+",
-      specs: [
-        "24 x SFP Gigabit",
-        "4 x 10G SFP+",
-        "Optical коммутация",
-        "Redundancy поддержка",
-      ],
+      description: "24×1G SFP, 4×10G SFP+, без PoE",
+      link: "/models/ids3730-24f-4x.html",
     },
     {
-      id: "ids3730-10g-8x",
-      name: "IDS3730-10G-8X",
-      image:
-        "https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?w=400&h=300&fit=crop",
-      description: "8 портов 10G SFP+, агрегационный коммутатор",
-      specs: [
-        "8 x 10G SFP+",
-        "2 x 40G QSFP+",
-        "Высокая производительность",
-        "Layer 3 routing",
-      ],
+      id: "ids3730-48t-6x",
+      name: "IDS3730-48T-6X",
+      description: "48×1G Base-T, 6×10G SFP+, без PoE",
+      link: "/models/ids3730-48t-6x.html",
+    },
+  ];
+
+  const advantages = [
+    {
+      icon: "Zap",
+      title: "PoE+ до 740 Вт",
+      description: "Мощное питание устройств",
+    },
+    {
+      icon: "Network",
+      title: "10G uplink (SFP+)",
+      description: "Высокоскоростные соединения",
+    },
+    {
+      icon: "Settings",
+      title: "Поддержка L3: ACL, QoS, маршрутизация",
+      description: "Расширенные функции управления",
+    },
+    {
+      icon: "Layers",
+      title: "Стекирование до 4 устройств",
+      description: "Масштабируемая архитектура",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Page Header */}
-      <section className="bg-gradient-to-r from-[#0063B2] to-[#0088C5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4">
-              Серия IDS3730
+      {/* Hero Block */}
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              IDS3730 — управляемые L2+/L3-коммутаторы корпоративного уровня
             </h1>
-            <div className="w-24 h-1 bg-white/80 mx-auto"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Series Description */}
-      <section className="bg-gradient-to-b from-gray-50 to-white py-[15px]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl p-10 shadow-lg border border-gray-100 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0063B2] to-[#0088C5]"></div>
-            <div className="relative">
-              <p className="text-xl text-gray-800 leading-relaxed mb-8 font-medium">
-                Коммутаторы серии IDS3730 разработаны для стабильной работы в
-                критически важных бизнес-приложениях. Устройства обеспечивают
-                высокую производительность, гибкое управление трафиком и
-                расширенные возможности масштабирования.
-              </p>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Поддержка PoE+, L2/L3-функционала, централизованного мониторинга
-                и стекирования позволяет эффективно адаптировать инфраструктуру
-                под задачи предприятия.
-              </p>
+            <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+              До 740 Вт PoE+, стек до 4 устройств, uplink 10G, маршрутизация L3
+              — всё в одной платформе
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="bg-brand-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-brand-primary/90 transition-colors">
+                Подробнее
+              </button>
+              <button className="border-2 border-brand-primary text-brand-primary px-8 py-3 rounded-lg font-medium hover:bg-brand-primary hover:text-white transition-colors">
+                Сравнить модели
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Models Catalog */}
-      <section className="py-3 bg-[#dfe2e440]">
+      {/* Advantages Block */}
+      <section className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="text-[#333b45] text-lg mx-0 text-center">
-              Выберите подходящую модель для вашей инфраструктуры
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {models.map((model) => (
-              <Link
-                key={model.id}
-                to={`/product/${model.id}`}
-                className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="aspect-video overflow-hidden">
-                  <img
-                    src={model.image}
-                    alt={model.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {advantages.map((advantage, index) => (
+              <div key={index} className="text-center">
+                <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon
+                    name={advantage.icon}
+                    size={32}
+                    className="text-white"
                   />
                 </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-brand-primary transition-colors">
-                    {model.name}
-                  </h3>
-
-                  <p className="text-gray-600 text-sm mb-4">
-                    {model.description}
-                  </p>
-
-                  <ul className="space-y-2 mb-6">
-                    {model.specs.map((spec, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-center text-sm text-gray-700"
-                      >
-                        <Icon
-                          name="Check"
-                          size={14}
-                          className="text-green-500 mr-2 flex-shrink-0"
-                        />
-                        {spec}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-brand-primary font-medium group-hover:text-brand-secondary transition-colors">
-                      Подробнее
-                    </span>
-                    <Icon
-                      name="ArrowRight"
-                      size={16}
-                      className="text-brand-primary group-hover:translate-x-1 transition-transform"
-                    />
-                  </div>
-                </div>
-              </Link>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  {advantage.title}
+                </h3>
+                <p className="text-gray-600 text-sm">{advantage.description}</p>
+              </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Models Cards Block */}
+      <section className="bg-white py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {models.map((model) => (
+              <div
+                key={model.id}
+                className="bg-gray-50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                  {model.name}
+                </h3>
+                <p className="text-gray-600 mb-6 text-lg">
+                  {model.description}
+                </p>
+                <Link
+                  to={model.link}
+                  className="inline-flex items-center bg-brand-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-primary/90 transition-colors"
+                >
+                  Подробнее
+                  <Icon name="ArrowRight" size={16} className="ml-2" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Block */}
+      <section className="bg-brand-primary py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
+            Нужна помощь с выбором?
+          </h2>
+          <button className="bg-white text-brand-primary px-8 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+            Связаться с инженером
+          </button>
         </div>
       </section>
 
