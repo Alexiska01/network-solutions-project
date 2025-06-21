@@ -52,7 +52,7 @@ const SeriesCatalog3530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Network" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">1G/10G uplink</h3>
+              <h3 className="font-semibold text-lg mb-2">10G uplink (SFP+)</h3>
               <p className="text-gray-600">Гибкие варианты подключения</p>
             </div>
 
