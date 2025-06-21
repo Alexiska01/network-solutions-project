@@ -63,18 +63,18 @@ const SeriesCatalog = () => {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               IDS3730 — управляемые L2+/L3-коммутаторы корпоративного уровня
             </h1>
-            <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed">
               До 740 Вт PoE+, стек до 4 устройств, uplink 10G, маршрутизация L3
               — всё в одной платформе
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-brand-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-brand-primary/90 transition-colors">
+              <button className="bg-brand-primary text-white px-10 py-4 rounded-lg font-semibold text-lg hover:bg-brand-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl">
                 Подробнее
               </button>
-              <button className="border-2 border-brand-primary text-brand-primary px-8 py-3 rounded-lg font-medium hover:bg-brand-primary hover:text-white transition-colors">
+              <button className="border-2 border-brand-primary text-brand-primary px-10 py-4 rounded-lg font-semibold text-lg hover:bg-brand-primary hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl">
                 Сравнить модели
               </button>
             </div>
@@ -83,22 +83,22 @@ const SeriesCatalog = () => {
       </section>
 
       {/* Advantages Block */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-gray-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {advantages.map((advantage, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <div key={index} className="text-center group">
+                <div className="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                   <Icon
                     name={advantage.icon}
-                    size={32}
+                    size={36}
                     className="text-white"
                   />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
                   {advantage.title}
                 </h3>
-                <p className="text-gray-600 text-sm">{advantage.description}</p>
+                <p className="text-gray-600">{advantage.description}</p>
               </div>
             ))}
           </div>
@@ -106,26 +106,26 @@ const SeriesCatalog = () => {
       </section>
 
       {/* Models Cards Block */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {models.map((model) => (
               <div
                 key={model.id}
-                className="bg-gray-50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px] border border-gray-100"
               >
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   {model.name}
                 </h3>
-                <p className="text-gray-600 mb-6 text-lg">
+                <p className="text-gray-600 mb-8 text-lg leading-relaxed">
                   {model.description}
                 </p>
                 <Link
                   to={model.link}
-                  className="inline-flex items-center bg-brand-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-primary/90 transition-colors"
+                  className="inline-flex items-center bg-brand-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-brand-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Подробнее
-                  <Icon name="ArrowRight" size={16} className="ml-2" />
+                  <Icon name="ArrowRight" size={18} className="ml-2" />
                 </Link>
               </div>
             ))}
@@ -134,12 +134,12 @@ const SeriesCatalog = () => {
       </section>
 
       {/* CTA Block */}
-      <section className="bg-brand-primary py-16">
+      <section className="bg-brand-primary py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
             Нужна помощь с выбором?
           </h2>
-          <button className="bg-white text-brand-primary px-8 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+          <button className="bg-white text-brand-primary px-10 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl">
             Связаться с инженером
           </button>
         </div>
