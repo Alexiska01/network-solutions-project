@@ -99,7 +99,7 @@ const SeriesCatalog = () => {
       </section>
 
       {/* Models Catalog */}
-      <section className="py-3 bg-[#d9f4ff3b]">
+      <section className="py-3 bg-[#dfe2e440]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-[#333b45] text-lg mx-0 text-center">
