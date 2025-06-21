@@ -8,6 +8,15 @@ interface MobileMenuProps {
 }
 
 const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
+  const handleContactsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onClose();
+    const contactsSection = document.getElementById("contacts-section");
+    if (contactsSection) {
+      contactsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <>
       {/* Квадратная кнопка меню с округлениями */}
@@ -76,7 +85,9 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               style={{
                 animationDelay: isOpen ? `${index * 50}ms` : "0ms",
               }}
-              onClick={onClose}
+              onClick={
+                item.path === "/contacts" ? handleContactsClick : onClose
+              }
             >
               <span className="relative">
                 {item.name}

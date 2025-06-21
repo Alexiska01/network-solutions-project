@@ -4,7 +4,7 @@ import Icon from "@/components/ui/icon";
 
 const Footer = () => {
   const quickLinks = [
-    { name: "Продукты и технологии", path: "/products" },
+    { name: "Оборудование iDATA", path: "/products" },
     { name: "Гарантия и сервис", path: "/warranty-service" },
     { name: "Программное обеспечение", path: "/software" },
     { name: "Документация", path: "/documentation" },
@@ -13,7 +13,6 @@ const Footer = () => {
   const solutions = [
     { name: "Отраслевые решения", path: "/vertical-solutions" },
     { name: "Сетевая архитектура", path: "/network-architecture" },
-    { name: "Контакты", path: "/contacts" },
   ];
 
   return (
@@ -32,22 +31,11 @@ const Footer = () => {
             <p className="text-gray-400 mb-4">
               Профессиональные решения для корпоративных сетей
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white">
-                <Icon name="Mail" size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <Icon name="Phone" size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <Icon name="MapPin" size={20} />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Продукты</h3>
+            <h3 className="text-lg font-semibold mb-4">Оборудование</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.path}>
