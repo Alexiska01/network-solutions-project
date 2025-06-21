@@ -41,42 +41,48 @@ const SeriesCatalog4530Component = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Zap" size={32} className="text-white" />
+                <Icon name="Cpu" size={32} className="text-white" />
               </div>
               <h3 className="font-semibold text-lg mb-2">
-                PoE++/PoE+ до 1520 Вт
+                Поддержка карт расширения 10G / 40G / 100G
               </h3>
-              <p className="text-gray-600">Максимальное питание устройств</p>
+              <p className="text-gray-600">
+                Гибкое масштабирование пропускной способности
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Network" size={32} className="text-white" />
+                <Icon name="Battery" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">25G uplink (SFP28)</h3>
+              <h3 className="font-semibold text-lg mb-2">
+                Двойной модуль питания (redundant)
+              </h3>
               <p className="text-gray-600">
-                Ультравысокоскоростное подключение
+                Резервирование для максимальной надежности
               </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Fan" size={32} className="text-white" />
+                <Icon name="Gauge" size={32} className="text-white" />
               </div>
               <h3 className="font-semibold text-lg mb-2">
-                Интеллектуальное охлаждение и модульные БП
+                Высокая коммутационная способность (до 736 Gbps)
               </h3>
-              <p className="text-gray-600">Адаптивная производительность</p>
+              <p className="text-gray-600">
+                Максимальная производительность сети
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Shield" size={32} className="text-white" />
+                <Icon name="Zap" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
-                Полная поддержка Layer 3 и VXLAN
-              </h3>
-              <p className="text-gray-600">Расширенная виртуализация сети</p>
+              <h3 className="font-semibold text-lg mb-2">PoE/PoE+ до 760 Вт</h3>
+              <p className="text-gray-600">
+                Питание для подключенных устройств
+              </p>
             </div>
           </div>
         </div>
