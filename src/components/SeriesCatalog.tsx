@@ -78,12 +78,95 @@ const SeriesCatalogComponent = () => {
         </div>
       </section>
 
-      {/* Content sections will be added here */}
+      {/* Models Section */}
       <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-gray-600">
-            Содержимое каталога серии будет добавлено здесь
-          </p>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Модели серии IDS3730
+            </h2>
+            <p className="text-xl text-gray-600">
+              Выберите оптимальную конфигурацию для ваших задач
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* IDS3730-24P-4X */}
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS3730-24P-4X
+              </h3>
+              <p className="text-gray-600 mb-4">
+                24×1G PoE+, 4×10G SFP+, PoE 370 Вт
+              </p>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  (window.location.href = "/models/ids3730-24p-4x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS3730-48P-6X */}
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS3730-48P-6X
+              </h3>
+              <p className="text-gray-600 mb-4">
+                48×1G PoE+, 6×10G SFP+, PoE 740 Вт
+              </p>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  (window.location.href = "/models/ids3730-48p-6x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS3730-24F-4X */}
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS3730-24F-4X
+              </h3>
+              <p className="text-gray-600 mb-4">
+                24×1G SFP, 4×10G SFP+, без PoE
+              </p>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  (window.location.href = "/models/ids3730-24f-4x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS3730-48T-6X */}
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS3730-48T-6X
+              </h3>
+              <p className="text-gray-600 mb-4">
+                48×1G Base-T, 6×10G SFP+, без PoE
+              </p>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  (window.location.href = "/models/ids3730-48t-6x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
     </div>
