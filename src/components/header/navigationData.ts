@@ -65,8 +65,7 @@ export const accessLevelSeries = [
 export const distributionLevelSeries = [
   {
     name: "Коммутаторы серии IDS6010",
-    path: "/products/switches/ids6010",
-    href: "/series/6010",
+    path: "/series-catalog-6010",
   },
   { name: "Коммутаторы серии IDS6030", path: "/products/switches/ids6030" },
   { name: "Коммутаторы серии IDS6032", path: "/products/switches/ids6032" },
