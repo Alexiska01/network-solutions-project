@@ -9,11 +9,11 @@ const SeriesCatalog3530Component = () => {
       <section className="bg-gradient-hero text-white py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            IDS3530 — управляемые L2 коммутаторы уровня доступа
+            IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
+            инфраструктуры
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto">
-            До 370 Вт PoE+, uplink 1G/10G, расширенное управление QoS —
-            оптимальное решение для доступа
+            До 760 Вт PoE+, uplink 10G, фиксированные блоки питания
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
