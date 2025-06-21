@@ -99,10 +99,10 @@ const SeriesCatalog = () => {
       </section>
 
       {/* Models Catalog */}
-      <section className="pb-16 bg-[#e5f0ff]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center mb-12 py-6">
-            <p className="text-lg text-[#1a1a1a] font-medium">
+      <section className="pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-gray-600">
               Выберите подходящую модель для вашей инфраструктуры
             </p>
           </div>
