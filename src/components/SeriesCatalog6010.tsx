@@ -1,296 +1,207 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
 
-const SeriesCatalog6010 = () => {
+const SeriesCatalog6010Component = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white py-20">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-4 bg-blue-600 hover:bg-blue-700">
-              <Icon name="Cpu" className="w-4 h-4 mr-2" />
-              Промышленные коммутаторы
-            </Badge>
-            <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              IDS6010 — мощные 10G/25G/40G/100G-коммутаторы для магистральных
-              решений
-            </h1>
-            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Высокая пропускная способность до 960 Gbps, модульная архитектура
+      <section className="bg-gradient-hero text-white py-20 px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            IDS6010 — высокопроизводительные коммутаторы уровня распределения
+          </h1>
+          <p className="md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto text-lg">
+            До 1.28 Tbps, модульная архитектура, резервирование, поддержка 100G
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 transition-all duration-300"
+            >
+              <Icon name="Info" className="mr-2" />
+              Подробнее
+            </Button>
+            <Button
+              size="lg"
+              className="bg-white text-gray-900 hover:bg-gradient-hero hover:text-white border-2 border-white transition-all duration-300"
+            >
+              <Icon name="BarChart3" className="mr-2" />
+              Сравнить модели
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Cpu" size={32} className="text-white" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">
+                Модульная архитектура с поддержкой 40G/100G
+              </h3>
+              <p className="text-gray-600">
+                Гибкое масштабирование для растущих сетей
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Battery" size={32} className="text-white" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">
+                Резервирование питания и управления
+              </h3>
+              <p className="text-gray-600">
+                Максимальная отказоустойчивость сети
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Gauge" size={32} className="text-white" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">
+                Высокая коммутационная способность (до 1.28 Tbps)
+              </h3>
+              <p className="text-gray-600">
+                Производительность уровня распределения
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Shield" size={32} className="text-white" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">
+                Расширенная безопасность
+              </h3>
+              <p className="text-gray-600">
+                Комплексная защита корпоративной сети
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Models Section */}
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Модели серии IDS6010
+            </h2>
+            <p className="text-xl text-gray-600">
+              Выберите оптимальную конфигурацию для уровня распределения
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* IDS6010-48T-4C */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS6010-48T-4C
+              </h3>
+              <p className="text-gray-600 mb-4">
+                48×1G Base-T + 4×100G QSFP28, модульная архитектура
+              </p>
               <Button
-                size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids6010-48t-4c.html")
+                }
               >
-                <Icon name="Download" className="w-5 h-5 mr-2" />
-                Скачать каталог
+                <Icon name="Info" className="mr-2" />
+                Подробнее
               </Button>
+            </div>
+
+            {/* IDS6010-24S-4C */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS6010-24S-4C
+              </h3>
+              <p className="text-gray-600 mb-4">
+                24×10G SFP+ + 4×100G QSFP28, высокая плотность портов
+              </p>
               <Button
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3"
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids6010-24s-4c.html")
+                }
               >
-                <Icon name="Phone" className="w-5 h-5 mr-2" />
-                Получить консультацию
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS6010-16Q-2C */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS6010-16Q-2C
+              </h3>
+              <p className="text-gray-600 mb-4">
+                16×40G QSFP+ + 2×100G QSFP28, магистральные подключения
+              </p>
+              <Button
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids6010-16q-2c.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS6010-32S-2C */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS6010-32S-2C
+              </h3>
+              <p className="text-gray-600 mb-4">
+                32×10G SFP+ + 2×100G QSFP28, оптимальная конфигурация
+              </p>
+              <Button
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids6010-32s-2c.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Преимущества серии IDS6010
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Надежность и производительность для самых требовательных
-              промышленных задач
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="border-l-4 border-l-blue-600 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon name="Gauge" className="w-6 h-6 text-blue-600" />
-                </div>
-                <CardTitle className="text-xl">
-                  До 960 Gbps пропускной способности
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-600">
-                  Поддержка масштабируемых магистральных нагрузок и высоких SLA
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-l-green-600 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon
-                    name="ArrowUpCircle"
-                    className="w-6 h-6 text-green-600"
-                  />
-                </div>
-                <CardTitle className="text-xl">Uplink до 100G</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-600">
-                  25G/40G/100G интерфейсы для дата-центров и агрегационных узлов
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-l-purple-600 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon name="Shield" className="w-6 h-6 text-purple-600" />
-                </div>
-                <CardTitle className="text-xl">
-                  Резервирование питания и охлаждения
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-600">
-                  Два слота питания + два слота вентиляторов для
-                  отказоустойчивости
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-l-orange-600 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon name="Network" className="w-6 h-6 text-orange-600" />
-                </div>
-                <CardTitle className="text-xl">
-                  Оптимизация под SDN и виртуализацию
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-600">
-                  Поддержка современных сетевых архитектур и централизованного
-                  управления
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Models Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Модели серии IDS6010
-            </h2>
-            <p className="text-lg text-gray-600">
-              Выберите оптимальное решение для ваших задач
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="hover:shadow-xl transition-shadow duration-300 border-0 shadow-md">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <CardTitle className="text-xl">IDS6010-8P</CardTitle>
-                <CardDescription className="text-blue-100">
-                  8-портовый коммутатор
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    8 портов Fast Ethernet
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    Компактный корпус
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    Промышленное исполнение
-                  </div>
-                </div>
-                <Button className="w-full mt-6 bg-blue-600 hover:bg-blue-700">
-                  Подробнее
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-xl transition-shadow duration-300 border-0 shadow-md">
-              <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-t-lg">
-                <CardTitle className="text-xl">IDS6010-16P</CardTitle>
-                <CardDescription className="text-green-100">
-                  16-портовый коммутатор
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    16 портов Fast Ethernet
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    Расширенные функции
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    Высокая производительность
-                  </div>
-                </div>
-                <Button className="w-full mt-6 bg-green-600 hover:bg-green-700">
-                  Подробнее
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-xl transition-shadow duration-300 border-0 shadow-md">
-              <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-t-lg">
-                <CardTitle className="text-xl">IDS6010-24P</CardTitle>
-                <CardDescription className="text-purple-100">
-                  24-портовый коммутатор
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    24 порта Gigabit Ethernet
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    Максимальная плотность портов
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Icon
-                      name="Circle"
-                      className="w-4 h-4 mr-2 text-green-500"
-                    />
-                    Корпоративный уровень
-                  </div>
-                </div>
-                <Button className="w-full mt-6 bg-purple-600 hover:bg-purple-700">
-                  Подробнее
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-900 to-indigo-900 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Готовы выбрать решение серии IDS6010?
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Нужна помощь с выбором?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Свяжитесь с нашими экспертами для получения персональной
-            консультации
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Наши инженеры помогут подобрать оптимальное решение для вашей
+            инфраструктуры
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-3"
-            >
-              <Icon name="MessageCircle" className="w-5 h-5 mr-2" />
-              Задать вопрос
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3"
-            >
-              <Icon name="FileText" className="w-5 h-5 mr-2" />
-              Техническая документация
-            </Button>
-          </div>
+          <Button
+            size="lg"
+            className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
+          >
+            <Icon name="MessageCircle" className="mr-2" />
+            Связаться с инженером
+          </Button>
         </div>
       </section>
     </div>
   );
 };
 
-export default SeriesCatalog6010;
+export default SeriesCatalog6010Component;
