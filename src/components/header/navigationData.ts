@@ -58,6 +58,7 @@ export const corporateLanItems = [
 export const accessLevelSeries = [
   { name: "Коммутаторы серии IDS3530", path: "/products/switches/ids3530" },
   { name: "Коммутаторы серии IDS3730", path: "/products/switches/ids3730" },
+  { name: "Коммутаторы серии 3730", path: "/series-catalog" },
   { name: "Коммутаторы серии IDS4530", path: "/products/switches/ids4530" },
   { name: "Коммутаторы серии IDS6012", path: "/products/switches/ids6012" },
 ];
