@@ -6,7 +6,7 @@ export default {
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}"
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -83,6 +83,7 @@ export default {
           "linear-gradient(to right, #0078D7, #0088C5, #0097B2)",
         "gradient-brand-dark":
           "linear-gradient(to right, #1e3a8a, #1e40af, #2563eb)",
+        "gradient-hero": "linear-gradient(to right, #0063B2, #0088C5)",
         "gradient-footer":
           "linear-gradient(to right, #0f172a, #1e293b, #334155)",
       },

@@ -65,32 +65,35 @@ const SeriesCatalog = () => {
       <Header />
 
       {/* Page Header */}
-      <section className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="bg-gradient-to-r from-[#0063B2] to-[#0088C5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-white mb-4">
               Серия IDS3730
             </h1>
-            <div className="w-24 h-1 bg-brand-primary mx-auto"></div>
+            <div className="w-24 h-1 bg-white/80 mx-auto"></div>
           </div>
         </div>
       </section>
 
       {/* Series Description */}
-      <section className="py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-xl p-8 shadow-sm">
-            <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              Коммутаторы серии IDS3730 предназначены для корпоративных сетей и
-              оснащены поддержкой PoE+, L2/L3-функционала и инструментами
-              управления трафиком. Серия обеспечивает высокую производительность
-              и надежность для критически важных бизнес-приложений.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              Все модели поддерживают расширенные возможности мониторинга,
-              централизованное управление и стекирование для масштабирования
-              сетевой инфраструктуры согласно потребностям предприятия.
-            </p>
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl p-10 shadow-lg border border-gray-100 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0063B2] to-[#0088C5]"></div>
+            <div className="relative">
+              <p className="text-xl text-gray-800 leading-relaxed mb-8 font-medium">
+                Коммутаторы серии IDS3730 разработаны для стабильной работы в
+                критически важных бизнес-приложениях. Устройства обеспечивают
+                высокую производительность, гибкое управление трафиком и
+                расширенные возможности масштабирования.
+              </p>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Поддержка PoE+, L2/L3-функционала, централизованного мониторинга
+                и стекирования позволяет эффективно адаптировать инфраструктуру
+                под задачи предприятия.
+              </p>
+            </div>
           </div>
         </div>
       </section>
