@@ -33,6 +33,7 @@ export const switchesSubmenuItems = [
     name: "Коммутаторы с сертификацией ТОРП",
     path: "/products/switches/torp-certified",
   },
+  { name: "Коммутаторы серии 4530", path: "/products/switches/ids4530" },
 ];
 
 export const routersSubmenuItems = [
