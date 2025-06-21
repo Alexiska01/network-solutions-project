@@ -3,7 +3,7 @@ import Icon from "@/components/ui/icon";
 
 const Hero = () => {
   return (
-    <section className="from-blue-600 to-blue-800 text-white py-12 sm:py-16 lg:py-20 bg-[#d5202000]">
+    <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-12 sm:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
