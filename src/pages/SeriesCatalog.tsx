@@ -77,7 +77,7 @@ const SeriesCatalog = () => {
       </section>
 
       {/* Series Description */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+      <section className="bg-gradient-to-b from-gray-50 to-white py-[15px]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl p-10 shadow-lg border border-gray-100 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0063B2] to-[#0088C5]"></div>
@@ -99,10 +99,10 @@ const SeriesCatalog = () => {
       </section>
 
       {/* Models Catalog */}
-      <section className="pb-16">
+      <section className="py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-gray-600">
+            <p className="text-[#333b45] text-lg mx-0 text-center">
               Выберите подходящую модель для вашей инфраструктуры
             </p>
           </div>
