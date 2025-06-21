@@ -79,11 +79,11 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
-        "gradient-brand":
-          "linear-gradient(to right, #0078D7, #0088C5, #0097B2)",
+        "gradient-brand": "linear-gradient(90deg, #1A2980, #0065B3, #00B5AD)",
         "gradient-brand-dark":
-          "linear-gradient(to right, #1e3a8a, #1e40af, #2563eb)",
+          "linear-gradient(90deg, #1A2980, #0065B3, #00B5AD)",
         "gradient-hero": "linear-gradient(90deg, #1A2980, #0065B3, #00B5AD)",
+        "gradient-icon": "linear-gradient(90deg, #1A2980, #0065B3, #00B5AD)",
         "gradient-footer":
           "linear-gradient(to right, #0f172a, #1e293b, #334155)",
       },

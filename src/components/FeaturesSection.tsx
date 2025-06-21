@@ -46,7 +46,7 @@ const FeaturesSection = () => {
               key={index}
               className="text-center bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <div className="w-20 h-20 bg-gradient-icon rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 bg-gradient-hero rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Icon
                   name={feature.icon as any}
                   size={36}

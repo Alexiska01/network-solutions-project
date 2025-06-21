@@ -40,13 +40,13 @@ const ProductsSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 font-sans">
             Наши продукты и технологии
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto font-sans">
             Полная линейка сетевого оборудования для построения надежной
             корпоративной инфраструктуры
           </p>
@@ -56,24 +56,26 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <div className="w-12 h-12 bg-brand-accent/20 rounded-lg flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-gradient-icon rounded-lg flex items-center justify-center mb-4">
                 <Icon
                   name={product.icon as any}
                   size={24}
-                  className="text-brand-primary"
+                  className="text-white"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 font-sans">
                 {product.title}
               </h3>
-              <p className="text-gray-600 mb-4">{product.description}</p>
+              <p className="text-gray-600 mb-4 font-sans">
+                {product.description}
+              </p>
               <ul className="space-y-2">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center text-sm text-gray-700"
+                    className="flex items-center text-sm text-gray-700 font-sans"
                   >
                     <Icon
                       name="Check"
@@ -84,7 +86,7 @@ const ProductsSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="mt-6 w-full bg-brand-primary text-white py-2 px-4 rounded-lg hover:bg-brand-secondary transition-colors">
+              <button className="mt-6 w-full bg-[#0065B3] text-white py-2 px-4 rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans">
                 Подробнее
               </button>
             </div>
