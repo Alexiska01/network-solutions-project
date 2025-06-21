@@ -41,7 +41,7 @@ const Footer = () => {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-gray-400 hover:text-white"
+                    className="text-gray-400 hover:text-brand-primary transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -58,7 +58,7 @@ const Footer = () => {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-gray-400 hover:text-white"
+                    className="text-gray-400 hover:text-brand-primary transition-colors"
                   >
                     {link.name}
                   </Link>

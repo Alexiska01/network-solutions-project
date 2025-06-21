@@ -3,7 +3,7 @@ import Icon from "@/components/ui/icon";
 
 const Hero = () => {
   return (
-    <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-12 sm:py-16 lg:py-20">
+    <section className="bg-gradient-to-br from-brand-primary to-brand-secondary text-white py-12 sm:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
@@ -16,10 +16,10 @@ const Hero = () => {
               сложности.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button className="bg-white text-blue-600 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gray-50 transition-colors">
+              <button className="bg-white text-brand-primary px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gray-50 transition-colors">
                 Посмотреть продукты
               </button>
-              <button className="border border-white text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-white hover:text-blue-600 transition-colors">
+              <button className="border border-white text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-white hover:text-brand-primary transition-colors">
                 Связаться с нами
               </button>
             </div>

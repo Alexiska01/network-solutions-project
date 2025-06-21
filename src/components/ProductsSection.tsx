@@ -58,11 +58,11 @@ const ProductsSection = () => {
               key={index}
               className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-brand-accent/20 rounded-lg flex items-center justify-center mb-4">
                 <Icon
                   name={product.icon as any}
                   size={24}
-                  className="text-blue-600"
+                  className="text-brand-primary"
                 />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
@@ -84,7 +84,7 @@ const ProductsSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="mt-6 w-full text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors bg-[#0088C5]">
+              <button className="mt-6 w-full bg-brand-primary text-white py-2 px-4 rounded-lg hover:bg-brand-secondary transition-colors">
                 Подробнее
               </button>
             </div>

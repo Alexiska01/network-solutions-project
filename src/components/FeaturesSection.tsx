@@ -43,11 +43,11 @@ const FeaturesSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div key={index} className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-brand-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon
                   name={feature.icon as any}
                   size={32}
-                  className="text-blue-600"
+                  className="text-brand-primary"
                 />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
