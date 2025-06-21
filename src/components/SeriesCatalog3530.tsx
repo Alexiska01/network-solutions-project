@@ -53,25 +53,27 @@ const SeriesCatalog3530Component = () => {
                 <Icon name="Network" size={32} className="text-white" />
               </div>
               <h3 className="font-semibold text-lg mb-2">10G uplink (SFP+)</h3>
-              <p className="text-gray-600">Гибкие варианты подключения</p>
+              <p className="text-gray-600">Высокоскоростное подключение</p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Shield" size={32} className="text-white" />
+                <Icon name="Fan" size={32} className="text-white" />
               </div>
               <h3 className="font-semibold text-lg mb-2">
-                L2 управление: VLAN, ACL, QoS
+                Надёжное охлаждение и фиксированные БП
               </h3>
-              <p className="text-gray-600">Полное управление трафиком</p>
+              <p className="text-gray-600">Стабильная работа 24/7</p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Settings" size={32} className="text-white" />
+                <Icon name="Shield" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">Простое управление</h3>
-              <p className="text-gray-600">Web-интерфейс и CLI</p>
+              <h3 className="font-semibold text-lg mb-2">
+                Поддержка Layer 3 и резервирования
+              </h3>
+              <p className="text-gray-600">Отказоустойчивость сети</p>
             </div>
           </div>
         </div>
