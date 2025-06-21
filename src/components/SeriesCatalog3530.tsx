@@ -92,18 +92,18 @@ const SeriesCatalog3530Component = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* IDS3530-24P-2X */}
+            {/* IDS3530-24P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS3530-24P-2X
+                IDS3530-24P-6X
               </h3>
               <p className="text-gray-600 mb-4">
-                24×1G PoE+, 2×10G SFP+, PoE 185 Вт
+                24×1G Base-T, 6×10G SFP+, PoE 380 Вт
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids3530-24p-2x.html")
+                  (window.location.href = "/models/ids3530-24p-6x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -111,18 +111,18 @@ const SeriesCatalog3530Component = () => {
               </Button>
             </div>
 
-            {/* IDS3530-48P-4X */}
+            {/* IDS3530-48P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS3530-48P-4X
+                IDS3530-48P-6X
               </h3>
               <p className="text-gray-600 mb-4">
-                48×1G PoE+, 4×10G SFP+, PoE 370 Вт
+                48×1G Base-T, 6×10G SFP+, PoE 760 Вт
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids3530-48p-4x.html")
+                  (window.location.href = "/models/ids3530-48p-6x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -130,18 +130,18 @@ const SeriesCatalog3530Component = () => {
               </Button>
             </div>
 
-            {/* IDS3530-24T-2X */}
+            {/* IDS3530-24S-8T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS3530-24T-2X
+                IDS3530-24S-8T-6X
               </h3>
               <p className="text-gray-600 mb-4">
-                24×1G Base-T, 2×1G SFP, без PoE
+                24×1G SFP, 8×1G Base-T, 6×10G SFP+
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids3530-24t-2x.html")
+                  (window.location.href = "/models/ids3530-24s-8t-6x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -149,18 +149,16 @@ const SeriesCatalog3530Component = () => {
               </Button>
             </div>
 
-            {/* IDS3530-48T-4X */}
+            {/* IDS3530-48T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS3530-48T-4X
+                IDS3530-48T-6X
               </h3>
-              <p className="text-gray-600 mb-4">
-                48×1G Base-T, 4×1G SFP, без PoE
-              </p>
+              <p className="text-gray-600 mb-4">48×1G Base-T, 6×10G SFP+</p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids3530-48t-4x.html")
+                  (window.location.href = "/models/ids3530-48t-6x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
