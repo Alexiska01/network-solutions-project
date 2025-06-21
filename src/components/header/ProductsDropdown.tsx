@@ -51,7 +51,7 @@ const ProductsDropdown = ({
       onMouseLeave={onMouseLeave}
     >
       <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center space-x-1">
-        <span>Оборудование iDATA</span>
+        <span>Оборудование</span>
         <Icon
           name="ChevronDown"
           size={16}
