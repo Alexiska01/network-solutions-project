@@ -1,5 +1,5 @@
 export const navigationItems = [
-  { name: "Оборудование iDATA", path: "/products", hasSubmenu: true },
+  { name: "Оборудование", path: "/products", hasSubmenu: true },
   { name: "Гарантия и сервис", path: "/warranty-service" },
   { name: "Программное обеспечение", path: "/software" },
   { name: "Документация", path: "/documentation" },
