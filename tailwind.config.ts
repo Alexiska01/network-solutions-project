@@ -21,7 +21,7 @@ export default {
       colors: {
         // Brand colors
         brand: {
-          primary: "#0065B3", // Updated to match specification
+          primary: "#0088C5",
           secondary: "#0078D7",
           accent: "#0097B2",
           blue: {
