@@ -44,7 +44,7 @@ const SeriesCatalog3530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Zap" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">PoE+ до 370 Вт</h3>
+              <h3 className="font-semibold text-lg mb-2">PoE/PoE+ до 760 Вт</h3>
               <p className="text-gray-600">Надежное питание устройств</p>
             </div>
 
