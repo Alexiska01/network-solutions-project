@@ -10,10 +10,10 @@ interface MobileMenuProps {
 const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
   return (
     <>
-      {/* Круглая кнопка меню */}
+      {/* Квадратная кнопка меню с округлениями */}
       <button
         onClick={onToggle}
-        className="lg:hidden relative w-12 h-12 rounded-full bg-white border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="lg:hidden relative w-12 h-12 rounded-lg bg-white border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
       >
         <div className="absolute inset-0 flex items-center justify-center">
