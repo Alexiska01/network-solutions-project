@@ -64,26 +64,32 @@ const SeriesCatalog = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      {/* Series Hero */}
-      <section className="bg-gradient-to-r from-[#0070D1] to-[#0080E0] py-15">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[#A2D3F7] text-sm font-medium uppercase tracking-wider mb-4">
-            О СЕРИИ
-          </p>
-          <h1 className="text-4xl font-bold text-white mb-6">
-            IDS3730 — надёжные коммутаторы для корпоративной инфраструктуры
-          </h1>
-          <div className="text-white text-lg leading-relaxed space-y-4">
-            <p>
-              Коммутаторы серии IDS3730 разработаны для стабильной работы в
-              критически важных бизнес-приложениях. Устройства обеспечивают
-              высокую производительность, гибкое управление трафиком и
-              расширенные возможности масштабирования.
+      {/* Page Header */}
+      <section className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Серия IDS3730
+            </h1>
+            <div className="w-24 h-1 bg-brand-primary mx-auto"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Series Description */}
+      <section className="py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-xl p-8 shadow-sm">
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+              Коммутаторы серии IDS3730 предназначены для корпоративных сетей и
+              оснащены поддержкой PoE+, L2/L3-функционала и инструментами
+              управления трафиком. Серия обеспечивает высокую производительность
+              и надежность для критически важных бизнес-приложений.
             </p>
-            <p>
-              Поддержка PoE+, L2/L3-функционала, централизованного мониторинга и
-              стекирования позволяет эффективно адаптировать инфраструктуру под
-              задачи предприятия.
+            <p className="text-gray-600 leading-relaxed">
+              Все модели поддерживают расширенные возможности мониторинга,
+              централизованное управление и стекирование для масштабирования
+              сетевой инфраструктуры согласно потребностям предприятия.
             </p>
           </div>
         </div>
