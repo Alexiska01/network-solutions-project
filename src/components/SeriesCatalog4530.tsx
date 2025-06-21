@@ -100,19 +100,19 @@ const SeriesCatalog4530Component = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* IDS4530-24P-8X */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* IDS4530-48P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS4530-24P-8X
+                IDS4530-48P-6X
               </h3>
               <p className="text-gray-600 mb-4">
-                24×1G Base-T, 8×25G SFP28, PoE++ 760 Вт
+                48×1G Base-T + 6×10G SFP+, 760 Вт PoE
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids4530-24p-8x.html")
+                  (window.location.href = "/models/ids4530-48p-6x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -120,18 +120,18 @@ const SeriesCatalog4530Component = () => {
               </Button>
             </div>
 
-            {/* IDS4530-48P-8X */}
+            {/* IDS4530-24P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS4530-48P-8X
+                IDS4530-24P-6X
               </h3>
               <p className="text-gray-600 mb-4">
-                48×1G Base-T, 8×25G SFP28, PoE++ 1520 Вт
+                24×1G Base-T + 6×10G SFP+, 380 Вт PoE
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids4530-48p-8x.html")
+                  (window.location.href = "/models/ids4530-24p-6x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -139,18 +139,16 @@ const SeriesCatalog4530Component = () => {
               </Button>
             </div>
 
-            {/* IDS4530-24S-12T-8X */}
+            {/* IDS4530-48T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS4530-24S-12T-8X
+                IDS4530-48T-6X
               </h3>
-              <p className="text-gray-600 mb-4">
-                24×1G SFP, 12×1G Base-T, 8×25G SFP28
-              </p>
+              <p className="text-gray-600 mb-4">48×1G Base-T + 6×10G SFP+</p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids4530-24s-12t-8x.html")
+                  (window.location.href = "/models/ids4530-48t-6x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -158,16 +156,50 @@ const SeriesCatalog4530Component = () => {
               </Button>
             </div>
 
-            {/* IDS4530-48T-8X */}
+            {/* IDS4530-24T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS4530-48T-8X
+                IDS4530-24T-6X
               </h3>
-              <p className="text-gray-600 mb-4">48×1G Base-T, 8×25G SFP28</p>
+              <p className="text-gray-600 mb-4">24×1G Base-T + 6×10G SFP+</p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids4530-48t-8x.html")
+                  (window.location.href = "/models/ids4530-24t-6x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS4530-24S-4X */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS4530-24S-4X
+              </h3>
+              <p className="text-gray-600 mb-4">24×1G SFP + 4×10G SFP+</p>
+              <Button
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids4530-24s-4x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS4530-48S-4X */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                IDS4530-48S-4X
+              </h3>
+              <p className="text-gray-600 mb-4">48×1G SFP + 4×10G SFP+</p>
+              <Button
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids4530-48s-4x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
