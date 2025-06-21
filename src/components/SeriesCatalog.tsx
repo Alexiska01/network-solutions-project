@@ -169,6 +169,26 @@ const SeriesCatalogComponent = () => {
           </div>
         </div>
       </section>
+
+      {/* CTA Section */}
+      <section className="py-16 px-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Нужна помощь с выбором?
+          </h2>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Наши инженеры помогут подобрать оптимальное решение для вашей
+            инфраструктуры
+          </p>
+          <Button
+            size="lg"
+            className="bg-gradient-hero text-white hover:opacity-90 transition-opacity duration-300 px-8 py-3"
+          >
+            <Icon name="MessageCircle" className="mr-2" />
+            Связаться с инженером
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };
