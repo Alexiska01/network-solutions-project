@@ -24,6 +24,10 @@ export default {
           primary: "#0088C5",
           secondary: "#0078D7",
           accent: "#0097B2",
+          blue: {
+            deep: "#0063B2",
+            main: "#0088C5",
+          },
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
