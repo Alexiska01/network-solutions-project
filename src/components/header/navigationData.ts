@@ -21,18 +21,17 @@ export const productSubmenuItems = [
 export const switchesSubmenuItems = [
   {
     name: "Коммутаторы для корпоративных ЛВС",
-    path: "/products/switches/corporate",
+    path: "/products/switches/corporate-lan",
     hasThirdLevel: true,
   },
   {
     name: "Коммутаторы для центров обработки данных",
-    path: "/products/switches/datacenter",
+    path: "/products/switches/data-centers",
     hasThirdLevel: true,
   },
   {
-    name: "Коммутаторы серии 6010",
-    path: "/series/6010",
-    hasThirdLevel: false,
+    name: "Коммутаторы с сертификацией ТОРП",
+    path: "/products/switches/torp-certified",
   },
 ];
 
