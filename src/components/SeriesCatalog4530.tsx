@@ -9,12 +9,11 @@ const SeriesCatalog4530Component = () => {
       <section className="bg-gradient-hero text-white py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            IDS4530 — высокопроизводительные L2+/L3-коммутаторы для
-            масштабируемой инфраструктуры
+            IDS4530 — расширяемые коммутаторы для корпоративной и операторской
+            сети
           </h1>
           <p className="md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto text-lg">
-            До 1520 Вт PoE++, модульные блоки питания, uplink 25G — максимальная
-            производительность для современных сетей
+            До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760 Вт
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
