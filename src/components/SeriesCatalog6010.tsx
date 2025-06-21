@@ -22,11 +22,11 @@ const SeriesCatalog6010 = () => {
               Промышленные коммутаторы
             </Badge>
             <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              Серия IDS6010
+              IDS6010 — мощные 10G/25G/40G/100G-коммутаторы для магистральных
+              решений
             </h1>
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Высокопроизводительные промышленные коммутаторы для критически
-              важных приложений
+              Высокая пропускная способность до 960 Gbps, модульная архитектура
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -62,18 +62,19 @@ const SeriesCatalog6010 = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <Card className="border-l-4 border-l-blue-600 hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon name="Shield" className="w-6 h-6 text-blue-600" />
+                  <Icon name="Gauge" className="w-6 h-6 text-blue-600" />
                 </div>
-                <CardTitle className="text-xl">Высокая надежность</CardTitle>
+                <CardTitle className="text-xl">
+                  До 960 Gbps пропускной способности
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-gray-600">
-                  Промышленный дизайн для работы в экстремальных условиях с
-                  расширенным температурным диапазоном
+                  Поддержка масштабируемых магистральных нагрузок и высоких SLA
                 </CardDescription>
               </CardContent>
             </Card>
@@ -81,16 +82,16 @@ const SeriesCatalog6010 = () => {
             <Card className="border-l-4 border-l-green-600 hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon name="Zap" className="w-6 h-6 text-green-600" />
+                  <Icon
+                    name="ArrowUpCircle"
+                    className="w-6 h-6 text-green-600"
+                  />
                 </div>
-                <CardTitle className="text-xl">
-                  Высокая производительность
-                </CardTitle>
+                <CardTitle className="text-xl">Uplink до 100G</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-gray-600">
-                  Передовые технологии коммутации для обеспечения максимальной
-                  пропускной способности
+                  25G/40G/100G интерфейсы для дата-центров и агрегационных узлов
                 </CardDescription>
               </CardContent>
             </Card>
@@ -98,14 +99,33 @@ const SeriesCatalog6010 = () => {
             <Card className="border-l-4 border-l-purple-600 hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon name="Settings" className="w-6 h-6 text-purple-600" />
+                  <Icon name="Shield" className="w-6 h-6 text-purple-600" />
                 </div>
-                <CardTitle className="text-xl">Гибкая настройка</CardTitle>
+                <CardTitle className="text-xl">
+                  Резервирование питания и охлаждения
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-gray-600">
-                  Расширенные возможности конфигурации и управления для любых
-                  промышленных сценариев
+                  Два слота питания + два слота вентиляторов для
+                  отказоустойчивости
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-l-orange-600 hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                  <Icon name="Network" className="w-6 h-6 text-orange-600" />
+                </div>
+                <CardTitle className="text-xl">
+                  Оптимизация под SDN и виртуализацию
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-gray-600">
+                  Поддержка современных сетевых архитектур и централизованного
+                  управления
                 </CardDescription>
               </CardContent>
             </Card>
