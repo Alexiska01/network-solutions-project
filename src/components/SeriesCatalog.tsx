@@ -35,6 +35,49 @@ const SeriesCatalogComponent = () => {
         </div>
       </section>
 
+      {/* Benefits Section */}
+      <section className="py-16 px-6 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Zap" size={32} className="text-blue-600" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">PoE+ до 740 Вт</h3>
+              <p className="text-gray-600">Питание для множества устройств</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Network" size={32} className="text-green-600" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">10G uplink (SFP+)</h3>
+              <p className="text-gray-600">Высокоскоростное подключение</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Shield" size={32} className="text-purple-600" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">
+                Поддержка L3: ACL, QoS, маршрутизация
+              </h3>
+              <p className="text-gray-600">Расширенные сетевые функции</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Layers" size={32} className="text-orange-600" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">
+                Стекирование до 4 устройств
+              </h3>
+              <p className="text-gray-600">Масштабируемая архитектура</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Content sections will be added here */}
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto text-center">
