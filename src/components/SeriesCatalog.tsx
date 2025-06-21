@@ -36,28 +36,28 @@ const SeriesCatalogComponent = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 px-6 bg-white">
+      <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Zap" size={32} className="text-white" />
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Zap" size={32} className="text-blue-600" />
               </div>
               <h3 className="font-semibold text-lg mb-2">PoE+ до 740 Вт</h3>
               <p className="text-gray-600">Питание для множества устройств</p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Network" size={32} className="text-white" />
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Network" size={32} className="text-green-600" />
               </div>
               <h3 className="font-semibold text-lg mb-2">10G uplink (SFP+)</h3>
               <p className="text-gray-600">Высокоскоростное подключение</p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Shield" size={32} className="text-white" />
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Shield" size={32} className="text-purple-600" />
               </div>
               <h3 className="font-semibold text-lg mb-2">
                 Поддержка L3: ACL, QoS, маршрутизация
@@ -66,8 +66,8 @@ const SeriesCatalogComponent = () => {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Layers" size={32} className="text-white" />
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Layers" size={32} className="text-orange-600" />
               </div>
               <h3 className="font-semibold text-lg mb-2">
                 Стекирование до 4 устройств
@@ -79,7 +79,7 @@ const SeriesCatalogComponent = () => {
       </section>
 
       {/* Models Section */}
-      <section className="py-16 px-6 bg-white">
+      <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -92,7 +92,7 @@ const SeriesCatalogComponent = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* IDS3730-24P-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 IDS3730-24P-4X
               </h3>
@@ -100,7 +100,7 @@ const SeriesCatalogComponent = () => {
                 24×1G PoE+, 4×10G SFP+, PoE 370 Вт
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full"
                 onClick={() =>
                   (window.location.href = "/models/ids3730-24p-4x.html")
                 }
@@ -111,7 +111,7 @@ const SeriesCatalogComponent = () => {
             </div>
 
             {/* IDS3730-48P-6X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 IDS3730-48P-6X
               </h3>
@@ -119,7 +119,7 @@ const SeriesCatalogComponent = () => {
                 48×1G PoE+, 6×10G SFP+, PoE 740 Вт
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full"
                 onClick={() =>
                   (window.location.href = "/models/ids3730-48p-6x.html")
                 }
@@ -130,7 +130,7 @@ const SeriesCatalogComponent = () => {
             </div>
 
             {/* IDS3730-24F-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 IDS3730-24F-4X
               </h3>
@@ -138,7 +138,7 @@ const SeriesCatalogComponent = () => {
                 24×1G SFP, 4×10G SFP+, без PoE
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full"
                 onClick={() =>
                   (window.location.href = "/models/ids3730-24f-4x.html")
                 }
@@ -149,7 +149,7 @@ const SeriesCatalogComponent = () => {
             </div>
 
             {/* IDS3730-48T-6X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 IDS3730-48T-6X
               </h3>
@@ -157,7 +157,7 @@ const SeriesCatalogComponent = () => {
                 48×1G Base-T, 6×10G SFP+, без PoE
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full"
                 onClick={() =>
                   (window.location.href = "/models/ids3730-48t-6x.html")
                 }
@@ -171,7 +171,7 @@ const SeriesCatalogComponent = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-6 bg-white">
+      <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Нужна помощь с выбором?
@@ -182,7 +182,7 @@ const SeriesCatalogComponent = () => {
           </p>
           <Button
             size="lg"
-            className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
+            className="bg-gradient-hero text-white hover:opacity-90 transition-opacity duration-300 px-8 py-3"
           >
             <Icon name="MessageCircle" className="mr-2" />
             Связаться с инженером
