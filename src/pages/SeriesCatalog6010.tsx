@@ -1,6 +1,6 @@
 import SeriesCatalog6010Component from "@/components/SeriesCatalog6010";
 import Header from "@/components/Header";
-import Footer from "@/components/footer/Footer";
+import Footer from "@/components/Footer";
 
 const SeriesCatalog6010 = () => {
   return (
