@@ -27,6 +27,7 @@ export default {
           blue: {
             deep: "#0063B2",
             main: "#0088C5",
+            light: "#e5f0ff",
           },
         },
         border: "hsl(var(--border))",
