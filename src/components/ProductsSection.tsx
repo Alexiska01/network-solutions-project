@@ -84,7 +84,7 @@ const ProductsSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="mt-6 w-full text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors bg-[#0097B2]">
+              <button className="mt-6 w-full text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors bg-[#0088C5]">
                 Подробнее
               </button>
             </div>
