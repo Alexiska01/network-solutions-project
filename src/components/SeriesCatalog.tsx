@@ -167,25 +167,6 @@ const SeriesCatalogComponent = () => {
               </Button>
             </div>
 
-            {/* IDS3730-48P-6X-R */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS3730-48P-6X-R
-              </h3>
-              <p className="text-gray-600 mb-4">
-                48×1G Base-T, 6×10G SFP+, PoE/PoE+ 380/760/1400 Вт
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
-                onClick={() =>
-                  (window.location.href = "/models/ids3730-48p-6x-r.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
             {/* IDS3730-24S-8T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
