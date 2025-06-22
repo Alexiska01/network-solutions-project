@@ -45,10 +45,10 @@ const SeriesCatalog4530Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
                     Поддержка карт расширения 10G / 40G / 100G
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
                     Гибкое масштабирование пропускной способности
                   </p>
                 </div>
@@ -65,10 +65,10 @@ const SeriesCatalog4530Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
                     Двойной модуль питания (redundant)
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
                     Резервирование для максимальной надежности
                   </p>
                 </div>
@@ -85,10 +85,10 @@ const SeriesCatalog4530Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
                     Высокая коммутационная способность (до 736 Gbps)
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
                     Максимальная производительность сети
                   </p>
                 </div>
@@ -105,10 +105,10 @@ const SeriesCatalog4530Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
                     PoE/PoE+ до 760 Вт
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
                     Надежное питание устройств
                   </p>
                 </div>

@@ -45,10 +45,10 @@ const SeriesCatalog6010Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
                     До 960 Gbps пропускной способности
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
                     Масштабируемые нагрузки и высокий SLA
                   </p>
                 </div>
@@ -65,10 +65,10 @@ const SeriesCatalog6010Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
                     Uplink до 100G
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
                     25G/40G/100G интерфейсы для ЦОД и агрегации
                   </p>
                 </div>
@@ -85,10 +85,10 @@ const SeriesCatalog6010Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
                     Резервирование питания и охлаждения
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
                     2 слота питания и 2 вентилятора для отказоустойчивости
                   </p>
                 </div>
@@ -105,10 +105,10 @@ const SeriesCatalog6010Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
                     Оптимизация под SDN и виртуализацию
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
                     Поддержка современных сетевых технологий
                   </p>
                 </div>

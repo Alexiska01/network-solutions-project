@@ -44,10 +44,10 @@ const SeriesCatalog3730Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
                     40G uplink (QSFP+)
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
                     Максимальная пропускная способность
                   </p>
                 </div>
@@ -64,10 +64,10 @@ const SeriesCatalog3730Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
                     Layer 3 маршрутизация
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
                     Полнофункциональная маршрутизация
                   </p>
                 </div>
@@ -84,10 +84,10 @@ const SeriesCatalog3730Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
                     Продвинутые протоколы безопасности
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
                     Защита корпоративного уровня
                   </p>
                 </div>
@@ -104,10 +104,10 @@ const SeriesCatalog3730Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
                     Высокопроизводительный процессор
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
                     Для сложных вычислительных задач
                   </p>
                 </div>
