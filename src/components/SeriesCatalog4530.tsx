@@ -36,51 +36,83 @@ const SeriesCatalog4530Component = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Cpu" size={32} className="text-white" />
+              <div className="flex md:flex-col items-center md:text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                  <Icon
+                    name="Cpu"
+                    size={24}
+                    className="text-white md:w-8 md:h-8"
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                    Поддержка карт расширения 10G / 40G / 100G
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                    Гибкое масштабирование пропускной способности
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
-                Поддержка карт расширения 10G / 40G / 100G
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
-                Гибкое масштабирование пропускной способности
-              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Battery" size={32} className="text-white" />
+              <div className="flex md:flex-col items-center md:text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                  <Icon
+                    name="Battery"
+                    size={24}
+                    className="text-white md:w-8 md:h-8"
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                    Двойной модуль питания (redundant)
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                    Резервирование для максимальной надежности
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
-                Двойной модуль питания (redundant)
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
-                Резервирование для максимальной надежности
-              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Gauge" size={32} className="text-white" />
+              <div className="flex md:flex-col items-center md:text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                  <Icon
+                    name="Gauge"
+                    size={24}
+                    className="text-white md:w-8 md:h-8"
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                    Высокая коммутационная способность (до 736 Gbps)
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                    Максимальная производительность сети
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
-                Высокая коммутационная способность (до 736 Gbps)
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
-                Максимальная производительность сети
-              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Zap" size={32} className="text-white" />
+              <div className="flex md:flex-col items-center md:text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                  <Icon
+                    name="Zap"
+                    size={24}
+                    className="text-white md:w-8 md:h-8"
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                    PoE/PoE+ до 760 Вт
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                    Надежное питание устройств
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
-                PoE/PoE+ до 760 Вт
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
-                Питание для подключенных устройств
-              </p>
             </div>
           </div>
         </div>

@@ -36,51 +36,83 @@ const SeriesCatalog610Component = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Zap" size={32} className="text-white" />
+              <div className="flex md:flex-col items-center md:text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                  <Icon
+                    name="Zap"
+                    size={24}
+                    className="text-white md:w-8 md:h-8"
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                    PoE/PoE+ до 880 Вт
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                    Надежное питание устройств
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
-                PoE/PoE+ до 880 Вт
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
-                Надежное питание устройств
-              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Network" size={32} className="text-white" />
+              <div className="flex md:flex-col items-center md:text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                  <Icon
+                    name="Network"
+                    size={24}
+                    className="text-white md:w-8 md:h-8"
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                    25G uplink (SFP28)
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                    Высокоскоростное подключение
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
-                25G uplink (SFP28)
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
-                Высокоскоростное подключение
-              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Fan" size={32} className="text-white" />
+              <div className="flex md:flex-col items-center md:text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                  <Icon
+                    name="Fan"
+                    size={24}
+                    className="text-white md:w-8 md:h-8"
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                    Модульное охлаждение и горячая замена БП
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                    Стабильная работа 24/7
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
-                Модульное охлаждение и горячая замена БП
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
-                Стабильная работа 24/7
-              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Shield" size={32} className="text-white" />
+              <div className="flex md:flex-col items-center md:text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                  <Icon
+                    name="Shield"
+                    size={24}
+                    className="text-white md:w-8 md:h-8"
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                    Поддержка Layer 3 и стекирования
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                    Отказоустойчивость сети
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
-                Поддержка Layer 3 и стекирования
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
-                Отказоустойчивость сети
-              </p>
             </div>
           </div>
         </div>
