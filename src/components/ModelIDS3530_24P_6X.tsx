@@ -41,6 +41,13 @@ const ModelIDS3530_24P_6XComponent = () => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start">
+            <div className="lg:col-span-1">
+              <SpecTable
+                title="Основные характеристики"
+                specs={ids353024p6xData.basicSpecs}
+              />
+            </div>
+
             <div className="lg:col-span-2">
               <ModelViewer
                 modelRef={modelViewerRef}
@@ -48,13 +55,6 @@ const ModelIDS3530_24P_6XComponent = () => {
                 indicatorsOn={indicatorsOn}
                 modelLoaded={modelLoaded}
                 onToggleIndicators={toggleIndicators}
-              />
-            </div>
-
-            <div className="lg:col-span-1">
-              <SpecTable
-                title="Основные характеристики"
-                specs={ids353024p6xData.basicSpecs}
               />
             </div>
           </div>
