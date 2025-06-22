@@ -1,20 +1,44 @@
 export const navigationItems = [
-  { name: "Оборудование", path: "/products", hasSubmenu: true },
-  { name: "Гарантия и сервис", path: "/warranty-service" },
-  { name: "Программное обеспечение", path: "/software" },
-  { name: "Документация", path: "/documentation" },
-  { name: "Отраслевые решения", path: "/vertical-solutions" },
-  { name: "Сетевая архитектура", path: "/network-architecture" },
+  {
+    name: "Оборудование",
+    path: "/products",
+    hasSubmenu: true,
+    icon: "Network",
+  },
+  { name: "Гарантия и сервис", path: "/warranty-service", icon: "ShieldCheck" },
+  { name: "Программное обеспечение", path: "/software", icon: "Settings" },
+  { name: "Документация", path: "/documentation", icon: "FileText" },
+  { name: "Отраслевые решения", path: "/vertical-solutions", icon: "Building" },
+  {
+    name: "Сетевая архитектура",
+    path: "/network-architecture",
+    icon: "GitBranch",
+  },
 ];
 
 export const productSubmenuItems = [
-  { name: "Коммутаторы", path: "/products/switches", hasNestedSubmenu: true },
-  { name: "Маршрутизаторы", path: "/products/routers", hasNestedSubmenu: true },
-  { name: "Беспроводное оборудование", path: "/products/wireless" },
-  { name: "Программное обеспечение", path: "/products/software" },
+  {
+    name: "Коммутаторы",
+    path: "/products/switches",
+    hasNestedSubmenu: true,
+    icon: "Network",
+  },
+  {
+    name: "Маршрутизаторы",
+    path: "/products/routers",
+    hasNestedSubmenu: true,
+    icon: "Route",
+  },
+  {
+    name: "Беспроводное оборудование",
+    path: "/products/wireless",
+    icon: "Wifi",
+  },
+  { name: "Программное обеспечение", path: "/products/software", icon: "Code" },
   {
     name: "Кабельные сборки и трансиверы",
     path: "/products/cables-transceivers",
+    icon: "Cable",
   },
 ];
 
