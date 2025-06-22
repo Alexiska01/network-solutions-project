@@ -101,18 +101,18 @@ const SeriesCatalog6010Component = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* IDS6010-48T-4C */}
+            {/* IDS6010-24T-18X-8Y */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS6010-48T-4C
+                IDS6010-24T-18X-8Y
               </h3>
               <p className="text-gray-600 mb-4">
-                48×1G Base-T + 4×100G QSFP28, модульная архитектура
+                24×1G Base-T, 18×10G SFP+, 8×25G SFP28
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids6010-48t-4c.html")
+                  (window.location.href = "/models/ids6010-24t-18x-8y.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -120,18 +120,16 @@ const SeriesCatalog6010Component = () => {
               </Button>
             </div>
 
-            {/* IDS6010-24S-4C */}
+            {/* IDS6010-24X-2Q */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS6010-24S-4C
+                IDS6010-24X-2Q
               </h3>
-              <p className="text-gray-600 mb-4">
-                24×10G SFP+ + 4×100G QSFP28, высокая плотность портов
-              </p>
+              <p className="text-gray-600 mb-4">24×10G SFP+, 2×40G QSFP+</p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids6010-24s-4c.html")
+                  (window.location.href = "/models/ids6010-24x-2q.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -139,18 +137,18 @@ const SeriesCatalog6010Component = () => {
               </Button>
             </div>
 
-            {/* IDS6010-16Q-2C */}
+            {/* IDS6010-24X-2C */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS6010-16Q-2C
+                IDS6010-24X-2C
               </h3>
               <p className="text-gray-600 mb-4">
-                16×40G QSFP+ + 2×100G QSFP28, магистральные подключения
+                24×10G SFP+, 2×100G/40G QSFP28
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids6010-16q-2c.html")
+                  (window.location.href = "/models/ids6010-24x-2c.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
@@ -158,18 +156,16 @@ const SeriesCatalog6010Component = () => {
               </Button>
             </div>
 
-            {/* IDS6010-32S-2C */}
+            {/* IDS6010-48X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                IDS6010-32S-2C
+                IDS6010-48X
               </h3>
-              <p className="text-gray-600 mb-4">
-                32×10G SFP+ + 2×100G QSFP28, оптимальная конфигурация
-              </p>
+              <p className="text-gray-600 mb-4">48×10G SFP+</p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids6010-32s-2c.html")
+                  (window.location.href = "/models/ids6010-48x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
