@@ -12,7 +12,7 @@ const SeriesCatalog4530Component = () => {
             IDS4530 — расширяемые коммутаторы для корпоративной и операторской
             сети
           </h1>
-          <p className="md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto text-lg">
+          <p className="md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto text-xl">
             До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760 Вт
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
