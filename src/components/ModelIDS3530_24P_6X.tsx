@@ -23,7 +23,7 @@ const ModelIDS3530_24P_6XComponent = () => {
           onClick={() => navigate("/products/switches/ids3530")}
           className="bg-white/90 backdrop-blur-sm hover:bg-white"
         >
-          <Icon name="ArrowLeft" className="mr-2" />
+          <Icon name="ChevronLeft" className="mr-2" />
           Назад
         </Button>
       </div>
@@ -32,12 +32,9 @@ const ModelIDS3530_24P_6XComponent = () => {
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
+            <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-6 md:mb-8 lg:mb-12 leading-tight">
               {ids353024p6xData.title}
             </h1>
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
-              {ids353024p6xData.description}
-            </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start">
