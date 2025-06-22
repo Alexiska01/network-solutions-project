@@ -20,22 +20,25 @@ const ModelIDS3530_24P_6XComponent = () => {
   const toggleIndicators = () => {
     if (modelViewerRef.current) {
       const model = modelViewerRef.current;
+      const threeModel = model.model;
+
+      if (!threeModel || !threeModel.materials) return;
+
+      const mat1 = threeModel.materials.find(
+        (m: any) => m.name === "Material_Indicator",
+      );
+      const mat2 = threeModel.materials.find(
+        (m: any) => m.name === "Material_Indicator2",
+      );
+
       const newState = !indicatorsOn;
 
-      // Управление материалами индикаторов
-      const materials = ["Material_Indicator", "Material_Indicator2"];
-      materials.forEach((materialName) => {
-        const material = model.model?.materials?.find(
-          (m: any) => m.name === materialName,
-        );
-        if (material) {
-          if (newState) {
-            material.pbrMetallicRoughness.setEmissiveFactor([0, 1, 0]);
-          } else {
-            material.pbrMetallicRoughness.setEmissiveFactor([0, 0, 0]);
-          }
-        }
-      });
+      if (mat1) {
+        mat1.setEmissiveFactor(newState ? [0.2, 1.0, 0.5] : [0.27, 0.27, 0.27]);
+      }
+      if (mat2) {
+        mat2.setEmissiveFactor(newState ? [1.0, 0.9, 0.3] : [0.27, 0.27, 0.27]);
+      }
 
       setIndicatorsOn(newState);
     }
@@ -88,7 +91,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                 <div className="aspect-video bg-white/5 rounded-lg overflow-hidden">
                   <model-viewer
                     ref={modelViewerRef}
-                    src="https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24P.glb"
+                    src="https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3530-24P-6X.glb"
                     camera-controls
                     exposure="1.0"
                     interaction-prompt="none"
@@ -108,7 +111,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                     </span>
                     <div
                       className={`w-12 h-6 rounded-full transition-all duration-200 ${
-                        indicatorsOn ? "bg-green-500" : "bg-gray-400"
+                        indicatorsOn ? "bg-green-400" : "bg-gray-400"
                       }`}
                     >
                       <div
@@ -195,7 +198,7 @@ const ModelIDS3530_24P_6XComponent = () => {
               <Icon name="X" size={24} />
             </button>
             <model-viewer
-              src="https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24P.glb"
+              src="https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3530-24P-6X.glb"
               camera-controls
               exposure="1.0"
               interaction-prompt="none"
