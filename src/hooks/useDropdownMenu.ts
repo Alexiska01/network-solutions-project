@@ -2,12 +2,12 @@ import { useState, useCallback } from "react";
 
 export interface DropdownState {
   isProductsDropdownOpen: boolean;
-  isRoutersSubmenuOpen: boolean;
   isSwitchesSubmenuOpen: boolean;
-  isAccessLevelSubmenuOpen: boolean;
-  isDistributionLevelSubmenuOpen: boolean;
+  isRoutersSubmenuOpen: boolean;
   isCorporateLanSubmenuOpen: boolean;
   isDataCentersSubmenuOpen: boolean;
+  isAccessLevelSubmenuOpen: boolean;
+  isDistributionLevelSubmenuOpen: boolean;
   isSpineLevelSubmenuOpen: boolean;
   isLeafLevelSubmenuOpen: boolean;
 }
@@ -15,12 +15,12 @@ export interface DropdownState {
 export const useDropdownMenu = () => {
   const [dropdownState, setDropdownState] = useState<DropdownState>({
     isProductsDropdownOpen: false,
-    isRoutersSubmenuOpen: false,
     isSwitchesSubmenuOpen: false,
-    isAccessLevelSubmenuOpen: false,
-    isDistributionLevelSubmenuOpen: false,
+    isRoutersSubmenuOpen: false,
     isCorporateLanSubmenuOpen: false,
     isDataCentersSubmenuOpen: false,
+    isAccessLevelSubmenuOpen: false,
+    isDistributionLevelSubmenuOpen: false,
     isSpineLevelSubmenuOpen: false,
     isLeafLevelSubmenuOpen: false,
   });
@@ -32,12 +32,12 @@ export const useDropdownMenu = () => {
   const closeAllSubmenus = useCallback(() => {
     setDropdownState({
       isProductsDropdownOpen: false,
-      isRoutersSubmenuOpen: false,
       isSwitchesSubmenuOpen: false,
-      isAccessLevelSubmenuOpen: false,
-      isDistributionLevelSubmenuOpen: false,
+      isRoutersSubmenuOpen: false,
       isCorporateLanSubmenuOpen: false,
       isDataCentersSubmenuOpen: false,
+      isAccessLevelSubmenuOpen: false,
+      isDistributionLevelSubmenuOpen: false,
       isSpineLevelSubmenuOpen: false,
       isLeafLevelSubmenuOpen: false,
     });
