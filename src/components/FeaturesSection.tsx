@@ -46,7 +46,7 @@ const FeaturesSection = () => {
               key={index}
               className="flex md:flex-col items-center md:text-center bg-white rounded-lg md:rounded-xl lg:rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <div className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-hero rounded-lg md:rounded-xl lg:rounded-2xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mb-3 lg:mb-6">
+              <div className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-hero rounded-lg md:rounded-xl lg:rounded-2xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mb-3 lg:mb-6 md:mx-auto">
                 <Icon
                   name={feature.icon as any}
                   size={20}
