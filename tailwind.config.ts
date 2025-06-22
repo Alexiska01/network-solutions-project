@@ -21,6 +21,21 @@ export default {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
       },
+      fontSize: {
+        "clamp-xs": "clamp(0.75rem, 2vw, 0.875rem)",
+        "clamp-sm": "clamp(0.875rem, 2.5vw, 1rem)",
+        "clamp-base": "clamp(1rem, 3vw, 1.125rem)",
+        "clamp-lg": "clamp(1.125rem, 3.5vw, 1.25rem)",
+        "clamp-xl": "clamp(1.25rem, 4vw, 1.5rem)",
+        "clamp-2xl": "clamp(1.5rem, 5vw, 2rem)",
+        "clamp-3xl": "clamp(1.875rem, 6vw, 2.5rem)",
+        "clamp-4xl": "clamp(2.25rem, 7vw, 3rem)",
+        "clamp-5xl": "clamp(3rem, 8vw, 4rem)",
+      },
+      maxWidth: {
+        "text-mobile": "90%",
+        "text-desktop": "70%",
+      },
       colors: {
         // iDATA Brand colors
         idata: {

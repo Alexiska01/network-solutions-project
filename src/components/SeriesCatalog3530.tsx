@@ -8,11 +8,11 @@ const SeriesCatalog3530Component = () => {
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-clamp-4xl font-bold mb-4 sm:mb-6 leading-tight font-sans w-[90%] md:w-[70%] mx-auto">
             IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
             инфраструктуры
           </h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 text-slate-300 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-clamp-lg mb-6 sm:mb-8 text-slate-300 w-[90%] md:w-[70%] mx-auto leading-relaxed font-sans">
             До 760 Вт PoE+, фиксированные блоки питания, uplink 10G — всё в
             одной платформе
           </p>
@@ -44,10 +44,10 @@ const SeriesCatalog3530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Zap" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2 text-sm sm:text-lg">
+              <h3 className="font-semibold text-clamp-lg mb-2 font-sans">
                 PoE/PoE+ до 760 Вт
               </h3>
-              <p className="text-gray-600 text-xs sm:text-base text-gray-500 sm:text-gray-600 leading-tight sm:leading-normal">
+              <p className="text-clamp-sm text-gray-600 leading-normal font-sans w-[90%] md:w-[70%] mx-auto">
                 Надежное питание устройств
               </p>
             </div>
@@ -56,10 +56,10 @@ const SeriesCatalog3530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Network" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2 text-sm sm:text-lg">
+              <h3 className="font-semibold text-clamp-lg mb-2 font-sans">
                 10G uplink (SFP+)
               </h3>
-              <p className="text-gray-600 text-xs sm:text-base text-gray-500 sm:text-gray-600 leading-tight sm:leading-normal">
+              <p className="text-clamp-sm text-gray-600 leading-normal font-sans w-[90%] md:w-[70%] mx-auto">
                 Высокоскоростное подключение
               </p>
             </div>
@@ -68,10 +68,10 @@ const SeriesCatalog3530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Fan" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2 text-sm sm:text-lg">
+              <h3 className="font-semibold text-clamp-lg mb-2 font-sans">
                 Надёжное охлаждение и фиксированные БП
               </h3>
-              <p className="text-gray-600 text-xs sm:text-base text-gray-500 sm:text-gray-600 leading-tight sm:leading-normal">
+              <p className="text-clamp-sm text-gray-600 leading-normal font-sans w-[90%] md:w-[70%] mx-auto">
                 Стабильная работа 24/7
               </p>
             </div>
@@ -80,10 +80,10 @@ const SeriesCatalog3530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Shield" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2 text-sm sm:text-lg">
+              <h3 className="font-semibold text-clamp-lg mb-2 font-sans">
                 Поддержка Layer 3 и резервирования
               </h3>
-              <p className="text-gray-600 text-xs sm:text-base text-gray-500 sm:text-gray-600 leading-tight sm:leading-normal">
+              <p className="text-clamp-sm text-gray-600 leading-normal font-sans w-[90%] md:w-[70%] mx-auto">
                 Отказоустойчивость сети
               </p>
             </div>
@@ -95,10 +95,10 @@ const SeriesCatalog3530Component = () => {
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-clamp-3xl font-bold text-gray-900 mb-4 font-sans">
               Модели серии IDS3530
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-clamp-xl text-gray-600 font-sans w-[90%] md:w-[70%] mx-auto">
               Выберите оптимальную конфигурацию для ваших задач
             </p>
           </div>
@@ -106,10 +106,10 @@ const SeriesCatalog3530Component = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* IDS3530-24P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-base sm:text-xl">
+              <h3 className="text-clamp-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3530-24P-6X
               </h3>
-              <p className="text-gray-600 mb-4 text-sm sm:text-base text-gray-500 sm:text-gray-600">
+              <p className="text-clamp-base text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
                 24×1G Base-T, 6×10G SFP+, PoE 380 Вт
               </p>
               <Button
@@ -125,10 +125,10 @@ const SeriesCatalog3530Component = () => {
 
             {/* IDS3530-48P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-base sm:text-xl">
+              <h3 className="text-clamp-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3530-48P-6X
               </h3>
-              <p className="text-gray-600 mb-4 text-sm sm:text-base text-gray-500 sm:text-gray-600">
+              <p className="text-clamp-base text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
                 48×1G Base-T, 6×10G SFP+, PoE 760 Вт
               </p>
               <Button
@@ -144,10 +144,10 @@ const SeriesCatalog3530Component = () => {
 
             {/* IDS3530-24S-8T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-base sm:text-xl">
+              <h3 className="text-clamp-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3530-24S-8T-6X
               </h3>
-              <p className="text-gray-600 mb-4 text-sm sm:text-base text-gray-500 sm:text-gray-600">
+              <p className="text-clamp-base text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
                 24×1G SFP, 8×1G Base-T, 6×10G SFP+
               </p>
               <Button
@@ -163,10 +163,10 @@ const SeriesCatalog3530Component = () => {
 
             {/* IDS3530-48T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-base sm:text-xl">
+              <h3 className="text-clamp-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3530-48T-6X
               </h3>
-              <p className="text-gray-600 mb-4 text-sm sm:text-base text-gray-500 sm:text-gray-600">
+              <p className="text-clamp-base text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
                 48×1G Base-T, 6×10G SFP+
               </p>
               <Button
@@ -186,10 +186,10 @@ const SeriesCatalog3530Component = () => {
       {/* CTA Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-clamp-4xl font-bold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto">
             Нужна помощь с выбором?
           </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-clamp-xl text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
             Наши инженеры помогут подобрать оптимальное решение для вашей
             инфраструктуры
           </p>
