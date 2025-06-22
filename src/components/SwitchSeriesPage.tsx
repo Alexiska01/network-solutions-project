@@ -9,16 +9,10 @@ const SwitchSeriesPage = () => {
       <section className="py-20 px-6 bg-gradient-hero text-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2
-              className="font-bold mb-6 leading-tight"
-              style={{ fontSize: "39px" }}
-            >
+            <h2 className="font-bold mb-6 leading-tight text-[39px]">
               Коммутаторы серии IDS3730
             </h2>
-            <p
-              className="mb-8 text-white/90 max-w-4xl mx-auto"
-              style={{ fontSize: "20px" }}
-            >
+            <p className="mb-8 text-white/90 max-w-4xl mx-auto text-[20px]">
               Управляемые L2+/L3-коммутаторы доступа. До 1400 Вт PoE+, стек до 4
               устройств, uplink 10G
             </p>
@@ -77,16 +71,10 @@ const SwitchSeriesPage = () => {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2
-              className="font-bold mb-6 text-gray-900"
-              style={{ fontSize: "39px" }}
-            >
+            <h2 className="font-bold mb-6 text-gray-900 text-[39px]">
               Коммутаторы серии IDS3530
             </h2>
-            <p
-              className="text-gray-600 max-w-4xl mx-auto"
-              style={{ fontSize: "20px" }}
-            >
+            <p className="text-gray-600 max-w-4xl mx-auto text-[20px]">
               Надёжные L2+/L3-коммутаторы для промышленной инфраструктуры. До
               760 Вт PoE+, модульные блоки питания
             </p>
@@ -164,16 +152,10 @@ const SwitchSeriesPage = () => {
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2
-              className="font-bold mb-6 text-gray-900"
-              style={{ fontSize: "39px" }}
-            >
+            <h2 className="font-bold mb-6 text-gray-900 text-[39px]">
               Коммутаторы серии IDS4530
             </h2>
-            <p
-              className="text-gray-600 max-w-4xl mx-auto"
-              style={{ fontSize: "20px" }}
-            >
+            <p className="text-gray-600 max-w-4xl mx-auto text-[20px]">
               Расширяемые коммутаторы для корпоративной и операторской сети. До
               736 Gbps, два слота расширения
             </p>
@@ -235,16 +217,10 @@ const SwitchSeriesPage = () => {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2
-              className="font-bold mb-6 text-gray-900"
-              style={{ fontSize: "39px" }}
-            >
+            <h2 className="font-bold mb-6 text-gray-900 text-[39px]">
               Коммутаторы серии IDS6010
             </h2>
-            <p
-              className="text-gray-600 max-w-4xl mx-auto"
-              style={{ fontSize: "20px" }}
-            >
+            <p className="text-gray-600 max-w-4xl mx-auto text-[20px]">
               Мощные 10G/25G/40G/100G-коммутаторы для магистральных решений. До
               960 Gbps пропускной способности
             </p>

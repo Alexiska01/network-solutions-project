@@ -6,7 +6,7 @@ export default {
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}"
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -31,6 +31,8 @@ export default {
         "clamp-3xl": "clamp(1.875rem, 6vw, 2.5rem)",
         "clamp-4xl": "clamp(2.25rem, 7vw, 3rem)",
         "clamp-5xl": "clamp(3rem, 8vw, 4rem)",
+        "39px": "39px",
+        "20px": "20px",
       },
       maxWidth: {
         "text-mobile": "90%",
