@@ -8,10 +8,10 @@ const SeriesCatalog610Component = () => {
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-6 leading-tight">
             IDS610 — мощные L2+/L3-коммутаторы для корпоративной инфраструктуры
           </h1>
-          <p className="md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto text-lg">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-8 text-white/90 max-w-4xl mx-auto">
             До 880 Вт PoE+, модульные блоки питания, uplink 25G — всё в одной
             платформе
           </p>
@@ -43,36 +43,48 @@ const SeriesCatalog610Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Zap" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">PoE/PoE+ до 880 Вт</h3>
-              <p className="text-gray-600">Надежное питание устройств</p>
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
+                PoE/PoE+ до 880 Вт
+              </h3>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
+                Надежное питание устройств
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Network" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">25G uplink (SFP28)</h3>
-              <p className="text-gray-600">Высокоскоростное подключение</p>
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
+                25G uplink (SFP28)
+              </h3>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
+                Высокоскоростное подключение
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Fan" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
                 Модульное охлаждение и горячая замена БП
               </h3>
-              <p className="text-gray-600">Стабильная работа 24/7</p>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
+                Стабильная работа 24/7
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Shield" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
                 Поддержка Layer 3 и стекирования
               </h3>
-              <p className="text-gray-600">Отказоустойчивость сети</p>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
+                Отказоустойчивость сети
+              </p>
             </div>
           </div>
         </div>

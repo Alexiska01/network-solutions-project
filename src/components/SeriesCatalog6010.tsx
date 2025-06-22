@@ -143,10 +143,10 @@ const SeriesCatalog6010Component = () => {
 
             {/* IDS6010-24X-2C */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
                 IDS6010-24X-2C
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
                 24×10G SFP+, 2×100G/40G QSFP28
               </p>
               <Button
@@ -162,10 +162,12 @@ const SeriesCatalog6010Component = () => {
 
             {/* IDS6010-48X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
                 IDS6010-48X
               </h3>
-              <p className="text-gray-600 mb-4">48×10G SFP+</p>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+                48×10G SFP+
+              </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
@@ -183,10 +185,10 @@ const SeriesCatalog6010Component = () => {
       {/* CTA Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-gray-900 mb-6">
             Нужна помощь с выбором?
           </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Наши инженеры помогут подобрать оптимальное решение для вашей
             инфраструктуры
           </p>
