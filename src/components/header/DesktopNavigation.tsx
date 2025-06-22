@@ -37,6 +37,9 @@ const DesktopNavigation = ({
               isOpen={dropdownState.isProductsDropdownOpen}
               dropdownState={dropdownState}
               updateDropdownState={updateDropdownState}
+              setActiveSubmenu={(submenu) =>
+                updateDropdownState({ activeSubmenu: submenu })
+              }
               onMouseEnter={handleProductsMouseEnter}
               onMouseLeave={scheduleCloseAllSubmenus}
             />

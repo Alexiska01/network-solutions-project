@@ -2,27 +2,13 @@ import { useState, useCallback } from "react";
 
 export interface DropdownState {
   isProductsDropdownOpen: boolean;
-  isSwitchesSubmenuOpen: boolean;
-  isRoutersSubmenuOpen: boolean;
-  isCorporateLanSubmenuOpen: boolean;
-  isDataCentersSubmenuOpen: boolean;
-  isAccessLevelSubmenuOpen: boolean;
-  isDistributionLevelSubmenuOpen: boolean;
-  isSpineLevelSubmenuOpen: boolean;
-  isLeafLevelSubmenuOpen: boolean;
+  activeSubmenu: string | null;
 }
 
 export const useDropdownMenu = () => {
   const [dropdownState, setDropdownState] = useState<DropdownState>({
     isProductsDropdownOpen: false,
-    isSwitchesSubmenuOpen: false,
-    isRoutersSubmenuOpen: false,
-    isCorporateLanSubmenuOpen: false,
-    isDataCentersSubmenuOpen: false,
-    isAccessLevelSubmenuOpen: false,
-    isDistributionLevelSubmenuOpen: false,
-    isSpineLevelSubmenuOpen: false,
-    isLeafLevelSubmenuOpen: false,
+    activeSubmenu: null,
   });
 
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
@@ -32,14 +18,7 @@ export const useDropdownMenu = () => {
   const closeAllSubmenus = useCallback(() => {
     setDropdownState({
       isProductsDropdownOpen: false,
-      isSwitchesSubmenuOpen: false,
-      isRoutersSubmenuOpen: false,
-      isCorporateLanSubmenuOpen: false,
-      isDataCentersSubmenuOpen: false,
-      isAccessLevelSubmenuOpen: false,
-      isDistributionLevelSubmenuOpen: false,
-      isSpineLevelSubmenuOpen: false,
-      isLeafLevelSubmenuOpen: false,
+      activeSubmenu: null,
     });
   }, []);
 
@@ -60,11 +39,19 @@ export const useDropdownMenu = () => {
     setDropdownState((prev) => ({ ...prev, ...updates }));
   }, []);
 
+  const setActiveSubmenu = useCallback(
+    (submenuName: string | null) => {
+      updateDropdownState({ activeSubmenu: submenuName });
+    },
+    [updateDropdownState],
+  );
+
   return {
     dropdownState,
     closeAllSubmenus,
     cancelCloseTimeout,
     scheduleCloseAllSubmenus,
     updateDropdownState,
+    setActiveSubmenu,
   };
 };
