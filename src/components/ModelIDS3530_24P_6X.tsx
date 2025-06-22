@@ -1,23 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { useNavigate } from "react-router-dom";
-import "@google/model-viewer";
 
-// Добавляем типизацию для model-viewer
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "model-viewer": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      > & {
-        src?: string;
-        "camera-controls"?: boolean;
-        exposure?: string;
-        "interaction-prompt"?: string;
-        ref?: React.Ref<any>;
-      };
+      "model-viewer": any;
     }
   }
 }
@@ -27,22 +16,6 @@ const ModelIDS3530_24P_6XComponent = () => {
   const modelViewerRef = useRef<any>(null);
   const [indicatorsOn, setIndicatorsOn] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [modelLoaded, setModelLoaded] = useState(false);
-
-  useEffect(() => {
-    console.log("ModelIDS3530_24P_6X компонент загружен");
-
-    const handleModelLoad = () => {
-      console.log("3D модель загружена");
-      setModelLoaded(true);
-    };
-
-    const modelViewer = modelViewerRef.current;
-    if (modelViewer) {
-      modelViewer.addEventListener("load", handleModelLoad);
-      return () => modelViewer.removeEventListener("load", handleModelLoad);
-    }
-  }, []);
 
   const toggleIndicators = () => {
     if (modelViewerRef.current) {
