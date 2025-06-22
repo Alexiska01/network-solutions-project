@@ -53,9 +53,9 @@ const ModelIDS3530_24P_6XComponent = () => {
 
               {/* Model Title below the table */}
               <div className="mt-8 text-center">
-                <h2 className="text-lg md:text-xl lg:text-2xl font-normal text-white">
+                <div className="bg-white text-[#0065B3] px-4 py-2 rounded-md font-medium text-lg inline-block">
                   {ids353024p6xData.title}
-                </h2>
+                </div>
               </div>
             </div>
           </div>
