@@ -41,49 +41,49 @@ const SeriesCatalog6010Component = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Cpu" size={32} className="text-white" />
+                <Icon name="Zap" size={32} className="text-white" />
               </div>
               <h3 className="font-semibold text-lg mb-2">
-                Модульная архитектура с поддержкой 40G/100G
+                До 960 Gbps пропускной способности
               </h3>
               <p className="text-gray-600">
-                Гибкое масштабирование для растущих сетей
+                Поддержка масштабируемых магистральных нагрузок и высоких SLA
               </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Battery" size={32} className="text-white" />
+                <Icon name="Cable" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
-                Резервирование питания и управления
-              </h3>
+              <h3 className="font-semibold text-lg mb-2">Uplink до 100G</h3>
               <p className="text-gray-600">
-                Максимальная отказоустойчивость сети
+                25G/40G/100G интерфейсы для дата-центров и агрегационных узлов
               </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Gauge" size={32} className="text-white" />
+                <Icon name="Battery" size={32} className="text-white" />
               </div>
               <h3 className="font-semibold text-lg mb-2">
-                Высокая коммутационная способность (до 1.28 Tbps)
+                Резервирование питания и охлаждения
               </h3>
               <p className="text-gray-600">
-                Производительность уровня распределения
+                Два слота питания + два слота вентиляторов для
+                отказоустойчивости
               </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Shield" size={32} className="text-white" />
+                <Icon name="Network" size={32} className="text-white" />
               </div>
               <h3 className="font-semibold text-lg mb-2">
-                Расширенная безопасность
+                Оптимизация под SDN и виртуализацию
               </h3>
               <p className="text-gray-600">
-                Комплексная защита корпоративной сети
+                Поддержка современных сетевых архитектур и централизованного
+                управления
               </p>
             </div>
           </div>
