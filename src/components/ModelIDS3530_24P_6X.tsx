@@ -46,19 +46,20 @@ const ModelIDS3530_24P_6XComponent = () => {
             </div>
 
             <div className="lg:col-span-1">
+              {/* Model Title above the specifications table */}
+              <div className="mb-6 text-center">
+                <h1
+                  className="text-2xl md:text-[32px] font-bold text-white font-montserrat"
+                  style={{ textShadow: "0 1px 2px rgba(0, 0, 0, 0.1)" }}
+                >
+                  {ids353024p6xData.title}
+                </h1>
+              </div>
+
               <SpecTable
                 title="Основные характеристики"
                 specs={ids353024p6xData.basicSpecs}
               />
-
-              {/* Model Title below the table */}
-              <div className="mt-8 text-center">
-                <div className="bg-white text-[#0065B3] px-6 py-4 rounded-md inline-block">
-                  <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 font-sans">
-                    {ids353024p6xData.title}
-                  </h1>
-                </div>
-              </div>
             </div>
           </div>
 
