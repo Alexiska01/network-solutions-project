@@ -16,14 +16,16 @@ const SpecTable: React.FC<SpecTableProps> = ({ title, specs }) => {
         {specs.map((spec, index) => (
           <div
             key={index}
-            className={`flex justify-between items-center py-2 ${
+            className={`flex justify-between items-center py-3 ${
               index < specs.length - 1 ? "border-b border-gray-100" : ""
             }`}
           >
             <span className="text-gray-600 font-sans text-sm">
               {spec.label}
             </span>
-            <span className="font-medium font-sans text-sm">{spec.value}</span>
+            <span className="font-medium font-sans text-sm text-gray-900">
+              {spec.value}
+            </span>
           </div>
         ))}
       </div>
