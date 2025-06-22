@@ -9,7 +9,7 @@ interface SpecTableProps {
 const SpecTable: React.FC<SpecTableProps> = ({ title, specs }) => {
   return (
     <div className="bg-white rounded-xl p-6 shadow-lg">
-      <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans">
+      <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans text-center">
         {title}
       </h3>
       <div className="space-y-4">
