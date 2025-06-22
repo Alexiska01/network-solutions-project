@@ -23,10 +23,9 @@ const ModelIDS3530_24P_6XComponent = () => {
           <Button
             variant="outline"
             onClick={() => navigate("/products/switches/ids3530")}
-            className="bg-white/90 backdrop-blur-sm hover:bg-white"
+            className="bg-black/80 backdrop-blur-sm hover:bg-black/90 border-black/80 hover:border-black/90 text-white hover:text-white p-2"
           >
-            <Icon name="ChevronLeft" className="mr-2" />
-            Назад
+            <Icon name="ChevronLeft" className="h-5 w-5" />
           </Button>
         </div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
