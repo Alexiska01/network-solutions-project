@@ -142,7 +142,7 @@ const SeriesCatalog3530Component = () => {
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
-                  (window.location.href = "/models/ids3530-24p-6x.html")
+                  (window.location.href = "/products/switches/ids3530/24p-6x")
                 }
               >
                 <Icon name="Info" className="mr-2" />
