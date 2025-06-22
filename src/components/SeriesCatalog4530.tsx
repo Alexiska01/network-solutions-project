@@ -8,11 +8,11 @@ const SeriesCatalog4530Component = () => {
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="md:text-5xl font-bold mb-6 leading-tight text-4xl">
+          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-6 leading-tight">
             IDS4530 — расширяемые коммутаторы для корпоративной и операторской
             сети
           </h1>
-          <p className="md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto text-xl">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-8 text-white/90 max-w-4xl mx-auto">
             До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760 Вт
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -43,10 +43,10 @@ const SeriesCatalog4530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Cpu" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
                 Поддержка карт расширения 10G / 40G / 100G
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
                 Гибкое масштабирование пропускной способности
               </p>
             </div>
@@ -55,10 +55,10 @@ const SeriesCatalog4530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Battery" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
                 Двойной модуль питания (redundant)
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
                 Резервирование для максимальной надежности
               </p>
             </div>
@@ -67,10 +67,10 @@ const SeriesCatalog4530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Gauge" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
                 Высокая коммутационная способность (до 736 Gbps)
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
                 Максимальная производительность сети
               </p>
             </div>
@@ -79,8 +79,10 @@ const SeriesCatalog4530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Zap" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">PoE/PoE+ до 760 Вт</h3>
-              <p className="text-gray-600">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2">
+                PoE/PoE+ до 760 Вт
+              </h3>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
                 Питание для подключенных устройств
               </p>
             </div>
@@ -92,10 +94,10 @@ const SeriesCatalog4530Component = () => {
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
               Модели серии IDS4530
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
               Выберите оптимальную конфигурацию для ваших задач
             </p>
           </div>
@@ -103,10 +105,10 @@ const SeriesCatalog4530Component = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* IDS4530-48P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
                 IDS4530-48P-6X
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
                 48×1G Base-T + 6×10G SFP+, 760 Вт PoE
               </p>
               <Button
@@ -122,10 +124,10 @@ const SeriesCatalog4530Component = () => {
 
             {/* IDS4530-24P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
                 IDS4530-24P-6X
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
                 24×1G Base-T + 6×10G SFP+, 380 Вт PoE
               </p>
               <Button
@@ -141,10 +143,12 @@ const SeriesCatalog4530Component = () => {
 
             {/* IDS4530-48T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
                 IDS4530-48T-6X
               </h3>
-              <p className="text-gray-600 mb-4">48×1G Base-T + 6×10G SFP+</p>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+                48×1G Base-T + 6×10G SFP+
+              </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
@@ -158,10 +162,12 @@ const SeriesCatalog4530Component = () => {
 
             {/* IDS4530-24T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
                 IDS4530-24T-6X
               </h3>
-              <p className="text-gray-600 mb-4">24×1G Base-T + 6×10G SFP+</p>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+                24×1G Base-T + 6×10G SFP+
+              </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
@@ -175,10 +181,12 @@ const SeriesCatalog4530Component = () => {
 
             {/* IDS4530-24S-4X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
                 IDS4530-24S-4X
               </h3>
-              <p className="text-gray-600 mb-4">24×1G SFP + 4×10G SFP+</p>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+                24×1G SFP + 4×10G SFP+
+              </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
@@ -192,10 +200,12 @@ const SeriesCatalog4530Component = () => {
 
             {/* IDS4530-48S-4X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
                 IDS4530-48S-4X
               </h3>
-              <p className="text-gray-600 mb-4">48×1G SFP + 4×10G SFP+</p>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+                48×1G SFP + 4×10G SFP+
+              </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
@@ -213,10 +223,10 @@ const SeriesCatalog4530Component = () => {
       {/* CTA Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-gray-900 mb-6">
             Нужна помощь с выбором?
           </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Наши инженеры помогут подобрать оптимальное решение для вашей
             инфраструктуры
           </p>
