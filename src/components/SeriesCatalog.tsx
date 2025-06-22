@@ -8,8 +8,8 @@ const SeriesCatalogComponent = () => {
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            IDS3730 — управляемые L2+/L3-коммутаторы корпоративного уровня
+          <h1 className="md:text-5xl font-bold mb-6 leading-tight text-4xl">
+            IDS3730 — управляемые L2+/L3-коммутаторы доступа
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto">
             До 740 Вт PoE+, стек до 4 устройств, uplink 10G, маршрутизация L3 —
