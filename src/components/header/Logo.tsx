@@ -4,7 +4,7 @@ const Logo = () => {
   return (
     <Link to="/" className="flex items-center">
       <img
-        src="https://cdn.poehali.dev/files/0eff40a3-b365-4fad-b10d-9f08d095a1f8.png"
+        src="https://cdn.poehali.dev/files/a8b55522-f8bc-41c7-a484-eaa789e9e35c.png"
         alt="iDATA"
         className="h-7 w-auto sm:h-7 object-contain rounded-0"
       />
