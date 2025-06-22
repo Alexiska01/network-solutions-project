@@ -72,7 +72,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         {/* Ссылка "Все коммутаторы" */}
         <Link
           to="/products/switches"
-          className="block py-3 px-4 text-sm font-semibold text-white bg-gradient-to-r from-idata-primary/20 to-idata-teal/20 rounded-lg border border-white/10 hover:from-idata-primary/30 hover:to-idata-teal/30 transition-all duration-200"
+          className="block py-3 px-4 text-sm font-semibold text-gray-800 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition-all duration-200 shadow-sm"
           onClick={onClose}
         >
           Все коммутаторы
@@ -81,15 +81,15 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         {productSubmenuItems.map((category, categoryIndex) => (
           <div key={category.path} className="space-y-2">
             {/* Основная категория */}
-            <div className="flex items-center py-2 px-3 bg-white/5 rounded-lg backdrop-blur-sm">
+            <div className="flex items-center py-2 px-3 bg-white rounded-lg shadow-sm border border-gray-100">
               <Icon
                 name={category.icon}
                 size={16}
-                className="text-idata-teal mr-3 flex-shrink-0"
+                className="text-idata-primary mr-3 flex-shrink-0"
               />
               <Link
                 to={category.path}
-                className="font-medium text-white text-sm flex-1 hover:text-idata-teal transition-colors"
+                className="font-medium text-gray-800 text-sm flex-1 hover:text-idata-primary transition-colors"
                 onClick={onClose}
               >
                 {category.name}
@@ -100,11 +100,14 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
             {category.submenuItems && (
               <div className="ml-6 space-y-3">
                 {category.submenuItems.map((subcategory, subIndex) => (
-                  <div key={subcategory.path} className="space-y-1">
+                  <div
+                    key={subcategory.path}
+                    className="space-y-1 bg-white rounded-lg p-3 border border-gray-100 shadow-sm"
+                  >
                     {/* Название подкатегории */}
                     <Link
                       to={subcategory.path}
-                      className="block text-xs font-semibold text-idata-teal/90 uppercase tracking-wide py-1 hover:text-idata-teal transition-colors"
+                      className="block text-xs font-semibold text-idata-primary uppercase tracking-wide py-1 hover:text-idata-primary/80 transition-colors"
                       onClick={onClose}
                     >
                       {subcategory.name}
@@ -117,7 +120,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                           <Link
                             key={item.path}
                             to={item.path}
-                            className="block text-sm text-white/80 py-2 px-3 rounded-md hover:bg-white/5 hover:text-white transition-all duration-200"
+                            className="block text-sm text-gray-700 py-2 px-3 rounded-md hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
                             onClick={onClose}
                           >
                             {item.name}
