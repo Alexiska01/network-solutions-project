@@ -1,11 +1,9 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 
 const ProductsSection = () => {
-  const productCategories = [
+  const products = [
     {
-      icon: "Network",
       title: "Управляемые коммутаторы",
       description:
         "L3 коммутаторы с поддержкой VLAN, QoS и расширенными функциями управления",
@@ -15,9 +13,9 @@ const ProductsSection = () => {
         "Стекирование",
         "SNMP мониторинг",
       ],
+      icon: "Network",
     },
     {
-      icon: "Router",
       title: "Корпоративные маршрутизаторы",
       description: "Высокопроизводительные маршрутизаторы для филиальных сетей",
       features: [
@@ -26,9 +24,9 @@ const ProductsSection = () => {
         "Load balancing",
         "Резервирование",
       ],
+      icon: "Router",
     },
     {
-      icon: "Wifi",
       title: "Беспроводные решения",
       description: "Enterprise-класс точки доступа и контроллеры для Wi-Fi 6",
       features: [
@@ -37,65 +35,60 @@ const ProductsSection = () => {
         "Централизованное управление",
         "Roaming",
       ],
+      icon: "Wifi",
     },
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 font-sans">
             Наши продукты и технологии
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto font-sans">
             Полная линейка сетевого оборудования для построения надежной
             корпоративной инфраструктуры
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {productCategories.map((category, index) => (
+        <div className="grid md:grid-cols-3 gap-8">
+          {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow"
+              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Icon
-                    name={category.icon}
-                    size={32}
-                    className="text-blue-600"
-                  />
-                </div>
+              <div className="w-12 h-12 bg-gradient-icon rounded-lg flex items-center justify-center mb-4">
+                <Icon
+                  name={product.icon as any}
+                  size={24}
+                  className="text-white"
+                />
               </div>
-
-              <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
-                {category.title}
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 font-sans">
+                {product.title}
               </h3>
-
-              <p className="text-gray-600 mb-6 text-center">
-                {category.description}
+              <p className="text-gray-600 mb-4 font-sans">
+                {product.description}
               </p>
-
-              <ul className="space-y-3 mb-8">
-                {category.features.map((feature, featureIndex) => (
+              <ul className="space-y-2">
+                {product.features.map((feature, idx) => (
                   <li
-                    key={featureIndex}
-                    className="flex items-center text-sm text-gray-700"
+                    key={idx}
+                    className="flex items-center text-sm text-gray-700 font-sans"
                   >
                     <Icon
                       name="Check"
                       size={16}
-                      className="text-green-500 mr-3 flex-shrink-0"
+                      className="text-green-500 mr-2 flex-shrink-0"
                     />
                     {feature}
                   </li>
                 ))}
               </ul>
-
-              <Button className="w-full bg-blue-600 hover:bg-blue-700">
+              <button className="mt-6 w-full bg-[#0065B3] text-white py-2 px-4 rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans">
                 Подробнее
-              </Button>
+              </button>
             </div>
           ))}
         </div>
