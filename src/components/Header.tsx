@@ -31,7 +31,7 @@ const Header = () => {
         </div>
 
         {/* Навигация в сетке с отступом под логотип */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto pl-4 sm:pl-6 lg:pl-8">
           <div className="flex items-center justify-end h-16 pl-40 sm:pl-44 lg:pl-48">
             <DesktopNavigation
               dropdownState={dropdownState}
