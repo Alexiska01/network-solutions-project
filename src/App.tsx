@@ -9,6 +9,7 @@ import SeriesCatalog3730 from "./pages/SeriesCatalog3730";
 import SeriesCatalog3530 from "./pages/SeriesCatalog3530";
 import SeriesCatalog4530 from "./pages/SeriesCatalog4530";
 import SeriesCatalog6010 from "./pages/SeriesCatalog6010";
+import ModelIDS3530_24P_6X from "./pages/ModelIDS3530_24P_6X";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,10 @@ const App = () => (
           <Route
             path="/products/switches/ids6010"
             element={<SeriesCatalog6010 />}
+          />
+          <Route
+            path="/models/ids3530-24p-6x"
+            element={<ModelIDS3530_24P_6X />}
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
