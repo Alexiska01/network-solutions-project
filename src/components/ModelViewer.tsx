@@ -32,7 +32,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
 
   return (
     <>
-      <div className="relative bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8">
+      <div className="relative bg-gradient-hero rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
         <button
           onClick={toggleFullscreen}
           className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 text-white p-2 rounded-lg transition-all duration-200 z-10"
@@ -40,9 +40,9 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
           <Icon name="Maximize" size={20} />
         </button>
 
-        <div className="aspect-video bg-white/5 rounded-lg overflow-hidden relative">
+        <div className="aspect-video rounded-lg overflow-hidden relative">
           {!modelLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-white/10 backdrop-blur-sm">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm">
               <div className="text-white text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
                 <p className="text-sm">Загрузка 3D модели...</p>
@@ -69,7 +69,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
           />
         </div>
 
-        <div className="mt-4 flex items-center justify-center">
+        <div className="mt-6 flex items-center justify-center">
           <button
             onClick={onToggleIndicators}
             disabled={!modelLoaded}
