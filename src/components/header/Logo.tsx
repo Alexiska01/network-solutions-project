@@ -4,9 +4,9 @@ const Logo = () => {
   return (
     <Link to="/" className="flex items-center">
       <img
-        src="https://cdn.poehali.dev/files/a8b55522-f8bc-41c7-a484-eaa789e9e35c.png"
+        src="https://cdn.poehali.dev/files/b7a2bc8d-4235-406c-8770-8cce8752b5e8.png"
         alt="iDATA"
-        className="h-7 w-auto sm:h-7 object-contain rounded-0"
+        className="h-8 w-auto ml-6 object-contain hover:opacity-80 transition-opacity"
       />
     </Link>
   );
