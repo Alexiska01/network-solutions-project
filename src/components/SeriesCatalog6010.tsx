@@ -57,7 +57,7 @@ const SeriesCatalog6010Component = () => {
 
             <div className="text-center">
               <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mb-4 md:mx-auto">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
                   <Icon
                     name="Cable"
                     size={24}
@@ -77,7 +77,7 @@ const SeriesCatalog6010Component = () => {
 
             <div className="text-center">
               <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mb-4 md:mx-auto">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
                   <Icon
                     name="Battery"
                     size={24}
@@ -97,7 +97,7 @@ const SeriesCatalog6010Component = () => {
 
             <div className="text-center">
               <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mb-4 md:mx-auto">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
                   <Icon
                     name="Network"
                     size={24}
