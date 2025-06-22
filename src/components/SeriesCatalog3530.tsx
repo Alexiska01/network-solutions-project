@@ -45,10 +45,10 @@ const SeriesCatalog3530Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left">
                     PoE/PoE+ до 880 Вт
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left">
                     Надежное питание устройств
                   </p>
                 </div>
@@ -65,10 +65,10 @@ const SeriesCatalog3530Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left">
                     10G uplink (SFP+)
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left">
                     Высокоскоростное подключение
                   </p>
                 </div>
@@ -85,10 +85,10 @@ const SeriesCatalog3530Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left">
                     Надёжное охлаждение и фиксированные БП
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left">
                     Стабильная работа 24/7
                   </p>
                 </div>
@@ -105,10 +105,10 @@ const SeriesCatalog3530Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left">
                     Поддержка Layer 3 и резервирования
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left">
                     Отказоустойчивость сети
                   </p>
                 </div>

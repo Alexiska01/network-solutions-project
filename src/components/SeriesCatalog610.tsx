@@ -45,10 +45,10 @@ const SeriesCatalog610Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
                     PoE/PoE+ до 880 Вт
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
                     Надежное питание устройств
                   </p>
                 </div>
@@ -65,10 +65,10 @@ const SeriesCatalog610Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
                     25G uplink (SFP28)
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
                     Высокоскоростное подключение
                   </p>
                 </div>
@@ -85,10 +85,10 @@ const SeriesCatalog610Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
                     Модульное охлаждение и горячая замена БП
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
                     Стабильная работа 24/7
                   </p>
                 </div>
@@ -105,10 +105,10 @@ const SeriesCatalog610Component = () => {
                   />
                 </div>
                 <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
+                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left">
                     Поддержка Layer 3 и стекирования
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left">
                     Отказоустойчивость сети
                   </p>
                 </div>
