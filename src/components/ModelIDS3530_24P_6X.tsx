@@ -21,9 +21,9 @@ const ModelIDS3530_24P_6XComponent = () => {
         {/* Back Button */}
         <div className="absolute top-4 left-4 z-20">
           <Button
-            variant="outline"
+            variant="ghost"
             onClick={() => navigate("/products/switches/ids3530")}
-            className="bg-black/80 backdrop-blur-sm hover:bg-black/90 border-black/80 hover:border-black/90 text-white hover:text-white p-2"
+            className="bg-transparent hover:bg-white/10 border-0 text-gray-800 hover:text-gray-900 p-2"
           >
             <Icon name="ChevronLeft" className="h-5 w-5" />
           </Button>
