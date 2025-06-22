@@ -58,10 +58,10 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
           interaction-prompt="none"
           loading="eager"
           reveal="auto"
-          camera-orbit="0deg 75deg 0.5m"
-          min-camera-orbit="auto auto 0.3m"
-          max-camera-orbit="auto auto 0.8m"
-          field-of-view="25deg"
+          camera-orbit="0deg 75deg 1.2m"
+          min-camera-orbit="auto auto 0.8m"
+          max-camera-orbit="auto auto 2.0m"
+          field-of-view="35deg"
           poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='transparent'/%3E%3C/svg%3E"
           style={{ width: "100%", height: "400px", background: "transparent" }}
           className="w-full"
@@ -110,10 +110,10 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               auto-rotate
               exposure="1.0"
               interaction-prompt="none"
-              camera-orbit="0deg 75deg 0.5m"
-              min-camera-orbit="auto auto 0.3m"
-              max-camera-orbit="auto auto 0.8m"
-              field-of-view="25deg"
+              camera-orbit="0deg 75deg 1.2m"
+              min-camera-orbit="auto auto 0.8m"
+              max-camera-orbit="auto auto 2.0m"
+              field-of-view="35deg"
               style={{ width: "100%", height: "100%" }}
               className="w-full h-full rounded-lg"
             />
