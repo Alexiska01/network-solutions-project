@@ -44,36 +44,48 @@ const SeriesCatalog3530Component = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Zap" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">PoE/PoE+ до 760 Вт</h3>
-              <p className="text-gray-600">Надежное питание устройств</p>
+              <h3 className="font-semibold text-lg mb-2 text-sm sm:text-lg">
+                PoE/PoE+ до 760 Вт
+              </h3>
+              <p className="text-gray-600 text-xs sm:text-base text-gray-500 sm:text-gray-600 leading-tight sm:leading-normal">
+                Надежное питание устройств
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Network" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">10G uplink (SFP+)</h3>
-              <p className="text-gray-600">Высокоскоростное подключение</p>
+              <h3 className="font-semibold text-lg mb-2 text-sm sm:text-lg">
+                10G uplink (SFP+)
+              </h3>
+              <p className="text-gray-600 text-xs sm:text-base text-gray-500 sm:text-gray-600 leading-tight sm:leading-normal">
+                Высокоскоростное подключение
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Fan" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
+              <h3 className="font-semibold text-lg mb-2 text-sm sm:text-lg">
                 Надёжное охлаждение и фиксированные БП
               </h3>
-              <p className="text-gray-600">Стабильная работа 24/7</p>
+              <p className="text-gray-600 text-xs sm:text-base text-gray-500 sm:text-gray-600 leading-tight sm:leading-normal">
+                Стабильная работа 24/7
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Shield" size={32} className="text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">
+              <h3 className="font-semibold text-lg mb-2 text-sm sm:text-lg">
                 Поддержка Layer 3 и резервирования
               </h3>
-              <p className="text-gray-600">Отказоустойчивость сети</p>
+              <p className="text-gray-600 text-xs sm:text-base text-gray-500 sm:text-gray-600 leading-tight sm:leading-normal">
+                Отказоустойчивость сети
+              </p>
             </div>
           </div>
         </div>
@@ -94,10 +106,10 @@ const SeriesCatalog3530Component = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* IDS3530-24P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-base sm:text-xl">
                 IDS3530-24P-6X
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 text-sm sm:text-base text-gray-500 sm:text-gray-600">
                 24×1G Base-T, 6×10G SFP+, PoE 380 Вт
               </p>
               <Button
@@ -113,10 +125,10 @@ const SeriesCatalog3530Component = () => {
 
             {/* IDS3530-48P-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-base sm:text-xl">
                 IDS3530-48P-6X
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 text-sm sm:text-base text-gray-500 sm:text-gray-600">
                 48×1G Base-T, 6×10G SFP+, PoE 760 Вт
               </p>
               <Button
@@ -132,10 +144,10 @@ const SeriesCatalog3530Component = () => {
 
             {/* IDS3530-24S-8T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-base sm:text-xl">
                 IDS3530-24S-8T-6X
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 text-sm sm:text-base text-gray-500 sm:text-gray-600">
                 24×1G SFP, 8×1G Base-T, 6×10G SFP+
               </p>
               <Button
@@ -151,10 +163,12 @@ const SeriesCatalog3530Component = () => {
 
             {/* IDS3530-48T-6X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-base sm:text-xl">
                 IDS3530-48T-6X
               </h3>
-              <p className="text-gray-600 mb-4">48×1G Base-T, 6×10G SFP+</p>
+              <p className="text-gray-600 mb-4 text-sm sm:text-base text-gray-500 sm:text-gray-600">
+                48×1G Base-T, 6×10G SFP+
+              </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
