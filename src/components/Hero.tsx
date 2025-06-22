@@ -3,79 +3,79 @@ import Icon from "@/components/ui/icon";
 
 const Hero = () => {
   return (
-    <section className="bg-gradient-hero text-white py-12 sm:py-16 lg:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+    <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
           <div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
+            <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
               Профессиональные решения для сетевой инфраструктуры
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 text-blue-100">
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
               iDATA — ведущий производитель коммутаторов, маршрутизаторов и
               беспроводного оборудования для корпоративных сетей любой
               сложности.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button className="bg-white text-[#0065B3] px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans">
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
+              <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
                 Посмотреть продукты
               </button>
-              <button className="border border-white text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-white hover:text-[#0065B3] transition-all duration-300 font-sans">
+              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-white hover:text-[#0065B3] transition-all duration-300 font-sans min-h-[44px]">
                 Связаться с нами
               </button>
             </div>
           </div>
-          <div className="relative mt-8 lg:mt-0">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8">
-              <div className="grid grid-cols-2 gap-4 sm:gap-6">
+          <div className="relative mt-6 md:mt-8 lg:mt-0">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8">
+              <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
                 <div className="text-center">
                   <Icon
                     name="Network"
-                    size={32}
-                    className="mx-auto mb-2 sm:mb-3 text-blue-200 sm:w-12 sm:h-12"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
                   />
-                  <h3 className="text-sm sm:text-base font-semibold mb-1">
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
                     Коммутаторы
                   </h3>
-                  <p className="text-xs sm:text-sm text-blue-200">
+                  <p className="text-xs md:text-sm text-blue-200">
                     L2/L3 решения
                   </p>
                 </div>
                 <div className="text-center">
                   <Icon
                     name="Router"
-                    size={32}
-                    className="mx-auto mb-2 sm:mb-3 text-blue-200 sm:w-12 sm:h-12"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
                   />
-                  <h3 className="text-sm sm:text-base font-semibold mb-1">
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
                     Маршрутизаторы
                   </h3>
-                  <p className="text-xs sm:text-sm text-blue-200">
+                  <p className="text-xs md:text-sm text-blue-200">
                     Корпоративные
                   </p>
                 </div>
                 <div className="text-center">
                   <Icon
                     name="Wifi"
-                    size={32}
-                    className="mx-auto mb-2 sm:mb-3 text-blue-200 sm:w-12 sm:h-12"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
                   />
-                  <h3 className="text-sm sm:text-base font-semibold mb-1">
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
                     Wi-Fi
                   </h3>
-                  <p className="text-xs sm:text-sm text-blue-200">
+                  <p className="text-xs md:text-sm text-blue-200">
                     Беспроводные AP
                   </p>
                 </div>
                 <div className="text-center">
                   <Icon
                     name="Shield"
-                    size={32}
-                    className="mx-auto mb-2 sm:mb-3 text-blue-200 sm:w-12 sm:h-12"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
                   />
-                  <h3 className="text-sm sm:text-base font-semibold mb-1">
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
                     Безопасность
                   </h3>
-                  <p className="text-xs sm:text-sm text-blue-200">
+                  <p className="text-xs md:text-sm text-blue-200">
                     Защита сети
                   </p>
                 </div>

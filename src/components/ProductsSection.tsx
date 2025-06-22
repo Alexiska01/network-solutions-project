@@ -40,53 +40,53 @@ const ProductsSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 font-sans">
+    <section className="py-10 md:py-16 bg-white">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 md:mb-4 font-sans">
             Наши продукты и технологии
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto font-sans">
+          <p className="text-sm md:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto font-sans">
             Полная линейка сетевого оборудования для построения надежной
             корпоративной инфраструктуры
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
+              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <div className="w-12 h-12 bg-gradient-icon rounded-lg flex items-center justify-center mb-4">
+              <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center mb-3 md:mb-4">
                 <Icon
                   name={product.icon as any}
-                  size={24}
-                  className="text-white"
+                  size={16}
+                  className="text-white md:w-5 md:h-5 lg:w-6 lg:h-6"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 font-sans">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-2 md:mb-3 font-sans">
                 {product.title}
               </h3>
-              <p className="text-gray-600 mb-4 font-sans">
+              <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4 font-sans leading-relaxed">
                 {product.description}
               </p>
-              <ul className="space-y-2">
+              <ul className="space-y-1.5 md:space-y-2">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center text-sm text-gray-700 font-sans"
+                    className="flex items-center text-xs md:text-sm text-gray-700 font-sans"
                   >
                     <Icon
                       name="Check"
-                      size={16}
-                      className="text-green-500 mr-2 flex-shrink-0"
+                      size={12}
+                      className="text-green-500 mr-1.5 md:mr-2 flex-shrink-0 md:w-4 md:h-4"
                     />
                     {feature}
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-[#0065B3] text-white py-2 px-4 rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans my-[53px]">
+              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans mt-4 md:mt-6 text-sm md:text-base min-h-[44px]">
                 Подробнее
               </button>
             </div>

@@ -29,34 +29,34 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6 font-sans">
+    <section className="py-12 md:py-16 lg:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="text-center mb-10 md:mb-12 lg:mb-16">
+          <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3 md:mb-4 lg:mb-6 font-sans">
             Почему выбирают iDATA
           </h2>
-          <p className="text-xl text-gray-600 font-sans">
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans">
             Преимущества, которые получают наши клиенты
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="text-center bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
+              className="text-center bg-white rounded-lg md:rounded-xl lg:rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <div className="w-20 h-20 bg-gradient-hero rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <div className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-hero rounded-lg md:rounded-xl lg:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 lg:mb-6">
                 <Icon
                   name={feature.icon as any}
-                  size={36}
-                  className="text-white"
+                  size={20}
+                  className="text-white md:w-6 md:h-6 lg:w-8 lg:h-8 xl:w-9 xl:h-9"
                 />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 font-sans">
+              <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-bold text-gray-900 mb-2 md:mb-3 lg:mb-4 font-sans">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 font-sans leading-relaxed">
+              <p className="text-xs md:text-sm lg:text-base text-gray-600 font-sans leading-relaxed">
                 {feature.description}
               </p>
             </div>
