@@ -96,7 +96,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               </Link>
             </div>
 
-            {/* Подкатегории */}
+            {/* Подкатегории с поддержкой 4 уровней */}
             {category.submenuItems && (
               <div className="ml-6 space-y-3">
                 {category.submenuItems.map((subcategory, subIndex) => (
@@ -113,21 +113,65 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                       {subcategory.name}
                     </Link>
 
-                    {/* Элементы подкатегории */}
-                    {subcategory.items && subcategory.items.length > 0 && (
-                      <div className="space-y-1">
-                        {subcategory.items.map((item, itemIndex) => (
-                          <Link
-                            key={item.path}
-                            to={item.path}
-                            className="block text-sm text-gray-700 py-2 px-3 rounded-md hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
-                            onClick={onClose}
-                          >
-                            {item.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
+                    {/* 3-й уровень: подкатегории уровней (доступа, распределения и т.д.) */}
+                    {subcategory.hasThirdLevel &&
+                      subcategory.items &&
+                      subcategory.items.length > 0 && (
+                        <div className="ml-4 space-y-2">
+                          {subcategory.items.map((thirdLevel, thirdIndex) => (
+                            <div
+                              key={thirdLevel.path}
+                              className="space-y-1 bg-gray-50 rounded-md p-2 border border-gray-200"
+                            >
+                              {/* Название 3-го уровня */}
+                              <Link
+                                to={thirdLevel.path}
+                                className="block text-xs font-medium text-gray-600 uppercase tracking-wide py-1 hover:text-idata-primary transition-colors"
+                                onClick={onClose}
+                              >
+                                {thirdLevel.name}
+                              </Link>
+
+                              {/* 4-й уровень: серии коммутаторов */}
+                              {thirdLevel.items &&
+                                thirdLevel.items.length > 0 && (
+                                  <div className="ml-2 space-y-1">
+                                    {thirdLevel.items.map(
+                                      (series, seriesIndex) => (
+                                        <Link
+                                          key={series.path}
+                                          to={series.path}
+                                          className="block text-sm text-gray-700 py-1.5 px-2 rounded hover:bg-white hover:text-gray-900 transition-all duration-200"
+                                          onClick={onClose}
+                                        >
+                                          {series.name}
+                                        </Link>
+                                      ),
+                                    )}
+                                  </div>
+                                )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                    {/* Обычные элементы подкатегории (для совместимости) */}
+                    {!subcategory.hasThirdLevel &&
+                      subcategory.items &&
+                      subcategory.items.length > 0 && (
+                        <div className="space-y-1">
+                          {subcategory.items.map((item, itemIndex) => (
+                            <Link
+                              key={item.path}
+                              to={item.path}
+                              className="block text-sm text-gray-700 py-2 px-3 rounded-md hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
+                              onClick={onClose}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
                   </div>
                 ))}
               </div>

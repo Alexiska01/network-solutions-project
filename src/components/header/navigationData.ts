@@ -26,44 +26,92 @@ export const productSubmenuItems = [
       {
         name: "Коммутаторы для корпоративных ЛВС",
         path: "/products/switches/corporate-lan",
+        hasThirdLevel: true,
         items: [
           {
-            name: "Коммутаторы серии IDS3530",
-            path: "/products/switches/ids3530",
+            name: "Коммутаторы уровня доступа",
+            path: "/products/switches/corporate-lan/access-level",
+            items: [
+              {
+                name: "Коммутаторы серии IDS3530",
+                path: "/products/switches/ids3530",
+              },
+              {
+                name: "Коммутаторы серии IDS3730",
+                path: "/products/switches/ids3730",
+              },
+              {
+                name: "Коммутаторы серии IDS4530",
+                path: "/products/switches/ids4530",
+              },
+              {
+                name: "Коммутаторы серии IDS6012",
+                path: "/products/switches/ids6012",
+              },
+            ],
           },
           {
-            name: "Коммутаторы серии IDS3730",
-            path: "/products/switches/ids3730",
+            name: "Коммутаторы распределительного уровня",
+            path: "/products/switches/corporate-lan/distribution-level",
+            items: [
+              {
+                name: "Коммутаторы серии IDS6010",
+                path: "/products/switches/ids6010",
+              },
+              {
+                name: "Коммутаторы серии IDS6030",
+                path: "/products/switches/ids6030",
+              },
+              {
+                name: "Коммутаторы серии IDS6032",
+                path: "/products/switches/ids6032",
+              },
+            ],
           },
           {
-            name: "Коммутаторы серии IDS4530",
-            path: "/products/switches/ids4530",
-          },
-          {
-            name: "Коммутаторы серии IDS6012",
-            path: "/products/switches/ids6012",
+            name: "Коммутаторы уровня ядра",
+            path: "/products/switches/corporate-lan/core-level",
+            items: [
+              {
+                name: "Коммутаторы серии IDS8040",
+                path: "/products/switches/ids8040",
+              },
+            ],
           },
         ],
       },
       {
         name: "Коммутаторы для центров обработки данных",
         path: "/products/switches/data-centers",
+        hasThirdLevel: true,
         items: [
           {
-            name: "Коммутаторы серии IDS8030",
-            path: "/products/switches/ids8030",
+            name: "Коммутаторы уровня Spine",
+            path: "/products/switches/data-centers/spine-level",
+            items: [
+              {
+                name: "Коммутаторы серии IDS8030",
+                path: "/products/switches/ids8030",
+              },
+              {
+                name: "Коммутаторы серии IDS8010",
+                path: "/products/switches/ids8010",
+              },
+              {
+                name: "Коммутаторы серии IDS6150",
+                path: "/products/switches/ids6150",
+              },
+            ],
           },
           {
-            name: "Коммутаторы серии IDS8010",
-            path: "/products/switches/ids8010",
-          },
-          {
-            name: "Коммутаторы серии IDS6150",
-            path: "/products/switches/ids6150",
-          },
-          {
-            name: "Коммутаторы серии IDS6130",
-            path: "/products/switches/ids6130",
+            name: "Коммутаторы уровня Leaf",
+            path: "/products/switches/data-centers/leaf-level",
+            items: [
+              {
+                name: "Коммутаторы серии IDS6130",
+                path: "/products/switches/ids6130",
+              },
+            ],
           },
         ],
       },
