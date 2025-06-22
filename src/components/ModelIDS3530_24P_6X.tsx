@@ -29,13 +29,7 @@ const ModelIDS3530_24P_6XComponent = () => {
           </Button>
         </div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <p className="text-sm md:text-base lg:text-lg text-white/90 mb-6">
-              Промышленный коммутатор для критически важных сетевых решений
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start">
+          <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start mt-16">
             <div className="lg:col-span-2">
               <ModelViewer
                 modelRef={modelViewerRef}
