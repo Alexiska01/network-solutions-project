@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDropdownMenu } from "@/hooks/useDropdownMenu";
 import Logo from "./header/Logo";
 import DesktopNavigation from "./header/DesktopNavigation";
+import MobileMenu from "./header/MobileMenu";
 
 const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const {
     dropdownState,
     closeAllSubmenus,
@@ -11,6 +13,14 @@ const Header = () => {
     scheduleCloseAllSubmenus,
     updateDropdownState,
   } = useDropdownMenu();
+
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleMobileMenuClose = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
@@ -29,6 +39,12 @@ const Header = () => {
               closeAllSubmenus={closeAllSubmenus}
               cancelCloseTimeout={cancelCloseTimeout}
               scheduleCloseAllSubmenus={scheduleCloseAllSubmenus}
+            />
+
+            <MobileMenu
+              isOpen={isMobileMenuOpen}
+              onToggle={handleMobileMenuToggle}
+              onClose={handleMobileMenuClose}
             />
           </div>
         </div>

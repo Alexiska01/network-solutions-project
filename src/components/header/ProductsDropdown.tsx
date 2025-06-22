@@ -10,7 +10,6 @@ interface ProductsDropdownProps {
   setActiveSubmenu: (submenuName: string | null) => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-  onClick: () => void;
 }
 
 const ProductsDropdown = ({
@@ -20,19 +19,10 @@ const ProductsDropdown = ({
   setActiveSubmenu,
   onMouseEnter,
   onMouseLeave,
-  onClick,
 }: ProductsDropdownProps) => {
   const activeItem = productSubmenuItems.find(
     (item) => item.name === dropdownState.activeSubmenu,
   );
-
-  const handleSubmenuItemClick = (item: any) => {
-    if (item.hasNestedSubmenu) {
-      setActiveSubmenu(
-        dropdownState.activeSubmenu === item.name ? null : item.name,
-      );
-    }
-  };
 
   return (
     <div
@@ -40,12 +30,9 @@ const ProductsDropdown = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <button
-        className="text-gray-700 hover:text-blue-600 px-2 md:px-3 py-2 text-sm md:text-base font-medium transition-colors flex items-center space-x-1 md:space-x-2"
-        onClick={onClick}
-      >
+      <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium transition-colors flex items-center space-x-2">
         <Icon name="Network" size={16} />
-        <span className="hidden sm:inline">Оборудование</span>
+        <span>Оборудование</span>
         <Icon
           name="ChevronDown"
           size={16}
@@ -56,13 +43,13 @@ const ProductsDropdown = ({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 md:left-auto md:right-0 top-full bg-white border border-gray-100 rounded-lg shadow-lg z-50 animate-fade-in flex flex-col md:flex-row min-w-[280px] md:min-w-max max-w-[90vw] md:max-w-none">
+        <div className="absolute left-0 top-full bg-white border border-gray-100 rounded-lg shadow-lg z-50 animate-fade-in flex">
           {/* Левая панель - основные разделы */}
-          <div className="w-full md:w-72 py-4 border-b md:border-b-0 md:border-r border-gray-100">
+          <div className="w-72 py-4 border-r border-gray-100">
             {/* Ссылка "Все коммутаторы" */}
             <Link
               to="/products/switches.html"
-              className="block px-4 md:px-6 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors border-b border-gray-100 mb-2"
+              className="block px-6 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors border-b border-gray-100 mb-2"
             >
               Все коммутаторы
             </Link>
@@ -71,7 +58,7 @@ const ProductsDropdown = ({
               <div key={item.path}>
                 <Link
                   to={item.path}
-                  className={`flex items-center justify-between px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700 hover:bg-gray-50 transition-all duration-200 group ${
+                  className={`flex items-center justify-between px-6 py-4 text-base text-gray-700 hover:bg-gray-50 transition-all duration-200 group ${
                     dropdownState.activeSubmenu === item.name
                       ? "bg-gray-50"
                       : ""
@@ -81,17 +68,11 @@ const ProductsDropdown = ({
                       ? setActiveSubmenu(item.name)
                       : setActiveSubmenu(null)
                   }
-                  onClick={(e) => {
-                    if (item.hasNestedSubmenu) {
-                      e.preventDefault();
-                      handleSubmenuItemClick(item);
-                    }
-                  }}
                 >
                   <div className="flex items-center space-x-3">
                     <Icon
                       name={item.icon}
-                      size={16}
+                      size={18}
                       className="text-gray-500 group-hover:text-blue-600 transition-colors"
                     />
                     <span className="font-medium">{item.name}</span>
@@ -110,12 +91,12 @@ const ProductsDropdown = ({
 
           {/* Правая панель - подразделы */}
           {activeItem?.submenuItems && (
-            <div className="w-full md:w-80 py-4 max-h-64 md:max-h-none overflow-y-auto">
+            <div className="w-80 py-4">
               {activeItem.submenuItems.map((submenuItem) => (
-                <div key={submenuItem.path} className="mb-4 md:mb-6">
+                <div key={submenuItem.path} className="mb-6">
                   <Link
                     to={submenuItem.path}
-                    className="block px-4 md:px-6 py-2 text-sm font-semibold text-gray-900 hover:text-blue-600 transition-colors"
+                    className="block px-6 py-2 text-sm font-semibold text-gray-900 hover:text-blue-600 transition-colors"
                   >
                     {submenuItem.name}
                   </Link>
@@ -126,7 +107,7 @@ const ProductsDropdown = ({
                         <Link
                           key={seriesItem.path}
                           to={seriesItem.path}
-                          className="block px-4 md:px-6 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200"
+                          className="block px-6 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200"
                         >
                           {seriesItem.name}
                         </Link>
