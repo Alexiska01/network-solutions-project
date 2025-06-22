@@ -29,15 +29,20 @@ const ModelIDS3530_24P_6XComponent = () => {
           </Button>
         </div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start mt-16">
+          <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start mt-4">
             <div className="lg:col-span-2">
-              <ModelViewer
-                modelRef={modelViewerRef}
-                modelPath={ids353024p6xData.modelPath}
-                indicatorsOn={indicatorsOn}
-                modelLoaded={modelLoaded}
-                onToggleIndicators={toggleIndicators}
-              />
+              <div
+                style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+                className="rounded-lg overflow-hidden"
+              >
+                <ModelViewer
+                  modelRef={modelViewerRef}
+                  modelPath={ids353024p6xData.modelPath}
+                  indicatorsOn={indicatorsOn}
+                  modelLoaded={modelLoaded}
+                  onToggleIndicators={toggleIndicators}
+                />
+              </div>
             </div>
 
             <div className="lg:col-span-1">
