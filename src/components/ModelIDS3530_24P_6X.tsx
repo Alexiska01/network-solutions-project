@@ -128,43 +128,121 @@ const ModelIDS3530_24P_6XComponent = () => {
                 <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans">
                   Основные характеристики
                 </h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
                     <span className="text-gray-600 font-sans text-sm">
                       Порты:
                     </span>
-                    <span className="font-medium font-sans text-sm">
+                    <span className="font-medium font-sans text-sm text-right">
                       24×1000M Base-T
+                      <br />
+                      <span className="text-xs text-gray-500">
+                        RJ45, Auto-MDI/MDIX
+                      </span>
                     </span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
                     <span className="text-gray-600 font-sans text-sm">
                       Слоты:
                     </span>
-                    <span className="font-medium font-sans text-sm">
+                    <span className="font-medium font-sans text-sm text-right">
                       6×10G SFP+
+                      <br />
+                      <span className="text-xs text-gray-500">
+                        Hot-swappable
+                      </span>
                     </span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
                     <span className="text-gray-600 font-sans text-sm">
                       Поддержка PoE&PoE+:
                     </span>
-                    <span className="font-medium font-sans text-sm">380W</span>
+                    <span className="font-medium font-sans text-sm text-right">
+                      380W общий бюджет
+                      <br />
+                      <span className="text-xs text-gray-500">30W на порт</span>
+                    </span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
                     <span className="text-gray-600 font-sans text-sm">
                       Производительность:
                     </span>
-                    <span className="font-medium font-sans text-sm">
+                    <span className="font-medium font-sans text-sm text-right">
                       168 Gbps
+                      <br />
+                      <span className="text-xs text-gray-500">125 Mpps</span>
                     </span>
                   </div>
-                  <div className="flex justify-between items-center py-2">
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
                     <span className="text-gray-600 font-sans text-sm">
                       Питание:
                     </span>
-                    <span className="font-medium font-sans text-sm">
-                      Fixed One AC Power Supply
+                    <span className="font-medium font-sans text-sm text-right">
+                      AC 100-240V
+                      <br />
+                      <span className="text-xs text-gray-500">
+                        50/60Hz, 480W max
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
+                    <span className="text-gray-600 font-sans text-sm">
+                      Размеры:
+                    </span>
+                    <span className="font-medium font-sans text-sm text-right">
+                      440×260×44 мм
+                      <br />
+                      <span className="text-xs text-gray-500">
+                        1U rack-mount
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
+                    <span className="text-gray-600 font-sans text-sm">
+                      Рабочая температура:
+                    </span>
+                    <span className="font-medium font-sans text-sm text-right">
+                      -5°C до +50°C
+                      <br />
+                      <span className="text-xs text-gray-500">
+                        Хранение: -40°C до +70°C
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
+                    <span className="text-gray-600 font-sans text-sm">
+                      Влажность:
+                    </span>
+                    <span className="font-medium font-sans text-sm text-right">
+                      10% ~ 90%
+                      <br />
+                      <span className="text-xs text-gray-500">
+                        без конденсации
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
+                    <span className="text-gray-600 font-sans text-sm">
+                      MAC-адреса:
+                    </span>
+                    <span className="font-medium font-sans text-sm">16K</span>
+                  </div>
+                  <div className="flex justify-between items-start py-2 border-b border-gray-100">
+                    <span className="text-gray-600 font-sans text-sm">
+                      VLAN:
+                    </span>
+                    <span className="font-medium font-sans text-sm">4K</span>
+                  </div>
+                  <div className="flex justify-between items-start py-2">
+                    <span className="text-gray-600 font-sans text-sm">
+                      Сертификация:
+                    </span>
+                    <span className="font-medium font-sans text-sm text-right">
+                      CE, FCC, RoHS
+                      <br />
+                      <span className="text-xs text-gray-500">
+                        IEEE 802.3at/af
+                      </span>
                     </span>
                   </div>
                 </div>
