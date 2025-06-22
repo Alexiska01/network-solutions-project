@@ -30,9 +30,9 @@ const ModelIDS3530_24P_6XComponent = () => {
         </div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-6 md:mb-8 lg:mb-12 leading-tight">
-              {ids353024p6xData.title}
-            </h1>
+            <p className="text-sm md:text-base lg:text-lg text-white/90 mb-6">
+              Промышленный коммутатор для критически важных сетевых решений
+            </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start">
@@ -51,6 +51,13 @@ const ModelIDS3530_24P_6XComponent = () => {
                 title="Основные характеристики"
                 specs={ids353024p6xData.basicSpecs}
               />
+
+              {/* Model Title below the table */}
+              <div className="mt-8 text-center">
+                <h2 className="text-lg md:text-xl lg:text-2xl font-normal text-white">
+                  {ids353024p6xData.title}
+                </h2>
+              </div>
             </div>
           </div>
 
