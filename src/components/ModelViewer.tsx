@@ -94,8 +94,10 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               disabled={!modelLoaded}
               className={`flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200 ${
                 modelLoaded
-                  ? `${indicatorsOn ? "bg-yellow-400 text-yellow-900" : "bg-white/10 text-white"} hover:bg-yellow-300 hover:text-yellow-900 cursor-pointer`
-                  : "bg-white/5 text-white/50 cursor-not-allowed"
+                  ? `${indicatorsOn ? "bg-yellow-400 text-yellow-900" : background === "light" ? "bg-gray-200 hover:bg-gray-300 text-gray-700" : "bg-white/10 text-white hover:bg-white/20"} cursor-pointer`
+                  : background === "light"
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-white/5 text-white/50 cursor-not-allowed"
               }`}
               title="Индикаторы"
             >
@@ -107,7 +109,9 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               className={`flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200 ${
                 background === "dark"
                   ? "bg-gray-700 text-gray-200"
-                  : "bg-white/10 hover:bg-white/20 text-white"
+                  : background === "light"
+                    ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                    : "bg-white/10 hover:bg-white/20 text-white"
               }`}
               title="Темный фон"
             >
@@ -118,8 +122,10 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               onClick={() => setBackground("light")}
               className={`flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200 ${
                 background === "light"
-                  ? "bg-white text-gray-700"
-                  : "bg-white/10 hover:bg-white/20 text-white"
+                  ? "bg-white text-gray-700 shadow-sm"
+                  : background === "light"
+                    ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                    : "bg-white/10 hover:bg-white/20 text-white"
               }`}
               title="Светлый фон"
             >
@@ -131,7 +137,9 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               className={`flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200 ${
                 background === "gradient"
                   ? "bg-blue-500 text-white"
-                  : "bg-white/10 hover:bg-white/20 text-white"
+                  : background === "light"
+                    ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                    : "bg-white/10 hover:bg-white/20 text-white"
               }`}
               title="Градиентный фон"
             >
