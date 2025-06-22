@@ -14,6 +14,7 @@ interface ModelViewerProps {
   modelPath: string;
   indicatorsOn: boolean;
   onToggleIndicators: () => void;
+  modelLoaded?: boolean;
 }
 
 const ModelViewer: React.FC<ModelViewerProps> = ({
@@ -21,6 +22,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
   modelPath,
   indicatorsOn,
   onToggleIndicators,
+  modelLoaded = false,
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -38,13 +40,24 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
           <Icon name="Maximize" size={20} />
         </button>
 
-        <div className="aspect-video bg-white/5 rounded-lg overflow-hidden">
+        <div className="aspect-video bg-white/5 rounded-lg overflow-hidden relative">
+          {!modelLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-white/10 backdrop-blur-sm">
+              <div className="text-white text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
+                <p className="text-sm">Загрузка 3D модели...</p>
+              </div>
+            </div>
+          )}
+
           <model-viewer
             ref={modelRef}
             src={modelPath}
             camera-controls
+            auto-rotate
             exposure="1.0"
             interaction-prompt="none"
+            loading="eager"
             style={{ width: "100%", height: "100%" }}
             className="w-full h-full"
           />
@@ -53,9 +66,16 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
         <div className="mt-4 flex items-center justify-center">
           <button
             onClick={onToggleIndicators}
-            className="flex items-center gap-3 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-200"
+            disabled={!modelLoaded}
+            className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 ${
+              modelLoaded
+                ? "bg-white/10 hover:bg-white/20 cursor-pointer"
+                : "bg-white/5 cursor-not-allowed opacity-50"
+            }`}
           >
-            <span className="text-white text-sm font-medium">Индикаторы</span>
+            <span className="text-white text-sm font-medium">
+              Индикаторы {modelLoaded ? "" : "(загрузка...)"}
+            </span>
             <div
               className={`w-12 h-6 rounded-full transition-all duration-200 ${
                 indicatorsOn ? "bg-green-400" : "bg-gray-400"
@@ -83,6 +103,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
             <model-viewer
               src={modelPath}
               camera-controls
+              auto-rotate
               exposure="1.0"
               interaction-prompt="none"
               style={{ width: "100%", height: "100%" }}

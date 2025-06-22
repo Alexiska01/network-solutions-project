@@ -11,7 +11,8 @@ import { ids353024p6xData } from "@/data/ids3530-24p-6x";
 
 const ModelIDS3530_24P_6XComponent = () => {
   const navigate = useNavigate();
-  const { modelViewerRef, indicatorsOn, toggleIndicators } = useModelViewer();
+  const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
+    useModelViewer();
 
   return (
     <div className="min-h-screen">
@@ -45,6 +46,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                 modelRef={modelViewerRef}
                 modelPath={ids353024p6xData.modelPath}
                 indicatorsOn={indicatorsOn}
+                modelLoaded={modelLoaded}
                 onToggleIndicators={toggleIndicators}
               />
             </div>
