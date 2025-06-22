@@ -9,10 +9,11 @@ const SeriesCatalog6010Component = () => {
       <section className="bg-gradient-hero text-white py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            IDS6010 — высокопроизводительные коммутаторы уровня распределения
+            IDS6010 — мощные 10G/25G/40G/100G-коммутаторы для магистральных
+            решений
           </h1>
           <p className="md:text-2xl mb-8 text-white/90 max-w-4xl mx-auto text-lg">
-            До 1.28 Tbps, модульная архитектура, резервирование, поддержка 100G
+            Высокая пропускная способность до 960 Gbps, модульная архитектура
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
