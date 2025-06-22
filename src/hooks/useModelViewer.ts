@@ -15,17 +15,33 @@ export const useModelViewer = () => {
 
       const handleError = (error: any) => {
         console.error("Ошибка загрузки 3D модели:", error);
+        // Попробуем загрузить запасную модель
+        setTimeout(() => {
+          if (modelViewer && !modelLoaded) {
+            modelViewer.src =
+              "https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3530-24P-6X.glb";
+          }
+        }, 2000);
+      };
+
+      const handleProgress = (event: any) => {
+        console.log(
+          "Загрузка модели:",
+          Math.round(event.detail.totalProgress * 100) + "%",
+        );
       };
 
       modelViewer.addEventListener("load", handleLoad);
       modelViewer.addEventListener("error", handleError);
+      modelViewer.addEventListener("progress", handleProgress);
 
       return () => {
         modelViewer.removeEventListener("load", handleLoad);
         modelViewer.removeEventListener("error", handleError);
+        modelViewer.removeEventListener("progress", handleProgress);
       };
     }
-  }, []);
+  }, [modelLoaded]);
 
   const toggleIndicators = () => {
     if (!modelViewerRef.current || !modelLoaded) {

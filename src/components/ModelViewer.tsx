@@ -58,6 +58,8 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
             exposure="1.0"
             interaction-prompt="none"
             loading="eager"
+            reveal="auto"
+            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3C/svg%3E"
             style={{ width: "100%", height: "100%" }}
             className="w-full h-full"
           />
