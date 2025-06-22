@@ -50,7 +50,7 @@ const ProductsDropdown = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center space-x-2">
+      <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium transition-colors flex items-center space-x-2">
         <Icon name="Network" size={16} />
         <span>Оборудование</span>
         <Icon
@@ -63,14 +63,14 @@ const ProductsDropdown = ({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-72">
-          <div className="py-2">
+        <div className="absolute left-0 top-full bg-white border border-gray-100 rounded-lg shadow-lg z-50 animate-fade-in w-72">
+          <div className="py-3">
             {productSubmenuItems.map((subItem) => (
               <div key={subItem.path}>
                 {subItem.hasNestedSubmenu ? (
                   <>
                     <div
-                      className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
+                      className="flex items-center justify-between px-6 py-4 text-base text-gray-700 hover:bg-gradient-to-r hover:from-[#1A2980] hover:via-[#0065B3] hover:to-[#00B5AD] hover:text-white transition-all duration-200 cursor-pointer group"
                       onClick={() => {
                         if (subItem.name === "Коммутаторы") {
                           handleSwitchesToggle();
@@ -79,14 +79,18 @@ const ProductsDropdown = ({
                         }
                       }}
                     >
-                      <div className="flex items-center space-x-2">
-                        <Icon name={subItem.icon} size={16} />
-                        <span>{subItem.name}</span>
+                      <div className="flex items-center space-x-3">
+                        <Icon
+                          name={subItem.icon}
+                          size={18}
+                          className="group-hover:text-white transition-colors duration-200"
+                        />
+                        <span className="font-medium">{subItem.name}</span>
                       </div>
                       <Icon
                         name="ChevronRight"
-                        size={16}
-                        className={`transition-transform duration-300 ${
+                        size={18}
+                        className={`transition-all duration-300 group-hover:text-white ${
                           (subItem.name === "Коммутаторы" &&
                             dropdownState.isSwitchesSubmenuOpen) ||
                           (subItem.name === "Маршрутизаторы" &&
@@ -113,7 +117,7 @@ const ProductsDropdown = ({
                         <Link
                           key={nestedItem.path}
                           to={nestedItem.path}
-                          className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-blue-300 bg-gray-50"
+                          className="block px-12 py-3 text-sm text-gray-600 hover:bg-gradient-to-r hover:from-[#1A2980] hover:via-[#0065B3] hover:to-[#00B5AD] hover:text-white transition-all duration-200 border-l-4 border-blue-200 bg-gray-50"
                         >
                           {nestedItem.name}
                         </Link>
@@ -122,11 +126,15 @@ const ProductsDropdown = ({
                 ) : (
                   <Link
                     to={subItem.path}
-                    className="flex items-center space-x-2 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                    className="flex items-center space-x-3 px-6 py-4 text-base text-gray-700 hover:bg-gradient-to-r hover:from-[#1A2980] hover:via-[#0065B3] hover:to-[#00B5AD] hover:text-white transition-all duration-200 group"
                     onClick={handleSimpleItemClick}
                   >
-                    <Icon name={subItem.icon} size={16} />
-                    <span>{subItem.name}</span>
+                    <Icon
+                      name={subItem.icon}
+                      size={18}
+                      className="group-hover:text-white transition-colors duration-200"
+                    />
+                    <span className="font-medium">{subItem.name}</span>
                   </Link>
                 )}
               </div>
