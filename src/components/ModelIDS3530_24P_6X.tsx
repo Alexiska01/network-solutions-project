@@ -16,20 +16,19 @@ const ModelIDS3530_24P_6XComponent = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Back Button */}
-      <div className="absolute top-4 left-4 z-50">
-        <Button
-          variant="outline"
-          onClick={() => navigate("/products/switches/ids3530")}
-          className="bg-white/90 backdrop-blur-sm hover:bg-white"
-        >
-          <Icon name="ChevronLeft" className="mr-2" />
-          Назад
-        </Button>
-      </div>
-
       {/* Hero Section with 3D Model */}
-      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
+      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative">
+        {/* Back Button */}
+        <div className="absolute top-4 left-4 z-20">
+          <Button
+            variant="outline"
+            onClick={() => navigate("/products/switches/ids3530")}
+            className="bg-white/90 backdrop-blur-sm hover:bg-white"
+          >
+            <Icon name="ChevronLeft" className="mr-2" />
+            Назад
+          </Button>
+        </div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-6 md:mb-8 lg:mb-12 leading-tight">
