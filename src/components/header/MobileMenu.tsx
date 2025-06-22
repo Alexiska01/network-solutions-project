@@ -58,8 +58,10 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         return distributionLevelSeries;
       case "/products/switches/data-centers":
         return dataCentersItems;
-      case "/products/switches/spine-level":
+      case "/products/switches/data-centers/spine-level":
         return spineLevelSeries;
+      case "/products/switches/data-centers/leaf-level":
+        return leafLevelSeries;
       default:
         return [];
     }

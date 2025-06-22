@@ -46,12 +46,12 @@ export const corporateLanItems = [
   {
     name: "Коммутаторы уровня доступа",
     path: "/products/switches/corporate-lan/access-level",
-    hasSubmenu: true,
+    hasThirdLevel: true,
   },
   {
     name: "Коммутаторы уровня распределения",
     path: "/products/switches/corporate-lan/distribution-level",
-    hasSubmenu: true,
+    hasThirdLevel: true,
   },
 ];
 
@@ -71,12 +71,13 @@ export const distributionLevelSeries = [
 export const dataCentersItems = [
   {
     name: "Коммутаторы уровня Spine",
-    path: "/products/switches/spine-level",
-    hasSubmenu: true,
+    path: "/products/switches/data-centers/spine-level",
+    hasThirdLevel: true,
   },
   {
     name: "Коммутаторы уровня Leaf",
-    path: "/products/switches/leaf-level",
+    path: "/products/switches/data-centers/leaf-level",
+    hasThirdLevel: true,
   },
 ];
 
