@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { DropdownState } from "@/hooks/useDropdownMenu";
 import ProductsDropdown from "./ProductsDropdown";
 import { navigationItems } from "./navigationData";
+import Icon from "@/components/ui/icon";
 
 interface DesktopNavigationProps {
   dropdownState: DropdownState;
