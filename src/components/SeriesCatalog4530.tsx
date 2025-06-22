@@ -8,7 +8,7 @@ const SeriesCatalog4530Component = () => {
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+          <h1 className="md:text-5xl font-bold mb-6 leading-tight text-4xl">
             IDS4530 — расширяемые коммутаторы для корпоративной и операторской
             сети
           </h1>
