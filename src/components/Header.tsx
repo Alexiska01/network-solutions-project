@@ -25,18 +25,16 @@ const Header = () => {
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-start h-16 gap-8">
+        <div className="flex items-center justify-between h-16">
           <Logo />
 
-          <div className="flex-1 flex justify-center">
-            <DesktopNavigation
-              dropdownState={dropdownState}
-              updateDropdownState={updateDropdownState}
-              closeAllSubmenus={closeAllSubmenus}
-              cancelCloseTimeout={cancelCloseTimeout}
-              scheduleCloseAllSubmenus={scheduleCloseAllSubmenus}
-            />
-          </div>
+          <DesktopNavigation
+            dropdownState={dropdownState}
+            updateDropdownState={updateDropdownState}
+            closeAllSubmenus={closeAllSubmenus}
+            cancelCloseTimeout={cancelCloseTimeout}
+            scheduleCloseAllSubmenus={scheduleCloseAllSubmenus}
+          />
 
           <MobileMenu
             isOpen={isMobileMenuOpen}
