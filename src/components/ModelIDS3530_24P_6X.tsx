@@ -1,52 +1,17 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { useNavigate } from "react-router-dom";
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "model-viewer": any;
-    }
-  }
-}
+import { useModelViewer } from "@/hooks/useModelViewer";
+import ModelViewer from "@/components/ModelViewer";
+import SpecTable from "@/components/SpecTable";
+import FeatureCard from "@/components/FeatureCard";
+import DetailedSpecCard from "@/components/DetailedSpecCard";
+import { ids353024p6xData } from "@/data/ids3530-24p-6x";
 
 const ModelIDS3530_24P_6XComponent = () => {
   const navigate = useNavigate();
-  const modelViewerRef = useRef<any>(null);
-  const [indicatorsOn, setIndicatorsOn] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  const toggleIndicators = () => {
-    if (modelViewerRef.current) {
-      const model = modelViewerRef.current;
-      const threeModel = model.model;
-
-      if (!threeModel || !threeModel.materials) return;
-
-      const mat1 = threeModel.materials.find(
-        (m: any) => m.name === "Material_Indicator",
-      );
-      const mat2 = threeModel.materials.find(
-        (m: any) => m.name === "Material_Indicator2",
-      );
-
-      const newState = !indicatorsOn;
-
-      if (mat1) {
-        mat1.setEmissiveFactor(newState ? [0.2, 1.0, 0.5] : [0.27, 0.27, 0.27]);
-      }
-      if (mat2) {
-        mat2.setEmissiveFactor(newState ? [1.0, 0.9, 0.3] : [0.27, 0.27, 0.27]);
-      }
-
-      setIndicatorsOn(newState);
-    }
-  };
-
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
-  };
+  const { modelViewerRef, indicatorsOn, toggleIndicators } = useModelViewer();
 
   return (
     <div className="min-h-screen">
@@ -67,111 +32,28 @@ const ModelIDS3530_24P_6XComponent = () => {
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-              IDS3530-24P-6X
+              {ids353024p6xData.title}
             </h1>
             <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
-              24×1G Base-T + 6×10G SFP+, PoE+ 380 Вт — оптимальная
-              производительность для среднего бизнеса
+              {ids353024p6xData.description}
             </p>
           </div>
 
-          {/* 3D Model and Specs Container */}
           <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start">
-            {/* 3D Model */}
             <div className="lg:col-span-2">
-              <div className="relative bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8">
-                {/* Fullscreen Button */}
-                <button
-                  onClick={toggleFullscreen}
-                  className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 text-white p-2 rounded-lg transition-all duration-200 z-10"
-                >
-                  <Icon name="Maximize" size={20} />
-                </button>
-
-                <div className="aspect-video bg-white/5 rounded-lg overflow-hidden">
-                  <model-viewer
-                    ref={modelViewerRef}
-                    src="https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3530-24P-6X.glb"
-                    camera-controls
-                    exposure="1.0"
-                    interaction-prompt="none"
-                    style={{ width: "100%", height: "100%" }}
-                    className="w-full h-full"
-                  />
-                </div>
-
-                {/* Indicators Toggle */}
-                <div className="mt-4 flex items-center justify-center">
-                  <button
-                    onClick={toggleIndicators}
-                    className="flex items-center gap-3 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-200"
-                  >
-                    <span className="text-white text-sm font-medium">
-                      Индикаторы
-                    </span>
-                    <div
-                      className={`w-12 h-6 rounded-full transition-all duration-200 ${
-                        indicatorsOn ? "bg-green-400" : "bg-gray-400"
-                      }`}
-                    >
-                      <div
-                        className={`w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-200 ${
-                          indicatorsOn ? "translate-x-6" : "translate-x-0"
-                        }`}
-                      />
-                    </div>
-                  </button>
-                </div>
-              </div>
+              <ModelViewer
+                modelRef={modelViewerRef}
+                modelPath={ids353024p6xData.modelPath}
+                indicatorsOn={indicatorsOn}
+                onToggleIndicators={toggleIndicators}
+              />
             </div>
 
-            {/* Specifications Table */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans">
-                  Основные характеристики
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-sans text-sm">
-                      Порты:
-                    </span>
-                    <span className="font-medium font-sans text-sm">
-                      24×1000M Base-T
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-sans text-sm">
-                      Слоты:
-                    </span>
-                    <span className="font-medium font-sans text-sm">
-                      6×10G SFP+
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-sans text-sm">
-                      Поддержка PoE&PoE+:
-                    </span>
-                    <span className="font-medium font-sans text-sm">380W</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-sans text-sm">
-                      Производительность:
-                    </span>
-                    <span className="font-medium font-sans text-sm">
-                      168 Gbps
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-gray-600 font-sans text-sm">
-                      Питание:
-                    </span>
-                    <span className="font-medium font-sans text-sm">
-                      Fixed One AC Power Supply
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <SpecTable
+                title="Основные характеристики"
+                specs={ids353024p6xData.basicSpecs}
+              />
             </div>
           </div>
 
@@ -187,28 +69,6 @@ const ModelIDS3530_24P_6XComponent = () => {
         </div>
       </section>
 
-      {/* Fullscreen Modal */}
-      {isFullscreen && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="relative w-full max-w-6xl aspect-video">
-            <button
-              onClick={toggleFullscreen}
-              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-lg transition-all duration-200 z-10"
-            >
-              <Icon name="X" size={24} />
-            </button>
-            <model-viewer
-              src="https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3530-24P-6X.glb"
-              camera-controls
-              exposure="1.0"
-              interaction-prompt="none"
-              style={{ width: "100%", height: "100%" }}
-              className="w-full h-full rounded-lg"
-            />
-          </div>
-        </div>
-      )}
-
       {/* Key Features */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
@@ -219,41 +79,9 @@ const ModelIDS3530_24P_6XComponent = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Zap" size={32} className="text-white" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2 font-sans">
-                PoE+ 380 Вт
-              </h3>
-              <p className="text-gray-600 font-sans">
-                Надежное питание IP-камер, точек доступа и других устройств
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Network" size={32} className="text-white" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2 font-sans">
-                6×10G SFP+
-              </h3>
-              <p className="text-gray-600 font-sans">
-                Высокоскоростные аплинки для подключения к серверам и магистрали
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Shield" size={32} className="text-white" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2 font-sans">
-                L2+/L3 функции
-              </h3>
-              <p className="text-gray-600 font-sans">
-                Продвинутая маршрутизация и функции безопасности
-              </p>
-            </div>
+            {ids353024p6xData.features.map((feature, index) => (
+              <FeatureCard key={index} feature={feature} />
+            ))}
           </div>
         </div>
       </section>
@@ -268,241 +96,9 @@ const ModelIDS3530_24P_6XComponent = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Порты и интерфейсы */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans flex items-center">
-                <Icon name="Plug" className="mr-2 text-blue-600" />
-                Порты и интерфейсы
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Порты Ethernet:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    24×10/100/1000M Base-T RJ45
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    SFP+ слоты:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    6×10G SFP+
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Консольный порт:
-                  </span>
-                  <span className="font-medium font-sans text-sm">1×RJ45</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600 font-sans text-sm">
-                    USB-порт:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    1×USB 2.0
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Производительность */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans flex items-center">
-                <Icon name="Gauge" className="mr-2 text-green-600" />
-                Производительность
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Пропускная способность:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    168 Gbps
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Скорость передачи:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    125 Mpps
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Таблица MAC-адресов:
-                  </span>
-                  <span className="font-medium font-sans text-sm">32K</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Задержка:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    &lt; 3 μs
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* PoE характеристики */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans flex items-center">
-                <Icon name="Zap" className="mr-2 text-orange-600" />
-                PoE характеристики
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Общая мощность PoE:
-                  </span>
-                  <span className="font-medium font-sans text-sm">380W</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    PoE портов:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    24 порта
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Стандарты:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    IEEE 802.3af/at
-                  </span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Мощность на порт:
-                  </span>
-                  <span className="font-medium font-sans text-sm">до 30W</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Физические характеристики */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans flex items-center">
-                <Icon name="Box" className="mr-2 text-purple-600" />
-                Физические характеристики
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Размеры (ШxГxВ):
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    440×260×44 мм
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">Вес:</span>
-                  <span className="font-medium font-sans text-sm">3.2 кг</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Монтаж:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    19" стойка, 1U
-                  </span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Материал корпуса:
-                  </span>
-                  <span className="font-medium font-sans text-sm">Металл</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Питание и охлаждение */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans flex items-center">
-                <Icon name="Cpu" className="mr-2 text-red-600" />
-                Питание и охлаждение
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Источник питания:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    Fixed One AC Power Supply
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Напряжение:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    100-240V AC, 50/60Hz
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Максимальное потребление:
-                  </span>
-                  <span className="font-medium font-sans text-sm">450W</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Охлаждение:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    Интеллектуальные вентиляторы
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Условия эксплуатации */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 font-sans flex items-center">
-                <Icon name="Thermometer" className="mr-2 text-indigo-600" />
-                Условия эксплуатации
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Рабочая температура:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    0°C ~ 50°C
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Температура хранения:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    -40°C ~ 70°C
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Влажность:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    10% ~ 90% (без конденсата)
-                  </span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600 font-sans text-sm">
-                    Высота над уровнем моря:
-                  </span>
-                  <span className="font-medium font-sans text-sm">
-                    до 3000 м
-                  </span>
-                </div>
-              </div>
-            </div>
+            {ids353024p6xData.specGroups.map((specGroup, index) => (
+              <DetailedSpecCard key={index} specGroup={specGroup} />
+            ))}
           </div>
         </div>
       </section>
@@ -511,7 +107,7 @@ const ModelIDS3530_24P_6XComponent = () => {
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto">
-            Готовы внедрить IDS3530-24P-6X?
+            Готовы внедрить {ids353024p6xData.title}?
           </h2>
           <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
             Получите персональное предложение и техническую консультацию от
