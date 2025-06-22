@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  navigationItems,
-  productSubmenuItems,
-  switchesSubmenuItems,
-  routersSubmenuItems,
-  corporateLanItems,
-  accessLevelSeries,
-  distributionLevelSeries,
-  dataCentersItems,
-  spineLevelSeries,
-} from "./navigationData";
+import { navigationItems, productSubmenuItems } from "./navigationData";
 import Icon from "@/components/ui/icon";
 
 interface MobileMenuProps {
@@ -21,33 +11,52 @@ interface MobileMenuProps {
 
 const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [currentLevel, setCurrentLevel] = useState<string>("main");
+  const [breadcrumb, setBreadcrumb] = useState<
+    Array<{ name: string; level: string }>
+  >([]);
 
   // Сброс меню при закрытии
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
         setExpandedItems(new Set());
+        setCurrentLevel("main");
+        setBreadcrumb([]);
       }, 300);
     }
   }, [isOpen]);
 
-  const toggleExpanded = (itemPath: string) => {
-    setExpandedItems((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(itemPath)) {
-        newSet.delete(itemPath);
-      } else {
-        newSet.add(itemPath);
+  const navigateToLevel = (level: string, name?: string) => {
+    if (level === "main") {
+      setCurrentLevel("main");
+      setBreadcrumb([]);
+    } else {
+      setCurrentLevel(level);
+      if (name) {
+        setBreadcrumb((prev) => [...prev, { name, level }]);
       }
-      return newSet;
-    });
+    }
+  };
+
+  const goBack = () => {
+    if (breadcrumb.length > 0) {
+      const newBreadcrumb = [...breadcrumb];
+      newBreadcrumb.pop();
+      setBreadcrumb(newBreadcrumb);
+
+      if (newBreadcrumb.length === 0) {
+        setCurrentLevel("main");
+      } else {
+        setCurrentLevel(newBreadcrumb[newBreadcrumb.length - 1].level);
+      }
+    }
   };
 
   const handleItemClick = (item: any, e: React.MouseEvent) => {
     if (item.hasSubmenu && item.path === "/products") {
       e.preventDefault();
-      toggleExpanded(item.path);
+      navigateToLevel("products", "Оборудование");
     } else if (item.path === "/contacts") {
       e.preventDefault();
       onClose();
@@ -55,131 +64,244 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       if (contactsSection) {
         contactsSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    } else if (
-      !item.hasSubmenu &&
-      !item.hasNestedSubmenu &&
-      !item.hasThirdLevel
-    ) {
+    } else if (!item.hasSubmenu) {
       onClose();
     }
   };
 
-  const renderProductsMenu = () => {
-    if (!expandedItems.has("/products")) return null;
+  const renderMainMenu = () => (
+    <div className="space-y-1">
+      {navigationItems.map((item, index) => (
+        <div key={item.path}>
+          {item.hasSubmenu ? (
+            <button
+              onClick={(e) => handleItemClick(item, e)}
+              className="group w-full flex items-center justify-between p-4 text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+            >
+              <div className="flex items-center space-x-3">
+                <Icon name={item.icon} size={20} className="text-white/80" />
+                <span className="text-base font-medium">{item.name}</span>
+              </div>
+              <Icon
+                name="ChevronUp"
+                size={16}
+                className="text-white/60 rotate-90"
+              />
+            </button>
+          ) : (
+            <Link
+              to={item.path}
+              className="group w-full flex items-center space-x-3 p-4 text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+              onClick={(e) => handleItemClick(item, e)}
+            >
+              <Icon name={item.icon} size={20} className="text-white/80" />
+              <span className="text-base font-medium">{item.name}</span>
+            </Link>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderProductsMenu = () => (
+    <div className="space-y-3">
+      {/* Кнопка "Все коммутаторы" */}
+      <Link
+        to="/products/switches"
+        className="block w-full p-4 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+        onClick={onClose}
+      >
+        Все коммутаторы
+      </Link>
+
+      {/* Категории продуктов */}
+      {productSubmenuItems.map((category) => (
+        <div key={category.path}>
+          {category.hasNestedSubmenu ? (
+            <button
+              onClick={() =>
+                navigateToLevel(`category-${category.name}`, category.name)
+              }
+              className="group w-full flex items-center justify-between p-4 bg-white/10 backdrop-blur-sm rounded-lg text-white hover:bg-white/20 transition-all duration-200"
+            >
+              <div className="flex items-center space-x-3">
+                <Icon
+                  name={category.icon}
+                  size={18}
+                  className="text-white/80"
+                />
+                <span className="text-sm font-medium">{category.name}</span>
+              </div>
+              <Icon
+                name="ChevronUp"
+                size={14}
+                className="text-white/60 rotate-90"
+              />
+            </button>
+          ) : (
+            <Link
+              to={category.path}
+              className="group w-full flex items-center space-x-3 p-4 bg-white/10 backdrop-blur-sm rounded-lg text-white hover:bg-white/20 transition-all duration-200"
+              onClick={onClose}
+            >
+              <Icon name={category.icon} size={18} className="text-white/80" />
+              <span className="text-sm font-medium">{category.name}</span>
+            </Link>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderCategoryMenu = (categoryName: string) => {
+    const category = productSubmenuItems.find(
+      (cat) => `category-${cat.name}` === currentLevel,
+    );
+    if (!category || !category.submenuItems) return null;
 
     return (
-      <div className="ml-4 mt-2 space-y-1 animate-fade-in">
-        {/* Ссылка "Все коммутаторы" */}
-        <Link
-          to="/products/switches"
-          className="block py-3 px-4 text-sm font-semibold text-gray-800 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition-all duration-200 shadow-sm"
-          onClick={onClose}
-        >
-          Все коммутаторы
-        </Link>
-
-        {productSubmenuItems.map((category, categoryIndex) => (
-          <div key={category.path} className="space-y-2">
-            {/* Основная категория */}
-            <div className="flex items-center py-2 px-3 bg-white rounded-lg shadow-sm border border-gray-100">
-              <Icon
-                name={category.icon}
-                size={16}
-                className="text-idata-primary mr-3 flex-shrink-0"
-              />
+      <div className="space-y-3">
+        {category.submenuItems.map((subcategory) => (
+          <div key={subcategory.path}>
+            {subcategory.hasThirdLevel ? (
+              <button
+                onClick={() =>
+                  navigateToLevel(
+                    `subcategory-${subcategory.name}`,
+                    subcategory.name,
+                  )
+                }
+                className="group w-full text-left p-4 bg-white/10 backdrop-blur-sm rounded-lg text-white hover:bg-white/20 transition-all duration-200"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium uppercase tracking-wide text-blue-200">
+                    {subcategory.name}
+                  </span>
+                  <Icon
+                    name="ChevronUp"
+                    size={14}
+                    className="text-white/60 rotate-90"
+                  />
+                </div>
+              </button>
+            ) : (
               <Link
-                to={category.path}
-                className="font-medium text-gray-800 text-sm flex-1 hover:text-idata-primary transition-colors"
+                to={subcategory.path}
+                className="block w-full p-4 bg-white/10 backdrop-blur-sm rounded-lg text-white hover:bg-white/20 transition-all duration-200"
                 onClick={onClose}
               >
-                {category.name}
+                <span className="text-sm font-medium uppercase tracking-wide text-blue-200">
+                  {subcategory.name}
+                </span>
               </Link>
-            </div>
-
-            {/* Подкатегории с поддержкой 4 уровней */}
-            {category.submenuItems && (
-              <div className="ml-6 space-y-3">
-                {category.submenuItems.map((subcategory, subIndex) => (
-                  <div
-                    key={subcategory.path}
-                    className="space-y-1 bg-white rounded-lg p-3 border border-gray-100 shadow-sm"
-                  >
-                    {/* Название подкатегории */}
-                    <Link
-                      to={subcategory.path}
-                      className="block text-xs font-semibold text-idata-primary uppercase tracking-wide py-1 hover:text-idata-primary/80 transition-colors"
-                      onClick={onClose}
-                    >
-                      {subcategory.name}
-                    </Link>
-
-                    {/* 3-й уровень: подкатегории уровней (доступа, распределения и т.д.) */}
-                    {subcategory.hasThirdLevel &&
-                      subcategory.items &&
-                      subcategory.items.length > 0 && (
-                        <div className="ml-4 space-y-2">
-                          {subcategory.items.map((thirdLevel, thirdIndex) => (
-                            <div
-                              key={thirdLevel.path}
-                              className="space-y-1 bg-gray-50 rounded-md p-2 border border-gray-200"
-                            >
-                              {/* Название 3-го уровня */}
-                              <Link
-                                to={thirdLevel.path}
-                                className="block text-xs font-medium text-gray-600 uppercase tracking-wide py-1 hover:text-idata-primary transition-colors"
-                                onClick={onClose}
-                              >
-                                {thirdLevel.name}
-                              </Link>
-
-                              {/* 4-й уровень: серии коммутаторов */}
-                              {thirdLevel.items &&
-                                thirdLevel.items.length > 0 && (
-                                  <div className="ml-2 space-y-1">
-                                    {thirdLevel.items.map(
-                                      (series, seriesIndex) => (
-                                        <Link
-                                          key={series.path}
-                                          to={series.path}
-                                          className="block text-sm text-gray-700 py-1.5 px-2 rounded hover:bg-white hover:text-gray-900 transition-all duration-200"
-                                          onClick={onClose}
-                                        >
-                                          {series.name}
-                                        </Link>
-                                      ),
-                                    )}
-                                  </div>
-                                )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                    {/* Обычные элементы подкатегории (для совместимости) */}
-                    {!subcategory.hasThirdLevel &&
-                      subcategory.items &&
-                      subcategory.items.length > 0 && (
-                        <div className="space-y-1">
-                          {subcategory.items.map((item, itemIndex) => (
-                            <Link
-                              key={item.path}
-                              to={item.path}
-                              className="block text-sm text-gray-700 py-2 px-3 rounded-md hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
-                              onClick={onClose}
-                            >
-                              {item.name}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                  </div>
-                ))}
-              </div>
             )}
           </div>
         ))}
       </div>
     );
+  };
+
+  const renderSubcategoryMenu = () => {
+    const categoryName = currentLevel.replace("subcategory-", "");
+    const category = productSubmenuItems.find((cat) =>
+      cat.submenuItems?.some((sub) => sub.name === categoryName),
+    );
+    const subcategory = category?.submenuItems?.find(
+      (sub) => sub.name === categoryName,
+    );
+
+    if (!subcategory || !subcategory.items) return null;
+
+    return (
+      <div className="space-y-3">
+        {subcategory.items.map((thirdLevel) => (
+          <div key={thirdLevel.path}>
+            {thirdLevel.items && thirdLevel.items.length > 0 ? (
+              <button
+                onClick={() =>
+                  navigateToLevel(
+                    `thirdlevel-${thirdLevel.name}`,
+                    thirdLevel.name,
+                  )
+                }
+                className="group w-full text-left p-4 bg-white/10 backdrop-blur-sm rounded-lg text-white hover:bg-white/20 transition-all duration-200"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-300">
+                    {thirdLevel.name}
+                  </span>
+                  <Icon
+                    name="ChevronUp"
+                    size={14}
+                    className="text-white/60 rotate-90"
+                  />
+                </div>
+              </button>
+            ) : (
+              <Link
+                to={thirdLevel.path}
+                className="block w-full p-4 bg-white/10 backdrop-blur-sm rounded-lg text-white hover:bg-white/20 transition-all duration-200"
+                onClick={onClose}
+              >
+                <span className="text-sm font-medium text-gray-300">
+                  {thirdLevel.name}
+                </span>
+              </Link>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderThirdLevelMenu = () => {
+    const thirdLevelName = currentLevel.replace("thirdlevel-", "");
+    // Найти нужный третий уровень через все категории
+    let thirdLevelItem = null;
+
+    for (const category of productSubmenuItems) {
+      if (category.submenuItems) {
+        for (const subcategory of category.submenuItems) {
+          if (subcategory.items) {
+            const found = subcategory.items.find(
+              (item) => item.name === thirdLevelName,
+            );
+            if (found) {
+              thirdLevelItem = found;
+              break;
+            }
+          }
+        }
+      }
+      if (thirdLevelItem) break;
+    }
+
+    if (!thirdLevelItem || !thirdLevelItem.items) return null;
+
+    return (
+      <div className="space-y-2">
+        {thirdLevelItem.items.map((series) => (
+          <Link
+            key={series.path}
+            to={series.path}
+            className="block w-full p-3 bg-white rounded-lg text-gray-900 hover:bg-gray-50 transition-all duration-200"
+            onClick={onClose}
+          >
+            <span className="text-sm font-medium">{series.name}</span>
+          </Link>
+        ))}
+      </div>
+    );
+  };
+
+  const getCurrentContent = () => {
+    if (currentLevel === "main") return renderMainMenu();
+    if (currentLevel === "products") return renderProductsMenu();
+    if (currentLevel.startsWith("category-"))
+      return renderCategoryMenu(currentLevel);
+    if (currentLevel.startsWith("subcategory-")) return renderSubcategoryMenu();
+    if (currentLevel.startsWith("thirdlevel-")) return renderThirdLevelMenu();
+    return renderMainMenu();
   };
 
   return (
@@ -227,8 +349,20 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       >
         {/* Шапка меню */}
         <div className="flex justify-between items-center h-12 md:h-16 px-4 md:px-6 border-b border-white/10">
-          <div className="text-base md:text-lg font-semibold text-white font-sans">
-            Меню
+          <div className="flex items-center space-x-3">
+            {breadcrumb.length > 0 && (
+              <button
+                onClick={goBack}
+                className="w-8 h-8 rounded-md bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-200 flex items-center justify-center"
+              >
+                <Icon name="ChevronLeft" size={16} />
+              </button>
+            )}
+            <div className="text-base md:text-lg font-semibold text-white font-sans">
+              {breadcrumb.length > 0
+                ? breadcrumb[breadcrumb.length - 1].name
+                : "Меню"}
+            </div>
           </div>
 
           <button
@@ -243,66 +377,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         {/* Контейнер меню */}
         <div className="h-full overflow-y-auto">
           <nav className="flex flex-col py-3 px-4 md:py-4 md:px-6 font-sans">
-            {navigationItems.map((item, index) => (
-              <div key={item.path}>
-                {item.hasSubmenu ? (
-                  <div>
-                    <button
-                      onClick={(e) => handleItemClick(item, e)}
-                      className={`group relative text-white hover:text-idata-teal py-3 md:py-4 text-sm md:text-base font-medium transition-all duration-200 w-full text-left flex items-center justify-between rounded-lg ${
-                        isOpen ? "animate-fade-in" : ""
-                      }`}
-                      style={{
-                        animationDelay: isOpen ? `${index * 40}ms` : "0ms",
-                      }}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <Icon
-                          name={item.icon}
-                          size={16}
-                          className="text-idata-teal"
-                        />
-                        <span className="relative">
-                          {item.name}
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-idata-teal to-white transition-all duration-300 group-hover:w-full" />
-                        </span>
-                      </div>
-                      <div
-                        className={`w-5 h-5 md:w-6 md:h-6 rounded-full bg-white/10 transition-all duration-200 flex items-center justify-center ${expandedItems.has(item.path) ? "bg-white/20" : ""}`}
-                      >
-                        <Icon
-                          name="ChevronDown"
-                          size={12}
-                          className={`md:w-3.5 md:h-3.5 text-white transition-all duration-200 ${expandedItems.has(item.path) ? "rotate-180" : ""}`}
-                        />
-                      </div>
-                    </button>
-                    {renderProductsMenu()}
-                  </div>
-                ) : (
-                  <Link
-                    to={item.path}
-                    className={`group relative text-white hover:text-idata-teal py-3 md:py-4 text-sm md:text-base font-medium transition-all duration-200 block rounded-lg flex items-center space-x-3 ${
-                      isOpen ? "animate-fade-in" : ""
-                    }`}
-                    style={{
-                      animationDelay: isOpen ? `${index * 40}ms` : "0ms",
-                    }}
-                    onClick={(e) => handleItemClick(item, e)}
-                  >
-                    <Icon
-                      name={item.icon}
-                      size={16}
-                      className="text-idata-teal"
-                    />
-                    <span className="relative">
-                      {item.name}
-                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-idata-teal to-white transition-all duration-300 group-hover:w-full" />
-                    </span>
-                  </Link>
-                )}
-              </div>
-            ))}
+            {getCurrentContent()}
           </nav>
         </div>
 
