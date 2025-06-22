@@ -101,16 +101,34 @@ const ProductsDropdown = ({
                     {submenuItem.name}
                   </Link>
 
+                  {/* Третий уровень - категории */}
                   {submenuItem.items && submenuItem.items.length > 0 && (
-                    <div className="mt-2 space-y-1">
-                      {submenuItem.items.map((seriesItem) => (
-                        <Link
-                          key={seriesItem.path}
-                          to={seriesItem.path}
-                          className="block px-6 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200"
-                        >
-                          {seriesItem.name}
-                        </Link>
+                    <div className="mt-2 space-y-3">
+                      {submenuItem.items.map((categoryItem) => (
+                        <div key={categoryItem.path} className="ml-2">
+                          <Link
+                            to={categoryItem.path}
+                            className="block px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200 rounded"
+                          >
+                            {categoryItem.name}
+                          </Link>
+
+                          {/* Четвёртый уровень - серии коммутаторов */}
+                          {categoryItem.items &&
+                            categoryItem.items.length > 0 && (
+                              <div className="mt-1 ml-4 space-y-1">
+                                {categoryItem.items.map((seriesItem) => (
+                                  <Link
+                                    key={seriesItem.path}
+                                    to={seriesItem.path}
+                                    className="block px-3 py-1.5 text-xs text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded border-l-2 border-transparent hover:border-blue-300"
+                                  >
+                                    {seriesItem.name}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                        </div>
                       ))}
                     </div>
                   )}
