@@ -6,31 +6,27 @@ const SeriesCatalog6010Component = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-hero text-white py-20 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-6 leading-tight">
-            IDS6010 — мощные 10G/25G/40G/100G-коммутаторы для магистральных
-            решений
-          </h1>
-          <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-8 text-white/90 max-w-4xl mx-auto">
-            Высокая пропускная способность до 960 Gbps, модульная архитектура
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 transition-all duration-300"
-            >
-              <Icon name="Info" className="mr-2" />
-              Подробнее
-            </Button>
-            <Button
-              size="lg"
-              className="bg-white text-gray-900 hover:bg-gradient-hero hover:text-white border-2 border-white transition-all duration-300"
-            >
-              <Icon name="BarChart3" className="mr-2" />
-              Сравнить модели
-            </Button>
+      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
+            <div>
+              <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
+                IDS6010 — мощные 10G/25G/40G/100G-коммутаторы для магистральных
+                решений
+              </h1>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
+                Высокая пропускная способность до 960 Gbps, модульная
+                архитектура
+              </p>
+              <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
+                <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
+                  Подробнее
+                </button>
+                <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-white hover:text-[#0065B3] transition-all duration-300 font-sans min-h-[44px]">
+                  Сравнить модели
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
