@@ -63,14 +63,14 @@ const ProductsDropdown = ({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-72">
-          <div className="py-2">
+        <div className="absolute left-0 top-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fade-in w-80">
+          <div className="py-3">
             {productSubmenuItems.map((subItem) => (
               <div key={subItem.path}>
                 {subItem.hasNestedSubmenu ? (
                   <>
                     <div
-                      className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600 cursor-pointer"
+                      className="flex items-center justify-between px-5 py-4 text-sm text-gray-700 hover:bg-[#F0F3F5] hover:text-blue-600 transition-colors cursor-pointer"
                       onClick={() => {
                         if (subItem.name === "Коммутаторы") {
                           handleSwitchesToggle();
@@ -79,14 +79,18 @@ const ProductsDropdown = ({
                         }
                       }}
                     >
-                      <div className="flex items-center space-x-2">
-                        <Icon name={subItem.icon} size={16} />
-                        <span>{subItem.name}</span>
+                      <div className="flex items-center space-x-3">
+                        <Icon
+                          name={subItem.icon}
+                          size={18}
+                          className="text-gray-500"
+                        />
+                        <span className="font-medium">{subItem.name}</span>
                       </div>
                       <Icon
                         name="ChevronRight"
                         size={16}
-                        className={`transition-transform duration-300 ${
+                        className={`transition-transform duration-300 text-gray-400 ${
                           (subItem.name === "Коммутаторы" &&
                             dropdownState.isSwitchesSubmenuOpen) ||
                           (subItem.name === "Маршрутизаторы" &&
@@ -113,7 +117,7 @@ const ProductsDropdown = ({
                         <Link
                           key={nestedItem.path}
                           to={nestedItem.path}
-                          className="block px-8 py-3 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors border-l-4 border-blue-300 bg-gray-50"
+                          className="block px-10 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] hover:text-blue-600 transition-colors border-l-4 border-blue-300 bg-gray-50"
                         >
                           {nestedItem.name}
                         </Link>
@@ -122,11 +126,15 @@ const ProductsDropdown = ({
                 ) : (
                   <Link
                     to={subItem.path}
-                    className="flex items-center space-x-2 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-2 border-transparent hover:border-blue-600"
+                    className="flex items-center space-x-3 px-5 py-4 text-sm text-gray-700 hover:bg-[#F0F3F5] hover:text-blue-600 transition-colors"
                     onClick={handleSimpleItemClick}
                   >
-                    <Icon name={subItem.icon} size={16} />
-                    <span>{subItem.name}</span>
+                    <Icon
+                      name={subItem.icon}
+                      size={18}
+                      className="text-gray-500"
+                    />
+                    <span className="font-medium">{subItem.name}</span>
                   </Link>
                 )}
               </div>
