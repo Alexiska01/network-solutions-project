@@ -48,7 +48,7 @@ const SeriesCatalog3530Component = () => {
                   <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
                     PoE/PoE+ до 880 Вт
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
                     Надежное питание устройств
                   </p>
                 </div>
@@ -68,7 +68,7 @@ const SeriesCatalog3530Component = () => {
                   <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
                     10G uplink (SFP+)
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
                     Высокоскоростное подключение
                   </p>
                 </div>
@@ -88,7 +88,7 @@ const SeriesCatalog3530Component = () => {
                   <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
                     Надёжное охлаждение и фиксированные БП
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
                     Стабильная работа 24/7
                   </p>
                 </div>
@@ -108,7 +108,7 @@ const SeriesCatalog3530Component = () => {
                   <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
                     Поддержка Layer 3 и резервирования
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
                     Отказоустойчивость сети
                   </p>
                 </div>
@@ -125,7 +125,7 @@ const SeriesCatalog3530Component = () => {
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
               Модели серии IDS3530
             </h2>
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans w-[90%] md:w-[70%] mx-auto">
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans">
               Выберите оптимальную конфигурацию для ваших задач
             </p>
           </div>
@@ -136,7 +136,7 @@ const SeriesCatalog3530Component = () => {
               <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3530-24P-6X
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
                 24×1G Base-T, 6×10G SFP+, PoE 380 Вт
               </p>
               <Button
@@ -155,7 +155,7 @@ const SeriesCatalog3530Component = () => {
               <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3530-48P-6X
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
                 48×1G Base-T, 6×10G SFP+, PoE 760 Вт
               </p>
               <Button
@@ -174,7 +174,7 @@ const SeriesCatalog3530Component = () => {
               <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3530-24S-8T-6X
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
                 24×1G SFP, 8×1G Base-T, 6×10G SFP+
               </p>
               <Button
@@ -193,7 +193,7 @@ const SeriesCatalog3530Component = () => {
               <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3530-48T-6X
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
                 48×1G Base-T, 6×10G SFP+
               </p>
               <Button
