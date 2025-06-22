@@ -41,7 +41,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
         </button>
 
         {!modelLoaded && (
-          <div className="absolute inset-6 flex items-center justify-center bg-black/10 backdrop-blur-sm rounded-lg">
+          <div className="absolute inset-6 flex items-center justify-center">
             <div className="text-white text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
               <p className="text-sm">Загрузка 3D модели...</p>
@@ -62,9 +62,9 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
           min-camera-orbit="auto auto 0.5m"
           max-camera-orbit="auto auto 1.5m"
           field-of-view="30deg"
-          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3C/svg%3E"
-          style={{ width: "100%", height: "400px" }}
-          className="w-full rounded-lg"
+          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='transparent'/%3E%3C/svg%3E"
+          style={{ width: "100%", height: "400px", background: "transparent" }}
+          className="w-full"
         />
 
         <div className="mt-6 flex items-center justify-center">
