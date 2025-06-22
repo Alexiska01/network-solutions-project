@@ -11,10 +11,12 @@ const SeriesCatalog3530Component = () => {
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
             <div>
               <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-                IDS3530 — надёжные L2+/L3-коммутаторы для промышленной инфраструктуры
+                IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
+                инфраструктуры
               </h1>
               <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
-                До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в одной платформе
+                До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
+                одной платформе
               </p>
               <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
                 <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
@@ -81,6 +83,7 @@ const SeriesCatalog3530Component = () => {
               </p>
             </div>
           </div>
+        </div>
       </section>
 
       {/* Models Section */}
@@ -172,6 +175,7 @@ const SeriesCatalog3530Component = () => {
               </Button>
             </div>
           </div>
+        </div>
       </section>
 
       {/* CTA Section */}
