@@ -18,7 +18,18 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+      },
       colors: {
+        // iDATA Brand colors
+        idata: {
+          primary: "#1A2980",
+          blue: "#0065B3",
+          teal: "#00B5AD",
+          text: "#1A1A1A",
+          active: "#00B5AD",
+        },
         // Brand colors
         brand: {
           primary: "#0065B3",

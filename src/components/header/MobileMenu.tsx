@@ -118,18 +118,18 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       {/* Кнопка гамбургера */}
       <button
         onClick={onToggle}
-        className="lg:hidden relative w-12 h-12 rounded-lg bg-white border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="lg:hidden relative w-12 h-12 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-idata-active focus:ring-offset-2"
         aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-5 h-4 flex flex-col justify-center relative">
             <span
-              className={`block h-0.5 w-5 bg-gray-700 transition-all duration-300 ${
+              className={`block h-0.5 w-5 bg-idata-text transition-all duration-300 ${
                 isOpen ? "rotate-45 translate-y-0.5" : ""
               }`}
             />
             <span
-              className={`block h-0.5 w-5 bg-gray-700 mt-1 transition-all duration-300 ${
+              className={`block h-0.5 w-5 bg-idata-text mt-1 transition-all duration-300 ${
                 isOpen ? "-rotate-45 -translate-y-0.5" : ""
               }`}
             />
@@ -139,7 +139,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
 
       {/* Оверлей */}
       <div
-        className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-all duration-500 ${
+        className={`lg:hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-all duration-300 ${
           isOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -149,30 +149,31 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
 
       {/* Мобильное меню */}
       <div
-        className={`lg:hidden fixed top-0 right-0 w-full max-w-sm h-full bg-white z-50 shadow-2xl transition-transform duration-500 ease-out ${
+        className={`lg:hidden fixed top-0 right-0 w-full max-w-sm h-full bg-white z-50 shadow-xl transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Шапка меню */}
-        <div className="flex justify-between items-center h-16 px-6 border-b border-gray-100 bg-gray-50">
+        <div className="flex justify-between items-center h-16 px-6 border-b border-gray-50 bg-gradient-to-r from-idata-primary via-idata-blue to-idata-teal">
           <div className="flex items-center space-x-3">
             {currentLevel > 0 && (
               <button
                 onClick={handleBackClick}
-                className="w-8 h-8 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/30"
                 aria-label="Назад"
               >
-                <Icon name="ChevronLeft" size={16} />
+                <Icon name="ArrowLeft" size={16} />
+                <span className="text-sm font-medium">Назад</span>
               </button>
             )}
-            <div className="text-xl font-bold text-gray-900">
+            <div className="text-lg font-semibold text-white font-sans">
               {currentMenu.title}
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center"
+            className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/30 flex items-center justify-center"
             aria-label="Закрыть меню"
           >
             <Icon name="X" size={16} />
@@ -182,9 +183,9 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         {/* Контейнер для анимации переходов */}
         <div className="relative h-full overflow-hidden">
           <nav
-            className={`absolute inset-0 flex flex-col py-6 px-6 overflow-y-auto transition-all duration-300 ease-out ${
+            className={`absolute inset-0 flex flex-col py-4 px-6 overflow-y-auto font-sans transition-all duration-300 ease-out ${
               isTransitioning
-                ? "opacity-0 translate-x-4"
+                ? "opacity-0 translate-x-8"
                 : "opacity-100 translate-x-0"
             }`}
           >
@@ -197,43 +198,45 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                   {hasSubmenu ? (
                     <button
                       onClick={(e) => handleItemClick(item, e)}
-                      className={`group relative text-gray-700 hover:text-blue-600 py-4 text-lg font-medium border-b border-gray-100 last:border-b-0 transition-all duration-300 hover:pl-2 w-full text-left flex items-center justify-between ${
+                      className={`group relative text-idata-text hover:text-idata-active py-4 text-base font-medium border-b border-gray-50 last:border-b-0 transition-all duration-200 hover:bg-gray-50/50 hover:pl-2 w-full text-left flex items-center justify-between rounded-lg ${
                         isOpen && !isTransitioning ? "animate-fade-in" : ""
                       }`}
                       style={{
                         animationDelay:
                           isOpen && !isTransitioning
-                            ? `${index * 50}ms`
+                            ? `${index * 40}ms`
                             : "0ms",
                       }}
                     >
                       <span className="relative">
                         {item.name}
-                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full" />
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-idata-primary to-idata-teal transition-all duration-300 group-hover:w-full" />
                       </span>
-                      <Icon
-                        name="ChevronRight"
-                        size={16}
-                        className="text-gray-400 group-hover:text-blue-600 transition-colors duration-300"
-                      />
+                      <div className="w-6 h-6 rounded-full bg-gray-50 group-hover:bg-idata-active/10 transition-all duration-200 flex items-center justify-center">
+                        <Icon
+                          name="ChevronRight"
+                          size={14}
+                          className="text-gray-400 group-hover:text-idata-active transition-colors duration-200"
+                        />
+                      </div>
                     </button>
                   ) : (
                     <Link
                       to={item.path}
-                      className={`group relative text-gray-700 hover:text-blue-600 py-4 text-lg font-medium border-b border-gray-100 last:border-b-0 transition-all duration-300 hover:pl-2 block ${
+                      className={`group relative text-idata-text hover:text-idata-active py-4 text-base font-medium border-b border-gray-50 last:border-b-0 transition-all duration-200 hover:bg-gray-50/50 hover:pl-2 block rounded-lg ${
                         isOpen && !isTransitioning ? "animate-fade-in" : ""
                       }`}
                       style={{
                         animationDelay:
                           isOpen && !isTransitioning
-                            ? `${index * 50}ms`
+                            ? `${index * 40}ms`
                             : "0ms",
                       }}
                       onClick={(e) => handleItemClick(item, e)}
                     >
                       <span className="relative">
                         {item.name}
-                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full" />
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-idata-primary to-idata-teal transition-all duration-300 group-hover:w-full" />
                       </span>
                     </Link>
                   )}
@@ -244,7 +247,13 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         </div>
 
         {/* Декоративный градиент внизу */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-50 to-transparent pointer-events-none" />
+        <div
+          className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(26, 41, 128, 0.05), transparent)",
+          }}
+        />
       </div>
     </>
   );
