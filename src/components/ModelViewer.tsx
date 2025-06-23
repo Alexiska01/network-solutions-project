@@ -27,7 +27,26 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [background, setBackground] = useState("gradient");
+  const [isLibraryLoaded, setIsLibraryLoaded] = useState(false);
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    // Проверка загрузки библиотеки model-viewer
+    const checkLibrary = () => {
+      if (
+        typeof window !== "undefined" &&
+        window.customElements &&
+        window.customElements.get("model-viewer")
+      ) {
+        setIsLibraryLoaded(true);
+      } else {
+        // Повторная проверка через небольшой интервал
+        setTimeout(checkLibrary, 100);
+      }
+    };
+
+    checkLibrary();
+  }, []);
 
   // Адаптивные настройки камеры для мобильных устройств
   const getCameraOrbit = () => {
@@ -56,7 +75,6 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
       loading: "eager",
       reveal: "auto",
       "auto-rotate": !isMobile,
-      preload: true,
       style: {
         width: "100%",
         height: "100%",
@@ -97,18 +115,22 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               <Icon name="Maximize" size={20} />
             </button>
 
-            {!modelLoaded && (
+            {(!modelLoaded || !isLibraryLoaded) && (
               <div className="absolute inset-4 sm:inset-6 flex items-center justify-center">
                 <div className="text-white text-center">
                   <div className="space-y-2">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-                    <p className="text-sm">Загрузка 3D модели...</p>
+                    <p className="text-sm">
+                      {!isLibraryLoaded
+                        ? "Загрузка библиотеки..."
+                        : "Загрузка 3D модели..."}
+                    </p>
                   </div>
                 </div>
               </div>
             )}
 
-            <model-viewer {...getModelViewerProps()} />
+            {isLibraryLoaded && <model-viewer {...getModelViewerProps()} />}
           </div>
 
           <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex items-center justify-center gap-3">
@@ -181,20 +203,31 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
             >
               <Icon name="X" size={24} />
             </button>
-            <model-viewer
-              src={modelPath}
-              camera-controls="true"
-              auto-rotate={!isMobile ? "true" : "false"}
-              exposure="1.0"
-              interaction-prompt="none"
-              loading="lazy"
-              camera-orbit="0deg 75deg 0.8m"
-              min-camera-orbit="auto auto 0.5m"
-              max-camera-orbit="auto auto 1.5m"
-              field-of-view="30deg"
-              style={{ width: "100%", height: "100%" }}
-              className="w-full h-full rounded-lg"
-            />
+            {isLibraryLoaded ? (
+              <model-viewer
+                src={modelPath}
+                camera-controls={true}
+                auto-rotate={!isMobile}
+                exposure="1.0"
+                interaction-prompt="none"
+                loading="lazy"
+                camera-orbit="0deg 75deg 0.8m"
+                min-camera-orbit="auto auto 0.5m"
+                max-camera-orbit="auto auto 1.5m"
+                field-of-view="30deg"
+                style={{ width: "100%", height: "100%" }}
+                className="w-full h-full rounded-lg"
+              />
+            ) : (
+              <div className="flex items-center justify-center w-full h-full">
+                <div className="text-white text-center">
+                  <div className="space-y-2">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+                    <p className="text-sm">Загрузка библиотеки...</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

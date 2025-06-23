@@ -5,12 +5,28 @@ export const useModelViewer = () => {
   const modelViewerRef = useRef<any>(null);
   const [indicatorsOn, setIndicatorsOn] = useState(false);
   const [modelLoaded, setModelLoaded] = useState(false);
+  const [isLibraryReady, setIsLibraryReady] = useState(false);
   const isMobile = useIsMobile();
 
+  // Проверяем доступность библиотеки model-viewer
   useEffect(() => {
+    const checkLibrary = () => {
+      if (customElements.get("model-viewer")) {
+        setIsLibraryReady(true);
+        console.log("model-viewer библиотека готова");
+      } else {
+        console.log("Ожидаем загрузки model-viewer...");
+        setTimeout(checkLibrary, 100);
+      }
+    };
+    checkLibrary();
+  }, []);
+
+  useEffect(() => {
+    if (!isLibraryReady) return;
+
     const modelViewer = modelViewerRef.current;
     if (modelViewer) {
-      // Сброс состояния при смене модели
       setModelLoaded(false);
 
       const handleLoad = () => {
@@ -28,12 +44,10 @@ export const useModelViewer = () => {
         console.log("Загрузка модели:", progress + "%");
       };
 
-      // Добавляем обработчики
       modelViewer.addEventListener("load", handleLoad);
       modelViewer.addEventListener("error", handleError);
       modelViewer.addEventListener("progress", handleProgress);
 
-      // Принудительно запускаем загрузку если модель уже есть в DOM
       if (modelViewer.src) {
         console.log("Начинаем загрузку модели:", modelViewer.src);
       }
@@ -44,7 +58,7 @@ export const useModelViewer = () => {
         modelViewer.removeEventListener("progress", handleProgress);
       };
     }
-  }, []); // Убираем зависимость modelLoaded для предотвращения лишних пересчетов
+  }, [isLibraryReady]);
 
   const toggleIndicators = () => {
     if (!modelViewerRef.current || !modelLoaded) {
@@ -88,6 +102,7 @@ export const useModelViewer = () => {
     modelViewerRef,
     indicatorsOn,
     modelLoaded,
+    isLibraryReady,
     isMobile,
     toggleIndicators,
   };
