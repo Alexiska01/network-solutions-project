@@ -116,7 +116,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                 className={isActive ? "text-blue-600" : "text-gray-500"}
               />
             )}
-            <span className="text-sm font-medium">{item.name}</span>
+            <span className="text-xs font-medium text-left">{item.name}</span>
           </div>
           <Icon
             name="ChevronRight"
@@ -142,7 +142,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               className={isActive ? "text-blue-600" : "text-gray-500"}
             />
           )}
-          <span className="text-sm font-medium">{item.name}</span>
+          <span className="text-xs font-medium text-left">{item.name}</span>
         </div>
       </Link>
     );

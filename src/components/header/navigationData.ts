@@ -29,7 +29,7 @@ export const productSubmenuItems = [
         hasThirdLevel: true,
         items: [
           {
-            name: "Коммутаторы уровня доступа",
+            name: "Уровень доступа",
             path: "/products/switches/corporate-lan/access-level",
             items: [
               {
@@ -51,7 +51,7 @@ export const productSubmenuItems = [
             ],
           },
           {
-            name: "Коммутаторы распределительного уровня",
+            name: "Уровень распределения",
             path: "/products/switches/corporate-lan/distribution-level",
             items: [
               {
@@ -69,7 +69,7 @@ export const productSubmenuItems = [
             ],
           },
           {
-            name: "Коммутаторы уровня ядра",
+            name: "Уровень ядра",
             path: "/products/switches/corporate-lan/core-level",
             items: [
               {
@@ -86,7 +86,7 @@ export const productSubmenuItems = [
         hasThirdLevel: true,
         items: [
           {
-            name: "Коммутаторы уровня Spine",
+            name: "Уровень Spine",
             path: "/products/switches/data-centers/spine-level",
             items: [
               {
@@ -104,7 +104,7 @@ export const productSubmenuItems = [
             ],
           },
           {
-            name: "Коммутаторы уровня Leaf",
+            name: "Уровень Leaf",
             path: "/products/switches/data-centers/leaf-level",
             items: [
               {
@@ -116,7 +116,7 @@ export const productSubmenuItems = [
         ],
       },
       {
-        name: "Коммутаторы с сертификацией ТОРП",
+        name: "Коммутаторы с ТОРП",
         path: "/products/switches/torp-certified",
         items: [],
       },
@@ -129,7 +129,7 @@ export const productSubmenuItems = [
     icon: "Route",
     submenuItems: [
       {
-        name: "Маршрутизаторы для распределенных сетей связи",
+        name: "Распределенные сети",
         path: "/products/routers/distributed-networks",
         items: [],
       },
@@ -178,12 +178,12 @@ export const routersSubmenuItems = [
 
 export const corporateLanItems = [
   {
-    name: "Коммутаторы уровня доступа",
+    name: "Уровень доступа",
     path: "/products/switches/corporate-lan/access-level",
     hasThirdLevel: true,
   },
   {
-    name: "Коммутаторы уровня распределения",
+    name: "Уровень распределения",
     path: "/products/switches/corporate-lan/distribution-level",
     hasThirdLevel: true,
   },
@@ -204,12 +204,12 @@ export const distributionLevelSeries = [
 
 export const dataCentersItems = [
   {
-    name: "Коммутаторы уровня Spine",
+    name: "Уровень Spine",
     path: "/products/switches/data-centers/spine-level",
     hasThirdLevel: true,
   },
   {
-    name: "Коммутаторы уровня Leaf",
+    name: "Уровень Leaf",
     path: "/products/switches/data-centers/leaf-level",
     hasThirdLevel: true,
   },
