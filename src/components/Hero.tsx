@@ -19,7 +19,7 @@ const Hero = () => {
               <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
                 Посмотреть продукты
               </button>
-              <button className="bg-gradient-hero border border-white/30 text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-white hover:text-[#0065B3] hover:border-white transition-all duration-300 font-sans min-h-[44px]">
+              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white hover:border-transparent transition-all duration-300 font-sans min-h-[44px]">
                 Связаться с нами
               </button>
             </div>
