@@ -58,7 +58,7 @@ const ProductsSection = () => {
               key={index}
               className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
+              <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
                 <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
