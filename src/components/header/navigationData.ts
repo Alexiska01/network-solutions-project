@@ -24,7 +24,7 @@ export const productSubmenuItems = [
     icon: "Network",
     submenuItems: [
       {
-        name: "Коммутаторы для корпоративных ЛВС",
+        name: "Корпоративные ЛВС",
         path: "/products/switches/corporate-lan",
         hasThirdLevel: true,
         items: [
@@ -81,7 +81,7 @@ export const productSubmenuItems = [
         ],
       },
       {
-        name: "Коммутаторы для центров обработки данных",
+        name: "Центры обработки данных",
         path: "/products/switches/data-centers",
         hasThirdLevel: true,
         items: [
@@ -116,7 +116,7 @@ export const productSubmenuItems = [
         ],
       },
       {
-        name: "Коммутаторы с ТОРП",
+        name: "Сертифицированные ТОРП",
         path: "/products/switches/torp-certified",
         items: [],
       },
@@ -154,12 +154,12 @@ export const productSubmenuItems = [
 
 export const switchesSubmenuItems = [
   {
-    name: "Коммутаторы для корпоративных ЛВС",
+    name: "Корпоративные ЛВС",
     path: "/products/switches/corporate-lan",
     hasThirdLevel: true,
   },
   {
-    name: "Коммутаторы для центров обработки данных",
+    name: "Центры обработки данных",
     path: "/products/switches/data-centers",
     hasThirdLevel: true,
   },

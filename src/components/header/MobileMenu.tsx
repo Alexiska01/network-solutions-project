@@ -203,7 +203,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                 <Icon name="ArrowLeft" size={16} />
               </button>
             )}
-            <h2 className="text-lg font-semibold truncate">
+            <h2 className="text-sm font-medium truncate">
               {currentLevel?.title || "Меню"}
             </h2>
           </div>
