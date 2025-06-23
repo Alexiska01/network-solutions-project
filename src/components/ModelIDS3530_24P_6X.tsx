@@ -84,6 +84,9 @@ const ModelIDS3530_24P_6XComponent = () => {
             </h2>
           </div>
 
+          <button className="w-full bg-gray-100 text-gray-800 px-6 py-3 rounded-lg font-medium hover:bg-gradient-to-r hover:from-orange-500 hover:to-red-600 hover:text-white transition-all duration-300">
+            View All Features
+          </button>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {ids353024p6xData.features.map((feature, index) => (
               <FeatureCard key={index} feature={feature} />
