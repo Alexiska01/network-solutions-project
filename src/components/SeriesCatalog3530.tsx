@@ -77,7 +77,7 @@ const SeriesCatalog3530Component = () => {
 
             <div className="text-center">
               <div className="flex md:flex-col items-start md:items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                <div className="w-12 h-12 md:w-16 md:h-16 from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4 bg-[#9950B4]">
                   <Icon
                     name="Fan"
                     size={24}
