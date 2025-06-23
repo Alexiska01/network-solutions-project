@@ -14,6 +14,18 @@ const ModelIDS3530_24P_6XComponent = () => {
   const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
     useModelViewer();
 
+  // Предзагрузка модели при монтировании компонента
+  React.useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.href = ids353024p6xData.modelPath;
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Hero Section with 3D Model */}
