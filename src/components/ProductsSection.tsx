@@ -58,20 +58,24 @@ const ProductsSection = () => {
               key={index}
               className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center mb-3 md:mb-4">
-                <Icon
-                  name={product.icon as any}
-                  size={16}
-                  className="text-white md:w-5 md:h-5 lg:w-6 lg:h-6"
-                />
+              <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
+                <div className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Icon
+                    name={product.icon as any}
+                    size={20}
+                    className="text-white md:w-6 md:h-6 lg:w-7 lg:h-7"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
+                    {product.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-gray-600 font-sans leading-relaxed">
+                    {product.description}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-2 md:mb-3 font-sans">
-                {product.title}
-              </h3>
-              <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4 font-sans leading-relaxed">
-                {product.description}
-              </p>
-              <ul className="space-y-1.5 md:space-y-2">
+              <ul className="space-y-1.5 md:space-y-2 mb-4 md:mb-6">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
@@ -86,7 +90,7 @@ const ProductsSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans mt-4 md:mt-6 text-sm md:text-base min-h-[44px]">
+              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px]">
                 Подробнее
               </button>
             </div>
