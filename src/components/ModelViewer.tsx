@@ -26,8 +26,21 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
   modelLoaded = false,
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [background, setBackground] = useState("gradient"); // gradient, dark, light
+  const [background, setBackground] = useState("gradient");
+  const [shouldLoadModel, setShouldLoadModel] = useState(false);
   const isMobile = useIsMobile();
+
+  // Отложенная загрузка модели
+  useEffect(() => {
+    const timer = setTimeout(
+      () => {
+        setShouldLoadModel(true);
+      },
+      isMobile ? 800 : 300,
+    );
+
+    return () => clearTimeout(timer);
+  }, [isMobile]);
 
   // Адаптивные настройки камеры для мобильных устройств
   const getCameraOrbit = () => {
@@ -40,6 +53,43 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
 
   const getMaxCameraOrbit = () => {
     return isMobile ? "auto auto 1.65m" : "auto auto 1.5m";
+  };
+
+  const getModelViewerProps = () => {
+    const baseProps = {
+      ref: modelRef,
+      src: modelPath,
+      "camera-controls": true,
+      exposure: "1.0",
+      "interaction-prompt": "none",
+      "camera-orbit": getCameraOrbit(),
+      "min-camera-orbit": getMinCameraOrbit(),
+      "max-camera-orbit": getMaxCameraOrbit(),
+      "field-of-view": "30deg",
+      poster:
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3C/svg%3E",
+      style: {
+        width: "100%",
+        height: "100%",
+        background: "transparent",
+      },
+      className: "w-full h-full",
+    };
+
+    if (isMobile) {
+      return {
+        ...baseProps,
+        loading: "lazy",
+        reveal: "interaction",
+      };
+    }
+
+    return {
+      ...baseProps,
+      "auto-rotate": true,
+      loading: "lazy",
+      reveal: "auto",
+    };
   };
 
   const toggleFullscreen = () => {
@@ -71,36 +121,27 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               <Icon name="Maximize" size={20} />
             </button>
 
-            {!modelLoaded && (
+            {(!shouldLoadModel || !modelLoaded) && (
               <div className="absolute inset-4 sm:inset-6 flex items-center justify-center">
                 <div className="text-white text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
-                  <p className="text-sm">Загрузка 3D модели...</p>
+                  {!shouldLoadModel ? (
+                    <div className="space-y-2">
+                      <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center mx-auto">
+                        <Icon name="Box" size={32} className="text-white/60" />
+                      </div>
+                      <p className="text-sm">Подготовка 3D модели...</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+                      <p className="text-sm">Загрузка 3D модели...</p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
 
-            <model-viewer
-              ref={modelRef}
-              src={modelPath}
-              camera-controls
-              auto-rotate
-              exposure="1.0"
-              interaction-prompt="none"
-              loading="eager"
-              reveal="auto"
-              camera-orbit={getCameraOrbit()}
-              min-camera-orbit={getMinCameraOrbit()}
-              max-camera-orbit={getMaxCameraOrbit()}
-              field-of-view="30deg"
-              poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='transparent'/%3E%3C/svg%3E"
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "transparent",
-              }}
-              className="w-full h-full"
-            />
+            {shouldLoadModel && <model-viewer {...getModelViewerProps()} />}
           </div>
 
           <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex items-center justify-center gap-3">
@@ -176,9 +217,10 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
             <model-viewer
               src={modelPath}
               camera-controls
-              auto-rotate
+              auto-rotate={!isMobile}
               exposure="1.0"
               interaction-prompt="none"
+              loading="lazy"
               camera-orbit="0deg 75deg 0.8m"
               min-camera-orbit="auto auto 0.5m"
               max-camera-orbit="auto auto 1.5m"
