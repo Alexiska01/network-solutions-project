@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import ProductPage from "@/pages/ProductPage";
 import SeriesCatalog from "./pages/SeriesCatalog";
 import SeriesCatalog3730 from "./pages/SeriesCatalog3730";
 import SeriesCatalog3530 from "./pages/SeriesCatalog3530";
@@ -22,8 +21,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<div>Home</div>} />
-          <Route path="/product" element={<ProductPage />} />
+          <Route path="/" element={<Index />} />
           <Route
             path="/products/switches/ids3730"
             element={<SeriesCatalog3730 />}
