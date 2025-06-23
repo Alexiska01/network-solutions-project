@@ -125,9 +125,9 @@ const SeriesCatalog6010Component = () => {
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
               Модели серии IDS6010
             </h2>
-            <button className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
               Выберите оптимальную конфигурацию для уровня распределения
-            </button>
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

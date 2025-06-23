@@ -126,9 +126,7 @@ const SeriesCatalog3530Component = () => {
               Модели серии IDS3530
             </h2>
             <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans">
-              <button className="bg-blue-600 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-400 text-white px-6 py-2 rounded transition-all duration-300">
-                Выберите оптимальную конфигурацию для ваших задач
-              </button>
+              Выберите оптимальную конфигурацию для ваших задач
             </p>
           </div>
 
