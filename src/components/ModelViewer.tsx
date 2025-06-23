@@ -151,7 +151,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
 
       {isFullscreen && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="relative w-full max-w-6xl aspect-video">
+          <div className="relative w-full max-w-[95vw] h-[90vh]">
             <button
               onClick={toggleFullscreen}
               className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-lg transition-all duration-200 z-10"
