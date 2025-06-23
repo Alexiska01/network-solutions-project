@@ -35,83 +35,87 @@ const SeriesCatalog3730Component = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Gauge"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clipRule="evenodd"
                   />
-                </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    40G uplink (QSFP+)
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
-                    Максимальная пропускная способность
-                  </p>
-                </div>
+                </svg>
               </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Широкий каталог
+              </h3>
+              <p className="text-gray-600">
+                Более 10,000 наименований электронных компонентов
+              </p>
             </div>
 
             <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Network"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
                   />
-                </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    Layer 3 маршрутизация
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
-                    Полнофункциональная маршрутизация
-                  </p>
-                </div>
+                </svg>
               </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Высокое качество
+              </h3>
+              <p className="text-gray-600">
+                Только оригинальные компоненты от ведущих производителей
+              </p>
             </div>
 
             <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Shield"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    Продвинутые протоколы безопасности
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
-                    Защита корпоративного уровня
-                  </p>
-                </div>
+              <div className="w-16 h-16 bg-[#5D4DE2] rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" />
+                </svg>
               </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Быстрая доставка
+              </h3>
+              <p className="text-gray-600">
+                Доставка по России и СНГ в кратчайшие сроки
+              </p>
             </div>
 
             <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Cpu"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
+              <div className="w-16 h-16 bg-[#FF6B2D] rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clipRule="evenodd"
                   />
-                </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    Высокопроизводительный процессор
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
-                    Для сложных вычислительных задач
-                  </p>
-                </div>
+                </svg>
               </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Техподдержка
+              </h3>
+              <p className="text-gray-600">
+                Профессиональная консультация по выбору компонентов
+              </p>
             </div>
           </div>
         </div>
