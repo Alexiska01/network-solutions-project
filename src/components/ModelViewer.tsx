@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Icon from "@/components/ui/icon";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 declare global {
   namespace JSX {
@@ -26,89 +25,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
   modelLoaded = false,
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [background, setBackground] = useState("gradient");
-  const [isLibraryLoaded, setIsLibraryLoaded] = useState(false);
-  const isMobile = useIsMobile();
-
-  useEffect(() => {
-    let checkCount = 0;
-    const maxChecks = 30;
-
-    const checkLibrary = () => {
-      checkCount++;
-
-      if (
-        typeof window !== "undefined" &&
-        window.customElements &&
-        window.customElements.get("model-viewer")
-      ) {
-        console.log("✅ ModelViewer: библиотека готова");
-        setIsLibraryLoaded(true);
-        return;
-      }
-
-      if (checkCount < maxChecks) {
-        console.log(`⏳ ModelViewer: проверка ${checkCount}/${maxChecks}`);
-        setTimeout(checkLibrary, 100);
-      } else {
-        console.error("❌ ModelViewer: библиотека не загрузилась");
-      }
-    };
-
-    checkLibrary();
-  }, []);
-
-  // Принудительная установка src после загрузки библиотеки
-  useEffect(() => {
-    if (isLibraryLoaded && modelRef.current && modelPath) {
-      const viewer = modelRef.current;
-      console.log("🔧 ModelViewer: настройка модели:", modelPath);
-
-      // Убеждаемся что src установлен
-      if (!viewer.src || viewer.src !== modelPath) {
-        viewer.src = modelPath;
-        console.log("📂 ModelViewer: src установлен");
-      }
-    }
-  }, [isLibraryLoaded, modelPath]);
-
-  // Адаптивные настройки камеры для мобильных устройств
-  const getCameraOrbit = () => {
-    return isMobile ? "0deg 75deg 0.88m" : "0deg 75deg 0.8m";
-  };
-
-  const getMinCameraOrbit = () => {
-    return isMobile ? "auto auto 0.55m" : "auto auto 0.5m";
-  };
-
-  const getMaxCameraOrbit = () => {
-    return isMobile ? "auto auto 1.65m" : "auto auto 1.5m";
-  };
-
-  const getModelViewerProps = () => {
-    const baseProps = {
-      ref: modelRef,
-      src: modelPath,
-      "camera-controls": true,
-      exposure: "1.0",
-      "interaction-prompt": "none",
-      "camera-orbit": getCameraOrbit(),
-      "min-camera-orbit": getMinCameraOrbit(),
-      "max-camera-orbit": getMaxCameraOrbit(),
-      "field-of-view": "30deg",
-      loading: "eager",
-      reveal: "auto",
-      "auto-rotate": !isMobile,
-      style: {
-        width: "100%",
-        height: "100%",
-        background: "transparent",
-      },
-      className: "w-full h-full",
-    };
-
-    return baseProps;
-  };
+  const [background, setBackground] = useState("gradient"); // gradient, dark, light
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -139,35 +56,36 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               <Icon name="Maximize" size={20} />
             </button>
 
-            {(!modelLoaded || !isLibraryLoaded) && (
-              <div className="absolute inset-4 sm:inset-6 flex items-center justify-center bg-black/10 rounded-lg">
+            {!modelLoaded && (
+              <div className="absolute inset-4 sm:inset-6 flex items-center justify-center">
                 <div className="text-white text-center">
-                  <div className="space-y-3">
-                    <div className="animate-spin rounded-full h-10 w-10 border-b-3 border-white mx-auto"></div>
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium">
-                        {!isLibraryLoaded
-                          ? "Загрузка библиотеки 3D..."
-                          : "Загрузка модели..."}
-                      </p>
-                      {isLibraryLoaded && !modelLoaded && (
-                        <p className="text-xs opacity-75">
-                          Пожалуйста, подождите...
-                        </p>
-                      )}
-                    </div>
-                  </div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
+                  <p className="text-sm">Загрузка 3D модели...</p>
                 </div>
               </div>
             )}
 
-            {isLibraryLoaded && (
-              <model-viewer
-                {...getModelViewerProps()}
-                onLoad={() => console.log("🎯 Model-viewer onLoad triggered")}
-                onError={(e: any) => console.error("❌ Model-viewer error:", e)}
-              />
-            )}
+            <model-viewer
+              ref={modelRef}
+              src={modelPath}
+              camera-controls
+              auto-rotate
+              exposure="1.0"
+              interaction-prompt="none"
+              loading="eager"
+              reveal="auto"
+              camera-orbit="0deg 75deg 0.8m"
+              min-camera-orbit="auto auto 0.5m"
+              max-camera-orbit="auto auto 1.5m"
+              field-of-view="30deg"
+              poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='transparent'/%3E%3C/svg%3E"
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "transparent",
+              }}
+              className="w-full h-full"
+            />
           </div>
 
           <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex items-center justify-center gap-3">
@@ -183,7 +101,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               }`}
               title="Индикаторы"
             >
-              <Icon name="Zap" size={18} />
+              <Icon name="Lightbulb" size={18} />
             </button>
 
             <button
@@ -205,7 +123,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               className={`flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200 ${
                 background === "light"
                   ? "bg-white text-gray-700 shadow-sm"
-                  : background === "dark"
+                  : background === "light"
                     ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
                     : "bg-white/10 hover:bg-white/20 text-white"
               }`}
@@ -240,31 +158,19 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
             >
               <Icon name="X" size={24} />
             </button>
-            {isLibraryLoaded ? (
-              <model-viewer
-                src={modelPath}
-                camera-controls={true}
-                auto-rotate={!isMobile}
-                exposure="1.0"
-                interaction-prompt="none"
-                loading="lazy"
-                camera-orbit="0deg 75deg 0.8m"
-                min-camera-orbit="auto auto 0.5m"
-                max-camera-orbit="auto auto 1.5m"
-                field-of-view="30deg"
-                style={{ width: "100%", height: "100%" }}
-                className="w-full h-full rounded-lg"
-              />
-            ) : (
-              <div className="flex items-center justify-center w-full h-full">
-                <div className="text-white text-center">
-                  <div className="space-y-2">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-                    <p className="text-sm">Загрузка библиотеки...</p>
-                  </div>
-                </div>
-              </div>
-            )}
+            <model-viewer
+              src={modelPath}
+              camera-controls
+              auto-rotate
+              exposure="1.0"
+              interaction-prompt="none"
+              camera-orbit="0deg 75deg 0.8m"
+              min-camera-orbit="auto auto 0.5m"
+              max-camera-orbit="auto auto 1.5m"
+              field-of-view="30deg"
+              style={{ width: "100%", height: "100%" }}
+              className="w-full h-full rounded-lg"
+            />
           </div>
         </div>
       )}

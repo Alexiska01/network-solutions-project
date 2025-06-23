@@ -11,22 +11,8 @@ import { ids353024p6xData } from "@/data/ids3530-24p-6x";
 
 const ModelIDS3530_24P_6XComponent = () => {
   const navigate = useNavigate();
-  const {
-    modelViewerRef,
-    indicatorsOn,
-    modelLoaded,
-    isLibraryReady,
-    toggleIndicators,
-  } = useModelViewer();
-
-  // Отладочная информация
-  React.useEffect(() => {
-    console.log("Состояние компонента:", {
-      isLibraryReady,
-      modelLoaded,
-      modelPath: ids353024p6xData.modelPath,
-    });
-  }, [isLibraryReady, modelLoaded]);
+  const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
+    useModelViewer();
 
   return (
     <div className="min-h-screen">
@@ -47,7 +33,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             <div className="lg:col-span-2">
               <div
                 style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
-                className="rounded-lg overflow-hidden relative"
+                className="rounded-lg overflow-hidden"
               >
                 <ModelViewer
                   modelRef={modelViewerRef}
@@ -56,17 +42,6 @@ const ModelIDS3530_24P_6XComponent = () => {
                   modelLoaded={modelLoaded}
                   onToggleIndicators={toggleIndicators}
                 />
-
-                {!isLibraryReady && (
-                  <div className="absolute inset-4 sm:inset-6 flex items-center justify-center">
-                    <div className="text-white text-center">
-                      <div className="space-y-2">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-                        <p className="text-sm">Загрузка библиотеки 3D...</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
 
