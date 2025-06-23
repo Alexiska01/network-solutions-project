@@ -156,7 +156,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               className={`flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200 ${
                 background === "light"
                   ? "bg-white text-gray-700 shadow-sm"
-                  : background === "light"
+                  : background === "dark"
                     ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
                     : "bg-white/10 hover:bg-white/20 text-white"
               }`}
