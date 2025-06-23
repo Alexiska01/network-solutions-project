@@ -134,7 +134,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               }`}
               title="Индикаторы"
             >
-              <Icon name="Lightbulb" size={18} />
+              <Icon name="Bulb" size={18} />
             </button>
 
             <button
