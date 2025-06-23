@@ -31,36 +31,44 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    // Проверка загрузки библиотеки model-viewer с улучшенной логикой
+    let checkCount = 0;
+    const maxChecks = 30;
+
     const checkLibrary = () => {
+      checkCount++;
+
       if (
         typeof window !== "undefined" &&
         window.customElements &&
         window.customElements.get("model-viewer")
       ) {
-        console.log("ModelViewer: библиотека model-viewer загружена");
+        console.log("✅ ModelViewer: библиотека готова");
         setIsLibraryLoaded(true);
+        return;
+      }
+
+      if (checkCount < maxChecks) {
+        console.log(`⏳ ModelViewer: проверка ${checkCount}/${maxChecks}`);
+        setTimeout(checkLibrary, 100);
       } else {
-        console.log("ModelViewer: ожидаем загрузки model-viewer...");
-        setTimeout(checkLibrary, 150);
+        console.error("❌ ModelViewer: библиотека не загрузилась");
       }
     };
 
     checkLibrary();
   }, []);
 
-  // Дополнительный эффект для принудительной перезагрузки модели
+  // Принудительная установка src после загрузки библиотеки
   useEffect(() => {
     if (isLibraryLoaded && modelRef.current && modelPath) {
       const viewer = modelRef.current;
-      console.log("ModelViewer: устанавливаем путь к модели:", modelPath);
+      console.log("🔧 ModelViewer: настройка модели:", modelPath);
 
-      // Принудительная установка src после небольшой задержки
-      setTimeout(() => {
-        if (viewer && viewer.src !== modelPath) {
-          viewer.src = modelPath;
-        }
-      }, 200);
+      // Убеждаемся что src установлен
+      if (!viewer.src || viewer.src !== modelPath) {
+        viewer.src = modelPath;
+        console.log("📂 ModelViewer: src установлен");
+      }
     }
   }, [isLibraryLoaded, modelPath]);
 
@@ -132,21 +140,34 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
             </button>
 
             {(!modelLoaded || !isLibraryLoaded) && (
-              <div className="absolute inset-4 sm:inset-6 flex items-center justify-center">
+              <div className="absolute inset-4 sm:inset-6 flex items-center justify-center bg-black/10 rounded-lg">
                 <div className="text-white text-center">
-                  <div className="space-y-2">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-                    <p className="text-sm">
-                      {!isLibraryLoaded
-                        ? "Загрузка библиотеки..."
-                        : "Загрузка 3D модели..."}
-                    </p>
+                  <div className="space-y-3">
+                    <div className="animate-spin rounded-full h-10 w-10 border-b-3 border-white mx-auto"></div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium">
+                        {!isLibraryLoaded
+                          ? "Загрузка библиотеки 3D..."
+                          : "Загрузка модели..."}
+                      </p>
+                      {isLibraryLoaded && !modelLoaded && (
+                        <p className="text-xs opacity-75">
+                          Пожалуйста, подождите...
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {isLibraryLoaded && <model-viewer {...getModelViewerProps()} />}
+            {isLibraryLoaded && (
+              <model-viewer
+                {...getModelViewerProps()}
+                onLoad={() => console.log("🎯 Model-viewer onLoad triggered")}
+                onError={(e: any) => console.error("❌ Model-viewer error:", e)}
+              />
+            )}
           </div>
 
           <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex items-center justify-center gap-3">
