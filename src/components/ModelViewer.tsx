@@ -74,10 +74,10 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               interaction-prompt="none"
               loading="eager"
               reveal="auto"
-              camera-orbit="0deg 75deg 1.2m"
-              min-camera-orbit="auto auto 0.8m"
-              max-camera-orbit="auto auto 2m"
-              field-of-view="35deg"
+              camera-orbit="0deg 75deg 1.8m"
+              min-camera-orbit="auto auto 1.4m"
+              max-camera-orbit="auto auto 2.5m"
+              field-of-view="45deg"
               poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='transparent'/%3E%3C/svg%3E"
               style={{
                 width: "100%",
