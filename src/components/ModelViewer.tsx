@@ -31,22 +31,38 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    // Проверка загрузки библиотеки model-viewer
+    // Проверка загрузки библиотеки model-viewer с улучшенной логикой
     const checkLibrary = () => {
       if (
         typeof window !== "undefined" &&
         window.customElements &&
         window.customElements.get("model-viewer")
       ) {
+        console.log("ModelViewer: библиотека model-viewer загружена");
         setIsLibraryLoaded(true);
       } else {
-        // Повторная проверка через небольшой интервал
-        setTimeout(checkLibrary, 100);
+        console.log("ModelViewer: ожидаем загрузки model-viewer...");
+        setTimeout(checkLibrary, 150);
       }
     };
 
     checkLibrary();
   }, []);
+
+  // Дополнительный эффект для принудительной перезагрузки модели
+  useEffect(() => {
+    if (isLibraryLoaded && modelRef.current && modelPath) {
+      const viewer = modelRef.current;
+      console.log("ModelViewer: устанавливаем путь к модели:", modelPath);
+
+      // Принудительная установка src после небольшой задержки
+      setTimeout(() => {
+        if (viewer && viewer.src !== modelPath) {
+          viewer.src = modelPath;
+        }
+      }, 200);
+    }
+  }, [isLibraryLoaded, modelPath]);
 
   // Адаптивные настройки камеры для мобильных устройств
   const getCameraOrbit = () => {

@@ -8,56 +8,67 @@ export const useModelViewer = () => {
   const [isLibraryReady, setIsLibraryReady] = useState(false);
   const isMobile = useIsMobile();
 
-  // Проверяем доступность библиотеки model-viewer
   useEffect(() => {
     const checkLibrary = () => {
-      if (customElements.get("model-viewer")) {
-        setIsLibraryReady(true);
+      if (
+        typeof window !== "undefined" &&
+        window.customElements &&
+        window.customElements.get("model-viewer")
+      ) {
         console.log("model-viewer библиотека готова");
+        setIsLibraryReady(true);
       } else {
         console.log("Ожидаем загрузки model-viewer...");
-        setTimeout(checkLibrary, 100);
+        setTimeout(checkLibrary, 200);
       }
     };
+
+    // Немедленная проверка и затем через интервал
     checkLibrary();
   }, []);
 
   useEffect(() => {
-    if (!isLibraryReady) return;
+    if (!isLibraryReady || !modelViewerRef.current) return;
 
     const modelViewer = modelViewerRef.current;
-    if (modelViewer) {
+    setModelLoaded(false);
+
+    const handleLoad = () => {
+      console.log("3D модель загружена успешно");
+      setModelLoaded(true);
+    };
+
+    const handleError = (error: any) => {
+      console.error("Ошибка загрузки 3D модели:", error);
       setModelLoaded(false);
+    };
 
-      const handleLoad = () => {
-        console.log("3D модель загружена успешно");
-        setModelLoaded(true);
-      };
+    const handleProgress = (event: any) => {
+      const progress = Math.round(event.detail.totalProgress * 100);
+      console.log("Загрузка модели:", progress + "%");
+    };
 
-      const handleError = (error: any) => {
-        console.error("Ошибка загрузки 3D модели:", error);
-        setModelLoaded(false);
-      };
+    // Добавляем слушатели событий
+    modelViewer.addEventListener("load", handleLoad);
+    modelViewer.addEventListener("error", handleError);
+    modelViewer.addEventListener("progress", handleProgress);
 
-      const handleProgress = (event: any) => {
-        const progress = Math.round(event.detail.totalProgress * 100);
-        console.log("Загрузка модели:", progress + "%");
-      };
-
-      modelViewer.addEventListener("load", handleLoad);
-      modelViewer.addEventListener("error", handleError);
-      modelViewer.addEventListener("progress", handleProgress);
-
-      if (modelViewer.src) {
-        console.log("Начинаем загрузку модели:", modelViewer.src);
-      }
-
-      return () => {
-        modelViewer.removeEventListener("load", handleLoad);
-        modelViewer.removeEventListener("error", handleError);
-        modelViewer.removeEventListener("progress", handleProgress);
-      };
+    // Принудительно запускаем загрузку модели
+    if (modelViewer.src) {
+      console.log("Начинаем загрузку модели:", modelViewer.src);
+      // Перезагружаем модель для надежности
+      const currentSrc = modelViewer.src;
+      modelViewer.src = "";
+      setTimeout(() => {
+        modelViewer.src = currentSrc;
+      }, 100);
     }
+
+    return () => {
+      modelViewer.removeEventListener("load", handleLoad);
+      modelViewer.removeEventListener("error", handleError);
+      modelViewer.removeEventListener("progress", handleProgress);
+    };
   }, [isLibraryReady]);
 
   const toggleIndicators = () => {
