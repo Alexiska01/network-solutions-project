@@ -9,34 +9,59 @@ interface MobileMenuProps {
   onClose: () => void;
 }
 
+interface MenuLevel {
+  title: string;
+  items: any[];
+  parentPath?: string;
+}
+
 const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const [menuStack, setMenuStack] = useState<MenuLevel[]>([]);
+  const [activeItem, setActiveItem] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Инициализация главного меню
+  useEffect(() => {
+    if (isOpen && menuStack.length === 0) {
+      setMenuStack([{ title: "Меню", items: navigationItems }]);
+    }
+  }, [isOpen, menuStack.length]);
 
   // Сброс меню при закрытии
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
-        setExpandedItems(new Set());
+        setMenuStack([]);
+        setActiveItem(null);
       }, 300);
     }
   }, [isOpen]);
 
-  const toggleExpanded = (itemKey: string) => {
-    setExpandedItems((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(itemKey)) {
-        newSet.delete(itemKey);
-      } else {
-        newSet.add(itemKey);
-      }
-      return newSet;
-    });
+  const navigateToLevel = (newLevel: MenuLevel) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setMenuStack((prev) => [...prev, newLevel]);
+      setIsTransitioning(false);
+    }, 150);
+  };
+
+  const navigateBack = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setMenuStack((prev) => prev.slice(0, -1));
+      setIsTransitioning(false);
+    }, 150);
   };
 
   const handleItemClick = (item: any, e: React.MouseEvent) => {
-    if (item.hasSubmenu && item.path === "/products") {
+    setActiveItem(item.path);
+
+    if (item.path === "/products" && item.hasSubmenu) {
       e.preventDefault();
-      toggleExpanded("products");
+      navigateToLevel({
+        title: "Оборудование",
+        items: productSubmenuItems,
+      });
     } else if (item.path === "/contacts") {
       e.preventDefault();
       onClose();
@@ -44,148 +69,105 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       if (contactsSection) {
         contactsSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    } else if (!item.hasSubmenu) {
+    } else if (item.submenuItems) {
+      e.preventDefault();
+      navigateToLevel({
+        title: item.name,
+        items: item.submenuItems,
+        parentPath: item.path,
+      });
+    } else if (item.items && item.items.length > 0) {
+      e.preventDefault();
+      navigateToLevel({
+        title: item.name,
+        items: item.items,
+        parentPath: item.path,
+      });
+    } else if (!item.hasSubmenu && !item.submenuItems && !item.items) {
       onClose();
     }
   };
 
-  const renderAllProducts = () => (
-    <div className="space-y-1 mt-2">
-      {/* Все коммутаторы */}
-      <Link
-        to="/products/switches"
-        className="block w-full p-3 text-blue-600 hover:bg-gray-50 transition-colors text-sm"
-        onClick={onClose}
-      >
-        Все коммутаторы
-      </Link>
+  const renderMenuItem = (item: any) => {
+    const hasChildren =
+      item.hasSubmenu ||
+      item.submenuItems ||
+      (item.items && item.items.length > 0);
+    const isActive = activeItem === item.path;
 
-      {/* Категории продуктов */}
-      {productSubmenuItems.map((category) => (
-        <div key={category.path} className="border-l-2 border-gray-100 ml-2">
-          <div className="pl-4">
-            <div className="text-xs font-medium text-orange-600 uppercase tracking-wide mb-2 py-1">
-              {category.name}
-            </div>
+    const baseClasses =
+      "group w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-emerald-50 transition-all duration-200 min-h-[44px] border-b border-gray-50 last:border-b-0";
+    const activeClasses = isActive
+      ? "bg-gradient-to-r from-blue-100 to-emerald-100 text-blue-700"
+      : "";
 
-            {/* Подкategories если есть */}
-            {category.submenuItems &&
-              category.submenuItems.map((subcategory) => (
-                <div key={subcategory.path} className="mb-3">
-                  <div className="text-xs text-gray-600 mb-1 pl-2">
-                    {subcategory.name}
-                  </div>
-
-                  {/* Третий уровень если есть */}
-                  {subcategory.items &&
-                    subcategory.items.map((thirdLevel) => (
-                      <div key={thirdLevel.path} className="ml-4 mb-2">
-                        <div className="text-xs text-gray-500 mb-1">
-                          {thirdLevel.name}
-                        </div>
-
-                        {/* Конкретные серии */}
-                        {thirdLevel.items &&
-                          thirdLevel.items.map((series) => (
-                            <Link
-                              key={series.path}
-                              to={series.path}
-                              className="block w-full p-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors rounded"
-                              onClick={onClose}
-                            >
-                              {series.name}
-                            </Link>
-                          ))}
-                      </div>
-                    ))}
-
-                  {/* Если нет третьего уровня, показать как ссылку */}
-                  {!subcategory.items && (
-                    <Link
-                      to={subcategory.path}
-                      className="block w-full p-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors rounded ml-2"
-                      onClick={onClose}
-                    >
-                      Перейти к {subcategory.name.toLowerCase()}
-                    </Link>
-                  )}
-                </div>
-              ))}
-
-            {/* Если нет submenuItems, показать как обычную ссылку */}
-            {!category.submenuItems && (
-              <Link
-                to={category.path}
-                className="block w-full p-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors rounded"
-                onClick={onClose}
-              >
-                Перейти к {category.name.toLowerCase()}
-              </Link>
+    if (hasChildren) {
+      return (
+        <button
+          key={item.path}
+          onClick={(e) => handleItemClick(item, e)}
+          className={`${baseClasses} ${activeClasses}`}
+        >
+          <div className="flex items-center space-x-3">
+            {item.icon && (
+              <Icon
+                name={item.icon}
+                size={20}
+                className={isActive ? "text-blue-600" : "text-gray-500"}
+              />
             )}
+            <span className="text-sm font-medium">{item.name}</span>
           </div>
-        </div>
-      ))}
-    </div>
-  );
+          <Icon
+            name="ChevronRight"
+            size={16}
+            className={isActive ? "text-blue-500" : "text-gray-400"}
+          />
+        </button>
+      );
+    }
 
-  const renderMainMenu = () => (
-    <div className="space-y-1">
-      {navigationItems.map((item, index) => (
-        <div key={item.path}>
-          {item.hasSubmenu ? (
-            <div>
-              <button
-                onClick={(e) => handleItemClick(item, e)}
-                className="group w-full flex items-center justify-between p-3 text-gray-700 hover:bg-gray-50 transition-all duration-200"
-              >
-                <div className="flex items-center space-x-3">
-                  <Icon name={item.icon} size={18} className="text-gray-500" />
-                  <span className="text-sm">{item.name}</span>
-                </div>
-                <Icon
-                  name="ChevronDown"
-                  size={14}
-                  className={`text-gray-400 transition-transform duration-200 ${
-                    expandedItems.has("products") ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {/* Развернутое меню продуктов */}
-              {expandedItems.has("products") && renderAllProducts()}
-            </div>
-          ) : (
-            <Link
-              to={item.path}
-              className="group w-full flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 transition-all duration-200"
-              onClick={(e) => handleItemClick(item, e)}
-            >
-              <Icon name={item.icon} size={18} className="text-gray-500" />
-              <span className="text-sm">{item.name}</span>
-            </Link>
+    return (
+      <Link
+        key={item.path}
+        to={item.path}
+        className={`${baseClasses} ${activeClasses}`}
+        onClick={(e) => handleItemClick(item, e)}
+      >
+        <div className="flex items-center space-x-3">
+          {item.icon && (
+            <Icon
+              name={item.icon}
+              size={20}
+              className={isActive ? "text-blue-600" : "text-gray-500"}
+            />
           )}
+          <span className="text-sm font-medium">{item.name}</span>
         </div>
-      ))}
-    </div>
-  );
+      </Link>
+    );
+  };
+
+  const currentLevel = menuStack[menuStack.length - 1];
+  const canGoBack = menuStack.length > 1;
 
   return (
     <>
       {/* Кнопка гамбургера */}
       <button
         onClick={onToggle}
-        className="lg:hidden relative w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-idata-active focus:ring-offset-2"
+        className="lg:hidden relative w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-4 h-3 md:w-5 md:h-4 flex flex-col justify-center relative">
             <span
-              className={`block h-0.5 w-4 md:w-5 bg-idata-text transition-all duration-300 ${
+              className={`block h-0.5 w-4 md:w-5 bg-gray-700 transition-all duration-300 ${
                 isOpen ? "rotate-45 translate-y-0.5" : ""
               }`}
             />
             <span
-              className={`block h-0.5 w-4 md:w-5 bg-idata-text mt-1 transition-all duration-300 ${
+              className={`block h-0.5 w-4 md:w-5 bg-gray-700 mt-1 transition-all duration-300 ${
                 isOpen ? "-rotate-45 -translate-y-0.5" : ""
               }`}
             />
@@ -205,30 +187,51 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
 
       {/* Мобильное меню */}
       <div
-        className={`lg:hidden fixed top-0 right-0 w-full max-w-xs md:max-w-sm h-full bg-white z-50 shadow-xl transition-transform duration-300 ease-out ${
+        className={`lg:hidden fixed top-0 right-0 w-full max-w-xs md:max-w-sm h-full bg-white z-50 shadow-2xl transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Шапка меню */}
-        <div className="flex justify-between items-center h-12 md:h-16 px-4 md:px-6 border-b border-gray-100">
-          <div className="text-base md:text-lg text-gray-900 font-sans">
-            Меню
+        <div className="flex items-center justify-between h-16 px-4 bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
+          <div className="flex items-center space-x-3">
+            {canGoBack && (
+              <button
+                onClick={navigateBack}
+                className="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center"
+                aria-label="Назад"
+              >
+                <Icon name="ArrowLeft" size={16} />
+              </button>
+            )}
+            <h2 className="text-lg font-semibold truncate">
+              {currentLevel?.title || "Меню"}
+            </h2>
           </div>
 
           <button
             onClick={onClose}
-            className="w-8 h-8 md:w-9 md:h-9 rounded-md md:rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300 flex items-center justify-center"
+            className="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center"
             aria-label="Закрыть меню"
           >
-            <Icon name="X" size={14} className="md:w-4 md:h-4" />
+            <Icon name="X" size={16} />
           </button>
         </div>
 
         {/* Контейнер меню */}
-        <div className="h-full overflow-y-auto">
-          <nav className="flex flex-col py-3 px-4 md:py-4 md:px-6 font-sans">
-            {renderMainMenu()}
-          </nav>
+        <div className="h-full overflow-hidden">
+          <div
+            className={`h-full transition-all duration-300 ease-out ${
+              isTransitioning
+                ? "opacity-0 transform translate-x-2"
+                : "opacity-100 transform translate-x-0"
+            }`}
+          >
+            <nav className="h-full overflow-y-auto">
+              <div className="py-2">
+                {currentLevel?.items?.map((item) => renderMenuItem(item))}
+              </div>
+            </nav>
+          </div>
         </div>
       </div>
     </>
