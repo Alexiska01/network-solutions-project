@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Icon from "@/components/ui/icon";
 
 const Hero = () => {
+  const [hoveredButton, setHoveredButton] = useState<
+    "primary" | "secondary" | null
+  >(null);
+
   return (
     <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
@@ -15,11 +19,42 @@ const Hero = () => {
               беспроводного оборудования для корпоративных сетей любой
               сложности.
             </p>
-            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
-              <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
+            <div
+              className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4"
+              onMouseLeave={() => setHoveredButton(null)}
+            >
+              <button
+                className={`
+                  px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg 
+                  text-xs md:text-sm lg:text-base font-medium font-sans min-h-[44px]
+                  transition-all duration-300 ease-in-out
+                  ${
+                    hoveredButton === "primary"
+                      ? "bg-gradient-hero text-white border border-transparent"
+                      : hoveredButton === "secondary"
+                        ? "bg-white text-[#0065B3] border border-transparent"
+                        : "bg-white text-[#0065B3] border border-transparent"
+                  }
+                `}
+                onMouseEnter={() => setHoveredButton("primary")}
+              >
                 Посмотреть продукты
               </button>
-              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-white hover:text-[#0065B3] transition-all duration-300 font-sans min-h-[44px]">
+              <button
+                className={`
+                  px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg 
+                  text-xs md:text-sm lg:text-base font-medium font-sans min-h-[44px]
+                  transition-all duration-300 ease-in-out
+                  ${
+                    hoveredButton === "secondary"
+                      ? "bg-gradient-hero text-white border border-white/20"
+                      : hoveredButton === "primary"
+                        ? "bg-white text-[#0065B3] border border-transparent"
+                        : "bg-gradient-hero text-white border border-white/20"
+                  }
+                `}
+                onMouseEnter={() => setHoveredButton("secondary")}
+              >
                 Связаться с нами
               </button>
             </div>
