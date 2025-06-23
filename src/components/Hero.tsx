@@ -16,10 +16,10 @@ const Hero = () => {
               сложности.
             </p>
             <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
-              <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium md:hover:bg-gradient-to-r md:hover:from-[#2563eb] md:hover:to-[#16a34a] md:hover:text-white transition-all duration-300 font-sans min-h-[44px]">
+              <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white transition-all duration-300 font-sans min-h-[44px]">
                 Посмотреть продукты
               </button>
-              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium md:hover:bg-gradient-to-r md:hover:from-[#2563eb] md:hover:to-[#16a34a] md:hover:text-white transition-all duration-300 font-sans min-h-[44px]">
+              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:border-transparent transition-all duration-300 font-sans min-h-[44px]">
                 Связаться с нами
               </button>
             </div>
