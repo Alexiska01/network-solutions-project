@@ -59,18 +59,18 @@ const ProductsSection = () => {
               className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
               <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
-                <div className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
-                    size={20}
-                    className="text-white md:w-6 md:h-6 lg:w-7 lg:h-7"
+                    size={24}
+                    className="text-white md:w-8 md:h-8 lg:w-9 lg:h-9"
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
+                  <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
                     {product.title}
                   </h3>
-                  <p className="text-sm md:text-base text-gray-600 font-sans leading-relaxed">
+                  <p className="text-xs md:text-sm text-gray-600 font-sans leading-relaxed">
                     {product.description}
                   </p>
                 </div>
