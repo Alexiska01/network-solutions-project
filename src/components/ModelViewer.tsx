@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 declare global {
   namespace JSX {
@@ -26,6 +27,20 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [background, setBackground] = useState("gradient"); // gradient, dark, light
+  const isMobile = useIsMobile();
+
+  // Адаптивные настройки камеры для мобильных устройств
+  const getCameraOrbit = () => {
+    return isMobile ? "0deg 75deg 0.88m" : "0deg 75deg 0.8m";
+  };
+
+  const getMinCameraOrbit = () => {
+    return isMobile ? "auto auto 0.55m" : "auto auto 0.5m";
+  };
+
+  const getMaxCameraOrbit = () => {
+    return isMobile ? "auto auto 1.65m" : "auto auto 1.5m";
+  };
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -74,9 +89,9 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               interaction-prompt="none"
               loading="eager"
               reveal="auto"
-              camera-orbit="0deg 75deg 0.8m"
-              min-camera-orbit="auto auto 0.5m"
-              max-camera-orbit="auto auto 1.5m"
+              camera-orbit={getCameraOrbit()}
+              min-camera-orbit={getMinCameraOrbit()}
+              max-camera-orbit={getMaxCameraOrbit()}
               field-of-view="30deg"
               poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='transparent'/%3E%3C/svg%3E"
               style={{
