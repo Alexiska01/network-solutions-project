@@ -224,8 +224,7 @@ const SeriesCatalog3530Component = () => {
             size="lg"
             className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
           >
-            <Icon name="MessageCircle" className="mr-2" />
-            Связаться с инженером
+            Связаться с нами
           </Button>
         </div>
       </section>
