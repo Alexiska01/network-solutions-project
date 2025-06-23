@@ -27,20 +27,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [background, setBackground] = useState("gradient");
-  const [shouldLoadModel, setShouldLoadModel] = useState(false);
   const isMobile = useIsMobile();
-
-  // Отложенная загрузка модели
-  useEffect(() => {
-    const timer = setTimeout(
-      () => {
-        setShouldLoadModel(true);
-      },
-      isMobile ? 800 : 300,
-    );
-
-    return () => clearTimeout(timer);
-  }, [isMobile]);
 
   // Адаптивные настройки камеры для мобильных устройств
   const getCameraOrbit = () => {
@@ -66,6 +53,9 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
       "min-camera-orbit": getMinCameraOrbit(),
       "max-camera-orbit": getMaxCameraOrbit(),
       "field-of-view": "30deg",
+      loading: "eager",
+      reveal: "auto",
+      "auto-rotate": !isMobile,
       poster:
         "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3C/svg%3E",
       style: {
@@ -76,20 +66,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
       className: "w-full h-full",
     };
 
-    if (isMobile) {
-      return {
-        ...baseProps,
-        loading: "lazy",
-        reveal: "interaction",
-      };
-    }
-
-    return {
-      ...baseProps,
-      "auto-rotate": true,
-      loading: "lazy",
-      reveal: "auto",
-    };
+    return baseProps;
   };
 
   const toggleFullscreen = () => {
@@ -141,7 +118,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               </div>
             )}
 
-            {shouldLoadModel && <model-viewer {...getModelViewerProps()} />}
+            <model-viewer {...getModelViewerProps()} />
           </div>
 
           <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex items-center justify-center gap-3">

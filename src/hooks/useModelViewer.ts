@@ -5,24 +5,9 @@ export const useModelViewer = () => {
   const modelViewerRef = useRef<any>(null);
   const [indicatorsOn, setIndicatorsOn] = useState(false);
   const [modelLoaded, setModelLoaded] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
   const isMobile = useIsMobile();
 
-  // Отложенная инициализация для мобильных
   useEffect(() => {
-    if (isMobile) {
-      const timer = setTimeout(() => {
-        setIsInitialized(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else {
-      setIsInitialized(true);
-    }
-  }, [isMobile]);
-
-  useEffect(() => {
-    if (!isInitialized) return;
-
     const modelViewer = modelViewerRef.current;
     if (modelViewer) {
       const handleLoad = () => {
@@ -58,7 +43,7 @@ export const useModelViewer = () => {
         modelViewer.removeEventListener("progress", handleProgress);
       };
     }
-  }, [modelLoaded, isInitialized]);
+  }, [modelLoaded]);
 
   const toggleIndicators = () => {
     if (!modelViewerRef.current || !modelLoaded) {
@@ -102,7 +87,6 @@ export const useModelViewer = () => {
     modelViewerRef,
     indicatorsOn,
     modelLoaded,
-    isInitialized,
     isMobile,
     toggleIndicators,
   };
