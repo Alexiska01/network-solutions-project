@@ -17,6 +17,7 @@ interface MenuLevel {
 
 const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
   const [menuStack, setMenuStack] = useState<MenuLevel[]>([]);
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -33,6 +34,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       setTimeout(() => {
         setMenuStack([]);
         setActiveItem(null);
+        setExpandedItems(new Set());
       }, 300);
     }
   }, [isOpen]);
@@ -53,6 +55,18 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     }, 150);
   };
 
+  const toggleExpanded = (itemPath: string) => {
+    setExpandedItems((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(itemPath)) {
+        newSet.delete(itemPath);
+      } else {
+        newSet.add(itemPath);
+      }
+      return newSet;
+    });
+  };
+
   const handleItemClick = (item: any, e: React.MouseEvent) => {
     setActiveItem(item.path);
 
@@ -69,6 +83,10 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       if (contactsSection) {
         contactsSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
+    } else if (item.hasThirdLevel && item.items) {
+      // Для элементов с третьим уровнем - используем аккордеон
+      e.preventDefault();
+      toggleExpanded(item.path);
     } else if (item.submenuItems) {
       e.preventDefault();
       navigateToLevel({
@@ -88,12 +106,14 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     }
   };
 
-  const renderMenuItem = (item: any) => {
+  const renderMenuItem = (item: any, level: number = 0) => {
     const hasChildren =
       item.hasSubmenu ||
       item.submenuItems ||
       (item.items && item.items.length > 0);
     const isActive = activeItem === item.path;
+    const isExpanded = expandedItems.has(item.path);
+    const hasThirdLevel = item.hasThirdLevel && item.items;
 
     const baseClasses =
       "group w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-emerald-50 transition-all duration-200 min-h-[44px] border-b border-gray-50 last:border-b-0";
@@ -101,29 +121,53 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       ? "bg-gradient-to-r from-blue-100 to-emerald-100 text-blue-700"
       : "";
 
+    // Добавляем отступ для вложенных элементов
+    const indentClass = level > 0 ? `pl-${4 + level * 4}` : "px-4";
+    const adjustedClasses = baseClasses.replace("px-4", indentClass);
+
     if (hasChildren) {
       return (
-        <button
-          key={item.path}
-          onClick={(e) => handleItemClick(item, e)}
-          className={`${baseClasses} ${activeClasses}`}
-        >
-          <div className="flex items-center space-x-3">
-            {item.icon && (
-              <Icon
-                name={item.icon}
-                size={20}
-                className={isActive ? "text-blue-600" : "text-gray-500"}
-              />
-            )}
-            <span className="text-xs font-medium text-left">{item.name}</span>
-          </div>
-          <Icon
-            name="ChevronRight"
-            size={16}
-            className={isActive ? "text-blue-500" : "text-gray-400"}
-          />
-        </button>
+        <div key={item.path}>
+          <button
+            onClick={(e) => handleItemClick(item, e)}
+            className={`${adjustedClasses} ${activeClasses}`}
+          >
+            <div className="flex items-center space-x-3">
+              {item.icon && level === 0 && (
+                <Icon
+                  name={item.icon}
+                  size={20}
+                  className={isActive ? "text-blue-600" : "text-gray-500"}
+                />
+              )}
+              <span className="text-xs font-medium text-left">{item.name}</span>
+            </div>
+            <Icon
+              name={
+                hasThirdLevel && isExpanded ? "ChevronDown" : "ChevronRight"
+              }
+              size={16}
+              className={`transition-transform duration-200 ${
+                isActive ? "text-blue-500" : "text-gray-400"
+              }`}
+            />
+          </button>
+
+          {/* Аккордеон для третьего уровня */}
+          {hasThirdLevel && (
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-out ${
+                isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="bg-gray-25 border-l-2 border-blue-200 ml-4">
+                {item.items.map((subItem: any) =>
+                  renderMenuItem(subItem, level + 1),
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       );
     }
 
@@ -131,11 +175,11 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       <Link
         key={item.path}
         to={item.path}
-        className={`${baseClasses} ${activeClasses}`}
+        className={`${adjustedClasses} ${activeClasses}`}
         onClick={(e) => handleItemClick(item, e)}
       >
         <div className="flex items-center space-x-3">
-          {item.icon && (
+          {item.icon && level === 0 && (
             <Icon
               name={item.icon}
               size={20}
