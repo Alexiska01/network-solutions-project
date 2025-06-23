@@ -46,7 +46,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
     const baseProps = {
       ref: modelRef,
       src: modelPath,
-      "camera-controls": true,
+      "camera-controls": "true",
       exposure: "1.0",
       "interaction-prompt": "none",
       "camera-orbit": getCameraOrbit(),
@@ -55,7 +55,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
       "field-of-view": "30deg",
       loading: "eager",
       reveal: "auto",
-      "auto-rotate": !isMobile,
+      "auto-rotate": !isMobile ? "true" : "false",
       poster:
         "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3C/svg%3E",
       style: {
@@ -98,22 +98,13 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               <Icon name="Maximize" size={20} />
             </button>
 
-            {(!shouldLoadModel || !modelLoaded) && (
+            {!modelLoaded && (
               <div className="absolute inset-4 sm:inset-6 flex items-center justify-center">
                 <div className="text-white text-center">
-                  {!shouldLoadModel ? (
-                    <div className="space-y-2">
-                      <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center mx-auto">
-                        <Icon name="Box" size={32} className="text-white/60" />
-                      </div>
-                      <p className="text-sm">Подготовка 3D модели...</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-                      <p className="text-sm">Загрузка 3D модели...</p>
-                    </div>
-                  )}
+                  <div className="space-y-2">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+                    <p className="text-sm">Загрузка 3D модели...</p>
+                  </div>
                 </div>
               </div>
             )}
@@ -134,7 +125,7 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
               }`}
               title="Индикаторы"
             >
-              <Icon name="Lightbulb" size={18} />
+              <Icon name="Zap" size={18} />
             </button>
 
             <button
@@ -193,8 +184,8 @@ const ModelViewer: React.FC<ModelViewerProps> = ({
             </button>
             <model-viewer
               src={modelPath}
-              camera-controls
-              auto-rotate={!isMobile}
+              camera-controls="true"
+              auto-rotate={!isMobile ? "true" : "false"}
               exposure="1.0"
               interaction-prompt="none"
               loading="lazy"
