@@ -5,7 +5,7 @@ export const ids353024p6xData: ProductInfo = {
   title: "IDS3530-24P-6X",
   description:
     "24×1G Base-T + 6×10G SFP+, PoE+ 380 Вт — оптимальная производительность для среднего бизнеса",
-  modelPath: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24P.glb",
+  modelPath: "https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3530-24P-6X.glb",
   basicSpecs: [
     { label: "Порты:", value: "24×1000M Base-T" },
     { label: "Слоты:", value: "6×10G SFP+" },

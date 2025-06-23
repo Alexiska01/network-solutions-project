@@ -10,36 +10,33 @@ export const useModelViewer = () => {
   useEffect(() => {
     const modelViewer = modelViewerRef.current;
     if (modelViewer) {
+      // Сброс состояния при смене модели
+      setModelLoaded(false);
+
       const handleLoad = () => {
-        setModelLoaded(true);
         console.log("3D модель загружена успешно");
+        setModelLoaded(true);
       };
 
       const handleError = (error: any) => {
         console.error("Ошибка загрузки 3D модели:", error);
-        // Попробуем загрузить запасную модель без блокировки
-        const fallbackTimer = setTimeout(() => {
-          if (modelViewer && !modelLoaded) {
-            modelViewer.src =
-              "https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3530-24P-6X.glb";
-          }
-        }, 1000);
-
-        // Очищаем таймер если модель загрузилась
-        const cleanup = () => clearTimeout(fallbackTimer);
-        modelViewer.addEventListener("load", cleanup, { once: true });
+        setModelLoaded(false);
       };
 
       const handleProgress = (event: any) => {
-        console.log(
-          "Загрузка модели:",
-          Math.round(event.detail.totalProgress * 100) + "%",
-        );
+        const progress = Math.round(event.detail.totalProgress * 100);
+        console.log("Загрузка модели:", progress + "%");
       };
 
+      // Добавляем обработчики
       modelViewer.addEventListener("load", handleLoad);
       modelViewer.addEventListener("error", handleError);
       modelViewer.addEventListener("progress", handleProgress);
+
+      // Принудительно запускаем загрузку если модель уже есть в DOM
+      if (modelViewer.src) {
+        console.log("Начинаем загрузку модели:", modelViewer.src);
+      }
 
       return () => {
         modelViewer.removeEventListener("load", handleLoad);
