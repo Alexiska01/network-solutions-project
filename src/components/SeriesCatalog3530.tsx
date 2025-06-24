@@ -8,15 +8,14 @@ const SeriesCatalog3530Component = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:pl-[5vw]">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
             <div>
-              <h1 className="text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-                IDS3530 — надёжные L2+/L3-коммутаторы
-                <br className="hidden lg:block" />
-                для промышленной инфраструктуры
+              <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
+                IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
+                инфраструктуры
               </h1>
-              <p className="text-sm md:text-base lg:text-base xl:text-lg mb-4 md:mb-6 lg:mb-8 text-blue-100 lg:leading-relaxed xl:leading-loose">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
                 До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
                 одной платформе
               </p>
