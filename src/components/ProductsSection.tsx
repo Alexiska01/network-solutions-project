@@ -70,15 +70,13 @@ const ProductsSection = () => {
                   <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
                     {product.title}
                   </h3>
-                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed min-h-[32px] md:min-h-[40px]">
+                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed h-[48px] md:h-[56px] flex items-start">
                     {product.description}
                   </p>
                 </div>
               </div>
               <div className="flex-1 flex flex-col">
-                <ul
-                  className={`space-y-1.5 md:space-y-2 mb-6 flex-1 ${index === 0 || index === 2 ? "mt-2 md:mt-3" : ""}`}
-                >
+                <ul className="space-y-1.5 md:space-y-2 mb-6 flex-1">
                   {product.features.map((feature, idx) => (
                     <li
                       key={idx}
