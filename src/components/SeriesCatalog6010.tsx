@@ -1,34 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
-
-const BenefitCard = ({
-  icon,
-  iconColor,
-  title,
-  description,
-}: {
-  icon: string;
-  iconColor: string;
-  title: string;
-  description: string;
-}) => (
-  <div className="flex items-start space-x-4 p-6 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-100/50 hover:bg-white/80 hover:shadow-lg transition-all duration-300">
-    <div
-      className={`w-12 h-12 ${iconColor} rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm`}
-    >
-      <Icon name={icon} size={20} className="text-white" />
-    </div>
-    <div>
-      <h3 className="text-lg font-semibold mb-2 text-gray-900 font-sans">
-        {title}
-      </h3>
-      <p className="text-sm text-gray-600 leading-relaxed font-sans">
-        {description}
-      </p>
-    </div>
-  </div>
-);
+import BenefitCard from "@/components/BenefitCard";
 
 const SeriesCatalog6010Component = () => {
   return (
