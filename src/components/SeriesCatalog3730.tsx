@@ -34,65 +34,37 @@ const SeriesCatalog3730Component = () => {
       {/* Benefits Section */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-            Ключевые преимущества
-          </h2>
-          <div className="grid grid-cols-2 gap-8">
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Zap" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  40G uplink (QSFP+)
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Максимальная пропускная способность
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Network" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Layer 3 маршрутизация
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Полнофункциональная маршрутизация
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Shield" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Защита от DDoS
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Встроенная защита от атак
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Settings" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Управление SNMP
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Централизованное управление
-                </p>
-              </div>
-            </div>
+          <div className="text-center mb-12">
+            <div className="w-16 h-1 bg-gradient-brand mx-auto mb-4 rounded-full"></div>
+            <h2 className="text-3xl font-bold text-gray-900">
+              Ключевые преимущества
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <BenefitCard
+              icon="Zap"
+              iconColor="bg-blue-600"
+              title="40G uplink (QSFP+)"
+              description="Максимальная пропускная способность"
+            />
+            <BenefitCard
+              icon="Network"
+              iconColor="bg-teal-600"
+              title="Layer 3 маршрутизация"
+              description="Полнофункциональная маршрутизация"
+            />
+            <BenefitCard
+              icon="Shield"
+              iconColor="bg-purple-600"
+              title="Защита от DDoS"
+              description="Встроенная защита от атак"
+            />
+            <BenefitCard
+              icon="Settings"
+              iconColor="bg-orange-600"
+              title="Управление SNMP"
+              description="Централизованное управление"
+            />
           </div>
         </div>
       </section>
