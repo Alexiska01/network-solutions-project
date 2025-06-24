@@ -44,13 +44,13 @@ const SeriesCatalog3530Component = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <BenefitCard
               icon="Zap"
-              iconColor="bg-blue-600"
+              iconColor="bg-gradient-to-r from-[#003A85] to-[#0063C2]"
               title="PoE/PoE+ до 880 Вт"
               description="Надёжное питание устройств"
             />
             <BenefitCard
               icon="Network"
-              iconColor="bg-teal-600"
+              iconColor="bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8]"
               title="10G uplink (SFP+)"
               description="Высокоскоростное подключение"
             />

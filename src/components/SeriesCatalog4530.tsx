@@ -44,13 +44,13 @@ const SeriesCatalog4530Component = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <BenefitCard
               icon="Zap"
-              iconColor="bg-blue-600"
+              iconColor="bg-gradient-to-r from-[#003A85] to-[#0063C2]"
               title="10G / 40G / 100G карты"
               description="Гибкое масштабирование пропускной способности"
             />
             <BenefitCard
               icon="Battery"
-              iconColor="bg-teal-600"
+              iconColor="bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8]"
               title="Двойной модуль питания"
               description="Резервирование для максимальной надежности"
             />
