@@ -56,7 +56,7 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
+              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full grid grid-rows-[auto_1fr_auto] gap-0"
             >
               <div className="grid grid-cols-[auto_1fr] gap-3 md:gap-4 items-start mb-4">
                 <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
@@ -70,31 +70,29 @@ const ProductsSection = () => {
                   <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
                     {product.title}
                   </h3>
-                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed h-[48px] md:h-[56px] flex items-start">
+                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed">
                     {product.description}
                   </p>
                 </div>
               </div>
-              <div className="flex-1 flex flex-col">
-                <ul className="space-y-1.5 md:space-y-2 mb-6 flex-1">
-                  {product.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center text-xs md:text-sm text-gray-700 font-sans"
-                    >
-                      <Icon
-                        name="Check"
-                        size={12}
-                        className="text-green-500 mr-1.5 md:mr-2 flex-shrink-0 md:w-4 md:h-4"
-                      />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px]">
-                  Подробнее
-                </button>
-              </div>
+              <ul className="space-y-1.5 md:space-y-2 mb-6">
+                {product.features.map((feature, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-center text-xs md:text-sm text-gray-700 font-sans"
+                  >
+                    <Icon
+                      name="Check"
+                      size={12}
+                      className="text-green-500 mr-1.5 md:mr-2 flex-shrink-0 md:w-4 md:h-4"
+                    />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px]">
+                Подробнее
+              </button>
             </div>
           ))}
         </div>
