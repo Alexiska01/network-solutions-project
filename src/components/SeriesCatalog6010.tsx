@@ -1,9 +1,18 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
-import BenefitCard from "@/components/BenefitCard";
 
-const BenefitCard = ({ icon, iconColor, title, description }) => (
+const BenefitCard = ({
+  icon,
+  iconColor,
+  title,
+  description,
+}: {
+  icon: string;
+  iconColor: string;
+  title: string;
+  description: string;
+}) => (
   <div className="flex items-start space-x-4 p-6 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-100/50 hover:bg-white/80 hover:shadow-lg transition-all duration-300">
     <div
       className={`w-12 h-12 ${iconColor} rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm`}
