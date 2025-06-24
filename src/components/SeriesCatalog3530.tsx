@@ -169,7 +169,7 @@ const SeriesCatalog3530Component = () => {
             Нужна помощь с выбором?
           </h2>
           <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
-            Наши инженеры помогут подобрать оптимальное решение для вашей
+            Наша компания поможет подобрать оптимальное решение для вашей
             инфраструктуры
           </p>
           <Button
