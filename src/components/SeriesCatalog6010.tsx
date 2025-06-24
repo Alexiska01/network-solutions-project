@@ -92,10 +92,10 @@ const SeriesCatalog6010Component = () => {
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
               Модели серии IDS6010
             </h2>
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600">
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans">
               Выберите оптимальную конфигурацию для уровня распределения
             </p>
           </div>
@@ -103,10 +103,10 @@ const SeriesCatalog6010Component = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* IDS6010-24T-18X-8Y */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS6010-24T-18X-8Y
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
                 24×1G Base-T, 18×10G SFP+, 8×25G SFP28
               </p>
               <Button
@@ -122,10 +122,10 @@ const SeriesCatalog6010Component = () => {
 
             {/* IDS6010-24X-2Q */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS6010-24X-2Q
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
                 24×10G SFP+, 2×40G QSFP+
               </p>
               <Button
@@ -141,10 +141,10 @@ const SeriesCatalog6010Component = () => {
 
             {/* IDS6010-24X-2C */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS6010-24X-2C
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
                 24×10G SFP+, 2×100G/40G QSFP28
               </p>
               <Button
@@ -160,10 +160,10 @@ const SeriesCatalog6010Component = () => {
 
             {/* IDS6010-48X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS6010-48X
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
                 48×10G SFP+
               </p>
               <Button
