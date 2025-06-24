@@ -8,26 +8,21 @@ const SeriesCatalog4530Component = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
-            <div>
-              <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-                IDS4530 — расширяемые коммутаторы для корпоративной и
-                операторской сети
-              </h1>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
-                До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760
-                Вт
-              </p>
-              <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
-                <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
-                  Подробнее
-                </button>
-                <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand">
-                  Сравнить модели
-                </button>
-              </div>
-            </div>
+        <div className="max-w-6xl mx-auto px-6">
+          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
+            IDS4530 — расширяемые коммутаторы для корпоративной и операторской
+            сети
+          </h1>
+          <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-4xl">
+            До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760 Вт
+          </p>
+          <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
+            <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
+              Подробнее
+            </button>
+            <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand">
+              Сравнить модели
+            </button>
           </div>
         </div>
       </section>
