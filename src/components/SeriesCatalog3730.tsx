@@ -28,7 +28,7 @@ const SeriesCatalog3730Component = () => {
               </div>
             </div>
             <div className="hidden lg:block">
-              <div className="w-full h-64 bg-white/10 rounded-lg flex items-center justify-center">
+              <div className="">
                 <Icon name="Network" size={64} className="text-white/60" />
               </div>
             </div>
