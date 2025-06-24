@@ -169,15 +169,14 @@ const SeriesCatalog6010Component = () => {
             Нужна помощь с выбором?
           </h2>
           <p className="text-[18px] text-gray-600 mb-8 max-w-2xl mx-auto">
-            Наши инженеры помогут подобрать оптимальное решение для вашей
+            Наша компания поможет подобрать оптимальное решение для вашей
             инфраструктуры
           </p>
           <Button
             size="lg"
             className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
           >
-            <Icon name="MessageCircle" className="mr-2" />
-            Связаться с инженером
+            Связаться с нами
           </Button>
         </div>
       </section>
