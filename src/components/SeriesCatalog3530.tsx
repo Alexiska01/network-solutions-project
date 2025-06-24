@@ -97,7 +97,7 @@ const SeriesCatalog3530Component = () => {
 
             <div className="text-center">
               <div className="flex md:flex-col items-start md:items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4 bg-[#FF8168]">
+                <div className="w-12 h-12 md:w-16 md:h-16 from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4 bg-[#C04E4F]">
                   <Icon
                     name="Shield"
                     size={24}
