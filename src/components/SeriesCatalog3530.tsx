@@ -13,7 +13,7 @@ const SeriesCatalog3530Component = () => {
             <div className="w-full max-w-full">
               <h1
                 className="font-bold mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight"
-                style={{ fontSize: "40px" }}
+                style={{ fontSize: "48px" }}
               >
                 <span className="lg:hidden">
                   IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
