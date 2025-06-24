@@ -31,8 +31,11 @@ const SeriesCatalog3730Component = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
+            Ключевые преимущества
+          </h2>
           <div className="grid grid-cols-2 gap-8">
             <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
               <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
