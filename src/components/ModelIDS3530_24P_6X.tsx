@@ -86,13 +86,16 @@ const ModelIDS3530_24P_6XComponent = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ids353024p6xData.features.map((feature, index) => {
-              const iconColors = [
-                "bg-blue-500",
-                "bg-green-500",
-                "bg-purple-500",
-                "bg-orange-500",
-                "bg-red-500",
-                "bg-indigo-500",
+              const gradientStyles = [
+                { background: "linear-gradient(to right, #003A85, #0063C2)" }, // синий
+                {
+                  background:
+                    "linear-gradient(to right, #0093B9, #00AEB4, #00B9A8)",
+                }, // зеленый
+                { background: "linear-gradient(to right, #553C9A, #B794F4)" }, // фиолетовый
+                { background: "linear-gradient(to right, #FF6B35, #F7931E)" }, // оранжевый
+                { background: "linear-gradient(to right, #DC2626, #EF4444)" }, // красный
+                { background: "linear-gradient(to right, #4338CA, #6366F1)" }, // индиго
               ];
               return (
                 <div
@@ -101,7 +104,8 @@ const ModelIDS3530_24P_6XComponent = () => {
                 >
                   <div className="flex-shrink-0">
                     <div
-                      className={`w-12 h-12 rounded-lg flex items-center justify-center ${iconColors[index % iconColors.length]}`}
+                      className="w-12 h-12 rounded-lg flex items-center justify-center"
+                      style={gradientStyles[index % gradientStyles.length]}
                     >
                       <Icon
                         name={feature.icon}
