@@ -34,10 +34,10 @@ const SeriesCatalog4530Component = () => {
       {/* Benefits Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 gap-4 md:gap-6">
             <div className="text-center">
               <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#003A85] to-[#0063C2] rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#003A85] to-[#0063C2] rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
                   <Icon
                     name="Cpu"
                     size={24}
@@ -57,7 +57,7 @@ const SeriesCatalog4530Component = () => {
 
             <div className="text-center">
               <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8] rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
                   <Icon
                     name="Battery"
                     size={24}
@@ -77,7 +77,7 @@ const SeriesCatalog4530Component = () => {
 
             <div className="text-center">
               <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
                   <Icon
                     name="Gauge"
                     size={24}
@@ -97,7 +97,7 @@ const SeriesCatalog4530Component = () => {
 
             <div className="text-center">
               <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
                   <Icon
                     name="Zap"
                     size={24}
