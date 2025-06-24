@@ -56,13 +56,13 @@ const SeriesCatalog6010Component = () => {
             />
             <BenefitCard
               icon="Battery"
-              iconColor="bg-purple-600"
+              iconColor="bg-gradient-to-r from-[#553C9A] to-[#B794F4]"
               title="Резервирование питания"
               description="Непрерывная работа критически важных систем"
             />
             <BenefitCard
               icon="Settings"
-              iconColor="bg-orange-600"
+              iconColor="bg-gradient-to-r from-[#DD6B20] to-[#F6AD55]"
               title="Управление SDN"
               description="Программно-определяемые сети"
             />

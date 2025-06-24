@@ -56,13 +56,13 @@ const SeriesCatalog3730Component = () => {
             />
             <BenefitCard
               icon="Shield"
-              iconColor="bg-purple-600"
+              iconColor="bg-gradient-to-r from-[#553C9A] to-[#B794F4]"
               title="Защита от DDoS"
               description="Встроенная защита от атак"
             />
             <BenefitCard
               icon="Settings"
-              iconColor="bg-orange-600"
+              iconColor="bg-gradient-to-r from-[#DD6B20] to-[#F6AD55]"
               title="Управление SNMP"
               description="Централизованное управление"
             />

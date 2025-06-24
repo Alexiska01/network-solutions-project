@@ -56,13 +56,13 @@ const SeriesCatalog4530Component = () => {
             />
             <BenefitCard
               icon="Gauge"
-              iconColor="bg-purple-600"
+              iconColor="bg-gradient-to-r from-[#553C9A] to-[#B794F4]"
               title="Мониторинг 24/7"
               description="Непрерывный контроль производительности"
             />
             <BenefitCard
               icon="Settings"
-              iconColor="bg-orange-600"
+              iconColor="bg-gradient-to-r from-[#DD6B20] to-[#F6AD55]"
               title="Простая настройка"
               description="Интуитивный веб-интерфейс управления"
             />

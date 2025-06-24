@@ -56,13 +56,13 @@ const SeriesCatalog3530Component = () => {
             />
             <BenefitCard
               icon="Fan"
-              iconColor="bg-purple-600"
+              iconColor="bg-gradient-to-r from-[#553C9A] to-[#B794F4]"
               title="Надёжное охлаждение и фиксированные БП"
               description="Стабильная работа 24/7"
             />
             <BenefitCard
               icon="Shield"
-              iconColor="bg-orange-600"
+              iconColor="bg-gradient-to-r from-[#DD6B20] to-[#F6AD55]"
               title="Поддержка Layer 3 и резервирования"
               description="Отказоустойчивость сети"
             />
