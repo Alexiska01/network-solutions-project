@@ -8,8 +8,7 @@ const SeriesCatalog3530Component = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
-        <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8">
-          <div className="max-w-7xl">
+        <div className="max-w-6xl mx-auto px-6">
             <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
               IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
               инфраструктуры
