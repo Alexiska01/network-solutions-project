@@ -162,6 +162,7 @@ const SeriesCatalog3730Component = () => {
                 Подробнее
               </Button>
             </div>
+          </div>
         </div>
       </section>
 
