@@ -34,7 +34,7 @@ const SeriesCatalog3530Component = () => {
       {/* Benefits Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 gap-8">
             <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
               <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Icon name="Zap" size={32} className="text-white" />
@@ -76,10 +76,8 @@ const SeriesCatalog3530Component = () => {
                 </p>
               </div>
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 gap-8 mt-8">
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg max-w-md mx-auto">
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
               <div className="w-16 h-16 bg-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Icon name="Shield" size={32} className="text-white" />
               </div>
