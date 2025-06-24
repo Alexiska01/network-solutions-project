@@ -10,7 +10,7 @@ const SeriesCatalog3530Component = () => {
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
-            <div className="w-[600px] max-w-full">
+            <div className="w-full max-w-full">
               <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
                 <span className="lg:hidden">
                   IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
