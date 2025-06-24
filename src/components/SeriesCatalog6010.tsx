@@ -32,63 +32,65 @@ const SeriesCatalog6010Component = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          {/* Benefits Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8] rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Icon name="Zap" size={32} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">До 960 Gbps</h3>
-                  <p className="text-gray-600">
-                    Масштабируемые нагрузки и высокий SLA
-                  </p>
-                </div>
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
+            Ключевые преимущества
+          </h2>
+          <div className="grid grid-cols-2 gap-8">
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Zap" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  До 960 Gbps
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Масштабируемые нагрузки и высокий SLA
+                </p>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Icon name="Activity" size={32} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">Uplink до 100G</h3>
-                  <p className="text-gray-600">
-                    25G/40G/100G интерфейсы для ЦОД и агрегации
-                  </p>
-                </div>
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Activity" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  Uplink до 100G
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  25G/40G/100G интерфейсы для ЦОД и агрегации
+                </p>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Icon name="Battery" size={32} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Резервирование питания
-                  </h3>
-                  <p className="text-gray-600">
-                    Непрерывная работа критически важных систем
-                  </p>
-                </div>
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Battery" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  Резервирование питания
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Непрерывная работа критически важных систем
+                </p>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Icon name="Settings" size={32} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">Управление SDN</h3>
-                  <p className="text-gray-600">Программно-определяемые сети</p>
-                </div>
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Settings" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  Управление SDN
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Программно-определяемые сети
+                </p>
               </div>
             </div>
           </div>
