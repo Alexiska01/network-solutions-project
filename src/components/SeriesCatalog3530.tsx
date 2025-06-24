@@ -7,15 +7,17 @@ const SeriesCatalog3530Component = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 animate-fade-in">
+      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
-            <div className="lg:animate-slide-in-left">
-              <h1 className="text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-                IDS3530 — надёжные коммутаторы L2+/L3
+            <div>
+              <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
+                IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
+                инфраструктуры
               </h1>
-              <p className="text-sm md:text-base lg:text-base xl:text-lg mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
-                До 760 Вт PoE+, модульные БП, uplink 10G
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
+                До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
+                одной платформе
               </p>
               <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
                 <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
@@ -24,20 +26,6 @@ const SeriesCatalog3530Component = () => {
                 <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand">
                   Сравнить модели
                 </button>
-              </div>
-            </div>
-            <div className="hidden lg:flex lg:animate-slide-in-right justify-center items-center">
-              <div className="relative">
-                <div className="w-96 h-64 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
-                  <img
-                    src="https://cdn.poehali.dev/files/23f6e645-66ec-4ffc-a802-dabeb7da6ac8.png"
-                    alt="IDS3530 коммутатор"
-                    className="w-full h-full object-cover rounded-2xl opacity-90"
-                  />
-                </div>
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-white/20 rounded-full blur-xl"></div>
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-blue-400/20 rounded-full blur-2xl"></div>
               </div>
             </div>
           </div>
