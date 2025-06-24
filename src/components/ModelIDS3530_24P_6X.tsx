@@ -85,26 +85,41 @@ const ModelIDS3530_24P_6XComponent = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ids353024p6xData.features.map((feature, index) => (
-              <div
-                key={index}
-                className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg"
-              >
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 from-blue-500 to-blue-600 rounded-lg flex items-center justify-center bg-[#5EC0A4]">
-                    <Icon name={feature.icon} className="h-6 w-6 text-white" />
+            {ids353024p6xData.features.map((feature, index) => {
+              const iconColors = [
+                "bg-blue-500",
+                "bg-green-500",
+                "bg-purple-500",
+                "bg-orange-500",
+                "bg-red-500",
+                "bg-indigo-500",
+              ];
+              return (
+                <div
+                  key={index}
+                  className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg"
+                >
+                  <div className="flex-shrink-0">
+                    <div
+                      className={`w-12 h-12 rounded-lg flex items-center justify-center ${iconColors[index % iconColors.length]}`}
+                    >
+                      <Icon
+                        name={feature.icon}
+                        className="h-6 w-6 text-white"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex-grow">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 font-sans">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 leading-relaxed font-sans">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
-                <div className="flex-grow">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 font-sans">
-                    {feature.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed font-sans">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
