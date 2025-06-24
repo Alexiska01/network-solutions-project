@@ -165,10 +165,10 @@ const SeriesCatalog3530Component = () => {
       {/* CTA Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto">
+          <h2 className="md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto font-semibold text-4xl">
             Нужна помощь с выбором?
           </h2>
-          <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
+          <p className="md:text-base lg:text-lg xl:text-xl text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto text-lg">
             Наша компания поможет подобрать оптимальное решение для вашей
             инфраструктуры
           </p>
