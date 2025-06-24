@@ -12,12 +12,24 @@ const SeriesCatalog3530Component = () => {
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
             <div>
               <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-                IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
-                инфраструктуры
+                <span className="lg:hidden">
+                  IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
+                  инфраструктуры
+                </span>
+                <span className="hidden lg:block">
+                  IDS3530 — надёжные
+                  <br />
+                  промышленные коммутаторы
+                </span>
               </h1>
               <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
-                До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
-                одной платформе
+                <span className="lg:hidden">
+                  До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
+                  одной платформе
+                </span>
+                <span className="hidden lg:block">
+                  До 760 Вт PoE+, uplink 10G — всё в одной платформе
+                </span>
               </p>
               <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
                 <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
@@ -26,6 +38,86 @@ const SeriesCatalog3530Component = () => {
                 <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand">
                   Сравнить модели
                 </button>
+              </div>
+            </div>
+
+            {/* Visual Elements - Desktop Only */}
+            <div className="hidden lg:flex items-center justify-center relative">
+              <div className="relative w-80 h-80">
+                {/* Central Network Hub */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 flex items-center justify-center animate-pulse">
+                  <div className="w-12 h-12 bg-gradient-to-br from-white/40 to-white/10 rounded-xl flex items-center justify-center">
+                    <div className="w-6 h-6 bg-white rounded-md opacity-80"></div>
+                  </div>
+                </div>
+
+                {/* Floating Network Nodes */}
+                <div
+                  className="absolute top-8 left-8 w-16 h-16 bg-gradient-to-br from-blue-400/30 to-cyan-300/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center animate-fade-in"
+                  style={{ animationDelay: "0.5s" }}
+                >
+                  <div className="w-6 h-6 bg-white/60 rounded-full"></div>
+                </div>
+
+                <div
+                  className="absolute top-8 right-8 w-16 h-16 bg-gradient-to-br from-purple-400/30 to-pink-300/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center animate-fade-in"
+                  style={{ animationDelay: "1s" }}
+                >
+                  <div className="w-6 h-6 bg-white/60 rounded-full"></div>
+                </div>
+
+                <div
+                  className="absolute bottom-8 left-8 w-16 h-16 bg-gradient-to-br from-green-400/30 to-emerald-300/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center animate-fade-in"
+                  style={{ animationDelay: "1.5s" }}
+                >
+                  <div className="w-6 h-6 bg-white/60 rounded-full"></div>
+                </div>
+
+                <div
+                  className="absolute bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-orange-400/30 to-yellow-300/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center animate-fade-in"
+                  style={{ animationDelay: "2s" }}
+                >
+                  <div className="w-6 h-6 bg-white/60 rounded-full"></div>
+                </div>
+
+                {/* Connection Lines */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <div
+                    className="absolute w-32 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-45 animate-pulse"
+                    style={{ animationDelay: "0.5s" }}
+                  ></div>
+                  <div
+                    className="absolute w-32 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent -rotate-45 animate-pulse"
+                    style={{ animationDelay: "1s" }}
+                  ></div>
+                  <div
+                    className="absolute w-32 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-90 animate-pulse"
+                    style={{ animationDelay: "1.5s" }}
+                  ></div>
+                  <div
+                    className="absolute w-32 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse"
+                    style={{ animationDelay: "2s" }}
+                  ></div>
+                </div>
+
+                {/* Floating Stats */}
+                <div
+                  className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 animate-fade-in"
+                  style={{ animationDelay: "2.5s" }}
+                >
+                  <span className="text-white/90 text-sm font-medium">
+                    10G SFP+
+                  </span>
+                </div>
+
+                <div
+                  className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 animate-fade-in"
+                  style={{ animationDelay: "3s" }}
+                >
+                  <span className="text-white/90 text-sm font-medium">
+                    760W PoE+
+                  </span>
+                </div>
               </div>
             </div>
           </div>
