@@ -25,15 +25,6 @@ const SeriesCatalog3530Component = () => {
                   промышленные коммутаторы
                 </span>
               </h1>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
-                <span className="lg:hidden">
-                  До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
-                  одной платформе
-                </span>
-                <span className="hidden lg:block">
-                  До 760 Вт PoE+, uplink 10G — всё в одной платформе
-                </span>
-              </p>
               <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
                 <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
                   Подробнее
