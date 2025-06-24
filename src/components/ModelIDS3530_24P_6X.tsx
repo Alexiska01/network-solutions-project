@@ -149,7 +149,7 @@ const ModelIDS3530_24P_6XComponent = () => {
           </h2>
           <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
             Получите персональное предложение и техническую консультацию от
-            наших инженеров
+            нашей компании
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
