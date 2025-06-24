@@ -52,13 +52,13 @@ const ProductsSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6 lg:gap-8 md:items-start">
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
+              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full grid grid-rows-[auto_1fr_auto] gap-3 md:gap-4"
             >
-              <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
+              <div className="grid grid-cols-[auto_1fr] gap-3 md:gap-4 items-start">
                 <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
@@ -66,7 +66,7 @@ const ProductsSection = () => {
                     className="text-white md:w-8 md:h-8 lg:w-9 lg:h-9"
                   />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0">
                   <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
                     {product.title}
                   </h3>
@@ -75,7 +75,7 @@ const ProductsSection = () => {
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1.5 md:space-y-2 mb-4 md:mb-6 flex-grow">
+              <ul className="space-y-1.5 md:space-y-2">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
@@ -90,7 +90,7 @@ const ProductsSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] mt-auto">
+              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px]">
                 Подробнее
               </button>
             </div>
