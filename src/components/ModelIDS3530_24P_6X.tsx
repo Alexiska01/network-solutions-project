@@ -14,29 +14,6 @@ const ModelIDS3530_24P_6XComponent = () => {
   const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
     useModelViewer();
 
-  const features = [
-    {
-      icon: "Zap",
-      title: "PoE/PoE+ до 880 Вт",
-      description: "Надежное питание устройств",
-    },
-    {
-      icon: "Network",
-      title: "10G uplink (SFP+)",
-      description: "Высокоскоростное подключение",
-    },
-    {
-      icon: "Fan",
-      title: "Надёжное охлаждение и фиксированные БП",
-      description: "Стабильная работа 24/7",
-    },
-    {
-      icon: "Shield",
-      title: "Поддержка Layer 3 и резервирования",
-      description: "Отказоустойчивость сети",
-    },
-  ];
-
   return (
     <div className="min-h-screen">
       {/* Hero Section with 3D Model */}
@@ -107,37 +84,12 @@ const ModelIDS3530_24P_6XComponent = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="flex items-start gap-6">
-                <div className="flex-shrink-0">
-                  <div
-                    className={`w-20 h-20 rounded-full flex items-center justify-center ${
-                      index === 0
-                        ? "bg-blue-600"
-                        : index === 1
-                          ? "bg-emerald-500"
-                          : index === 2
-                            ? "bg-purple-500"
-                            : "bg-orange-500"
-                    }`}
-                  >
-                    <Icon
-                      name={feature.icon}
-                      size={32}
-                      className="text-white"
-                    />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">
-                    {feature.title}
-                  </h4>
-                  <p className="text-gray-600 text-base leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
+          <button className="w-full bg-gray-100 text-gray-800 px-6 py-3 rounded-lg font-medium hover:bg-gradient-to-r hover:from-orange-500 hover:to-red-600 hover:text-white transition-all duration-300">
+            View All Features
+          </button>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {ids353024p6xData.features.map((feature, index) => (
+              <FeatureCard key={index} feature={feature} />
             ))}
           </div>
         </div>
