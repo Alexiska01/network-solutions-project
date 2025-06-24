@@ -8,22 +8,24 @@ const SeriesCatalog3530Component = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-            IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
-            инфраструктуры
-          </h1>
-          <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-4xl">
-            До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в одной
-            платформе
-          </p>
-          <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
-            <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
-              Подробнее
-            </button>
-            <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand">
-              Сравнить модели
-            </button>
+        <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="max-w-7xl">
+            <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
+              IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
+              инфраструктуры
+            </h1>
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-4xl">
+              До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в одной
+              платформе
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
+              <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
+                Подробнее
+              </button>
+              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand">
+                Сравнить модели
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -47,8 +49,20 @@ const SeriesCatalog3530Component = () => {
             <BenefitCard
               icon="Network"
               iconColor="bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8]"
-              title="Модульная архитектура"
-              description="Гибкая конфигурация под задачи"
+              title="10G uplink (SFP+)"
+              description="Высокоскоростное подключение"
+            />
+            <BenefitCard
+              icon="Fan"
+              iconColor="bg-gradient-to-r from-[#553C9A] to-[#B794F4]"
+              title="Надёжное охлаждение и фиксированные БП"
+              description="Стабильная работа 24/7"
+            />
+            <BenefitCard
+              icon="Shield"
+              iconColor="bg-gradient-to-r from-[#DD6B20] to-[#F6AD55]"
+              title="Поддержка Layer 3 и резервирования"
+              description="Отказоустойчивость сети"
             />
           </div>
         </div>
