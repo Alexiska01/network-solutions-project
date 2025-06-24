@@ -70,7 +70,7 @@ const ProductsSection = () => {
                   <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
                     {product.title}
                   </h3>
-                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed">
+                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed h-8 md:h-10">
                     {product.description}
                   </p>
                 </div>
