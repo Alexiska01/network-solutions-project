@@ -84,12 +84,26 @@ const ModelIDS3530_24P_6XComponent = () => {
             </h2>
           </div>
 
-          <button className="w-full bg-gray-100 text-gray-800 px-6 py-3 rounded-lg font-medium hover:bg-gradient-to-r hover:from-orange-500 hover:to-red-600 hover:text-white transition-all duration-300">
-            View All Features
-          </button>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ids353024p6xData.features.map((feature, index) => (
-              <FeatureCard key={index} feature={feature} />
+              <div
+                key={index}
+                className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg"
+              >
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                    <Icon name={feature.icon} className="h-6 w-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-grow">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 font-sans">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 leading-relaxed font-sans">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
