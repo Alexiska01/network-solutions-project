@@ -9,16 +9,16 @@ const SeriesCatalog3530Component = () => {
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
         <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8">
-          <div className="text-center max-w-7xl mx-auto">
+          <div className="max-w-7xl">
             <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
               IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
               инфраструктуры
             </h1>
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-4xl">
               До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в одной
               платформе
             </p>
-            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
               <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white transition-all duration-300 font-sans min-h-[44px]">
                 Подробнее
               </button>
