@@ -34,84 +34,62 @@ const SeriesCatalog3530Component = () => {
       {/* Benefits Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="flex md:flex-col items-start md:items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#003A85] to-[#0063C2] rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Zap"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none flex flex-col justify-center">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    PoE/PoE+ до 880 Вт
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
-                    Надежное питание устройств
-                  </p>
-                </div>
+          <div className="grid grid-cols-3 gap-8">
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Zap" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  PoE/PoE+ до 880 Вт
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Надёжное питание устройств
+                </p>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-start md:items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8] rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Network"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none flex flex-col justify-center">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    10G uplink (SFP+)
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
-                    Высокоскоростное подключение
-                  </p>
-                </div>
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Network" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  10G uplink (SFP+)
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Высокоскоростное подключение
+                </p>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-start md:items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Fan"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none flex flex-col justify-center">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    Надёжное охлаждение и фиксированные БП
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
-                    Стабильная работа 24/7
-                  </p>
-                </div>
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Fan" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  Надёжное охлаждение и фиксированные БП
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Стабильная работа 24/7
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-start md:items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Shield"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none flex flex-col justify-center">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    Поддержка Layer 3 и резервирования
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center">
-                    Отказоустойчивость сети
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 gap-8 mt-8">
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg max-w-md mx-auto">
+              <div className="w-16 h-16 bg-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Shield" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  Поддержка Layer 3 и резервирования
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Отказоустойчивость сети
+                </p>
               </div>
             </div>
           </div>
