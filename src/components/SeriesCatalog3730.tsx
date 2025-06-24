@@ -31,14 +31,11 @@ const SeriesCatalog3730Component = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
-              Ключевые преимущества
-            </h2>
-          </div>
-
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
+            Ключевые преимущества
+          </h2>
           <div className="grid grid-cols-2 gap-8">
             <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
               <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -106,81 +103,81 @@ const SeriesCatalog3730Component = () => {
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
               Модели серии IDS3730
             </h2>
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans">
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans w-[90%] md:w-[70%] mx-auto">
               Выберите оптимальную конфигурацию для ваших задач
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* IDS3730-24P-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS3730-24P-4X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G Base-T PoE+, 4×40G QSFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
-                onClick={() =>
-                  (window.location.href = "/products/switches/ids3730/24p-4x")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS3730-48P-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS3730-48P-4X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                48×1G Base-T PoE+, 4×40G QSFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
-                onClick={() =>
-                  (window.location.href = "/models/ids3730-48p-4x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS3730-24T-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS3730-24T-4X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G Base-T, 4×40G QSFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
-                onClick={() =>
-                  (window.location.href = "/models/ids3730-24t-4x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
             {/* IDS3730-48T-4X */}
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
                 IDS3730-48T-4X
               </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
                 48×1G Base-T, 4×40G QSFP+
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
                 onClick={() =>
                   (window.location.href = "/models/ids3730-48t-4x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS3730-24T-2X */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
+                IDS3730-24T-2X
+              </h3>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
+                24×1G Base-T, 2×40G QSFP+
+              </p>
+              <Button
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids3730-24t-2x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS3730-48S-4X */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
+                IDS3730-48S-4X
+              </h3>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
+                48×1G SFP, 4×40G QSFP+
+              </p>
+              <Button
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids3730-48s-4x.html")
+                }
+              >
+                <Icon name="Info" className="mr-2" />
+                Подробнее
+              </Button>
+            </div>
+
+            {/* IDS3730-24S-2X */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
+                IDS3730-24S-2X
+              </h3>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans w-[90%] md:w-[70%] mx-auto">
+                24×1G SFP, 2×40G QSFP+
+              </p>
+              <Button
+                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                onClick={() =>
+                  (window.location.href = "/models/ids3730-24s-2x.html")
                 }
               >
                 <Icon name="Info" className="mr-2" />
