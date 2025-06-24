@@ -149,8 +149,7 @@ const ModelIDS3530_24P_6XComponent = () => {
               variant="outline"
               className="border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white font-medium transition-all duration-300 px-8 py-3"
             >
-              <Icon name="MessageCircle" className="mr-2" />
-              Связаться с инженером
+              Связаться с нами
             </Button>
           </div>
         </div>
