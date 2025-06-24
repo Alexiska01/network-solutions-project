@@ -1,6 +1,25 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import BenefitCard from "@/components/BenefitCard";
+
+const BenefitCard = ({ icon, iconColor, title, description }) => (
+  <div className="flex items-start space-x-4 p-6 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-100/50 hover:bg-white/80 hover:shadow-lg transition-all duration-300">
+    <div
+      className={`w-12 h-12 ${iconColor} rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm`}
+    >
+      <Icon name={icon} size={20} className="text-white" />
+    </div>
+    <div>
+      <h3 className="text-lg font-semibold mb-2 text-gray-900 font-sans">
+        {title}
+      </h3>
+      <p className="text-sm text-gray-600 leading-relaxed font-sans">
+        {description}
+      </p>
+    </div>
+  </div>
+);
 
 const SeriesCatalog6010Component = () => {
   return (
@@ -32,67 +51,39 @@ const SeriesCatalog6010Component = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-to-b from-gray-50/30 to-white">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-            Ключевые преимущества
-          </h2>
-          <div className="grid grid-cols-2 gap-8">
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Zap" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  До 960 Gbps
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Масштабируемые нагрузки и высокий SLA
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Activity" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Uplink до 100G
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  25G/40G/100G интерфейсы для ЦОД и агрегации
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Battery" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Резервирование питания
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Непрерывная работа критически важных систем
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Settings" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Управление SDN
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Программно-определяемые сети
-                </p>
-              </div>
-            </div>
+          <div className="text-center mb-12">
+            <div className="w-20 h-0.5 bg-gradient-hero mx-auto mb-6"></div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 font-sans">
+              Ключевые преимущества
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <BenefitCard
+              icon="Zap"
+              iconColor="bg-blue-600"
+              title="До 960 Gbps"
+              description="Масштабируемые нагрузки и высокий SLA"
+            />
+            <BenefitCard
+              icon="Activity"
+              iconColor="bg-teal-600"
+              title="Uplink до 100G"
+              description="25G/40G/100G интерфейсы для ЦОД и агрегации"
+            />
+            <BenefitCard
+              icon="Battery"
+              iconColor="bg-purple-600"
+              title="Резервирование питания"
+              description="Непрерывная работа критически важных систем"
+            />
+            <BenefitCard
+              icon="Settings"
+              iconColor="bg-orange-600"
+              title="Управление SDN"
+              description="Программно-определяемые сети"
+            />
           </div>
         </div>
       </section>

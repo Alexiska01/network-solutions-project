@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import BenefitCard from "@/components/BenefitCard";
 
 const SeriesCatalog4530Component = () => {
   return (
@@ -32,67 +33,39 @@ const SeriesCatalog4530Component = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-to-b from-gray-50/30 to-white">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-            Ключевые преимущества
-          </h2>
-          <div className="grid grid-cols-2 gap-8">
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Zap" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  10G / 40G / 100G карты
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Гибкое масштабирование пропускной способности
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Battery" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Двойной модуль питания
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Резервирование для максимальной надежности
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Gauge" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Мониторинг 24/7
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Непрерывный контроль производительности
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Settings" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Простая настройка
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Интуитивный веб-интерфейс управления
-                </p>
-              </div>
-            </div>
+          <div className="text-center mb-12">
+            <div className="w-20 h-0.5 bg-gradient-hero mx-auto mb-6"></div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 font-sans">
+              Ключевые преимущества
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <BenefitCard
+              icon="Zap"
+              iconColor="bg-blue-600"
+              title="10G / 40G / 100G карты"
+              description="Гибкое масштабирование пропускной способности"
+            />
+            <BenefitCard
+              icon="Battery"
+              iconColor="bg-teal-600"
+              title="Двойной модуль питания"
+              description="Резервирование для максимальной надежности"
+            />
+            <BenefitCard
+              icon="Gauge"
+              iconColor="bg-purple-600"
+              title="Мониторинг 24/7"
+              description="Непрерывный контроль производительности"
+            />
+            <BenefitCard
+              icon="Settings"
+              iconColor="bg-orange-600"
+              title="Простая настройка"
+              description="Интуитивный веб-интерфейс управления"
+            />
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import BenefitCard from "@/components/BenefitCard";
 
 const SeriesCatalog3530Component = () => {
   return (
@@ -32,67 +33,39 @@ const SeriesCatalog3530Component = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-to-b from-gray-50/30 to-white">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-            Ключевые преимущества
-          </h2>
-          <div className="grid grid-cols-2 gap-8">
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Zap" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  PoE/PoE+ до 880 Вт
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Надёжное питание устройств
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Network" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  10G uplink (SFP+)
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Высокоскоростное подключение
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Fan" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Надёжное охлаждение и фиксированные БП
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Стабильная работа 24/7
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
-              <div className="w-16 h-16 bg-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon name="Shield" size={32} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 font-sans">
-                  Поддержка Layer 3 и резервирования
-                </h3>
-                <p className="text-base text-gray-600 leading-normal font-sans">
-                  Отказоустойчивость сети
-                </p>
-              </div>
-            </div>
+          <div className="text-center mb-12">
+            <div className="w-20 h-0.5 bg-gradient-hero mx-auto mb-6"></div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 font-sans">
+              Ключевые преимущества
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <BenefitCard
+              icon="Zap"
+              iconColor="bg-blue-600"
+              title="PoE/PoE+ до 880 Вт"
+              description="Надёжное питание устройств"
+            />
+            <BenefitCard
+              icon="Network"
+              iconColor="bg-teal-600"
+              title="10G uplink (SFP+)"
+              description="Высокоскоростное подключение"
+            />
+            <BenefitCard
+              icon="Fan"
+              iconColor="bg-purple-600"
+              title="Надёжное охлаждение и фиксированные БП"
+              description="Стабильная работа 24/7"
+            />
+            <BenefitCard
+              icon="Shield"
+              iconColor="bg-orange-600"
+              title="Поддержка Layer 3 и резервирования"
+              description="Отказоустойчивость сети"
+            />
           </div>
         </div>
       </section>

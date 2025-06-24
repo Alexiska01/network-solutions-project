@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import BenefitCard from "@/components/BenefitCard";
 
 const SeriesCatalog3730Component = () => {
   return (
