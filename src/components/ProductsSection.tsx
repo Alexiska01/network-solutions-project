@@ -56,9 +56,9 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full grid grid-rows-[auto_1fr_auto] gap-3 md:gap-4"
+              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full grid grid-rows-[auto_1fr_auto] gap-0"
             >
-              <div className="grid grid-cols-[auto_1fr] gap-3 md:gap-4 items-start">
+              <div className="grid grid-cols-[auto_1fr] gap-3 md:gap-4 items-start mb-4">
                 <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
@@ -75,7 +75,7 @@ const ProductsSection = () => {
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1.5 md:space-y-2">
+              <ul className="space-y-1.5 md:space-y-2 mb-6">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
