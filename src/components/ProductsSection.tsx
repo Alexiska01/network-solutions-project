@@ -56,7 +56,7 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
+              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
             >
               <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
                 <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
@@ -75,7 +75,7 @@ const ProductsSection = () => {
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1.5 md:space-y-2 mb-4 md:mb-6">
+              <ul className="space-y-1.5 md:space-y-2 mb-4 md:mb-6 flex-grow">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
@@ -90,7 +90,7 @@ const ProductsSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px]">
+              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] mt-auto">
                 Подробнее
               </button>
             </div>
