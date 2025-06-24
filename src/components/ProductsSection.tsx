@@ -76,7 +76,9 @@ const ProductsSection = () => {
                 </div>
               </div>
               <div className="flex-1 flex flex-col">
-                <ul className="space-y-1.5 md:space-y-2 mb-6 flex-1">
+                <ul
+                  className={`space-y-1.5 md:space-y-2 mb-6 flex-1 ${index === 0 || index === 2 ? "mt-2 md:mt-3" : ""}`}
+                >
                   {product.features.map((feature, idx) => (
                     <li
                       key={idx}
