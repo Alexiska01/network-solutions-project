@@ -27,11 +27,7 @@ const SeriesCatalog3730Component = () => {
                 </button>
               </div>
             </div>
-            <div className="hidden lg:block">
-              <div className="">
-                <Icon name="Network" size={64} className="text-white/60" />
-              </div>
-            </div>
+            <div className="hidden lg:block">{/* Network icon removed */}</div>
           </div>
         </div>
       </section>
