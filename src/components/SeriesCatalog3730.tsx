@@ -33,84 +33,60 @@ const SeriesCatalog3730Component = () => {
       {/* Benefits Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 gap-4 md:gap-6">
-            <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#003A85] to-[#0063C2] rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Gauge"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    40G uplink (QSFP+)
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
-                    Максимальная пропускная способность
-                  </p>
-                </div>
+          <div className="grid grid-cols-2 gap-8">
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Zap" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  40G uplink (QSFP+)
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Максимальная пропускная способность
+                </p>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8] rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Network"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    Layer 3 маршрутизация
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
-                    Полнофункциональная маршрутизация
-                  </p>
-                </div>
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Network" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  Layer 3 маршрутизация
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Полнофункциональная маршрутизация
+                </p>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Shield"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    Продвинутые протоколы безопасности
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
-                    Защита корпоративного уровня
-                  </p>
-                </div>
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Shield" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  Защита от DDoS
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Встроенная защита от атак
+                </p>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Cpu"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
-                </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 font-sans text-left md:text-center">
-                    Высокопроизводительный процессор
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-normal font-sans text-left md:text-center md:w-[70%] md:mx-auto">
-                    Для сложных вычислительных задач
-                  </p>
-                </div>
+            <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg">
+              <div className="w-16 h-16 bg-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon name="Settings" size={32} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2 font-sans">
+                  Управление SNMP
+                </h3>
+                <p className="text-base text-gray-600 leading-normal font-sans">
+                  Централизованное управление
+                </p>
               </div>
             </div>
           </div>

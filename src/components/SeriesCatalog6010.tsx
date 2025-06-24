@@ -34,83 +34,60 @@ const SeriesCatalog6010Component = () => {
       {/* Benefits Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 gap-4 md:gap-6">
-            <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#003A85] to-[#0063C2] rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Zap"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
+          {/* Benefits Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Icon name="Zap" size={32} className="text-white" />
                 </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
-                    До 960 Gbps пропускной способности
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">До 960 Gbps</h3>
+                  <p className="text-gray-600">
                     Масштабируемые нагрузки и высокий SLA
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Activity"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Icon name="Activity" size={32} className="text-white" />
                 </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
-                    Uplink до 100G
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Uplink до 100G</h3>
+                  <p className="text-gray-600">
                     25G/40G/100G интерфейсы для ЦОД и агрегации
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Battery"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Icon name="Battery" size={32} className="text-white" />
                 </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
-                    Резервирование питания и охлаждения
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Резервирование питания
                   </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
-                    2 слота питания и 2 вентилятора для отказоустойчивости
+                  <p className="text-gray-600">
+                    Непрерывная работа критически важных систем
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="flex md:flex-col items-center md:text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0 mr-3 md:mr-0 md:mx-auto mb-0 md:mb-4">
-                  <Icon
-                    name="Network"
-                    size={24}
-                    className="text-white md:w-8 md:h-8"
-                  />
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Icon name="Settings" size={32} className="text-white" />
                 </div>
-                <div className="flex-1 md:flex-none">
-                  <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold mb-1 md:mb-2 text-left md:text-center">
-                    Оптимизация под SDN и виртуализацию
-                  </h3>
-                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 text-left md:text-center">
-                    Поддержка современных сетевых технологий
-                  </p>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Управление SDN</h3>
+                  <p className="text-gray-600">Программно-определяемые сети</p>
                 </div>
               </div>
             </div>
