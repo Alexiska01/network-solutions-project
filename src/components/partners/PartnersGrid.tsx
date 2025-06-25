@@ -74,7 +74,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 6,
       name: "Wireless Solutions Ltd",
-      logo: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b696?w=200&h=120&fit=crop",
+      logo: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=200&h=120&fit=crop",
       region: "Americas",
       type: "Интегратор",
       category: "Wi-Fi",
