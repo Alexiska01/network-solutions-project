@@ -85,7 +85,7 @@ const AuthorizedPartnersInfo = () => {
                       : "opacity-0 translate-y-5"
                   }`}
                 >
-                  <div className="w-14 h-14 bg-gradient-to-br from-[#0A1F44] to-[#00BEAD] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-teal-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon
                       name={benefit.icon}
                       className="text-white group-hover:animate-[bounce_0.6s_ease]"
