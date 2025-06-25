@@ -46,7 +46,13 @@ const AuthorizedPartnersInfo = () => {
           }
         }
       `}</style>
-      <section className="py-20 bg-gradient-to-br from-blue-600 to-teal-500">
+      <section
+        className="py-20"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(10,31,68,0.1) 0%, rgba(0,190,173,0.1) 100%)",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-montserrat mb-4">
