@@ -66,11 +66,11 @@ const ProductsSection = () => {
                     className="text-white md:w-8 md:h-8 lg:w-9 lg:h-9"
                   />
                 </div>
-                <div className="flex-1 min-h-[4rem] md:min-h-[5rem] flex flex-col justify-center">
+                <div className="flex-1 min-h-[5rem] md:min-h-[6rem] flex flex-col justify-start">
                   <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
                     {product.title}
                   </h3>
-                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed">
+                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed flex-1">
                     {product.description}
                   </p>
                 </div>
