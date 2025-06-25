@@ -38,3 +38,53 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Series Grid Styles */
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.series-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.series-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.series-image {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.series-button {
+  background: linear-gradient(135deg, #00a0dc 0%, #0078a8 100%);
+}
+
+.series-button:hover {
+  box-shadow: 0 4px 16px rgba(0, 160, 220, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .series-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .series-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
