@@ -37,6 +37,12 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   const observeElement = (element: Element | null, index: number) => {
     if (!element || !observerRef.current) return;
 
+    // Отключаем наблюдение за старым элементом если он есть
+    const oldElement = elementsRef.current.get(index);
+    if (oldElement && observerRef.current) {
+      observerRef.current.unobserve(oldElement);
+    }
+
     elementsRef.current.set(index, element);
     element.setAttribute("data-reveal-index", index.toString());
     observerRef.current.observe(element);

@@ -6,7 +6,11 @@ interface FiltersProps {
     type: string;
     category: string;
   };
-  onFilterChange: (filters: any) => void;
+  onFilterChange: (filters: {
+    region: string;
+    type: string;
+    category: string;
+  }) => void;
 }
 
 const PartnersFilters: React.FC<FiltersProps> = ({
