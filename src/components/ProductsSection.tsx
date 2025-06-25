@@ -63,8 +63,8 @@ const ProductsSection = () => {
                 <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
-                    size={22}
-                    className="text-white md:w-7 md:h-7 lg:w-8 lg:h-8"
+                    size={16}
+                    className="text-white"
                   />
                 </div>
                 <div className="flex-1">
