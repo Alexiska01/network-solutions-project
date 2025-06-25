@@ -58,7 +58,7 @@ const AuthorizedPartnersInfo = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12">
             {benefits.map((benefit, index) => {
               const cardRef = useRef<HTMLDivElement>(null);
               const { observeElement, isVisible } = useScrollReveal({
@@ -74,10 +74,6 @@ const AuthorizedPartnersInfo = () => {
                   key={index}
                   ref={cardRef}
                   className={`group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 ${
-                    index === 4
-                      ? "col-span-2 sm:col-span-2 lg:col-span-3 xl:col-span-5 max-w-md mx-auto"
-                      : ""
-                  } ${
                     isVisible(index)
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-5"
