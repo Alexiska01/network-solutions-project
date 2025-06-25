@@ -42,8 +42,8 @@ const ProductsSection = () => {
   return (
     <section className="py-10 md:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="text-center mb-6 md:mb-10">
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-1.5 md:mb-2 font-sans">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 md:mb-4 font-sans">
             Наши продукты и технологии
           </h2>
           <p className="text-sm md:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto font-sans">
@@ -56,10 +56,10 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl px-6 md:px-8 py-6 md:py-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
+              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 grid grid-rows-[auto_60px_1fr_auto] gap-4"
             >
               {/* Header with icon and title */}
-              <div className="flex gap-3 md:gap-4 items-start mb-3 md:mb-4">
+              <div className="flex gap-3 md:gap-4 items-start">
                 <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
@@ -74,15 +74,15 @@ const ProductsSection = () => {
                 </div>
               </div>
 
-              {/* Description */}
-              <div className="mb-4 md:mb-6">
+              {/* Description with fixed height */}
+              <div className="flex items-start">
                 <p className="text-xs md:text-sm text-gray-600 font-sans leading-relaxed">
                   {product.description}
                 </p>
               </div>
 
               {/* Features list */}
-              <ul className="space-y-1.5 md:space-y-2 flex-grow mb-6">
+              <ul className="space-y-1.5 md:space-y-2 self-start">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
@@ -99,7 +99,7 @@ const ProductsSection = () => {
               </ul>
 
               {/* Button */}
-              <button className="w-full bg-[#0065B3] text-white py-2.5 md:py-3 px-4 md:px-5 rounded-lg md:rounded-xl hover:bg-gradient-hero transition-all duration-300 font-sans text-xs md:text-sm lg:text-base font-semibold min-h-[48px] shadow-md hover:shadow-lg">
+              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] self-end">
                 Подробнее
               </button>
             </div>
