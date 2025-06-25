@@ -4,7 +4,7 @@ import Icon from "@/components/ui/icon";
 
 const AuthorizedPartnersInfo = () => {
   return (
-    <section className="bg-white py-8 md:py-12 lg:py-16">
+    <section className="bg-white py-4 md:py-6 lg:py-8">
       <div className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-10">
