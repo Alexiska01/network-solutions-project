@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import {
@@ -195,9 +196,11 @@ const SwitchesCatalog = () => {
             Наши специалисты помогут выбрать оптимальное решение для вашей
             инфраструктуры
           </p>
-          <Button size="lg" className="bg-[#2E5BFF] hover:bg-[#1E4FFF]">
-            Связаться с нами
-            <ArrowRight className="ml-2 h-5 w-5" />
+          <Button size="lg" className="bg-[#2E5BFF] hover:bg-[#1E4FFF]" asChild>
+            <Link to="/partners">
+              Связаться с нами
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </Button>
         </section>
       </div>
