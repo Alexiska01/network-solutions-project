@@ -59,7 +59,7 @@ const ProductsSection = () => {
               className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 grid grid-rows-[auto_60px_1fr_auto] gap-4"
             >
               {/* Header with icon and title */}
-              <div className="flex gap-3 md:gap-4 items-start">
+              <div className="flex gap-3 md:gap-4 items-center">
                 <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
@@ -67,7 +67,7 @@ const ProductsSection = () => {
                     className="text-white md:w-8 md:h-8 lg:w-9 lg:h-9"
                   />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-center">
                   <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 font-sans leading-tight">
                     {product.title}
                   </h3>
