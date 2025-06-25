@@ -14,19 +14,6 @@ const PartnersHero = () => {
             Полная экосистема сетевого оборудования и проверенных интеграторов
             для вашего бизнеса
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm font-montserrat">
-            <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full">
-              <span className="text-blue-100">🌍 Глобальное покрытие</span>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full">
-              <span className="text-blue-100">
-                🤝 Сертифицированные партнёры
-              </span>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full">
-              <span className="text-blue-100">⚡ Быстрая поддержка</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>
