@@ -46,63 +46,68 @@
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .series-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .series-grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1280px) {
-  .series-grid {
-    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
   }
 }
 
 .series-card {
+  display: block;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   overflow: hidden;
-  transition: all 0.3s ease;
-  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+  border: 1px solid #f3f4f6;
+  text-decoration: none;
+  color: inherit;
 }
 
 .series-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(0, 119, 230, 0.15);
   border-color: #0077e6;
 }
 
-.series-image {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  position: relative;
-  background: #f3f4f6;
+.series-icon svg {
+  transition: transform 0.2s ease;
 }
 
-.series-image img {
-  transition: transform 0.3s ease;
-}
-
-.series-card:hover .series-image img {
-  transform: scale(1.05);
+.series-card:hover .series-icon svg {
+  transform: scale(1.1);
 }
 
 .series-button {
   background: linear-gradient(135deg, #0077e6 0%, #00a0dc 100%);
-  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
 }
 
 .series-button:hover {
-  background: linear-gradient(135deg, #005bb5 0%, #0088c5 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 119, 230, 0.3);
+  background: linear-gradient(135deg, #0066cc 0%, #0088cc 100%);
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
 }
