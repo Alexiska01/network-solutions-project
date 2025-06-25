@@ -88,7 +88,7 @@ const SeriesCatalog3530Component = () => {
                 24×1G Base-T, 6×10G SFP+, PoE 380 Вт
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/products/switches/ids3530/24p-6x")
                 }
@@ -107,7 +107,7 @@ const SeriesCatalog3530Component = () => {
                 48×1G Base-T, 6×10G SFP+, PoE 760 Вт
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids3530-48p-6x.html")
                 }
@@ -126,7 +126,7 @@ const SeriesCatalog3530Component = () => {
                 24×1G SFP, 8×1G Base-T, 6×10G SFP+
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids3530-24s-8t-6x.html")
                 }
@@ -145,7 +145,7 @@ const SeriesCatalog3530Component = () => {
                 48×1G Base-T, 6×10G SFP+
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids3530-48t-6x.html")
                 }

@@ -87,7 +87,7 @@ const SeriesCatalog4530Component = () => {
                 48×1G Base-T + 6×10G SFP+, 760 Вт PoE
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids4530-48p-6x.html")
                 }
@@ -106,7 +106,7 @@ const SeriesCatalog4530Component = () => {
                 24×1G Base-T + 6×10G SFP+, 380 Вт PoE
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids4530-24p-6x.html")
                 }
@@ -125,7 +125,7 @@ const SeriesCatalog4530Component = () => {
                 48×1G Base-T + 6×10G SFP+
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids4530-48t-6x.html")
                 }
@@ -144,7 +144,7 @@ const SeriesCatalog4530Component = () => {
                 24×1G Base-T + 6×10G SFP+
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids4530-24t-6x.html")
                 }
@@ -163,7 +163,7 @@ const SeriesCatalog4530Component = () => {
                 24×1G SFP + 4×10G SFP+
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids4530-24s-4x.html")
                 }
@@ -182,7 +182,7 @@ const SeriesCatalog4530Component = () => {
                 48×1G SFP + 4×10G SFP+
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids4530-48s-4x.html")
                 }

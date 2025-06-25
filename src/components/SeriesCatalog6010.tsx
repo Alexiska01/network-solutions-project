@@ -87,7 +87,7 @@ const SeriesCatalog6010Component = () => {
                 24×1G Base-T, 18×10G SFP+, 8×25G SFP28
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids6010-24t-18x-8y.html")
                 }
@@ -106,7 +106,7 @@ const SeriesCatalog6010Component = () => {
                 24×10G SFP+, 2×40G QSFP+
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids6010-24x-2q.html")
                 }
@@ -125,7 +125,7 @@ const SeriesCatalog6010Component = () => {
                 24×10G SFP+, 2×100G/40G QSFP28
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids6010-24x-2c.html")
                 }
@@ -144,7 +144,7 @@ const SeriesCatalog6010Component = () => {
                 48×10G SFP+
               </p>
               <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300"
+                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
                 onClick={() =>
                   (window.location.href = "/models/ids6010-48x.html")
                 }
