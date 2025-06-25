@@ -108,7 +108,7 @@ const AuthorizedPartnersInfo = () => {
           <div className="text-center">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-[#0A1F44] to-[#00BEAD] hover:from-[#082340] hover:to-[#009A8A] text-white px-8 py-4 text-lg font-semibold font-montserrat rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white px-8 py-4 text-lg font-semibold font-montserrat rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               Стать партнером
               <Icon name="ArrowRight" className="ml-2" size={20} />
