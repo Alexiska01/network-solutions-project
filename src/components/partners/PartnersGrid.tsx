@@ -120,14 +120,12 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
         </div>
 
         {filteredPartners.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {filteredPartners.map((partner, index) => (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {filteredPartners.map((partner) => (
               <div
                 key={partner.id}
                 onClick={() => onPartnerClick(partner)}
-                className={`group bg-white rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden ${
-                  index < 4 ? "col-span-2 sm:col-span-1" : "col-span-1"
-                }`}
+                className="group bg-white rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
               >
                 <div className="p-3 md:p-6">
                   <div className="relative h-[140px] w-full mb-3 md:mb-4 bg-gray-100 rounded-lg overflow-hidden group-hover:bg-blue-50 transition-colors">
