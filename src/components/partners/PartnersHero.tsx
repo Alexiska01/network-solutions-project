@@ -7,7 +7,7 @@ const PartnersHero = () => {
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 text-center relative">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-xl md:text-4xl lg:text-5xl font-semibold md:font-bold mb-6 font-montserrat leading-tight">
+          <h1 className="text-[31px] md:text-4xl lg:text-5xl font-semibold md:font-bold mb-6 font-montserrat leading-tight">
             Наши партнёры
           </h1>
           <p className="text-sm md:text-xl text-blue-100 font-montserrat font-normal leading-relaxed max-w-3xl mx-auto">
