@@ -100,7 +100,7 @@ const AuthorizedPartnersInfo = () => {
           </div>
 
           {/* Последняя карточка на всю ширину */}
-          <div className="mb-4">
+          <div className="mb-4 md:mb-8">
             {(() => {
               const benefit = benefits[4];
               const cardRef = useRef<HTMLDivElement>(null);
