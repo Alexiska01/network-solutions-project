@@ -161,17 +161,17 @@ const SeriesCatalog3730Component = () => {
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-[20px] font-semibold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto md:text-[36px]">
-            Нужна помощь с выбором?
+            Нужна персональная рекомендация?
           </h2>
           <p className="text-[14px] text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px]">
-            Наша компания поможет подобрать оптимальное решение для вашей
-            инфраструктуры
+            Оставьте заявку — мы подберём оптимальное решение и подготовим
+            расчёт стоимости.
           </p>
           <Button
             size="lg"
             className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
           >
-            Связаться с нами
+            Получить расчёт
           </Button>
         </div>
       </section>
