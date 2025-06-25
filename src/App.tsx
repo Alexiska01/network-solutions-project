@@ -11,6 +11,7 @@ import SeriesCatalog4530 from "./pages/SeriesCatalog4530";
 import SeriesCatalog6010 from "./pages/SeriesCatalog6010";
 import ModelIDS3530_24P_6X from "./pages/ModelIDS3530_24P_6X";
 import Partners from "./pages/Partners";
+import SwitchesPage from "./pages/SwitchesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => (
             path="/products/switches/ids3530/24p-6x"
             element={<ModelIDS3530_24P_6X />}
           />
+          <Route path="/switches" element={<SwitchesPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

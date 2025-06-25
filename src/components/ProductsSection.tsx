@@ -109,7 +109,13 @@ const ProductsSection = () => {
 
               {/* Button with enhanced CTA styling */}
               <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                Подробнее
+                {index === 0 ? (
+                  <a href="/switches" className="block">
+                    Подробнее
+                  </a>
+                ) : (
+                  "Подробнее"
+                )}
               </button>
             </div>
           ))}
