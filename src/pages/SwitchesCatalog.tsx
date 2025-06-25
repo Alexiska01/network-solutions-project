@@ -15,6 +15,7 @@ import SwitchesFilter from "@/components/SwitchesFilter";
 import SwitchesSearch from "@/components/SwitchesSearch";
 import SwitchCard from "@/components/SwitchCard";
 import { switchesData, categoryLabels } from "@/data/switchesData";
+import { Link } from "react-router-dom";
 
 const SwitchesCatalog = () => {
   const [activeFilter, setActiveFilter] = useState("all");
@@ -195,9 +196,11 @@ const SwitchesCatalog = () => {
             Наши специалисты помогут выбрать оптимальное решение для вашей
             инфраструктуры
           </p>
-          <Button size="lg" className="bg-[#2E5BFF] hover:bg-[#1E4FFF]">
-            Связаться с нами
-            <ArrowRight className="ml-2 h-5 w-5" />
+          <Button size="lg" className="bg-[#2E5BFF] hover:bg-[#1E4FFF]" asChild>
+            <Link to="/contacts">
+              Связаться с нами
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </Button>
         </section>
       </div>
