@@ -72,8 +72,7 @@ const ProductsSection = () => {
                     {product.title === "Беспроводные решения" ? (
                       <>
                         Беспроводные
-                        <br />
-                        решения
+                        <br className="hidden sm:block" /> решения
                       </>
                     ) : (
                       product.title
