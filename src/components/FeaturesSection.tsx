@@ -54,7 +54,7 @@ const FeaturesSection = () => {
               className="flex flex-col items-center text-center bg-white rounded-xl p-6 lg:p-8 shadow-lg border border-gray-100 h-full transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50"
               style={{ minHeight: "280px" }}
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center mb-6">
                 <Icon
                   name={feature.icon as any}
                   size={32}
