@@ -58,7 +58,7 @@ const AuthorizedPartnersInfo = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12 justify-items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12 justify-items-center [&>:nth-child(5)]:col-span-2 [&>:nth-child(5)]:max-w-sm [&>:nth-child(5)]:mx-auto md:[&>:nth-child(5)]:col-span-1 md:[&>:nth-child(5)]:max-w-none">
             {benefits.map((benefit, index) => {
               const cardRef = useRef<HTMLDivElement>(null);
               const { observeElement, isVisible } = useScrollReveal({
@@ -73,7 +73,7 @@ const AuthorizedPartnersInfo = () => {
                 <div
                   key={index}
                   ref={cardRef}
-                  className={`group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 min-h-[140px] md:min-h-[160px] flex flex-col ${
+                  className={`group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 ${
                     isVisible(index)
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-5"
