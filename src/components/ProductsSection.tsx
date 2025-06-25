@@ -75,7 +75,7 @@ const ProductsSection = () => {
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1.5 md:space-y-2 mb-6">
+              <ul className="space-y-1.5 md:space-y-2 mb-6 py-[26px]">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
