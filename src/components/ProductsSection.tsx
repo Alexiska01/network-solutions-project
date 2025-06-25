@@ -83,13 +83,11 @@ const ProductsSection = () => {
                   </p>
                 </div>
               </div>
-              <ul
-                className={`product-features-${index} space-y-1.5 md:space-y-2 mb-6 flex-1`}
-              >
+              <ul className="product-features space-y-1.5 md:space-y-2 mb-6 flex-1">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
-                    className={`product-feature-${index}-${idx} flex items-center text-xs md:text-sm text-gray-700 font-sans`}
+                    className="product-feature flex items-center text-xs md:text-sm text-gray-700 font-sans"
                   >
                     <Icon
                       name="Check"
