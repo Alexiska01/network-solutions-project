@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import type { FilterType } from "@/pages/SwitchesPage";
 
 interface Series {
   id: string;
@@ -7,6 +8,11 @@ interface Series {
   description: string;
   image: string;
   path: string;
+  category: FilterType;
+}
+
+interface SeriesGridProps {
+  activeFilter: FilterType;
 }
 
 const seriesData: Series[] = [
@@ -18,6 +24,7 @@ const seriesData: Series[] = [
     image:
       "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
     path: "/products/switches/ids3530",
+    category: "corporate",
   },
   {
     id: "ids3730",
@@ -27,6 +34,7 @@ const seriesData: Series[] = [
     image:
       "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
     path: "/products/switches/ids3730",
+    category: "corporate",
   },
   {
     id: "ids4530",
@@ -36,6 +44,7 @@ const seriesData: Series[] = [
     image:
       "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop",
     path: "/products/switches/ids4530",
+    category: "corporate",
   },
   {
     id: "ids6012",
@@ -45,39 +54,7 @@ const seriesData: Series[] = [
     image:
       "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=300&fit=crop",
     path: "/products/switches/ids6012",
-  },
-  {
-    id: "ids6010",
-    name: "IDS6010",
-    description: "Коммутаторы распределения с высокой плотностью портов",
-    image:
-      "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
-    path: "/products/switches/ids6010",
-  },
-  {
-    id: "ids6030",
-    name: "IDS6030",
-    description: "Модульные коммутаторы для масштабируемых корпоративных сетей",
-    image:
-      "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=400&h=300&fit=crop",
-    path: "/products/switches/ids6030",
-  },
-  {
-    id: "ids6032",
-    name: "IDS6032",
-    description: "Высокопроизводительные коммутаторы с поддержкой стекирования",
-    image:
-      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop",
-    path: "/products/switches/ids6032",
-  },
-  {
-    id: "ids8040",
-    name: "IDS8040",
-    description:
-      "Флагманские коммутаторы ядра с максимальной производительностью",
-    image:
-      "https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=400&h=300&fit=crop",
-    path: "/products/switches/ids8040",
+    category: "corporate",
   },
   {
     id: "ids8030",
@@ -87,10 +64,50 @@ const seriesData: Series[] = [
     image:
       "https://images.unsplash.com/photo-1551808525-51a94da548ce?w=400&h=300&fit=crop",
     path: "/products/switches/ids8030",
+    category: "datacenter",
+  },
+  {
+    id: "ids8010",
+    name: "IDS8010",
+    description:
+      "Коммутаторы распределения с высокой плотностью портов для ЦОД",
+    image:
+      "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
+    path: "/products/switches/ids8010",
+    category: "datacenter",
+  },
+  {
+    id: "ids6150",
+    name: "IDS6150",
+    description: "Модульные коммутаторы для масштабируемых решений ЦОД",
+    image:
+      "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=400&h=300&fit=crop",
+    path: "/products/switches/ids6150",
+    category: "datacenter",
+  },
+  {
+    id: "ids6130",
+    name: "IDS6130",
+    description:
+      "Высокопроизводительные коммутаторы с поддержкой стекирования для ЦОД",
+    image:
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop",
+    path: "/products/switches/ids6130",
+    category: "datacenter",
+  },
+  {
+    id: "ids8040",
+    name: "IDS8040",
+    description:
+      "Флагманские коммутаторы ядра с максимальной производительностью и сертификацией TORP",
+    image:
+      "https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=400&h=300&fit=crop",
+    path: "/products/switches/ids8040",
+    category: "certified",
   },
 ];
 
-const SeriesGrid = () => {
+const SeriesGrid = ({ activeFilter }: SeriesGridProps) => {
   const isMobile = useIsMobile();
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
@@ -98,20 +115,27 @@ const SeriesGrid = () => {
     setLoadedImages((prev) => new Set([...prev, seriesId]));
   };
 
+  const filteredSeries =
+    activeFilter === "all"
+      ? seriesData
+      : seriesData.filter((series) => series.category === activeFilter);
+
   useEffect(() => {
-    // Preload images for better UX
-    seriesData.forEach((series) => {
+    filteredSeries.forEach((series) => {
       const img = new Image();
       img.onload = () => handleImageLoad(series.id);
       img.src = series.image;
     });
-  }, []);
+  }, [filteredSeries]);
 
   return (
     <div className="p-6">
       <div className="mb-8">
         <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-          Серии коммутаторов
+          {activeFilter === "all" && "Все серии коммутаторов"}
+          {activeFilter === "corporate" && "Корпоративные ЛВС"}
+          {activeFilter === "datacenter" && "Центры обработки данных"}
+          {activeFilter === "certified" && "Сертифицированные TORP"}
         </h2>
         <p className="text-gray-600">
           Выберите серию для просмотра подробной информации и характеристик
@@ -119,14 +143,14 @@ const SeriesGrid = () => {
       </div>
 
       <div className="series-grid">
-        {seriesData.map((series) => (
+        {filteredSeries.map((series) => (
           <div key={series.id} className="series-card">
             <div className="series-image">
               <img
                 src={series.image}
                 alt={series.name}
-                className={`w-full h-full object-cover ${
-                  loadedImages.has(series.id) ? "loaded" : ""
+                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                  loadedImages.has(series.id) ? "opacity-100" : "opacity-0"
                 }`}
                 loading="lazy"
               />

@@ -7,13 +7,23 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Icon from "@/components/ui/icon";
+import type { FilterType } from "@/pages/SwitchesPage";
+
+interface SidebarSubItem {
+  id: string;
+  name: string;
+}
 
 interface SidebarItem {
-  id: string;
+  id: FilterType;
   name: string;
   description: string;
   icon: string;
-  path: string;
+  subitems: SidebarSubItem[];
+}
+
+interface SwitchesSidebarProps {
+  activeFilter: FilterType;
 }
 
 const sidebarItems: SidebarItem[] = [
@@ -22,28 +32,55 @@ const sidebarItems: SidebarItem[] = [
     name: "Корпоративные ЛВС",
     description: "Коммутаторы для корпоративных локальных сетей",
     icon: "Building2",
-    path: "/switches/corporate",
+    subitems: [
+      { id: "ids3530", name: "IDS3530" },
+      { id: "ids3730", name: "IDS3730" },
+      { id: "ids4530", name: "IDS4530" },
+      { id: "ids6012", name: "IDS6012" },
+    ],
   },
   {
     id: "datacenter",
     name: "Центры обработки данных",
     description: "Высокопроизводительные решения для ЦОД",
     icon: "Server",
-    path: "/switches/datacenter",
+    subitems: [
+      { id: "ids8030", name: "IDS8030" },
+      { id: "ids8010", name: "IDS8010" },
+      { id: "ids6150", name: "IDS6150" },
+      { id: "ids6130", name: "IDS6130" },
+    ],
   },
   {
     id: "certified",
     name: "Сертифицированные TORP",
     description: "Сертифицированное оборудование",
     icon: "Shield",
-    path: "/switches/certified",
+    subitems: [{ id: "ids8040", name: "IDS8040" }],
   },
 ];
 
-const SwitchesSidebar = () => {
+const SwitchesSidebar = ({ activeFilter }: SwitchesSidebarProps) => {
   const isMobile = useIsMobile();
-  const [activeItem, setActiveItem] = useState("corporate");
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const toggleExpand = (itemId: string) => {
+    setExpandedItems((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(itemId)) {
+        newSet.delete(itemId);
+      } else {
+        newSet.add(itemId);
+      }
+      return newSet;
+    });
+  };
+
+  const filteredItems =
+    activeFilter === "all"
+      ? sidebarItems
+      : sidebarItems.filter((item) => item.id === activeFilter);
 
   if (isMobile) {
     return (
@@ -63,43 +100,60 @@ const SwitchesSidebar = () => {
             </button>
 
             <div
-              className={`overflow-hidden transition-all duration-150 ${
-                isCollapsed ? "max-h-0" : "max-h-96"
+              className={`overflow-hidden transition-all duration-300 ${
+                isCollapsed ? "max-h-0" : "max-h-[500px]"
               }`}
             >
               <div className="mt-2 space-y-2">
-                {sidebarItems.map((item) => (
-                  <button
+                {filteredItems.map((item) => (
+                  <div
                     key={item.id}
-                    onClick={() => {
-                      setActiveItem(item.id);
-                      setIsCollapsed(true);
-                    }}
-                    className={`
-                      w-full flex items-start gap-3 p-3 rounded-lg text-left transition-all duration-150
-                      ${
-                        activeItem === item.id
-                          ? "bg-[#0077E6]/10 text-[#0077E6] border-l-4 border-[#0077E6]"
-                          : "hover:bg-gray-50 text-gray-700"
-                      }
-                    `}
+                    className="border border-gray-200 rounded-lg"
                   >
-                    <Icon
-                      name={item.icon}
-                      size={20}
-                      className={
-                        activeItem === item.id
-                          ? "text-[#0077E6]"
-                          : "text-gray-500"
-                      }
-                    />
-                    <div>
-                      <div className="font-medium">{item.name}</div>
-                      <div className="text-sm text-gray-600 mt-1">
-                        {item.description}
+                    <button
+                      onClick={() => toggleExpand(item.id)}
+                      className="w-full flex items-center justify-between p-3 text-left hover:bg-gray-50 transition-colors duration-150"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon
+                          name={item.icon}
+                          size={20}
+                          className="text-[#0077E6]"
+                        />
+                        <div>
+                          <div className="font-medium text-gray-900">
+                            {item.name}
+                          </div>
+                          <div className="text-sm text-gray-600">
+                            {item.description}
+                          </div>
+                        </div>
+                      </div>
+                      <Icon
+                        name="ChevronRight"
+                        size={16}
+                        className={`transition-transform duration-300 ${
+                          expandedItems.has(item.id) ? "rotate-90" : ""
+                        }`}
+                      />
+                    </button>
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ${
+                        expandedItems.has(item.id) ? "max-h-64" : "max-h-0"
+                      }`}
+                    >
+                      <div className="px-3 pb-3 space-y-1">
+                        {item.subitems.map((subitem) => (
+                          <button
+                            key={subitem.id}
+                            className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-[#0077E6]/10 hover:text-[#0077E6] rounded transition-colors duration-150"
+                          >
+                            {subitem.name}
+                          </button>
+                        ))}
                       </div>
                     </div>
-                  </button>
+                  </div>
                 ))}
               </div>
             </div>
@@ -109,82 +163,54 @@ const SwitchesSidebar = () => {
     );
   }
 
-  // Tablet: Accordion
-  if (window.innerWidth >= 768 && window.innerWidth < 1024) {
-    return (
-      <div className="w-full bg-white border-b border-gray-200 md:w-80 md:border-r md:border-b-0 md:min-h-screen">
-        <div className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Разделы</h3>
-          <Accordion type="single" collapsible className="w-full">
-            {sidebarItems.map((item) => (
-              <AccordionItem key={item.id} value={item.id}>
-                <AccordionTrigger className="py-4 text-left hover:no-underline">
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      name={item.icon}
-                      size={20}
-                      className="text-[#0077E6]"
-                    />
-                    <div>
-                      <div className="font-medium text-gray-900">
-                        {item.name}
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        {item.description}
-                      </div>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="pb-4">
-                  <div className="pl-8">
-                    <p className="text-sm text-gray-600">
-                      Подкатегории будут добавлены позже
-                    </p>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </div>
-    );
-  }
-
   // Desktop: Fixed sidebar
   return (
-    <div className="w-80 bg-white border-r border-gray-200 min-h-screen">
+    <div className="w-80 bg-white border-r border-gray-200 min-h-[calc(100vh-200px)]">
       <div className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Разделы</h3>
-        <nav className="space-y-2">
-          {sidebarItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveItem(item.id)}
-              className={`
-                w-full flex items-start gap-3 p-3 rounded-lg text-left transition-colors duration-200
-                ${
-                  activeItem === item.id
-                    ? "bg-[#0077E6]/10 text-[#0077E6] border-l-4 border-[#0077E6]"
-                    : "hover:bg-gray-50 text-gray-700"
-                }
-              `}
-            >
-              <Icon
-                name={item.icon}
-                size={20}
-                className={
-                  activeItem === item.id ? "text-[#0077E6]" : "text-gray-500"
-                }
-              />
-              <div>
-                <div className="font-medium">{item.name}</div>
-                <div className="text-sm text-gray-600 mt-1">
-                  {item.description}
+        <div className="space-y-2">
+          {filteredItems.map((item) => (
+            <div key={item.id} className="border border-gray-200 rounded-lg">
+              <button
+                onClick={() => toggleExpand(item.id)}
+                className="w-full flex items-center justify-between p-3 text-left hover:bg-gray-50 transition-colors duration-150 rounded-lg"
+              >
+                <div className="flex items-center gap-3">
+                  <Icon name={item.icon} size={20} className="text-[#0077E6]" />
+                  <div>
+                    <div className="font-medium text-gray-900">{item.name}</div>
+                    <div className="text-sm text-gray-600">
+                      {item.description}
+                    </div>
+                  </div>
+                </div>
+                <Icon
+                  name="ChevronRight"
+                  size={16}
+                  className={`transition-transform duration-300 ${
+                    expandedItems.has(item.id) ? "rotate-90" : ""
+                  }`}
+                />
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  expandedItems.has(item.id) ? "max-h-64" : "max-h-0"
+                }`}
+              >
+                <div className="px-3 pb-3 space-y-1">
+                  {item.subitems.map((subitem) => (
+                    <button
+                      key={subitem.id}
+                      className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-[#0077E6]/10 hover:text-[#0077E6] rounded transition-colors duration-150"
+                    >
+                      {subitem.name}
+                    </button>
+                  ))}
                 </div>
               </div>
-            </button>
+            </div>
           ))}
-        </nav>
+        </div>
       </div>
     </div>
   );

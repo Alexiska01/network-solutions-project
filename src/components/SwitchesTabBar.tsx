@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import Icon from "@/components/ui/icon";
 import { useIsMobile } from "@/hooks/use-mobile";
+import type { FilterType } from "@/pages/SwitchesPage";
+
+interface SwitchesTabBarProps {
+  activeFilter: FilterType;
+  onFilterChange: (filter: FilterType) => void;
+}
 
 const tabs = [
-  { id: "all", label: "Все" },
-  { id: "corporate", label: "Корпоративные ЛВС" },
-  { id: "datacenter", label: "ЦОД" },
-  { id: "certified", label: "Сертифицированные TORP" },
+  { id: "all" as FilterType, label: "Все" },
+  { id: "corporate" as FilterType, label: "Корпоративные ЛВС" },
+  { id: "datacenter" as FilterType, label: "Центры обработки данных" },
+  { id: "certified" as FilterType, label: "Сертифицированные TORP" },
 ];
 
-const SwitchesTabBar = () => {
-  const [activeTab, setActiveTab] = useState("all");
-  const [isCollapsed, setIsCollapsed] = useState(true);
+const SwitchesTabBar = ({
+  activeFilter,
+  onFilterChange,
+}: SwitchesTabBarProps) => {
+  const [isCollapsed, setIsCollapsed] = React.useState(true);
   const isMobile = useIsMobile();
 
-  const handleTabChange = (tabId: string) => {
-    setActiveTab(tabId);
+  const handleTabChange = (tabId: FilterType) => {
+    onFilterChange(tabId);
     if (isMobile) {
       setIsCollapsed(true);
     }
@@ -31,7 +39,7 @@ const SwitchesTabBar = () => {
               className="flex items-center justify-between w-full p-3 text-left font-medium text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-150"
             >
               <span>
-                Категории: {tabs.find((t) => t.id === activeTab)?.label}
+                Категории: {tabs.find((t) => t.id === activeFilter)?.label}
               </span>
               <Icon
                 name={isCollapsed ? "ChevronDown" : "ChevronUp"}
@@ -53,7 +61,7 @@ const SwitchesTabBar = () => {
                     className={`
                       w-full text-left p-3 rounded-lg transition-all duration-150
                       ${
-                        activeTab === tab.id
+                        activeFilter === tab.id
                           ? "bg-[#0077E6]/10 text-[#0077E6] font-medium"
                           : "text-gray-700 hover:bg-gray-50"
                       }
@@ -74,14 +82,14 @@ const SwitchesTabBar = () => {
                 className={`
                   relative font-inter text-sm md:text-base font-medium transition-all duration-150
                   ${
-                    activeTab === tab.id
+                    activeFilter === tab.id
                       ? "text-[#0077E6]"
                       : "text-gray-700 hover:text-[#0077E6]"
                   }
                 `}
               >
                 {tab.label}
-                {activeTab === tab.id && (
+                {activeFilter === tab.id && (
                   <div className="absolute bottom-[-24px] md:bottom-[-28px] left-0 right-0 h-0.5 bg-gradient-to-r from-[#00A0DC] to-[#0077E6] opacity-100 transition-opacity duration-150" />
                 )}
               </button>
