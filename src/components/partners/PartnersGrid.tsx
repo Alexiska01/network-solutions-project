@@ -109,10 +109,10 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
   };
 
   return (
-    <section className="py-8 md:py-20 bg-white">
+    <section className="py-6 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <div className="mb-8">
-          <h2 className="text-xl md:text-3xl font-bold text-gray-900 font-montserrat mb-4">
+        <div className="mb-4 md:mb-8">
+          <h2 className="text-lg md:text-3xl font-bold text-gray-900 font-montserrat mb-2 md:mb-4">
             {filteredPartners.length > 0
               ? `Найдено партнёров: ${filteredPartners.length}`
               : "Партнёры не найдены"}
@@ -120,15 +120,15 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
         </div>
 
         {filteredPartners.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {filteredPartners.map((partner) => (
               <div
                 key={partner.id}
                 onClick={() => onPartnerClick(partner)}
                 className="group bg-white rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
               >
-                <div className="p-4 md:p-6">
-                  <div className="flex items-center justify-center h-16 md:h-20 mb-4 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
+                <div className="p-3 md:p-6">
+                  <div className="flex items-center justify-center h-12 md:h-20 mb-3 md:mb-4 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
                     <img
                       src={partner.logo}
                       alt={partner.name}
@@ -136,25 +136,29 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     />
                   </div>
 
-                  <h3 className="font-semibold text-gray-900 font-montserrat text-base md:text-lg mb-3 group-hover:text-[#0065B3] transition-colors">
+                  <h3 className="font-semibold text-gray-900 font-montserrat text-sm md:text-lg mb-2 md:mb-3 group-hover:text-[#0065B3] transition-colors">
                     {partner.name}
                   </h3>
 
-                  <div className="space-y-2 mb-4">
+                  <div className="space-y-1.5 md:space-y-2 mb-3 md:mb-4">
                     <div className="flex items-center gap-2">
-                      <Icon name="MapPin" size={14} className="text-gray-400" />
-                      <span className="text-sm text-gray-600 font-montserrat">
+                      <Icon
+                        name="MapPin"
+                        size={12}
+                        className="text-gray-400 md:w-3.5 md:h-3.5"
+                      />
+                      <span className="text-xs md:text-sm text-gray-600 font-montserrat">
                         {partner.region}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Icon
                         name="Building"
-                        size={14}
-                        className="text-gray-400"
+                        size={12}
+                        className="text-gray-400 md:w-3.5 md:h-3.5"
                       />
                       <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium font-montserrat ${getTypeColor(partner.type)}`}
+                        className={`px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-xs font-medium font-montserrat ${getTypeColor(partner.type)}`}
                       >
                         {partner.type}
                       </span>
@@ -167,8 +171,8 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     </span>
                     <Icon
                       name="ArrowRight"
-                      size={16}
-                      className="text-gray-400 group-hover:text-[#0065B3] group-hover:translate-x-1 transition-all"
+                      size={14}
+                      className="text-gray-400 group-hover:text-[#0065B3] group-hover:translate-x-1 transition-all md:w-4 md:h-4"
                     />
                   </div>
                 </div>
@@ -176,14 +180,18 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
             ))}
           </div>
         ) : (
-          <div className="text-center py-16">
-            <div className="bg-gray-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
-              <Icon name="Search" size={32} className="text-gray-400" />
+          <div className="text-center py-12 md:py-16">
+            <div className="bg-gray-100 rounded-full w-16 h-16 md:w-20 md:h-20 flex items-center justify-center mx-auto mb-4 md:mb-6">
+              <Icon
+                name="Search"
+                size={24}
+                className="text-gray-400 md:w-8 md:h-8"
+              />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 font-montserrat mb-2">
+            <h3 className="text-lg md:text-xl font-semibold text-gray-900 font-montserrat mb-2">
               Партнёры не найдены
             </h3>
-            <p className="text-gray-600 font-montserrat max-w-md mx-auto">
+            <p className="text-sm md:text-base text-gray-600 font-montserrat max-w-md mx-auto px-4 md:px-0">
               Попробуйте изменить параметры фильтров или сбросить их для
               просмотра всех партнёров
             </p>
