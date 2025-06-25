@@ -77,7 +77,7 @@ const ProductsSection = () => {
                     {product.title}
                   </h3>
                   <p
-                    className={`product-desc-${index} text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed min-h-[72px] flex items-start`}
+                    className={`product-desc-${index} text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed h-[72px] md:h-[60px] flex items-start`}
                   >
                     {product.description}
                   </p>
