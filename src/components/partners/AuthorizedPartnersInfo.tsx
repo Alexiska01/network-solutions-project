@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const AuthorizedPartnersInfo = () => {
   const benefits = [
@@ -64,28 +65,44 @@ const AuthorizedPartnersInfo = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-            {benefits.map((benefit, index) => (
-              <div
-                key={index}
-                className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20"
-              >
-                <div className="w-14 h-14 bg-gradient-to-br from-[#0A1F44] to-[#00BEAD] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Icon
-                    name={benefit.icon}
-                    className="text-white group-hover:animate-[bounce_0.6s_ease]"
-                    size={24}
-                  />
+            {benefits.map((benefit, index) => {
+              const cardRef = useRef<HTMLDivElement>(null);
+              const { observeElement, isVisible } = useScrollReveal({
+                staggerDelay: 150,
+              });
+
+              useEffect(() => {
+                observeElement(cardRef.current, index);
+              }, []);
+
+              return (
+                <div
+                  key={index}
+                  ref={cardRef}
+                  className={`group bg-white rounded-2xl p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 ${
+                    isVisible(index)
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-5"
+                  }`}
+                >
+                  <div className="w-14 h-14 bg-gradient-to-br from-[#0A1F44] to-[#00BEAD] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Icon
+                      name={benefit.icon}
+                      className="text-white group-hover:animate-[bounce_0.6s_ease]"
+                      size={24}
+                    />
+                  </div>
+
+                  <h3 className="font-montserrat font-semibold text-base text-[#0A1F44] mt-4 mb-2 group-hover:text-[#0A1F44] transition-colors">
+                    {benefit.title}
+                  </h3>
+
+                  <p className="font-montserrat font-normal text-sm text-[#333] mt-2 leading-relaxed">
+                    {benefit.description}
+                  </p>
                 </div>
-
-                <h3 className="font-montserrat font-semibold text-base text-[#0A1F44] mt-4 mb-2 group-hover:text-[#0A1F44] transition-colors">
-                  {benefit.title}
-                </h3>
-
-                <p className="font-montserrat font-normal text-sm text-[#333] mt-2 leading-relaxed">
-                  {benefit.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="text-center">
