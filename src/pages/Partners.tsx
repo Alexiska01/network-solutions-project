@@ -31,6 +31,7 @@ const Partners = () => {
     <div className="min-h-screen">
       <Header />
       <PartnersHero />
+      <AuthorizedPartnersInfo />
       <PartnersFilters
         selectedFilters={selectedFilters}
         onFilterChange={setSelectedFilters}
@@ -39,7 +40,6 @@ const Partners = () => {
         selectedFilters={selectedFilters}
         onPartnerClick={setSelectedPartner}
       />
-      <AuthorizedPartnersInfo />
       <PartnerModal
         partner={selectedPartner}
         onClose={() => setSelectedPartner(null)}
