@@ -56,7 +56,7 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
+              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full grid grid-rows-[auto_1fr_auto]"
             >
               <div className="flex gap-3 md:gap-4 items-start mb-4">
                 <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
@@ -66,7 +66,7 @@ const ProductsSection = () => {
                     className="text-white md:w-8 md:h-8 lg:w-9 lg:h-9"
                   />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 min-h-[4rem] md:min-h-[5rem] flex flex-col justify-center">
                   <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
                     {product.title}
                   </h3>
@@ -75,7 +75,7 @@ const ProductsSection = () => {
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1.5 md:space-y-2 mb-6 flex-grow flex flex-col justify-start">
+              <ul className="space-y-1.5 md:space-y-2 mb-6">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
@@ -90,8 +90,8 @@ const ProductsSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] mt-auto">
-                Подробнее
+              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px]">
+                Подrobнее
               </button>
             </div>
           ))}
