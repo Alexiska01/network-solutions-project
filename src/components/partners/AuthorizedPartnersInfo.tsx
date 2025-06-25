@@ -7,7 +7,6 @@ const AuthorizedPartnersInfo = () => {
     <section className="bg-white py-8 md:py-12 lg:py-16">
       <div className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="w-20 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-4"></div>
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 font-montserrat mb-4 md:mb-6">
             Авторизованные партнёры
           </h2>
