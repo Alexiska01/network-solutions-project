@@ -80,7 +80,7 @@ const ModelIDS3530_24P_6XComponent = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
-              Ключевые возможности
+              Ключевые характеристики
             </h2>
           </div>
 
