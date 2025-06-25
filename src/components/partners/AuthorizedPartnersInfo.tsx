@@ -47,7 +47,7 @@ const AuthorizedPartnersInfo = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12 justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12 justify-items-center">
             {benefits.map((benefit, index) => {
               const cardRef = useRef<HTMLDivElement>(null);
               const { observeElement, isVisible } = useScrollReveal({
@@ -62,17 +62,17 @@ const AuthorizedPartnersInfo = () => {
                 <div
                   key={index}
                   ref={cardRef}
-                  className={`group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 min-h-[140px] md:min-h-[160px] flex flex-col ${
+                  className={`group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 min-h-[160px] md:min-h-[180px] flex flex-col ${
                     isVisible(index)
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-5"
                   }`}
                 >
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon
                       name={benefit.icon}
                       className="text-white group-hover:animate-[bounce_0.6s_ease]"
-                      size={18}
+                      size={20}
                     />
                   </div>
 

@@ -120,15 +120,15 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
         </div>
 
         {filteredPartners.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6">
             {filteredPartners.map((partner) => (
               <div
                 key={partner.id}
                 onClick={() => onPartnerClick(partner)}
                 className="group bg-white rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
               >
-                <div className="p-3 md:p-6">
-                  <div className="relative h-[140px] w-full mb-3 md:mb-4 bg-gray-100 rounded-lg overflow-hidden group-hover:bg-blue-50 transition-colors">
+                <div className="p-4 md:p-6">
+                  <div className="relative h-32 sm:h-36 md:h-40 w-full mb-3 md:mb-4 bg-gray-100 rounded-lg overflow-hidden group-hover:bg-blue-50 transition-colors">
                     <img
                       src={partner.logo}
                       alt={partner.name}
@@ -165,43 +165,43 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg -z-10"></div>
                   </div>
 
-                  <h3 className="font-semibold text-gray-900 font-montserrat text-sm md:text-lg mb-2 md:mb-3 group-hover:text-[#0065B3] transition-colors">
+                  <h3 className="font-semibold text-gray-900 font-montserrat text-base md:text-lg mb-2 md:mb-3 group-hover:text-[#0065B3] transition-colors line-clamp-2">
                     {partner.name}
                   </h3>
 
-                  <div className="space-y-1.5 md:space-y-2 mb-3 md:mb-4">
+                  <div className="space-y-2 md:space-y-2 mb-3 md:mb-4">
                     <div className="flex items-center gap-2">
                       <Icon
                         name="MapPin"
-                        size={12}
-                        className="text-gray-400 md:w-3.5 md:h-3.5"
+                        size={14}
+                        className="text-gray-400 flex-shrink-0"
                       />
-                      <span className="text-xs md:text-sm text-gray-600 font-montserrat">
+                      <span className="text-sm md:text-sm text-gray-600 font-montserrat">
                         {partner.region}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Icon
                         name="Building"
-                        size={12}
-                        className="text-gray-400 md:w-3.5 md:h-3.5"
+                        size={14}
+                        className="text-gray-400 flex-shrink-0"
                       />
                       <span
-                        className={`px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-xs font-medium font-montserrat ${getTypeColor(partner.type)}`}
+                        className={`px-2 py-1 md:px-2 md:py-1 rounded-full text-xs md:text-sm font-medium font-montserrat ${getTypeColor(partner.type)}`}
                       >
                         {partner.type}
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500 font-montserrat">
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-xs md:text-sm text-gray-500 font-montserrat truncate">
                       {partner.category}
                     </span>
                     <Icon
                       name="ArrowRight"
-                      size={14}
-                      className="text-gray-400 group-hover:text-[#0065B3] group-hover:translate-x-1 transition-all md:w-4 md:h-4"
+                      size={16}
+                      className="text-gray-400 group-hover:text-[#0065B3] group-hover:translate-x-1 transition-all flex-shrink-0"
                     />
                   </div>
                 </div>
@@ -211,11 +211,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
         ) : (
           <div className="text-center py-12 md:py-16">
             <div className="bg-gray-100 rounded-full w-16 h-16 md:w-20 md:h-20 flex items-center justify-center mx-auto mb-4 md:mb-6">
-              <Icon
-                name="Search"
-                size={24}
-                className="text-gray-400 md:w-8 md:h-8"
-              />
+              <Icon name="Search" size={32} className="text-gray-400" />
             </div>
             <h3 className="text-lg md:text-xl font-semibold text-gray-900 font-montserrat mb-2">
               Партнёры не найдены
