@@ -149,19 +149,17 @@ const ModelIDS3530_24P_6XComponent = () => {
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-xl md:text-[34px] font-semibold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto">
-            Готовы внедрить {ids353024p6xData.title}?
+            Хотите получить КП по IDS3530-24P-6X?
           </h2>
           <p className="text-sm md:text-[16px] text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
-            Получите персональное предложение и техническую консультацию от
-            нашей компании
+            Оставьте заявку — мы подготовим коммерческое предложение и расчёт
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
               className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
             >
-              <Icon name="Download" className="mr-2" />
-              Скачать спецификацию
+              Получить КП
             </Button>
             <Button
               size="lg"
