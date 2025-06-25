@@ -135,12 +135,23 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                       className="w-full h-full object-cover rounded-lg"
                       loading="lazy"
                       onLoad={(e) => {
-                        e.currentTarget.parentElement?.classList.remove(
-                          "animate-pulse",
-                        );
+                        const placeholder =
+                          e.currentTarget.parentElement?.querySelector(
+                            ".animate-pulse",
+                          );
+                        if (placeholder) {
+                          placeholder.remove();
+                        }
                       }}
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
+                        const placeholder =
+                          e.currentTarget.parentElement?.querySelector(
+                            ".animate-pulse",
+                          );
+                        if (placeholder) {
+                          placeholder.remove();
+                        }
                         const fallback = document.createElement("div");
                         fallback.className =
                           "w-full h-full bg-gray-200 rounded-lg flex items-center justify-center";
@@ -151,7 +162,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                         e.currentTarget.parentElement?.appendChild(fallback);
                       }}
                     />
-                    <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg"></div>
+                    <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg -z-10"></div>
                   </div>
 
                   <h3 className="font-semibold text-gray-900 font-montserrat text-sm md:text-lg mb-2 md:mb-3 group-hover:text-[#0065B3] transition-colors">
