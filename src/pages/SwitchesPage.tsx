@@ -16,9 +16,9 @@ const SwitchesPage = () => {
       <SwitchesHero />
       <SwitchesTabBar />
 
-      <div className="flex">
+      <div className="flex flex-col md:flex-row">
         <SwitchesSidebar />
-        <main className={`flex-1 ${isMobile ? "w-full" : "ml-0"}`}>
+        <main className="flex-1">
           <SeriesGrid />
         </main>
       </div>

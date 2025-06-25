@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Series {
@@ -92,6 +92,20 @@ const seriesData: Series[] = [
 
 const SeriesGrid = () => {
   const isMobile = useIsMobile();
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  const handleImageLoad = (seriesId: string) => {
+    setLoadedImages((prev) => new Set([...prev, seriesId]));
+  };
+
+  useEffect(() => {
+    // Preload images for better UX
+    seriesData.forEach((series) => {
+      const img = new Image();
+      img.onload = () => handleImageLoad(series.id);
+      img.src = series.image;
+    });
+  }, []);
 
   return (
     <div className="p-6">
@@ -111,7 +125,10 @@ const SeriesGrid = () => {
               <img
                 src={series.image}
                 alt={series.name}
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover ${
+                  loadedImages.has(series.id) ? "loaded" : ""
+                }`}
+                loading="lazy"
               />
             </div>
             <div className="p-6">
