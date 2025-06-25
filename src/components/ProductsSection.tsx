@@ -99,7 +99,7 @@ const ProductsSection = () => {
               </ul>
 
               {/* Button */}
-              <button className="w-full bg-[#0065B3] text-white py-2.5 md:py-3 px-4 md:px-5 rounded-lg md:rounded-xl hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base lg:text-lg font-semibold min-h-[48px] shadow-md hover:shadow-lg">
+              <button className="w-full bg-[#0065B3] text-white py-2.5 md:py-3 px-4 md:px-5 rounded-lg md:rounded-xl hover:bg-gradient-hero transition-all duration-300 font-sans text-xs md:text-sm lg:text-base font-semibold min-h-[48px] shadow-md hover:shadow-lg">
                 Подробнее
               </button>
             </div>
