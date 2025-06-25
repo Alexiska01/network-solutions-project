@@ -73,7 +73,7 @@ const AuthorizedPartnersInfo = () => {
                 <div
                   key={index}
                   ref={cardRef}
-                  className={`group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 ${
+                  className={`group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 min-h-[140px] md:min-h-[160px] flex flex-col ${
                     isVisible(index)
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-5"
