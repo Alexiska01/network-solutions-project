@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PartnersHero from "@/components/partners/PartnersHero";
-
+import AuthorizedPartnersInfo from "@/components/partners/AuthorizedPartnersInfo";
 import PartnersFilters from "@/components/partners/PartnersFilters";
 import PartnersGrid from "@/components/partners/PartnersGrid";
 import PartnerModal from "@/components/partners/PartnerModal";
@@ -31,6 +31,7 @@ const Partners = () => {
     <div className="min-h-screen">
       <Header />
       <PartnersHero />
+      <AuthorizedPartnersInfo />
       <PartnersFilters
         selectedFilters={selectedFilters}
         onFilterChange={setSelectedFilters}
