@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
 const ProductsSection = () => {
@@ -108,15 +109,18 @@ const ProductsSection = () => {
               </div>
 
               {/* Button with enhanced CTA styling */}
-              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                {index === 0 ? (
-                  <a href="/switches" className="block">
-                    Подробнее
-                  </a>
-                ) : (
-                  "Подробнее"
-                )}
-              </button>
+              {index === 0 ? (
+                <Link
+                  to="/switches"
+                  className="block w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-center"
+                >
+                  Подробнее
+                </Link>
+              ) : (
+                <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                  Подробнее
+                </button>
+              )}
             </div>
           ))}
         </div>
