@@ -148,10 +148,10 @@ const ModelIDS3530_24P_6XComponent = () => {
       {/* CTA Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-[34px] font-semibold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto">
+          <h2 className="text-xl md:text-[34px] font-semibold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto">
             Готовы внедрить {ids353024p6xData.title}?
           </h2>
-          <p className="text-[16px] text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
+          <p className="text-sm md:text-[16px] text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
             Получите персональное предложение и техническую консультацию от
             нашей компании
           </p>
