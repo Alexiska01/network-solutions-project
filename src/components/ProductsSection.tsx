@@ -83,7 +83,7 @@ const ProductsSection = () => {
                   </p>
                 </div>
               </div>
-              <ul className="product-features space-y-1.5 md:space-y-2 mb-6 flex-1">
+              <ul className="product-features space-y-1.5 md:space-y-2 mb-6 flex-1 px-[52px]">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
