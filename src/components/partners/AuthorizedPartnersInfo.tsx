@@ -61,11 +61,11 @@ const AuthorizedPartnersInfo = () => {
                 <Icon name={benefit.icon} className="text-white" size={24} />
               </div>
 
-              <h3 className="text-lg font-bold text-gray-900 font-montserrat mb-2 group-hover:text-[#0A1F44] transition-colors">
+              <h3 className="font-montserrat font-semibold text-base text-[#0A1F44] mt-4 mb-2 group-hover:text-[#0A1F44] transition-colors">
                 {benefit.title}
               </h3>
 
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="font-montserrat font-normal text-sm text-[#333] mt-2 leading-relaxed">
                 {benefit.description}
               </p>
             </div>
