@@ -149,51 +149,6 @@ const SwitchesCatalog = () => {
           )}
         </section>
 
-        {/* CTA блок */}
-        <section className="bg-gradient-to-r from-[#2E5BFF] to-[#4A90E2] rounded-2xl p-8 md:p-12 mb-16 text-white">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center">
-              Почему выбирают iDATA?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <div className="text-center">
-                <Shield className="h-12 w-12 mx-auto mb-3 opacity-90" />
-                <h3 className="font-semibold mb-2">5 лет гарантии</h3>
-                <p className="text-sm opacity-90">
-                  Максимальная защита инвестиций
-                </p>
-              </div>
-              <div className="text-center">
-                <Settings className="h-12 w-12 mx-auto mb-3 opacity-90" />
-                <h3 className="font-semibold mb-2">Расширенные L3 функции</h3>
-                <p className="text-sm opacity-90">Полный стек протоколов</p>
-              </div>
-              <div className="text-center">
-                <Zap className="h-12 w-12 mx-auto mb-3 opacity-90" />
-                <h3 className="font-semibold mb-2">Поддержка PoE++</h3>
-                <p className="text-sm opacity-90">До 1440Вт мощности</p>
-              </div>
-              <div className="text-center">
-                <Headphones className="h-12 w-12 mx-auto mb-3 opacity-90" />
-                <h3 className="font-semibold mb-2">Интеграция с NMS</h3>
-                <p className="text-sm opacity-90">
-                  Централизованное управление
-                </p>
-              </div>
-            </div>
-            <div className="text-center">
-              <Button
-                variant="secondary"
-                size="lg"
-                className="bg-white text-[#2E5BFF] hover:bg-gray-100"
-              >
-                Подробнее о технологиях
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </section>
-
         {/* Коммутаторы для ЦОД */}
         <section id="data-center" className="mb-16">
           <h2 className="text-2xl font-bold text-gray-900 mb-8">
