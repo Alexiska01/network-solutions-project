@@ -57,15 +57,15 @@ const AuthorizedPartnersInfo = () => {
               key={index}
               className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 hover:border-[#00BEAD]/20"
             >
-              <div className="w-14 h-14 bg-gradient-to-br from-[#0A1F44] to-[#00BEAD] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Icon name={benefit.icon} className="text-white" size={24} />
+              <div className="w-10 h-10 bg-gradient-to-br from-[#0A1F44] to-[#00BEAD] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Icon name={benefit.icon} className="text-white" size={40} />
               </div>
 
-              <h3 className="text-lg font-bold text-gray-900 font-montserrat mb-2 group-hover:text-[#0A1F44] transition-colors">
+              <h3 className="text-base font-semibold text-[#0A1F44] font-montserrat mt-4 mb-2 group-hover:text-[#0A1F44] transition-colors">
                 {benefit.title}
               </h3>
 
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm font-normal text-[#333333] leading-relaxed mt-2 font-montserrat">
                 {benefit.description}
               </p>
             </div>
