@@ -114,10 +114,10 @@ const SeriesGrid = ({ activeFilter }: SeriesGridProps) => {
   return (
     <div className="p-6 animate-fade-in">
       <div className="mb-8">
-        <h2 className="text-2xl font-montserrat font-bold text-gray-900 mb-4">
+        <h2 className="text-2xl font-montserrat font-semibold text-[#222222] mb-2">
           Серии коммутаторов
         </h2>
-        <p className="text-gray-600 font-inter">
+        <p className="text-sm font-montserrat text-[#555555]">
           Выберите серию для просмотра подробной информации и характеристик
         </p>
       </div>
@@ -125,48 +125,39 @@ const SeriesGrid = ({ activeFilter }: SeriesGridProps) => {
       <div className="series-grid">
         {filteredSeries.map((series) => (
           <a key={series.id} href={series.path} className="series-card group">
-            <div className="p-6">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="series-icon">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <rect
-                      width="32"
-                      height="32"
-                      rx="8"
-                      fill="url(#gradient)"
-                      className="transition-all duration-200"
-                    />
-                    <path
-                      d="M8 12h16v2H8zm0 4h16v2H8zm0 4h12v2H8z"
-                      fill="white"
-                    />
-                    <defs>
-                      <linearGradient
-                        id="gradient"
-                        x1="0"
-                        y1="0"
-                        x2="32"
-                        y2="32"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop stopColor="#0077E6" />
-                        <stop offset="1" stopColor="#00A0DC" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-base font-montserrat font-bold text-[#222222] mb-2">
-                    {series.name}
-                  </h3>
-                </div>
+            <div className="series-image">
+              <img
+                src={series.image}
+                alt={series.name}
+                className="w-full h-full object-cover"
+              />
+              <div className="series-icon-overlay">
+                <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                  <rect width="32" height="32" rx="8" fill="url(#gradient)" />
+                  <path
+                    d="M8 12h16v2H8zm0 4h16v2H8zm0 4h12v2H8z"
+                    fill="white"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="gradient"
+                      x1="0"
+                      y1="0"
+                      x2="32"
+                      y2="32"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#0077E6" />
+                      <stop offset="1" stopColor="#00A0DC" />
+                    </linearGradient>
+                  </defs>
+                </svg>
               </div>
-              <p className="text-sm font-inter text-[#555555] mb-6 leading-relaxed">
-                {series.description}
-              </p>
-              <button className="series-button w-full py-3 px-6 rounded-lg font-medium text-white transition-all duration-200 group-hover:shadow-lg">
-                Подробнее
-              </button>
+            </div>
+            <div className="series-content">
+              <h3 className="series-title">{series.name}</h3>
+              <p className="series-description">{series.description}</p>
+              <button className="series-button">Подробнее</button>
             </div>
           </a>
         ))}
