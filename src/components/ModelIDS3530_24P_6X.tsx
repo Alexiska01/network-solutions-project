@@ -157,6 +157,7 @@ const ModelIDS3530_24P_6XComponent = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
+              onClick={() => navigate("/partners")}
               className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
             >
               Получить КП
