@@ -52,14 +52,14 @@ const ProductsSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 grid grid-rows-[auto_60px_1fr_auto] gap-4"
+              className="bg-white rounded-lg md:rounded-xl px-6 md:px-8 py-6 md:py-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
             >
               {/* Header with icon and title */}
-              <div className="flex gap-3 md:gap-4 items-start">
+              <div className="flex gap-4 items-start mb-2">
                 <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
@@ -74,32 +74,34 @@ const ProductsSection = () => {
                 </div>
               </div>
 
-              {/* Description with fixed height */}
-              <div className="flex items-start">
+              {/* Description */}
+              <div className="mb-5 md:mb-6">
                 <p className="text-xs md:text-sm text-gray-600 font-sans leading-relaxed">
                   {product.description}
                 </p>
               </div>
 
               {/* Features list */}
-              <ul className="space-y-1.5 md:space-y-2 self-start">
-                {product.features.map((feature, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-center text-xs md:text-sm text-gray-700 font-sans"
-                  >
-                    <Icon
-                      name="Check"
-                      size={12}
-                      className="text-green-500 mr-1.5 md:mr-2 flex-shrink-0 md:w-4 md:h-4"
-                    />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+              <div className="flex-1 mb-6">
+                <ul className="space-y-2 md:space-y-2.5">
+                  {product.features.map((feature, idx) => (
+                    <li
+                      key={idx}
+                      className="flex items-center text-xs md:text-sm text-gray-700 font-sans"
+                    >
+                      <Icon
+                        name="Check"
+                        size={12}
+                        className="text-green-500 mr-2 flex-shrink-0 md:w-4 md:h-4"
+                      />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-              {/* Button */}
-              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] self-end">
+              {/* Button with enhanced CTA styling */}
+              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                 Подробнее
               </button>
             </div>
