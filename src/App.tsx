@@ -9,6 +9,7 @@ import SeriesCatalog3730 from "./pages/SeriesCatalog3730";
 import SeriesCatalog3530 from "./pages/SeriesCatalog3530";
 import SeriesCatalog4530 from "./pages/SeriesCatalog4530";
 import SeriesCatalog6010 from "./pages/SeriesCatalog6010";
+import SwitchesCatalog from "./pages/SwitchesCatalog";
 import ModelIDS3530_24P_6X from "./pages/ModelIDS3530_24P_6X";
 import Partners from "./pages/Partners";
 import NotFound from "./pages/NotFound";
@@ -49,6 +50,7 @@ const App = () => (
             element={<ModelIDS3530_24P_6X />}
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/switches" element={<SwitchesCatalog />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
