@@ -128,12 +128,30 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                 className="group bg-white rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
               >
                 <div className="p-3 md:p-6">
-                  <div className="flex items-center justify-center h-12 md:h-20 mb-3 md:mb-4 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
+                  <div className="relative h-[140px] w-full mb-3 md:mb-4 bg-gray-100 rounded-lg overflow-hidden group-hover:bg-blue-50 transition-colors">
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className="max-h-full max-w-full object-contain filter group-hover:saturate-110"
+                      className="w-full h-full object-cover rounded-lg filter brightness-90 group-hover:brightness-100 transition-all duration-300"
+                      loading="lazy"
+                      onLoad={(e) => {
+                        e.currentTarget.parentElement?.classList.remove(
+                          "animate-pulse",
+                        );
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                        const fallback = document.createElement("div");
+                        fallback.className =
+                          "w-full h-full bg-gray-200 rounded-lg flex items-center justify-center";
+                        fallback.innerHTML =
+                          '<span class="text-gray-400 text-lg font-medium">' +
+                          partner.name.charAt(0) +
+                          "</span>";
+                        e.currentTarget.parentElement?.appendChild(fallback);
+                      }}
                     />
+                    <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg"></div>
                   </div>
 
                   <h3 className="font-semibold text-gray-900 font-montserrat text-sm md:text-lg mb-2 md:mb-3 group-hover:text-[#0065B3] transition-colors">
