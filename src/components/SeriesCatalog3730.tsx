@@ -32,7 +32,7 @@ const SeriesCatalog3730Component = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <div className="w-20 h-0.5 bg-gradient-hero mx-auto mb-6"></div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 font-sans">
+            <h2 className="text-[20px] md:text-3xl font-bold text-gray-900 font-sans">
               Ключевые преимущества
             </h2>
           </div>
@@ -160,10 +160,10 @@ const SeriesCatalog3730Component = () => {
       {/* CTA Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-[36px] font-semibold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto">
+          <h2 className="text-[20px] font-semibold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto md:text-[36px]">
             Нужна помощь с выбором?
           </h2>
-          <p className="text-[18px] text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
+          <p className="text-[14px] text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px]">
             Наша компания поможет подобрать оптимальное решение для вашей
             инфраструктуры
           </p>
