@@ -6,7 +6,7 @@ export default {
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}"
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -17,11 +17,11 @@ export default {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ["Inter", "sans-serif"],
+      montserrat: ["Montserrat", "sans-serif"],
+    },
     extend: {
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        montserrat: ["Montserrat", "sans-serif"],
-      },
       fontSize: {
         "clamp-xs": "clamp(0.75rem, 2vw, 0.875rem)",
         "clamp-sm": "clamp(0.875rem, 2.5vw, 1rem)",
@@ -108,6 +108,7 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
+        "idata-gradient": "linear-gradient(to right, #1e3a8a, #0891b2)",
         "gradient-brand": "linear-gradient(90deg, #1A2980, #0065B3, #00B5AD)",
         "gradient-brand-dark":
           "linear-gradient(90deg, #1A2980, #0065B3, #00B5AD)",

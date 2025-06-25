@@ -81,20 +81,18 @@ const SwitchesCatalog = () => {
         </div>
       </div>
 
-      {/* Заголовок и описание */}
-      <div className="bg-white">
-        <div className="container mx-auto px-4 py-12">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Коммутаторы iDATA
-            </h1>
-            <p className="text-xl text-gray-600">
-              Решения уровня доступа, распределения и дата-центров для
-              корпоративных сетей любого масштаба
-            </p>
-          </div>
+      {/* Hero Section */}
+      <section className="bg-idata-gradient text-white py-16 px-4">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="font-montserrat font-bold text-4xl md:text-[40px] leading-tight mb-4">
+            Каталог коммутаторов
+          </h1>
+          <p className="font-montserrat text-sm md:text-lg max-w-2xl mx-auto">
+            Профессиональные сетевые решения для корпоративного сегмента и
+            дата-центров
+          </p>
         </div>
-      </div>
+      </section>
 
       {/* Фильтры */}
       <SwitchesFilter
