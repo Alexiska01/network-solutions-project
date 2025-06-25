@@ -132,7 +132,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className="w-full h-full object-cover rounded-lg filter brightness-90 group-hover:brightness-100 transition-all duration-300"
+                      className="w-full h-full object-cover rounded-lg"
                       loading="lazy"
                       onLoad={(e) => {
                         e.currentTarget.parentElement?.classList.remove(
