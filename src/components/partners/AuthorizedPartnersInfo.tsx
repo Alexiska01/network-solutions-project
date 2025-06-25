@@ -50,7 +50,7 @@ const AuthorizedPartnersInfo = () => {
         className="py-20"
         style={{
           background:
-            "linear-gradient(90deg, rgba(10,31,68,0.1) 0%, rgba(0,190,173,0.1) 100%)",
+            "linear-gradient(90deg, rgba(10,31,68,0.1) 0%, rgba(37,99,235,0.1) 100%)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
