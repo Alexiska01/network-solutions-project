@@ -35,7 +35,7 @@ const AuthorizedPartnersInfo = () => {
 
   return (
     <>
-      <style jsx={true}>{`
+      <style jsx>{`
         @keyframes bounce {
           0%,
           100% {
