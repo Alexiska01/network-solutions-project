@@ -1,5 +1,6 @@
 import React from "react";
 import { Partner } from "@/pages/Partners";
+import Icon from "@/components/ui/icon";
 
 interface PartnersGridProps {
   selectedFilters: {
@@ -14,15 +15,14 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
   selectedFilters,
   onPartnerClick,
 }) => {
-  // Пример данных партнёров
   const allPartners: Partner[] = [
     {
       id: 1,
       name: "TechnoLink Systems",
-      logo: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=80&fit=crop",
+      logo: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=120&fit=crop",
       region: "EMEA",
-      type: "Distributor",
-      category: "Switches",
+      type: "Дистрибьютор",
+      category: "Коммутаторы",
       phone: "+7 (495) 123-45-67",
       email: "info@technolink.ru",
       website: "https://technolink.ru",
@@ -30,10 +30,10 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 2,
       name: "NetworkPro Solutions",
-      logo: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=200&h=80&fit=crop",
+      logo: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=200&h=120&fit=crop",
       region: "APAC",
-      type: "Reseller",
-      category: "Routers",
+      type: "Реселлер",
+      category: "Маршрутизаторы",
       phone: "+7 (812) 234-56-78",
       email: "sales@networkpro.ru",
       website: "https://networkpro.ru",
@@ -41,10 +41,10 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 3,
       name: "DataCenter Integrators",
-      logo: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=200&h=80&fit=crop",
+      logo: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=200&h=120&fit=crop",
       region: "Americas",
-      type: "Integrator",
-      category: "Wireless",
+      type: "Интегратор",
+      category: "Wi-Fi",
       phone: "+7 (383) 345-67-89",
       email: "contact@dcintegrators.ru",
       website: "https://dcintegrators.ru",
@@ -52,10 +52,10 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 4,
       name: "Enterprise Networks",
-      logo: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=200&h=80&fit=crop",
+      logo: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=200&h=120&fit=crop",
       region: "EMEA",
-      type: "Reseller",
-      category: "Switches",
+      type: "Реселлер",
+      category: "Коммутаторы",
       phone: "+7 (495) 456-78-90",
       email: "info@entnetworks.ru",
       website: "https://entnetworks.ru",
@@ -63,10 +63,10 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 5,
       name: "Global Connect",
-      logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=80&fit=crop",
+      logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=120&fit=crop",
       region: "APAC",
-      type: "Distributor",
-      category: "Routers",
+      type: "Дистрибьютор",
+      category: "Маршрутизаторы",
       phone: "+7 (921) 567-89-01",
       email: "partners@globalconnect.ru",
       website: "https://globalconnect.ru",
@@ -74,10 +74,10 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 6,
       name: "Wireless Solutions Ltd",
-      logo: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b696?w=200&h=80&fit=crop",
+      logo: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b696?w=200&h=120&fit=crop",
       region: "Americas",
-      type: "Integrator",
-      category: "Wireless",
+      type: "Интегратор",
+      category: "Wi-Fi",
       phone: "+7 (343) 678-90-12",
       email: "info@wirelesssolutions.ru",
       website: "https://wirelesssolutions.ru",
@@ -95,34 +95,97 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     );
   });
 
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case "Дистрибьютор":
+        return "bg-blue-100 text-blue-800";
+      case "Реселлер":
+        return "bg-green-100 text-green-800";
+      case "Интегратор":
+        return "bg-purple-100 text-purple-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
   return (
-    <section className="py-12 md:py-16 lg:py-20">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-          {filteredPartners.map((partner) => (
-            <div
-              key={partner.id}
-              onClick={() => onPartnerClick(partner)}
-              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 p-6"
-            >
-              <div className="flex items-center justify-center h-20">
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
-              <h3 className="text-center mt-4 font-medium text-gray-900 font-['Montserrat'] text-sm">
-                {partner.name}
-              </h3>
-            </div>
-          ))}
+    <section className="py-16 md:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 font-montserrat mb-4">
+            {filteredPartners.length > 0
+              ? `Найдено партнёров: ${filteredPartners.length}`
+              : "Партнёры не найдены"}
+          </h2>
         </div>
 
-        {filteredPartners.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 font-['Montserrat']">
-              По выбранным фильтрам партнёры не найдены
+        {filteredPartners.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredPartners.map((partner) => (
+              <div
+                key={partner.id}
+                onClick={() => onPartnerClick(partner)}
+                className="group bg-white rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
+              >
+                <div className="p-6">
+                  <div className="flex items-center justify-center h-20 mb-4 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="max-h-full max-w-full object-contain filter group-hover:saturate-110"
+                    />
+                  </div>
+
+                  <h3 className="font-semibold text-gray-900 font-montserrat text-lg mb-3 group-hover:text-[#0065B3] transition-colors">
+                    {partner.name}
+                  </h3>
+
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center gap-2">
+                      <Icon name="MapPin" size={14} className="text-gray-400" />
+                      <span className="text-sm text-gray-600 font-montserrat">
+                        {partner.region}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        name="Building"
+                        size={14}
+                        className="text-gray-400"
+                      />
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium font-montserrat ${getTypeColor(partner.type)}`}
+                      >
+                        {partner.type}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-500 font-montserrat">
+                      {partner.category}
+                    </span>
+                    <Icon
+                      name="ArrowRight"
+                      size={16}
+                      className="text-gray-400 group-hover:text-[#0065B3] group-hover:translate-x-1 transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <div className="bg-gray-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+              <Icon name="Search" size={32} className="text-gray-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 font-montserrat mb-2">
+              Партнёры не найдены
+            </h3>
+            <p className="text-gray-600 font-montserrat max-w-md mx-auto">
+              Попробуйте изменить параметры фильтров или сбросить их для
+              просмотра всех партнёров
             </p>
           </div>
         )}

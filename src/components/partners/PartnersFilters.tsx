@@ -13,14 +13,15 @@ const PartnersFilters: React.FC<FiltersProps> = ({
   selectedFilters,
   onFilterChange,
 }) => {
-  const regions = ["All", "EMEA", "APAC", "Americas"];
-  const types = ["All", "Reseller", "Distributor", "Integrator"];
-  const categories = ["All", "Switches", "Routers", "Wireless"];
+  const regions = ["Все", "EMEA", "APAC", "Americas"];
+  const types = ["Все", "Реселлер", "Дистрибьютор", "Интегратор"];
+  const categories = ["Все", "Коммутаторы", "Маршрутизаторы", "Wi-Fi"];
 
   const handleFilterClick = (filterType: string, value: string) => {
+    const normalizedValue = value === "Все" ? "All" : value;
     onFilterChange({
       ...selectedFilters,
-      [filterType]: value,
+      [filterType]: normalizedValue,
     });
   };
 
@@ -33,40 +34,62 @@ const PartnersFilters: React.FC<FiltersProps> = ({
     options: string[];
     filterKey: string;
   }) => (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-      <span className="text-sm font-medium text-gray-700 font-['Montserrat'] min-w-[80px]">
-        {title}:
-      </span>
+    <div className="space-y-3">
+      <h3 className="text-sm font-semibold text-gray-800 font-montserrat uppercase tracking-wide">
+        {title}
+      </h3>
       <div className="flex flex-wrap gap-2">
-        {options.map((option) => (
-          <button
-            key={option}
-            onClick={() => handleFilterClick(filterKey, option)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 font-['Montserrat'] ${
-              selectedFilters[filterKey as keyof typeof selectedFilters] ===
-              option
-                ? "bg-[#0065B3] text-white shadow-md"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            {option}
-          </button>
-        ))}
+        {options.map((option) => {
+          const normalizedOption = option === "Все" ? "All" : option;
+          const isActive =
+            selectedFilters[filterKey as keyof typeof selectedFilters] ===
+            normalizedOption;
+
+          return (
+            <button
+              key={option}
+              onClick={() => handleFilterClick(filterKey, option)}
+              className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 font-montserrat border ${
+                isActive
+                  ? "bg-[#0065B3] text-white border-[#0065B3] shadow-lg shadow-blue-200"
+                  : "bg-white text-gray-700 border-gray-200 hover:border-[#0065B3] hover:text-[#0065B3] hover:shadow-md"
+              }`}
+            >
+              {option}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
 
   return (
-    <section className="bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="space-y-4">
-          <FilterGroup title="Регион" options={regions} filterKey="region" />
-          <FilterGroup title="Тип" options={types} filterKey="type" />
-          <FilterGroup
-            title="Категория"
-            options={categories}
-            filterKey="category"
-          />
+    <section className="bg-gray-50 py-12 border-b">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-gray-900 font-montserrat mb-2">
+              Фильтры поиска
+            </h2>
+            <p className="text-gray-600 font-montserrat text-sm">
+              Найдите подходящего партнёра по региону, типу и категории
+              оборудования
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            <FilterGroup title="Регион" options={regions} filterKey="region" />
+            <FilterGroup
+              title="Тип партнёра"
+              options={types}
+              filterKey="type"
+            />
+            <FilterGroup
+              title="Категория"
+              options={categories}
+              filterKey="category"
+            />
+          </div>
         </div>
       </div>
     </section>
