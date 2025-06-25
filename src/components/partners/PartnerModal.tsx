@@ -28,7 +28,7 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
       <div className="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="relative">
           {/* Header */}
-          <div className="bg-gradient-to-r from-[#0065B3] to-[#004A87] p-6 rounded-t-2xl">
+          <div className="bg-gradient-to-r from-[#0065B3] to-[#004A87] p-4 md:p-6 rounded-t-2xl">
             <button
               onClick={onClose}
               className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors bg-white/20 rounded-full p-2"
@@ -37,21 +37,21 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
             </button>
 
             <div className="text-center">
-              <div className="bg-white rounded-xl p-4 w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 flex items-center justify-center">
                 <img
                   src={partner.logo}
                   alt={partner.name}
                   className="max-h-full max-w-full object-contain"
                 />
               </div>
-              <h2 className="text-2xl font-bold text-white font-montserrat">
+              <h2 className="text-xl md:text-2xl font-bold text-white font-montserrat">
                 {partner.name}
               </h2>
             </div>
           </div>
 
           {/* Content */}
-          <div className="p-6">
+          <div className="p-4 md:p-6">
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-6">
               <span className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium font-montserrat border border-blue-200">
@@ -74,7 +74,7 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
               </h3>
 
               <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-3 p-2.5 md:p-3 bg-gray-50 rounded-lg">
                   <div className="bg-[#0065B3] text-white rounded-full p-2">
                     <Icon name="Phone" size={16} />
                   </div>
@@ -91,7 +91,7 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-3 p-2.5 md:p-3 bg-gray-50 rounded-lg">
                   <div className="bg-[#0065B3] text-white rounded-full p-2">
                     <Icon name="Mail" size={16} />
                   </div>
@@ -108,7 +108,7 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-3 p-2.5 md:p-3 bg-gray-50 rounded-lg">
                   <div className="bg-[#0065B3] text-white rounded-full p-2">
                     <Icon name="Globe" size={16} />
                   </div>
@@ -133,14 +133,14 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => window.open(`mailto:${partner.email}`, "_blank")}
-                className="flex items-center justify-center gap-2 bg-[#0065B3] text-white py-3 px-4 rounded-lg font-medium font-montserrat hover:bg-[#0052A3] transition-colors duration-200"
+                className="flex items-center justify-center gap-2 bg-[#0065B3] text-white py-2.5 md:py-3 px-4 rounded-lg font-medium font-montserrat hover:bg-[#0052A3] transition-colors duration-200"
               >
                 <Icon name="Mail" size={18} />
                 Написать
               </button>
               <button
                 onClick={() => window.open(`tel:${partner.phone}`, "_blank")}
-                className="flex items-center justify-center gap-2 bg-white text-[#0065B3] py-3 px-4 rounded-lg font-medium font-montserrat border-2 border-[#0065B3] hover:bg-[#0065B3] hover:text-white transition-colors duration-200"
+                className="flex items-center justify-center gap-2 bg-white text-[#0065B3] py-2.5 md:py-3 px-4 rounded-lg font-medium font-montserrat border-2 border-[#0065B3] hover:bg-[#0065B3] hover:text-white transition-colors duration-200"
               >
                 <Icon name="Phone" size={18} />
                 Позвонить

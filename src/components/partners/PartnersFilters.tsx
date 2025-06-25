@@ -49,7 +49,7 @@ const PartnersFilters: React.FC<FiltersProps> = ({
             <button
               key={option}
               onClick={() => handleFilterClick(filterKey, option)}
-              className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 font-montserrat border ${
+              className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg text-sm font-medium transition-all duration-200 font-montserrat border ${
                 isActive
                   ? "bg-[#0065B3] text-white border-[#0065B3] shadow-lg shadow-blue-200"
                   : "bg-white text-gray-700 border-gray-200 hover:border-[#0065B3] hover:text-[#0065B3] hover:shadow-md"
@@ -64,11 +64,11 @@ const PartnersFilters: React.FC<FiltersProps> = ({
   );
 
   return (
-    <section className="bg-gray-50 py-12 border-b">
+    <section className="bg-gray-50 py-6 md:py-12 border-b">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border">
+        <div className="bg-white rounded-xl p-4 md:p-8 shadow-sm border">
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-900 font-montserrat mb-2">
+            <h2 className="text-lg md:text-xl font-bold text-gray-900 font-montserrat mb-2">
               Фильтры поиска
             </h2>
             <p className="text-gray-600 font-montserrat text-sm">
