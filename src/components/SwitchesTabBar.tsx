@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const tabs = [
   { id: "all", label: "Все" },
   { id: "corporate", label: "Корпоративные ЛВС" },
-  { id: "datacenter", label: "Центры обработки данных" },
+  { id: "datacenter", label: "ЦОД" },
   { id: "certified", label: "Сертифицированные TORP" },
 ];
 
@@ -19,17 +19,17 @@ const SwitchesTabBar = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`
-                relative font-inter text-sm md:text-base font-medium transition-colors duration-200
+                relative font-inter text-sm md:text-base font-medium transition-all duration-150
                 ${
                   activeTab === tab.id
-                    ? "text-[#00A0DC]"
-                    : "text-gray-700 hover:text-[#00A0DC]"
+                    ? "text-[#0077E6]"
+                    : "text-gray-700 hover:text-[#0077E6]"
                 }
               `}
             >
               {tab.label}
               {activeTab === tab.id && (
-                <div className="absolute bottom-[-24px] md:bottom-[-28px] left-0 right-0 h-0.5 bg-[#00A0DC]" />
+                <div className="absolute bottom-[-24px] md:bottom-[-28px] left-0 right-0 h-0.5 bg-gradient-to-r from-[#00A0DC] to-[#0077E6] opacity-100 transition-opacity duration-150" />
               )}
             </button>
           ))}
