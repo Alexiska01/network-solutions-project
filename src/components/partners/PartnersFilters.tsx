@@ -49,7 +49,7 @@ const PartnersFilters: React.FC<FiltersProps> = ({
             <button
               key={option}
               onClick={() => handleFilterClick(filterKey, option)}
-              className={`px-3 py-2 md:px-4 md:py-2.5 lg:px-5 lg:py-3 rounded-lg text-sm md:text-base font-medium transition-all duration-200 font-montserrat border whitespace-nowrap ${
+              className={`px-2 py-1.5 md:px-3 md:py-2 lg:px-4 lg:py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 font-montserrat border ${
                 isActive
                   ? "bg-[#0065B3] text-white border-[#0065B3] shadow-lg shadow-blue-200"
                   : "bg-white text-gray-700 border-gray-200 hover:border-[#0065B3] hover:text-[#0065B3] hover:shadow-md"

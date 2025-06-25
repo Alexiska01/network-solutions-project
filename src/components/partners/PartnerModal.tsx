@@ -24,8 +24,8 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-scale-in">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl max-w-sm w-full max-h-[85vh] overflow-y-auto shadow-2xl mx-2">
         <div className="relative">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#0065B3] to-[#004A87] p-3 rounded-t-xl">
@@ -37,23 +37,14 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
             </button>
 
             <div className="text-center">
-              <div className="bg-white rounded-lg p-2 w-16 h-16 mx-auto mb-3 flex items-center justify-center shadow-sm">
+              <div className="bg-white rounded-lg p-2 w-14 h-14 mx-auto mb-3 flex items-center justify-center">
                 <img
                   src={partner.logo}
                   alt={partner.name}
                   className="max-h-full max-w-full object-contain"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    target.style.display = "none";
-                    const fallback = document.createElement("div");
-                    fallback.className =
-                      "w-full h-full bg-gray-200 rounded flex items-center justify-center";
-                    fallback.innerHTML = `<span class="text-gray-400 text-xl font-bold">${partner.name.charAt(0)}</span>`;
-                    target.parentElement?.appendChild(fallback);
-                  }}
                 />
               </div>
-              <h2 className="text-xl font-bold text-white font-montserrat">
+              <h2 className="text-lg font-bold text-white font-montserrat">
                 {partner.name}
               </h2>
             </div>
@@ -77,59 +68,59 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-4 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 font-montserrat mb-3">
+            <div className="space-y-3 mb-4">
+              <h3 className="text-base font-semibold text-gray-900 font-montserrat mb-2">
                 Контактная информация
               </h3>
 
               <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <div className="bg-[#0065B3] text-white rounded-full p-2 flex-shrink-0">
-                    <Icon name="Phone" size={16} />
+                <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
+                  <div className="bg-[#0065B3] text-white rounded-full p-1.5">
+                    <Icon name="Phone" size={14} />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs text-gray-500 font-montserrat mb-1">
+                  <div>
+                    <p className="text-xs text-gray-500 font-montserrat">
                       Телефон
                     </p>
                     <a
                       href={`tel:${partner.phone}`}
-                      className="text-gray-900 text-sm font-medium font-montserrat hover:text-[#0065B3] transition-colors break-all"
+                      className="text-gray-900 text-sm font-medium font-montserrat hover:text-[#0065B3] transition-colors"
                     >
                       {partner.phone}
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <div className="bg-[#0065B3] text-white rounded-full p-2 flex-shrink-0">
-                    <Icon name="Mail" size={16} />
+                <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
+                  <div className="bg-[#0065B3] text-white rounded-full p-1.5">
+                    <Icon name="Mail" size={14} />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs text-gray-500 font-montserrat mb-1">
+                  <div>
+                    <p className="text-xs text-gray-500 font-montserrat">
                       Email
                     </p>
                     <a
                       href={`mailto:${partner.email}`}
-                      className="text-gray-900 text-sm font-medium font-montserrat hover:text-[#0065B3] transition-colors break-all"
+                      className="text-gray-900 text-sm font-medium font-montserrat hover:text-[#0065B3] transition-colors"
                     >
                       {partner.email}
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <div className="bg-[#0065B3] text-white rounded-full p-2 flex-shrink-0">
-                    <Icon name="Globe" size={16} />
+                <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
+                  <div className="bg-[#0065B3] text-white rounded-full p-1.5">
+                    <Icon name="Globe" size={14} />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs text-gray-500 font-montserrat mb-1">
+                  <div>
+                    <p className="text-xs text-gray-500 font-montserrat">
                       Веб-сайт
                     </p>
                     <a
                       href={partner.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-900 text-sm font-medium font-montserrat hover:text-[#0065B3] transition-colors break-all"
+                      className="text-gray-900 text-sm font-medium font-montserrat hover:text-[#0065B3] transition-colors"
                     >
                       {partner.website}
                     </a>
@@ -139,17 +130,17 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => window.open(`mailto:${partner.email}`, "_blank")}
-                className="flex items-center justify-center gap-2 bg-[#0065B3] text-white py-3 px-4 rounded-lg text-sm font-medium font-montserrat hover:bg-[#0052A3] transition-colors duration-200 active:scale-95"
+                className="flex items-center justify-center gap-1.5 bg-[#0065B3] text-white py-2 px-3 rounded-lg text-sm font-medium font-montserrat hover:bg-[#0052A3] transition-colors duration-200"
               >
                 <Icon name="Mail" size={16} />
                 Написать
               </button>
               <button
                 onClick={() => window.open(`tel:${partner.phone}`, "_blank")}
-                className="flex items-center justify-center gap-2 bg-white text-[#0065B3] py-3 px-4 rounded-lg text-sm font-medium font-montserrat border-2 border-[#0065B3] hover:bg-[#0065B3] hover:text-white transition-colors duration-200 active:scale-95"
+                className="flex items-center justify-center gap-1.5 bg-white text-[#0065B3] py-2 px-3 rounded-lg text-sm font-medium font-montserrat border-2 border-[#0065B3] hover:bg-[#0065B3] hover:text-white transition-colors duration-200"
               >
                 <Icon name="Phone" size={16} />
                 Позвонить
