@@ -35,17 +35,6 @@ const AuthorizedPartnersInfo = () => {
 
   return (
     <>
-      <style jsx>{`
-        @keyframes bounce {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-6px);
-          }
-        }
-      `}</style>
       <section className="py-12 md:py-20 bg-gradient-to-r from-blue-900/10 via-blue-600/10 to-teal-500/10">
         <div className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
