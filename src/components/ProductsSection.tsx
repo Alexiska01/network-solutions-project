@@ -56,7 +56,7 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 grid grid-rows-[auto_60px_1fr_auto] gap-4"
+              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 grid grid-rows-[auto_auto_1fr_auto] gap-2 md:gap-3"
             >
               {/* Header with icon and title */}
               <div className="flex gap-3 md:gap-4 items-start">
@@ -68,17 +68,13 @@ const ProductsSection = () => {
                   />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 font-sans leading-tight">
+                  <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 font-sans leading-tight mb-1">
                     {product.title}
                   </h3>
+                  <p className="text-xs md:text-sm text-gray-600 font-sans leading-relaxed">
+                    {product.description}
+                  </p>
                 </div>
-              </div>
-
-              {/* Description with fixed height */}
-              <div className="flex items-start">
-                <p className="text-xs md:text-sm text-gray-600 font-sans leading-relaxed">
-                  {product.description}
-                </p>
               </div>
 
               {/* Features list */}
