@@ -11,7 +11,7 @@ const AuthorizedPartnersInfo = () => {
             Авторизованные партнёры
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-[#0065B3] to-[#004A87] mx-auto mb-6 md:mb-8 rounded-full"></div>
-          <p className="text-sm md:text-lg text-gray-600 font-montserrat leading-relaxed mb-6 md:mb-8 text-left md:text-center pl-1 md:pl-0">
+          <p className="text-sm md:text-lg text-gray-600 font-montserrat leading-relaxed mb-6 md:mb-8 text-left md:text-center pl-9 md:pl-0">
             Мы сотрудничаем с надёжными и проверенными компаниями, которые
             прошли официальную авторизацию и обладают экспертизой в наших
             продуктах и решениях.
