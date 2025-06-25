@@ -59,7 +59,7 @@ const ProductsSection = () => {
               className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
             >
               <div className="flex gap-3 md:gap-4 items-start mb-4">
-                <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
                     size={24}
@@ -75,7 +75,7 @@ const ProductsSection = () => {
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1.5 md:space-y-2 mb-6 flex-grow flex flex-col justify-start py-0">
+              <ul className="space-y-1.5 md:space-y-2 mb-6 flex-1">
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
