@@ -58,7 +58,7 @@ const AuthorizedPartnersInfo = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-2 md:lg:grid-cols-3 md:xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12">
             {benefits.slice(0, 4).map((benefit, index) => {
               const cardRef = useRef<HTMLDivElement>(null);
               const { observeElement, isVisible } = useScrollReveal({
