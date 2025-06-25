@@ -69,7 +69,15 @@ const ProductsSection = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 font-sans leading-tight">
-                    {product.title}
+                    {product.title === "Беспроводные решения" ? (
+                      <>
+                        Беспроводные
+                        <br />
+                        решения
+                      </>
+                    ) : (
+                      product.title
+                    )}
                   </h3>
                 </div>
               </div>
