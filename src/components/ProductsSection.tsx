@@ -56,30 +56,40 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
+              className={`product-card-${index} bg-white rounded-lg md:rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col`}
             >
-              <div className="flex gap-3 md:gap-4 items-start mb-4">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
+              <div
+                className={`product-header-${index} flex gap-3 md:gap-4 items-start mb-4`}
+              >
+                <div
+                  className={`product-icon-${index} w-12 h-12 md:w-16 md:h-16 bg-gradient-icon rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0`}
+                >
                   <Icon
                     name={product.icon as any}
                     size={24}
                     className="text-white md:w-8 md:h-8 lg:w-9 lg:h-9"
                   />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans">
+                <div className={`product-content-${index} flex-1`}>
+                  <h3
+                    className={`product-title-${index} text-sm md:text-base lg:text-lg font-semibold text-gray-900 mb-1 md:mb-2 font-sans`}
+                  >
                     {product.title}
                   </h3>
-                  <p className="text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed">
+                  <p
+                    className={`product-desc-${index} text-xs md:text-xs lg:text-sm text-gray-600 font-sans leading-relaxed`}
+                  >
                     {product.description}
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1.5 md:space-y-2 mb-6 flex-1">
+              <ul
+                className={`product-features-${index} space-y-1.5 md:space-y-2 mb-6 flex-1`}
+              >
                 {product.features.map((feature, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center text-xs md:text-sm text-gray-700 font-sans"
+                    className={`product-feature-${index}-${idx} flex items-center text-xs md:text-sm text-gray-700 font-sans`}
                   >
                     <Icon
                       name="Check"
@@ -90,7 +100,9 @@ const ProductsSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] mt-auto">
+              <button
+                className={`product-button-${index} w-full bg-[#0065B3] text-white py-2 md:py-2.5 px-3 md:px-4 rounded-md md:rounded-lg hover:bg-gradient-hero transition-all duration-300 font-sans text-sm md:text-base min-h-[44px] mt-auto`}
+              >
                 Подробнее
               </button>
             </div>
