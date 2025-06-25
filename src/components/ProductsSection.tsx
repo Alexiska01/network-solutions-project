@@ -60,7 +60,7 @@ const ProductsSection = () => {
             >
               {/* Header with icon and title */}
               <div className="flex gap-4 items-start mb-2">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-md md:rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={product.icon as any}
                     size={24}
