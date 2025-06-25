@@ -51,14 +51,11 @@ const AuthorizedPartnersInfo = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-y-6 md:gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="group bg-white rounded-xl p-6 text-center transition-all duration-300 hover:-translate-y-2 border border-gray-100 hover:border-[#00BEAD]/20"
-              style={{
-                boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-              }}
+              className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 hover:border-[#00BEAD]/20"
             >
               <div className="w-14 h-14 bg-gradient-to-br from-[#0A1F44] to-[#00BEAD] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Icon name={benefit.icon} className="text-white" size={24} />
