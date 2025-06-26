@@ -106,9 +106,20 @@
 
 /* Базовые стили для карточек */
 .switch-card-base {
-  transition: all 0.3s ease-out;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .switch-card-base:hover {
   transform: translateY(-4px);
+}
+
+.switch-card-base:focus,
+.switch-card-base:target,
+.switch-card-base.active {
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.1),
+    0 8px 0 rgba(0, 0, 0, 0.05);
+  transform: scale(1.02);
 }
