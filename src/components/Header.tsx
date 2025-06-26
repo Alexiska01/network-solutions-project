@@ -28,7 +28,7 @@ const Header = () => {
         <div className="px-4">{/* Здесь будет логотип */}</div>
 
         {/* Навигация в общем контейнере */}
-        <div className="max-w-7xl mx-auto py-4 px-[35px]">
+        <div className="max-w-7xl mx-auto py-4 px-[19px]">
           <div className="flex items-center">
             <DesktopNavigation
               dropdownState={dropdownState}
