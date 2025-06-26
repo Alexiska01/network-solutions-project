@@ -14,6 +14,16 @@ interface CatalogNavigationProps {
   activeSection?: string;
 }
 
+const applyNavigationEffect = (switchId: string) => {
+  const element = document.getElementById(switchId);
+  if (element) {
+    element.classList.add("navigation-active");
+    setTimeout(() => {
+      element.classList.remove("navigation-active");
+    }, 2000);
+  }
+};
+
 const navigationData: NavigationItem[] = [
   {
     id: "corporate-lan",
@@ -150,6 +160,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
       // Для финальных серий выполняем плавный скролл с центрированием
       e.preventDefault();
       onNavigate(item.id);
+      applyNavigationEffect(item.id);
 
       const el = document.getElementById(item.id.toLowerCase());
       if (el) {

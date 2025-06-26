@@ -116,10 +116,16 @@
 }
 
 .switch-card-base:focus,
-.switch-card-base:target,
-.switch-card-base.active {
-  box-shadow:
-    0 4px 0 rgba(0, 0, 0, 0.1),
-    0 8px 0 rgba(0, 0, 0, 0.05);
-  transform: scale(1.02);
+.switch-card-base:focus-visible,
+.switch-card-base:target {
+  outline: none !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-0.25rem) !important;
+  transition: all 0.3s ease !important;
+}
+
+.switch-card-base.navigation-active {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-0.25rem) !important;
+  transition: all 0.3s ease !important;
 }
