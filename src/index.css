@@ -104,11 +104,41 @@
   }
 }
 
-/* Базовые стили для карточек */
+/* Базовые стили для карточек с мягкой чёрно-белой подсветкой */
 .switch-card-base {
+  position: relative;
+  scroll-margin-block: 50vh;
   transition: all 0.3s ease-out;
 }
 
 .switch-card-base:hover {
   transform: translateY(-4px);
+}
+
+.switch-card-base:focus,
+.switch-card-base:focus-visible,
+.switch-card-base:target,
+.switch-card-base.active {
+  outline: none !important;
+}
+
+.switch-card-base::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.switch-card-base.active::after,
+.switch-card-base:target::after {
+  opacity: 1;
+  transform: scale(1.02);
 }

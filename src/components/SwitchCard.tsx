@@ -20,7 +20,8 @@ const baseStyles = `
 
   .switch-card-base:focus,
   .switch-card-base:focus-visible,
-  .switch-card-base:target {
+  .switch-card-base:target,
+  .switch-card-base.active {
     outline: none !important;
   }
 `;

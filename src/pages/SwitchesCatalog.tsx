@@ -118,21 +118,17 @@ const SwitchesCatalog = () => {
                 onNavigate={(sectionId) => {
                   const element = document.getElementById(sectionId);
                   if (element) {
-                    // Плавный скролл к центру с улучшенным позиционированием
-                    const elementRect = element.getBoundingClientRect();
-                    const absoluteElementTop = elementRect.top + window.scrollY;
-                    const middle =
-                      absoluteElementTop -
-                      window.innerHeight / 2 +
-                      elementRect.height / 2;
-
-                    window.scrollTo({
-                      top: middle,
+                    // Плавный скролл к центру
+                    element.scrollIntoView({
                       behavior: "smooth",
+                      block: "center",
                     });
 
-                    // Добавляем плавный скролл без визуальных эффектов
-                    // Убираем все подсветки и эффекты
+                    // Добавляем класс active для подсветки на 2 секунды
+                    element.classList.add("active");
+                    setTimeout(() => {
+                      element.classList.remove("active");
+                    }, 2000);
 
                     window.location.hash = sectionId;
                   }
