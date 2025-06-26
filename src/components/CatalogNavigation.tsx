@@ -165,13 +165,6 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
           inline: "nearest",
         });
 
-        // Удаляем хеш из URL, чтобы псевдокласс :target больше не применялся
-        window.history.replaceState(
-          null,
-          "",
-          window.location.pathname + window.location.search,
-        );
-
         // Добавляем класс active и слушаем событие animationend
         el.classList.add("active");
         el.addEventListener(

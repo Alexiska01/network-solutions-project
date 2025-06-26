@@ -46,34 +46,6 @@ const SwitchesCatalog = () => {
     return filtered;
   }, [activeFilter, searchTerm]);
 
-  const handleScrollToCard = (cardId: string) => {
-    const element = document.getElementById(cardId);
-    if (element) {
-      // Убираем активный класс у всех карточек
-      document.querySelectorAll(".switch-card-base.active").forEach((el) => {
-        el.classList.remove("active");
-      });
-
-      // Скроллим к элементу
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
-
-      // Очищаем хеш из URL
-      window.history.replaceState(
-        null,
-        "",
-        window.location.pathname + window.location.search,
-      );
-
-      // Добавляем класс активного состояния
-      element.classList.add("active");
-
-      // Снимаем класс через 2 секунды
-      setTimeout(() => {
-        element.classList.remove("active");
-      }, 2000);
-    }
-  };
-
   const groupedSwitches = useMemo(() => {
     const corporate = filteredSwitches.filter((s) =>
       ["access", "distribution"].includes(s.category),
@@ -141,13 +113,25 @@ const SwitchesCatalog = () => {
         <div className="flex gap-6">
           {/* Левое меню навигации - только на десктопе */}
           {!isMobile && (
-            <div className="flex-shrink-0 max-w-7xl mx-auto px-4 py-12">
-              <div className="max-w-[280px]">
-                <CatalogNavigation
-                  onNavigate={handleScrollToCard}
-                  activeSection={activeFilter}
-                />
-              </div>
+            <div className="w-80 flex-shrink-0">
+              <CatalogNavigation
+                onNavigate={(sectionId) => {
+                  const element = document.getElementById(sectionId);
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: "smooth",
+                      block: "center",
+                    });
+                    element.classList.add("active");
+                    element.addEventListener(
+                      "animationend",
+                      () => element.classList.remove("active"),
+                      { once: true },
+                    );
+                  }
+                }}
+                activeSection={activeFilter}
+              />
             </div>
           )}
 
