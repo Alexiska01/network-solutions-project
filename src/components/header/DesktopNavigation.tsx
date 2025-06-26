@@ -29,7 +29,7 @@ const DesktopNavigation = ({
   };
 
   return (
-    <nav className="hidden lg:flex items-center space-x-3 mx-0">
+    <nav className="hidden lg:flex items-center space-x-8 mx-0">
       {navigationItems.map((item) => (
         <div key={item.path} className="relative">
           {item.hasSubmenu ? (
@@ -46,7 +46,7 @@ const DesktopNavigation = ({
           ) : (
             <Link
               to={item.path}
-              className="text-gray-700 hover:text-blue-600 px-2.5 py-2 text-sm font-medium transition-colors whitespace-nowrap flex items-center space-x-2 h-10"
+              className="text-gray-700 hover:text-blue-600 px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap flex items-center space-x-2 h-10"
               onClick={handleNavItemClick}
             >
               <Icon name={item.icon} size={16} />
