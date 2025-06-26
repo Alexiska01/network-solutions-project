@@ -109,10 +109,8 @@ const SwitchesCatalog = () => {
         onFilterChange={setActiveFilter}
       />
 
-      <div
-        className={`${isMobile ? "container mx-auto px-4" : "max-w-7xl mx-auto px-4"} py-8`}
-      >
-        <div className={`${isMobile ? "" : "flex gap-6"}`}>
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="flex gap-6">
           {/* Левое меню навигации - только на десктопе */}
           {!isMobile && (
             <div className="w-80 flex-shrink-0">
