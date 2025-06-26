@@ -25,14 +25,14 @@ const Header = () => {
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="relative flex items-center h-12 md:h-16">
-          {/* Логотип в отдельном контейнере */}
-          <div className="flex-shrink-0">
+        <div className="relative flex items-center justify-between h-12 md:h-16">
+          {/* Логотип */}
+          <div className="flex items-center">
             <Logo />
           </div>
 
-          {/* Навигация в отдельном контейнере */}
-          <nav className="flex-1 flex items-center justify-end space-x-8">
+          {/* Навигация */}
+          <div className="flex items-center">
             <DesktopNavigation
               dropdownState={dropdownState}
               updateDropdownState={updateDropdownState}
@@ -46,7 +46,7 @@ const Header = () => {
               onToggle={handleMobileMenuToggle}
               onClose={handleMobileMenuClose}
             />
-          </nav>
+          </div>
         </div>
       </div>
     </header>
