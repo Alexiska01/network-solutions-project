@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDropdownMenu } from "@/hooks/useDropdownMenu";
-import Logo from "./header/Logo";
 import DesktopNavigation from "./header/DesktopNavigation";
 import MobileMenu from "./header/MobileMenu";
 
@@ -25,12 +24,7 @@ const Header = () => {
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="relative flex items-center justify-between h-12 md:h-16">
-          {/* Логотип */}
-          <div className="flex items-center">
-            <Logo />
-          </div>
-
+        <div className="relative flex items-center justify-end h-12 md:h-16">
           {/* Навигация */}
           <div className="flex items-center">
             <DesktopNavigation
