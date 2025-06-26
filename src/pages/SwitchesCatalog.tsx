@@ -131,9 +131,12 @@ const SwitchesCatalog = () => {
                       behavior: "smooth",
                     });
 
-                    // Добавляем класс active для подсветки
-                    element.classList.add("active");
-                    setTimeout(() => element.classList.remove("active"), 2000);
+                    // Добавляем класс navigation-active для подсветки
+                    element.classList.add("navigation-active");
+                    setTimeout(
+                      () => element.classList.remove("navigation-active"),
+                      1500,
+                    );
 
                     window.location.hash = sectionId;
                   }
