@@ -84,12 +84,12 @@ const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
   }
 
   return (
-    <div className="bg-white shadow-sm border-r">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-white border-r border-gray-200 h-full">
+      <div className="container mx-auto px-4">
         <div className="py-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Категории
-          </h2>
+          <h3 className="font-montserrat font-semibold text-lg mb-4 text-gray-900">
+            Категории оборудования
+          </h3>
           <nav className="space-y-2">
             {navigationData.map((item) => (
               <NavigationItem

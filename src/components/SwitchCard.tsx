@@ -8,7 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Icon from "@/components/ui/icon";
+import { ArrowRight } from "lucide-react";
 import { SwitchModel } from "@/data/switchesData";
 
 // Базовые стили для карточек
@@ -50,102 +50,142 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
     const checkTablet = () => {
       setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
     };
-
     checkTablet();
     window.addEventListener("resize", checkTablet);
 
     return () => {
-      window.removeEventListener("resize", checkTablet);
       document.head.removeChild(styleElement);
+      window.removeEventListener("resize", checkTablet);
     };
   }, []);
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "access":
-        return "bg-[#2E5BFF]";
-      case "distribution":
-        return "bg-[#FF6B35]";
-      case "spine":
-        return "bg-[#10B981]";
-      case "leaf":
-        return "bg-[#8B5CF6]";
-      default:
-        return "bg-gray-500";
+  const handleScrollToCard = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById(switchData.id.toLowerCase());
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
-  return (
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.location.href = switchData.link;
+  };
+
+  const CardContent = (
     <div
-      id={switchData.id}
+      id={switchData.id.toLowerCase()}
+      tabIndex={0}
       className={cn(
-        "switch-card-base bg-white rounded-xl border border-gray-200 p-6",
-        "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none",
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleScrollToCard}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="flex items-center mb-3">
-            <div
-              className={cn(
-                "w-3 h-3 rounded-full mr-3",
-                getCategoryColor(switchData.category),
-              )}
-            ></div>
-            <h3 className="text-xl font-bold text-gray-900">
+      {!isMobile && !isTablet ? (
+        <div className="flex gap-4 items-center">
+          <div className="w-2/5 flex-shrink-0">
+            <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
+              <img
+                src={switchData.image}
+                alt={switchData.title}
+                className={cn(
+                  "w-full h-full object-cover transition-transform duration-300",
+                  isHovered ? "scale-110" : "scale-100",
+                )}
+              />
+            </div>
+          </div>
+          <div className="flex-1 flex flex-col justify-center">
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
               {switchData.title}
             </h3>
-          </div>
-
-          <p className="text-gray-600 mb-4">{switchData.description}</p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            {switchData.specs.features?.map((spec, index) => (
-              <div key={index} className="text-center">
-                <div className="text-lg font-semibold text-gray-900">
-                  {spec.value}
-                </div>
-                <div className="text-sm text-gray-500">{spec.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {switchData.features && (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {switchData.features.map((feature, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
-                >
-                  {feature}
-                </span>
-              ))}
+            <p className="text-gray-600 text-base mb-4 leading-relaxed">
+              {switchData.description}
+            </p>
+            <div className="flex items-center gap-3 text-sm text-gray-500 mb-4">
+              <span className="bg-gray-100 px-2 py-1 rounded-md flex items-center gap-1">
+                <span className="text-xs">🔌</span>
+                {switchData.specs.ports}
+              </span>
+              <span className="bg-gray-100 px-2 py-1 rounded-md flex items-center gap-1">
+                <span className="text-xs">⚡</span>
+                {switchData.specs.throughput}
+              </span>
             </div>
-          )}
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-fit group hover:bg-gray-800 hover:text-white hover:border-gray-800"
+              onClick={handleLinkClick}
+            >
+              Подробнее
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </div>
         </div>
-
-        <div className="ml-6 flex-shrink-0">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="hover:bg-[#2E5BFF] hover:text-white"
-                >
-                  <Icon name="ArrowRight" size={16} />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Подробнее о {switchData.title}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+      ) : (
+        <div className="flex flex-col">
+          <div className="aspect-video mb-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
+            <img
+              src={switchData.image}
+              alt={switchData.title}
+              className={cn(
+                "w-full h-full object-cover transition-transform duration-300",
+                isHovered ? "scale-110" : "scale-100",
+              )}
+            />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">
+            {switchData.title}
+          </h3>
+          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+            {switchData.description}
+          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full group hover:bg-gray-800 hover:text-white hover:border-gray-800"
+            onClick={handleLinkClick}
+          >
+            Подробнее
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Button>
         </div>
-      </div>
+      )}
     </div>
+  );
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{CardContent}</TooltipTrigger>
+        <TooltipContent side="top" className="max-w-xs">
+          <div className="space-y-2">
+            <div className="font-medium">{switchData.id}</div>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div>
+                <span className="font-medium">Порты:</span>{" "}
+                {switchData.specs.ports}
+              </div>
+              <div>
+                <span className="font-medium">Питание:</span>{" "}
+                {switchData.specs.power}
+              </div>
+              <div>
+                <span className="font-medium">Производительность:</span>{" "}
+                {switchData.specs.throughput}
+              </div>
+            </div>
+            <div className="text-xs">
+              <span className="font-medium">Функции:</span>{" "}
+              {switchData.specs.features.join(", ")}
+            </div>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
