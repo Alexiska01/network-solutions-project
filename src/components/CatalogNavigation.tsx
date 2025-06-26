@@ -20,7 +20,7 @@ const applyNavigationEffect = (switchId: string) => {
     element.classList.add("navigation-active");
     setTimeout(() => {
       element.classList.remove("navigation-active");
-    }, 2000);
+    }, 1500);
   }
 };
 
