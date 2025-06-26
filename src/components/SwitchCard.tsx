@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -39,23 +39,8 @@ interface SwitchCardProps {
 
 const SwitchCard = ({ switchData }: SwitchCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isHighlighted, setIsHighlighted] = useState(false);
   const isMobile = useIsMobile();
   const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash?.substring(1);
-      if (hash === switchData.id.toLowerCase()) {
-        setIsHighlighted(true);
-        setTimeout(() => setIsHighlighted(false), 2000);
-      }
-    };
-
-    handleHashChange();
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [switchData.id]);
 
   // Мобильная и планшетная версия - вертикальный layout
   if (isMobile || isTablet) {
