@@ -132,29 +132,40 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
 
   const handleHeaderClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setOpenMap((prev) => {
-      const next = {
-        ...prev,
-        [level]: prev[level] === item.id ? null : item.id,
-      };
-      Object.keys(next).forEach((key) => {
-        if (Number(key) > level) delete next[Number(key)];
-      });
-      return next;
-    });
 
-    onNavigate(item.id);
-    const el = document.getElementById(item.id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      el.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
-      el.style.transform = "scale(1.02)";
-      el.style.transition = "all 0.3s ease";
-      setTimeout(() => {
-        el.style.boxShadow = "";
-        el.style.transform = "";
+    // Определяем, является ли элемент финальной серией (без детей)
+    const isFinalSeries = !item.children || item.children.length === 0;
+
+    if (item.children) {
+      // Для элементов с детьми только раскрываем/сворачиваем меню
+      setOpenMap((prev) => {
+        const next = {
+          ...prev,
+          [level]: prev[level] === item.id ? null : item.id,
+        };
+        Object.keys(next).forEach((key) => {
+          if (Number(key) > level) delete next[Number(key)];
+        });
+        return next;
+      });
+
+      // Устанавливаем активную секцию для визуального выделения
+      onNavigate(item.id);
+    } else {
+      // Для финальных серий выполняем скролл и анимацию
+      onNavigate(item.id);
+      const el = document.getElementById(item.id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
+        el.style.transform = "scale(1.02)";
         el.style.transition = "all 0.3s ease";
-      }, 2000);
+        setTimeout(() => {
+          el.style.boxShadow = "";
+          el.style.transform = "";
+          el.style.transition = "all 0.3s ease";
+        }, 2000);
+      }
     }
   };
 
