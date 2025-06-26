@@ -11,7 +11,7 @@ import {
 import { ArrowRight } from "lucide-react";
 import { SwitchModel } from "@/data/switchesData";
 
-// Обновленные стили для мягкой чёрно-белой подсветки
+// Обновленные стили без размытия
 const highlightStyles = `
   .switch-card-base {
     position: relative;
@@ -26,39 +26,20 @@ const highlightStyles = `
     outline: none !important;
   }
 
-  /* Псевдоэлемент для мягкой тени */
-  .switch-card-base::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 0.75rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05), 
-                0 8px 16px rgba(0,0,0,0.10);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  /* Активное состояние — показываем тень и scale */
-  .switch-card-base.active::after,
-  .switch-card-base:target::after {
-    opacity: 1;
+  /* Простое выделение без эффектов */
+  .switch-card-base.active,
+  .switch-card-base:target {
     transform: scale(1.02);
+    transition: transform 0.3s ease;
   }
 
   /* Анимация затухания подсветки */
   @keyframes highlightFade {
     0% {
-      opacity: 1;
       transform: scale(1.02);
     }
-    80% {
-      opacity: 0;
-      transform: scale(1.00);
-    }
     100% {
-      opacity: 0;
-      transform: none;
+      transform: scale(1.00);
     }
   }
 `;

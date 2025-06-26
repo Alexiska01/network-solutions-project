@@ -107,11 +107,9 @@
 /* Кастомные стили для подсветки карточек */
 @keyframes highlightFade {
   0% {
-    opacity: 1;
     transform: scale(1.02);
   }
   100% {
-    opacity: 0;
     transform: scale(1);
   }
 }
@@ -122,32 +120,11 @@
   transition: all 0.3s ease-out;
 }
 
-.highlight::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: inherit;
-  box-shadow:
-    0 0 25px rgba(0, 0, 0, 0.3),
-    0 0 50px rgba(0, 0, 0, 0.15);
-  opacity: 1;
-  pointer-events: none;
-  animation: highlightFade 2s ease-out forwards;
-}
-
-/* Базовые стили для карточек с двойной тенью */
+/* Базовые стили для карточек */
 .switch-card-base {
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.1),
-    0 5px 15px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease-out;
 }
 
 .switch-card-base:hover {
-  box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.12),
-    0 8px 25px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
 }
