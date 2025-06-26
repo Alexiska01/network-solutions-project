@@ -46,6 +46,34 @@ const SwitchesCatalog = () => {
     return filtered;
   }, [activeFilter, searchTerm]);
 
+  const handleScrollToCard = (cardId: string) => {
+    const element = document.getElementById(cardId);
+    if (element) {
+      // Убираем активный класс у всех карточек
+      document.querySelectorAll(".switch-card-base.active").forEach((el) => {
+        el.classList.remove("active");
+      });
+
+      // Скроллим к элементу
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Очищаем хеш из URL
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search,
+      );
+
+      // Добавляем класс активного состояния
+      element.classList.add("active");
+
+      // Снимаем класс через 2 секунды
+      setTimeout(() => {
+        element.classList.remove("active");
+      }, 2000);
+    }
+  };
+
   const groupedSwitches = useMemo(() => {
     const corporate = filteredSwitches.filter((s) =>
       ["access", "distribution"].includes(s.category),
@@ -115,21 +143,7 @@ const SwitchesCatalog = () => {
           {!isMobile && (
             <div className="w-80 flex-shrink-0">
               <CatalogNavigation
-                onNavigate={(sectionId) => {
-                  const element = document.getElementById(sectionId);
-                  if (element) {
-                    element.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    });
-                    element.classList.add("active");
-                    element.addEventListener(
-                      "animationend",
-                      () => element.classList.remove("active"),
-                      { once: true },
-                    );
-                  }
-                }}
+                onNavigate={handleScrollToCard}
                 activeSection={activeFilter}
               />
             </div>
