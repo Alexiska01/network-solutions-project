@@ -41,7 +41,7 @@ const Header = () => {
               scheduleCloseAllSubmenus={scheduleCloseAllSubmenus}
             />
 
-            <div className="lg:hidden ml-auto">
+            <div className="lg:hidden ml-auto mr-[10%]">
               <MobileMenu
                 isOpen={isMobileMenuOpen}
                 onToggle={handleMobileMenuToggle}
