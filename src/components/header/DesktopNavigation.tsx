@@ -29,7 +29,7 @@ const DesktopNavigation = ({
   };
 
   return (
-    <nav className="hidden lg:flex items-center space-x-8 mx-0">
+    <nav className="hidden lg:flex items-center mx-0" style={{ gap: "31.7px" }}>
       {navigationItems.map((item) => (
         <div key={item.path} className="relative">
           {item.hasSubmenu ? (
