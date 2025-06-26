@@ -47,17 +47,6 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
     const handleHashChange = () => {
       const hash = window.location.hash?.substring(1);
       if (hash === switchData.id.toLowerCase()) {
-        // Убираем класс highlight и устанавливаем его заново для плавной анимации
-        const element = document.getElementById(switchData.id.toLowerCase());
-        if (element) {
-          element.classList.remove("highlight");
-          setTimeout(() => {
-            element.classList.add("highlight");
-            setTimeout(() => {
-              element.classList.remove("highlight");
-            }, 2000);
-          }, 100);
-        }
         setIsHighlighted(true);
         setTimeout(() => setIsHighlighted(false), 2000);
       }
