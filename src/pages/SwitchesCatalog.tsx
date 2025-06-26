@@ -120,10 +120,24 @@ const SwitchesCatalog = () => {
                 onNavigate={(sectionId) => {
                   const element = document.getElementById(sectionId);
                   if (element) {
+                    // Скролл к центру
                     element.scrollIntoView({
                       behavior: "smooth",
                       block: "center",
                     });
+
+                    // Добавляем визуальный эффект
+                    element.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
+                    element.style.transform = "scale(1.02)";
+                    element.style.transition = "all 0.3s ease";
+
+                    // Убираем эффект через 2 секунды
+                    setTimeout(() => {
+                      element.style.boxShadow = "";
+                      element.style.transform = "";
+                      element.style.transition = "all 0.3s ease";
+                    }, 2000);
+
                     window.location.hash = sectionId;
                   }
                 }}

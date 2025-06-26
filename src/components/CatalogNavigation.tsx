@@ -84,24 +84,24 @@ const CatalogNavigation = ({
     onNavigate(id);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
 
       // Добавляем эффект выделения карточки
+      element.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
       element.style.transform = "scale(1.02)";
-      element.style.boxShadow = "0 0 20px rgba(59, 130, 246, 0.5)";
       element.style.transition = "all 0.3s ease";
 
       // Убираем эффект через 2 секунды
       setTimeout(() => {
-        element.style.transform = "";
         element.style.boxShadow = "";
-        element.style.transition = "all 0.5s ease";
+        element.style.transform = "";
+        element.style.transition = "all 0.3s ease";
       }, 2000);
     }
   };
 
   return (
-    <div className="sticky top-24 bg-white rounded-lg border border-gray-200 p-6 h-fit ml-6">
+    <div className="sticky top-24 bg-white rounded-lg border border-gray-200 p-6 h-fit ml-8">
       <h3 className="font-semibold text-gray-900 mb-4">
         Навигация по каталогу
       </h3>
