@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CatalogNavigation from "@/components/CatalogNavigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,6 +22,7 @@ import { switchesData, categoryLabels } from "@/data/switchesData";
 const SwitchesCatalog = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const isMobile = useIsMobile();
 
   const filteredSwitches = useMemo(() => {
     let filtered = switchesData;
@@ -106,103 +109,124 @@ const SwitchesCatalog = () => {
         onFilterChange={setActiveFilter}
       />
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Поиск */}
-        <SwitchesSearch
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-        />
-
-        {/* Коммутаторы для корпоративных ЛВС */}
-        <section id="corporate-lan" className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">
-            Коммутаторы для корпоративных ЛВС
-          </h2>
-
-          {/* Уровень доступа */}
-          {groupedSwitches.corporateAccess.length > 0 && (
-            <div className="mb-12">
-              <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                <div className="w-3 h-3 bg-[#2E5BFF] rounded-full mr-3"></div>
-                Коммутаторы уровня доступа
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {groupedSwitches.corporateAccess.map((switchData) => (
-                  <SwitchCard key={switchData.id} switchData={switchData} />
-                ))}
-              </div>
+      <div
+        className={`${isMobile ? "container mx-auto px-4" : "max-w-7xl mx-auto px-4"} py-8`}
+      >
+        <div className={`${isMobile ? "" : "flex gap-8"}`}>
+          {/* Левое меню навигации - только на десктопе */}
+          {!isMobile && (
+            <div className="w-80 flex-shrink-0">
+              <CatalogNavigation
+                onNavigate={() => {}}
+                activeSection={activeFilter}
+              />
             </div>
           )}
 
-          {/* Уровень распределения */}
-          {groupedSwitches.corporateDistribution.length > 0 && (
-            <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                <div className="w-3 h-3 bg-[#FF6B35] rounded-full mr-3"></div>
-                Коммутаторы уровня распределения
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {groupedSwitches.corporateDistribution.map((switchData) => (
-                  <SwitchCard key={switchData.id} switchData={switchData} />
-                ))}
-              </div>
-            </div>
-          )}
-        </section>
+          {/* Основной контент */}
+          <div className="flex-1">
+            {/* Поиск */}
+            <SwitchesSearch
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+            />
 
-        {/* Коммутаторы для ЦОД */}
-        <section id="data-center" className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">
-            Коммутаторы для центров обработки данных
-          </h2>
+            {/* Коммутаторы для корпоративных ЛВС */}
+            <section id="corporate-lan" className="mb-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Коммутаторы для корпоративных ЛВС
+              </h2>
 
-          {/* Spine */}
-          {groupedSwitches.dataCenterSpine.length > 0 && (
-            <div className="mb-12">
-              <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                <div className="w-3 h-3 bg-[#10B981] rounded-full mr-3"></div>
-                Spine
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {groupedSwitches.dataCenterSpine.map((switchData) => (
-                  <SwitchCard key={switchData.id} switchData={switchData} />
-                ))}
-              </div>
-            </div>
-          )}
+              {/* Уровень доступа */}
+              {groupedSwitches.corporateAccess.length > 0 && (
+                <div id="access-level" className="mb-10">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-[#2E5BFF] rounded-full mr-3"></div>
+                    Коммутаторы уровня доступа
+                  </h3>
+                  <div className="space-y-4">
+                    {groupedSwitches.corporateAccess.map((switchData) => (
+                      <SwitchCard key={switchData.id} switchData={switchData} />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-          {/* Leaf */}
-          {groupedSwitches.dataCenterLeaf.length > 0 && (
-            <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                <div className="w-3 h-3 bg-[#8B5CF6] rounded-full mr-3"></div>
-                Leaf
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {groupedSwitches.dataCenterLeaf.map((switchData) => (
-                  <SwitchCard key={switchData.id} switchData={switchData} />
-                ))}
-              </div>
-            </div>
-          )}
-        </section>
+              {/* Уровень распределения */}
+              {groupedSwitches.corporateDistribution.length > 0 && (
+                <div id="distribution-level">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-[#FF6B35] rounded-full mr-3"></div>
+                    Коммутаторы уровня распределения
+                  </h3>
+                  <div className="space-y-4">
+                    {groupedSwitches.corporateDistribution.map((switchData) => (
+                      <SwitchCard key={switchData.id} switchData={switchData} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
 
-        {/* CTA блок внизу */}
-        <section className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Нужна помощь с подбором?
-          </h2>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Наши специалисты помогут выбрать оптимальное решение для вашей
-            инфраструктуры
-          </p>
-          <Button size="lg" className="bg-[#2E5BFF] hover:bg-[#1E4FFF]" asChild>
-            <Link to="/partners">
-              Связаться с нами
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </section>
+            {/* Коммутаторы для ЦОД */}
+            <section id="data-center" className="mb-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Центры обработки данных
+              </h2>
+
+              {/* Spine */}
+              {groupedSwitches.dataCenterSpine.length > 0 && (
+                <div id="spine-level" className="mb-10">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-[#10B981] rounded-full mr-3"></div>
+                    Spine
+                  </h3>
+                  <div className="space-y-4">
+                    {groupedSwitches.dataCenterSpine.map((switchData) => (
+                      <SwitchCard key={switchData.id} switchData={switchData} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Leaf */}
+              {groupedSwitches.dataCenterLeaf.length > 0 && (
+                <div id="leaf-level">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-[#8B5CF6] rounded-full mr-3"></div>
+                    Leaf
+                  </h3>
+                  <div className="space-y-4">
+                    {groupedSwitches.dataCenterLeaf.map((switchData) => (
+                      <SwitchCard key={switchData.id} switchData={switchData} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
+
+            {/* CTA блок внизу */}
+            <section className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                Нужна помощь с подбором?
+              </h2>
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Наши специалисты помогут выбрать оптимальное решение для вашей
+                инфраструктуры
+              </p>
+              <Button
+                size="lg"
+                className="bg-[#2E5BFF] hover:bg-[#1E4FFF]"
+                asChild
+              >
+                <Link to="/partners">
+                  Связаться с нами
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </section>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
