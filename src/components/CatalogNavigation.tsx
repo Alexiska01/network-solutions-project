@@ -147,19 +147,32 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
       });
       // НЕ вызываем onNavigate для элементов с детьми - только toggle меню
     } else {
-      // Для финальных серий выполняем скролл и анимацию
+      // Для финальных серий выполняем плавный скролл с центрированием
+      e.preventDefault();
       onNavigate(item.id);
-      const el = document.getElementById(item.id);
+
+      const el = document.getElementById(item.id.toLowerCase());
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-        el.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
-        el.style.transform = "scale(1.02)";
-        el.style.transition = "all 0.3s ease";
+        // Убираем предыдущую подсветку
+        document.querySelectorAll(".highlight").forEach((elem) => {
+          elem.classList.remove("highlight");
+        });
+
+        // Плавный скролл с центрированием
+        el.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+
+        // Добавляем подсветку с небольшой задержкой
         setTimeout(() => {
-          el.style.boxShadow = "";
-          el.style.transform = "";
-          el.style.transition = "all 0.3s ease";
-        }, 2000);
+          el.classList.add("highlight");
+          // Убираем подсветку через 2 секунды
+          setTimeout(() => {
+            el.classList.remove("highlight");
+          }, 2000);
+        }, 300);
       }
     }
   };

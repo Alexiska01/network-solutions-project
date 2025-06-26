@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -50,6 +54,15 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .highlight {
+    box-shadow:
+      0 0 20px rgba(46, 91, 255, 0.4),
+      0 0 40px rgba(46, 91, 255, 0.2);
+    transform: scale(1.02);
+    border-color: rgba(46, 91, 255, 0.5) !important;
+    transition: all 0.3s ease;
   }
 
   .dark {
