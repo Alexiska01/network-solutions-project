@@ -15,12 +15,19 @@ interface CatalogNavigationProps {
 }
 
 const applyNavigationEffect = (switchId: string) => {
-  const element = document.getElementById(switchId);
+  // Убираем все предыдущие подсветки
+  document
+    .querySelectorAll(".navigation-active, .highlight")
+    .forEach((elem) => {
+      elem.classList.remove("navigation-active", "highlight");
+    });
+
+  const element = document.getElementById(switchId.toLowerCase());
   if (element) {
     element.classList.add("navigation-active");
     setTimeout(() => {
       element.classList.remove("navigation-active");
-    }, 1500);
+    }, 2000);
   }
 };
 
@@ -162,29 +169,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
       onNavigate(item.id);
       applyNavigationEffect(item.id);
 
-      const el = document.getElementById(item.id.toLowerCase());
-      if (el) {
-        // Убираем предыдущую подсветку
-        document.querySelectorAll(".highlight").forEach((elem) => {
-          elem.classList.remove("highlight");
-        });
-
-        // Плавный скролл с центрированием
-        el.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "nearest",
-        });
-
-        // Добавляем подсветку с небольшой задержкой
-        setTimeout(() => {
-          el.classList.add("highlight");
-          // Убираем подсветку через 2 секунды
-          setTimeout(() => {
-            el.classList.remove("highlight");
-          }, 2000);
-        }, 300);
-      }
+      // Убираем дублирующий код - используем только applyNavigationEffect
     }
   };
 

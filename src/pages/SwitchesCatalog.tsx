@@ -132,10 +132,17 @@ const SwitchesCatalog = () => {
                     });
 
                     // Добавляем класс navigation-active для подсветки
+                    // Убираем все предыдущие подсветки
+                    document
+                      .querySelectorAll(".navigation-active, .highlight")
+                      .forEach((elem) => {
+                        elem.classList.remove("navigation-active", "highlight");
+                      });
+
                     element.classList.add("navigation-active");
                     setTimeout(
                       () => element.classList.remove("navigation-active"),
-                      1500,
+                      2000,
                     );
 
                     window.location.hash = sectionId;

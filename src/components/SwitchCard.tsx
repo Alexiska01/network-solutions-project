@@ -55,9 +55,25 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
 
   const handleScrollToCard = (e: React.MouseEvent) => {
     e.preventDefault();
+
+    // Убираем все предыдущие подсветки
+    document
+      .querySelectorAll(".navigation-active, .highlight")
+      .forEach((elem) => {
+        elem.classList.remove("navigation-active", "highlight");
+      });
+
     const el = document.getElementById(switchData.id.toLowerCase());
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Добавляем подсветку с небольшой задержкой
+      setTimeout(() => {
+        el.classList.add("navigation-active");
+        setTimeout(() => {
+          el.classList.remove("navigation-active");
+        }, 2000);
+      }, 300);
     }
   };
 
