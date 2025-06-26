@@ -32,7 +32,7 @@ const Header = () => {
 
         {/* Навигация в общем контейнере */}
         <div className="max-w-7xl mx-auto py-1.5 px-0">
-          <div className="flex items-center justify-between w-full mx-16">
+          <div className="flex items-center justify-between w-full">
             <DesktopNavigation
               dropdownState={dropdownState}
               updateDropdownState={updateDropdownState}
@@ -41,7 +41,7 @@ const Header = () => {
               scheduleCloseAllSubmenus={scheduleCloseAllSubmenus}
             />
 
-            <div className="lg:hidden ml-auto mr-[10%]">
+            <div className="lg:hidden ml-auto">
               <MobileMenu
                 isOpen={isMobileMenuOpen}
                 onToggle={handleMobileMenuToggle}
