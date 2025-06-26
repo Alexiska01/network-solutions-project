@@ -134,10 +134,10 @@ const SwitchesCatalog = () => {
                     // Добавляем класс active для подсветки карточки
                     element.classList.add("active");
 
-                    // Убираем класс через 300ms
+                    // Убираем класс через 500ms
                     setTimeout(() => {
                       element.classList.remove("active");
-                    }, 300);
+                    }, 500);
 
                     window.location.hash = sectionId;
                   }

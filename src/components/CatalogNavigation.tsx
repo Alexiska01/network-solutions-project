@@ -154,8 +154,8 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
       const el = document.getElementById(item.id.toLowerCase());
       if (el) {
         // Убираем предыдущую подсветку
-        document.querySelectorAll(".highlight").forEach((elem) => {
-          elem.classList.remove("highlight");
+        document.querySelectorAll(".active").forEach((elem) => {
+          elem.classList.remove("active");
         });
 
         // Плавный скролл с центрированием
@@ -167,11 +167,11 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
 
         // Добавляем подсветку с небольшой задержкой
         setTimeout(() => {
-          el.classList.add("highlight");
-          // Убираем подсветку через 2 секунды
+          el.classList.add("active");
+          // Убираем подсветку через 500ms
           setTimeout(() => {
-            el.classList.remove("highlight");
-          }, 2000);
+            el.classList.remove("active");
+          }, 500);
         }, 300);
       }
     }
