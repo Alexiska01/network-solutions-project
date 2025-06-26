@@ -131,19 +131,8 @@ const SwitchesCatalog = () => {
                       behavior: "smooth",
                     });
 
-                    // Добавляем визуальный эффект с улучшенной анимацией
-                    element.style.boxShadow = "0 0 30px rgba(46, 91, 255, 0.5)";
-                    element.style.transform = "scale(1.02)";
-                    element.style.transition = "all 0.4s ease-out";
-                    element.style.backgroundColor = "rgba(46, 91, 255, 0.02)";
-
-                    // Убираем эффект через 2 секунды
-                    setTimeout(() => {
-                      element.style.boxShadow = "";
-                      element.style.transform = "";
-                      element.style.backgroundColor = "";
-                      element.style.transition = "all 0.4s ease-out";
-                    }, 2000);
+                    // Добавляем плавный скролл без визуальных эффектов
+                    // Убираем все подсветки и эффекты
 
                     window.location.hash = sectionId;
                   }
