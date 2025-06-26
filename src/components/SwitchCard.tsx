@@ -102,7 +102,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
           <p className="text-gray-600 mb-4">{switchData.description}</p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            {switchData.specs.map((spec, index) => (
+            {switchData.specs.features?.map((spec, index) => (
               <div key={index} className="text-center">
                 <div className="text-lg font-semibold text-gray-900">
                   {spec.value}
