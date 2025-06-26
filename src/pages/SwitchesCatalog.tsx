@@ -141,7 +141,7 @@ const SwitchesCatalog = () => {
         <div className="flex gap-6">
           {/* Левое меню навигации - только на десктопе */}
           {!isMobile && (
-            <div className="w-80 flex-shrink-0">
+            <div className="w-80 flex-shrink-0 px-4">
               <CatalogNavigation
                 onNavigate={handleScrollToCard}
                 activeSection={activeFilter}
