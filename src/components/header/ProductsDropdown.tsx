@@ -30,7 +30,7 @@ const ProductsDropdown = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <button className="text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1 px-2 py-2">
+      <button className="text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-2">
         <Icon name="Network" size={16} />
         <span>Оборудование</span>
         <Icon
