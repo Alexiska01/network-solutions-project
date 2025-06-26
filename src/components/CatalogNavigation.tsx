@@ -88,7 +88,7 @@ const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
       <div className="container mx-auto px-4">
         <div className="py-6">
           <h3 className="font-montserrat font-semibold text-lg mb-4 text-gray-900">
-            Категории оборудования
+            Категории коммутаторов
           </h3>
           <nav className="space-y-2">
             {navigationData.map((item) => (
