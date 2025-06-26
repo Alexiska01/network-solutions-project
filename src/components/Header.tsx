@@ -32,7 +32,7 @@ const Header = () => {
 
         {/* Навигация в общем контейнере */}
         <div className="max-w-7xl mx-auto py-1.5 px-0">
-          <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-between w-full mx-16">
             <DesktopNavigation
               dropdownState={dropdownState}
               updateDropdownState={updateDropdownState}
