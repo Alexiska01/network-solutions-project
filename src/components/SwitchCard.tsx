@@ -16,18 +16,13 @@ const highlightStyles = `
     position: relative;
   }
   
-  .switch-card-base.highlight::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 14px;
-    box-shadow: 0 0 20px rgba(0, 180, 255, 0.15);
-    z-index: -1;
-    transition: opacity 0.3s ease;
-    opacity: 1;
+  .switch-card-base:target,
+  .switch-card-base.active {
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.04),
+      0 6px 12px rgba(0, 0, 0, 0.1),
+      0 12px 24px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
   }
 `;
 
