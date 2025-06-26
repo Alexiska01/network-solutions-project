@@ -101,7 +101,7 @@ const CatalogNavigation = ({
   };
 
   return (
-    <div className="sticky top-24 bg-white rounded-lg border border-gray-200 p-6 h-fit ml-8">
+    <div className="sticky top-24 bg-white rounded-lg border border-gray-200 p-6 h-fit">
       <h3 className="font-semibold text-gray-900 mb-4">
         Навигация по каталогу
       </h3>
