@@ -131,8 +131,13 @@ const SwitchesCatalog = () => {
                       behavior: "smooth",
                     });
 
-                    // Добавляем плавный скролл без визуальных эффектов
-                    // Убираем все подсветки и эффекты
+                    // Добавляем класс active для подсветки карточки
+                    element.classList.add("active");
+
+                    // Убираем класс через 300ms
+                    setTimeout(() => {
+                      element.classList.remove("active");
+                    }, 300);
 
                     window.location.hash = sectionId;
                   }

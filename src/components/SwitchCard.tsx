@@ -58,6 +58,14 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
     const el = document.getElementById(switchData.id.toLowerCase());
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Добавляем класс active для подсветки
+      el.classList.add("active");
+
+      // Убираем класс через 300ms после завершения анимации
+      setTimeout(() => {
+        el.classList.remove("active");
+      }, 300);
     }
   };
 
