@@ -24,6 +24,28 @@ const SwitchesCatalog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const isMobile = useIsMobile();
 
+  // Обработка хеша при загрузке страницы
+  React.useEffect(() => {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      // Небольшая задержка для загрузки контента
+      setTimeout(() => {
+        const element = document.getElementById(hash.toLowerCase());
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          // Добавляем подсветку
+          setTimeout(() => {
+            element.classList.add("navigation-active");
+            setTimeout(() => {
+              element.classList.remove("navigation-active");
+            }, 3000);
+          }, 500);
+        }
+      }, 100);
+    }
+  }, []);
+
   const filteredSwitches = useMemo(() => {
     let filtered = switchesData;
 
