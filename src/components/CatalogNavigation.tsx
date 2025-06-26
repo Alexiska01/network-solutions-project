@@ -30,7 +30,16 @@ const applyNavigationEffect = (switchId: string) => {
     // Добавляем подсветку
     element.classList.add("active");
 
-    // Автоматически убираем подсветку через 500ms (длительность анимации)
+    // Автоматически убираем подсветку через animationend
+    element.addEventListener(
+      "animationend",
+      () => {
+        element.classList.remove("active");
+      },
+      { once: true },
+    );
+
+    // Дублируем через setTimeout как резервный механизм
     setTimeout(() => {
       element.classList.remove("active");
     }, 500);

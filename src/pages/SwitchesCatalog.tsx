@@ -37,6 +37,17 @@ const SwitchesCatalog = () => {
           // Добавляем подсветку
           setTimeout(() => {
             element.classList.add("navigation-active");
+
+            // Автоматически убираем подсветку через animationend
+            element.addEventListener(
+              "animationend",
+              () => {
+                element.classList.remove("navigation-active");
+              },
+              { once: true },
+            );
+
+            // Дублируем через setTimeout как резервный механизм
             setTimeout(() => {
               element.classList.remove("navigation-active");
             }, 3000);
@@ -162,6 +173,17 @@ const SwitchesCatalog = () => {
                       });
 
                     element.classList.add("navigation-active");
+
+                    // Автоматически убираем подсветку через animationend
+                    element.addEventListener(
+                      "animationend",
+                      () => {
+                        element.classList.remove("navigation-active");
+                      },
+                      { once: true },
+                    );
+
+                    // Дублируем через setTimeout как резервный механизм
                     setTimeout(
                       () => element.classList.remove("navigation-active"),
                       2000,
