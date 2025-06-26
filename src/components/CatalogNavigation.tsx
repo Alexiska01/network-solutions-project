@@ -102,21 +102,23 @@ const CatalogNavigation = ({
 
   return (
     <div className="bg-white border-r border-gray-200 h-full">
-      <div className="px-4 md:px-6 py-6">
-        <h3 className="font-montserrat font-semibold text-lg mb-4 text-gray-900">
-          Категории оборудования
-        </h3>
-        <nav className="space-y-2">
-          {navigationData.map((item) => (
-            <NavigationItem
-              key={item.id}
-              item={item}
-              onNavigate={onNavigate}
-              activeSection={activeSection}
-              level={0}
-            />
-          ))}
-        </nav>
+      <div className="container mx-auto px-4">
+        <div className="py-6">
+          <h3 className="font-montserrat font-semibold text-lg mb-4 text-gray-900">
+            Категории оборудования
+          </h3>
+          <nav className="space-y-2">
+            {navigationData.map((item) => (
+              <NavigationItem
+                key={item.id}
+                item={item}
+                onNavigate={onNavigate}
+                activeSection={activeSection}
+                level={0}
+              />
+            ))}
+          </nav>
+        </div>
       </div>
     </div>
   );
