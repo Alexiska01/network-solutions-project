@@ -54,10 +54,8 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
             <div
               id={switchData.id.toLowerCase()}
               className={cn(
-                "bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer",
-                "hover:shadow-lg hover:-translate-y-1 hover:border-[#2E5BFF]/30",
-                isHighlighted &&
-                  "shadow-[0_0_20px_rgba(46,91,255,0.4)] scale-[1.02] border-[#2E5BFF]/50",
+                "bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer switch-card-base",
+                "hover:-translate-y-1",
               )}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
@@ -129,10 +127,8 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
           <div
             id={switchData.id.toLowerCase()}
             className={cn(
-              "bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer",
-              "hover:shadow-lg hover:-translate-y-1 hover:border-[#2E5BFF]/30",
-              isHighlighted &&
-                "shadow-[0_0_20px_rgba(46,91,255,0.4)] scale-[1.02] border-[#2E5BFF]/50",
+              "bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer switch-card-base",
+              "hover:-translate-y-1",
             )}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
