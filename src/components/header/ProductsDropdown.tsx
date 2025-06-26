@@ -26,11 +26,11 @@ const ProductsDropdown = ({
 
   return (
     <div
-      className="relative"
+      className="max-w-7xl mx-auto px-4 flex items-center relative"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium transition-colors flex items-center space-x-2">
+      <button className="text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-2">
         <Icon name="Network" size={16} />
         <span>Оборудование</span>
         <Icon
