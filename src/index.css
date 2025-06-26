@@ -112,14 +112,3 @@
 .switch-card-base:hover {
   transform: translateY(-4px);
 }
-
-.switch-card-base.active,
-.switch-card-base:target {
-  box-shadow:
-    0 10px 0 rgba(0, 0, 0, 0.1),
-    0 20px 0 rgba(0, 0, 0, 0.05);
-  transform: scale(1.02);
-  transition:
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
-}
