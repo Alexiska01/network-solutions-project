@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -16,8 +16,23 @@ interface SwitchCardProps {
 
 const SwitchCard = ({ switchData }: SwitchCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isHighlighted, setIsHighlighted] = useState(false);
   const isMobile = useIsMobile();
   const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash?.substring(1);
+      if (hash === switchData.id.toLowerCase()) {
+        setIsHighlighted(true);
+        setTimeout(() => setIsHighlighted(false), 2000);
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [switchData.id]);
 
   // Мобильная и планшетная версия - вертикальный layout
   if (isMobile || isTablet) {
@@ -27,7 +42,12 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
           <TooltipTrigger asChild>
             <div
               id={switchData.id.toLowerCase()}
-              className="bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-[#2E5BFF]/30 cursor-pointer"
+              className={cn(
+                "bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer",
+                "hover:shadow-lg hover:-translate-y-1 hover:border-[#2E5BFF]/30",
+                isHighlighted &&
+                  "shadow-[0_0_20px_rgba(46,91,255,0.4)] scale-[1.02] border-[#2E5BFF]/50",
+              )}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
@@ -42,7 +62,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
                 />
               </div>
 
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
                 {switchData.title}
               </h3>
 
@@ -97,7 +117,12 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
         <TooltipTrigger asChild>
           <div
             id={switchData.id.toLowerCase()}
-            className="bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] hover:border-[#2E5BFF]/30 cursor-pointer"
+            className={cn(
+              "bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer",
+              "hover:shadow-lg hover:-translate-y-1 hover:border-[#2E5BFF]/30",
+              isHighlighted &&
+                "shadow-[0_0_20px_rgba(46,91,255,0.4)] scale-[1.02] border-[#2E5BFF]/50",
+            )}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -118,7 +143,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
 
               {/* Контент справа - 60% ширины */}
               <div className="flex-1 flex flex-col justify-center">
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">
                   {switchData.title}
                 </h3>
 
@@ -127,10 +152,12 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
                 </p>
 
                 <div className="flex items-center gap-3 text-sm text-gray-500 mb-4">
-                  <span className="bg-gray-100 px-2 py-1 rounded-md">
+                  <span className="bg-gray-100 px-2 py-1 rounded-md flex items-center gap-1">
+                    <span className="text-xs">🔌</span>
                     {switchData.specs.ports}
                   </span>
-                  <span className="bg-gray-100 px-2 py-1 rounded-md">
+                  <span className="bg-gray-100 px-2 py-1 rounded-md flex items-center gap-1">
+                    <span className="text-xs">⚡</span>
                     {switchData.specs.throughput}
                   </span>
                 </div>

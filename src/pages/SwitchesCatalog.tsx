@@ -112,12 +112,21 @@ const SwitchesCatalog = () => {
       <div
         className={`${isMobile ? "container mx-auto px-4" : "max-w-7xl mx-auto px-4"} py-8`}
       >
-        <div className={`${isMobile ? "" : "flex gap-8"}`}>
+        <div className={`${isMobile ? "" : "flex gap-6"}`}>
           {/* Левое меню навигации - только на десктопе */}
           {!isMobile && (
             <div className="w-80 flex-shrink-0">
               <CatalogNavigation
-                onNavigate={() => {}}
+                onNavigate={(sectionId) => {
+                  const element = document.getElementById(sectionId);
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: "smooth",
+                      block: "center",
+                    });
+                    window.location.hash = sectionId;
+                  }
+                }}
                 activeSection={activeFilter}
               />
             </div>
@@ -133,14 +142,14 @@ const SwitchesCatalog = () => {
 
             {/* Коммутаторы для корпоративных ЛВС */}
             <section id="corporate-lan" className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 Коммутаторы для корпоративных ЛВС
               </h2>
 
               {/* Уровень доступа */}
               {groupedSwitches.corporateAccess.length > 0 && (
                 <div id="access-level" className="mb-10">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                     <div className="w-3 h-3 bg-[#2E5BFF] rounded-full mr-3"></div>
                     Коммутаторы уровня доступа
                   </h3>
@@ -155,7 +164,7 @@ const SwitchesCatalog = () => {
               {/* Уровень распределения */}
               {groupedSwitches.corporateDistribution.length > 0 && (
                 <div id="distribution-level">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                     <div className="w-3 h-3 bg-[#FF6B35] rounded-full mr-3"></div>
                     Коммутаторы уровня распределения
                   </h3>
@@ -170,14 +179,14 @@ const SwitchesCatalog = () => {
 
             {/* Коммутаторы для ЦОД */}
             <section id="data-center" className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 Центры обработки данных
               </h2>
 
               {/* Spine */}
               {groupedSwitches.dataCenterSpine.length > 0 && (
                 <div id="spine-level" className="mb-10">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                     <div className="w-3 h-3 bg-[#10B981] rounded-full mr-3"></div>
                     Spine
                   </h3>
@@ -192,7 +201,7 @@ const SwitchesCatalog = () => {
               {/* Leaf */}
               {groupedSwitches.dataCenterLeaf.length > 0 && (
                 <div id="leaf-level">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                     <div className="w-3 h-3 bg-[#8B5CF6] rounded-full mr-3"></div>
                     Leaf
                   </h3>
