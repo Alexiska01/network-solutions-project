@@ -11,36 +11,17 @@ import {
 import { ArrowRight } from "lucide-react";
 import { SwitchModel } from "@/data/switchesData";
 
-// Обновленные стили без размытия
-const highlightStyles = `
+// Базовые стили без подсветки
+const baseStyles = `
   .switch-card-base {
     position: relative;
-    scroll-margin-block: 50vh; /* Центрирование при scrollIntoView */
+    scroll-margin-block: 50vh;
   }
 
-  /* Отключаем стандартный outline браузера */
   .switch-card-base:focus,
   .switch-card-base:focus-visible,
-  .switch-card-base:target,
-  .switch-card-base.active {
-    outline: none !important;
-  }
-
-  /* Простое выделение без эффектов */
-  .switch-card-base.active,
   .switch-card-base:target {
-    transform: scale(1.02);
-    transition: transform 0.3s ease;
-  }
-
-  /* Анимация затухания подсветки */
-  @keyframes highlightFade {
-    0% {
-      transform: scale(1.02);
-    }
-    100% {
-      transform: scale(1.00);
-    }
+    outline: none !important;
   }
 `;
 
@@ -54,9 +35,9 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    // Внедряем стили в head
+    // Внедряем базовые стили
     const styleElement = document.createElement("style");
-    styleElement.textContent = highlightStyles;
+    styleElement.textContent = baseStyles;
     document.head.appendChild(styleElement);
 
     // Определяем tablet
@@ -77,8 +58,6 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
     const el = document.getElementById(switchData.id.toLowerCase());
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "center" });
-      el.classList.add("active");
-      setTimeout(() => el.classList.remove("active"), 2000);
     }
   };
 
