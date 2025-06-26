@@ -133,9 +133,6 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   const handleHeaderClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    // Определяем, является ли элемент финальной серией (без детей)
-    const isFinalSeries = !item.children || item.children.length === 0;
-
     if (item.children) {
       // Для элементов с детьми только раскрываем/сворачиваем меню
       setOpenMap((prev) => {
@@ -148,9 +145,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
         });
         return next;
       });
-
-      // Устанавливаем активную секцию для визуального выделения
-      onNavigate(item.id);
+      // НЕ вызываем onNavigate для элементов с детьми - только toggle меню
     } else {
       // Для финальных серий выполняем скролл и анимацию
       onNavigate(item.id);
