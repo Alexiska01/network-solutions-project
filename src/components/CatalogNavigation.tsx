@@ -124,4 +124,72 @@ const CatalogNavigation = ({
   );
 };
 
+const NavigationItem = ({
+  item,
+  onNavigate,
+  activeSection,
+  level,
+}: {
+  item: NavigationItem;
+  onNavigate: (id: string) => void;
+  activeSection?: string;
+  level: number;
+}) => {
+  const handleClick = () => {
+    onNavigate(item.id);
+    const element = document.getElementById(item.id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Добавляем эффект выделения
+      element.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
+      element.style.transform = "scale(1.02)";
+      element.style.transition = "all 0.3s ease";
+
+      setTimeout(() => {
+        element.style.boxShadow = "";
+        element.style.transform = "";
+        element.style.transition = "all 0.3s ease";
+      }, 2000);
+    }
+  };
+
+  return (
+    <div>
+      <button
+        onClick={handleClick}
+        className={`
+          w-full text-left px-3 py-2 rounded-lg transition-colors
+          ${level === 0 ? "font-semibold" : level === 1 ? "font-medium" : "font-normal"}
+          ${
+            activeSection === item.id
+              ? "bg-blue-50 text-blue-600 border-l-4 border-blue-500"
+              : "text-gray-700 hover:bg-gray-50"
+          }
+        `}
+        style={{ marginLeft: `${level * 12}px` }}
+      >
+        <div className="flex items-center gap-2">
+          <Icon name={item.icon} size={16} />
+          <span>{item.name}</span>
+        </div>
+      </button>
+
+      {item.children && (
+        <div className="mt-1">
+          {item.children.map((child) => (
+            <NavigationItem
+              key={child.id}
+              item={child}
+              onNavigate={onNavigate}
+              activeSection={activeSection}
+              level={level + 1}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default CatalogNavigation;
