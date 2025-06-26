@@ -24,15 +24,15 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
-      <div className="relative">
-        {/* Логотип */}
-        <div className="absolute left-0 top-0 h-12 md:h-16 flex items-center pl-2 sm:pl-4 md:pl-6 lg:pl-8 z-10">
-          <Logo />
-        </div>
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="relative flex items-center justify-between h-12 md:h-16">
+          {/* Логотип */}
+          <div className="flex items-center">
+            <Logo />
+          </div>
 
-        {/* Навигация */}
-        <div className="pl-2 sm:pl-4 md:pl-6 lg:pl-8">
-          <div className="flex items-center justify-end h-12 md:h-16 pl-28 sm:pl-32 md:pl-40 lg:pl-48 pr-2 sm:pr-4 md:pr-6 lg:pr-8 mx-[73px]">
+          {/* Навигация */}
+          <div className="flex items-center">
             <DesktopNavigation
               dropdownState={dropdownState}
               updateDropdownState={updateDropdownState}
