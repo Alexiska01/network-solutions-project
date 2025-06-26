@@ -97,7 +97,7 @@ const SwitchesCatalog = () => {
       <Header />
       <div className="bg-gray-50">
         {/* Breadcrumb */}
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto py-4 px-[35px]">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>

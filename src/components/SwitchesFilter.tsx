@@ -50,7 +50,7 @@ const SwitchesFilter = ({
           : "relative",
       )}
     >
-      <div className="max-w-7xl mx-auto py-4 px-4">
+      <div className="max-w-7xl mx-auto py-4 px-[35px]">
         <div className="flex flex-wrap gap-2">
           {filters.map((filter) => (
             <button
