@@ -50,18 +50,17 @@ const SwitchesFilter = ({
           : "relative",
       )}
     >
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-wrap gap-2 py-4">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex flex-wrap gap-2">
           {filters.map((filter) => (
             <button
               key={filter.id}
               onClick={() => handleFilterClick(filter.id, filter.section)}
               className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                "border border-gray-200 hover:border-[#2E5BFF] hover:bg-[#2E5BFF]/5",
+                "px-4 py-2 rounded-lg border text-sm font-medium transition-colors",
                 activeFilter === filter.id
-                  ? "bg-[#2E5BFF] text-white border-[#2E5BFF]"
-                  : "bg-white text-gray-700",
+                  ? "bg-idata-blue text-white border-idata-blue"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50",
               )}
             >
               {filter.label}
