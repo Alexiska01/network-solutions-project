@@ -17,17 +17,23 @@ interface CatalogNavigationProps {
 const applyNavigationEffect = (switchId: string) => {
   // Убираем все предыдущие подсветки
   document
-    .querySelectorAll(".navigation-active, .highlight")
+    .querySelectorAll(".navigation-active, .highlight, .active")
     .forEach((elem) => {
-      elem.classList.remove("navigation-active", "highlight");
+      elem.classList.remove("navigation-active", "highlight", "active");
     });
 
   const element = document.getElementById(switchId.toLowerCase());
   if (element) {
-    element.classList.add("navigation-active");
+    // Скроллим к элементу
+    element.scrollIntoView({ block: "center", behavior: "smooth" });
+
+    // Добавляем подсветку
+    element.classList.add("active");
+
+    // Автоматически убираем подсветку через 500ms (длительность анимации)
     setTimeout(() => {
-      element.classList.remove("navigation-active");
-    }, 2000);
+      element.classList.remove("active");
+    }, 500);
   }
 };
 

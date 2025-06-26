@@ -53,27 +53,16 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
     };
   }, []);
 
-  const handleScrollToCard = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleScrollToCard = () => {
+    const cardElement = document.getElementById(switchData.id.toLowerCase());
+    if (cardElement) {
+      cardElement.scrollIntoView({ block: "center", behavior: "smooth" });
+      cardElement.classList.add("active");
 
-    // Убираем все предыдущие подсветки
-    document
-      .querySelectorAll(".navigation-active, .highlight")
-      .forEach((elem) => {
-        elem.classList.remove("navigation-active", "highlight");
-      });
-
-    const el = document.getElementById(switchData.id.toLowerCase());
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-
-      // Добавляем подсветку с небольшой задержкой
+      // Автоматически убираем подсветку через 500ms
       setTimeout(() => {
-        el.classList.add("navigation-active");
-        setTimeout(() => {
-          el.classList.remove("navigation-active");
-        }, 2000);
-      }, 300);
+        cardElement.classList.remove("active");
+      }, 500);
     }
   };
 
