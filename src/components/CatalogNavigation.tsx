@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Icon from "@/components/ui/icon";
 
@@ -70,35 +71,13 @@ const navigationData: NavigationItem[] = [
   },
 ];
 
-const CatalogNavigation = ({
-  onNavigate,
-  activeSection,
-}: CatalogNavigationProps) => {
+const CatalogNavigation: React.FC<CatalogNavigationProps> = ({ onNavigate, activeSection }) => {
   const isMobile = useIsMobile();
+  const [openMap, setOpenMap] = React.useState<Record<number, string | null>>({});
 
   if (isMobile) {
-    return null; // Скрываем на мобильных устройствах
+    return null;
   }
-
-  const handleItemClick = (id: string) => {
-    onNavigate(id);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
-
-      // Добавляем эффект выделения карточки
-      element.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
-      element.style.transform = "scale(1.02)";
-      element.style.transition = "all 0.3s ease";
-
-      // Убираем эффект через 2 секунды
-      setTimeout(() => {
-        element.style.boxShadow = "";
-        element.style.transform = "";
-        element.style.transition = "all 0.3s ease";
-      }, 2000);
-    }
-  };
 
   return (
     <div className="bg-white border-r border-gray-200 h-full">
@@ -115,6 +94,8 @@ const CatalogNavigation = ({
                 onNavigate={onNavigate}
                 activeSection={activeSection}
                 level={0}
+                openMap={openMap}
+                setOpenMap={setOpenMap}
               />
             ))}
           </nav>
@@ -124,32 +105,46 @@ const CatalogNavigation = ({
   );
 };
 
-const NavigationItem = ({
-  item,
-  onNavigate,
-  activeSection,
-  level,
-}: {
+interface NavigationItemProps {
   item: NavigationItem;
   onNavigate: (id: string) => void;
   activeSection?: string;
   level: number;
+  openMap: Record<number, string | null>;
+  setOpenMap: React.Dispatch<React.SetStateAction<Record<number, string | null>>>;
+}
+
+const NavigationItem: React.FC<NavigationItemProps> = ({
+  item,
+  onNavigate,
+  activeSection,
+  level,
+  openMap,
+  setOpenMap,
 }) => {
-  const handleClick = () => {
+  const isOpen = openMap[level] === item.id;
+
+  const handleHeaderClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpenMap((prev) => {
+      const next = { ...prev, [level]: prev[level] === item.id ? null : item.id };
+      Object.keys(next).forEach((key) => {
+        if (Number(key) > level) delete next[Number(key)];
+      });
+      return next;
+    });
+
     onNavigate(item.id);
-    const element = document.getElementById(item.id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
-
-      // Добавляем эффект выделения
-      element.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
-      element.style.transform = "scale(1.02)";
-      element.style.transition = "all 0.3s ease";
-
+    const el = document.getElementById(item.id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.style.boxShadow = "0 0 20px rgba(46, 91, 255, 0.4)";
+      el.style.transform = "scale(1.02)";
+      el.style.transition = "all 0.3s ease";
       setTimeout(() => {
-        element.style.boxShadow = "";
-        element.style.transform = "";
-        element.style.transition = "all 0.3s ease";
+        el.style.boxShadow = "";
+        el.style.transform = "";
+        el.style.transition = "all 0.3s ease";
       }, 2000);
     }
   };
@@ -157,9 +152,9 @@ const NavigationItem = ({
   return (
     <div>
       <button
-        onClick={handleClick}
+        onClick={handleHeaderClick}
         className={`
-          w-full text-left px-3 py-2 rounded-lg transition-colors
+          w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center justify-between
           ${level === 0 ? "font-semibold" : level === 1 ? "font-medium" : "font-normal"}
           ${
             activeSection === item.id
@@ -173,21 +168,39 @@ const NavigationItem = ({
           <Icon name={item.icon} size={16} />
           <span>{item.name}</span>
         </div>
+        {item.children && (
+          <Icon
+            name="ChevronDown"
+            size={12}
+            className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+          />
+        )}
       </button>
 
-      {item.children && (
-        <div className="mt-1">
-          {item.children.map((child) => (
-            <NavigationItem
-              key={child.id}
-              item={child}
-              onNavigate={onNavigate}
-              activeSection={activeSection}
-              level={level + 1}
-            />
-          ))}
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {item.children && isOpen && (
+          <motion.div
+            key="sublist"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            style={{ overflow: "hidden" }}
+          >
+            {item.children.map((child) => (
+              <NavigationItem
+                key={child.id}
+                item={child}
+                onNavigate={onNavigate}
+                activeSection={activeSection}
+                level={level + 1}
+                openMap={openMap}
+                setOpenMap={setOpenMap}
+              />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
