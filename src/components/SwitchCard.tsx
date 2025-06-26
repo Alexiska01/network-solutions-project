@@ -10,6 +10,34 @@ import {
 import { ArrowRight } from "lucide-react";
 import { SwitchModel } from "@/data/switchesData";
 
+// Добавляем стили для подсветки
+const highlightStyles = `
+  .switch-card-base {
+    position: relative;
+  }
+  
+  .switch-card-base.highlight::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 14px;
+    box-shadow: 0 0 20px rgba(0, 180, 255, 0.15);
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+  }
+`;
+
+// Добавляем стили в head
+if (typeof document !== "undefined") {
+  const styleElement = document.createElement("style");
+  styleElement.textContent = highlightStyles;
+  document.head.appendChild(styleElement);
+}
+
 interface SwitchCardProps {
   switchData: SwitchModel;
 }
