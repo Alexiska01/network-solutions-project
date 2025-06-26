@@ -1,5 +1,4 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Icon from "@/components/ui/icon";
 
@@ -71,9 +70,14 @@ const navigationData: NavigationItem[] = [
   },
 ];
 
-const CatalogNavigation: React.FC<CatalogNavigationProps> = ({ onNavigate, activeSection }) => {
+const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
+  onNavigate,
+  activeSection,
+}) => {
   const isMobile = useIsMobile();
-  const [openMap, setOpenMap] = React.useState<Record<number, string | null>>({});
+  const [openMap, setOpenMap] = React.useState<Record<number, string | null>>(
+    {},
+  );
 
   if (isMobile) {
     return null;
@@ -111,7 +115,9 @@ interface NavigationItemProps {
   activeSection?: string;
   level: number;
   openMap: Record<number, string | null>;
-  setOpenMap: React.Dispatch<React.SetStateAction<Record<number, string | null>>>;
+  setOpenMap: React.Dispatch<
+    React.SetStateAction<Record<number, string | null>>
+  >;
 }
 
 const NavigationItem: React.FC<NavigationItemProps> = ({
@@ -127,7 +133,10 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   const handleHeaderClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setOpenMap((prev) => {
-      const next = { ...prev, [level]: prev[level] === item.id ? null : item.id };
+      const next = {
+        ...prev,
+        [level]: prev[level] === item.id ? null : item.id,
+      };
       Object.keys(next).forEach((key) => {
         if (Number(key) > level) delete next[Number(key)];
       });
@@ -177,30 +186,25 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
         )}
       </button>
 
-      <AnimatePresence initial={false}>
-        {item.children && isOpen && (
-          <motion.div
-            key="sublist"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            style={{ overflow: "hidden" }}
-          >
-            {item.children.map((child) => (
-              <NavigationItem
-                key={child.id}
-                item={child}
-                onNavigate={onNavigate}
-                activeSection={activeSection}
-                level={level + 1}
-                openMap={openMap}
-                setOpenMap={setOpenMap}
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {item.children && (
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          {item.children.map((child) => (
+            <NavigationItem
+              key={child.id}
+              item={child}
+              onNavigate={onNavigate}
+              activeSection={activeSection}
+              level={level + 1}
+              openMap={openMap}
+              setOpenMap={setOpenMap}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
