@@ -186,7 +186,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
           ${level === 0 ? "font-semibold" : level === 1 ? "font-medium" : "font-normal"}
           ${
             activeSection === item.id
-              ? "bg-blue-50 text-blue-600 border-l-4 border-blue-500"
+              ? "bg-gray-100 text-gray-800 border-l-4 border-gray-600"
               : "text-gray-700 hover:bg-gray-50"
           }
         `}
