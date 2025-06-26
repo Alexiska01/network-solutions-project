@@ -98,7 +98,7 @@ const SwitchesCatalog = () => {
       <div className="bg-gray-50">
         {/* Хлебные крошки */}
         <div className="bg-white border-b">
-          <div className="container mx-auto px-4 py-4">
+          <div className="max-w-7xl mx-auto px-4 py-4">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
