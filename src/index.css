@@ -95,6 +95,17 @@
   }
 }
 
+@layer components {
+  /* Стили для подсветки карточек при навигации */
+  .navigation-active {
+    @apply ring-4 ring-blue-400 ring-opacity-50 shadow-lg transform scale-[1.02] bg-blue-50 transition-all duration-300;
+  }
+
+  .highlight {
+    @apply ring-4 ring-amber-400 ring-opacity-50 shadow-lg transform scale-[1.02] bg-amber-50 transition-all duration-300;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
