@@ -11,17 +11,24 @@ import {
 import { ArrowRight } from "lucide-react";
 import { SwitchModel } from "@/data/switchesData";
 
-// Базовые стили без подсветки
+// Базовые стили для карточек
 const baseStyles = `
   .switch-card-base {
     position: relative;
     scroll-margin-block: 50vh;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .switch-card-base:focus,
   .switch-card-base:focus-visible,
   .switch-card-base:target {
     outline: none !important;
+  }
+
+  .switch-card-base:hover,
+  .switch-card-base.active {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-4px) scale(1.02);
   }
 `;
 
@@ -71,7 +78,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
       id={switchData.id.toLowerCase()}
       tabIndex={0}
       className={cn(
-        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer focus:outline-none hover:-translate-y-1",
+        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none",
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
