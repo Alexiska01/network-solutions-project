@@ -23,9 +23,12 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="relative flex items-center justify-end h-12 md:h-16">
-          {/* Навигация */}
+      <div className="relative flex items-center justify-between h-12 md:h-16">
+        {/* Логотип остается вне основного контейнера */}
+        <div className="px-4">{/* Здесь будет логотип */}</div>
+
+        {/* Навигация в общем контейнере */}
+        <div className="max-w-7xl mx-auto px-4 flex-1 flex justify-end">
           <div className="flex items-center">
             <DesktopNavigation
               dropdownState={dropdownState}

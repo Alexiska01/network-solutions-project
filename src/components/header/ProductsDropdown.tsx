@@ -26,7 +26,7 @@ const ProductsDropdown = ({
 
   return (
     <div
-      className="max-w-7xl mx-auto px-4 flex items-center relative"
+      className="flex items-center relative"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
