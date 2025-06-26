@@ -16,12 +16,17 @@ const highlightStyles = `
     position: relative;
   }
   
+  .switch-card-base:focus,
+  .switch-card-base:target,
+  .switch-card-base.active {
+    outline: none;
+  }
+  
   .switch-card-base:target,
   .switch-card-base.active {
     box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.04),
-      0 6px 12px rgba(0, 0, 0, 0.1),
-      0 12px 24px rgba(0, 0, 0, 0.05);
+      0 2px 8px rgba(0, 0, 0, 0.05),
+      0 8px 16px rgba(0, 0, 0, 0.10);
     transition: box-shadow 0.3s ease;
   }
 `;
