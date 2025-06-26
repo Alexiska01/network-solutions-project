@@ -122,6 +122,12 @@ const SwitchesCatalog = () => {
                       behavior: "smooth",
                       block: "center",
                     });
+                    // Удаляем хеш из URL, чтобы псевдокласс :target больше не применялся
+                    window.history.replaceState(
+                      null,
+                      "",
+                      window.location.pathname + window.location.search,
+                    );
                     element.classList.add("active");
                     element.addEventListener(
                       "animationend",
