@@ -24,39 +24,6 @@ const SwitchesCatalog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const isMobile = useIsMobile();
 
-  // Обработка хеша при загрузке страницы
-  React.useEffect(() => {
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-      // Небольшая задержка для загрузки контента
-      setTimeout(() => {
-        const element = document.getElementById(hash.toLowerCase());
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
-
-          // Добавляем подсветку
-          setTimeout(() => {
-            element.classList.add("navigation-active");
-
-            // Автоматически убираем подсветку через animationend
-            element.addEventListener(
-              "animationend",
-              () => {
-                element.classList.remove("navigation-active");
-              },
-              { once: true },
-            );
-
-            // Дублируем через setTimeout как резервный механизм
-            setTimeout(() => {
-              element.classList.remove("navigation-active");
-            }, 3000);
-          }, 500);
-        }
-      }, 100);
-    }
-  }, []);
-
   const filteredSwitches = useMemo(() => {
     let filtered = switchesData;
 
@@ -164,30 +131,8 @@ const SwitchesCatalog = () => {
                       behavior: "smooth",
                     });
 
-                    // Добавляем класс navigation-active для подсветки
-                    // Убираем все предыдущие подсветки
-                    document
-                      .querySelectorAll(".navigation-active, .highlight")
-                      .forEach((elem) => {
-                        elem.classList.remove("navigation-active", "highlight");
-                      });
-
-                    element.classList.add("navigation-active");
-
-                    // Автоматически убираем подсветку через animationend
-                    element.addEventListener(
-                      "animationend",
-                      () => {
-                        element.classList.remove("navigation-active");
-                      },
-                      { once: true },
-                    );
-
-                    // Дублируем через setTimeout как резервный механизм
-                    setTimeout(
-                      () => element.classList.remove("navigation-active"),
-                      2000,
-                    );
+                    // Добавляем плавный скролл без визуальных эффектов
+                    // Убираем все подсветки и эффекты
 
                     window.location.hash = sectionId;
                   }

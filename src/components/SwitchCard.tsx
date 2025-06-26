@@ -53,16 +53,11 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
     };
   }, []);
 
-  const handleScrollToCard = () => {
-    const cardElement = document.getElementById(switchData.id.toLowerCase());
-    if (cardElement) {
-      cardElement.scrollIntoView({ block: "center", behavior: "smooth" });
-      cardElement.classList.add("active");
-
-      // Автоматически убираем подсветку через 500ms
-      setTimeout(() => {
-        cardElement.classList.remove("active");
-      }, 500);
+  const handleScrollToCard = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById(switchData.id.toLowerCase());
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 

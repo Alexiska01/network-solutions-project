@@ -14,38 +14,6 @@ interface CatalogNavigationProps {
   activeSection?: string;
 }
 
-const applyNavigationEffect = (switchId: string) => {
-  // Убираем все предыдущие подсветки
-  document
-    .querySelectorAll(".navigation-active, .highlight, .active")
-    .forEach((elem) => {
-      elem.classList.remove("navigation-active", "highlight", "active");
-    });
-
-  const element = document.getElementById(switchId.toLowerCase());
-  if (element) {
-    // Скроллим к элементу
-    element.scrollIntoView({ block: "center", behavior: "smooth" });
-
-    // Добавляем подсветку
-    element.classList.add("active");
-
-    // Автоматически убираем подсветку через animationend
-    element.addEventListener(
-      "animationend",
-      () => {
-        element.classList.remove("active");
-      },
-      { once: true },
-    );
-
-    // Дублируем через setTimeout как резервный механизм
-    setTimeout(() => {
-      element.classList.remove("active");
-    }, 500);
-  }
-};
-
 const navigationData: NavigationItem[] = [
   {
     id: "corporate-lan",
@@ -120,7 +88,7 @@ const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
       <div className="container mx-auto px-4">
         <div className="py-6">
           <h3 className="font-montserrat font-semibold text-lg mb-4 text-gray-900">
-            Категории коммутаторов
+            Категории оборудования
           </h3>
           <nav className="space-y-2">
             {navigationData.map((item) => (
@@ -182,9 +150,30 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
       // Для финальных серий выполняем плавный скролл с центрированием
       e.preventDefault();
       onNavigate(item.id);
-      applyNavigationEffect(item.id);
 
-      // Убираем дублирующий код - используем только applyNavigationEffect
+      const el = document.getElementById(item.id.toLowerCase());
+      if (el) {
+        // Убираем предыдущую подсветку
+        document.querySelectorAll(".highlight").forEach((elem) => {
+          elem.classList.remove("highlight");
+        });
+
+        // Плавный скролл с центрированием
+        el.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+
+        // Добавляем подсветку с небольшой задержкой
+        setTimeout(() => {
+          el.classList.add("highlight");
+          // Убираем подсветку через 2 секунды
+          setTimeout(() => {
+            el.classList.remove("highlight");
+          }, 2000);
+        }, 300);
+      }
     }
   };
 
