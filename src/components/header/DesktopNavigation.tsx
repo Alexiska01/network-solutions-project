@@ -46,7 +46,7 @@ const DesktopNavigation = ({
           ) : (
             <Link
               to={item.path}
-              className="text-gray-700 hover:text-blue-600 px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap flex items-center space-x-2 h-10"
+              className="text-sm font-normal text-gray-600 hover:text-gray-900 px-4 py-2 transition-colors whitespace-nowrap flex items-center space-x-2 h-10"
               onClick={handleNavItemClick}
             >
               <Icon name={item.icon} size={16} />
