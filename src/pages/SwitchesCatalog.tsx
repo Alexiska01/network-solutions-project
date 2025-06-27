@@ -14,25 +14,16 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Shield, Zap, Settings, Headphones, ArrowRight } from "lucide-react";
-import SwitchesFilter from "@/components/SwitchesFilter";
 import SwitchesSearch from "@/components/SwitchesSearch";
 import SwitchCard from "@/components/SwitchCard";
 import { switchesData, categoryLabels } from "@/data/switchesData";
 
 const SwitchesCatalog = () => {
-  const [activeFilter, setActiveFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const isMobile = useIsMobile();
 
   const filteredSwitches = useMemo(() => {
     let filtered = switchesData;
-
-    // Фильтрация по категории
-    if (activeFilter !== "all") {
-      filtered = filtered.filter(
-        (switch_) => switch_.category === activeFilter,
-      );
-    }
 
     // Фильтрация по поисковому запросу
     if (searchTerm) {
@@ -44,7 +35,7 @@ const SwitchesCatalog = () => {
     }
 
     return filtered;
-  }, [activeFilter, searchTerm]);
+  }, [searchTerm]);
 
   const handleScrollToCard = (cardId: string) => {
     const element = document.getElementById(cardId);
@@ -133,21 +124,12 @@ const SwitchesCatalog = () => {
         </div>
       </section>
 
-      {/* Фильтры */}
-      <SwitchesFilter
-        activeFilter={activeFilter}
-        onFilterChange={setActiveFilter}
-      />
-
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex gap-6">
           {/* Левое меню навигации - только на десктопе */}
           {!isMobile && (
             <div className="w-96 flex-shrink-0">
-              <CatalogNavigation
-                onNavigate={handleScrollToCard}
-                activeSection={activeFilter}
-              />
+              <CatalogNavigation onNavigate={handleScrollToCard} />
             </div>
           )}
 
