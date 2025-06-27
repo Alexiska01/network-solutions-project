@@ -85,8 +85,8 @@ const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
 
   return (
     <div className="bg-white border-r border-gray-200 h-full">
-      <div className="container mx-auto px-4">
-        <div className="px-4 py-6">
+      <div className="container mx-auto px-1.5">
+        <div className="py-6 px-0">
           <nav className="space-y-2 px-0 mx-0">
             {navigationData.map((item) => (
               <NavigationItem
