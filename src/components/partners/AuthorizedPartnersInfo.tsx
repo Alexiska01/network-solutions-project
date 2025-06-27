@@ -62,9 +62,6 @@ const AuthorizedPartnersInfo = () => {
       <section className="py-12 md:py-20 bg-gradient-to-r from-blue-900/10 via-blue-600/10 to-teal-500/10">
         <div className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-gray-900 font-montserrat mb-3 md:mb-4">
-              Преимущества партнёров
-            </h2>
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
               Станьте частью экосистемы iDATA и получите доступ к эксклюзивным
               возможностям
