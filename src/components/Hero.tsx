@@ -1,46 +1,88 @@
 import React from "react";
+import Icon from "@/components/ui/icon";
 
 const Hero = () => {
   return (
-    <section
-      className="relative overflow-hidden text-white flex flex-col justify-center items-center min-h-[70vh] px-8"
-      style={{
-        background: "linear-gradient(90deg, #0033A0 0%, #00B4B4 100%)",
-      }}
-    >
-      {/* Background patterns */}
-      <div className="absolute inset-0 opacity-10">
-        <svg className="w-full h-full" viewBox="0 0 100 100">
-          <defs>
-            <pattern
-              id="circles"
-              x="0"
-              y="0"
-              width="20"
-              height="20"
-              patternUnits="userSpaceOnUse"
-            >
-              <circle cx="10" cy="10" r="1" fill="white" />
-            </pattern>
-          </defs>
-          <rect width="100" height="100" fill="url(#circles)" />
-        </svg>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight opacity-0 animate-fadeUp [animation-delay:0.2s]">
-          Профессиональные решения для сетевой инфраструктуры
-        </h1>
-        <p className="text-lg md:text-xl lg:text-2xl mb-8 text-blue-100 leading-relaxed opacity-0 animate-fadeUp [animation-delay:0.4s]">
-          iDATA — ведущий производитель коммутаторов, маршрутизаторов и
-          беспроводного оборудования для корпоративных сетей любой сложности.
-        </p>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-5 scroll-indicator">
-        <span></span>
+    <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
+          <div>
+            <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
+              Профессиональные решения для сетевой инфраструктуры
+            </h1>
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
+              iDATA — ведущий производитель коммутаторов, маршрутизаторов и
+              беспроводного оборудования для корпоративных сетей любой
+              сложности.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
+              <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px]">
+                Посмотреть продукты
+              </button>
+              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand">
+                Связаться с нами
+              </button>
+            </div>
+          </div>
+          <div className="relative mt-6 md:mt-8 lg:mt-0">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8">
+              <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
+                <div className="text-center">
+                  <Icon
+                    name="Network"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Коммутаторы
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    L2/L3 решения
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Icon
+                    name="Router"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Маршрутизаторы
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    Корпоративные
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Icon
+                    name="Wifi"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Wi-Fi
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    Беспроводные AP
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Icon
+                    name="Shield"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Безопасность
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    Защита сети
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
