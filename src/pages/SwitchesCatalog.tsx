@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { Shield, Zap, Settings, Headphones, ArrowRight } from "lucide-react";
 import SwitchesSearch from "@/components/SwitchesSearch";
 import SwitchCard from "@/components/SwitchCard";
-import SwitchesHero from "@/components/SwitchesHero";
 import { switchesData, categoryLabels } from "@/data/switchesData";
 
 const SwitchesCatalog = () => {
@@ -113,7 +112,80 @@ const SwitchesCatalog = () => {
       </div>
 
       {/* Hero Section */}
-      <SwitchesHero />
+      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
+        <div className="max-w-7xl mx-auto px-[35px]">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
+            <div>
+              <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
+                Коммутаторы для любых задач
+              </h1>
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed">
+                Полная линейка коммутаторов для корпоративных сетей и центров
+                обработки данных. От устройств доступа до магистральных решений.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
+                <Button
+                  size="lg"
+                  className="bg-white text-[#0065B3] hover:bg-gradient-brand hover:text-white hover:border hover:border-white min-h-[44px]"
+                >
+                  <Shield className="mr-2 h-4 w-4" />
+                  Техническая поддержка
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-white text-white hover:bg-gradient-brand hover:border-gradient-brand min-h-[44px]"
+                >
+                  <Headphones className="mr-2 h-4 w-4" />
+                  Консультация
+                </Button>
+              </div>
+            </div>
+            <div className="relative mt-6 md:mt-8 lg:mt-0">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8">
+                <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
+                  <div className="text-center">
+                    <Zap className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
+                    <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                      Доступ
+                    </h3>
+                    <p className="text-xs md:text-sm text-blue-200">
+                      24-48 портов
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <Settings className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
+                    <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                      Распределение
+                    </h3>
+                    <p className="text-xs md:text-sm text-blue-200">
+                      Агрегация трафика
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <Shield className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
+                    <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                      Spine
+                    </h3>
+                    <p className="text-xs md:text-sm text-blue-200">
+                      Центр данных
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <ArrowRight className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
+                    <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                      Leaf
+                    </h3>
+                    <p className="text-xs md:text-sm text-blue-200">
+                      Серверные стойки
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex gap-6">
