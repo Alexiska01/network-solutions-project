@@ -22,10 +22,7 @@ const Header = () => {
   };
 
   return (
-    <header
-      className="bg-white shadow-sm border-b border-gray-80
-"
-    >
+    <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto py-1.5 px-[35px]">
         {/* Логотип остается вне основного контейнера */}
         <div className="px-4">{/* Здесь будет логотип */}</div>
