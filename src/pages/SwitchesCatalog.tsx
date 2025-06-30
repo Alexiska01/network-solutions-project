@@ -13,7 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { Shield, Zap, Settings, Headphones, ArrowRight } from "lucide-react";
+import { Shield, Zap, Settings, Headphones } from "lucide-react";
 import SwitchesSearch from "@/components/SwitchesSearch";
 import SwitchCard from "@/components/SwitchCard";
 import { switchesData, categoryLabels } from "@/data/switchesData";
@@ -448,7 +448,7 @@ const SwitchesCatalog = () => {
               >
                 <Link to="/partners">
                   Связаться с нами
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <Icon name="ArrowRight" className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
             </section>

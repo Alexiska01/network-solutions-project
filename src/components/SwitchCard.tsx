@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
-import { ArrowRight } from "lucide-react";
+import Icon from "@/components/ui/icon";
 import { SwitchModel } from "@/data/switchesData";
 
 // Базовые стили для карточек
@@ -92,7 +92,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
               <img
                 src={switchData.image}
-                alt={switchData.title}
+                alt={`${switchData.title} - коммутатор`}
                 className={cn(
                   "w-full h-full object-cover transition-transform duration-300",
                   isHovered ? "scale-110" : "scale-100"
@@ -124,7 +124,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
               onClick={handleLinkClick}
             >
               Подробнее
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <Icon name="ArrowRight" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
         </div>
@@ -153,7 +153,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             onClick={handleLinkClick}
           >
             Подробнее
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <Icon name="ArrowRight" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
         </div>
       )}
