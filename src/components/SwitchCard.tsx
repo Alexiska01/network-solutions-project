@@ -80,7 +80,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
       id={switchData.id.toLowerCase()}
       tabIndex={0}
       className={cn(
-        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none"
+        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none",
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -95,7 +95,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                 alt={`${switchData.title} - коммутатор`}
                 className={cn(
                   "w-full h-full object-cover transition-transform duration-300",
-                  isHovered ? "scale-110" : "scale-100"
+                  isHovered ? "scale-110" : "scale-100",
                 )}
               />
             </div>
@@ -124,7 +124,10 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
               onClick={handleLinkClick}
             >
               Подробнее
-              <Icon name="ArrowRight" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <Icon
+                name="ArrowRight"
+                className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+              />
             </Button>
           </div>
         </div>
@@ -134,10 +137,10 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             <img
               src={switchData.image}
               alt={switchData.title}
-                className={cn(
-                  "w-full h-full object-cover transition-transform duration-300",
-                  isHovered ? "scale-110" : "scale-100"
-                )}
+              className={cn(
+                "w-full h-full object-cover transition-transform duration-300",
+                isHovered ? "scale-110" : "scale-100",
+              )}
             />
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -153,7 +156,10 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             onClick={handleLinkClick}
           >
             Подробнее
-              <Icon name="ArrowRight" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <Icon
+              name="ArrowRight"
+              className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+            />
           </Button>
         </div>
       )}
@@ -170,7 +176,9 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             <strong>Порты:</strong>{" "}
             <button
               className="text-blue-600 hover:underline"
-              onClick={() => onSpecFilter?.("ports", `${switchData.specs.ports}`)}
+              onClick={() =>
+                onSpecFilter?.("ports", `${switchData.specs.ports}`)
+              }
             >
               {switchData.specs.ports}
             </button>
@@ -185,17 +193,21 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             </button>
           </li>
           <li>
-            <strong>Пропускная способность:</strong> {switchData.specs.throughput}
+            <strong>Пропускная способность:</strong>{" "}
+            {switchData.specs.throughput}
           </li>
           <li>
             <strong>Функции:</strong> {switchData.specs.features.join(", ")}
           </li>
         </ul>
         <DialogClose asChild>
-          <Button variant="ghost" className="mt-4">Закрыть</Button>
+          <Button variant="ghost" className="mt-4">
+            Закрыть
+          </Button>
         </DialogClose>
       </DialogContent>
     </Dialog>
-);
+  );
+};
 
 export default SwitchCard;
