@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { ArrowRight } from "lucide-react";
 import { SwitchModel } from "@/data/switchesData";
 
@@ -26,16 +27,18 @@ const baseStyles = `
 
   .switch-card-base:hover,
   .switch-card-base.active {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
     transform: translateY(-4px) scale(1.02);
   }
 `;
 
 interface SwitchCardProps {
   switchData: SwitchModel;
+  onSpecFilter?: (filterKey: string, value: string) => void;
 }
 
-const SwitchCard = ({ switchData }: SwitchCardProps) => {
+const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = useIsMobile();
   const [isTablet, setIsTablet] = useState(false);
@@ -77,7 +80,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
       id={switchData.id.toLowerCase()}
       tabIndex={0}
       className={cn(
-        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none",
+        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -92,7 +95,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
                 alt={switchData.title}
                 className={cn(
                   "w-full h-full object-cover transition-transform duration-300",
-                  isHovered ? "scale-110" : "scale-100",
+                  isHovered ? "scale-110" : "scale-100"
                 )}
               />
             </div>
@@ -131,10 +134,10 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
             <img
               src={switchData.image}
               alt={switchData.title}
-              className={cn(
-                "w-full h-full object-cover transition-transform duration-300",
-                isHovered ? "scale-110" : "scale-100",
-              )}
+                className={cn(
+                  "w-full h-full object-cover transition-transform duration-300",
+                  isHovered ? "scale-110" : "scale-100"
+                )}
             />
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -150,7 +153,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
             onClick={handleLinkClick}
           >
             Подробнее
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
         </div>
       )}
@@ -158,35 +161,41 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
   );
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>{CardContent}</TooltipTrigger>
-        <TooltipContent side="top" className="max-w-xs">
-          <div className="space-y-2">
-            <div className="font-medium">{switchData.id}</div>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div>
-                <span className="font-medium">Порты:</span>{" "}
-                {switchData.specs.ports}
-              </div>
-              <div>
-                <span className="font-medium">Питание:</span>{" "}
-                {switchData.specs.power}
-              </div>
-              <div>
-                <span className="font-medium">Производительность:</span>{" "}
-                {switchData.specs.throughput}
-              </div>
-            </div>
-            <div className="text-xs">
-              <span className="font-medium">Функции:</span>{" "}
-              {switchData.specs.features.join(", ")}
-            </div>
-          </div>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
+    <Dialog>
+      <DialogTrigger asChild>{CardContent}</DialogTrigger>
+      <DialogContent className="max-w-md">
+        <DialogTitle>{switchData.title} — спецификации</DialogTitle>
+        <ul className="space-y-2 mt-4">
+          <li>
+            <strong>Порты:</strong>{" "}
+            <button
+              className="text-blue-600 hover:underline"
+              onClick={() => onSpecFilter?.("ports", `${switchData.specs.ports}`)}
+            >
+              {switchData.specs.ports}
+            </button>
+          </li>
+          <li>
+            <strong>Питание:</strong>{" "}
+            <button
+              className="text-blue-600 hover:underline"
+              onClick={() => onSpecFilter?.("power", switchData.specs.power)}
+            >
+              {switchData.specs.power}
+            </button>
+          </li>
+          <li>
+            <strong>Пропускная способность:</strong> {switchData.specs.throughput}
+          </li>
+          <li>
+            <strong>Функции:</strong> {switchData.specs.features.join(", ")}
+          </li>
+        </ul>
+        <DialogClose asChild>
+          <Button variant="ghost" className="mt-4">Закрыть</Button>
+        </DialogClose>
+      </DialogContent>
+    </Dialog>
+);
 
 export default SwitchCard;
