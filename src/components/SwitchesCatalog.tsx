@@ -29,16 +29,23 @@ const SimplePagination: React.FC<SimplePaginationProps> = ({
   onPageChange,
   totalPages,
 }) => {
-  const handlePrevious = () => {
+  const handlePrevious = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (page > 1) {
       onPageChange(page - 1);
     }
   };
 
-  const handleNext = () => {
+  const handleNext = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (page < totalPages) {
       onPageChange(page + 1);
     }
+  };
+
+  const handlePageClick = (pageNum: number) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    onPageChange(pageNum);
   };
 
   return (
@@ -46,6 +53,7 @@ const SimplePagination: React.FC<SimplePaginationProps> = ({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
+            href="#"
             onClick={handlePrevious}
             aria-disabled={page <= 1}
             style={{ pointerEvents: page <= 1 ? "none" : "auto" }}
@@ -54,7 +62,8 @@ const SimplePagination: React.FC<SimplePaginationProps> = ({
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
           <PaginationItem key={pageNum}>
             <PaginationLink
-              onClick={() => onPageChange(pageNum)}
+              href="#"
+              onClick={handlePageClick(pageNum)}
               isActive={pageNum === page}
             >
               {pageNum}
@@ -63,6 +72,7 @@ const SimplePagination: React.FC<SimplePaginationProps> = ({
         ))}
         <PaginationItem>
           <PaginationNext
+            href="#"
             onClick={handleNext}
             aria-disabled={page >= totalPages}
             style={{ pointerEvents: page >= totalPages ? "none" : "auto" }}
@@ -102,14 +112,14 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
 
   return (
     <div className="flex">
-      {/** На десктопе — обычное боковое меню */}
       {!isMobile && (
         <aside className="w-64 pr-6">
           <CatalogNavigation
-            activeFilters={filters}
-            onChange={(key: string, val: string) =>
-              setFilters((prev) => ({ ...prev, [key]: val }))
-            }
+            onNavigate={(sectionId: string) => {
+              setFilters((prev) => ({ ...prev, category: sectionId }));
+              setPage(1);
+            }}
+            activeSection={filters.category}
           />
         </aside>
       )}
@@ -118,7 +128,6 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
         <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Коммутаторы</h1>
 
-          {/** На мобильных — кнопка открытия фильтров */}
           {isMobile && (
             <Dialog>
               <DialogTrigger asChild>
@@ -128,18 +137,17 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
               </DialogTrigger>
               <DialogContent className="w-80">
                 <CatalogNavigation
-                  activeFilters={filters}
-                  onChange={(key: string, val: string) => {
-                    setFilters((prev) => ({ ...prev, [key]: val }));
+                  onNavigate={(sectionId: string) => {
+                    setFilters((prev) => ({ ...prev, category: sectionId }));
                     setPage(1);
                   }}
+                  activeSection={filters.category}
                 />
               </DialogContent>
             </Dialog>
           )}
         </div>
 
-        {/** Сетка карточек: 1 колонка на мобилках, 3 на десктопе */}
         <div
           className={
             isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-3 gap-6"
@@ -157,7 +165,6 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
           ))}
         </div>
 
-        {/** Пагинация */}
         {pageCount > 1 && (
           <div className="mt-8 flex justify-center">
             <SimplePagination
