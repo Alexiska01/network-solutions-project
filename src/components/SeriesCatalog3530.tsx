@@ -205,16 +205,16 @@ const SeriesCatalog3530Component: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-semibold text-gray-900 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[24px] text-2xl leading-snug">
             Нужна помощь с выбором оборудования?
-            <span className="block w-12 h-1 bg-brand-primary mt-2 mx-auto"></span>
+            <div className="w-20 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-4"></div>
           </h2>
           <p className="text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px] text-lg leading-relaxed">
-            Свяжитесь с нашими партнерами!
+            Свяжитесь с нашими партнёрами!
           </p>
           <Button
             size="lg"
             className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
           >
-            Связаться с партнером
+            Связаться с партнёром
           </Button>
         </div>
       </motion.section>
