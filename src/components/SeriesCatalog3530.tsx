@@ -6,18 +6,100 @@ import BenefitCard from "@/components/BenefitCard";
 const SeriesCatalog3530Component = () => {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-            IDS3530 — надёжные L2+/L3-коммутаторы для промышленной
-            инфраструктуры
-          </h1>
-          <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-4xl">
-            До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в одной
-            платформе
-          </p>
+      {/* Hero Section с живым фоном */}
+      <section
+        className="text-white py-8 md:py-12 lg:py-16 xl:py-20 relative"
+        style={{
+          minHeight: "600px",
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          overflow: "hidden",
+        }}
+      >
+        {/* Анимированная сетка Vanta.net */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: "50px 50px",
+            animation: "vanta-grid 20s linear infinite",
+          }}
+        />
+
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="flex flex-col items-center justify-center h-full text-center">
+            {/* Заголовок на две строки */}
+            <h1 className="text-white mb-6 leading-tight">
+              <span className="block text-6xl md:text-8xl font-bold">
+                IDS3530
+              </span>
+              <span className="block text-2xl md:text-3xl font-normal mt-2">
+                — надёжные L2+/L3-коммутаторы
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 mb-8">
+              для промышленной инфраструктуры
+            </p>
+
+            {/* Сабтайтл */}
+            <div className="text-center mb-8">
+              <p className="text-base md:text-lg text-white/90 mb-6">
+                «До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
+                одной платформе»
+              </p>
+            </div>
+
+            {/* Иконки преимуществ */}
+            <div className="flex flex-wrap justify-center gap-6 mb-8">
+              <div className="flex items-center gap-2 text-white/90">
+                <Icon name="Zap" className="h-5 w-5" />
+                <span className="text-sm">PoE</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/90">
+                <Icon name="Network" className="h-5 w-5" />
+                <span className="text-sm">10G uplink</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/90">
+                <Icon name="Snowflake" className="h-5 w-5" />
+                <span className="text-sm">охлаждение</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/90">
+                <Icon name="Shield" className="h-5 w-5" />
+                <span className="text-sm">L3</span>
+              </div>
+            </div>
+
+            {/* Кнопки-фильтры */}
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button
+                variant="outline"
+                className="bg-white/20 border-white/30 text-white hover:bg-white/30 backdrop-blur-sm px-6 py-3"
+              >
+                Только с PoE
+              </Button>
+              <Button
+                variant="outline"
+                className="bg-white/20 border-white/30 text-white hover:bg-white/30 backdrop-blur-sm px-6 py-3"
+              >
+                Только с SFP
+              </Button>
+            </div>
+          </div>
         </div>
+
+        {/* CSS для анимации */}
+        <style jsx>{`
+          @keyframes vanta-grid {
+            0% {
+              transform: translate(0, 0);
+            }
+            100% {
+              transform: translate(50px, 50px);
+            }
+          }
+        `}</style>
       </section>
 
       {/* Benefits Section */}
