@@ -2,7 +2,14 @@ import React, { useState, useMemo } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CatalogNavigation from "@/components/CatalogNavigation";
 import SwitchCard from "@/components/SwitchCard";
-import { Pagination } from "@/components/ui/pagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { SwitchModel } from "@/types/models";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -10,6 +17,61 @@ import { Button } from "@/components/ui/button";
 interface SwitchesCatalogProps {
   data: SwitchModel[];
 }
+
+interface SimplePaginationProps {
+  page: number;
+  onPageChange: (page: number) => void;
+  totalPages: number;
+}
+
+const SimplePagination: React.FC<SimplePaginationProps> = ({
+  page,
+  onPageChange,
+  totalPages,
+}) => {
+  const handlePrevious = () => {
+    if (page > 1) {
+      onPageChange(page - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (page < totalPages) {
+      onPageChange(page + 1);
+    }
+  };
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={handlePrevious}
+            aria-disabled={page <= 1}
+            style={{ pointerEvents: page <= 1 ? "none" : "auto" }}
+          />
+        </PaginationItem>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+          <PaginationItem key={pageNum}>
+            <PaginationLink
+              onClick={() => onPageChange(pageNum)}
+              isActive={pageNum === page}
+            >
+              {pageNum}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationNext
+            onClick={handleNext}
+            aria-disabled={page >= totalPages}
+            style={{ pointerEvents: page >= totalPages ? "none" : "auto" }}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+};
 
 const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
   const isMobile = useIsMobile();
@@ -25,9 +87,9 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
     () =>
       data.filter((sw) =>
         Object.entries(filters).every(([k, v]) => {
-          if (k === "ports") return sw.specs.ports === v;
-          if (k === "power") return sw.specs.power === v;
-          if (k === "features") return sw.specs.tags?.includes(v);
+          if (k === "category") return sw.category === v;
+          if (k === "poe") return sw.poe === v;
+          if (k === "layer3") return sw.layer3.toString() === v;
           return true;
         }),
       ),
@@ -45,7 +107,7 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
         <aside className="w-64 pr-6">
           <CatalogNavigation
             activeFilters={filters}
-            onChange={(key, val) =>
+            onChange={(key: string, val: string) =>
               setFilters((prev) => ({ ...prev, [key]: val }))
             }
           />
@@ -67,7 +129,7 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
               <DialogContent className="w-80">
                 <CatalogNavigation
                   activeFilters={filters}
-                  onChange={(key, val) => {
+                  onChange={(key: string, val: string) => {
                     setFilters((prev) => ({ ...prev, [key]: val }));
                     setPage(1);
                   }}
@@ -87,7 +149,7 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
             <SwitchCard
               key={sw.id}
               switchData={sw}
-              onSpecFilter={(k, v) => {
+              onSpecFilter={(k: string, v: string) => {
                 setFilters((prev) => ({ ...prev, [k]: v }));
                 setPage(1);
               }}
@@ -98,9 +160,9 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
         {/** Пагинация */}
         {pageCount > 1 && (
           <div className="mt-8 flex justify-center">
-            <Pagination
+            <SimplePagination
               page={page}
-              onPageChange={(newPage) => setPage(newPage)}
+              onPageChange={(newPage: number) => setPage(newPage)}
               totalPages={pageCount}
             />
           </div>
