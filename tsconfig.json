@@ -4,26 +4,22 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    // важно: node-resolution для поиска типов в node_modules
-    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    },
-    // чтобы можно было писать `import React from 'react'`
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    // явно подгружаем декларации
-    "typeRoots": ["src/types", "node_modules/@types"]
+      "@/*": ["./src/*"]
+    }
   },
-
-  // захватываем и .tsx, и vite-env.d.ts
-  "include": ["src", "vite-env.d.ts"]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -2,7 +2,6 @@ import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Icon from "@/components/ui/icon";
 
-// Тип одного пункта навигации
 interface NavigationItem {
   id: string;
   name: string;
@@ -10,11 +9,8 @@ interface NavigationItem {
   children?: NavigationItem[];
 }
 
-// Тип пропсов для компонента навигации
-export interface CatalogNavigationProps {
+interface CatalogNavigationProps {
   onNavigate: (sectionId: string) => void;
-  activeFilters: { [key: string]: string };
-  onChange: (key: string, val: string) => void;
   activeSection?: string;
 }
 
@@ -76,14 +72,16 @@ const navigationData: NavigationItem[] = [
 
 const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
   onNavigate,
-  activeFilters,
-  onChange,
   activeSection,
 }) => {
   const isMobile = useIsMobile();
-  const [openMap, setOpenMap] = React.useState<Record<number, string | null>>({});
+  const [openMap, setOpenMap] = React.useState<Record<number, string | null>>(
+    {},
+  );
 
-  if (isMobile) return null;
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div className="bg-white border-r border-gray-200 h-full">
@@ -91,12 +89,10 @@ const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
         <div className="py-6 px-0">
           <nav className="space-y-2 mx-0 px-[7px]">
             {navigationData.map((item) => (
-              <NavigationItemComponent
+              <NavigationItem
                 key={item.id}
                 item={item}
                 onNavigate={onNavigate}
-                onChange={onChange}
-                activeFilters={activeFilters}
                 activeSection={activeSection}
                 level={0}
                 openMap={openMap}
@@ -113,19 +109,17 @@ const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
 interface NavigationItemProps {
   item: NavigationItem;
   onNavigate: (id: string) => void;
-  onChange: (key: string, val: string) => void;
-  activeFilters: { [key: string]: string };
   activeSection?: string;
   level: number;
   openMap: Record<number, string | null>;
-  setOpenMap: React.Dispatch<React.SetStateAction<Record<number, string | null>>>;
+  setOpenMap: React.Dispatch<
+    React.SetStateAction<Record<number, string | null>>
+  >;
 }
 
-const NavigationItemComponent: React.FC<NavigationItemProps> = ({
+const NavigationItem: React.FC<NavigationItemProps> = ({
   item,
   onNavigate,
-  onChange,
-  activeFilters,
   activeSection,
   level,
   openMap,
@@ -137,17 +131,52 @@ const NavigationItemComponent: React.FC<NavigationItemProps> = ({
     e.stopPropagation();
 
     if (item.children) {
+      // Для элементов с детьми только раскрываем/сворачиваем меню
       setOpenMap((prev) => {
-        const next = { ...prev, [level]: prev[level] === item.id ? null : item.id };
+        const next = {
+          ...prev,
+          [level]: prev[level] === item.id ? null : item.id,
+        };
         Object.keys(next).forEach((key) => {
-          if (Number(key) > level) delete next[+key];
+          if (Number(key) > level) delete next[Number(key)];
         });
         return next;
       });
+      // НЕ вызываем onNavigate для элементов с детьми - только toggle меню
     } else {
+      // Для финальных серий выполняем плавный скролл с центрированием
       e.preventDefault();
-      onChange("series", item.id);
       onNavigate(item.id);
+
+      const el = document.getElementById(item.id.toLowerCase());
+      if (el) {
+        // Убираем предыдущую подсветку
+        document.querySelectorAll(".active").forEach((elem) => {
+          elem.classList.remove("active");
+        });
+
+        // Плавный скролл с центрированием
+        el.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+
+        // Удаляем хеш из URL, чтобы псевдокласс :target больше не применялся
+        window.history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search,
+        );
+
+        // Добавляем класс active и слушаем событие animationend
+        el.classList.add("active");
+        el.addEventListener(
+          "animationend",
+          () => el.classList.remove("active"),
+          { once: true },
+        );
+      }
     }
   };
 
@@ -155,13 +184,15 @@ const NavigationItemComponent: React.FC<NavigationItemProps> = ({
     <div>
       <button
         onClick={handleHeaderClick}
-        className={`w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center justify-between
-        ${level === 0 ? "font-semibold" : level === 1 ? "font-medium" : "font-normal"}
-        ${
-          activeSection === item.id
-            ? "bg-gray-100 text-gray-800 border-l-4 border-gray-600"
-            : "text-gray-700 hover:bg-gray-50"
-        }`}
+        className={`
+          w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center justify-between
+          ${level === 0 ? "font-semibold" : level === 1 ? "font-medium" : "font-normal"}
+          ${
+            activeSection === item.id
+              ? "bg-gray-100 text-gray-800 border-l-4 border-gray-600"
+              : "text-gray-700 hover:bg-gray-50"
+          }
+        `}
         style={{ marginLeft: `${level * 12}px` }}
       >
         <div className="flex items-center gap-2">
@@ -184,12 +215,10 @@ const NavigationItemComponent: React.FC<NavigationItemProps> = ({
           }`}
         >
           {item.children.map((child) => (
-            <NavigationItemComponent
+            <NavigationItem
               key={child.id}
               item={child}
               onNavigate={onNavigate}
-              onChange={onChange}
-              activeFilters={activeFilters}
               activeSection={activeSection}
               level={level + 1}
               openMap={openMap}
