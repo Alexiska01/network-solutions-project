@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import Icon from "@/components/ui/icon";
-import { SwitchModel } from "@/types/models";
+import { SwitchModel } from "@/data/switchesData";
 
 const baseStyles = `
   .switch-card-base {
@@ -37,10 +37,7 @@ interface SwitchCardProps {
   onSpecFilter?: (filterKey: string, value: string) => void;
 }
 
-const SwitchCard: React.FC<SwitchCardProps> = ({
-  switchData,
-  onSpecFilter,
-}) => {
+const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = useIsMobile();
   const [isTablet, setIsTablet] = useState(false);
@@ -72,7 +69,7 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
 
   const handleLinkClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    window.open(switchData.url, "_blank");
+    window.location.href = switchData.link;
   };
 
   const CardContent = (
@@ -90,14 +87,29 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
         <div className="flex gap-4 items-center">
           <div className="w-2/5 flex-shrink-0">
             <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Изображение</span>
+              <img
+                src={switchData.image}
+                alt={`${switchData.title} - коммутатор`}
+                className={cn(
+                  "w-full h-full object-cover transition-transform duration-300",
+                  isHovered ? "scale-110" : "scale-100",
+                )}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = "none";
+                  target.nextElementSibling?.classList.remove("hidden");
+                }}
+              />
+              <div className="hidden w-full h-full bg-gray-200 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">
+                  Изображение недоступно
+                </span>
               </div>
             </div>
           </div>
           <div className="flex-1 flex flex-col justify-center">
             <h3 className="text-2xl font-bold text-gray-900 mb-3">
-              {switchData.name}
+              {switchData.title}
             </h3>
             <p className="text-gray-600 text-base mb-4 leading-relaxed">
               {switchData.description}
@@ -105,18 +117,16 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
             <div className="flex items-center gap-3 text-sm text-gray-500 mb-4">
               <span className="bg-gray-100 px-2 py-1 rounded-md flex items-center gap-1">
                 <span className="text-xs">🔌</span>
-                {switchData.ports1G}
+                {switchData.specs.ports}
               </span>
               <span className="bg-gray-100 px-2 py-1 rounded-md flex items-center gap-1">
                 <span className="text-xs">⚡</span>
-                {switchData.ports10G}
+                {switchData.specs.power}
               </span>
-              {switchData.poe && (
-                <span className="bg-gray-100 px-2 py-1 rounded-md flex items-center gap-1">
-                  <span className="text-xs">🔋</span>
-                  {switchData.poe}
-                </span>
-              )}
+              <span className="bg-gray-100 px-2 py-1 rounded-md flex items-center gap-1">
+                <span className="text-xs">📊</span>
+                {switchData.specs.throughput}
+              </span>
             </div>
             <Button
               variant="outline"
@@ -135,12 +145,27 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
       ) : (
         <div className="flex flex-col">
           <div className="aspect-video mb-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-              <span className="text-gray-500 text-sm">Изображение</span>
+            <img
+              src={switchData.image}
+              alt={switchData.title}
+              className={cn(
+                "w-full h-full object-cover transition-transform duration-300",
+                isHovered ? "scale-110" : "scale-100",
+              )}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = "none";
+                target.nextElementSibling?.classList.remove("hidden");
+              }}
+            />
+            <div className="hidden w-full h-full bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500 text-sm">
+                Изображение недоступно
+              </span>
             </div>
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">
-            {switchData.name}
+            {switchData.title}
           </h3>
           <p className="text-gray-600 text-sm mb-3 line-clamp-2">
             {switchData.description}
@@ -166,40 +191,33 @@ const SwitchCard: React.FC<SwitchCardProps> = ({
     <Dialog>
       <DialogTrigger asChild>{CardContent}</DialogTrigger>
       <DialogContent className="max-w-md">
-        <DialogTitle>{switchData.name} — спецификации</DialogTitle>
+        <DialogTitle>{switchData.title} — спецификации</DialogTitle>
         <ul className="space-y-2 mt-4">
           <li>
-            <strong>Порты 1G:</strong>{" "}
+            <strong>Порты:</strong>{" "}
             <button
               className="text-blue-600 hover:underline"
-              onClick={() => onSpecFilter?.("ports1G", switchData.ports1G)}
+              onClick={() => onSpecFilter?.("ports", switchData.specs.ports)}
             >
-              {switchData.ports1G}
+              {switchData.specs.ports}
             </button>
           </li>
           <li>
-            <strong>Порты 10G:</strong>{" "}
+            <strong>Питание:</strong>{" "}
             <button
               className="text-blue-600 hover:underline"
-              onClick={() => onSpecFilter?.("ports10G", switchData.ports10G)}
+              onClick={() => onSpecFilter?.("power", switchData.specs.power)}
             >
-              {switchData.ports10G}
+              {switchData.specs.power}
             </button>
           </li>
-          {switchData.poe && (
-            <li>
-              <strong>PoE:</strong>{" "}
-              <button
-                className="text-blue-600 hover:underline"
-                onClick={() => onSpecFilter?.("poe", switchData.poe || "")}
-              >
-                {switchData.poe}
-              </button>
-            </li>
-          )}
           <li>
-            <strong>Layer 3:</strong>{" "}
-            <span>{switchData.layer3 ? "Да" : "Нет"}</span>
+            <strong>Пропускная способность:</strong>{" "}
+            <span>{switchData.specs.throughput}</span>
+          </li>
+          <li>
+            <strong>Функции:</strong>{" "}
+            <span>{switchData.specs.features.join(", ")}</span>
           </li>
           <li>
             <strong>Категория:</strong>{" "}

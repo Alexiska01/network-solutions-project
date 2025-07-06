@@ -10,12 +10,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { SwitchModel } from "@/types/models";
+import { switchesData, SwitchModel, categoryLabels } from "@/data/switchesData";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 interface SwitchesCatalogProps {
-  data: SwitchModel[];
+  data?: SwitchModel[];
 }
 
 interface SimplePaginationProps {
@@ -84,7 +84,7 @@ const SimplePagination = ({
   );
 };
 
-const SwitchesCatalog = ({ data }: SwitchesCatalogProps) => {
+const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
   const isMobile = useIsMobile();
 
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
@@ -96,8 +96,8 @@ const SwitchesCatalog = ({ data }: SwitchesCatalogProps) => {
       data.filter((sw) =>
         Object.entries(filters).every(([k, v]) => {
           if (k === "category") return sw.category === v;
-          if (k === "poe") return sw.poe === v;
-          if (k === "layer3") return sw.layer3.toString() === v;
+          if (k === "ports") return sw.specs.ports === v;
+          if (k === "power") return sw.specs.power === v;
           return true;
         }),
       ),
@@ -107,13 +107,26 @@ const SwitchesCatalog = ({ data }: SwitchesCatalogProps) => {
   const paged = filtered.slice((page - 1) * pageSize, page * pageSize);
   const pageCount = Math.ceil(filtered.length / pageSize);
 
+  // Группируем данные по категориям для навигации
+  const groupedData = useMemo(() => {
+    const groups: { [key: string]: SwitchModel[] } = {};
+    data.forEach((sw) => {
+      if (!groups[sw.category]) {
+        groups[sw.category] = [];
+      }
+      groups[sw.category].push(sw);
+    });
+    return groups;
+  }, [data]);
+
   return (
     <div className="flex">
       {!isMobile && (
         <aside className="w-64 pr-6">
           <CatalogNavigation
             onNavigate={(sectionId: string) => {
-              setFilters((prev) => ({ ...prev, category: sectionId }));
+              // Очищаем фильтры и устанавливаем новую категорию
+              setFilters({ category: sectionId });
               setPage(1);
             }}
             activeSection={filters.category}
@@ -122,10 +135,16 @@ const SwitchesCatalog = ({ data }: SwitchesCatalogProps) => {
       )}
 
       <main className="flex-1">
-        <div className="mb-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Коммутаторы</h1>
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Коммутаторы</h1>
+          <p className="text-gray-600">
+            Полный каталог коммутаторов для корпоративных сетей и центров
+            обработки данных
+          </p>
+        </div>
 
-          {isMobile && (
+        {isMobile && (
+          <div className="mb-4">
             <Dialog>
               <DialogTrigger asChild>
                 <Button size="sm" variant="outline">
@@ -135,16 +154,49 @@ const SwitchesCatalog = ({ data }: SwitchesCatalogProps) => {
               <DialogContent className="w-80">
                 <CatalogNavigation
                   onNavigate={(sectionId: string) => {
-                    setFilters((prev) => ({ ...prev, category: sectionId }));
+                    setFilters({ category: sectionId });
                     setPage(1);
                   }}
                   activeSection={filters.category}
                 />
               </DialogContent>
             </Dialog>
-          )}
+          </div>
+        )}
+
+        {/* Показываем активный фильтр */}
+        {filters.category && (
+          <div className="mb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-500">Категория:</span>
+              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-sm">
+                {
+                  categoryLabels[
+                    filters.category as keyof typeof categoryLabels
+                  ]
+                }
+              </span>
+              <button
+                onClick={() => {
+                  setFilters({});
+                  setPage(1);
+                }}
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
+                Сбросить
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Показываем количество результатов */}
+        <div className="mb-4">
+          <p className="text-sm text-gray-500">
+            Найдено {filtered.length} коммутаторов
+          </p>
         </div>
 
+        {/* Сетка карточек */}
         <div
           className={
             isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-3 gap-6"
@@ -162,6 +214,7 @@ const SwitchesCatalog = ({ data }: SwitchesCatalogProps) => {
           ))}
         </div>
 
+        {/* Пагинация */}
         {pageCount > 1 && (
           <div className="mt-8 flex justify-center">
             <SimplePagination
@@ -169,6 +222,16 @@ const SwitchesCatalog = ({ data }: SwitchesCatalogProps) => {
               onPageChange={(newPage: number) => setPage(newPage)}
               totalPages={pageCount}
             />
+          </div>
+        )}
+
+        {/* Показываем сообщение если нет результатов */}
+        {filtered.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">Коммутаторы не найдены</p>
+            <p className="text-gray-400 text-sm mt-2">
+              Попробуйте изменить фильтры или сбросить их
+            </p>
           </div>
         )}
       </main>
