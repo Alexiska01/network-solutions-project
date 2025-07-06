@@ -28,64 +28,52 @@ const ModelIDS3530_24P_6XComponent = () => {
             <Icon name="ChevronLeft" className="h-5 w-5" />
           </Button>
         </div>
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col items-center justify-center h-full text-center">
-            {/* Заголовок на две строки */}
-            <h1 className="text-white mb-6 leading-tight">
-              <span className="block text-6xl md:text-8xl font-bold">
-                IDS3530
-              </span>
-              <span className="block text-2xl md:text-3xl font-normal mt-2">
-                — надёжные L2+/L3-коммутаторы
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-white/90 mb-8">
-              для промышленной инфраструктуры
-            </p>
-
-            {/* Сабтайтл */}
-            <div className="text-center mb-8">
-              <p className="text-base md:text-lg text-white/90 mb-6">
-                «До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
-                одной платформе»
-              </p>
-            </div>
-
-            {/* Иконки преимуществ */}
-            <div className="flex flex-wrap justify-center gap-6 mb-8">
-              <div className="flex items-center gap-2 text-white/90">
-                <Icon name="Zap" className="h-5 w-5" />
-                <span className="text-sm">PoE</span>
-              </div>
-              <div className="flex items-center gap-2 text-white/90">
-                <Icon name="Network" className="h-5 w-5" />
-                <span className="text-sm">10G uplink</span>
-              </div>
-              <div className="flex items-center gap-2 text-white/90">
-                <Icon name="Snowflake" className="h-5 w-5" />
-                <span className="text-sm">охлаждение</span>
-              </div>
-              <div className="flex items-center gap-2 text-white/90">
-                <Icon name="Shield" className="h-5 w-5" />
-                <span className="text-sm">L3</span>
-              </div>
-            </div>
-
-            {/* Кнопки-фильтры */}
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button
-                variant="outline"
-                className="bg-white/20 border-white/30 text-white hover:bg-white/30 backdrop-blur-sm px-6 py-3"
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-3 gap-6 md:gap-8 items-start mt-4">
+            <div className="lg:col-span-2">
+              <div
+                style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+                className="rounded-lg overflow-hidden"
               >
-                Только с PoE
-              </Button>
-              <Button
-                variant="outline"
-                className="bg-white/20 border-white/30 text-white hover:bg-white/30 backdrop-blur-sm px-6 py-3"
-              >
-                Только с SFP
-              </Button>
+                <ModelViewer
+                  modelRef={modelViewerRef}
+                  modelPath={ids353024p6xData.modelPath}
+                  indicatorsOn={indicatorsOn}
+                  modelLoaded={modelLoaded}
+                  onToggleIndicators={toggleIndicators}
+                />
+              </div>
             </div>
+
+            <div className="lg:col-span-1">
+              {/* Model Title above the specifications table */}
+              <div className="mb-6 text-center">
+                <h1
+                  className="text-2xl md:text-[32px] font-bold text-white font-montserrat"
+                  style={{ textShadow: "0 1px 2px rgba(0, 0, 0, 0.1)" }}
+                >
+                  {ids353024p6xData.title}
+                </h1>
+              </div>
+
+              <SpecTable
+                title="Основные характеристики"
+                specs={ids353024p6xData.basicSpecs}
+              />
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4 mt-8 justify-center">
+            <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-hero hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px]">
+              Скачать характеристики
+            </button>
+            <button
+              onClick={() => navigate("/partners")}
+              className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:border-gradient-brand transition-all duration-300 font-sans min-h-[44px]"
+            >
+              Запросить цену
+            </button>
           </div>
         </div>
       </section>
