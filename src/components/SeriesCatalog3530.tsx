@@ -341,7 +341,7 @@ const SeriesCatalog3530Component = () => {
             {/* IDS3530-24P-6X */}
             {(filter === "all" || filter === "poe") && (
               <motion.div
-                className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative"
+                className="group bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300 hover:-translate-y-1 hover:scale-105 relative"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -359,7 +359,7 @@ const SeriesCatalog3530Component = () => {
                     <Icon name="Plus" className="h-4 w-4" />
                   </button>
                 </div>
-                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
+                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans group-hover:text-brand-primary transition-colors">
                   IDS3530-24P-6X
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
@@ -371,7 +371,10 @@ const SeriesCatalog3530Component = () => {
                     (window.location.href = "/products/switches/ids3530/24p-6x")
                   }
                 >
-                  <Icon name="Info" className="mr-2" />
+                  <Icon
+                    name="Info"
+                    className="mr-2 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
+                  />
                   Подробнее
                 </Button>
               </motion.div>
@@ -380,7 +383,7 @@ const SeriesCatalog3530Component = () => {
             {/* IDS3530-48P-6X */}
             {(filter === "all" || filter === "poe") && (
               <motion.div
-                className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative"
+                className="group bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300 hover:-translate-y-1 hover:scale-105 relative"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -398,7 +401,7 @@ const SeriesCatalog3530Component = () => {
                     <Icon name="Plus" className="h-4 w-4" />
                   </button>
                 </div>
-                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
+                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans group-hover:text-brand-primary transition-colors">
                   IDS3530-48P-6X
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
@@ -410,7 +413,10 @@ const SeriesCatalog3530Component = () => {
                     (window.location.href = "/models/ids3530-48p-6x.html")
                   }
                 >
-                  <Icon name="Info" className="mr-2" />
+                  <Icon
+                    name="Info"
+                    className="mr-2 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
+                  />
                   Подробнее
                 </Button>
               </motion.div>
@@ -419,7 +425,7 @@ const SeriesCatalog3530Component = () => {
             {/* IDS3530-24S-8T-6X */}
             {(filter === "all" || filter === "sfp") && (
               <motion.div
-                className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative"
+                className="group bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300 hover:-translate-y-1 hover:scale-105 relative"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
@@ -437,7 +443,7 @@ const SeriesCatalog3530Component = () => {
                     <Icon name="Plus" className="h-4 w-4" />
                   </button>
                 </div>
-                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
+                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans group-hover:text-brand-primary transition-colors">
                   IDS3530-24S-8T-6X
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
@@ -458,7 +464,7 @@ const SeriesCatalog3530Component = () => {
             {/* IDS3530-48T-6X */}
             {(filter === "all" || filter === "sfp") && (
               <motion.div
-                className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative"
+                className="group bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300 hover:-translate-y-1 hover:scale-105 relative"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
@@ -476,7 +482,7 @@ const SeriesCatalog3530Component = () => {
                     <Icon name="Plus" className="h-4 w-4" />
                   </button>
                 </div>
-                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
+                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans group-hover:text-brand-primary transition-colors">
                   IDS3530-48T-6X
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
@@ -488,7 +494,10 @@ const SeriesCatalog3530Component = () => {
                     (window.location.href = "/models/ids3530-48t-6x.html")
                   }
                 >
-                  <Icon name="Info" className="mr-2" />
+                  <Icon
+                    name="Info"
+                    className="mr-2 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
+                  />
                   Подробнее
                 </Button>
               </motion.div>
