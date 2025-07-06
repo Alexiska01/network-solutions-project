@@ -144,7 +144,7 @@ const SeriesCatalog3530Component = () => {
                   }}
                 >
                   <motion.div
-                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer shadow-sm"
+                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
                       visible: {
@@ -177,7 +177,7 @@ const SeriesCatalog3530Component = () => {
                     </p>
                   </motion.div>
                   <motion.div
-                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer shadow-sm"
+                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
                       visible: {
@@ -210,7 +210,7 @@ const SeriesCatalog3530Component = () => {
                     </p>
                   </motion.div>
                   <motion.div
-                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer shadow-sm"
+                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
                       visible: {
@@ -243,7 +243,7 @@ const SeriesCatalog3530Component = () => {
                     </p>
                   </motion.div>
                   <motion.div
-                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer shadow-sm"
+                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
                       visible: {
