@@ -1,0 +1,83 @@
+import { SwitchModel, FeatureIcon } from "@/types/models";
+
+export const switchModels: SwitchModel[] = [
+  {
+    id: "IDS3530-24P-6X",
+    name: "IDS3530-24P-6X",
+    description: "24×1G Base-T, 6×10G SFP+, PoE 380 Вт",
+    ports1G: "24×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: "380 Вт",
+    layer3: true,
+    category: "poe",
+    url: "/products/switches/ids3530/24p-6x",
+    animationDelay: 0.1,
+  },
+  {
+    id: "IDS3530-48P-6X",
+    name: "IDS3530-48P-6X",
+    description: "48×1G Base-T, 6×10G SFP+, PoE 760 Вт",
+    ports1G: "48×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: "760 Вт",
+    layer3: true,
+    category: "poe",
+    url: "/models/ids3530-48p-6x.html",
+    animationDelay: 0.2,
+  },
+  {
+    id: "IDS3530-24S-8T-6X",
+    name: "IDS3530-24S-8T-6X",
+    description: "24×1G SFP, 8×1G Base-T, 6×10G SFP+",
+    ports1G: "24×1G SFP + 8×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids3530-24s-8t-6x.html",
+    animationDelay: 0.3,
+  },
+  {
+    id: "IDS3530-48T-6X",
+    name: "IDS3530-48T-6X",
+    description: "48×1G Base-T, 6×10G SFP+",
+    ports1G: "48×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids3530-48t-6x.html",
+    animationDelay: 0.4,
+  },
+];
+
+export const featureIcons: FeatureIcon[] = [
+  {
+    name: "poe",
+    icon: "Zap",
+    title: "PoE до 760Вт",
+    description: "Питание устройств",
+    ariaLabel: "Power over Ethernet до 760 Ватт",
+  },
+  {
+    name: "uplink",
+    icon: "Network",
+    title: "10G uplink",
+    description: "Высокая скорость",
+    ariaLabel: "10 гигабитный uplink",
+  },
+  {
+    name: "cooling",
+    icon: "Fan",
+    title: "Охлаждение",
+    description: "Стабильная работа",
+    ariaLabel: "Охлаждение и стабильная работа",
+  },
+  {
+    name: "layer3",
+    icon: "Shield",
+    title: "Layer 3",
+    description: "Маршрутизация",
+    ariaLabel: "Надёжная защита сети",
+  },
+];
