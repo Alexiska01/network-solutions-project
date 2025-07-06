@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import Icon from "@/components/ui/icon";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import ModelCard from "@/components/ModelCard";
 import FeatureIconsGrid from "@/components/FeatureIconsGrid";
 import FilterButtons from "@/components/FilterButtons";
@@ -10,7 +9,7 @@ import ComparisonModal from "@/components/ComparisonModal";
 import { switchModels, featureIcons } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
 
-const SeriesCatalog3530Component = () => {
+const SeriesCatalog3530Component: React.FC = () => {
   const [filter, setFilter] = useState<FilterType>("all");
   const [compareModels, setCompareModels] = useState<string[]>([]);
   const [showCompareModal, setShowCompareModal] = useState(false);
@@ -36,12 +35,20 @@ const SeriesCatalog3530Component = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-        <style jsx>{`
+        <style jsx global>{`
           @media (prefers-reduced-motion: reduce) {
             * {
               animation-duration: 0.01ms !important;
               animation-iteration-count: 1 !important;
               transition-duration: 0.01ms !important;
+            }
+          }
+          @keyframes vanta-grid {
+            0% {
+              transform: translate(0, 0);
+            }
+            100% {
+              transform: translate(50px, 50px);
             }
           }
         `}</style>
@@ -64,34 +71,19 @@ const SeriesCatalog3530Component = () => {
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.2,
-                type: "spring",
-                stiffness: 100,
-              }}
+              transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
             >
               <motion.h1
                 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.3,
-                  type: "spring",
-                  stiffness: 120,
-                }}
+                transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 120 }}
               >
                 <motion.span
                   className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.4,
-                    type: "spring",
-                    stiffness: 140,
-                  }}
+                  transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 140 }}
                 >
                   IDS3530
                 </motion.span>
@@ -118,8 +110,7 @@ const SeriesCatalog3530Component = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.0 }}
               >
-                До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
-                одной платформе
+                До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в одной платформе
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4"
@@ -152,18 +143,6 @@ const SeriesCatalog3530Component = () => {
             </motion.div>
           </div>
         </div>
-
-        {/* CSS Animation */}
-        <style jsx>{`
-          @keyframes vanta-grid {
-            0% {
-              transform: translate(0, 0);
-            }
-            100% {
-              transform: translate(50px, 50px);
-            }
-          }
-        `}</style>
       </section>
 
       {/* Models Section */}
@@ -182,14 +161,12 @@ const SeriesCatalog3530Component = () => {
             <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans mb-8">
               Выберите оптимальную конфигурацию для ваших задач
             </p>
-
             <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredModels.map((model, index) => (
               <ModelCard
-                key={`${model.id}-${filter}`}
+                key={model.id}
                 model={model}
                 isInCompareList={compareModels.includes(model.id)}
                 onToggleCompare={toggleCompareModel}
@@ -226,15 +203,11 @@ const SeriesCatalog3530Component = () => {
         viewport={{ once: true }}
       >
         <div className="max-w-4xl mx-auto text-center">
-          <h2
-            className="font-semibold text-gray-900 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[24px] text-2xl leading-snug"
-          >
+          <h2 className="font-semibold text-gray-900 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[24px] text-2xl leading-snug">
             Нужна помощь с выбором оборудования?
             <span className="block w-12 h-1 bg-brand-primary mt-2 mx-auto"></span>
           </h2>
-          <p
-            className="text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px] text-lg leading-relaxed"
-          >
+          <p className="text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px] text-lg leading-relaxed">
             Свяжитесь с нашими партнерами!
           </p>
           <Button
