@@ -3,12 +3,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import CatalogNavigation from "@/components/CatalogNavigation";
 import SwitchCard from "@/components/SwitchCard";
 import { Pagination } from "@/components/ui/pagination";
-import { SwitchData } from "@/types";
+import { SwitchModel } from "@/types/models";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 interface SwitchesCatalogProps {
-  data: SwitchData[];
+  data: SwitchModel[];
 }
 
 const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
@@ -24,11 +24,14 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
   const filtered = useMemo(
     () =>
       data.filter((sw) =>
-        Object.entries(filters).every(
-          ([k, v]) => String((sw.specs as any)[k]) === v
-        )
+        Object.entries(filters).every(([k, v]) => {
+          if (k === "ports") return sw.specs.ports === v;
+          if (k === "power") return sw.specs.power === v;
+          if (k === "features") return sw.specs.tags?.includes(v);
+          return true;
+        }),
       ),
-    [data, filters]
+    [data, filters],
   );
 
   // Пагинация
@@ -75,7 +78,11 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
         </div>
 
         {/** Сетка карточек: 1 колонка на мобилках, 3 на десктопе */}
-        <div className={isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-3 gap-6"}>
+        <div
+          className={
+            isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-3 gap-6"
+          }
+        >
           {paged.map((sw) => (
             <SwitchCard
               key={sw.id}
