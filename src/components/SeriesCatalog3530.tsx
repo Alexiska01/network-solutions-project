@@ -10,7 +10,7 @@ const SeriesCatalog3530Component = () => {
       <section
         className="text-white py-8 md:py-12 lg:py-16 xl:py-20 relative"
         style={{
-          minHeight: "600px",
+          minHeight: "100vh",
           background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
           overflow: "hidden",
         }}
@@ -28,8 +28,8 @@ const SeriesCatalog3530Component = () => {
           }}
         />
 
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col items-center justify-center h-full text-center">
+        <div className="max-w-6xl mx-auto px-6 relative z-10 h-full">
+          <div className="flex flex-col items-center justify-center h-full text-center min-h-screen">
             {/* Заголовок на две строки */}
             <h1 className="text-white mb-6 leading-tight">
               <span className="block text-6xl md:text-8xl font-bold">
@@ -111,31 +111,51 @@ const SeriesCatalog3530Component = () => {
               Ключевые преимущества
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <BenefitCard
-              icon="Zap"
-              iconColor="bg-gradient-to-r from-[#003A85] to-[#0063C2]"
-              title="PoE/PoE+ до 880 Вт"
-              description="Надёжное питание устройств"
-            />
-            <BenefitCard
-              icon="Network"
-              iconColor="bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8]"
-              title="10G uplink (SFP+)"
-              description="Высокоскоростное подключение"
-            />
-            <BenefitCard
-              icon="Fan"
-              iconColor="bg-gradient-to-r from-[#553C9A] to-[#B794F4]"
-              title="Надёжное охлаждение и фиксированные БП"
-              description="Стабильная работа 24/7"
-            />
-            <BenefitCard
-              icon="Shield"
-              iconColor="bg-gradient-to-r from-[#DD6B20] to-[#F6AD55]"
-              title="Поддержка Layer 3 и резервирования"
-              description="Отказоустойчивость сети"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-gradient-to-r from-[#003A85] to-[#0063C2] mb-4">
+                <Icon name="Zap" className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 font-sans">
+                PoE до 880 Вт
+              </h3>
+              <p className="text-sm text-gray-600 font-sans">
+                10G uplink, надёжное охлаждение и поддержка Layer 3
+              </p>
+            </div>
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8] mb-4">
+                <Icon name="Network" className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 font-sans">
+                10G uplink
+              </h3>
+              <p className="text-sm text-gray-600 font-sans">
+                надёжное охлаждение
+              </p>
+            </div>
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-gradient-to-r from-[#553C9A] to-[#B794F4] mb-4">
+                <Icon name="Fan" className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 font-sans">
+                охлаждение
+              </h3>
+              <p className="text-sm text-gray-600 font-sans">
+                и поддержка Layer 3
+              </p>
+            </div>
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-gradient-to-r from-[#DD6B20] to-[#F6AD55] mb-4">
+                <Icon name="Shield" className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 font-sans">
+                L3
+              </h3>
+              <p className="text-sm text-gray-600 font-sans">
+                поддержка Layer 3
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -148,7 +168,8 @@ const SeriesCatalog3530Component = () => {
               Модели серии IDS3530
             </h2>
             <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans">
-              Выберите оптимальную конфигурацию для ваших задач
+              Сетка из карточек моделей (по две в ряд на десктопе, одна на
+              мобильном)
             </p>
           </div>
 
@@ -159,7 +180,7 @@ const SeriesCatalog3530Component = () => {
                 IDS3530-24P-6X
               </h3>
               <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G Base-T, 6×10G SFP+, PoE 380 Вт
+                название модели, описание портов и PoE
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
@@ -178,7 +199,7 @@ const SeriesCatalog3530Component = () => {
                 IDS3530-48P-6X
               </h3>
               <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                48×1G Base-T, 6×10G SFP+, PoE 760 Вт
+                название модели, описание портов и PoE
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
@@ -197,7 +218,7 @@ const SeriesCatalog3530Component = () => {
                 IDS3530-24S-8T-6X
               </h3>
               <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G SFP, 8×1G Base-T, 6×10G SFP+
+                название модели, описание портов и PoE
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
@@ -216,7 +237,7 @@ const SeriesCatalog3530Component = () => {
                 IDS3530-48T-6X
               </h3>
               <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                48×1G Base-T, 6×10G SFP+
+                название модели, описание портов и PoE
               </p>
               <Button
                 className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
@@ -227,6 +248,47 @@ const SeriesCatalog3530Component = () => {
                 <Icon name="Info" className="mr-2" />
                 Подробнее
               </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Panel */}
+      <section className="py-16 px-6 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
+              Панель сравнения
+            </h2>
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans">
+              Если пользователь выбрал хотя бы две модели, внизу появляется
+              компактная полоса с пиктограммами выбранных устройств и кнопкой
+              «Сравнить»
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+            <div className="flex items-center justify-between">
+              <div className="text-lg font-semibold text-gray-900 font-sans">
+                Выбрано для сравнения: 2 модели
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Icon name="Network" className="h-6 w-6 text-brand-primary" />
+                  <span className="text-sm text-gray-600 font-sans">
+                    IDS3530-24P-6X
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Icon name="Network" className="h-6 w-6 text-brand-primary" />
+                  <span className="text-sm text-gray-600 font-sans">
+                    IDS3530-48P-6X
+                  </span>
+                </div>
+                <Button className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-6 py-2">
+                  Сравнить
+                </Button>
+              </div>
             </div>
           </div>
         </div>
