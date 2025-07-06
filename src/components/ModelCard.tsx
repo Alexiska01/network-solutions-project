@@ -19,9 +19,14 @@ const ModelCard: React.FC<ModelCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="group bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 relative"
+      className="group bg-white rounded-xl shadow-lg p-8 relative"
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
+      whileHover={{
+        y: -4,
+        scale: 1.02,
+        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+      }}
       transition={{ duration: 0.5, delay: model.animationDelay }}
       viewport={{ once: true }}
     >
