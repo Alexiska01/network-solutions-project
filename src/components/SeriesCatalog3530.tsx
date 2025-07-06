@@ -45,23 +45,38 @@ const SeriesCatalog3530Component = () => {
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                type: "spring",
+                stiffness: 100,
+              }}
             >
-              <motion.h1 
+              <motion.h1
                 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 120 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.3,
+                  type: "spring",
+                  stiffness: 120,
+                }}
               >
-                <motion.span 
+                <motion.span
                   className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold"
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 140 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 0.4,
+                    type: "spring",
+                    stiffness: 140,
+                  }}
                 >
                   IDS3530
                 </motion.span>
-                <motion.span 
+                <motion.span
                   className="block text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-normal mt-2"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -70,7 +85,7 @@ const SeriesCatalog3530Component = () => {
                   — надёжные L2+/L3-коммутаторы
                 </motion.span>
               </motion.h1>
-              <motion.p 
+              <motion.p
                 className="text-sm md:text-base lg:text-lg xl:text-xl mb-2 md:mb-3 text-blue-100 leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -78,7 +93,7 @@ const SeriesCatalog3530Component = () => {
               >
                 для распределённых корпоративных сетей
               </motion.p>
-              <motion.p 
+              <motion.p
                 className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-3xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -87,7 +102,7 @@ const SeriesCatalog3530Component = () => {
                 До 760 Вт PoE+, модульные блоки питания, uplink 10G — всё в
                 одной платформе
               </motion.p>
-              <motion.div 
+              <motion.div
                 className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -99,21 +114,21 @@ const SeriesCatalog3530Component = () => {
                 <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg">
                   Получить консультацию
                 </button>
-              </div>
-            </div>
-            <motion.div 
+              </motion.div>
+            </motion.div>
+            <motion.div
               className="relative mt-6 md:mt-8 lg:mt-0"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <motion.div 
+              <motion.div
                 className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 transition-all duration-300 hover:bg-white/15 hover:scale-105"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
               >
-                <motion.div 
+                <motion.div
                   className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6"
                   initial="hidden"
                   animate="visible"
@@ -123,29 +138,29 @@ const SeriesCatalog3530Component = () => {
                       opacity: 1,
                       transition: {
                         staggerChildren: 0.2,
-                        delayChildren: 0.9
-                      }
-                    }
+                        delayChildren: 0.9,
+                      },
+                    },
                   }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2 cursor-pointer"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
-                      visible: { 
-                        opacity: 1, 
-                        scale: 1, 
+                      visible: {
+                        opacity: 1,
+                        scale: 1,
                         y: 0,
-                        transition: { 
-                          type: "spring", 
-                          stiffness: 200, 
-                          damping: 20 
-                        }
-                      }
+                        transition: {
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 20,
+                        },
+                      },
                     }}
-                    whileHover={{ 
-                      scale: 1.05, 
-                      transition: { duration: 0.2 } 
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.2 },
                     }}
                     aria-label="Power over Ethernet до 760 Ватт"
                   >
@@ -161,24 +176,24 @@ const SeriesCatalog3530Component = () => {
                       Питание устройств
                     </p>
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2 cursor-pointer"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
-                      visible: { 
-                        opacity: 1, 
-                        scale: 1, 
+                      visible: {
+                        opacity: 1,
+                        scale: 1,
                         y: 0,
-                        transition: { 
-                          type: "spring", 
-                          stiffness: 200, 
-                          damping: 20 
-                        }
-                      }
+                        transition: {
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 20,
+                        },
+                      },
                     }}
-                    whileHover={{ 
-                      scale: 1.05, 
-                      transition: { duration: 0.2 } 
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.2 },
                     }}
                     aria-label="10 гигабитный uplink"
                   >
@@ -194,24 +209,24 @@ const SeriesCatalog3530Component = () => {
                       Высокая скорость
                     </p>
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2 cursor-pointer"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
-                      visible: { 
-                        opacity: 1, 
-                        scale: 1, 
+                      visible: {
+                        opacity: 1,
+                        scale: 1,
                         y: 0,
-                        transition: { 
-                          type: "spring", 
-                          stiffness: 200, 
-                          damping: 20 
-                        }
-                      }
+                        transition: {
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 20,
+                        },
+                      },
                     }}
-                    whileHover={{ 
-                      scale: 1.05, 
-                      transition: { duration: 0.2 } 
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.2 },
                     }}
                     aria-label="Охлаждение и стабильная работа"
                   >
@@ -227,24 +242,24 @@ const SeriesCatalog3530Component = () => {
                       Стабильная работа
                     </p>
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2 cursor-pointer"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
-                      visible: { 
-                        opacity: 1, 
-                        scale: 1, 
+                      visible: {
+                        opacity: 1,
+                        scale: 1,
                         y: 0,
-                        transition: { 
-                          type: "spring", 
-                          stiffness: 200, 
-                          damping: 20 
-                        }
-                      }
+                        transition: {
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 20,
+                        },
+                      },
                     }}
-                    whileHover={{ 
-                      scale: 1.05, 
-                      transition: { duration: 0.2 } 
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.2 },
                     }}
                     aria-label="Надёжная защита сети"
                   >
