@@ -217,34 +217,34 @@ const SeriesCatalog3530Component = () => {
         onRemoveModel={toggleCompareModel}
       />
 
-{/* CTA Section */}
-<motion.section
-  className="py-16 px-6 bg-white"
-  initial={{ opacity: 0, y: 50 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
-  viewport={{ once: true }}
->
-  <div className="max-w-4xl mx-auto text-center">
-    <h2
-      className="font-semibold text-gray-900 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[24px] text-2xl leading-snug"
-    >
-      Нужна помощь с выбором оборудования?
-      <span className="block w-12 h-1 bg-brand-primary mt-2 mx-auto"></span>
-    </h2>
-    <p
-      className="text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[17px] text-lg leading-relaxed"
-    >
-      Свяжитесь с нашими партнерами!
-    </p>
-    <Button
-      size="lg"
-      className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
-    >
-      Связаться с партнером
-    </Button>
-  </div>
-</motion.section>
+      {/* CTA Section */}
+      <motion.section
+        className="py-16 px-6 bg-white"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <h2
+            className="font-semibold text-gray-900 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[24px] text-2xl leading-snug"
+          >
+            Нужна помощь с выбором оборудования?
+            <span className="block w-12 h-1 bg-brand-primary mt-2 mx-auto"></span>
+          </h2>
+          <p
+            className="text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px] text-lg leading-relaxed"
+          >
+            Свяжитесь с нашими партнерами!
+          </p>
+          <Button
+            size="lg"
+            className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
+          >
+            Связаться с партнером
+          </Button>
+        </div>
+      </motion.section>
     </div>
   );
 };
