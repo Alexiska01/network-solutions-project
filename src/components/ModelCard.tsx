@@ -9,6 +9,7 @@ interface ModelCardProps {
   isInCompareList: boolean;
   onToggleCompare: (modelId: string) => void;
   onNavigate: (url: string) => void;
+  animationDelay?: number;
 }
 
 const ModelCard: React.FC<ModelCardProps> = ({
@@ -16,14 +17,14 @@ const ModelCard: React.FC<ModelCardProps> = ({
   isInCompareList,
   onToggleCompare,
   onNavigate,
+  animationDelay = 0,
 }) => {
   return (
     <motion.div
       className="group bg-white rounded-xl shadow-lg border border-gray-200 p-8 relative transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: model.animationDelay }}
-      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: animationDelay }}
     >
       <div className="absolute top-4 right-4">
         <button
