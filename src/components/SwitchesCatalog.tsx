@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CatalogNavigation from "@/components/CatalogNavigation";
 import SwitchCard from "@/components/SwitchCard";
@@ -24,29 +24,30 @@ interface SimplePaginationProps {
   totalPages: number;
 }
 
-const SimplePagination: React.FC<SimplePaginationProps> = ({
+const SimplePagination = ({
   page,
   onPageChange,
   totalPages,
-}) => {
-  const handlePrevious = (e: React.MouseEvent) => {
+}: SimplePaginationProps) => {
+  const handlePrevious = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (page > 1) {
       onPageChange(page - 1);
     }
   };
 
-  const handleNext = (e: React.MouseEvent) => {
+  const handleNext = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (page < totalPages) {
       onPageChange(page + 1);
     }
   };
 
-  const handlePageClick = (pageNum: number) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    onPageChange(pageNum);
-  };
+  const handlePageClick =
+    (pageNum: number) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      onPageChange(pageNum);
+    };
 
   return (
     <Pagination>
@@ -83,16 +84,13 @@ const SimplePagination: React.FC<SimplePaginationProps> = ({
   );
 };
 
-const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
+const SwitchesCatalog = ({ data }: SwitchesCatalogProps) => {
   const isMobile = useIsMobile();
 
-  // Состояние фильтров
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
-  // Состояние текущей страницы
   const [page, setPage] = useState(1);
   const pageSize = 12;
 
-  // Фильтрация
   const filtered = useMemo(
     () =>
       data.filter((sw) =>
@@ -106,7 +104,6 @@ const SwitchesCatalog: React.FC<SwitchesCatalogProps> = ({ data }) => {
     [data, filters],
   );
 
-  // Пагинация
   const paged = filtered.slice((page - 1) * pageSize, page * pageSize);
   const pageCount = Math.ceil(filtered.length / pageSize);
 
