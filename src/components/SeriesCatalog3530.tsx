@@ -24,12 +24,13 @@ const SeriesCatalog3530Component: React.FC = () => {
     window.location.href = url;
   };
 
-  const filteredModels = switchModels.filter((model) => {
-    if (filter === "all") return true;
-    if (filter === "poe") return model.category === "poe";
-    if (filter === "sfp") return model.category === "sfp";
-    return true;
-  });
+    const filteredModels = switchModels.filter((model) => {
+      if (filter === "all") return true;
+      if (filter === "poe") return model.features.includes("poe");
+      if (filter === "sfp") return model.features.includes("sfp");
+      return true;
+    });
+
 
   return (
     <div className="mmin-h-screen">
@@ -204,9 +205,8 @@ const SeriesCatalog3530Component: React.FC = () => {
         viewport={{ once: true }}
       >
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-semibold text-gray-900 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[24px] text-2xl leading-snug">
+          <h2 className="cta-title w-[90%] md:w-[70%] font-sans">
             Нужна помощь с выбором оборудования?
-            <div className="w-20 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-4"></div>
           </h2>
           <p className="text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px] text-lg leading-relaxed">
             Свяжитесь с нашими партнёрами!

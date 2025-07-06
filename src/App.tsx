@@ -4,12 +4,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import SeriesCatalog from "./pages/SeriesCatalog";
+import SeriesCatalog from "./pages/SwitchesCatalog";
 import SeriesCatalog3730 from "./pages/SeriesCatalog3730";
 import SeriesCatalog3530 from "./pages/SeriesCatalog3530";
 import SeriesCatalog4530 from "./pages/SeriesCatalog4530";
 import SeriesCatalog6010 from "./pages/SeriesCatalog6010";
 import SwitchesCatalog from "./pages/SwitchesCatalog";
+import { switchModels } from "@/data/switchModels";
 import ModelIDS3530_24P_6X from "./pages/ModelIDS3530_24P_6X";
 import Partners from "./pages/Partners";
 import NotFound from "./pages/NotFound";
@@ -50,7 +51,7 @@ const App = () => (
             element={<ModelIDS3530_24P_6X />}
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="/switches" element={<SwitchesCatalog />} />
+          <Route path="/switches" element={<SwitchesCatalog data={switchModels} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -10,9 +10,8 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import Icon from "@/components/ui/icon";
-import { SwitchModel } from "@/data/switchesData";
+import { SwitchModel } from "@/types/models";
 
-// Базовые стили для карточек
 const baseStyles = `
   .switch-card-base {
     position: relative;
@@ -44,12 +43,10 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    // Внедряем базовые стили
     const styleElement = document.createElement("style");
     styleElement.textContent = baseStyles;
     document.head.appendChild(styleElement);
 
-    // Определяем tablet
     const checkTablet = () => {
       setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
     };
@@ -80,7 +77,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
       id={switchData.id.toLowerCase()}
       tabIndex={0}
       className={cn(
-        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none",
+        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -95,7 +92,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                 alt={`${switchData.title} - коммутатор`}
                 className={cn(
                   "w-full h-full object-cover transition-transform duration-300",
-                  isHovered ? "scale-110" : "scale-100",
+                  isHovered ? "scale-110" : "scale-100"
                 )}
               />
             </div>
@@ -139,7 +136,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
               alt={switchData.title}
               className={cn(
                 "w-full h-full object-cover transition-transform duration-300",
-                isHovered ? "scale-110" : "scale-100",
+                isHovered ? "scale-110" : "scale-100"
               )}
             />
           </div>
@@ -197,7 +194,20 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             {switchData.specs.throughput}
           </li>
           <li>
-            <strong>Функции:</strong> {switchData.specs.features.join(", ")}
+            <strong>Функции:</strong>{" "}
+            {switchData.features.length > 0 ? (
+              switchData.features.map((feature, i) => (
+                <button
+                  key={i}
+                  className="text-blue-600 hover:underline mr-1"
+                  onClick={() => onSpecFilter?.("features", feature)}
+                >
+                  {feature}
+                </button>
+              ))
+            ) : (
+              <span className="text-gray-500">Нет</span>
+            )}
           </li>
         </ul>
         <DialogClose asChild>
