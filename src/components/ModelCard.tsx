@@ -26,6 +26,7 @@ const ModelCard: React.FC<ModelCardProps> = ({
         y: -4,
         scale: 1.02,
         boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+        transition: { duration: 0.2 },
       }}
       transition={{ duration: 0.5, delay: model.animationDelay }}
       viewport={{ once: true }}
