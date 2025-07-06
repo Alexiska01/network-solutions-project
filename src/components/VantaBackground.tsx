@@ -1,16 +1,37 @@
 // src/components/VantaBackground.tsx
-import React from "react";
 
-interface VantaBackgroundProps {
-  effect?: "net" | "waves" | "fog";
+import { useEffect, useRef, useState } from "react"
+import * as THREE from "three"
+import NET from "vanta/dist/vanta.net.min"
+
+const VantaBackground = ({ effect = "net" }) => {
+  const vantaRef = useRef(null)
+  const [vantaEffect, setVantaEffect] = useState(null)
+
+  useEffect(() => {
+    if (!vantaEffect) {
+      setVantaEffect(
+        NET({
+          el: vantaRef.current,
+          THREE,
+          mouseControls: true,
+          touchControls: true,
+          minHeight: 200.0,
+          minWidth: 200.0,
+          scale: 1.0,
+          scaleMobile: 1.0,
+          color: 0x0077ff,
+          backgroundColor: 0x000000
+        })
+      )
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy()
+    }
+  }, [vantaEffect])
+
+  return <div ref={vantaRef} className="absolute inset-0 z-0" />
 }
 
-const VantaBackground: React.FC<VantaBackgroundProps> = ({
-  effect = "net",
-}) => {
-  return (
-    <div className="fixed top-0 left-0 w-full h-full -z-10 bg-gradient-to-br from-slate-900 to-slate-800" />
-  );
-};
+export default VantaBackground
 
-export default VantaBackground;
