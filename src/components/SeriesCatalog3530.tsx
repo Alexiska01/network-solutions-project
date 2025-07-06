@@ -166,7 +166,7 @@ const SeriesCatalog3530Component: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredModels.map((model, index) => (
               <ModelCard
-                key={model.id}
+                key={`${model.id}-${filter}`}
                 model={model}
                 isInCompareList={compareModels.includes(model.id)}
                 onToggleCompare={toggleCompareModel}
