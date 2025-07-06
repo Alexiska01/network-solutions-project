@@ -144,7 +144,7 @@ const SeriesCatalog3530Component = () => {
                   }}
                 >
                   <motion.div
-                    className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2 cursor-pointer"
+                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer shadow-sm"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
                       visible: {
@@ -159,8 +159,8 @@ const SeriesCatalog3530Component = () => {
                       },
                     }}
                     whileHover={{
-                      scale: 1.05,
-                      transition: { duration: 0.2 },
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] },
                     }}
                     aria-label="Power over Ethernet до 760 Ватт"
                   >
@@ -177,7 +177,7 @@ const SeriesCatalog3530Component = () => {
                     </p>
                   </motion.div>
                   <motion.div
-                    className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2 cursor-pointer"
+                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer shadow-sm"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
                       visible: {
@@ -192,8 +192,8 @@ const SeriesCatalog3530Component = () => {
                       },
                     }}
                     whileHover={{
-                      scale: 1.05,
-                      transition: { duration: 0.2 },
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] },
                     }}
                     aria-label="10 гигабитный uplink"
                   >
@@ -210,7 +210,7 @@ const SeriesCatalog3530Component = () => {
                     </p>
                   </motion.div>
                   <motion.div
-                    className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2 cursor-pointer"
+                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer shadow-sm"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
                       visible: {
@@ -225,8 +225,8 @@ const SeriesCatalog3530Component = () => {
                       },
                     }}
                     whileHover={{
-                      scale: 1.05,
-                      transition: { duration: 0.2 },
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] },
                     }}
                     aria-label="Охлаждение и стабильная работа"
                   >
@@ -243,7 +243,7 @@ const SeriesCatalog3530Component = () => {
                     </p>
                   </motion.div>
                   <motion.div
-                    className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2 cursor-pointer"
+                    className="text-center transition-all duration-300 ease-[cubic-bezier(0.33, 1, 0.68, 1)] hover:scale-[1.02] hover:bg-white/15 hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:ring-1 hover:ring-blue-200/40 rounded-lg p-2 cursor-pointer shadow-sm"
                     variants={{
                       hidden: { opacity: 0, scale: 0.8, y: 20 },
                       visible: {
@@ -258,8 +258,8 @@ const SeriesCatalog3530Component = () => {
                       },
                     }}
                     whileHover={{
-                      scale: 1.05,
-                      transition: { duration: 0.2 },
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] },
                     }}
                     aria-label="Надёжная защита сети"
                   >
