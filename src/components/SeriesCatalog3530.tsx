@@ -16,7 +16,7 @@ const SeriesCatalog3530Component: React.FC = () => {
 
   const toggleCompareModel = (model: string) => {
     setCompareModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
     );
   };
 
@@ -32,26 +32,27 @@ const SeriesCatalog3530Component: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen">
+    <div className="mmin-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-        <style jsx global>{`
-          @media (prefers-reduced-motion: reduce) {
-            * {
-              animation-duration: 0.01ms !important;
-              animation-iteration-count: 1 !important;
-              transition-duration: 0.01ms !important;
-            }
-          }
-          @keyframes vanta-grid {
-            0% {
-              transform: translate(0, 0);
-            }
-            100% {
-              transform: translate(50px, 50px);
-            }
-          }
-        `}</style>
+        {/* Вставляем глобальный CSS без styled-jsx */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              @media (prefers-reduced-motion: reduce) {
+                * {
+                  animation-duration: 0.01ms !important;
+                  animation-iteration-count: 1 !important;
+                  transition-duration: 0.01ms !important;
+                }
+              }
+              @keyframes vanta-grid {
+                0% { transform: translate(0, 0); }
+                100% { transform: translate(50px, 50px); }
+              }
+            `,
+          }}
+        />
 
         {/* Animated Grid */}
         <div
