@@ -17,7 +17,7 @@ const SeriesCatalog3530Component = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section - унифицированный с главной страницей */}
-      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden min-h-screen">
+      <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
         {/* Анимированная сетка */}
         <div
           className="absolute inset-0 opacity-30"
@@ -32,7 +32,7 @@ const SeriesCatalog3530Component = () => {
         />
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
-          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center min-h-screen">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
             <div>
               <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default">
                 <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold">
