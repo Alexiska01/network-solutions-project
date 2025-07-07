@@ -135,7 +135,7 @@ const SeriesCatalog4530Component = () => {
                 <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg">
                   Получить консультацию
                 </button>
-              </div>
+              </motion.div>
             </motion.div>
             <motion.div
               className="relative mt-6 md:mt-8 lg:mt-0"
