@@ -51,6 +51,7 @@ const App = () => (
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/switches" element={<SwitchesCatalog />} />
+          <Route path="/products/switches.html" element={<SwitchesCatalog />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

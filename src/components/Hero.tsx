@@ -188,7 +188,7 @@ const Hero = () => {
                 </div>
                 <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
                   <Icon
-                    name="Router"
+                    name="Route"
                     size={20}
                     className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
                   />
