@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Icon from "@/components/ui/icon";
-import BenefitCard from "@/components/BenefitCard";
+import ModelCard from "@/components/ModelCard";
+import FeatureIconsGrid from "@/components/FeatureIconsGrid";
+import FilterButtons from "@/components/FilterButtons";
+import ComparisonPanel from "@/components/ComparisonPanel";
+import ComparisonModal from "@/components/ComparisonModal";
+import { switchModels3730, featureIcons3730 } from "@/data/switchModels";
+import { FilterType } from "@/types/models";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,6 +19,27 @@ import {
 import { Link } from "react-router-dom";
 
 const SeriesCatalog3730Component = () => {
+  const [filter, setFilter] = useState<FilterType>("all");
+  const [compareModels, setCompareModels] = useState<string[]>([]);
+  const [showCompareModal, setShowCompareModal] = useState(false);
+
+  const toggleCompareModel = (model: string) => {
+    setCompareModels((prev) =>
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
+    );
+  };
+
+  const handleNavigate = (url: string) => {
+    window.location.href = url;
+  };
+
+  const filteredModels = switchModels3730.filter((model) => {
+    if (filter === "all") return true;
+    if (filter === "poe") return model.category === "poe";
+    if (filter === "sfp") return model.category === "sfp";
+    return true;
+  });
+
   return (
     <div className="min-h-screen">
       {/* Breadcrumb */}
@@ -46,9 +72,9 @@ const SeriesCatalog3730Component = () => {
           </Breadcrumb>
         </div>
       </div>
+
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-        {/* Animated Grid */}
         <div
           className="absolute inset-0 opacity-30"
           style={{
@@ -60,7 +86,6 @@ const SeriesCatalog3730Component = () => {
             animation: "vanta-grid 20s linear infinite",
           }}
         />
-
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
             <motion.div
@@ -149,34 +174,7 @@ const SeriesCatalog3730Component = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
               >
-                <div className="grid grid-cols-2 gap-4 md:gap-6">
-                  <div className="text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                      <Icon name="Zap" className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <p className="text-xs md:text-sm font-medium">40G uplink</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                      <Icon name="Network" className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <p className="text-xs md:text-sm font-medium">Layer 3</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                      <Icon name="Shield" className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <p className="text-xs md:text-sm font-medium">
-                      DDoS защита
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                      <Icon name="Settings" className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <p className="text-xs md:text-sm font-medium">SNMP</p>
-                  </div>
-                </div>
+                <FeatureIconsGrid features={featureIcons3730} />
               </motion.div>
             </motion.div>
           </div>
@@ -195,44 +193,6 @@ const SeriesCatalog3730Component = () => {
         `}</style>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-16 bg-gradient-to-b from-gray-50/30 to-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <div className="w-20 h-0.5 bg-gradient-hero mx-auto mb-6"></div>
-            <h2 className="text-[20px] md:text-3xl font-bold text-gray-900 font-sans">
-              Ключевые преимущества
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <BenefitCard
-              icon="Zap"
-              iconColor="bg-gradient-to-r from-[#003A85] to-[#0063C2]"
-              title="40G uplink (QSFP+)"
-              description="Максимальная пропускная способность"
-            />
-            <BenefitCard
-              icon="Network"
-              iconColor="bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8]"
-              title="Layer 3 маршрутизация"
-              description="Полнофункциональная маршрутизация"
-            />
-            <BenefitCard
-              icon="Shield"
-              iconColor="bg-gradient-to-r from-[#553C9A] to-[#B794F4]"
-              title="Защита от DDoS"
-              description="Встроенная защита от атак"
-            />
-            <BenefitCard
-              icon="Settings"
-              iconColor="bg-gradient-to-r from-[#DD6B20] to-[#F6AD55]"
-              title="Управление SNMP"
-              description="Централизованное управление"
-            />
-          </div>
-        </div>
-      </section>
-
       {/* Models Section */}
       <motion.section
         className="py-16 px-6 bg-white"
@@ -249,87 +209,40 @@ const SeriesCatalog3730Component = () => {
             <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans mb-8">
               Выберите оптимальную конфигурацию для ваших задач
             </p>
+
+            <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* IDS3730-48T-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS3730-48T-4X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                48×1G Base-T, 4×40G QSFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids3730-48t-4x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS3730-24T-2X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS3730-24T-2X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G Base-T, 2×40G QSFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids3730-24t-2x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS3730-48S-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS3730-48S-4X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                48×1G SFP, 4×40G QSFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids3730-48s-4x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS3730-24S-2X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS3730-24S-2X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G SFP, 2×40G QSFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids3730-24s-2x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
+            {filteredModels.map((model, index) => (
+              <ModelCard
+                key={`${model.id}-${filter}`}
+                model={model}
+                isInCompareList={compareModels.includes(model.id)}
+                onToggleCompare={toggleCompareModel}
+                onNavigate={handleNavigate}
+                animationDelay={index * 0.1}
+              />
+            ))}
           </div>
         </div>
       </motion.section>
+
+      {/* Comparison Panel */}
+      <ComparisonPanel
+        compareModels={compareModels}
+        onClearAll={() => setCompareModels([])}
+        onRemoveModel={toggleCompareModel}
+        onShowModal={() => setShowCompareModal(true)}
+      />
+
+      {/* Comparison Modal */}
+      <ComparisonModal
+        isOpen={showCompareModal}
+        compareModels={compareModels}
+        onClose={() => setShowCompareModal(false)}
+        onRemoveModel={toggleCompareModel}
+      />
 
       {/* CTA Section */}
       <motion.section

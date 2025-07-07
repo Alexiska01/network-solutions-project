@@ -51,6 +51,81 @@ export const switchModels: SwitchModel[] = [
   },
 ];
 
+export const switchModels3730: SwitchModel[] = [
+  {
+    id: "IDS3730-24T-6X",
+    name: "IDS3730-24T-6X",
+    description: "24×1G Base-T, 6×10G SFP+",
+    ports1G: "24×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids3730-24t-6x.html",
+    animationDelay: 0.1,
+  },
+  {
+    id: "IDS3730-48T-6X",
+    name: "IDS3730-48T-6X",
+    description: "48×1G Base-T, 6×10G SFP+",
+    ports1G: "48×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids3730-48t-6x.html",
+    animationDelay: 0.2,
+  },
+  {
+    id: "IDS3730-24P-6X",
+    name: "IDS3730-24P-6X",
+    description: "24×1G Base-T, 6×10G SFP+, PoE 760 Вт",
+    ports1G: "24×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: "760 Вт",
+    layer3: true,
+    category: "poe",
+    url: "/models/ids3730-24p-6x.html",
+    animationDelay: 0.3,
+  },
+  {
+    id: "IDS3730-48P-6X",
+    name: "IDS3730-48P-6X",
+    description: "48×1G Base-T, 6×10G SFP+, PoE 1400 Вт",
+    ports1G: "48×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: "1400 Вт",
+    layer3: true,
+    category: "poe",
+    url: "/models/ids3730-48p-6x.html",
+    animationDelay: 0.4,
+  },
+  {
+    id: "IDS3730-24S-8T-6X",
+    name: "IDS3730-24S-8T-6X",
+    description: "24×1G SFP, 8×1G Base-T, 6×10G SFP+",
+    ports1G: "24×1G SFP + 8×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids3730-24s-8t-6x.html",
+    animationDelay: 0.5,
+  },
+  {
+    id: "IDS3730-48S-6X",
+    name: "IDS3730-48S-6X",
+    description: "48×1G SFP, 6×10G SFP+",
+    ports1G: "48×1G SFP",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids3730-48s-6x.html",
+    animationDelay: 0.6,
+  },
+];
+
 export const featureIcons: FeatureIcon[] = [
   {
     name: "poe",
@@ -79,5 +154,36 @@ export const featureIcons: FeatureIcon[] = [
     title: "Layer 3",
     description: "Маршрутизация",
     ariaLabel: "Надёжная защита сети",
+  },
+];
+
+export const featureIcons3730: FeatureIcon[] = [
+  {
+    name: "uplink40g",
+    icon: "Zap",
+    title: "40G uplink",
+    description: "Максимальная пропускная способность",
+    ariaLabel: "Скоростной 40G uplink",
+  },
+  {
+    name: "layer3",
+    icon: "Network",
+    title: "Layer 3",
+    description: "Полнофункциональная маршрутизация",
+    ariaLabel: "Layer 3 маршрутизация",
+  },
+  {
+    name: "ddos",
+    icon: "Shield",
+    title: "DDoS защита",
+    description: "Встроенная защита от атак",
+    ariaLabel: "Защита от DDoS-атак",
+  },
+  {
+    name: "snmp",
+    icon: "Settings",
+    title: "SNMP",
+    description: "Централизованное управление",
+    ariaLabel: "Поддержка протокола SNMP",
   },
 ];
