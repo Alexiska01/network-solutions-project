@@ -1,6 +1,5 @@
 import { useState,} from "react";
 import { Button } from "@/components/ui/button";
-import Icon from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import ModelCard from "@/components/ModelCard";
 import FeatureIconsGrid from "@/components/FeatureIconsGrid";
@@ -9,6 +8,15 @@ import ComparisonPanel from "@/components/ComparisonPanel";
 import ComparisonModal from "@/components/ComparisonModal";
 import { switchModels, featureIcons } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Link } from "react-router-dom";
 
 const SeriesCatalog3530Component = () => {
   const [filter, setFilter] = useState<FilterType>("all");
@@ -34,6 +42,37 @@ const SeriesCatalog3530Component = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Breadcrumb */}
+      <div className="bg-gray-50">
+        <div className="max-w-7xl mx-auto py-4 px-[35px]">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Главная</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/products">Продукты</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/switches">Коммутаторы</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>IDS3530</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
         {/* Animated Grid */}
