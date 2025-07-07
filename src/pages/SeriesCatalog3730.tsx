@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SeriesCatalog3730Component from "@/components/SeriesCatalog3730";

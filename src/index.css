@@ -40,19 +40,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -93,12 +86,14 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
+  /* Удаляем лишнюю обводку, но сохраняем цвет для тех, кто явно укажет border */
+  *, ::before, ::after {
+    border-width: 0;
+    border-style: solid;
+    border-color: hsl(var(--border));
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -108,21 +103,19 @@
 .switch-card-base {
   transition: all 0.3s ease-out;
 }
-
 .switch-card-base:hover {
   transform: translateY(-4px);
 }
 
-/* Вставьте это в конец src/index.css */
+/* Стили для заголовка блока cta */
 .cta-title {
-  /* Tailwind-утилиты через @apply */
   @apply relative inline-block text-2xl md:text-3xl font-semibold mx-auto;
 }
 .cta-title::after {
   content: "";
   display: block;
-  width: 6rem;                     /* ширина линии */
-  height: 2px;                     /* толщина линии */
-  background-color: theme("colors.gray.300"); /* цвет линии */
-  margin: 0.75rem auto 1.5rem;     /* отступ сверху и снизу, и по центру */
+  width: 6rem;
+  height: 2px;
+  background-color: theme("colors.gray.300");
+  margin: 0.75rem auto 1.5rem;
 }

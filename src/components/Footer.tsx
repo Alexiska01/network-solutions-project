@@ -1,6 +1,4 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import Icon from "@/components/ui/icon";
 
 const Footer = () => {
   const quickLinks = [

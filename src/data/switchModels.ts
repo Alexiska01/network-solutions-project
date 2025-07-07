@@ -126,6 +126,81 @@ export const switchModels3730: SwitchModel[] = [
   },
 ];
 
+export const switchModels4530: SwitchModel[] = [
+  {
+    id: "IDS4530-24T-6X",
+    name: "IDS4530-24T-6X",
+    description: "24×1G Base-T, 6×10G SFP+",
+    ports1G: "24×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids4530-24t-6x.html",
+    animationDelay: 0.1,
+  },
+  {
+    id: "IDS4530-24P-6X",
+    name: "IDS4530-24P-6X",
+    description: "24×1G Base-T, 6×10G SFP+, PoE 760 Вт",
+    ports1G: "24×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: "760 Вт",
+    layer3: true,
+    category: "poe",
+    url: "/models/ids4530-24p-6x.html",
+    animationDelay: 0.2,
+  },
+  {
+    id: "IDS4530-48T-6X",
+    name: "IDS4530-48T-6X",
+    description: "48×1G Base-T, 6×10G SFP+",
+    ports1G: "48×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids4530-48t-6x.html",
+    animationDelay: 0.3,
+  },
+  {
+    id: "IDS4530-48P-6X",
+    name: "IDS4530-48P-6X",
+    description: "48×1G Base-T, 6×10G SFP+, PoE 1400 Вт",
+    ports1G: "48×1G Base-T",
+    ports10G: "6×10G SFP+",
+    poe: "1400 Вт",
+    layer3: true,
+    category: "poe",
+    url: "/models/ids4530-48p-6x.html",
+    animationDelay: 0.4,
+  },
+  {
+    id: "IDS4530-24S-4X",
+    name: "IDS4530-24S-4X",
+    description: "24×1G SFP, 4×10G SFP+",
+    ports1G: "24×1G SFP",
+    ports10G: "4×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids4530-24s-4x.html",
+    animationDelay: 0.5,
+  },
+  {
+    id: "IDS4530-48S-4X",
+    name: "IDS4530-48S-4X",
+    description: "48×1G SFP, 4×10G SFP+",
+    ports1G: "48×1G SFP",
+    ports10G: "4×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids4530-48s-4x.html",
+    animationDelay: 0.6,
+  },
+];
+
 export const featureIcons: FeatureIcon[] = [
   {
     name: "poe",
@@ -157,6 +232,57 @@ export const featureIcons: FeatureIcon[] = [
   },
 ];
 
+export const switchModels6010: SwitchModel[] = [
+  {
+    id: "IDS6010-24T-18X-8Y",
+    name: "IDS6010-24T-18X-8Y",
+    description: "24×1G Base-T, 18×10G SFP+, 8×25G SFP28",
+    ports1G: "24×1G Base-T",
+    ports10G: "18×10G SFP+",
+    ports25G: "8×25G SFP28",
+    layer3: true,
+    poe: null,
+    category: "sfp",
+    url: "/models/ids6010-24t-18x-8y.html",
+    animationDelay: 0.1,
+  },
+  {
+    id: "IDS6010-24X-2Q",
+    name: "IDS6010-24X-2Q",
+    description: "24×10G SFP+, 2×40G QSFP+",
+    ports10G: "24×10G SFP+",
+    ports40G: "2×40G QSFP+",
+    layer3: true,
+    poe: null,
+    category: "sfp",
+    url: "/models/ids6010-24x-2q.html",
+    animationDelay: 0.2,
+  },
+  {
+    id: "IDS6010-24X-2C",
+    name: "IDS6010-24X-2C",
+    description: "24×10G SFP+, 2×100G/40G QSFP28",
+    ports10G: "24×10G SFP+",
+    ports100G: "2×100G QSFP28",
+    layer3: true,
+    poe: null,
+    category: "sfp",
+    url: "/models/ids6010-24x-2c.html",
+    animationDelay: 0.3,
+  },
+  {
+    id: "IDS6010-48X",
+    name: "IDS6010-48X",
+    description: "48×10G SFP+",
+    ports10G: "48×10G SFP+",
+    layer3: true,
+    poe: null,
+    category: "sfp",
+    url: "/models/ids6010-48x.html",
+    animationDelay: 0.4,
+  },
+];
+
 export const featureIcons3730: FeatureIcon[] = [
   {
     name: "uplink40g",
@@ -185,5 +311,67 @@ export const featureIcons3730: FeatureIcon[] = [
     title: "SNMP",
     description: "Централизованное управление",
     ariaLabel: "Поддержка протокола SNMP",
+  },
+];
+
+export const featureIcons4530: FeatureIcon[] = [
+  {
+    name: "throughput",
+    icon: "Zap",
+    title: "736 Gbps",
+    description: "Пропускная способность",
+    ariaLabel: "Пропускная способность до 736 гигабит в секунду",
+  },
+  {
+    name: "power",
+    icon: "Battery",
+    title: "Двойное питание",
+    description: "Надёжное резервирование",
+    ariaLabel: "Двойной модуль питания",
+  },
+  {
+    name: "monitoring",
+    icon: "Gauge",
+    title: "Мониторинг 24/7",
+    description: "Постоянный контроль",
+    ariaLabel: "Круглосуточный мониторинг оборудования",
+  },
+  {
+    name: "setup",
+    icon: "Settings",
+    title: "Простая настройка",
+    description: "Удобный интерфейс",
+    ariaLabel: "Интуитивно понятная настройка",
+  },
+];
+
+export const featureIcons6010: FeatureIcon[] = [
+  {
+    name: "performance",
+    icon: "Zap",
+    title: "До 960 Gbps",
+    description: "Высокая пропускная способность",
+    ariaLabel: "Пропускная способность до 960 гигабит в секунду",
+  },
+  {
+    name: "uplink",
+    icon: "Activity",
+    title: "100G uplink",
+    description: "Магистральные соединения",
+    ariaLabel: "Аплинк до 100 гигабит в секунду",
+  },
+  {
+    name: "power",
+    icon: "Battery",
+    title: "Резервное питание",
+    description: "Два блока питания",
+    ariaLabel: "Поддержка резервирования питания",
+  },
+  {
+    name: "sdn",
+    icon: "Settings",
+    title: "Поддержка SDN",
+    description: "Гибкое управление сетью",
+    ariaLabel: "Программно-определяемые сети",
   },
 ];

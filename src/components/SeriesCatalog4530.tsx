@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Icon from "@/components/ui/icon";
-import BenefitCard from "@/components/BenefitCard";
+import ModelCard from "@/components/ModelCard";
+import FeatureIconsGrid from "@/components/FeatureIconsGrid";
+import FilterButtons from "@/components/FilterButtons";
+import ComparisonPanel from "@/components/ComparisonPanel";
+import ComparisonModal from "@/components/ComparisonModal";
+import { switchModels4530, featureIcons4530 } from "@/data/switchModels";
+import { FilterType } from "@/types/models";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,6 +19,25 @@ import {
 import { Link } from "react-router-dom";
 
 const SeriesCatalog4530Component = () => {
+  const [filter, setFilter] = useState<FilterType>("all");
+  const [compareModels, setCompareModels] = useState<string[]>([]);
+  const [showCompareModal, setShowCompareModal] = useState(false);
+
+  const toggleCompareModel = (model: string) => {
+    setCompareModels((prev) =>
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
+    );
+  };
+
+  const handleNavigate = (url: string) => {
+    window.location.href = url;
+  };
+
+  const filteredModels = switchModels4530.filter((model) => {
+    if (filter === "all") return true;
+    return model.category === filter;
+  });
+
   return (
     <div className="min-h-screen">
       {/* Breadcrumb */}
@@ -46,9 +70,9 @@ const SeriesCatalog4530Component = () => {
           </Breadcrumb>
         </div>
       </div>
+
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-        {/* Animated Grid */}
         <div
           className="absolute inset-0 opacity-30"
           style={{
@@ -60,40 +84,24 @@ const SeriesCatalog4530Component = () => {
             animation: "vanta-grid 20s linear infinite",
           }}
         />
-
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.2,
-                type: "spring",
-                stiffness: 100,
-              }}
+              transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
             >
               <motion.h1
                 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.3,
-                  type: "spring",
-                  stiffness: 120,
-                }}
+                transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 120 }}
               >
                 <motion.span
                   className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.4,
-                    type: "spring",
-                    stiffness: 140,
-                  }}
+                  transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 140 }}
                 >
                   IDS4530
                 </motion.span>
@@ -120,8 +128,7 @@ const SeriesCatalog4530Component = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.0 }}
               >
-                До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760
-                Вт
+                До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760 Вт
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4"
@@ -149,92 +156,17 @@ const SeriesCatalog4530Component = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
               >
-                <div className="grid grid-cols-2 gap-4 md:gap-6">
-                  <div className="text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                      <Icon name="Zap" className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <p className="text-xs md:text-sm font-medium">736 Gbps</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                      <Icon name="Battery" className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <p className="text-xs md:text-sm font-medium">
-                      Двойное питание
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                      <Icon name="Gauge" className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <p className="text-xs md:text-sm font-medium">
-                      Мониторинг 24/7
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                      <Icon name="Settings" className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <p className="text-xs md:text-sm font-medium">
-                      Простая настройка
-                    </p>
-                  </div>
-                </div>
+                <FeatureIconsGrid features={featureIcons4530} />
               </motion.div>
             </motion.div>
           </div>
         </div>
-
-        {/* CSS Animation */}
         <style>{`
           @keyframes vanta-grid {
-            0% {
-              transform: translate(0, 0);
-            }
-            100% {
-              transform: translate(50px, 50px);
-            }
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
           }
         `}</style>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-16 bg-gradient-to-b from-gray-50/30 to-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <div className="w-20 h-0.5 bg-gradient-hero mx-auto mb-6"></div>
-            <h2 className="text-[20px] md:text-3xl font-bold text-gray-900 font-sans">
-              Ключевые преимущества
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <BenefitCard
-              icon="Zap"
-              iconColor="bg-gradient-to-r from-[#003A85] to-[#0063C2]"
-              title="10G / 40G / 100G карты"
-              description="Гибкое масштабирование пропускной способности"
-            />
-            <BenefitCard
-              icon="Battery"
-              iconColor="bg-gradient-to-r from-[#0093B9] via-[#00AEB4] to-[#00B9A8]"
-              title="Двойной модуль питания"
-              description="Резервирование для максимальной надежности"
-            />
-            <BenefitCard
-              icon="Gauge"
-              iconColor="bg-gradient-to-r from-[#553C9A] to-[#B794F4]"
-              title="Мониторинг 24/7"
-              description="Непрерывный контроль производительности"
-            />
-            <BenefitCard
-              icon="Settings"
-              iconColor="bg-gradient-to-r from-[#DD6B20] to-[#F6AD55]"
-              title="Простая настройка"
-              description="Интуитивный веб-интерфейс управления"
-            />
-          </div>
-        </div>
       </section>
 
       {/* Models Section */}
@@ -253,125 +185,37 @@ const SeriesCatalog4530Component = () => {
             <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans mb-8">
               Выберите оптимальную конфигурацию для ваших задач
             </p>
+            <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* IDS4530-48P-6X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS4530-48P-6X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                48×1G Base-T + 6×10G SFP+, 760 Вт PoE
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids4530-48p-6x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS4530-24P-6X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS4530-24P-6X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G Base-T + 6×10G SFP+, 380 Вт PoE
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids4530-24p-6x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS4530-48T-6X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS4530-48T-6X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                48×1G Base-T + 6×10G SFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids4530-48t-6x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS4530-24T-6X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS4530-24T-6X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G Base-T + 6×10G SFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids4530-24t-6x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS4530-24S-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS4530-24S-4X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                24×1G SFP + 4×10G SFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids4530-24s-4x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
-
-            {/* IDS4530-48S-4X */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-3 font-sans">
-                IDS4530-48S-4X
-              </h3>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-4 font-sans">
-                48×1G SFP + 4×10G SFP+
-              </p>
-              <Button
-                className="w-full bg-brand-primary hover:bg-gradient-hero hover:border-white text-white font-medium transition-all duration-300 border border-transparent"
-                onClick={() =>
-                  (window.location.href = "/models/ids4530-48s-4x.html")
-                }
-              >
-                <Icon name="Info" className="mr-2" />
-                Подробнее
-              </Button>
-            </div>
+            {filteredModels.map((model, index) => (
+              <ModelCard
+                key={`${model.id}-${filter}`}
+                model={model}
+                isInCompareList={compareModels.includes(model.id)}
+                onToggleCompare={toggleCompareModel}
+                onNavigate={handleNavigate}
+                animationDelay={index * 0.1}
+              />
+            ))}
           </div>
         </div>
       </motion.section>
+
+      <ComparisonPanel
+        compareModels={compareModels}
+        onClearAll={() => setCompareModels([])}
+        onRemoveModel={toggleCompareModel}
+        onShowModal={() => setShowCompareModal(true)}
+      />
+
+      <ComparisonModal
+        isOpen={showCompareModal}
+        compareModels={compareModels}
+        onClose={() => setShowCompareModal(false)}
+        onRemoveModel={toggleCompareModel}
+      />
 
       {/* CTA Section */}
       <motion.section
