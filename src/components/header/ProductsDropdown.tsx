@@ -48,7 +48,7 @@ const ProductsDropdown = ({
           <div className="w-72 py-4 border-r border-gray-100">
             {/* Ссылка "Все коммутаторы" */}
             <Link
-              to="/products/switches.html"
+              to="/switches"
               className="block px-6 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors border-b border-gray-100 mb-2"
             >
               Все коммутаторы
