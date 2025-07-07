@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
 const Hero = () => {
   const [typingText, setTypingText] = useState("");
   const fullText =
     "iDATA — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
+
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationIdRef = useRef<number>();
 
   // Typing effect
   useEffect(() => {
@@ -21,12 +24,182 @@ const Hero = () => {
     return () => clearInterval(typingInterval);
   }, []);
 
+  // Flying cubes animation
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Canvas sizing
+    const resizeCanvas = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    // Network nodes - tech cubes
+    const nodes: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      type: "switch" | "router" | "endpoint";
+      connections: number[];
+    }> = [];
+
+    const nodeCount = 18;
+    const maxDistance = 100;
+    let mouseX = 0;
+    let mouseY = 0;
+
+    // Initialize nodes
+    for (let i = 0; i < nodeCount; i++) {
+      nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: i < 6 ? 4 + Math.random() * 2 : 2 + Math.random() * 1.5,
+        type: i < 3 ? "switch" : i < 6 ? "router" : "endpoint",
+        connections: [],
+      });
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update nodes
+      nodes.forEach((node) => {
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+
+        // Mouse interaction
+        const dx = mouseX - node.x;
+        const dy = mouseY - node.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 120) {
+          const force =
+            node.type === "switch"
+              ? 0.002
+              : node.type === "router"
+                ? 0.0015
+                : 0.001;
+          node.x += dx * force;
+          node.y += dy * force;
+        }
+      });
+
+      // Draw connections
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < maxDistance) {
+            const opacity = 1 - distance / maxDistance;
+            const isMain =
+              nodes[i].type !== "endpoint" || nodes[j].type !== "endpoint";
+            const alpha = isMain ? opacity * 0.3 : opacity * 0.15;
+
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+            ctx.lineWidth = isMain ? 1.5 : 1;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      nodes.forEach((node) => {
+        if (node.type === "switch") {
+          // Switches - blue squares
+          ctx.fillStyle = "rgba(0, 101, 179, 0.9)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+          ctx.lineWidth = 1.5;
+          ctx.fillRect(
+            node.x - node.radius,
+            node.y - node.radius,
+            node.radius * 2,
+            node.radius * 2,
+          );
+          ctx.strokeRect(
+            node.x - node.radius,
+            node.y - node.radius,
+            node.radius * 2,
+            node.radius * 2,
+          );
+        } else if (node.type === "router") {
+          // Routers - teal diamonds
+          ctx.fillStyle = "rgba(0, 181, 173, 0.9)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+          ctx.lineWidth = 1.5;
+          ctx.save();
+          ctx.translate(node.x, node.y);
+          ctx.rotate(Math.PI / 4);
+          ctx.fillRect(
+            -node.radius,
+            -node.radius,
+            node.radius * 2,
+            node.radius * 2,
+          );
+          ctx.strokeRect(
+            -node.radius,
+            -node.radius,
+            node.radius * 2,
+            node.radius * 2,
+          );
+          ctx.restore();
+        } else {
+          // Endpoints - white circles
+          ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+
+      animationIdRef.current = requestAnimationFrame(animate);
+    };
+
+    // Mouse tracking
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    };
+
+    canvas.addEventListener("mousemove", handleMouseMove);
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+      canvas.removeEventListener("mousemove", handleMouseMove);
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_35%,rgba(255,255,255,0.1)_50%,transparent_65%)] animate-pulse"></div>
-      </div>
+      {/* Canvas network animation */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 1 }}
+      />
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
