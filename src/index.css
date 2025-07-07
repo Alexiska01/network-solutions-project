@@ -112,3 +112,17 @@
 .switch-card-base:hover {
   transform: translateY(-4px);
 }
+
+/* Вставьте это в конец src/index.css */
+.cta-title {
+  /* Tailwind-утилиты через @apply */
+  @apply relative inline-block text-2xl md:text-3xl font-semibold mx-auto;
+}
+.cta-title::after {
+  content: "";
+  display: block;
+  width: 6rem;                     /* ширина линии */
+  height: 2px;                     /* толщина линии */
+  background-color: theme("colors.gray.300"); /* цвет линии */
+  margin: 0.75rem auto 1.5rem;     /* отступ сверху и снизу, и по центру */
+}

@@ -207,29 +207,60 @@ const SeriesCatalog3530Component = () => {
         onRemoveModel={toggleCompareModel}
       />
 
-      {/* CTA Section */}
-      <motion.section
-        className="py-16 px-6 bg-white"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-semibold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto md:text-[36px] text-2xl">
-            Нужна помощь с выбором оборудования?
-          </h2>
-          <p className="text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px] text-lg">
-            Свяжитесь с нашими партнерами!
-          </p>
-          <Button
-            size="lg"
-            className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
-          >
-            Связаться с партнером
-          </Button>
-        </div>
-      </motion.section>
+{/* CTA Section */}
+<motion.section
+  className="py-16 px-6 bg-white"
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+  viewport={{ once: true }}
+>
+  <div className="max-w-4xl mx-auto text-center">
+    {/* Заголовок 24px + линия снизу */}
+    <h2
+      className="
+        relative
+        inline-block
+        text-2xl        /* = 1.5rem = 24px */
+        font-semibold
+        mx-auto
+      "
+    >
+      Нужна помощь с выбором оборудования?
+      {/* псевдо-элемент ::after через реальный span */}
+      <span
+        className="
+          block
+          w-24            /* 6rem = 96px ширина линии */
+          h-0.5           /* 2px толщина */
+          bg-gray-300
+          mt-3            /* отступ сверху (между текстом и линией) */
+          mb-6            /* отступ снизу (между линией и блоком ниже) */
+          mx-auto
+        "
+      />
+    </h2>
+
+    <p className="text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto md:text-[18px] text-lg leading-relaxed">
+      Свяжитесь с нашими партнёрами!
+    </p>
+
+    <Button
+      size="lg"
+      className="
+        bg-brand-primary
+        hover:bg-gradient-hero
+        text-white
+        font-medium
+        transition-all duration-300
+        px-8 py-3
+        shadow-lg hover:shadow-xl
+      "
+    >
+      Связаться с партнёром
+    </Button>
+  </div>
+</motion.section>
     </div>
   );
 };
