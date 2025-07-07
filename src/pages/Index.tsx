@@ -1,28 +1,18 @@
-import React from "react";
-
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="text-2xl font-bold text-blue-600">iDATA</div>
-          <nav className="hidden md:flex space-x-8">
-            <a href="#" className="text-gray-700 hover:text-blue-600">
-              Оборудование
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600">
-              Сервис
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600">
-              Документация
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600">
-              Контакты
-            </a>
-          </nav>
-        </div>
-      </header>
+    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+      <h1 style={{ color: 'blue', fontSize: '32px' }}>iDATA - Тест</h1>
+      <p>Если вы видите этот текст, React работает правильно!</p>
+      <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f0f0f0', borderRadius: '8px' }}>
+        <h2>Проверка базовой функциональности</h2>
+        <p>Сайт загружается без ошибок</p>
+        <button style={{ padding: '10px 20px', backgroundColor: 'blue', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+          Тестовая кнопка
+        </button>
+      </div>
+    </div>
+  );
+};
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-teal-600 text-white py-20">
