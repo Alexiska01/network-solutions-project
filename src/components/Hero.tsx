@@ -41,31 +41,31 @@ const Hero = () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Network nodes - tech cubes
+    // Network nodes - специально для коммутаторов
     const nodes: Array<{
       x: number;
       y: number;
       vx: number;
       vy: number;
       radius: number;
-      type: "switch" | "router" | "endpoint";
+      type: "switch" | "endpoint";
       connections: number[];
     }> = [];
 
-    const nodeCount = 18;
-    const maxDistance = 100;
+    const nodeCount = 15;
+    const maxDistance = 120;
     let mouseX = 0;
     let mouseY = 0;
 
-    // Initialize nodes
+    // Initialize nodes - создаем топологию коммутаторов
     for (let i = 0; i < nodeCount; i++) {
       nodes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        radius: i < 6 ? 4 + Math.random() * 2 : 2 + Math.random() * 1.5,
-        type: i < 3 ? "switch" : i < 6 ? "router" : "endpoint",
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        radius: i < 5 ? 4 + Math.random() * 2 : 2 + Math.random() * 1.5, // коммутаторы крупнее
+        type: i < 5 ? "switch" : "endpoint",
         connections: [],
       });
     }
@@ -81,18 +81,13 @@ const Hero = () => {
         if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
         if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
 
-        // Mouse interaction
+        // Mouse interaction - коммутаторы притягиваются к курсору
         const dx = mouseX - node.x;
         const dy = mouseY - node.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < 120) {
-          const force =
-            node.type === "switch"
-              ? 0.002
-              : node.type === "router"
-                ? 0.0015
-                : 0.001;
+          const force = node.type === "switch" ? 0.002 : 0.001;
           node.x += dx * force;
           node.y += dy * force;
         }
@@ -107,12 +102,13 @@ const Hero = () => {
 
           if (distance < maxDistance) {
             const opacity = 1 - distance / maxDistance;
-            const isMain =
-              nodes[i].type !== "endpoint" || nodes[j].type !== "endpoint";
-            const alpha = isMain ? opacity * 0.3 : opacity * 0.15;
+            // Коммутаторы имеют более яркие связи
+            const isSwitch =
+              nodes[i].type === "switch" || nodes[j].type === "switch";
+            const alpha = isSwitch ? opacity * 0.25 : opacity * 0.1;
 
             ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-            ctx.lineWidth = isMain ? 1.5 : 1;
+            ctx.lineWidth = isSwitch ? 1.5 : 1;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -124,8 +120,8 @@ const Hero = () => {
       // Draw nodes
       nodes.forEach((node) => {
         if (node.type === "switch") {
-          // Switches - blue squares
-          ctx.fillStyle = "rgba(0, 101, 179, 0.9)";
+          // Коммутаторы - квадратные с обводкой
+          ctx.fillStyle = "rgba(46, 91, 255, 0.9)";
           ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
           ctx.lineWidth = 1.5;
           ctx.fillRect(
@@ -140,29 +136,8 @@ const Hero = () => {
             node.radius * 2,
             node.radius * 2,
           );
-        } else if (node.type === "router") {
-          // Routers - teal diamonds
-          ctx.fillStyle = "rgba(0, 181, 173, 0.9)";
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
-          ctx.lineWidth = 1.5;
-          ctx.save();
-          ctx.translate(node.x, node.y);
-          ctx.rotate(Math.PI / 4);
-          ctx.fillRect(
-            -node.radius,
-            -node.radius,
-            node.radius * 2,
-            node.radius * 2,
-          );
-          ctx.strokeRect(
-            -node.radius,
-            -node.radius,
-            node.radius * 2,
-            node.radius * 2,
-          );
-          ctx.restore();
         } else {
-          // Endpoints - white circles
+          // Конечные устройства - круглые
           ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
           ctx.beginPath();
           ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
