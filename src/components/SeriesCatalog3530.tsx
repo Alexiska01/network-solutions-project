@@ -36,16 +36,6 @@ const SeriesCatalog3530Component = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-        <style jsx>{`
-          @media (prefers-reduced-motion: reduce) {
-            * {
-              animation-duration: 0.01ms !important;
-              animation-iteration-count: 1 !important;
-              transition-duration: 0.01ms !important;
-            }
-          }
-        `}</style>
-
         {/* Animated Grid */}
         <div
           className="absolute inset-0 opacity-30"
@@ -154,7 +144,7 @@ const SeriesCatalog3530Component = () => {
         </div>
 
         {/* CSS Animation */}
-        <style jsx>{`
+        <style>{`
           @keyframes vanta-grid {
             0% {
               transform: translate(0, 0);
