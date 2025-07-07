@@ -39,17 +39,14 @@ interface SwitchCardProps {
 
 const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [imgErrored, setImgErrored] = useState(false);
   const isMobile = useIsMobile();
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    // Внедряем базовые стили
     const styleElement = document.createElement("style");
     styleElement.textContent = baseStyles;
     document.head.appendChild(styleElement);
 
-    // Определяем tablet
     const checkTablet = () => {
       setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
     };
@@ -80,14 +77,13 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
       id={switchData.id.toLowerCase()}
       tabIndex={0}
       className={cn(
-        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none"
+        "switch-card-base bg-white rounded-xl border border-gray-200 p-4 cursor-pointer focus:outline-none",
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleScrollToCard}
     >
       {!isMobile && !isTablet ? (
-        /* --- ДИСПЛЕЙ ДЛЯ ДЕСКТОПА --- */
         <div className="flex gap-4 items-center">
           <div className="w-2/5 flex-shrink-0">
             <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
@@ -96,15 +92,15 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                 alt={`${switchData.title} - коммутатор`}
                 className={cn(
                   "w-full h-full object-cover transition-transform duration-300",
-                  isHovered ? "scale-110" : "scale-100"
+                  isHovered ? "scale-110" : "scale-100",
                 )}
-                onError={() => setImgErrored(true)}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = "none";
+                  target.nextElementSibling?.classList.remove("hidden");
+                }}
               />
-              {/* fallback-блок — заведомо hidden через style и без Tailwind-класса hidden */}
-              <div
-                style={{ display: imgErrored ? "flex" : "none" }}
-                className="w-full h-full bg-gray-200 flex items-center justify-center"
-              >
+              <div className="hidden w-full h-full bg-gray-200 flex items-center justify-center">
                 <span className="text-gray-500 text-sm">
                   Изображение недоступно
                 </span>
@@ -147,7 +143,6 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
           </div>
         </div>
       ) : (
-        /* --- МЕДИА ДЛЯ МОБИЛЬНЫХ --- */
         <div className="flex flex-col">
           <div className="aspect-video mb-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
             <img
@@ -155,14 +150,15 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
               alt={switchData.title}
               className={cn(
                 "w-full h-full object-cover transition-transform duration-300",
-                isHovered ? "scale-110" : "scale-100"
+                isHovered ? "scale-110" : "scale-100",
               )}
-              onError={() => setImgErrored(true)}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = "none";
+                target.nextElementSibling?.classList.remove("hidden");
+              }}
             />
-            <div
-              style={{ display: imgErrored ? "flex" : "none" }}
-              className="w-full h-full bg-gray-200 flex items-center justify-center"
-            >
+            <div className="hidden w-full h-full bg-gray-200 flex items-center justify-center">
               <span className="text-gray-500 text-sm">
                 Изображение недоступно
               </span>
@@ -191,7 +187,6 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
     </div>
   );
 
-  /* --- Модалка со спецификациями --- */
   return (
     <Dialog>
       <DialogTrigger asChild>{CardContent}</DialogTrigger>
@@ -202,9 +197,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             <strong>Порты:</strong>{" "}
             <button
               className="text-blue-600 hover:underline"
-              onClick={() =>
-                onSpecFilter?.("ports", switchData.specs.ports)
-              }
+              onClick={() => onSpecFilter?.("ports", switchData.specs.ports)}
             >
               {switchData.specs.ports}
             </button>
@@ -213,9 +206,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             <strong>Питание:</strong>{" "}
             <button
               className="text-blue-600 hover:underline"
-              onClick={() =>
-                onSpecFilter?.("power", switchData.specs.power)
-              }
+              onClick={() => onSpecFilter?.("power", switchData.specs.power)}
             >
               {switchData.specs.power}
             </button>
@@ -232,9 +223,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             <strong>Категория:</strong>{" "}
             <button
               className="text-blue-600 hover:underline"
-              onClick={() =>
-                onSpecFilter?.("category", switchData.category)
-              }
+              onClick={() => onSpecFilter?.("category", switchData.category)}
             >
               {switchData.category}
             </button>
