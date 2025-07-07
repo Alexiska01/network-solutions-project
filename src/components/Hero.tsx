@@ -1,265 +1,232 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "@/components/ui/icon";
+import * as THREE from "three";
 
 const Hero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const layer1Ref = useRef<HTMLDivElement>(null);
-  const layer2Ref = useRef<HTMLDivElement>(null);
-  const animationIdRef = useRef<number>();
+  const [typingText, setTypingText] = useState("");
+  const fullText =
+    "iDATA — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
 
+  // Typing effect
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setTypingText(fullText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 30);
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    return () => clearInterval(typingInterval);
+  }, []);
 
-    // Canvas sizing
-    const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
+  // Three.js WebGL background
+  useEffect(() => {
+    if (!canvasRef.current) return;
 
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvasRef.current,
+      alpha: true,
+    });
 
-    // Network nodes - специально для коммутаторов
-    const nodes: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      type: "switch" | "endpoint";
-      connections: number[];
-    }> = [];
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
 
-    const nodeCount = 15;
-    const maxDistance = 120;
+    // Particles for network effect
+    const particleCount = 150;
+    const particles = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const velocities = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      positions[i3] = (Math.random() - 0.5) * 20;
+      positions[i3 + 1] = (Math.random() - 0.5) * 10;
+      positions[i3 + 2] = (Math.random() - 0.5) * 20;
+
+      velocities[i3] = (Math.random() - 0.5) * 0.02;
+      velocities[i3 + 1] = (Math.random() - 0.5) * 0.01;
+      velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
+
+      const color = new THREE.Color();
+      color.setHSL(0.6 + Math.random() * 0.2, 0.8, 0.3 + Math.random() * 0.4);
+      colors[i3] = color.r;
+      colors[i3 + 1] = color.g;
+      colors[i3 + 2] = color.b;
+    }
+
+    particles.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    particles.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.05,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const particleSystem = new THREE.Points(particles, particleMaterial);
+    scene.add(particleSystem);
+
+    camera.position.z = 8;
+
+    let animationId: number;
     let mouseX = 0;
     let mouseY = 0;
 
-    // Initialize nodes - создаем топологию коммутаторов
-    for (let i = 0; i < nodeCount; i++) {
-      nodes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        radius: i < 5 ? 4 + Math.random() * 2 : 2 + Math.random() * 1.5, // коммутаторы крупнее
-        type: i < 5 ? "switch" : "endpoint",
-        connections: [],
-      });
-    }
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const positions = particleSystem.geometry.attributes.position
+        .array as Float32Array;
 
-      // Update nodes
-      nodes.forEach((node) => {
-        node.x += node.vx;
-        node.y += node.vy;
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        positions[i3] += velocities[i3];
+        positions[i3 + 1] += velocities[i3 + 1];
+        positions[i3 + 2] += velocities[i3 + 2];
 
-        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-
-        // Mouse interaction - коммутаторы притягиваются к курсору
-        const dx = mouseX - node.x;
-        const dy = mouseY - node.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < 120) {
-          const force = node.type === "switch" ? 0.002 : 0.001;
-          node.x += dx * force;
-          node.y += dy * force;
-        }
-      });
-
-      // Draw connections - приоритет коммутаторам
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < maxDistance) {
-            const opacity = 1 - distance / maxDistance;
-            // Коммутаторы имеют более яркие связи
-            const isSwitch =
-              nodes[i].type === "switch" || nodes[j].type === "switch";
-            const alpha = isSwitch ? opacity * 0.25 : opacity * 0.1;
-
-            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-            ctx.lineWidth = isSwitch ? 1.5 : 1;
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-        }
+        // Bounce off boundaries
+        if (positions[i3] > 10 || positions[i3] < -10) velocities[i3] *= -1;
+        if (positions[i3 + 1] > 5 || positions[i3 + 1] < -5)
+          velocities[i3 + 1] *= -1;
+        if (positions[i3 + 2] > 10 || positions[i3 + 2] < -10)
+          velocities[i3 + 2] *= -1;
       }
 
-      // Draw nodes
-      nodes.forEach((node) => {
-        if (node.type === "switch") {
-          // Коммутаторы - квадратные с обводкой
-          ctx.fillStyle = "rgba(46, 91, 255, 0.9)";
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
-          ctx.lineWidth = 1.5;
-          ctx.fillRect(
-            node.x - node.radius,
-            node.y - node.radius,
-            node.radius * 2,
-            node.radius * 2,
-          );
-          ctx.strokeRect(
-            node.x - node.radius,
-            node.y - node.radius,
-            node.radius * 2,
-            node.radius * 2,
-          );
-        } else {
-          // Конечные устройства - круглые
-          ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      });
+      particleSystem.geometry.attributes.position.needsUpdate = true;
 
-      animationIdRef.current = requestAnimationFrame(animate);
+      // Mouse interaction
+      camera.rotation.x += (mouseY * 0.1 - camera.rotation.x) * 0.05;
+      camera.rotation.y += (mouseX * 0.1 - camera.rotation.y) * 0.05;
+
+      particleSystem.rotation.x += 0.0005;
+      particleSystem.rotation.y += 0.001;
+
+      renderer.render(scene, camera);
+      animationId = requestAnimationFrame(animate);
     };
 
-    // Mouse tracking
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
-    };
-
-    canvas.addEventListener("mousemove", handleMouseMove);
-    animate();
-
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      if (animationIdRef.current) {
-        cancelAnimationFrame(animationIdRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = e.clientX / window.innerWidth;
-      const y = e.clientY / window.innerHeight;
-
-      if (layer1Ref.current) {
-        layer1Ref.current.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
-      }
-      if (layer2Ref.current) {
-        layer2Ref.current.style.transform = `translate(${x * 4}px, ${y * 4}px)`;
-      }
-    };
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-
-      if (layer1Ref.current) {
-        layer1Ref.current.style.transform = `translateY(${scrollY * 0.2}px)`;
-      }
-      if (layer2Ref.current) {
-        layer2Ref.current.style.transform = `translateY(${scrollY * 0.05}px)`;
-      }
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    animate();
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationId);
+      renderer.dispose();
     };
   }, []);
 
   return (
-    <section className="hero relative overflow-hidden text-white flex flex-col justify-center items-center min-h-[70vh] px-8">
-      {/* Background layers */}
-      <div
-        ref={layer1Ref}
-        className="hero-bg layer1 absolute inset-0 transition-transform duration-75 ease-out"
-        style={{ background: "linear-gradient(90deg, #0033A0, #00B4B4)" }}
-      />
-      <div
-        ref={layer2Ref}
-        className="hero-bg layer2 absolute inset-0 transition-transform duration-100 ease-out"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(10,31,68,0.5), rgba(0,180,180,0.5))",
-        }}
-      />
-
-      {/* Canvas network */}
+    <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
+      {/* Three.js WebGL Background */}
       <canvas
         ref={canvasRef}
-        id="switches-network"
         className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 1 }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-8 items-center w-full">
-        {/* Left side - text content */}
-        <div>
-          <h1 className="hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight transition-all duration-300">
-            Профессиональные решения для сетевой инфраструктуры
-          </h1>
-          <p className="hero-subtitle text-lg md:text-xl text-blue-100 leading-relaxed transition-all duration-300 mb-8">
-            iDATA — ведущий производитель коммутаторов, маршрутизаторов и
-            беспроводного оборудования для корпоративных сетей любой сложности.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button className="bg-white text-[#0065B3] px-6 py-3 rounded-lg text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px] hover:scale-105 hover:shadow-lg">
-              Техническая поддержка
-            </button>
-            <button className="border border-white text-white px-6 py-3 rounded-lg text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg">
-              Консультация
-            </button>
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
+          <div>
+            <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default">
+              Профессиональные решения для сетевой инфраструктуры
+            </h1>
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed transition-all duration-300 hover:scale-105 hover:drop-shadow-md cursor-default min-h-[3em]">
+              {typingText}
+              {typingText.length < fullText.length && (
+                <span className="animate-pulse">|</span>
+              )}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
+              <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px] hover:scale-105 hover:shadow-lg">
+                Техническая поддержка
+              </button>
+              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg">
+                Консультация
+              </button>
+            </div>
           </div>
-        </div>
-
-        {/* Right side - product icons grid */}
-        <div className="grid grid-cols-2 gap-6 max-w-md mx-auto lg:mx-0">
-          <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-6">
-            <Icon name="Zap" size={48} className="mx-auto mb-4 text-blue-200" />
-            <h3 className="text-lg font-semibold mb-2">Доступ</h3>
-            <p className="text-sm text-blue-200">24-48 портов</p>
-          </div>
-          <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-6">
-            <Icon
-              name="Settings"
-              size={48}
-              className="mx-auto mb-4 text-blue-200"
-            />
-            <h3 className="text-lg font-semibold mb-2">Распределение</h3>
-            <p className="text-sm text-blue-200">Агрегация трафика</p>
-          </div>
-          <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-6">
-            <Icon
-              name="Shield"
-              size={48}
-              className="mx-auto mb-4 text-blue-200"
-            />
-            <h3 className="text-lg font-semibold mb-2">Spine</h3>
-            <p className="text-sm text-blue-200">Центр данных</p>
-          </div>
-          <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-6">
-            <Icon
-              name="ChevronRight"
-              size={48}
-              className="mx-auto mb-4 text-blue-200"
-            />
-            <h3 className="text-lg font-semibold mb-2">Leaf</h3>
-            <p className="text-sm text-blue-200">Серверные стойки</p>
+          <div className="relative mt-6 md:mt-8 lg:mt-0">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 transition-all duration-300 hover:bg-white/15 hover:scale-105">
+              <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
+                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
+                  <Icon
+                    name="Zap"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Доступ
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    24-48 портов
+                  </p>
+                </div>
+                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
+                  <Icon
+                    name="Settings"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Распределение
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    Агрегация трафика
+                  </p>
+                </div>
+                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
+                  <Icon
+                    name="Shield"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Spine
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    Центр данных
+                  </p>
+                </div>
+                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
+                  <Icon
+                    name="ArrowRight"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Leaf
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    Серверные стойки
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
