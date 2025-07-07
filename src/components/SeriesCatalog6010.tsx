@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import BenefitCard from "@/components/BenefitCard";
 import {
@@ -44,6 +46,7 @@ const SeriesCatalog6010Component = () => {
           </Breadcrumb>
         </div>
       </div>
+
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
         {/* Animated Grid */}
@@ -61,33 +64,92 @@ const SeriesCatalog6010Component = () => {
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
-            <div>
-              <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight">
-                <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                type: "spring",
+                stiffness: 100,
+              }}
+            >
+              <motion.h1
+                className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.3,
+                  type: "spring",
+                  stiffness: 120,
+                }}
+              >
+                <motion.span
+                  className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 0.4,
+                    type: "spring",
+                    stiffness: 140,
+                  }}
+                >
                   IDS6010
-                </span>
-                <span className="block text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-normal mt-2 transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default">
+                </motion.span>
+                <motion.span
+                  className="block text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-normal mt-2 transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                >
                   — мощные коммутаторы
-                </span>
-              </h1>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-2 md:mb-3 text-blue-100 leading-relaxed">
+                </motion.span>
+              </motion.h1>
+              <motion.p
+                className="text-sm md:text-base lg:text-lg xl:text-xl mb-2 md:mb-3 text-blue-100 leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
                 для магистральных решений
-              </p>
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-3xl">
+              </motion.p>
+              <motion.p
+                className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-3xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.0 }}
+              >
                 Высокая пропускная способность до 960 Gbps, модульная
                 архитектура
-              </p>
-              <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
+              </motion.p>
+              <motion.div
+                className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+              >
                 <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px] hover:scale-105 hover:shadow-lg">
                   Посмотреть все модели
                 </button>
                 <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg">
                   Получить консультацию
                 </button>
-              </div>
-            </div>
-            <div className="relative mt-6 md:mt-8 lg:mt-0">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 transition-all duration-300 hover:bg-white/15 hover:scale-105">
+              </motion.div>
+            </motion.div>
+            <motion.div
+              className="relative mt-6 md:mt-8 lg:mt-0"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <motion.div
+                className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 transition-all duration-300 hover:bg-white/15 hover:scale-105"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+              >
                 <div className="grid grid-cols-2 gap-4 md:gap-6">
                   <div className="text-center">
                     <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-2 md:mb-3 mx-auto">
@@ -118,8 +180,8 @@ const SeriesCatalog6010Component = () => {
                     <p className="text-xs md:text-sm font-medium">SDN</p>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
 
@@ -175,7 +237,13 @@ const SeriesCatalog6010Component = () => {
       </section>
 
       {/* Models Section */}
-      <section className="py-16 px-6 bg-white">
+      <motion.section
+        className="py-16 px-6 bg-white"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
@@ -264,10 +332,16 @@ const SeriesCatalog6010Component = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="py-16 px-6 bg-white">
+      <motion.section
+        className="py-16 px-6 bg-white"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="relative inline-block text-2xl font-semibold mx-auto">
             Нужна помощь с выбором оборудования?
@@ -283,7 +357,7 @@ const SeriesCatalog6010Component = () => {
             Связаться с партнёром
           </Button>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };
