@@ -25,7 +25,7 @@ const ProductsSection = () => {
         "Load balancing",
         "Резервирование",
       ],
-      icon: "Route",
+      icon: "Router",
     },
     {
       title: "Беспроводные решения",
