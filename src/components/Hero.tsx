@@ -175,28 +175,41 @@ const Hero = () => {
               <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
                 <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
                   <Icon
-                    name="Zap"
+                    name="Network"
                     size={20}
                     className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
                   />
                   <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
-                    Доступ
+                    Коммутаторы
                   </h3>
                   <p className="text-xs md:text-sm text-blue-200">
-                    24-48 портов
+                    L2/L3 решения
                   </p>
                 </div>
                 <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
                   <Icon
-                    name="Settings"
+                    name="Router"
                     size={20}
                     className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
                   />
                   <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
-                    Распределение
+                    Маршрутизаторы
                   </h3>
                   <p className="text-xs md:text-sm text-blue-200">
-                    Агрегация трафика
+                    Корпоративные
+                  </p>
+                </div>
+                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
+                  <Icon
+                    name="Wifi"
+                    size={20}
+                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                  />
+                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
+                    Wi-Fi
+                  </h3>
+                  <p className="text-xs md:text-sm text-blue-200">
+                    Беспроводные AP
                   </p>
                 </div>
                 <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
@@ -206,23 +219,10 @@ const Hero = () => {
                     className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
                   />
                   <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
-                    Spine
+                    Безопасность
                   </h3>
                   <p className="text-xs md:text-sm text-blue-200">
-                    Центр данных
-                  </p>
-                </div>
-                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
-                  <Icon
-                    name="ArrowRight"
-                    size={20}
-                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
-                  />
-                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
-                    Leaf
-                  </h3>
-                  <p className="text-xs md:text-sm text-blue-200">
-                    Серверные стойки
+                    Защита сети
                   </p>
                 </div>
               </div>
