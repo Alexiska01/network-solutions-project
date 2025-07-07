@@ -31,16 +31,12 @@ const SimplePagination = ({
 }: SimplePaginationProps) => {
   const handlePrevious = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (page > 1) {
-      onPageChange(page - 1);
-    }
+    if (page > 1) onPageChange(page - 1);
   };
 
   const handleNext = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (page < totalPages) {
-      onPageChange(page + 1);
-    }
+    if (page < totalPages) onPageChange(page + 1);
   };
 
   const handlePageClick =
@@ -99,33 +95,20 @@ const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
           if (k === "ports") return sw.specs.ports === v;
           if (k === "power") return sw.specs.power === v;
           return true;
-        }),
+        })
       ),
-    [data, filters],
+    [data, filters]
   );
 
   const paged = filtered.slice((page - 1) * pageSize, page * pageSize);
   const pageCount = Math.ceil(filtered.length / pageSize);
-
-  // Группируем данные по категориям для навигации
-  const groupedData = useMemo(() => {
-    const groups: { [key: string]: SwitchModel[] } = {};
-    data.forEach((sw) => {
-      if (!groups[sw.category]) {
-        groups[sw.category] = [];
-      }
-      groups[sw.category].push(sw);
-    });
-    return groups;
-  }, [data]);
 
   return (
     <div className="flex">
       {!isMobile && (
         <aside className="w-64 pr-6">
           <CatalogNavigation
-            onNavigate={(sectionId: string) => {
-              // Очищаем фильтры и устанавливаем новую категорию
+            onNavigate={(sectionId) => {
               setFilters({ category: sectionId });
               setPage(1);
             }}
@@ -138,8 +121,7 @@ const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Коммутаторы</h1>
           <p className="text-gray-600">
-            Полный каталог коммутаторов для корпоративных сетей и центров
-            обработки данных
+            Полный каталог коммутаторов для корпоративных сетей и центров обработки данных
           </p>
         </div>
 
@@ -153,7 +135,7 @@ const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
               </DialogTrigger>
               <DialogContent className="w-80">
                 <CatalogNavigation
-                  onNavigate={(sectionId: string) => {
+                  onNavigate={(sectionId) => {
                     setFilters({ category: sectionId });
                     setPage(1);
                   }}
@@ -164,17 +146,12 @@ const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
           </div>
         )}
 
-        {/* Показываем активный фильтр */}
         {filters.category && (
           <div className="mb-4">
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-500">Категория:</span>
               <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-sm">
-                {
-                  categoryLabels[
-                    filters.category as keyof typeof categoryLabels
-                  ]
-                }
+                {categoryLabels[filters.category as keyof typeof categoryLabels]}
               </span>
               <button
                 onClick={() => {
@@ -189,24 +166,16 @@ const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
           </div>
         )}
 
-        {/* Показываем количество результатов */}
         <div className="mb-4">
-          <p className="text-sm text-gray-500">
-            Найдено {filtered.length} коммутаторов
-          </p>
+          <p className="text-sm text-gray-500">Найдено {filtered.length} коммутаторов</p>
         </div>
 
-        {/* Сетка карточек */}
-        <div
-          className={
-            isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-3 gap-6"
-          }
-        >
+        <div className={isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-3 gap-6"}>
           {paged.map((sw) => (
             <SwitchCard
               key={sw.id}
               switchData={sw}
-              onSpecFilter={(k: string, v: string) => {
+              onSpecFilter={(k, v) => {
                 setFilters((prev) => ({ ...prev, [k]: v }));
                 setPage(1);
               }}
@@ -214,18 +183,16 @@ const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
           ))}
         </div>
 
-        {/* Пагинация */}
         {pageCount > 1 && (
           <div className="mt-8 flex justify-center">
             <SimplePagination
               page={page}
-              onPageChange={(newPage: number) => setPage(newPage)}
+              onPageChange={(newPage) => setPage(newPage)}
               totalPages={pageCount}
             />
           </div>
         )}
 
-        {/* Показываем сообщение если нет результатов */}
         {filtered.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">Коммутаторы не найдены</p>
