@@ -213,7 +213,7 @@ const Hero = () => {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                     style={{ backgroundColor: color, color: "#000000" }}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium shadow-md"
+                    className="flex items-center gap-2 px-4 rounded-lg text-sm shadow-md font-bold py-2.5"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 + i * 0.1 }}
