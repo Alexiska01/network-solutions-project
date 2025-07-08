@@ -181,7 +181,7 @@ const Hero = () => {
                   <Shield className="w-4 h-4" />
                   Безопасность
                 </div>
-                <p className="text-white font-normal">Ка обеспечить защиту сети?</p>
+                <p className="text-white font-normal">Как обеспечить защиту сети?</p>
               </motion.a>
             </div>
 
