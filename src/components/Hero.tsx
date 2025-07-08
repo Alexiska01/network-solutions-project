@@ -1,11 +1,20 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { loadSlim } from "@tsparticles/slim";
 import { Particles } from "@tsparticles/react";
 import type { Container, Engine } from "@tsparticles/engine";
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "model-viewer": any;
+    }
+  }
+}
+
 const Hero = () => {
   const [typingText, setTypingText] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const modelViewerRef = useRef<any>(null);
   const fullText =
     "iDATA — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
 
@@ -267,219 +276,30 @@ const Hero = () => {
                   className="absolute inset-0 w-full h-full"
                 />
 
-                {/* Simplified Network Schema */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <svg
-                    width="320"
-                    height="240"
-                    viewBox="0 0 320 240"
-                    className="max-w-full max-h-full opacity-80"
-                  >
-                    {/* Connection Lines */}
-                    <g
-                      stroke="rgba(255,255,255,0.25)"
-                      strokeWidth="1.5"
-                      fill="none"
-                    >
-                      <line x1="160" y1="120" x2="80" y2="60" />
-                      <line x1="160" y1="120" x2="240" y2="60" />
-                      <line x1="160" y1="120" x2="80" y2="180" />
-                      <line x1="160" y1="120" x2="240" y2="180" />
-                    </g>
-
-                    {/* Animated Data Pulses */}
-                    <g>
-                      <circle r="2" fill="#60A5FA" opacity="0.8">
-                        <animateMotion dur="3s" repeatCount="indefinite">
-                          <mpath href="#path1" />
-                        </animateMotion>
-                      </circle>
-
-                      <circle r="2" fill="#93C5FD" opacity="0.6">
-                        <animateMotion
-                          dur="3.5s"
-                          repeatCount="indefinite"
-                          begin="1s"
-                        >
-                          <mpath href="#path2" />
-                        </animateMotion>
-                      </circle>
-                    </g>
-
-                    {/* Hidden paths for animation */}
-                    <defs>
-                      <path id="path1" d="M160,120 L80,60" />
-                      <path id="path2" d="M160,120 L240,60" />
-                    </defs>
-
-                    {/* Network Devices */}
-                    <g>
-                      {/* Central Switch */}
-                      <rect
-                        x="140"
-                        y="100"
-                        width="40"
-                        height="40"
-                        rx="6"
-                        fill="rgba(255,255,255,0.1)"
-                        stroke="rgba(255,255,255,0.3)"
-                        strokeWidth="1.5"
-                      />
-                      <rect
-                        x="145"
-                        y="110"
-                        width="30"
-                        height="4"
-                        rx="1"
-                        fill="rgba(96,165,250,0.6)"
-                      />
-                      <rect
-                        x="145"
-                        y="118"
-                        width="30"
-                        height="4"
-                        rx="1"
-                        fill="rgba(96,165,250,0.4)"
-                      />
-                      <rect
-                        x="145"
-                        y="126"
-                        width="30"
-                        height="4"
-                        rx="1"
-                        fill="rgba(96,165,250,0.3)"
-                      />
-
-                      {/* Servers */}
-                      <rect
-                        x="60"
-                        y="40"
-                        width="40"
-                        height="40"
-                        rx="6"
-                        fill="rgba(255,255,255,0.08)"
-                        stroke="rgba(255,255,255,0.25)"
-                        strokeWidth="1"
-                      />
-                      <rect
-                        x="70"
-                        y="52"
-                        width="20"
-                        height="16"
-                        rx="2"
-                        fill="rgba(34,197,94,0.3)"
-                      />
-
-                      {/* Workstations */}
-                      <rect
-                        x="220"
-                        y="40"
-                        width="40"
-                        height="40"
-                        rx="6"
-                        fill="rgba(255,255,255,0.08)"
-                        stroke="rgba(255,255,255,0.25)"
-                        strokeWidth="1"
-                      />
-                      <rect
-                        x="230"
-                        y="52"
-                        width="20"
-                        height="12"
-                        rx="2"
-                        fill="rgba(147,197,253,0.3)"
-                      />
-                      <rect
-                        x="230"
-                        y="68"
-                        width="20"
-                        height="2"
-                        rx="1"
-                        fill="rgba(147,197,253,0.4)"
-                      />
-
-                      {/* Wi-Fi */}
-                      <circle
-                        cx="80"
-                        cy="180"
-                        r="20"
-                        fill="rgba(255,255,255,0.08)"
-                        stroke="rgba(255,255,255,0.25)"
-                        strokeWidth="1"
-                      />
-                      <circle
-                        cx="80"
-                        cy="180"
-                        r="6"
-                        fill="rgba(168,85,247,0.3)"
-                      />
-                      <circle
-                        cx="80"
-                        cy="180"
-                        r="10"
-                        fill="none"
-                        stroke="rgba(168,85,247,0.2)"
-                        strokeWidth="1"
-                      >
-                        <animate
-                          attributeName="r"
-                          values="6;14;6"
-                          dur="3s"
-                          repeatCount="indefinite"
-                        />
-                        <animate
-                          attributeName="opacity"
-                          values="0.3;0.1;0.3"
-                          dur="3s"
-                          repeatCount="indefinite"
-                        />
-                      </circle>
-
-                      {/* Cloud/Storage */}
-                      <rect
-                        x="220"
-                        y="160"
-                        width="40"
-                        height="40"
-                        rx="6"
-                        fill="rgba(255,255,255,0.08)"
-                        stroke="rgba(255,255,255,0.25)"
-                        strokeWidth="1"
-                      />
-                      <path
-                        d="M230,175 Q235,170 240,175 Q245,170 250,175 Q245,180 240,175 Q235,180 230,175"
-                        fill="rgba(59,130,246,0.3)"
-                      />
-                    </g>
-
-                    {/* Status Indicators */}
-                    <g>
-                      <circle cx="90" cy="50" r="2" fill="#10B981">
-                        <animate
-                          attributeName="opacity"
-                          values="1;0.4;1"
-                          dur="2s"
-                          repeatCount="indefinite"
-                        />
-                      </circle>
-                      <circle cx="250" cy="50" r="2" fill="#10B981">
-                        <animate
-                          attributeName="opacity"
-                          values="1;0.4;1"
-                          dur="2.5s"
-                          repeatCount="indefinite"
-                        />
-                      </circle>
-                      <circle cx="170" cy="110" r="2" fill="#3B82F6">
-                        <animate
-                          attributeName="opacity"
-                          values="1;0.4;1"
-                          dur="3s"
-                          repeatCount="indefinite"
-                        />
-                      </circle>
-                    </g>
-                  </svg>
+                {/* 3D Model */}
+                <div className="absolute inset-0 flex items-center justify-center p-4">
+                  <div className="w-full h-full max-w-md max-h-80">
+                    <model-viewer
+                      ref={modelViewerRef}
+                      src="https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24P.glb"
+                      camera-controls
+                      auto-rotate
+                      exposure="1.2"
+                      interaction-prompt="none"
+                      loading="eager"
+                      reveal="auto"
+                      camera-orbit="0deg 75deg 0.88m"
+                      min-camera-orbit="auto auto 0.55m"
+                      max-camera-orbit="auto auto 1.65m"
+                      field-of-view="30deg"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        background: "transparent",
+                      }}
+                      className="w-full h-full"
+                    />
+                  </div>
                 </div>
               </div>
             ) : (
