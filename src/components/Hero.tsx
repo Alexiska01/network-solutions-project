@@ -196,7 +196,7 @@ const Hero = () => {
           {/* Правая часть */}
           <div className="w-full flex flex-col items-start gap-6 relative">
             {/* Декоративный круг */}
-            <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-white/10 rounded-full blur-sm opacity-30 pointer-events-none"></div>
+            <div className="w-32 h-32 bg-white rounded-full mb-4"></div>
 
             <div className="flex items-start gap-4 w-full relative z-10">
               <div className="flex flex-col gap-3">
