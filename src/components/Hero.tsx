@@ -289,67 +289,115 @@ const Hero = () => {
                     style={{ animationDelay: "1s" }}
                   ></div>
 
-                  {/* Main Dashboard Container - HubSpot style */}
+                  {/* Infographic Cards */}
                   <div className="relative h-full flex items-center justify-center p-4">
-                    <div className="space-y-3 max-w-md w-full">
-                      {/* Header Status */}
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                          <span className="text-white/80 text-sm">
-                            Система активна
-                          </span>
-                        </div>
-                        <div className="text-white/60 text-xs">
-                          Network Monitor
-                        </div>
-                      </div>
-
-                      {/* Large metric card */}
+                    <div className="space-y-4 max-w-md w-full">
+                      {/* Donut Chart - Пропускная способность */}
                       <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
-                        <div className="text-3xl font-bold text-white mb-1">
-                          500+
-                        </div>
-                        <div className="text-white/70 text-sm font-medium">
-                          Клиентов
-                        </div>
-                        <div className="text-white/50 text-xs">
-                          Успешных проектов
-                        </div>
-                      </div>
-
-                      {/* Support availability */}
-                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
-                        <div className="text-2xl font-bold text-white mb-1">
-                          24/7
-                        </div>
-                        <div className="text-white/70 text-sm">
-                          Техподдержка
-                        </div>
-                      </div>
-
-                      {/* Compact metrics grid */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
-                          <div className="flex items-center justify-center space-x-1 mb-1">
-                            <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                            <span className="text-xs text-white/70">
-                              Uptime
+                        <div className="relative w-16 h-16 mx-auto mb-3">
+                          <svg
+                            className="w-16 h-16 transform -rotate-90"
+                            viewBox="0 0 36 36"
+                          >
+                            <path
+                              d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                              fill="none"
+                              stroke="rgba(255,255,255,0.2)"
+                              strokeWidth="2"
+                            />
+                            <path
+                              d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                              fill="none"
+                              stroke="#60a5fa"
+                              strokeWidth="2"
+                              strokeDasharray="75, 100"
+                              className="animate-pulse"
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">
+                              75%
                             </span>
                           </div>
-                          <div className="text-lg font-bold text-white">
-                            99.9%
-                          </div>
                         </div>
-                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
-                          <div className="flex items-center justify-center space-x-1 mb-1">
-                            <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
-                            <span className="text-xs text-white/70">Speed</span>
-                          </div>
-                          <div className="text-lg font-bold text-white">
-                            1Gbps
-                          </div>
+                        <div className="text-white/70 text-sm font-medium">
+                          Пропускная способность
                         </div>
+                        <div className="text-white text-lg font-bold">
+                          847 Mbps
+                        </div>
+                      </div>
+
+                      {/* Bar Chart - Соотношение портов */}
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                        <div className="flex items-end justify-center space-x-1 mb-3 h-12">
+                          <div
+                            className="w-2 bg-blue-400 rounded-t"
+                            style={{ height: "48px" }}
+                          ></div>
+                          <div
+                            className="w-2 bg-blue-400/80 rounded-t"
+                            style={{ height: "38px" }}
+                          ></div>
+                          <div
+                            className="w-2 bg-blue-400/90 rounded-t"
+                            style={{ height: "28px" }}
+                          ></div>
+                          <div
+                            className="w-2 bg-blue-400/70 rounded-t"
+                            style={{ height: "18px" }}
+                          ></div>
+                          <div
+                            className="w-2 bg-blue-400/60 rounded-t"
+                            style={{ height: "12px" }}
+                          ></div>
+                        </div>
+                        <div className="text-white/70 text-sm font-medium">
+                          Активные порты
+                        </div>
+                        <div className="text-white text-lg font-bold">
+                          24/48
+                        </div>
+                      </div>
+
+                      {/* Speedometer - PoE мощность */}
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                        <div className="relative w-16 h-8 mx-auto mb-3">
+                          <svg className="w-16 h-8" viewBox="0 0 32 16">
+                            <path
+                              d="M 2 14 A 14 14 0 0 1 30 14"
+                              fill="none"
+                              stroke="rgba(255,255,255,0.2)"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                            <path
+                              d="M 2 14 A 14 14 0 0 1 22 14"
+                              fill="none"
+                              stroke="#10b981"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              className="animate-pulse"
+                            />
+                            <circle cx="16" cy="14" r="1" fill="#10b981" />
+                            <line
+                              x1="16"
+                              y1="14"
+                              x2="20"
+                              y2="8"
+                              stroke="#10b981"
+                              strokeWidth="1"
+                            />
+                          </svg>
+                        </div>
+                        <div className="text-white/70 text-sm font-medium">
+                          PoE мощность
+                        </div>
+                        <div className="text-white text-lg font-bold">340W</div>
                       </div>
                     </div>
                   </div>
