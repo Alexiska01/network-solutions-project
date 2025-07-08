@@ -53,7 +53,9 @@ const Hero = () => {
             </h1>
             <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed transition-all duration-300 hover:scale-105 hover:drop-shadow-md cursor-default min-h-[3em]">
               {typingText}
-              {typingText.length < fullText.length && <span className="animate-pulse">|</span>}
+              {typingText.length < fullText.length && (
+                <span className="animate-pulse">|</span>
+              )}
             </p>
             <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
               <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px] hover:scale-105 hover:shadow-lg">
@@ -87,7 +89,9 @@ const Hero = () => {
 
                 {/* Карточка Switch */}
                 <div className="absolute top-20 md:top-24 left-6 md:left-8 bg-white rounded-xl p-6 shadow-lg w-64 z-10">
-                  <h3 className="text-xl font-bold text-gray-800 mb-1">IDS-108F Switch</h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-1">
+                    IDS-108F Switch
+                  </h3>
                   <p className="text-blue-600 font-medium mb-4">iDATA</p>
                   <div className="flex justify-center">
                     <img
@@ -101,7 +105,8 @@ const Hero = () => {
                 {/* Чат-виджет */}
                 <div className="absolute top-6 md:top-8 right-6 md:right-8 bg-white rounded-xl shadow-lg w-72 z-10">
                   <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-3 rounded-t-xl flex items-center gap-2">
-                    <span>👤</span> <span className="font-medium">Поддержка iDATA</span>
+                    <span>👤</span>{" "}
+                    <span className="font-medium">Поддержка iDATA</span>
                   </div>
                   <div className="p-4 space-y-3">
                     <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
@@ -126,7 +131,7 @@ const Hero = () => {
                 </div>
 
                 {/* Мини-карточки */}
-                <div className="absolute bottom-6 md:bottom-8 left-6 md:left-8 flex gap-4 md:gap-6">
+                <div className="absolute bottom-6 md:bottom-8 left-6 md:left-8 flex gap-4 md:gap-6 my-[149px]">
                   {/* Deal funnel */}
                   <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
                     <div className="h-16 flex flex-col justify-center space-y-1">
@@ -135,16 +140,23 @@ const Hero = () => {
                       <div className="bg-blue-200 h-3 w-full rounded"></div>
                       <div className="bg-red-300 h-3 w-1/2 rounded"></div>
                     </div>
-                    <p className="text-xs text-gray-600 mt-2 text-center">Deal funnel</p>
+                    <p className="text-xs text-gray-600 mt-2 text-center">
+                      Deal funnel
+                    </p>
                   </div>
                   {/* Leads by source */}
                   <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
                     <div className="h-16 flex items-center justify-center">
-                      <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
+                      <svg
+                        className="w-12 h-12 transform -rotate-90"
+                        viewBox="0 0 36 36"
+                      >
                         {/* SVG сегменты */}
                       </svg>
                     </div>
-                    <p className="text-xs text-gray-600 mt-2 text-center">Leads by source</p>
+                    <p className="text-xs text-gray-600 mt-2 text-center">
+                      Leads by source
+                    </p>
                   </div>
                   {/* Tickets closed */}
                   <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
@@ -154,7 +166,9 @@ const Hero = () => {
                       <div className="bg-red-400 w-4 h-6 rounded-t"></div>
                       <div className="bg-red-400 w-4 h-10 rounded-t"></div>
                     </div>
-                    <p className="text-xs text-gray-600 mt-2 text-center">Tickets closed</p>
+                    <p className="text-xs text-gray-600 mt-2 text-center">
+                      Tickets closed
+                    </p>
                   </div>
                 </div>
               </div>
