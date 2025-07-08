@@ -289,59 +289,67 @@ const Hero = () => {
                     style={{ animationDelay: "1s" }}
                   ></div>
 
-                  {/* Main Dashboard Container */}
-                  <div className="relative h-full flex items-center justify-center p-8">
-                    <div className="grid grid-cols-1 gap-6 max-w-xs w-full">
-                      {/* Uptime Counter */}
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 cursor-pointer border border-white/20 hover:border-white/30 group">
-                        <div className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors duration-300">
-                          99.99<span className="text-2xl md:text-3xl">%</span>
+                  {/* Main Dashboard Container - HubSpot style */}
+                  <div className="relative h-full flex items-center justify-center p-4">
+                    <div className="space-y-3 max-w-md w-full">
+                      {/* Header Status */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                          <span className="text-white/80 text-sm">
+                            Система активна
+                          </span>
                         </div>
-                        <div className="text-white/70 text-sm md:text-base font-medium">
-                          Uptime
+                        <div className="text-white/60 text-xs">
+                          Network Monitor
                         </div>
-                        <div className="text-white/50 text-xs mt-1">
-                          Надёжность системы
-                        </div>
-                        <div className="w-2 h-2 bg-green-400 rounded-full mx-auto mt-3 animate-pulse"></div>
                       </div>
 
-                      {/* Clients Counter */}
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 cursor-pointer border border-white/20 hover:border-white/30 group">
-                        <div className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
-                          500<span className="text-2xl md:text-3xl">+</span>
+                      {/* Large metric card */}
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                        <div className="text-3xl font-bold text-white mb-1">
+                          500+
                         </div>
-                        <div className="text-white/70 text-sm md:text-base font-medium">
+                        <div className="text-white/70 text-sm font-medium">
                           Клиентов
                         </div>
-                        <div className="text-white/50 text-xs mt-1">
+                        <div className="text-white/50 text-xs">
                           Успешных проектов
-                        </div>
-                        <div className="flex justify-center space-x-1 mt-3">
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
-                          <div
-                            className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"
-                            style={{ animationDelay: "0.2s" }}
-                          ></div>
-                          <div
-                            className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"
-                            style={{ animationDelay: "0.4s" }}
-                          ></div>
                         </div>
                       </div>
 
-                      {/* Support Counter */}
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 cursor-pointer border border-white/20 hover:border-white/30 group">
-                        <div className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors duration-300">
-                          24<span className="text-2xl md:text-3xl">/7</span>
+                      {/* Support availability */}
+                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                        <div className="text-2xl font-bold text-white mb-1">
+                          24/7
                         </div>
-                        <div className="text-white/70 text-sm md:text-base font-medium">
-                          Поддержка
+                        <div className="text-white/70 text-sm">
+                          Техподдержка
                         </div>
-                        <div className="text-white/50 text-xs mt-1">
-                          Круглосуточная помощь
+                      </div>
+
+                      {/* Compact metrics grid */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                          <div className="flex items-center justify-center space-x-1 mb-1">
+                            <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                            <span className="text-xs text-white/70">
+                              Uptime
+                            </span>
+                          </div>
+                          <div className="text-lg font-bold text-white">
+                            99.9%
+                          </div>
                         </div>
-                        <div className="w-2 h-2 bg-orange-400 rounded-full mx-auto mt-3 animate-pulse"></div>
+                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                          <div className="flex items-center justify-center space-x-1 mb-1">
+                            <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                            <span className="text-xs text-white/70">Speed</span>
+                          </div>
+                          <div className="text-lg font-bold text-white">
+                            1Gbps
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
