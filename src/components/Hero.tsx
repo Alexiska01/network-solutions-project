@@ -158,59 +158,59 @@ const Hero = () => {
             {!isMobile ? (
               <div className="relative w-full h-full">
                 {/* Метки-пинты */}
-                <div className="absolute top-2 left-24 z-20">
-                  <div className="bg-yellow-100 text-black px-2 py-1 rounded-lg text-xs shadow-sm mb-1 flex items-center gap-1">
+                <div className="absolute top-8 left-20 z-20">
+                  <div className="bg-yellow-100 text-black px-3 py-1 rounded-lg text-sm shadow-sm mb-2 flex items-center gap-2">
                     <span>📍</span>
                     <span>Location</span>
                   </div>
-                  <div className="border-l-2 border-dashed border-yellow-300 h-6 ml-3"></div>
+                  <div className="border-l-2 border-dashed border-yellow-300 h-8 ml-4"></div>
                 </div>
 
-                <div className="absolute top-2 right-80 z-20">
-                  <div className="bg-yellow-100 text-black px-2 py-1 rounded-lg text-xs shadow-sm mb-1 flex items-center gap-1">
+                <div className="absolute top-8 right-80 z-20">
+                  <div className="bg-yellow-100 text-black px-3 py-1 rounded-lg text-sm shadow-sm mb-2 flex items-center gap-2">
                     <span>🔌</span>
                     <span>Interfaces</span>
                   </div>
-                  <div className="border-l-2 border-dashed border-yellow-300 h-6 ml-3"></div>
+                  <div className="border-l-2 border-dashed border-yellow-300 h-8 ml-4"></div>
                 </div>
 
                 {/* Основная карточка IDS-108F Switch */}
-                <div className="absolute top-10 left-8 bg-white rounded-xl p-4 shadow-lg w-60 z-10">
-                  <h3 className="text-lg font-bold text-gray-800 mb-1">
+                <div className="absolute top-20 left-8 bg-white rounded-xl p-6 shadow-lg w-64 z-10">
+                  <h3 className="text-xl font-bold text-gray-800 mb-1">
                     IDS-108F Switch
                   </h3>
-                  <p className="text-blue-600 font-medium mb-3">iDATA</p>
+                  <p className="text-blue-600 font-medium mb-4">iDATA</p>
                   <div className="flex justify-center">
                     <img
                       src="/img/8ec5ec20-46da-4cd7-b25c-085a6bbd020c.jpg"
                       alt="IDS-108F Switch"
-                      className="w-28 h-20 object-contain"
+                      className="w-32 h-24 object-contain"
                     />
                   </div>
                 </div>
 
                 {/* Чат-виджет Поддержка iDATA */}
-                <div className="absolute top-2 right-2 bg-white rounded-xl shadow-lg w-64 z-10">
-                  <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-2 rounded-t-xl flex items-center gap-2">
+                <div className="absolute top-16 right-8 bg-white rounded-xl shadow-lg w-72 z-10">
+                  <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-3 rounded-t-xl flex items-center gap-2">
                     <span>👤</span>
-                    <span className="font-medium text-sm">Поддержка iDATA</span>
+                    <span className="font-medium">Поддержка iDATA</span>
                   </div>
-                  <div className="p-3 space-y-2">
-                    <button className="w-full bg-blue-500 text-white py-1.5 px-3 rounded-lg text-xs font-medium hover:bg-blue-600 transition-colors">
+                  <div className="p-4 space-y-3">
+                    <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
                       Вам нужна помощь?
                     </button>
-                    <div className="bg-gray-100 p-2 rounded-lg text-xs">
+                    <div className="bg-gray-100 p-3 rounded-lg text-sm">
                       <p className="text-gray-700">
                         Здравствуйте! Готовы ответить на ваши вопросы.
                       </p>
                     </div>
-                    <div className="flex gap-1">
+                    <div className="flex gap-2">
                       <input
                         type="text"
-                        className="flex-1 border border-gray-300 rounded-lg px-2 py-1.5 text-xs"
+                        className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm"
                         placeholder="Введите сообщение..."
                       />
-                      <button className="bg-blue-500 text-white px-2 py-1.5 rounded-lg hover:bg-blue-600 transition-colors text-xs">
+                      <button className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                         ➤
                       </button>
                     </div>
@@ -218,9 +218,9 @@ const Hero = () => {
                 </div>
 
                 {/* Три мини-карточки внизу */}
-                <div className="absolute bottom-2 left-8 flex gap-2">
+                <div className="absolute bottom-8 left-80 flex gap-4">
                   {/* Deal funnel */}
-                  <div className="bg-white rounded-xl p-3 shadow-lg w-28 h-28">
+                  <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
                     <div className="h-16 flex flex-col justify-center space-y-1">
                       <div className="bg-blue-200 h-3 w-full rounded"></div>
                       <div className="bg-red-300 h-3 w-3/4 rounded"></div>
@@ -233,11 +233,11 @@ const Hero = () => {
                   </div>
 
                   {/* Leads by source */}
-                  <div className="bg-white rounded-xl p-3 shadow-lg w-28 h-28">
-                    <div className="h-14 flex items-center justify-center">
-                      <div className="relative w-10 h-10">
+                  <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
+                    <div className="h-16 flex items-center justify-center">
+                      <div className="relative w-12 h-12">
                         <svg
-                          className="w-10 h-10 transform -rotate-90"
+                          className="w-12 h-12 transform -rotate-90"
                           viewBox="0 0 36 36"
                         >
                           <path
@@ -264,18 +264,18 @@ const Hero = () => {
                         </svg>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-600 mt-1 text-center">
+                    <p className="text-xs text-gray-600 mt-2 text-center">
                       Leads by source
                     </p>
                   </div>
 
                   {/* Tickets closed */}
-                  <div className="bg-white rounded-xl p-3 shadow-lg w-28 h-28">
-                    <div className="h-14 flex items-end justify-center space-x-1">
-                      <div className="bg-red-400 w-3 h-6 rounded-t"></div>
-                      <div className="bg-red-400 w-3 h-10 rounded-t"></div>
-                      <div className="bg-red-400 w-3 h-4 rounded-t"></div>
-                      <div className="bg-red-400 w-3 h-8 rounded-t"></div>
+                  <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
+                    <div className="h-16 flex items-end justify-center space-x-1">
+                      <div className="bg-red-400 w-4 h-8 rounded-t"></div>
+                      <div className="bg-red-400 w-4 h-12 rounded-t"></div>
+                      <div className="bg-red-400 w-4 h-6 rounded-t"></div>
+                      <div className="bg-red-400 w-4 h-10 rounded-t"></div>
                     </div>
                     <p className="text-xs text-gray-600 mt-1 text-center">
                       Tickets closed
