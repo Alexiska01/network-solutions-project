@@ -45,38 +45,92 @@ const Hero = () => {
     <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden z-0">
         <svg
-  className="absolute inset-0 w-full h-full pointer-events-none"
-  viewBox="0 0 1200 800"
-  preserveAspectRatio="xMidYMid slice"
->
-  <defs>
-    <pattern
-      id="wave-pattern"
-      x="0"
-      y="0"
-      width="100"
-      height="100"
-      patternUnits="userSpaceOnUse"
-    >
-      <path
-        d="M0,50 Q25,20 50,50 T100,50"
-        stroke="white"
-        strokeWidth="1"
-        fill="none"
-        opacity="0.15"
-      />
-    </pattern>
-  </defs>
-  <path d="M0,200 Q300,100 600,200 T1200,200" stroke="white" strokeWidth="1.5" fill="none" opacity="0.2" />
-  <path d="M0,300 Q400,150 800,300 T1200,300" stroke="white" strokeWidth="1" fill="none" opacity="0.15" />
-  <path d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400" stroke="white" strokeWidth="1" fill="none" opacity="0.1" />
-  <path d="M0,500 Q350,350 700,500 T1200,500" stroke="white" strokeWidth="1.5" fill="none" opacity="0.18" />
-  <path d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600" stroke="white" strokeWidth="1" fill="none" opacity="0.12" />
-  <path d="M0,0 Q400,200 800,100 T1200,300" stroke="white" strokeWidth="1" fill="none" opacity="0.1" />
-  <path d="M0,800 Q300,600 600,700 T1200,500" stroke="white" strokeWidth="1" fill="none" opacity="0.08" />
-  <path d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300" stroke="white" strokeWidth="1" fill="none" opacity="0.08" />
-  <path d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250" stroke="white" strokeWidth="1" fill="none" opacity="0.06" />
-</svg>
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox="0 0 1200 800"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <defs>
+            <pattern
+              id="wave-pattern"
+              x="0"
+              y="0"
+              width="100"
+              height="100"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M0,50 Q25,20 50,50 T100,50"
+                stroke="white"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.15"
+              />
+            </pattern>
+          </defs>
+          <path
+            d="M0,200 Q300,100 600,200 T1200,200"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.2"
+          />
+          <path
+            d="M0,300 Q400,150 800,300 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.15"
+          />
+          <path
+            d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,500 Q350,350 700,500 T1200,500"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.18"
+          />
+          <path
+            d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.12"
+          />
+          <path
+            d="M0,0 Q400,200 800,100 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,800 Q300,600 600,700 T1200,500"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.06"
+          />
+        </svg>
       </div>
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
@@ -140,19 +194,26 @@ const Hero = () => {
           </div>
 
           {/* Правая часть */}
-          <div className="w-full flex flex-col items-start gap-6">
-            <div className="flex items-start gap-4 w-full">
+          <div className="w-full flex flex-col items-start gap-6 relative">
+            {/* Декоративный круг */}
+            <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-white/10 rounded-full blur-sm opacity-30 pointer-events-none"></div>
+
+            <div className="flex items-start gap-4 w-full relative z-10">
               <div className="flex flex-col gap-3">
-                {[{
-                  icon: FileText,
-                  label: 'Документация'
-                }, {
-                  icon: BookOpen,
-                  label: 'Инструкции'
-                }, {
-                  icon: Info,
-                  label: 'Справочные материалы'
-                }].map(({ icon: Icon, label }, i) => (
+                {[
+                  {
+                    icon: FileText,
+                    label: "Документация",
+                  },
+                  {
+                    icon: BookOpen,
+                    label: "Инструкции",
+                  },
+                  {
+                    icon: Info,
+                    label: "Справочные материалы",
+                  },
+                ].map(({ icon: Icon, label }, i) => (
                   <motion.a
                     key={label}
                     href="#"
@@ -181,7 +242,9 @@ const Hero = () => {
                   <Shield className="w-4 h-4" />
                   Безопасность
                 </div>
-                <p className="text-white font-normal">Как обеспечить защиту сети?</p>
+                <p className="text-white font-normal">
+                  Как обеспечить защиту сети?
+                </p>
               </motion.a>
             </div>
 
@@ -189,7 +252,7 @@ const Hero = () => {
               href="#"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="backdrop-blur-sm text-white rounded-xl shadow-xl p-6 w-full max-w-md"
+              className="backdrop-blur-sm text-white rounded-xl shadow-xl p-6 w-full max-w-md relative z-10"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 }}
@@ -198,7 +261,9 @@ const Hero = () => {
                 <Wifi className="w-5 h-5 text-blue-600" />
                 <span className="text-xl font-semibold">Wi-Fi</span>
               </div>
-              <p className="text-sm text-gray-600">Беспроводные точки доступа</p>
+              <p className="text-sm text-gray-600">
+                Беспроводные точки доступа
+              </p>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <div className="h-4 bg-blue-200 rounded" />
                 <div className="h-4 bg-blue-300 rounded" />
