@@ -1,9 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import Icon from "@/components/ui/icon";
-import * as THREE from "three";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [typingText, setTypingText] = useState("");
   const fullText =
     "iDATA — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
@@ -23,131 +20,105 @@ const Hero = () => {
     return () => clearInterval(typingInterval);
   }, []);
 
-  // Three.js WebGL background
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000,
-    );
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvasRef.current,
-      alpha: true,
-    });
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0);
-
-    // Particles for network effect
-    const particleCount = 150;
-    const particles = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-    const velocities = new Float32Array(particleCount * 3);
-
-    for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 20;
-      positions[i3 + 1] = (Math.random() - 0.5) * 10;
-      positions[i3 + 2] = (Math.random() - 0.5) * 20;
-
-      velocities[i3] = (Math.random() - 0.5) * 0.02;
-      velocities[i3 + 1] = (Math.random() - 0.5) * 0.01;
-      velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
-
-      const color = new THREE.Color();
-      color.setHSL(0.6 + Math.random() * 0.2, 0.8, 0.3 + Math.random() * 0.4);
-      colors[i3] = color.r;
-      colors[i3 + 1] = color.g;
-      colors[i3 + 2] = color.b;
-    }
-
-    particles.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    particles.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-    const particleMaterial = new THREE.PointsMaterial({
-      size: 0.05,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending,
-    });
-
-    const particleSystem = new THREE.Points(particles, particleMaterial);
-    scene.add(particleSystem);
-
-    camera.position.z = 8;
-
-    let animationId: number;
-    let mouseX = 0;
-    let mouseY = 0;
-
-    const handleMouseMove = (event: MouseEvent) => {
-      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    };
-
-    const animate = () => {
-      const positions = particleSystem.geometry.attributes.position
-        .array as Float32Array;
-
-      for (let i = 0; i < particleCount; i++) {
-        const i3 = i * 3;
-        positions[i3] += velocities[i3];
-        positions[i3 + 1] += velocities[i3 + 1];
-        positions[i3 + 2] += velocities[i3 + 2];
-
-        // Bounce off boundaries
-        if (positions[i3] > 10 || positions[i3] < -10) velocities[i3] *= -1;
-        if (positions[i3 + 1] > 5 || positions[i3 + 1] < -5)
-          velocities[i3 + 1] *= -1;
-        if (positions[i3 + 2] > 10 || positions[i3 + 2] < -10)
-          velocities[i3 + 2] *= -1;
-      }
-
-      particleSystem.geometry.attributes.position.needsUpdate = true;
-
-      // Mouse interaction
-      camera.rotation.x += (mouseY * 0.1 - camera.rotation.x) * 0.05;
-      camera.rotation.y += (mouseX * 0.1 - camera.rotation.y) * 0.05;
-
-      particleSystem.rotation.x += 0.0005;
-      particleSystem.rotation.y += 0.001;
-
-      renderer.render(scene, camera);
-      animationId = requestAnimationFrame(animate);
-    };
-
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("resize", handleResize);
-    animate();
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationId);
-      renderer.dispose();
-    };
-  }, []);
-
   return (
     <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-      {/* Three.js WebGL Background */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ zIndex: 1 }}
-      />
+      {/* Wave Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{ zIndex: 1 }}
+          viewBox="0 0 1200 800"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <defs>
+            <pattern
+              id="wave-pattern"
+              x="0"
+              y="0"
+              width="100"
+              height="100"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M0,50 Q25,20 50,50 T100,50"
+                stroke="white"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.15"
+              />
+            </pattern>
+          </defs>
+
+          {/* Flowing wave lines */}
+          <path
+            d="M0,200 Q300,100 600,200 T1200,200"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.2"
+          />
+          <path
+            d="M0,300 Q400,150 800,300 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.15"
+          />
+          <path
+            d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,500 Q350,350 700,500 T1200,500"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.18"
+          />
+          <path
+            d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.12"
+          />
+
+          {/* Diagonal intersecting lines */}
+          <path
+            d="M0,0 Q400,200 800,100 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,800 Q300,600 600,700 T1200,500"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+
+          {/* Subtle network connections */}
+          <path
+            d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.06"
+          />
+        </svg>
+      </div>
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
@@ -171,59 +142,21 @@ const Hero = () => {
             </div>
           </div>
           <div className="relative mt-6 md:mt-8 lg:mt-0">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 transition-all duration-300 hover:bg-white/15 hover:scale-105">
-              <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
-                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
-                  <Icon
-                    name="Network"
-                    size={20}
-                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
-                  />
-                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
-                    Коммутаторы
-                  </h3>
-                  <p className="text-xs md:text-sm text-blue-200">
-                    L2/L3 решения
-                  </p>
-                </div>
-                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
-                  <Icon
-                    name="Router"
-                    size={20}
-                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
-                  />
-                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
-                    Маршрутизаторы
-                  </h3>
-                  <p className="text-xs md:text-sm text-blue-200">
-                    Корпоративные
-                  </p>
-                </div>
-                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
-                  <Icon
-                    name="Wifi"
-                    size={20}
-                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
-                  />
-                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
-                    Wi-Fi
-                  </h3>
-                  <p className="text-xs md:text-sm text-blue-200">
-                    Беспроводные AP
-                  </p>
-                </div>
-                <div className="text-center transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-lg p-2">
-                  <Icon
-                    name="Shield"
-                    size={20}
-                    className="mx-auto mb-1.5 md:mb-2 lg:mb-3 text-blue-200 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
-                  />
-                  <h3 className="text-xs md:text-sm lg:text-base font-semibold mb-0.5 md:mb-1">
-                    Безопасность
-                  </h3>
-                  <p className="text-xs md:text-sm text-blue-200">
-                    Защита сети
-                  </p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-10 transition-all duration-300 hover:bg-white/15 hover:scale-105">
+              <div className="text-center">
+                <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-3 md:mb-4">
+                  Профессиональные решения
+                </h3>
+                <p className="text-sm md:text-base text-blue-200 mb-4 md:mb-6">
+                  Комплексные технологии для корпоративных сетей любой сложности
+                </p>
+                <div className="flex flex-col sm:flex-row gap-2 md:gap-3 justify-center">
+                  <button className="bg-white/20 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg text-sm md:text-base font-medium hover:bg-white/30 transition-all duration-300">
+                    Узнать больше
+                  </button>
+                  <button className="border border-white/50 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg text-sm md:text-base font-medium hover:bg-white/10 transition-all duration-300">
+                    Каталог
+                  </button>
                 </div>
               </div>
             </div>
