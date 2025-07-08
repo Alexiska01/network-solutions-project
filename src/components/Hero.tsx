@@ -276,7 +276,7 @@ const Hero = () => {
                   className="absolute inset-0 w-full h-full"
                 />
 
-                {/* HubSpot style scattered cards */}
+                {/* HubSpot style compact dashboard */}
                 <div className="absolute inset-0 overflow-hidden">
                   {/* Background Decorative Elements */}
                   <div className="absolute top-8 right-12 w-20 h-20 bg-blue-400/10 rounded-full blur-xl animate-pulse"></div>
@@ -289,106 +289,138 @@ const Hero = () => {
                     style={{ animationDelay: "1s" }}
                   ></div>
 
-                  {/* Top right - Donut Chart */}
-                  <div className="absolute top-8 right-16 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20 w-28">
-                    <div className="relative w-8 h-8 mx-auto mb-2">
-                      <svg
-                        className="w-8 h-8 transform -rotate-90"
-                        viewBox="0 0 36 36"
-                      >
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="rgba(255,255,255,0.2)"
-                          strokeWidth="2"
-                        />
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#60a5fa"
-                          strokeWidth="2"
-                          strokeDasharray="75, 100"
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">
-                          75%
-                        </span>
+                  {/* Main Dashboard Container */}
+                  <div className="relative h-full flex items-center justify-center p-4">
+                    <div className="space-y-3 max-w-sm w-full">
+                      {/* Status Bar */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                          <span className="text-white/80 text-sm">
+                            Система активна
+                          </span>
+                        </div>
+                        <div className="text-white/60 text-xs">
+                          Network Monitor
+                        </div>
+                      </div>
+
+                      {/* Compact 2x2 Grid */}
+                      <div className="grid grid-cols-2 gap-3">
+                        {/* Donut Chart - Пропускная способность */}
+                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                          <div className="relative w-8 h-8 mx-auto mb-2">
+                            <svg
+                              className="w-8 h-8 transform -rotate-90"
+                              viewBox="0 0 36 36"
+                            >
+                              <path
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="rgba(255,255,255,0.2)"
+                                strokeWidth="2"
+                              />
+                              <path
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="#60a5fa"
+                                strokeWidth="2"
+                                strokeDasharray="75, 100"
+                              />
+                            </svg>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-white text-xs font-bold">
+                                75%
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-white/70 text-xs">
+                            Пропускная способность
+                          </div>
+                          <div className="text-white text-sm font-bold">
+                            847 Mbps
+                          </div>
+                        </div>
+
+                        {/* Bar Chart - Активные порты */}
+                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                          <div className="flex items-end justify-center space-x-1 mb-2 h-8">
+                            <div
+                              className="w-1 bg-blue-400 rounded-t"
+                              style={{ height: "32px" }}
+                            ></div>
+                            <div
+                              className="w-1 bg-blue-400/80 rounded-t"
+                              style={{ height: "24px" }}
+                            ></div>
+                            <div
+                              className="w-1 bg-blue-400/90 rounded-t"
+                              style={{ height: "18px" }}
+                            ></div>
+                            <div
+                              className="w-1 bg-blue-400/70 rounded-t"
+                              style={{ height: "12px" }}
+                            ></div>
+                          </div>
+                          <div className="text-white/70 text-xs">
+                            Активные порты
+                          </div>
+                          <div className="text-white text-sm font-bold">
+                            24/48
+                          </div>
+                        </div>
+
+                        {/* Speedometer - PoE мощность */}
+                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                          <div className="relative w-8 h-4 mx-auto mb-2">
+                            <svg className="w-8 h-4" viewBox="0 0 32 16">
+                              <path
+                                d="M 2 14 A 14 14 0 0 1 30 14"
+                                fill="none"
+                                stroke="rgba(255,255,255,0.2)"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                              />
+                              <path
+                                d="M 2 14 A 14 14 0 0 1 22 14"
+                                fill="none"
+                                stroke="#10b981"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                              />
+                              <circle cx="16" cy="14" r="1" fill="#10b981" />
+                              <line
+                                x1="16"
+                                y1="14"
+                                x2="20"
+                                y2="8"
+                                stroke="#10b981"
+                                strokeWidth="1"
+                              />
+                            </svg>
+                          </div>
+                          <div className="text-white/70 text-xs">
+                            PoE мощность
+                          </div>
+                          <div className="text-white text-sm font-bold">
+                            340W
+                          </div>
+                        </div>
+
+                        {/* Uptime Status */}
+                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20">
+                          <div className="flex items-center justify-center space-x-1 mb-2">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span className="text-xs text-white/70">
+                              Uptime
+                            </span>
+                          </div>
+                          <div className="text-white text-sm font-bold">
+                            99.9%
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="text-white/70 text-xs">
-                      Пропускная способность
-                    </div>
-                    <div className="text-white text-sm font-bold">847 Mbps</div>
-                  </div>
-
-                  {/* Middle left - Bar Chart */}
-                  <div className="absolute top-24 left-8 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20 w-24">
-                    <div className="flex items-end justify-center space-x-1 mb-2 h-8">
-                      <div
-                        className="w-1 bg-blue-400 rounded-t"
-                        style={{ height: "32px" }}
-                      ></div>
-                      <div
-                        className="w-1 bg-blue-400/80 rounded-t"
-                        style={{ height: "24px" }}
-                      ></div>
-                      <div
-                        className="w-1 bg-blue-400/90 rounded-t"
-                        style={{ height: "18px" }}
-                      ></div>
-                      <div
-                        className="w-1 bg-blue-400/70 rounded-t"
-                        style={{ height: "12px" }}
-                      ></div>
-                    </div>
-                    <div className="text-white/70 text-xs">Активные порты</div>
-                    <div className="text-white text-sm font-bold">24/48</div>
-                  </div>
-
-                  {/* Bottom right - Speedometer */}
-                  <div className="absolute bottom-16 right-8 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20 w-28">
-                    <div className="relative w-8 h-4 mx-auto mb-2">
-                      <svg className="w-8 h-4" viewBox="0 0 32 16">
-                        <path
-                          d="M 2 14 A 14 14 0 0 1 30 14"
-                          fill="none"
-                          stroke="rgba(255,255,255,0.2)"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        />
-                        <path
-                          d="M 2 14 A 14 14 0 0 1 22 14"
-                          fill="none"
-                          stroke="#10b981"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        />
-                        <circle cx="16" cy="14" r="1" fill="#10b981" />
-                        <line
-                          x1="16"
-                          y1="14"
-                          x2="20"
-                          y2="8"
-                          stroke="#10b981"
-                          strokeWidth="1"
-                        />
-                      </svg>
-                    </div>
-                    <div className="text-white/70 text-xs">PoE мощность</div>
-                    <div className="text-white text-sm font-bold">340W</div>
-                  </div>
-
-                  {/* Top left corner - Status */}
-                  <div className="absolute top-6 left-6 bg-green-500/20 backdrop-blur-sm rounded-lg p-2 text-center border border-green-400/30 w-20">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mx-auto mb-1 animate-pulse"></div>
-                    <div className="text-white text-xs">Online</div>
-                  </div>
-
-                  {/* Bottom left - Uptime */}
-                  <div className="absolute bottom-8 left-12 bg-white/10 backdrop-blur-sm rounded-lg p-2 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 border border-white/20 w-20">
-                    <div className="text-white text-sm font-bold">99.9%</div>
-                    <div className="text-white/70 text-xs">Uptime</div>
                   </div>
                 </div>
               </div>
