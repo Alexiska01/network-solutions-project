@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { FileText, BookOpen, Info, Shield, Wifi } from "lucide-react";
 
 const Hero = () => {
   const [typingText, setTypingText] = useState("");
+  const [showTyping, setShowTyping] = useState(false);
+  const [showIDATA, setShowIDATA] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const fullText =
-    "iDATA — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
 
-  // Check if mobile
+  const fullText =
+    " — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -16,8 +20,15 @@ const Hero = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Typing effect
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowIDATA(true);
+    }, 1200);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    if (!showTyping) return;
     let currentIndex = 0;
     const typingInterval = setInterval(() => {
       if (currentIndex <= fullText.length) {
@@ -28,144 +39,172 @@ const Hero = () => {
       }
     }, 30);
     return () => clearInterval(typingInterval);
-  }, []);
+  }, [showTyping]);
 
   return (
     <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-      {/* Wave Background */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden z-0">
         <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ zIndex: 1 }}
-          viewBox="0 0 1200 800"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          {/* SVG пути... */}
-        </svg>
+  className="absolute inset-0 w-full h-full pointer-events-none"
+  viewBox="0 0 1200 800"
+  preserveAspectRatio="xMidYMid slice"
+>
+  <defs>
+    <pattern
+      id="wave-pattern"
+      x="0"
+      y="0"
+      width="100"
+      height="100"
+      patternUnits="userSpaceOnUse"
+    >
+      <path
+        d="M0,50 Q25,20 50,50 T100,50"
+        stroke="white"
+        strokeWidth="1"
+        fill="none"
+        opacity="0.15"
+      />
+    </pattern>
+  </defs>
+  <path d="M0,200 Q300,100 600,200 T1200,200" stroke="white" strokeWidth="1.5" fill="none" opacity="0.2" />
+  <path d="M0,300 Q400,150 800,300 T1200,300" stroke="white" strokeWidth="1" fill="none" opacity="0.15" />
+  <path d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400" stroke="white" strokeWidth="1" fill="none" opacity="0.1" />
+  <path d="M0,500 Q350,350 700,500 T1200,500" stroke="white" strokeWidth="1.5" fill="none" opacity="0.18" />
+  <path d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600" stroke="white" strokeWidth="1" fill="none" opacity="0.12" />
+  <path d="M0,0 Q400,200 800,100 T1200,300" stroke="white" strokeWidth="1" fill="none" opacity="0.1" />
+  <path d="M0,800 Q300,600 600,700 T1200,500" stroke="white" strokeWidth="1" fill="none" opacity="0.08" />
+  <path d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300" stroke="white" strokeWidth="1" fill="none" opacity="0.08" />
+  <path d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250" stroke="white" strokeWidth="1" fill="none" opacity="0.06" />
+</svg>
       </div>
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
           {/* Левая часть */}
-          <div>
-            <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default">
+          <div className="flex flex-col justify-between min-h-[260px]">
+            <motion.h1
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 70, damping: 15 }}
+              className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
+            >
               Профессиональные решения для сетевой инфраструктуры
-            </h1>
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed transition-all duration-300 hover:scale-105 hover:drop-shadow-md cursor-default min-h-[3em]">
-              {typingText}
-              {typingText.length < fullText.length && <span className="animate-pulse">|</span>}
-            </p>
+            </motion.h1>
+
+            <div className="relative max-w-2xl">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 text-blue-100 leading-relaxed transition-all duration-300 hover:scale-105 hover:drop-shadow-md cursor-default min-h-[3em] whitespace-pre-wrap">
+                {showIDATA && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 70, damping: 15 }}
+                    onAnimationComplete={() => setShowTyping(true)}
+                    className="inline-block"
+                  >
+                    iDATA
+                  </motion.span>
+                )}
+                {showTyping && typingText}
+                {showTyping && typingText.length < fullText.length && (
+                  <span className="animate-pulse">|</span>
+                )}
+              </p>
+
+              <span
+                className="invisible absolute pointer-events-none"
+                aria-hidden="true"
+              >
+                iDATA{fullText}
+              </span>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4">
-              <button className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px] hover:scale-105 hover:shadow-lg">
+              <motion.button
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
+                className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px] hover:scale-105 hover:shadow-lg"
+              >
                 Техническая поддержка
-              </button>
-              <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg">
+              </motion.button>
+              <motion.button
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.6, ease: "easeOut" }}
+                className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg"
+              >
                 Консультация
-              </button>
+              </motion.button>
             </div>
           </div>
 
           {/* Правая часть */}
-          <div className="relative mt-6 md:mt-8 lg:mt-0 h-[32rem] md:h-[36rem] lg:h-[40rem]">
-            {!isMobile ? (
-              <div className="relative w-full h-full p-4 md:p-6 lg:p-8">
-                {/* Пин Location */}
-                <div className="absolute top-6 md:top-8 left-20 md:left-24 z-20">
-                  <div className="bg-yellow-100 text-black px-3 py-1 rounded-lg text-sm shadow-sm mb-2 flex items-center gap-2">
-                    <span>📍</span> Location
-                  </div>
-                  <div className="border-l-2 border-dashed border-yellow-300 h-8 ml-4"></div>
-                </div>
-
-                {/* Пин Interfaces */}
-                <div className="absolute top-6 md:top-8 left-56 md:left-60 z-20">
-                  <div className="bg-yellow-100 text-black px-3 py-1 rounded-lg text-sm shadow-sm mb-2 flex items-center gap-2">
-                    <span>🔌</span> Interfaces
-                  </div>
-                  <div className="border-l-2 border-dashed border-yellow-300 h-8 ml-4"></div>
-                </div>
-
-                {/* Карточка Switch */}
-                <div className="absolute top-20 md:top-24 left-6 md:left-8 bg-white rounded-xl p-6 shadow-lg w-64 z-10">
-                  <h3 className="text-xl font-bold text-gray-800 mb-1">IDS-108F Switch</h3>
-                  <p className="text-blue-600 font-medium mb-4">iDATA</p>
-                  <div className="flex justify-center">
-                    <img
-                      src="/img/8ec5ec20-46da-4cd7-b25c-085a6bbd020c.jpg"
-                      alt="IDS-108F Switch"
-                      className="w-32 h-24 object-contain"
-                    />
-                  </div>
-                </div>
-
-                {/* Чат-виджет */}
-                <div className="absolute top-6 md:top-8 right-6 md:right-8 bg-white rounded-xl shadow-lg w-72 z-10">
-                  <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-3 rounded-t-xl flex items-center gap-2">
-                    <span>👤</span> <span className="font-medium">Поддержка iDATA</span>
-                  </div>
-                  <div className="p-4 space-y-3">
-                    <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
-                      Вам нужна помощь?
-                    </button>
-                    <div className="bg-gray-100 p-3 rounded-lg text-sm">
-                      <p className="text-gray-700">
-                        Здравствуйте! Готовы ответить на ваши вопросы.
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm"
-                        placeholder="Введите сообщение..."
-                      />
-                      <button className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                        ➤
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Мини-карточки */}
-                <div className="absolute bottom-6 md:bottom-8 left-6 md:left-8 flex gap-4 md:gap-6">
-                  {/* Deal funnel */}
-                  <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
-                    <div className="h-16 flex flex-col justify-center space-y-1">
-                      <div className="bg-blue-200 h-3 w-full rounded"></div>
-                      <div className="bg-red-300 h-3 w-3/4 rounded"></div>
-                      <div className="bg-blue-200 h-3 w-full rounded"></div>
-                      <div className="bg-red-300 h-3 w-1/2 rounded"></div>
-                    </div>
-                    <p className="text-xs text-gray-600 mt-2 text-center">Deal funnel</p>
-                  </div>
-                  {/* Leads by source */}
-                  <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
-                    <div className="h-16 flex items-center justify-center">
-                      <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
-                        {/* SVG сегменты */}
-                      </svg>
-                    </div>
-                    <p className="text-xs text-gray-600 mt-2 text-center">Leads by source</p>
-                  </div>
-                  {/* Tickets closed */}
-                  <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
-                    <div className="h-16 flex items-end justify-center space-x-1">
-                      <div className="bg-red-400 w-4 h-8 rounded-t"></div>
-                      <div className="bg-red-400 w-4 h-12 rounded-t"></div>
-                      <div className="bg-red-400 w-4 h-6 rounded-t"></div>
-                      <div className="bg-red-400 w-4 h-10 rounded-t"></div>
-                    </div>
-                    <p className="text-xs text-gray-600 mt-2 text-center">Tickets closed</p>
-                  </div>
-                </div>
+          <div className="w-full flex flex-col items-start gap-6">
+            <div className="flex items-start gap-4 w-full">
+              <div className="flex flex-col gap-3">
+                {[{
+                  icon: FileText,
+                  label: 'Документация'
+                }, {
+                  icon: BookOpen,
+                  label: 'Инструкции'
+                }, {
+                  icon: Info,
+                  label: 'Справочные материалы'
+                }].map(({ icon: Icon, label }, i) => (
+                  <motion.a
+                    key={label}
+                    href="#"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center gap-2 backdrop-blur-sm text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium hover:bg-yellow-100 transition-colors"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {label}
+                  </motion.a>
+                ))}
               </div>
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl md:rounded-2xl flex items-center justify-center">
-                <div className="text-center text-white/80">
-                  <div className="text-2xl mb-2">⚡</div>
-                  <p className="text-sm">Сетевые технологии</p>
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className="backdrop-blur-sm text-white px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <div className="flex items-center gap-2 text-white mb-1">
+                  <Shield className="w-4 h-4" />
+                  Безопасность
                 </div>
+                <p className="text-white font-normal">Как обеспечить защиту сети?</p>
+              </motion.a>
+            </div>
+
+            <motion.a
+              href="#"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="backdrop-blur-sm text-white rounded-xl shadow-xl p-6 w-full max-w-md"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 }}
+            >
+              <div className="flex items-center gap-2 text-gray-800 mb-2">
+                <Wifi className="w-5 h-5 text-blue-600" />
+                <span className="text-xl font-semibold">Wi-Fi</span>
               </div>
-            )}
+              <p className="text-sm text-gray-600">Беспроводные точки доступа</p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="h-4 bg-blue-200 rounded" />
+                <div className="h-4 bg-blue-300 rounded" />
+                <div className="h-4 bg-blue-100 rounded col-span-2" />
+              </div>
+            </motion.a>
           </div>
         </div>
       </div>
