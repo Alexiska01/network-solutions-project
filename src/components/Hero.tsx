@@ -305,7 +305,7 @@ const Hero = () => {
                         </div>
                         <div className="w-2 h-2 bg-green-400 rounded-full mx-auto mt-3 animate-pulse"></div>
                       </div>
-                      
+
                       {/* Clients Counter */}
                       <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 cursor-pointer border border-white/20 hover:border-white/30 group">
                         <div className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
@@ -319,11 +319,17 @@ const Hero = () => {
                         </div>
                         <div className="flex justify-center space-x-1 mt-3">
                           <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                          <div
+                            className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"
+                            style={{ animationDelay: "0.2s" }}
+                          ></div>
+                          <div
+                            className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"
+                            style={{ animationDelay: "0.4s" }}
+                          ></div>
                         </div>
                       </div>
-                      
+
                       {/* Support Counter */}
                       <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center transform hover:scale-105 hover:bg-white/15 transition-all duration-300 cursor-pointer border border-white/20 hover:border-white/30 group">
                         <div className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors duration-300">
@@ -337,149 +343,13 @@ const Hero = () => {
                         </div>
                         <div className="w-2 h-2 bg-orange-400 rounded-full mx-auto mt-3 animate-pulse"></div>
                       </div>
-                      
                     </div>
                   </div>
-                  
+
                   {/* Floating Indicator */}
                   <div className="absolute top-6 right-6">
                     <div className="w-10 h-10 bg-white/15 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl md:rounded-2xl flex items-center justify-center">
-                <div className="text-center text-white/80">
-                  <div className="text-2xl mb-2">⚡</div>
-                  <p className="text-sm">Сетевые технологии</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default Hero;
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-white/80 text-sm font-medium">
-                          Пропускная способность
-                        </span>
-                        <div className="text-blue-400 text-xs">сейчас</div>
-                      </div>
-                      <div className="flex items-end space-x-1 mb-2">
-                        <div
-                          className="w-2 bg-blue-400/60 rounded-t"
-                          style={{ height: "16px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400/70 rounded-t"
-                          style={{ height: "24px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400/80 rounded-t"
-                          style={{ height: "20px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400 rounded-t"
-                          style={{ height: "32px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400/90 rounded-t"
-                          style={{ height: "28px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400/70 rounded-t"
-                          style={{ height: "18px" }}
-                        ></div>
-                      </div>
-                      <div className="text-white text-lg font-bold">
-                        847 Mbps
-                      </div>
-                    </div>
-
-                    {/* Devices Connected */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-white/80 text-sm font-medium">
-                          Подключенные устройства
-                        </span>
-                        <div className="flex space-x-1">
-                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                          <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <div className="text-center">
-                          <div className="text-white text-lg font-bold">24</div>
-                          <div className="text-white/60 text-xs">Active</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-white text-lg font-bold">
-                            156
-                          </div>
-                          <div className="text-white/60 text-xs">Total</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Alert Notification */}
-                    <div className="bg-orange-500/20 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-orange-500/25 border border-orange-400/30 animate-pulse">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
-                          <span className="text-white text-sm font-bold">
-                            !
-                          </span>
-                        </div>
-                        <div>
-                          <div className="text-white text-sm font-medium">
-                            Обновление ПО
-                          </div>
-                          <div className="text-white/70 text-xs">
-                            Доступна новая версия
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Performance Metrics */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
-                      <div className="grid grid-cols-3 gap-3 text-center">
-                        <div>
-                          <div className="text-white text-sm font-bold">
-                            2.1ms
-                          </div>
-                          <div className="text-white/60 text-xs">Latency</div>
-                        </div>
-                        <div>
-                          <div className="text-white text-sm font-bold">0%</div>
-                          <div className="text-white/60 text-xs">
-                            Packet Loss
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-white text-sm font-bold">
-                            42°C
-                          </div>
-                          <div className="text-white/60 text-xs">
-                            Temperature
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Floating Action Button */}
-                  <div className="absolute bottom-6 right-6">
-                    <div className="w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 border border-white/30">
-                      <div className="w-6 h-6 text-white text-center text-sm font-bold">
-                        ⚡
-                      </div>
                     </div>
                   </div>
                 </div>
