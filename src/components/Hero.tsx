@@ -276,29 +276,156 @@ const Hero = () => {
                   className="absolute inset-0 w-full h-full"
                 />
 
-                {/* 3D Model */}
-                <div className="absolute inset-0 flex items-center justify-center p-4">
-                  <div className="w-full h-full max-w-md max-h-80">
-                    <model-viewer
-                      ref={modelViewerRef}
-                      src="https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24P.glb"
-                      camera-controls
-                      auto-rotate
-                      exposure="1.2"
-                      interaction-prompt="none"
-                      loading="eager"
-                      reveal="auto"
-                      camera-orbit="0deg 75deg 0.88m"
-                      min-camera-orbit="auto auto 0.55m"
-                      max-camera-orbit="auto auto 1.65m"
-                      field-of-view="30deg"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        background: "transparent",
-                      }}
-                      className="w-full h-full"
-                    />
+                {/* Interactive Dashboard Cards */}
+                <div className="absolute inset-0 overflow-hidden">
+                  {/* Background Elements */}
+                  <div className="absolute top-16 right-8 w-16 h-16 bg-orange-400/20 rounded-full blur-xl animate-pulse"></div>
+                  <div
+                    className="absolute bottom-20 left-8 w-12 h-12 bg-purple-400/20 rounded-full blur-lg animate-pulse"
+                    style={{ animationDelay: "1s" }}
+                  ></div>
+
+                  {/* Main Cards Container */}
+                  <div className="relative h-full p-6 flex flex-col justify-center space-y-4">
+                    {/* Network Status Card */}
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                          <span className="text-white/80 text-sm font-medium">
+                            Статус сети
+                          </span>
+                        </div>
+                        <div className="text-green-400 text-xs bg-green-400/20 px-2 py-1 rounded-full">
+                          Online
+                        </div>
+                      </div>
+                      <div className="text-white text-xl font-bold mb-1">
+                        99.8%
+                      </div>
+                      <div className="text-white/60 text-xs">
+                        Время бесперебойной работы
+                      </div>
+                    </div>
+
+                    {/* Bandwidth Chart Card */}
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-white/80 text-sm font-medium">
+                          Пропускная способность
+                        </span>
+                        <div className="text-blue-400 text-xs">сейчас</div>
+                      </div>
+                      <div className="flex items-end space-x-1 mb-2">
+                        <div
+                          className="w-2 bg-blue-400/60 rounded-t"
+                          style={{ height: "16px" }}
+                        ></div>
+                        <div
+                          className="w-2 bg-blue-400/70 rounded-t"
+                          style={{ height: "24px" }}
+                        ></div>
+                        <div
+                          className="w-2 bg-blue-400/80 rounded-t"
+                          style={{ height: "20px" }}
+                        ></div>
+                        <div
+                          className="w-2 bg-blue-400 rounded-t"
+                          style={{ height: "32px" }}
+                        ></div>
+                        <div
+                          className="w-2 bg-blue-400/90 rounded-t"
+                          style={{ height: "28px" }}
+                        ></div>
+                        <div
+                          className="w-2 bg-blue-400/70 rounded-t"
+                          style={{ height: "18px" }}
+                        ></div>
+                      </div>
+                      <div className="text-white text-lg font-bold">
+                        847 Mbps
+                      </div>
+                    </div>
+
+                    {/* Devices Connected */}
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-white/80 text-sm font-medium">
+                          Подключенные устройства
+                        </span>
+                        <div className="flex space-x-1">
+                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                          <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
+                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="text-center">
+                          <div className="text-white text-lg font-bold">24</div>
+                          <div className="text-white/60 text-xs">Active</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-white text-lg font-bold">
+                            156
+                          </div>
+                          <div className="text-white/60 text-xs">Total</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Alert Notification */}
+                    <div className="bg-orange-500/20 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-orange-500/25 border border-orange-400/30 animate-pulse">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
+                          <span className="text-white text-sm font-bold">
+                            !
+                          </span>
+                        </div>
+                        <div>
+                          <div className="text-white text-sm font-medium">
+                            Обновление ПО
+                          </div>
+                          <div className="text-white/70 text-xs">
+                            Доступна новая версия
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Performance Metrics */}
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
+                      <div className="grid grid-cols-3 gap-3 text-center">
+                        <div>
+                          <div className="text-white text-sm font-bold">
+                            2.1ms
+                          </div>
+                          <div className="text-white/60 text-xs">Latency</div>
+                        </div>
+                        <div>
+                          <div className="text-white text-sm font-bold">0%</div>
+                          <div className="text-white/60 text-xs">
+                            Packet Loss
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-white text-sm font-bold">
+                            42°C
+                          </div>
+                          <div className="text-white/60 text-xs">
+                            Temperature
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Floating Action Button */}
+                  <div className="absolute bottom-6 right-6">
+                    <div className="w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 border border-white/30">
+                      <div className="w-6 h-6 text-white text-center text-sm font-bold">
+                        ⚡
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
