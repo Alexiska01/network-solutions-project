@@ -213,7 +213,7 @@ const Hero = () => {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                     style={{ backgroundColor: color, color: "#000000" }}
-                    className="flex items-center gap-2 px-4 rounded-lg text-sm shadow-md font-bold py-2.5"
+                    className="flex items-center gap-2 px-4 rounded-lg text-sm shadow-md font-bold py-2.5 text-[#313335]"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 + i * 0.1 }}
@@ -232,7 +232,7 @@ const Hero = () => {
                   backgroundColor: "rgba(255, 99, 132, 0.12)",
                   color: "#000000",
                 }}
-                className="px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1 my-[23px]"
+                className="px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1 my-[23px] text-[#313335]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
@@ -268,9 +268,14 @@ const Hero = () => {
                 style={{ color: "#000000" }}
               >
                 <Wifi className="w-5 h-5" style={{ color: "#000000" }} />
-                <span className="text-xl font-semibold">Wi-Fi</span>
+                <span className="text-xl font-semibold text-[#313335]">
+                  Wi-Fi
+                </span>
               </div>
-              <p className="text-sm" style={{ color: "#000000" }}>
+              <p
+                className="text-sm text-[#313335]"
+                style={{ color: "#000000" }}
+              >
                 Беспроводные точки доступа
               </p>
               <div className="mt-4 grid grid-cols-2 gap-3">
