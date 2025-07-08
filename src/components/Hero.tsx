@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FileText, BookOpen, Info, Shield, Wifi } from "lucide-react";
@@ -42,20 +41,87 @@ const Hero = () => {
           preserveAspectRatio="xMidYMid slice"
         >
           <defs>
-            <pattern id="wave-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-              <path d="M0,50 Q25,20 50,50 T100,50" stroke="white" strokeWidth="1" fill="none" opacity="0.15" />
+            <pattern
+              id="wave-pattern"
+              x="0"
+              y="0"
+              width="100"
+              height="100"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M0,50 Q25,20 50,50 T100,50"
+                stroke="white"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.15"
+              />
             </pattern>
           </defs>
           {/* SVG lines */}
-          <path d="M0,200 Q300,100 600,200 T1200,200" stroke="white" strokeWidth="1.5" fill="none" opacity="0.2" />
-          <path d="M0,300 Q400,150 800,300 T1200,300" stroke="white" strokeWidth="1" fill="none" opacity="0.15" />
-          <path d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400" stroke="white" strokeWidth="1" fill="none" opacity="0.1" />
-          <path d="M0,500 Q350,350 700,500 T1200,500" stroke="white" strokeWidth="1.5" fill="none" opacity="0.18" />
-          <path d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600" stroke="white" strokeWidth="1" fill="none" opacity="0.12" />
-          <path d="M0,0 Q400,200 800,100 T1200,300" stroke="white" strokeWidth="1" fill="none" opacity="0.1" />
-          <path d="M0,800 Q300,600 600,700 T1200,500" stroke="white" strokeWidth="1" fill="none" opacity="0.08" />
-          <path d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300" stroke="white" strokeWidth="1" fill="none" opacity="0.08" />
-          <path d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250" stroke="white" strokeWidth="1" fill="none" opacity="0.06" />
+          <path
+            d="M0,200 Q300,100 600,200 T1200,200"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.2"
+          />
+          <path
+            d="M0,300 Q400,150 800,300 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.15"
+          />
+          <path
+            d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,500 Q350,350 700,500 T1200,500"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.18"
+          />
+          <path
+            d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.12"
+          />
+          <path
+            d="M0,0 Q400,200 800,100 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,800 Q300,600 600,700 T1200,500"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.06"
+          />
           {/* 🔵 Фоновый круг */}
           <circle cx="800" cy="380" r="110" fill="rgba(77, 177, 212, 0.6)" />
         </svg>
@@ -92,7 +158,10 @@ const Hero = () => {
                   <span className="animate-pulse">|</span>
                 )}
               </p>
-              <span className="invisible absolute pointer-events-none" aria-hidden="true">
+              <span
+                className="invisible absolute pointer-events-none"
+                aria-hidden="true"
+              >
                 iDATA{fullText}
               </span>
             </div>
@@ -122,17 +191,29 @@ const Hero = () => {
             <div className="flex items-start gap-4 w-full">
               <div className="flex flex-col gap-3">
                 {[
-                  { icon: FileText, label: 'Документация', color: 'rgba(255, 240, 213, 0.52)' },
-                  { icon: BookOpen, label: 'Инструкции', color: 'rgba(255, 240, 213, 0.52)' },
-                  { icon: Info, label: 'Справочные материалы', color: 'rgba(255, 240, 213, 0.52)' }
+                  {
+                    icon: FileText,
+                    label: "Документация",
+                    color: "rgba(255, 240, 213, 0.52)",
+                  },
+                  {
+                    icon: BookOpen,
+                    label: "Инструкции",
+                    color: "rgba(255, 240, 213, 0.52)",
+                  },
+                  {
+                    icon: Info,
+                    label: "Справочные материалы",
+                    color: "rgba(255, 240, 213, 0.52)",
+                  },
                 ].map(({ icon: Icon, label, color }, i) => (
                   <motion.a
                     key={label}
                     href="#"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
-                    style={{ backgroundColor: color }}
-                    className="flex items-center gap-2 backdrop-blur-sm px-4 py-2 rounded-lg text-sm font-medium text-slate-300 shadow-md"
+                    style={{ backgroundColor: color, color: "#000000" }}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium shadow-md"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 + i * 0.1 }}
@@ -147,17 +228,25 @@ const Hero = () => {
                 href="#"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                style={{ backgroundColor: 'rgba(255, 99, 132, 0.12)' }}
-                className="backdrop-blur-sm text-white px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1"
+                style={{
+                  backgroundColor: "rgba(255, 99, 132, 0.12)",
+                  color: "#000000",
+                }}
+                className="px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
               >
-                <div className="flex items-center gap-2 text-white mb-1">
+                <div
+                  className="flex items-center gap-2 mb-1"
+                  style={{ color: "#000000" }}
+                >
                   <Shield className="w-4 h-4" />
                   Безопасность
                 </div>
-                <p className="text-white font-normal">Как обеспечить защиту сети?</p>
+                <p className="font-normal" style={{ color: "#000000" }}>
+                  Как обеспечить защиту сети?
+                </p>
               </motion.a>
             </div>
 
@@ -165,17 +254,25 @@ const Hero = () => {
               href="#"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              style={{ backgroundColor: 'rgba(54, 162, 235, 0.12)' }}
-              className="backdrop-blur-sm text-white rounded-xl shadow-xl p-6 w-full max-w-md"
+              style={{
+                backgroundColor: "rgba(54, 162, 235, 0.12)",
+                color: "#000000",
+              }}
+              className="rounded-xl shadow-xl p-6 w-full max-w-md"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 }}
             >
-              <div className="flex items-center gap-2 text-white mb-2">
+              <div
+                className="flex items-center gap-2 mb-2"
+                style={{ color: "#000000" }}
+              >
                 <Wifi className="w-5 h-5 text-blue-200" />
                 <span className="text-xl font-semibold">Wi-Fi</span>
               </div>
-              <p className="text-sm text-white">Беспроводные точки доступа</p>
+              <p className="text-sm" style={{ color: "#000000" }}>
+                Беспроводные точки доступа
+              </p>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <div className="h-4 bg-blue-200 rounded" />
                 <div className="h-4 bg-blue-300 rounded" />
