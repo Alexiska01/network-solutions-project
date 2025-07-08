@@ -66,7 +66,7 @@ const Hero = () => {
           </div>
 
           {/* Правая часть */}
-          <div className="relative mt-6 md:mt-8 lg:mt-0 h-64 md:h-80 lg:h-96">
+          <div className="relative mt-6 md:mt-8 lg:mt-0 h-[32rem] md:h-[36rem] lg:h-[40rem]">
             {!isMobile ? (
               <div className="relative w-full h-full p-4 md:p-6 lg:p-8">
                 {/* Пин Location */}
