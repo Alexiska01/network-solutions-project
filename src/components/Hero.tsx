@@ -267,12 +267,390 @@ const Hero = () => {
                   className="absolute inset-0 w-full h-full"
                 />
 
-                {/* Flowing light effect overlay */}
-                <div className="absolute inset-0 overflow-hidden">
-                  <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse opacity-80"></div>
-                  <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-white rounded-full animate-ping opacity-60"></div>
-                  <div className="absolute bottom-1/3 left-1/2 w-1.5 h-1.5 bg-blue-300 rounded-full animate-pulse opacity-70"></div>
-                  <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-white rounded-full animate-ping opacity-50"></div>
+                {/* Network Infrastructure Schema */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <svg
+                    width="400"
+                    height="300"
+                    viewBox="0 0 400 300"
+                    className="max-w-full max-h-full"
+                  >
+                    {/* Connection Lines */}
+                    <g
+                      stroke="rgba(255,255,255,0.3)"
+                      strokeWidth="2"
+                      fill="none"
+                    >
+                      {/* Main switch connections */}
+                      <line x1="200" y1="150" x2="80" y2="80" />
+                      <line x1="200" y1="150" x2="320" y2="80" />
+                      <line x1="200" y1="150" x2="80" y2="220" />
+                      <line x1="200" y1="150" x2="320" y2="220" />
+                      <line x1="200" y1="150" x2="200" y2="50" />
+                      <line x1="200" y1="150" x2="200" y2="250" />
+                      <line x1="200" y1="150" x2="120" y2="150" />
+                      <line x1="200" y1="150" x2="280" y2="150" />
+                    </g>
+
+                    {/* Animated Data Pulses */}
+                    <g>
+                      {/* Pulse 1 */}
+                      <circle r="3" fill="#60A5FA" opacity="0.8">
+                        <animateMotion dur="2s" repeatCount="indefinite">
+                          <mpath href="#path1" />
+                        </animateMotion>
+                      </circle>
+
+                      {/* Pulse 2 */}
+                      <circle r="2" fill="#93C5FD" opacity="0.6">
+                        <animateMotion
+                          dur="2.5s"
+                          repeatCount="indefinite"
+                          begin="0.5s"
+                        >
+                          <mpath href="#path2" />
+                        </animateMotion>
+                      </circle>
+
+                      {/* Pulse 3 */}
+                      <circle r="2.5" fill="#DBEAFE" opacity="0.7">
+                        <animateMotion
+                          dur="3s"
+                          repeatCount="indefinite"
+                          begin="1s"
+                        >
+                          <mpath href="#path3" />
+                        </animateMotion>
+                      </circle>
+
+                      {/* Pulse 4 */}
+                      <circle r="2" fill="#60A5FA" opacity="0.5">
+                        <animateMotion
+                          dur="2.2s"
+                          repeatCount="indefinite"
+                          begin="1.5s"
+                        >
+                          <mpath href="#path4" />
+                        </animateMotion>
+                      </circle>
+                    </g>
+
+                    {/* Hidden paths for animation */}
+                    <defs>
+                      <path id="path1" d="M200,150 L80,80" />
+                      <path id="path2" d="M200,150 L320,80" />
+                      <path id="path3" d="M200,150 L80,220" />
+                      <path id="path4" d="M200,150 L320,220" />
+                    </defs>
+
+                    {/* Network Devices */}
+                    <g>
+                      {/* Central Switch */}
+                      <rect
+                        x="180"
+                        y="130"
+                        width="40"
+                        height="40"
+                        rx="4"
+                        fill="rgba(255,255,255,0.2)"
+                        stroke="rgba(255,255,255,0.5)"
+                        strokeWidth="2"
+                      />
+                      <rect
+                        x="185"
+                        y="135"
+                        width="30"
+                        height="6"
+                        rx="1"
+                        fill="rgba(96,165,250,0.8)"
+                      />
+                      <rect
+                        x="185"
+                        y="145"
+                        width="30"
+                        height="6"
+                        rx="1"
+                        fill="rgba(96,165,250,0.6)"
+                      />
+                      <rect
+                        x="185"
+                        y="155"
+                        width="30"
+                        height="6"
+                        rx="1"
+                        fill="rgba(96,165,250,0.4)"
+                      />
+
+                      {/* Servers */}
+                      <rect
+                        x="60"
+                        y="60"
+                        width="40"
+                        height="40"
+                        rx="4"
+                        fill="rgba(255,255,255,0.15)"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth="1.5"
+                      />
+                      <rect
+                        x="65"
+                        y="68"
+                        width="30"
+                        height="4"
+                        rx="1"
+                        fill="rgba(34,197,94,0.6)"
+                      />
+                      <rect
+                        x="65"
+                        y="76"
+                        width="30"
+                        height="4"
+                        rx="1"
+                        fill="rgba(34,197,94,0.4)"
+                      />
+                      <rect
+                        x="65"
+                        y="84"
+                        width="30"
+                        height="4"
+                        rx="1"
+                        fill="rgba(34,197,94,0.3)"
+                      />
+
+                      {/* Workstations */}
+                      <rect
+                        x="300"
+                        y="60"
+                        width="40"
+                        height="40"
+                        rx="4"
+                        fill="rgba(255,255,255,0.15)"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth="1.5"
+                      />
+                      <rect
+                        x="305"
+                        y="68"
+                        width="30"
+                        height="20"
+                        rx="2"
+                        fill="rgba(147,197,253,0.4)"
+                      />
+                      <rect
+                        x="305"
+                        y="92"
+                        width="30"
+                        height="4"
+                        rx="1"
+                        fill="rgba(147,197,253,0.6)"
+                      />
+
+                      {/* Wi-Fi Access Points */}
+                      <circle
+                        cx="80"
+                        cy="220"
+                        r="20"
+                        fill="rgba(255,255,255,0.15)"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx="80"
+                        cy="220"
+                        r="8"
+                        fill="rgba(168,85,247,0.4)"
+                      />
+                      <circle
+                        cx="80"
+                        cy="220"
+                        r="12"
+                        fill="none"
+                        stroke="rgba(168,85,247,0.3)"
+                        strokeWidth="1"
+                      >
+                        <animate
+                          attributeName="r"
+                          values="8;16;8"
+                          dur="2s"
+                          repeatCount="indefinite"
+                        />
+                        <animate
+                          attributeName="opacity"
+                          values="0.4;0.1;0.4"
+                          dur="2s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+
+                      {/* Network Storage */}
+                      <rect
+                        x="300"
+                        y="200"
+                        width="40"
+                        height="40"
+                        rx="4"
+                        fill="rgba(255,255,255,0.15)"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth="1.5"
+                      />
+                      <rect
+                        x="305"
+                        y="208"
+                        width="30"
+                        height="6"
+                        rx="1"
+                        fill="rgba(251,191,36,0.6)"
+                      />
+                      <rect
+                        x="305"
+                        y="218"
+                        width="30"
+                        height="6"
+                        rx="1"
+                        fill="rgba(251,191,36,0.4)"
+                      />
+                      <rect
+                        x="305"
+                        y="228"
+                        width="30"
+                        height="6"
+                        rx="1"
+                        fill="rgba(251,191,36,0.3)"
+                      />
+
+                      {/* Internet Gateway */}
+                      <rect
+                        x="180"
+                        y="30"
+                        width="40"
+                        height="40"
+                        rx="4"
+                        fill="rgba(255,255,255,0.15)"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx="200"
+                        cy="50"
+                        r="8"
+                        fill="rgba(59,130,246,0.6)"
+                      />
+                      <path
+                        d="M192,42 Q200,38 208,42 Q200,46 192,42"
+                        fill="rgba(59,130,246,0.4)"
+                      />
+
+                      {/* Printer */}
+                      <rect
+                        x="180"
+                        y="230"
+                        width="40"
+                        height="40"
+                        rx="4"
+                        fill="rgba(255,255,255,0.15)"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth="1.5"
+                      />
+                      <rect
+                        x="185"
+                        y="240"
+                        width="30"
+                        height="15"
+                        rx="2"
+                        fill="rgba(156,163,175,0.4)"
+                      />
+                      <rect
+                        x="190"
+                        y="245"
+                        width="20"
+                        height="5"
+                        rx="1"
+                        fill="rgba(156,163,175,0.6)"
+                      />
+
+                      {/* Laptops */}
+                      <rect
+                        x="100"
+                        y="130"
+                        width="40"
+                        height="40"
+                        rx="4"
+                        fill="rgba(255,255,255,0.15)"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth="1.5"
+                      />
+                      <rect
+                        x="105"
+                        y="140"
+                        width="30"
+                        height="18"
+                        rx="2"
+                        fill="rgba(147,197,253,0.3)"
+                      />
+                      <rect
+                        x="105"
+                        y="162"
+                        width="30"
+                        height="4"
+                        rx="1"
+                        fill="rgba(147,197,253,0.5)"
+                      />
+
+                      {/* Mobile Devices */}
+                      <rect
+                        x="260"
+                        y="130"
+                        width="40"
+                        height="40"
+                        rx="4"
+                        fill="rgba(255,255,255,0.15)"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth="1.5"
+                      />
+                      <rect
+                        x="270"
+                        y="140"
+                        width="20"
+                        height="28"
+                        rx="3"
+                        fill="rgba(147,197,253,0.4)"
+                      />
+                      <circle
+                        cx="280"
+                        cy="164"
+                        r="2"
+                        fill="rgba(147,197,253,0.6)"
+                      />
+                    </g>
+
+                    {/* Status Indicators */}
+                    <g>
+                      <circle cx="90" cy="70" r="3" fill="#10B981">
+                        <animate
+                          attributeName="opacity"
+                          values="1;0.3;1"
+                          dur="2s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+                      <circle cx="330" cy="70" r="3" fill="#10B981">
+                        <animate
+                          attributeName="opacity"
+                          values="1;0.3;1"
+                          dur="2.5s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+                      <circle cx="210" cy="40" r="3" fill="#3B82F6">
+                        <animate
+                          attributeName="opacity"
+                          values="1;0.3;1"
+                          dur="3s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+                    </g>
+                  </svg>
                 </div>
               </div>
             ) : (
