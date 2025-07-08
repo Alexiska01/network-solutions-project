@@ -258,7 +258,7 @@ const Hero = () => {
                 backgroundColor: "rgba(54, 162, 235, 0.12)",
                 color: "#000000",
               }}
-              className="rounded-xl shadow-xl p-6 w-full max-w-md"
+              className="rounded-xl shadow-xl p-6 w-full max-w-md mx-[52px] font-semibold"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 }}
