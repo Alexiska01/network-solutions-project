@@ -1,20 +1,11 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { loadSlim } from "@tsparticles/slim";
 import { Particles } from "@tsparticles/react";
 import type { Container, Engine } from "@tsparticles/engine";
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "model-viewer": any;
-    }
-  }
-}
-
 const Hero = () => {
   const [typingText, setTypingText] = useState("");
   const [isMobile, setIsMobile] = useState(false);
-  const modelViewerRef = useRef<any>(null);
   const fullText =
     "iDATA — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
 
@@ -276,157 +267,219 @@ const Hero = () => {
                   className="absolute inset-0 w-full h-full"
                 />
 
-                {/* Interactive Dashboard Cards */}
-                <div className="absolute inset-0 overflow-hidden">
-                  {/* Background Elements */}
-                  <div className="absolute top-16 right-8 w-16 h-16 bg-orange-400/20 rounded-full blur-xl animate-pulse"></div>
-                  <div
-                    className="absolute bottom-20 left-8 w-12 h-12 bg-purple-400/20 rounded-full blur-lg animate-pulse"
-                    style={{ animationDelay: "1s" }}
-                  ></div>
+                {/* Simplified Network Schema */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <svg
+                    width="320"
+                    height="240"
+                    viewBox="0 0 320 240"
+                    className="max-w-full max-h-full opacity-80"
+                  >
+                    {/* Connection Lines */}
+                    <g
+                      stroke="rgba(255,255,255,0.25)"
+                      strokeWidth="1.5"
+                      fill="none"
+                    >
+                      <line x1="160" y1="120" x2="80" y2="60" />
+                      <line x1="160" y1="120" x2="240" y2="60" />
+                      <line x1="160" y1="120" x2="80" y2="180" />
+                      <line x1="160" y1="120" x2="240" y2="180" />
+                    </g>
 
-                  {/* Main Cards Container */}
-                  <div className="relative h-full p-6 flex flex-col justify-center space-y-4">
-                    {/* Network Status Card */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                          <span className="text-white/80 text-sm font-medium">
-                            Статус сети
-                          </span>
-                        </div>
-                        <div className="text-green-400 text-xs bg-green-400/20 px-2 py-1 rounded-full">
-                          Online
-                        </div>
-                      </div>
-                      <div className="text-white text-xl font-bold mb-1">
-                        99.8%
-                      </div>
-                      <div className="text-white/60 text-xs">
-                        Время бесперебойной работы
-                      </div>
-                    </div>
+                    {/* Animated Data Pulses */}
+                    <g>
+                      <circle r="2" fill="#60A5FA" opacity="0.8">
+                        <animateMotion dur="3s" repeatCount="indefinite">
+                          <mpath href="#path1" />
+                        </animateMotion>
+                      </circle>
 
-                    {/* Bandwidth Chart Card */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-white/80 text-sm font-medium">
-                          Пропускная способность
-                        </span>
-                        <div className="text-blue-400 text-xs">сейчас</div>
-                      </div>
-                      <div className="flex items-end space-x-1 mb-2">
-                        <div
-                          className="w-2 bg-blue-400/60 rounded-t"
-                          style={{ height: "16px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400/70 rounded-t"
-                          style={{ height: "24px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400/80 rounded-t"
-                          style={{ height: "20px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400 rounded-t"
-                          style={{ height: "32px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400/90 rounded-t"
-                          style={{ height: "28px" }}
-                        ></div>
-                        <div
-                          className="w-2 bg-blue-400/70 rounded-t"
-                          style={{ height: "18px" }}
-                        ></div>
-                      </div>
-                      <div className="text-white text-lg font-bold">
-                        847 Mbps
-                      </div>
-                    </div>
+                      <circle r="2" fill="#93C5FD" opacity="0.6">
+                        <animateMotion
+                          dur="3.5s"
+                          repeatCount="indefinite"
+                          begin="1s"
+                        >
+                          <mpath href="#path2" />
+                        </animateMotion>
+                      </circle>
+                    </g>
 
-                    {/* Devices Connected */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-white/80 text-sm font-medium">
-                          Подключенные устройства
-                        </span>
-                        <div className="flex space-x-1">
-                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                          <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <div className="text-center">
-                          <div className="text-white text-lg font-bold">24</div>
-                          <div className="text-white/60 text-xs">Active</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-white text-lg font-bold">
-                            156
-                          </div>
-                          <div className="text-white/60 text-xs">Total</div>
-                        </div>
-                      </div>
-                    </div>
+                    {/* Hidden paths for animation */}
+                    <defs>
+                      <path id="path1" d="M160,120 L80,60" />
+                      <path id="path2" d="M160,120 L240,60" />
+                    </defs>
 
-                    {/* Alert Notification */}
-                    <div className="bg-orange-500/20 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-orange-500/25 border border-orange-400/30 animate-pulse">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
-                          <span className="text-white text-sm font-bold">
-                            !
-                          </span>
-                        </div>
-                        <div>
-                          <div className="text-white text-sm font-medium">
-                            Обновление ПО
-                          </div>
-                          <div className="text-white/70 text-xs">
-                            Доступна новая версия
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    {/* Network Devices */}
+                    <g>
+                      {/* Central Switch */}
+                      <rect
+                        x="140"
+                        y="100"
+                        width="40"
+                        height="40"
+                        rx="6"
+                        fill="rgba(255,255,255,0.1)"
+                        stroke="rgba(255,255,255,0.3)"
+                        strokeWidth="1.5"
+                      />
+                      <rect
+                        x="145"
+                        y="110"
+                        width="30"
+                        height="4"
+                        rx="1"
+                        fill="rgba(96,165,250,0.6)"
+                      />
+                      <rect
+                        x="145"
+                        y="118"
+                        width="30"
+                        height="4"
+                        rx="1"
+                        fill="rgba(96,165,250,0.4)"
+                      />
+                      <rect
+                        x="145"
+                        y="126"
+                        width="30"
+                        height="4"
+                        rx="1"
+                        fill="rgba(96,165,250,0.3)"
+                      />
 
-                    {/* Performance Metrics */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 transform hover:scale-105 transition-all duration-300 hover:bg-white/15 border border-white/20">
-                      <div className="grid grid-cols-3 gap-3 text-center">
-                        <div>
-                          <div className="text-white text-sm font-bold">
-                            2.1ms
-                          </div>
-                          <div className="text-white/60 text-xs">Latency</div>
-                        </div>
-                        <div>
-                          <div className="text-white text-sm font-bold">0%</div>
-                          <div className="text-white/60 text-xs">
-                            Packet Loss
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-white text-sm font-bold">
-                            42°C
-                          </div>
-                          <div className="text-white/60 text-xs">
-                            Temperature
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      {/* Servers */}
+                      <rect
+                        x="60"
+                        y="40"
+                        width="40"
+                        height="40"
+                        rx="6"
+                        fill="rgba(255,255,255,0.08)"
+                        stroke="rgba(255,255,255,0.25)"
+                        strokeWidth="1"
+                      />
+                      <rect
+                        x="70"
+                        y="52"
+                        width="20"
+                        height="16"
+                        rx="2"
+                        fill="rgba(34,197,94,0.3)"
+                      />
 
-                  {/* Floating Action Button */}
-                  <div className="absolute bottom-6 right-6">
-                    <div className="w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 border border-white/30">
-                      <div className="w-6 h-6 text-white text-center text-sm font-bold">
-                        ⚡
-                      </div>
-                    </div>
-                  </div>
+                      {/* Workstations */}
+                      <rect
+                        x="220"
+                        y="40"
+                        width="40"
+                        height="40"
+                        rx="6"
+                        fill="rgba(255,255,255,0.08)"
+                        stroke="rgba(255,255,255,0.25)"
+                        strokeWidth="1"
+                      />
+                      <rect
+                        x="230"
+                        y="52"
+                        width="20"
+                        height="12"
+                        rx="2"
+                        fill="rgba(147,197,253,0.3)"
+                      />
+                      <rect
+                        x="230"
+                        y="68"
+                        width="20"
+                        height="2"
+                        rx="1"
+                        fill="rgba(147,197,253,0.4)"
+                      />
+
+                      {/* Wi-Fi */}
+                      <circle
+                        cx="80"
+                        cy="180"
+                        r="20"
+                        fill="rgba(255,255,255,0.08)"
+                        stroke="rgba(255,255,255,0.25)"
+                        strokeWidth="1"
+                      />
+                      <circle
+                        cx="80"
+                        cy="180"
+                        r="6"
+                        fill="rgba(168,85,247,0.3)"
+                      />
+                      <circle
+                        cx="80"
+                        cy="180"
+                        r="10"
+                        fill="none"
+                        stroke="rgba(168,85,247,0.2)"
+                        strokeWidth="1"
+                      >
+                        <animate
+                          attributeName="r"
+                          values="6;14;6"
+                          dur="3s"
+                          repeatCount="indefinite"
+                        />
+                        <animate
+                          attributeName="opacity"
+                          values="0.3;0.1;0.3"
+                          dur="3s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+
+                      {/* Cloud/Storage */}
+                      <rect
+                        x="220"
+                        y="160"
+                        width="40"
+                        height="40"
+                        rx="6"
+                        fill="rgba(255,255,255,0.08)"
+                        stroke="rgba(255,255,255,0.25)"
+                        strokeWidth="1"
+                      />
+                      <path
+                        d="M230,175 Q235,170 240,175 Q245,170 250,175 Q245,180 240,175 Q235,180 230,175"
+                        fill="rgba(59,130,246,0.3)"
+                      />
+                    </g>
+
+                    {/* Status Indicators */}
+                    <g>
+                      <circle cx="90" cy="50" r="2" fill="#10B981">
+                        <animate
+                          attributeName="opacity"
+                          values="1;0.4;1"
+                          dur="2s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+                      <circle cx="250" cy="50" r="2" fill="#10B981">
+                        <animate
+                          attributeName="opacity"
+                          values="1;0.4;1"
+                          dur="2.5s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+                      <circle cx="170" cy="110" r="2" fill="#3B82F6">
+                        <animate
+                          attributeName="opacity"
+                          values="1;0.4;1"
+                          dur="3s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+                    </g>
+                  </svg>
                 </div>
               </div>
             ) : (
