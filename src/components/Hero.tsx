@@ -1,9 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { loadSlim } from "@tsparticles/slim";
+import { Particles } from "@tsparticles/react";
+import type { Container, Engine } from "@tsparticles/engine";
 
 const Hero = () => {
   const [typingText, setTypingText] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
   const fullText =
     "iDATA — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
+
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadSlim(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(
+    async (container: Container | undefined) => {
+      // particles loaded
+    },
+    [],
+  );
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Typing effect
   useEffect(() => {
@@ -141,25 +168,121 @@ const Hero = () => {
               </button>
             </div>
           </div>
-          <div className="relative mt-6 md:mt-8 lg:mt-0">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-10 transition-all duration-300 hover:bg-white/15 hover:scale-105">
-              <div className="text-center">
-                <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-3 md:mb-4">
-                  Профессиональные решения
-                </h3>
-                <p className="text-sm md:text-base text-blue-200 mb-4 md:mb-6">
-                  Комплексные технологии для корпоративных сетей любой сложности
-                </p>
-                <div className="flex flex-col sm:flex-row gap-2 md:gap-3 justify-center">
-                  <button className="bg-white/20 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg text-sm md:text-base font-medium hover:bg-white/30 transition-all duration-300">
-                    Узнать больше
-                  </button>
-                  <button className="border border-white/50 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg text-sm md:text-base font-medium hover:bg-white/10 transition-all duration-300">
-                    Каталог
-                  </button>
+          <div className="relative mt-6 md:mt-8 lg:mt-0 h-64 md:h-80 lg:h-96">
+            {!isMobile ? (
+              <div className="relative w-full h-full">
+                <Particles
+                  id="tsparticles"
+                  init={particlesInit}
+                  loaded={particlesLoaded}
+                  options={{
+                    background: {
+                      color: {
+                        value: "transparent",
+                      },
+                    },
+                    fpsLimit: 120,
+                    interactivity: {
+                      events: {
+                        onClick: {
+                          enable: false,
+                        },
+                        onHover: {
+                          enable: true,
+                          mode: "repulse",
+                        },
+                        resize: true,
+                      },
+                      modes: {
+                        repulse: {
+                          distance: 50,
+                          duration: 0.4,
+                        },
+                      },
+                    },
+                    particles: {
+                      color: {
+                        value: "#ffffff",
+                      },
+                      links: {
+                        color: "#ffffff",
+                        distance: 150,
+                        enable: true,
+                        opacity: 0.2,
+                        width: 1,
+                        triangles: {
+                          enable: false,
+                        },
+                      },
+                      move: {
+                        direction: "none",
+                        enable: true,
+                        outModes: {
+                          default: "bounce",
+                        },
+                        random: false,
+                        speed: 0.8,
+                        straight: false,
+                        trail: {
+                          enable: true,
+                          length: 10,
+                          fill: {
+                            color: {
+                              value: "#ffffff",
+                            },
+                          },
+                        },
+                      },
+                      number: {
+                        density: {
+                          enable: true,
+                          area: 800,
+                        },
+                        value: 25,
+                      },
+                      opacity: {
+                        value: 0.3,
+                        animation: {
+                          enable: true,
+                          speed: 1,
+                          minimumValue: 0.1,
+                          sync: false,
+                        },
+                      },
+                      shape: {
+                        type: "circle",
+                      },
+                      size: {
+                        value: { min: 1, max: 3 },
+                        animation: {
+                          enable: true,
+                          speed: 2,
+                          minimumValue: 0.5,
+                          sync: false,
+                        },
+                      },
+                    },
+                    detectRetina: true,
+                  }}
+                  className="absolute inset-0 w-full h-full"
+                />
+
+                {/* Flowing light effect overlay */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse opacity-80"></div>
+                  <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-white rounded-full animate-ping opacity-60"></div>
+                  <div className="absolute bottom-1/3 left-1/2 w-1.5 h-1.5 bg-blue-300 rounded-full animate-pulse opacity-70"></div>
+                  <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-white rounded-full animate-ping opacity-50"></div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl md:rounded-2xl flex items-center justify-center">
+                <div className="text-center text-white/80">
+                  <div className="text-2xl mb-2">⚡</div>
+                  <p className="text-sm">Сетевые технологии</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
