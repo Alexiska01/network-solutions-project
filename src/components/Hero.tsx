@@ -232,7 +232,7 @@ const Hero = () => {
                   backgroundColor: "rgba(255, 99, 132, 0.12)",
                   color: "#000000",
                 }}
-                className="px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1"
+                className="px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1 my-[23px]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
