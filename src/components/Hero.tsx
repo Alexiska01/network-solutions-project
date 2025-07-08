@@ -267,7 +267,7 @@ const Hero = () => {
                 className="flex items-center gap-2 mb-2"
                 style={{ color: "#000000" }}
               >
-                <Wifi className="w-5 h-5 text-blue-200" />
+                <Wifi className="w-5 h-5" style={{ color: "#000000" }} />
                 <span className="text-xl font-semibold">Wi-Fi</span>
               </div>
               <p className="text-sm" style={{ color: "#000000" }}>
