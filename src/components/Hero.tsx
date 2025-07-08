@@ -158,7 +158,7 @@ const Hero = () => {
             {!isMobile ? (
               <div className="relative w-full h-full">
                 {/* Метки-пинты */}
-                <div className="absolute top-8 left-16 z-20">
+                <div className="absolute top-4 left-20 z-20">
                   <div className="bg-yellow-100 text-black px-3 py-1 rounded-lg text-sm shadow-sm mb-2 flex items-center gap-2">
                     <span>📍</span>
                     <span>Location</span>
@@ -166,7 +166,7 @@ const Hero = () => {
                   <div className="border-l-2 border-dashed border-yellow-300 h-8 ml-4"></div>
                 </div>
 
-                <div className="absolute top-8 left-48 z-20">
+                <div className="absolute top-4 left-56 z-20">
                   <div className="bg-yellow-100 text-black px-3 py-1 rounded-lg text-sm shadow-sm mb-2 flex items-center gap-2">
                     <span>🔌</span>
                     <span>Interfaces</span>
@@ -175,7 +175,7 @@ const Hero = () => {
                 </div>
 
                 {/* Основная карточка IDS-108F Switch */}
-                <div className="absolute top-20 left-8 bg-white rounded-xl p-6 shadow-lg w-64 z-10">
+                <div className="absolute top-16 left-4 bg-white rounded-xl p-6 shadow-lg w-64 z-10">
                   <h3 className="text-xl font-bold text-gray-800 mb-1">
                     IDS-108F Switch
                   </h3>
@@ -190,7 +190,7 @@ const Hero = () => {
                 </div>
 
                 {/* Чат-виджет Поддержка iDATA */}
-                <div className="absolute top-16 right-8 bg-white rounded-xl shadow-lg w-72 z-10">
+                <div className="absolute top-4 right-4 bg-white rounded-xl shadow-lg w-72 z-10">
                   <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-3 rounded-t-xl flex items-center gap-2">
                     <span>👤</span>
                     <span className="font-medium">Поддержка iDATA</span>
@@ -218,7 +218,7 @@ const Hero = () => {
                 </div>
 
                 {/* Три мини-карточки внизу */}
-                <div className="absolute bottom-8 left-8 flex gap-4">
+                <div className="absolute bottom-4 left-4 flex gap-3">
                   {/* Deal funnel */}
                   <div className="bg-white rounded-xl p-4 shadow-lg w-32 h-32">
                     <div className="h-16 flex flex-col justify-center space-y-1">
