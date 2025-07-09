@@ -182,7 +182,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col items-start gap-6">
+          <div className="w-full flex flex-col items-start gap-6 px-[5px]">
             <div className="flex items-start gap-4 w-full">
               <motion.a
                 href="#"
