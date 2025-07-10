@@ -194,24 +194,6 @@ const SeriesCatalog4530Component = () => {
                   Получить консультацию
                 </button>
               </motion.div>
-
-              {/* Карточка с характеристиками под кнопками */}
-              <motion.div
-                className="grid grid-cols-3 gap-3 max-w-md"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.4 }}
-              >
-                <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
-                  48 портов
-                </div>
-                <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
-                  PoE до 760 Вт
-                </div>
-                <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
-                  2 слота расширения
-                </div>
-              </motion.div>
             </motion.div>
 
             {/* Правая часть с карточками */}
