@@ -90,70 +90,14 @@ const SeriesCatalog4530Component = () => {
           }}
         />
 
-        {/* Три динамичных блоба на фоне */}
+        {/* Круг на фоне с параллаксом */}
         <motion.svg
+          style={{ y: circleY }}
           className="absolute inset-0 w-full h-full pointer-events-none z-0"
           viewBox="0 0 1200 800"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Блоб 1 - большой справа */}
-          <motion.ellipse
-            cx="1000"
-            cy="300"
-            rx="180"
-            ry="220"
-            fill="rgba(77, 177, 212, 0.15)"
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 5, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
-          />
-
-          {/* Блоб 2 - средний слева */}
-          <motion.ellipse
-            cx="150"
-            cy="200"
-            rx="120"
-            ry="160"
-            fill="rgba(3, 154, 212, 0.12)"
-            animate={{
-              scale: [1, 1.15, 1],
-              rotate: [0, -8, 0],
-            }}
-            transition={{
-              duration: 5.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
-
-          {/* Блоб 3 - малый внизу */}
-          <motion.ellipse
-            cx="600"
-            cy="600"
-            rx="80"
-            ry="100"
-            fill="rgba(0, 92, 185, 0.1)"
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 10, 0],
-            }}
-            transition={{
-              duration: 3.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-              delay: 2,
-            }}
-          />
+          <circle cx="1120" cy="340" r="260" fill="rgba(77, 177, 212, 0.6)" />
         </motion.svg>
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
