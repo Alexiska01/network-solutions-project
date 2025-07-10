@@ -98,15 +98,8 @@ const SeriesCatalog4530Component = () => {
           }}
         />
 
-        {/* Круг на фоне с параллаксом */}
-        <motion.svg
-          style={{ y: circleY }}
-          className="absolute inset-0 w-full h-full pointer-events-none z-0"
-          viewBox="0 0 1200 800"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="1120" cy="340" r="260" fill="rgba(77, 177, 212, 0.6)" />
-        </motion.svg>
+        {/* Радиальное свечение справа */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-radial from-blue-400/20 via-blue-500/10 to-transparent blur-3xl"></div>
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start lg:items-center">
@@ -194,6 +187,115 @@ const SeriesCatalog4530Component = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
+              {/* Техно-сетка в фоне */}
+              <div className="absolute inset-0">
+                <svg
+                  width="100%"
+                  height="100%"
+                  className="absolute inset-0"
+                  style={{ opacity: 0.02 }}
+                >
+                  <defs>
+                    <pattern
+                      id="tech-grid"
+                      x="0"
+                      y="0"
+                      width="40"
+                      height="40"
+                      patternUnits="userSpaceOnUse"
+                    >
+                      <g stroke="white" strokeWidth="0.5" fill="none">
+                        <path d="M 40 0 L 0 0 0 40" />
+                        <path d="M 20 0 L 20 20 L 0 20" />
+                        <path d="M 40 20 L 20 20 L 20 40" />
+                        <circle cx="20" cy="20" r="2" strokeWidth="0.3" />
+                        <circle cx="0" cy="0" r="1" strokeWidth="0.3" />
+                        <circle cx="40" cy="0" r="1" strokeWidth="0.3" />
+                        <circle cx="0" cy="40" r="1" strokeWidth="0.3" />
+                        <circle cx="40" cy="40" r="1" strokeWidth="0.3" />
+                      </g>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#tech-grid)" />
+                </svg>
+              </div>
+
+              {/* Анимация потока данных */}
+              <div className="absolute inset-0 pointer-events-none">
+                <svg
+                  width="100%"
+                  height="100%"
+                  className="absolute inset-0"
+                  style={{ opacity: 0.15 }}
+                >
+                  <defs>
+                    <linearGradient
+                      id="dataFlow"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stopColor="rgba(59, 130, 246, 0)" />
+                      <stop offset="50%" stopColor="rgba(59, 130, 246, 0.8)" />
+                      <stop offset="100%" stopColor="rgba(59, 130, 246, 0)" />
+                    </linearGradient>
+                  </defs>
+                  <g>
+                    <motion.line
+                      x1="0"
+                      y1="20%"
+                      x2="100%"
+                      y2="20%"
+                      stroke="url(#dataFlow)"
+                      strokeWidth="2"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{
+                        duration: 2,
+                        ease: "easeInOut",
+                        repeat: Infinity,
+                        repeatDelay: 1,
+                      }}
+                    />
+                    <motion.line
+                      x1="0"
+                      y1="60%"
+                      x2="100%"
+                      y2="60%"
+                      stroke="url(#dataFlow)"
+                      strokeWidth="2"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{
+                        duration: 2,
+                        ease: "easeInOut",
+                        repeat: Infinity,
+                        repeatDelay: 1,
+                        delay: 0.5,
+                      }}
+                    />
+                    <motion.line
+                      x1="0"
+                      y1="80%"
+                      x2="100%"
+                      y2="80%"
+                      stroke="url(#dataFlow)"
+                      strokeWidth="2"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{
+                        duration: 2,
+                        ease: "easeInOut",
+                        repeat: Infinity,
+                        repeatDelay: 1,
+                        delay: 1,
+                      }}
+                    />
+                  </g>
+                </svg>
+              </div>
+
               <div className="relative z-10 flex flex-col items-center gap-4">
                 <div className="flex items-start gap-6 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
@@ -211,18 +313,19 @@ const SeriesCatalog4530Component = () => {
                     style={{
                       minWidth: "380px",
                       minHeight: "280px",
-                      boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+                      boxShadow:
+                        "0px 8px 32px rgba(0,0,0,0.3), 0px 4px 16px rgba(0,0,0,0.2)",
                     }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.boxShadow =
-                        "0px 8px 24px rgba(0,0,0,0.1)";
+                        "0px 12px 48px rgba(0,0,0,0.4), 0px 8px 24px rgba(0,0,0,0.3)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.boxShadow =
-                        "0px 4px 12px rgba(0,0,0,0.1)";
+                        "0px 8px 32px rgba(0,0,0,0.3), 0px 4px 16px rgba(0,0,0,0.2)";
                     }}
                   >
                     <img
