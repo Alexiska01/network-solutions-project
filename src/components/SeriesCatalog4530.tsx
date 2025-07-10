@@ -205,7 +205,7 @@ const SeriesCatalog4530Component = () => {
                       rounded-lg
                       border border-white/30
                       shadow-md
-                      -ml-12
+                      -ml-24
                       bg-white/10
                     "
                     style={{
