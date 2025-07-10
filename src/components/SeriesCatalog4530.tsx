@@ -202,8 +202,6 @@ const SeriesCatalog4530Component = () => {
                     style={{
                       minWidth: "290px",
                       minHeight: "210px",
-                      background:
-                        "linear-gradient(90deg, #005cb9 0%, #039ad4 100%)",
                       boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
                     }}
                     initial={{ opacity: 0, y: 20 }}
