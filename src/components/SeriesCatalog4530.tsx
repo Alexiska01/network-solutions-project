@@ -148,7 +148,7 @@ const SeriesCatalog4530Component = () => {
 
               {/* Блок преимуществ с иконками */}
               <motion.div
-                className="md:mb-6 lg:mb-8 space-y-3 my-[26px]"
+                className="mb-4 md:mb-6 lg:mb-8 space-y-3"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
@@ -173,7 +173,7 @@ const SeriesCatalog4530Component = () => {
                 </div>
               </motion.div>
               <motion.div
-                className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4 my-0"
+                className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4 mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
