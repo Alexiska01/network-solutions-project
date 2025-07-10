@@ -280,7 +280,7 @@ const SeriesCatalog4530Component = () => {
                             "0px 2px 8px rgba(0,0,0,0.1)";
                         }}
                       >
-                        <Icon className="w-6 h-6 text-white/90 transition-transform duration-200 group-hover:translate-x-1" />
+                        <Icon className="w-5 h-5 text-white/90 transition-transform duration-200 group-hover:translate-x-1" />
                         <span className="text-white font-medium">{label}</span>
                       </motion.a>
                     ))}
@@ -310,7 +310,7 @@ const SeriesCatalog4530Component = () => {
                       "0px 2px 8px rgba(0,0,0,0.1)";
                   }}
                 >
-                  <Layers className="w-6 h-6 text-white/90 flex-shrink-0" />
+                  <Layers className="w-5 h-5 text-white/90 flex-shrink-0" />
                   <span className="text-white font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                     Расширяемые коммутаторы уровня доступа и агрегации для
                     небольших корпоративных сетей
