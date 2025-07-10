@@ -203,7 +203,7 @@ const SeriesCatalog4530Component = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <div className="relative z-10 flex flex-col items-center gap-6">
+              <div className="relative z-10 flex flex-col items-center gap-4">
                 <div className="flex items-start gap-4 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
                   <motion.div
@@ -214,12 +214,12 @@ const SeriesCatalog4530Component = () => {
                       rounded-lg
                       border border-white/30
                       shadow-md
-                      -ml-20
+                      -ml-12
                       bg-white/10
                     "
                     style={{
-                      minWidth: "290px",
-                      minHeight: "210px",
+                      minWidth: "380px",
+                      minHeight: "280px",
                       boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
                     }}
                     initial={{ opacity: 0, y: 20 }}
@@ -237,7 +237,7 @@ const SeriesCatalog4530Component = () => {
                     <img
                       src="/img/Иерархия_4530.png"
                       alt="Иерархия 4530"
-                      className="h-44 object-contain rounded"
+                      className="h-56 object-contain rounded"
                     />
                   </motion.div>
 
@@ -293,39 +293,6 @@ const SeriesCatalog4530Component = () => {
                     ))}
                   </div>
                 </div>
-
-                {/* Карточка «Серия IDS4530» без характеристик */}
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="rounded-lg border border-white/30 bg-white/10 shadow-md px-5 py-3 w-full max-w-md font-semibold"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 }}
-                  style={{
-                    boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow =
-                      "0px 8px 24px rgba(0,0,0,0.1)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow =
-                      "0px 4px 12px rgba(0,0,0,0.1)";
-                  }}
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <Wifi className="w-5 h-5 text-white/90" />
-                    <span className="text-xl font-semibold text-white">
-                      Серия IDS4530
-                    </span>
-                  </div>
-                  <p className="text-sm text-white font-medium">
-                    Коммутаторы для построения уровня доступа или узлов
-                    агрегации в небольших корпоративных сетях.
-                  </p>
-                </motion.a>
               </div>
             </motion.div>
           </div>
