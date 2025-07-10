@@ -313,7 +313,7 @@ const SeriesCatalog4530Component = () => {
                         {/* Схематичный узор внутри карточки */}
                         <div
                           className="absolute inset-0 pointer-events-none"
-                          style={{ opacity: 0.06 }}
+                          style={{ opacity: 0.25 }}
                         >
                           <svg
                             width="100%"
@@ -329,7 +329,7 @@ const SeriesCatalog4530Component = () => {
                                 height="40"
                                 patternUnits="userSpaceOnUse"
                               >
-                                <g stroke="white" strokeWidth="0.5" fill="none">
+                                <g stroke="white" strokeWidth="1.5" fill="none">
                                   {/* Основная сетка */}
                                   <path d="M 0 0 L 40 0 M 0 20 L 40 20 M 0 40 L 40 40" />
                                   <path d="M 0 0 L 0 40 M 20 0 L 20 40 M 40 0 L 40 40" />
@@ -337,31 +337,26 @@ const SeriesCatalog4530Component = () => {
                                   {/* Диагональные линии */}
                                   <path
                                     d="M 0 0 L 20 20 M 20 0 L 40 20"
-                                    strokeWidth="0.3"
+                                    strokeWidth="1"
                                   />
                                   <path
                                     d="M 0 20 L 20 40 M 20 20 L 40 40"
-                                    strokeWidth="0.3"
+                                    strokeWidth="1"
                                   />
 
                                   {/* Узловые точки */}
                                   <circle
                                     cx="20"
                                     cy="20"
-                                    r="1"
-                                    strokeWidth="0.4"
+                                    r="2"
+                                    strokeWidth="1"
                                   />
-                                  <circle
-                                    cx="0"
-                                    cy="0"
-                                    r="0.5"
-                                    strokeWidth="0.3"
-                                  />
+                                  <circle cx="0" cy="0" r="1" strokeWidth="1" />
                                   <circle
                                     cx="40"
                                     cy="40"
-                                    r="0.5"
-                                    strokeWidth="0.3"
+                                    r="1"
+                                    strokeWidth="1"
                                   />
                                 </g>
                               </pattern>
@@ -413,7 +408,7 @@ const SeriesCatalog4530Component = () => {
                   {/* Схематичный узор внутри горизонтальной карточки */}
                   <div
                     className="absolute inset-0 pointer-events-none"
-                    style={{ opacity: 0.06 }}
+                    style={{ opacity: 0.25 }}
                   >
                     <svg
                       width="100%"
@@ -429,7 +424,7 @@ const SeriesCatalog4530Component = () => {
                           height="40"
                           patternUnits="userSpaceOnUse"
                         >
-                          <g stroke="white" strokeWidth="0.5" fill="none">
+                          <g stroke="white" strokeWidth="1.5" fill="none">
                             {/* Основная сетка */}
                             <path d="M 0 0 L 40 0 M 0 20 L 40 20 M 0 40 L 40 40" />
                             <path d="M 0 0 L 0 40 M 20 0 L 20 40 M 40 0 L 40 40" />
@@ -437,17 +432,17 @@ const SeriesCatalog4530Component = () => {
                             {/* Диагональные линии */}
                             <path
                               d="M 0 0 L 20 20 M 20 0 L 40 20"
-                              strokeWidth="0.3"
+                              strokeWidth="1"
                             />
                             <path
                               d="M 0 20 L 20 40 M 20 20 L 40 40"
-                              strokeWidth="0.3"
+                              strokeWidth="1"
                             />
 
                             {/* Узловые точки */}
-                            <circle cx="20" cy="20" r="1" strokeWidth="0.4" />
-                            <circle cx="0" cy="0" r="0.5" strokeWidth="0.3" />
-                            <circle cx="40" cy="40" r="0.5" strokeWidth="0.3" />
+                            <circle cx="20" cy="20" r="2" strokeWidth="1" />
+                            <circle cx="0" cy="0" r="1" strokeWidth="1" />
+                            <circle cx="40" cy="40" r="1" strokeWidth="1" />
                           </g>
                         </pattern>
                       </defs>
