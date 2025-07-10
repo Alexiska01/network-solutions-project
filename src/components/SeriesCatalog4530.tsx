@@ -221,79 +221,42 @@ const SeriesCatalog4530Component = () => {
               </div>
 
               {/* Анимация потока данных */}
-              <div className="absolute inset-0 pointer-events-none">
-                <svg
-                  width="100%"
-                  height="100%"
-                  className="absolute inset-0"
-                  style={{ opacity: 0.15 }}
-                >
-                  <defs>
-                    <linearGradient
-                      id="dataFlow"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="rgba(59, 130, 246, 0)" />
-                      <stop offset="50%" stopColor="rgba(59, 130, 246, 0.8)" />
-                      <stop offset="100%" stopColor="rgba(59, 130, 246, 0)" />
-                    </linearGradient>
-                  </defs>
-                  <g>
-                    <motion.line
-                      x1="0"
-                      y1="20%"
-                      x2="100%"
-                      y2="20%"
-                      stroke="url(#dataFlow)"
-                      strokeWidth="2"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{
-                        duration: 2,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 1,
-                      }}
-                    />
-                    <motion.line
-                      x1="0"
-                      y1="60%"
-                      x2="100%"
-                      y2="60%"
-                      stroke="url(#dataFlow)"
-                      strokeWidth="2"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{
-                        duration: 2,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 1,
-                        delay: 0.5,
-                      }}
-                    />
-                    <motion.line
-                      x1="0"
-                      y1="80%"
-                      x2="100%"
-                      y2="80%"
-                      stroke="url(#dataFlow)"
-                      strokeWidth="2"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{
-                        duration: 2,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 1,
-                        delay: 1,
-                      }}
-                    />
-                  </g>
-                </svg>
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <motion.div
+                  className="absolute w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"
+                  style={{ top: "25%", left: "-100%" }}
+                  animate={{ left: "100%" }}
+                  transition={{
+                    duration: 1.5,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                  }}
+                />
+                <motion.div
+                  className="absolute w-full h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent"
+                  style={{ top: "50%", left: "-100%" }}
+                  animate={{ left: "100%" }}
+                  transition={{
+                    duration: 1.5,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    delay: 0.5,
+                  }}
+                />
+                <motion.div
+                  className="absolute w-full h-1 bg-gradient-to-r from-transparent via-purple-400 to-transparent"
+                  style={{ top: "75%", left: "-100%" }}
+                  animate={{ left: "100%" }}
+                  transition={{
+                    duration: 1.5,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    delay: 1,
+                  }}
+                />
               </div>
 
               <div className="relative z-10 flex flex-col items-center gap-4">
