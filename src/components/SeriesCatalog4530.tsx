@@ -322,7 +322,7 @@ const SeriesCatalog4530Component = () => {
 
   {/* 3) Сам девайс */}
   <img
-    src="/img/Иерархия_4530.png"
+    src="/img/Иерархия_4530(1).png"
     alt="Иерархия 4530"
     className="relative z-10 h-56 object-contain"
   />
