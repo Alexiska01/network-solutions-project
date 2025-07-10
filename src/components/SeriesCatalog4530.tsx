@@ -223,7 +223,7 @@ const SeriesCatalog4530Component = () => {
               {/* Схематичный узор под карточками */}
               <div
                 className="absolute inset-0 pointer-events-none"
-                style={{ opacity: 0.04 }}
+                style={{ opacity: 0.15 }}
               >
                 <svg width="100%" height="100%" className="absolute inset-0">
                   <defs>
@@ -235,11 +235,7 @@ const SeriesCatalog4530Component = () => {
                       height="60"
                       patternUnits="userSpaceOnUse"
                     >
-                      <g
-                        stroke="rgba(255,255,255,0.6)"
-                        strokeWidth="0.5"
-                        fill="none"
-                      >
+                      <g stroke="white" strokeWidth="1" fill="none">
                         {/* Основная сетка */}
                         <path d="M 0 0 L 60 0 M 0 20 L 60 20 M 0 40 L 60 40 M 0 60 L 60 60" />
                         <path d="M 0 0 L 0 60 M 20 0 L 20 60 M 40 0 L 40 60 M 60 0 L 60 60" />
@@ -247,31 +243,31 @@ const SeriesCatalog4530Component = () => {
                         {/* Диагональные технологические линии */}
                         <path
                           d="M 0 0 L 20 20 M 20 0 L 40 20 M 40 0 L 60 20"
-                          strokeWidth="0.3"
+                          strokeWidth="0.8"
                         />
                         <path
                           d="M 0 20 L 20 40 M 20 20 L 40 40 M 40 20 L 60 40"
-                          strokeWidth="0.3"
+                          strokeWidth="0.8"
                         />
                         <path
                           d="M 0 40 L 20 60 M 20 40 L 40 60 M 40 40 L 60 60"
-                          strokeWidth="0.3"
+                          strokeWidth="0.8"
                         />
 
                         {/* Узловые точки */}
-                        <circle cx="20" cy="20" r="1.5" strokeWidth="0.4" />
-                        <circle cx="40" cy="40" r="1.5" strokeWidth="0.4" />
-                        <circle cx="20" cy="40" r="1" strokeWidth="0.3" />
-                        <circle cx="40" cy="20" r="1" strokeWidth="0.3" />
+                        <circle cx="20" cy="20" r="2" strokeWidth="1" />
+                        <circle cx="40" cy="40" r="2" strokeWidth="1" />
+                        <circle cx="20" cy="40" r="1.5" strokeWidth="0.8" />
+                        <circle cx="40" cy="20" r="1.5" strokeWidth="0.8" />
 
                         {/* Микро-детали */}
                         <path
                           d="M 10 10 L 15 15 M 45 15 L 50 10"
-                          strokeWidth="0.2"
+                          strokeWidth="0.6"
                         />
                         <path
                           d="M 10 50 L 15 45 M 45 45 L 50 50"
-                          strokeWidth="0.2"
+                          strokeWidth="0.6"
                         />
                       </g>
                     </pattern>
