@@ -238,18 +238,18 @@ const SeriesCatalog4530Component = () => {
                       {
                         icon: Route,
                         label: "Статистическая маршрутизация",
-                        delay: 0.6,
+                        delay: 0.1,
                       },
                       {
                         icon: Network,
                         label:
                           "Динамическая маршрутизация RIP, OSPF, BGP, ISIS",
-                        delay: 0.7,
+                        delay: 0.2,
                       },
                       {
                         icon: Shuffle,
                         label: "Модули расширения для интерфейсов 40G и 100G",
-                        delay: 0.8,
+                        delay: 0.3,
                       },
                     ].map(({ icon: Icon, label, delay }) => (
                       <motion.a
@@ -262,9 +262,13 @@ const SeriesCatalog4530Component = () => {
                           rounded-lg border transition-all duration-200
                           w-64 min-h-[60px]
                         "
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay }}
+                        transition={{
+                          delay,
+                          duration: 0.5,
+                          ease: "easeOut",
+                        }}
                         style={{
                           backgroundColor: "rgba(255,255,255,0.08)",
                           borderColor: "rgba(255,255,255,0.2)",
@@ -290,9 +294,13 @@ const SeriesCatalog4530Component = () => {
                 {/* Четвертая карточка с описанием под тремя */}
                 <motion.div
                   className="flex items-center gap-3 px-4 py-2 rounded-lg border transition-all duration-200 w-full"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 }}
+                  transition={{
+                    delay: 0.4,
+                    duration: 0.5,
+                    ease: "easeOut",
+                  }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   style={{
