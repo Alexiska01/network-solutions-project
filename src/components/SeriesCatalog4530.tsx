@@ -240,21 +240,31 @@ const SeriesCatalog4530Component = () => {
                       <motion.a
                         key={label}
                         href="#"
-                        whileHover={{ scale: 1.02 }}
+                        whileHover={{ scale: 1.02, y: -4 }}
                         whileTap={{ scale: 0.98 }}
                         className="
-                          group flex items-center gap-2 px-4 py-2.5
-                          rounded-lg border border-transparent
-                          bg-white/20 transition-all duration-200
-                          shadow-sm
-                          hover:bg-white/40 hover:shadow-md hover:-translate-y-1
+                          group flex items-center gap-2 px-5 py-3
+                          rounded-lg border border-white/30
+                          bg-white/10 transition-all duration-200
+                          shadow-md
                         "
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay }}
+                        style={{
+                          boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.boxShadow =
+                            "0px 8px 24px rgba(0,0,0,0.1)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.boxShadow =
+                            "0px 4px 12px rgba(0,0,0,0.1)";
+                        }}
                       >
-                        <Icon className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-                        {label}
+                        <Icon className="w-5 h-5 text-white/90 transition-transform duration-200 group-hover:translate-x-1" />
+                        <span className="text-white font-medium">{label}</span>
                       </motion.a>
                     ))}
                   </div>
@@ -263,35 +273,42 @@ const SeriesCatalog4530Component = () => {
                 {/* Карточка «Серия IDS4530» */}
                 <motion.a
                   href="#"
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
                   whileTap={{ scale: 0.98 }}
-                  style={{
-                    backgroundColor: "rgba(255,255,255,0.3)",
-                    color: "#000000",
-                  }}
-                  className="rounded-xl shadow-xl p-6 w-full max-w-md font-semibold mx-[53px]"
+                  className="rounded-lg border border-white/30 bg-white/10 shadow-md px-5 py-3 w-full max-w-md font-semibold mx-[53px]"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1 }}
+                  style={{
+                    boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow =
+                      "0px 8px 24px rgba(0,0,0,0.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow =
+                      "0px 4px 12px rgba(0,0,0,0.1)";
+                  }}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <Wifi className="w-5 h-5 text-[#313335]" />
-                    <span className="text-xl font-semibold text-[#313335]">
+                    <Wifi className="w-5 h-5 text-white/90" />
+                    <span className="text-xl font-semibold text-white font-medium">
                       Серия IDS4530
                     </span>
                   </div>
-                  <p className="text-sm text-[#313335]">
+                  <p className="text-sm text-white font-medium">
                     Коммутаторы для построения уровня доступа или узлов
                     агрегации в небольших корпоративных сетях.
                   </p>
                   <div className="mt-4 grid grid-cols-3 gap-3">
-                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">
+                    <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
                       48 портов
                     </div>
-                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">
+                    <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
                       PoE до 760 Вт
                     </div>
-                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">
+                    <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
                       2 слота расширения
                     </div>
                   </div>
