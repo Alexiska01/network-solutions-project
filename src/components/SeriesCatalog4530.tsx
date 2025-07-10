@@ -185,36 +185,100 @@ const SeriesCatalog4530Component = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              {/* Техно-сетка в фоне */}
+              {/* Фон с волнами из Hero.tsx */}
               <div className="absolute inset-0">
                 <svg
-                  width="100%"
-                  height="100%"
-                  className="absolute inset-0"
-                  style={{ opacity: 0.02 }}
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  viewBox="0 0 1200 800"
+                  preserveAspectRatio="xMidYMid slice"
                 >
                   <defs>
                     <pattern
-                      id="tech-grid"
+                      id="wave-pattern"
                       x="0"
                       y="0"
-                      width="40"
-                      height="40"
+                      width="100"
+                      height="100"
                       patternUnits="userSpaceOnUse"
                     >
-                      <g stroke="white" strokeWidth="0.5" fill="none">
-                        <path d="M 40 0 L 0 0 0 40" />
-                        <path d="M 20 0 L 20 20 L 0 20" />
-                        <path d="M 40 20 L 20 20 L 20 40" />
-                        <circle cx="20" cy="20" r="2" strokeWidth="0.3" />
-                        <circle cx="0" cy="0" r="1" strokeWidth="0.3" />
-                        <circle cx="40" cy="0" r="1" strokeWidth="0.3" />
-                        <circle cx="0" cy="40" r="1" strokeWidth="0.3" />
-                        <circle cx="40" cy="40" r="1" strokeWidth="0.3" />
-                      </g>
+                      <path
+                        d="M0,50 Q25,20 50,50 T100,50"
+                        stroke="white"
+                        strokeWidth="1"
+                        fill="none"
+                        opacity="0.15"
+                      />
                     </pattern>
                   </defs>
-                  <rect width="100%" height="100%" fill="url(#tech-grid)" />
+                  <path
+                    d="M0,200 Q300,100 600,200 T1200,200"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    fill="none"
+                    opacity="0.2"
+                  />
+                  <path
+                    d="M0,300 Q400,150 800,300 T1200,300"
+                    stroke="white"
+                    strokeWidth="1"
+                    fill="none"
+                    opacity="0.15"
+                  />
+                  <path
+                    d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400"
+                    stroke="white"
+                    strokeWidth="1"
+                    fill="none"
+                    opacity="0.1"
+                  />
+                  <path
+                    d="M0,500 Q350,350 700,500 T1200,500"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    fill="none"
+                    opacity="0.18"
+                  />
+                  <path
+                    d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600"
+                    stroke="white"
+                    strokeWidth="1"
+                    fill="none"
+                    opacity="0.12"
+                  />
+                  <path
+                    d="M0,0 Q400,200 800,100 T1200,300"
+                    stroke="white"
+                    strokeWidth="1"
+                    fill="none"
+                    opacity="0.1"
+                  />
+                  <path
+                    d="M0,800 Q300,600 600,700 T1200,500"
+                    stroke="white"
+                    strokeWidth="1"
+                    fill="none"
+                    opacity="0.08"
+                  />
+                  <path
+                    d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300"
+                    stroke="white"
+                    strokeWidth="1"
+                    fill="none"
+                    opacity="0.08"
+                  />
+                  <path
+                    d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250"
+                    stroke="white"
+                    strokeWidth="1"
+                    fill="none"
+                    opacity="0.06"
+                  />
+                  <circle
+                    cx="800"
+                    cy="380"
+                    r="110"
+                    fill="rgba(77, 177, 212, 0.6)"
+                  />
                 </svg>
               </div>
 
