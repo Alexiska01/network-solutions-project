@@ -289,7 +289,7 @@ const SeriesCatalog4530Component = () => {
 
                 {/* Четвертая карточка с описанием под тремя */}
                 <motion.div
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg border transition-all duration-200 w-64"
+                  className="flex items-center justify-center px-4 py-2.5 rounded-lg border transition-all duration-200 w-full"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.9 }}
@@ -310,8 +310,7 @@ const SeriesCatalog4530Component = () => {
                       "0px 2px 8px rgba(0,0,0,0.1)";
                   }}
                 >
-                  <Layers className="w-5 h-5 text-white/90 flex-shrink-0" />
-                  <span className="text-white font-medium text-sm leading-relaxed">
+                  <span className="text-white font-medium text-sm leading-relaxed text-center">
                     Расширяемые коммутаторы уровня доступа и агрегации для
                     небольших корпоративных сетей
                   </span>
