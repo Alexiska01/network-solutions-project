@@ -286,6 +286,36 @@ const SeriesCatalog4530Component = () => {
                     ))}
                   </div>
                 </div>
+
+                {/* Четвертая карточка с описанием под тремя */}
+                <motion.div
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg border transition-all duration-200 w-64"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  style={{
+                    backgroundColor: "rgba(255,255,255,0.08)",
+                    borderColor: "rgba(255,255,255,0.2)",
+                    borderWidth: "1px",
+                    boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow =
+                      "0px 8px 24px rgba(0,0,0,0.15)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow =
+                      "0px 2px 8px rgba(0,0,0,0.1)";
+                  }}
+                >
+                  <Layers className="w-5 h-5 text-white/90 flex-shrink-0" />
+                  <span className="text-white font-medium text-sm leading-relaxed">
+                    Расширяемые коммутаторы уровня доступа и агрегации для
+                    небольших корпоративных сетей
+                  </span>
+                </motion.div>
               </div>
             </motion.div>
           </div>
