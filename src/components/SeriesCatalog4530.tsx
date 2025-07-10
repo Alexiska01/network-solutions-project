@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import {
-  Shuffle,
-  Route,
+  ArrowUpDown,
+  GitBranch,
   Network,
   Wifi,
   Zap,
@@ -236,7 +236,7 @@ const SeriesCatalog4530Component = () => {
                   <div className="flex flex-col gap-5 justify-center">
                     {[
                       {
-                        icon: Route,
+                        icon: GitBranch,
                         label: "Статистическая маршрутизация",
                         delay: 0.1,
                       },
@@ -247,7 +247,7 @@ const SeriesCatalog4530Component = () => {
                         delay: 0.2,
                       },
                       {
-                        icon: Shuffle,
+                        icon: ArrowUpDown,
                         label: "Модули расширения для интерфейсов 40G и 100G",
                         delay: 0.3,
                       },
