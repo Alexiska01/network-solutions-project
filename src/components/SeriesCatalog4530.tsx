@@ -189,26 +189,34 @@ const SeriesCatalog4530Component = () => {
                 <div className="flex items-start gap-4 w-full">
                   {/* Image-card с градиентом, блюром и рамкой */}
                   <motion.div
-                    whileHover={{ scale: 1.03 }}
+                    whileHover={{ scale: 1.03, y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     className="
-                      flex justify-center items-center px-4 py-4
-                      rounded-xl
-                      border border-[#A8A8AA]
-                      shadow-[0_8px_24px_0_rgba(30,54,99,0.07)]
+                      flex justify-center items-center px-5 py-3
+                      rounded-lg
+                      border border-white/30
+                      shadow-md
                       -ml-20
-                      bg-white/60
-                      backdrop-blur-md
+                      bg-white/10
                     "
                     style={{
                       minWidth: "290px",
                       minHeight: "210px",
                       background:
                         "linear-gradient(90deg, #005cb9 0%, #039ad4 100%)",
+                      boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
                     }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.boxShadow =
+                        "0px 8px 24px rgba(0,0,0,0.1)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow =
+                        "0px 4px 12px rgba(0,0,0,0.1)";
+                    }}
                   >
                     <img
                       src="/img/Иерархия_4530.png"
