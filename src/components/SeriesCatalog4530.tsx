@@ -220,45 +220,6 @@ const SeriesCatalog4530Component = () => {
                 </svg>
               </div>
 
-              {/* Анимация потока данных */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <motion.div
-                  className="absolute w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"
-                  style={{ top: "25%", left: "-100%" }}
-                  animate={{ left: "100%" }}
-                  transition={{
-                    duration: 1.5,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                    repeatDelay: 2,
-                  }}
-                />
-                <motion.div
-                  className="absolute w-full h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent"
-                  style={{ top: "50%", left: "-100%" }}
-                  animate={{ left: "100%" }}
-                  transition={{
-                    duration: 1.5,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                    repeatDelay: 2,
-                    delay: 0.5,
-                  }}
-                />
-                <motion.div
-                  className="absolute w-full h-1 bg-gradient-to-r from-transparent via-purple-400 to-transparent"
-                  style={{ top: "75%", left: "-100%" }}
-                  animate={{ left: "100%" }}
-                  transition={{
-                    duration: 1.5,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                    repeatDelay: 2,
-                    delay: 1,
-                  }}
-                />
-              </div>
-
               <div className="relative z-10 flex flex-col items-center gap-4">
                 <div className="flex items-start gap-6 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
