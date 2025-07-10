@@ -220,62 +220,6 @@ const SeriesCatalog4530Component = () => {
                 </svg>
               </div>
 
-              {/* Схематичный узор под карточками */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{ opacity: 0.15 }}
-              >
-                <svg width="100%" height="100%" className="absolute inset-0">
-                  <defs>
-                    <pattern
-                      id="tech-overlay"
-                      x="0"
-                      y="0"
-                      width="60"
-                      height="60"
-                      patternUnits="userSpaceOnUse"
-                    >
-                      <g stroke="white" strokeWidth="1" fill="none">
-                        {/* Основная сетка */}
-                        <path d="M 0 0 L 60 0 M 0 20 L 60 20 M 0 40 L 60 40 M 0 60 L 60 60" />
-                        <path d="M 0 0 L 0 60 M 20 0 L 20 60 M 40 0 L 40 60 M 60 0 L 60 60" />
-
-                        {/* Диагональные технологические линии */}
-                        <path
-                          d="M 0 0 L 20 20 M 20 0 L 40 20 M 40 0 L 60 20"
-                          strokeWidth="0.8"
-                        />
-                        <path
-                          d="M 0 20 L 20 40 M 20 20 L 40 40 M 40 20 L 60 40"
-                          strokeWidth="0.8"
-                        />
-                        <path
-                          d="M 0 40 L 20 60 M 20 40 L 40 60 M 40 40 L 60 60"
-                          strokeWidth="0.8"
-                        />
-
-                        {/* Узловые точки */}
-                        <circle cx="20" cy="20" r="2" strokeWidth="1" />
-                        <circle cx="40" cy="40" r="2" strokeWidth="1" />
-                        <circle cx="20" cy="40" r="1.5" strokeWidth="0.8" />
-                        <circle cx="40" cy="20" r="1.5" strokeWidth="0.8" />
-
-                        {/* Микро-детали */}
-                        <path
-                          d="M 10 10 L 15 15 M 45 15 L 50 10"
-                          strokeWidth="0.6"
-                        />
-                        <path
-                          d="M 10 50 L 15 45 M 45 45 L 50 50"
-                          strokeWidth="0.6"
-                        />
-                      </g>
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#tech-overlay)" />
-                </svg>
-              </div>
-
               <div className="relative z-10 flex flex-col items-center gap-4">
                 <div className="flex items-start gap-6 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
@@ -342,7 +286,7 @@ const SeriesCatalog4530Component = () => {
                         className="
                           group flex items-center gap-3 px-4 py-3
                           rounded-lg border transition-all duration-200
-                          w-64 min-h-[60px]
+                          w-64 min-h-[60px] relative overflow-hidden
                         "
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -366,8 +310,74 @@ const SeriesCatalog4530Component = () => {
                             "0px 2px 8px rgba(0,0,0,0.1)";
                         }}
                       >
-                        <Icon className="w-5 h-5 text-white/90 transition-transform duration-200 group-hover:translate-x-1" />
-                        <span className="text-white font-medium">{label}</span>
+                        {/* Схематичный узор внутри карточки */}
+                        <div
+                          className="absolute inset-0 pointer-events-none"
+                          style={{ opacity: 0.06 }}
+                        >
+                          <svg
+                            width="100%"
+                            height="100%"
+                            className="absolute inset-0"
+                          >
+                            <defs>
+                              <pattern
+                                id={`tech-pattern-${label.replace(/\s+/g, "-")}`}
+                                x="0"
+                                y="0"
+                                width="40"
+                                height="40"
+                                patternUnits="userSpaceOnUse"
+                              >
+                                <g stroke="white" strokeWidth="0.5" fill="none">
+                                  {/* Основная сетка */}
+                                  <path d="M 0 0 L 40 0 M 0 20 L 40 20 M 0 40 L 40 40" />
+                                  <path d="M 0 0 L 0 40 M 20 0 L 20 40 M 40 0 L 40 40" />
+
+                                  {/* Диагональные линии */}
+                                  <path
+                                    d="M 0 0 L 20 20 M 20 0 L 40 20"
+                                    strokeWidth="0.3"
+                                  />
+                                  <path
+                                    d="M 0 20 L 20 40 M 20 20 L 40 40"
+                                    strokeWidth="0.3"
+                                  />
+
+                                  {/* Узловые точки */}
+                                  <circle
+                                    cx="20"
+                                    cy="20"
+                                    r="1"
+                                    strokeWidth="0.4"
+                                  />
+                                  <circle
+                                    cx="0"
+                                    cy="0"
+                                    r="0.5"
+                                    strokeWidth="0.3"
+                                  />
+                                  <circle
+                                    cx="40"
+                                    cy="40"
+                                    r="0.5"
+                                    strokeWidth="0.3"
+                                  />
+                                </g>
+                              </pattern>
+                            </defs>
+                            <rect
+                              width="100%"
+                              height="100%"
+                              fill={`url(#tech-pattern-${label.replace(/\s+/g, "-")})`}
+                            />
+                          </svg>
+                        </div>
+
+                        <Icon className="w-6 h-6 text-white/90 transition-transform duration-200 group-hover:translate-x-1 relative z-10" />
+                        <span className="text-white font-medium relative z-10">
+                          {label}
+                        </span>
                       </motion.a>
                     ))}
                   </div>
@@ -375,7 +385,7 @@ const SeriesCatalog4530Component = () => {
 
                 {/* Четвертая карточка с описанием под тремя */}
                 <motion.div
-                  className="flex items-center gap-3 px-4 py-2 rounded-lg border transition-all duration-200 w-full"
+                  className="flex items-center gap-3 px-4 py-2 rounded-lg border transition-all duration-200 w-full relative overflow-hidden"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
@@ -400,8 +410,57 @@ const SeriesCatalog4530Component = () => {
                       "0px 2px 8px rgba(0,0,0,0.1)";
                   }}
                 >
-                  <Layers className="w-5 h-5 text-white/90 flex-shrink-0" />
-                  <span className="text-white font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                  {/* Схематичный узор внутри горизонтальной карточки */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{ opacity: 0.06 }}
+                  >
+                    <svg
+                      width="100%"
+                      height="100%"
+                      className="absolute inset-0"
+                    >
+                      <defs>
+                        <pattern
+                          id="tech-pattern-horizontal"
+                          x="0"
+                          y="0"
+                          width="40"
+                          height="40"
+                          patternUnits="userSpaceOnUse"
+                        >
+                          <g stroke="white" strokeWidth="0.5" fill="none">
+                            {/* Основная сетка */}
+                            <path d="M 0 0 L 40 0 M 0 20 L 40 20 M 0 40 L 40 40" />
+                            <path d="M 0 0 L 0 40 M 20 0 L 20 40 M 40 0 L 40 40" />
+
+                            {/* Диагональные линии */}
+                            <path
+                              d="M 0 0 L 20 20 M 20 0 L 40 20"
+                              strokeWidth="0.3"
+                            />
+                            <path
+                              d="M 0 20 L 20 40 M 20 20 L 40 40"
+                              strokeWidth="0.3"
+                            />
+
+                            {/* Узловые точки */}
+                            <circle cx="20" cy="20" r="1" strokeWidth="0.4" />
+                            <circle cx="0" cy="0" r="0.5" strokeWidth="0.3" />
+                            <circle cx="40" cy="40" r="0.5" strokeWidth="0.3" />
+                          </g>
+                        </pattern>
+                      </defs>
+                      <rect
+                        width="100%"
+                        height="100%"
+                        fill="url(#tech-pattern-horizontal)"
+                      />
+                    </svg>
+                  </div>
+
+                  <Layers className="w-6 h-6 text-white/90 flex-shrink-0 relative z-10" />
+                  <span className="text-white font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis relative z-10">
                     Расширяемые коммутаторы уровня доступа и агрегации для
                     небольших корпоративных сетей
                   </span>
