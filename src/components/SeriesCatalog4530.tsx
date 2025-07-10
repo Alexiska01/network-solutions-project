@@ -322,7 +322,7 @@ const SeriesCatalog4530Component = () => {
 
   {/* 3) Сам девайс */}
   <img
-    src="/img/Иерархия_4530(2).png"
+    src="/img/Иерархия_4530(1).png"
     alt="Иерархия 4530"
     className="relative z-10 h-56 object-contain"
   />
@@ -542,7 +542,7 @@ const SeriesCatalog4530Component = () => {
                     </svg>
                   </div>
 
-                  <Layers className="w-6 h-6 text-white/90 flex-shrink-0 relative z-10" />
+                  <Layers className="w-4 h-4 text-white/80 flex-shrink-0 relative z-10" />
                   <span className="text-white font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis relative z-10">
                     Расширяемые коммутаторы уровня доступа и агрегации для
                     небольших корпоративных сетей
