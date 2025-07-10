@@ -24,6 +24,12 @@ import {
   Shield,
   Layers,
 } from "lucide-react";
+const cardVariants = {
+  hidden:   { opacity: 0, y: 20 },
+  visible:  { opacity: 1, y: 0, transition: { delay: 0.8, duration: 0.6 } },
+  hover:    { scale: 1.03, y: -4 },
+  tap:      { scale: 0.98 },
+};
 
 const SeriesCatalog4530Component = () => {
   const [filter, setFilter] = useState<FilterType>("all");
@@ -32,7 +38,7 @@ const SeriesCatalog4530Component = () => {
 
   const toggleCompareModel = (model: string) => {
     setCompareModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
     );
   };
 
@@ -45,7 +51,6 @@ const SeriesCatalog4530Component = () => {
     return model.category === filter;
   });
 
-  // Параллакс-эффект для фонового круга
   useViewportScroll();
 
   return (
@@ -83,21 +88,96 @@ const SeriesCatalog4530Component = () => {
 
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-        {/* Сеточный фон */}
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            background: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: "50px 50px",
-            animation: "vanta-grid 20s linear infinite",
-          }}
-        />
-
-        {/* Радиальное свечение справа */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-radial from-blue-400/20 via-blue-500/10 to-transparent blur-3xl"></div>
+        {/* SVG-оверлей с волнами */}
+        <div className="absolute inset-0 z-0">
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 1200 800"
+            preserveAspectRatio="xMidYMid slice"
+          >
+            <defs>
+              <pattern
+                id="wave-pattern"
+                x="0"
+                y="0"
+                width="100"
+                height="100"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M0,50 Q25,20 50,50 T100,50"
+                  stroke="white"
+                  strokeWidth="1"
+                  fill="none"
+                  opacity="0.15"
+                />
+              </pattern>
+            </defs>
+            <path
+              d="M0,200 Q300,100 600,200 T1200,200"
+              stroke="white"
+              strokeWidth="1.5"
+              fill="none"
+              opacity="0.2"
+            />
+            <path
+              d="M0,300 Q400,150 800,300 T1200,300"
+              stroke="white"
+              strokeWidth="1"
+              fill="none"
+              opacity="0.15"
+            />
+            <path
+              d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400"
+              stroke="white"
+              strokeWidth="1"
+              fill="none"
+              opacity="0.1"
+            />
+            <path
+              d="M0,500 Q350,350 700,500 T1200,500"
+              stroke="white"
+              strokeWidth="1.5"
+              fill="none"
+              opacity="0.18"
+            />
+            <path
+              d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600"
+              stroke="white"
+              strokeWidth="1"
+              fill="none"
+              opacity="0.12"
+            />
+            <path
+              d="M0,0 Q400,200 800,100 T1200,300"
+              stroke="white"
+              strokeWidth="1"
+              fill="none"
+              opacity="0.1"
+            />
+            <path
+              d="M0,800 Q300,600 600,700 T1200,500"
+              stroke="white"
+              strokeWidth="1"
+              fill="none"
+              opacity="0.08"
+            />
+            <path
+              d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300"
+              stroke="white"
+              strokeWidth="1"
+              fill="none"
+              opacity="0.08"
+            />
+            <path
+              d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250"
+              stroke="white"
+              strokeWidth="1"
+              fill="none"
+              opacity="0.06"
+            />
+          </svg>
+        </div>
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start lg:items-center">
@@ -112,7 +192,6 @@ const SeriesCatalog4530Component = () => {
                 stiffness: 100,
               }}
             >
-              {/* Сабтайтл над заголовком */}
               <motion.p
                 className="text-xs md:text-sm lg:text-base text-blue-200 font-medium mb-2 md:mb-3 uppercase tracking-wide"
                 initial={{ opacity: 0, y: 20 }}
@@ -122,7 +201,6 @@ const SeriesCatalog4530Component = () => {
                 Серия корпоративных коммутаторов
               </motion.p>
 
-              {/* Основной заголовок */}
               <motion.h1
                 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-2 md:mb-3 leading-tight"
                 initial={{ opacity: 0, y: 30 }}
@@ -137,7 +215,6 @@ const SeriesCatalog4530Component = () => {
                 IDS4530
               </motion.h1>
 
-              {/* Блок преимуществ с иконками */}
               <motion.div
                 className="md:mb-6 lg:mb-8 space-y-3 my-[26px]"
                 initial={{ opacity: 0, y: 20 }}
@@ -163,6 +240,7 @@ const SeriesCatalog4530Component = () => {
                   </span>
                 </div>
               </motion.div>
+
               <motion.div
                 className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4 my-0"
                 initial={{ opacity: 0, y: 20 }}
@@ -177,7 +255,7 @@ const SeriesCatalog4530Component = () => {
                 </button>
               </motion.div>
             </motion.div>
-
+            
             {/* Правая часть с карточками */}
             <motion.div
               className="relative mt-6 md:mt-8 lg:mt-0 lg:justify-self-center"
@@ -221,40 +299,34 @@ const SeriesCatalog4530Component = () => {
               <div className="relative z-10 flex flex-col items-center gap-4">
                 <div className="flex items-start gap-6 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
-                  <motion.div
-                    whileHover={{ scale: 1.03, y: -4 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="
-                      flex justify-center items-center px-5 py-3
-                      rounded-lg
-                      border border-white/30
-                      shadow-md
-                      -ml-24
-                      bg-white/10
-                    "
-                    style={{
-                      minWidth: "380px",
-                      minHeight: "280px",
-                      boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
-                    }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.boxShadow =
-                        "0px 4px 16px rgba(0,0,0,0.15)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.boxShadow =
-                        "0px 2px 8px rgba(0,0,0,0.1)";
-                    }}
-                  >
-                    <img
-                      src="/img/Иерархия_4530.png"
-                      alt="Иерархия 4530"
-                      className="h-56 object-contain rounded"
-                    />
-                  </motion.div>
+<motion.div
+  variants={cardVariants}
+  initial="hidden"
+  animate="visible"
+  whileHover="hover"
+  whileTap="tap"
+  className="
+    relative flex items-center justify-center
+    w-[380px] h-[280px]
+    rounded-lg border border-white/30
+    overflow-hidden
+    shadow transition-shadow duration-300
+    hover:shadow-lg hover:scale-105
+  "
+>
+  {/* 1) Слой, скрывающий волны */}
+  <div className="absolute inset-0 bg-white/10 backdrop-blur-md" />
+
+  {/* 2) Сетка (шаг 16px вместо 20px) */}
+  <div className="absolute inset-0 bg-grid-pattern bg-grid-16 pointer-events-none" />
+
+  {/* 3) Сам девайс */}
+  <img
+    src="/img/Иерархия_4530.png"
+    alt="Иерархия 4530"
+    className="relative z-10 h-56 object-contain"
+  />
+</motion.div>
 
                   {/* Правая колонка — три feature-карточки справа от фото */}
                   <div className="flex flex-col gap-5 justify-center">
