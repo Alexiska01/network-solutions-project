@@ -146,15 +146,6 @@ const SeriesCatalog4530Component = () => {
                 IDS4530
               </motion.h1>
 
-              {/* Подзаголовок */}
-              <motion.p
-                className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-normal mb-4 md:mb-5 text-blue-100 leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-              >
-                Расширяемые коммутаторы для корпоративной и операторской сети
-              </motion.p>
               {/* Блок преимуществ с иконками */}
               <motion.div
                 className="mb-4 md:mb-6 lg:mb-8 space-y-3"
