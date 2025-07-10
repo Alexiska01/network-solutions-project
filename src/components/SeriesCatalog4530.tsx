@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { motion, useViewportScroll, useTransform } from "framer-motion";
+import { motion, useViewportScroll } from "framer-motion";
 import ModelCard from "@/components/ModelCard";
 import FilterButtons from "@/components/FilterButtons";
 import ComparisonPanel from "@/components/ComparisonPanel";
@@ -46,7 +46,7 @@ const SeriesCatalog4530Component = () => {
   });
 
   // Параллакс-эффект для фонового круга
-  const { scrollY } = useViewportScroll();
+  useViewportScroll();
 
   return (
     <div className="min-h-screen">
@@ -262,18 +262,18 @@ const SeriesCatalog4530Component = () => {
                       {
                         icon: GitBranch,
                         label: "Статистическая маршрутизация",
-                        delay: 0.1,
+                        delay: 0.2,
                       },
                       {
                         icon: Network,
                         label:
                           "Динамическая маршрутизация RIP, OSPF, BGP, ISIS",
-                        delay: 0.2,
+                        delay: 0.3,
                       },
                       {
                         icon: ArrowUpDown,
                         label: "Модули расширения для интерфейсов 40G и 100G",
-                        delay: 0.3,
+                        delay: 0.4,
                       },
                     ].map(({ icon: Icon, label, delay }) => (
                       <motion.a
@@ -335,11 +335,11 @@ const SeriesCatalog4530Component = () => {
                                   {/* Диагональные линии */}
                                   <path
                                     d="M 0 0 L 20 20 M 20 0 L 40 20"
-                                    strokeWidth="0.3"
+                                    strokeWidth="0.25"
                                   />
                                   <path
                                     d="M 0 20 L 20 40 M 20 20 L 40 40"
-                                    strokeWidth="0.3"
+                                    strokeWidth="0.25"
                                   />
 
                                   {/* Узловые точки */}
@@ -347,7 +347,7 @@ const SeriesCatalog4530Component = () => {
                                     cx="20"
                                     cy="20"
                                     r="2"
-                                    strokeWidth="1"
+                                    strokeWidth="0.6"
                                   />
                                   <circle cx="0" cy="0" r="1" strokeWidth="1" />
                                   <circle
@@ -382,8 +382,8 @@ const SeriesCatalog4530Component = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 0.4,
-                    duration: 0.5,
+                    delay: 0.6,
+                    duration: 0.6,
                     ease: "easeOut",
                   }}
                   whileHover={{ scale: 1.02 }}
@@ -406,7 +406,7 @@ const SeriesCatalog4530Component = () => {
                   {/* Схематичный узор внутри горизонтальной карточки */}
                   <div
                     className="absolute inset-0 pointer-events-none"
-                    style={{ opacity: 0.25 }}
+                    style={{ opacity: 0.1 }}
                   >
                     <svg
                       width="100%"
@@ -422,7 +422,7 @@ const SeriesCatalog4530Component = () => {
                           height="40"
                           patternUnits="userSpaceOnUse"
                         >
-                          <g stroke="white" strokeWidth="1.5" fill="none">
+                          <g stroke="white" strokeWidth="0.5" fill="none">
                             {/* Основная сетка */}
                             <path d="M 0 0 L 40 0 M 0 20 L 40 20 M 0 40 L 40 40" />
                             <path d="M 0 0 L 0 40 M 20 0 L 20 40 M 40 0 L 40 40" />
@@ -430,11 +430,11 @@ const SeriesCatalog4530Component = () => {
                             {/* Диагональные линии */}
                             <path
                               d="M 0 0 L 20 20 M 20 0 L 40 20"
-                              strokeWidth="1"
+                              strokeWidth="0.25"
                             />
                             <path
                               d="M 0 20 L 20 40 M 20 20 L 40 40"
-                              strokeWidth="1"
+                              strokeWidth="0.25"
                             />
 
                             {/* Узловые точки */}
@@ -442,7 +442,7 @@ const SeriesCatalog4530Component = () => {
                               cx="20"
                               cy="20"
                               r="2"
-                              strokeWidth="1"
+                              strokeWidth="0.6"
                               fill="none"
                             />
                             <circle
