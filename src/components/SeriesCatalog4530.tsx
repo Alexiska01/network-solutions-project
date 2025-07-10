@@ -293,7 +293,7 @@ const SeriesCatalog4530Component = () => {
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <Wifi className="w-5 h-5 text-white/90" />
-                    <span className="text-xl font-semibold text-white font-medium">
+                    <span className="text-xl font-semibold text-white">
                       Серия IDS4530
                     </span>
                   </div>
