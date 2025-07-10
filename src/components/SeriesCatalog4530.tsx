@@ -242,7 +242,7 @@ const SeriesCatalog4530Component = () => {
                   </motion.div>
 
                   {/* Правая колонка — три feature-карточки справа от фото */}
-                  <div className="flex flex-col gap-3 justify-center">
+                  <div className="flex flex-col gap-5 justify-center">
                     {[
                       {
                         icon: Route,
@@ -264,27 +264,29 @@ const SeriesCatalog4530Component = () => {
                       <motion.a
                         key={label}
                         href="#"
-                        whileHover={{ scale: 1.02, y: -4 }}
+                        whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="
-                          group flex items-center gap-2 px-4 py-2.5
-                          rounded-lg border border-white/30
-                          bg-white/10 transition-all duration-200
-                          shadow-md w-64
+                          group flex items-center gap-3 px-4 py-3
+                          rounded-lg border transition-all duration-200
+                          w-64 min-h-[60px]
                         "
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay }}
                         style={{
-                          boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+                          backgroundColor: "rgba(255,255,255,0.08)",
+                          borderColor: "rgba(255,255,255,0.2)",
+                          borderWidth: "1px",
+                          boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.boxShadow =
-                            "0px 8px 24px rgba(0,0,0,0.1)";
+                            "0px 8px 24px rgba(0,0,0,0.15)";
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.boxShadow =
-                            "0px 4px 12px rgba(0,0,0,0.1)";
+                            "0px 2px 8px rgba(0,0,0,0.1)";
                         }}
                       >
                         <Icon className="w-5 h-5 text-white/90 transition-transform duration-200 group-hover:translate-x-1" />
