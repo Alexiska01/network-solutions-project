@@ -194,9 +194,9 @@ const SeriesCatalog4530Component = () => {
                       transition={{ delay: 0.8 }}
                     >
                       <img
-                        src="/img/hierarchy-4530.jpg"
-                        alt="Иерархия 4530"
-                        className="w-full h-full object-contain rounded"
+                        src="/images/module-photo.jpg"
+                        alt="Модуль расширения"
+                        className="w-24 h-24 object-contain rounded"
                       />
                     </motion.div>
 
