@@ -25,7 +25,7 @@ const SeriesCatalog4530Component = () => {
 
   const toggleCompareModel = (model: string) => {
     setCompareModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
     );
   };
 
@@ -106,19 +106,34 @@ const SeriesCatalog4530Component = () => {
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                type: "spring",
+                stiffness: 100,
+              }}
             >
               <motion.h1
                 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 120 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.3,
+                  type: "spring",
+                  stiffness: 120,
+                }}
               >
                 <motion.span
                   className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 140 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 0.4,
+                    type: "spring",
+                    stiffness: 140,
+                  }}
                 >
                   IDS4530
                 </motion.span>
@@ -145,7 +160,8 @@ const SeriesCatalog4530Component = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.0 }}
               >
-                До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760 Вт
+                До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760
+                Вт
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4"
@@ -171,7 +187,6 @@ const SeriesCatalog4530Component = () => {
             >
               <div className="relative z-10 flex flex-col items-start gap-6">
                 <div className="flex items-start gap-4 w-full">
-
                   {/* Image-card с градиентом, блюром и рамкой */}
                   <motion.div
                     whileHover={{ scale: 1.03 }}
@@ -188,7 +203,8 @@ const SeriesCatalog4530Component = () => {
                     style={{
                       minWidth: "290px",
                       minHeight: "210px",
-                      background: "linear-gradient(90deg, #005cb9 0%, #039ad4 100%)",
+                      background:
+                        "linear-gradient(90deg, #005cb9 0%, #039ad4 100%)",
                     }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -203,19 +219,24 @@ const SeriesCatalog4530Component = () => {
 
                   {/* Правая колонка — три feature-карточки */}
                   <div className="flex flex-col gap-3 md:ml-3">
-                    {[{
-                      icon: Route,
-                      label: "Статистическая маршрутизация",
-                      delay: 0.6,
-                    },{
-                      icon: Network,
-                      label: "Динамическая маршрутизация RIP, OSPF, BGP, ISIS",
-                      delay: 0.7,
-                    },{
-                      icon: Shuffle,
-                      label: "Модули расширения для интерфейсов 40G и 100G",
-                      delay: 0.8,
-                    }].map(({ icon: Icon, label, delay }) => (
+                    {[
+                      {
+                        icon: Route,
+                        label: "Статистическая маршрутизация",
+                        delay: 0.6,
+                      },
+                      {
+                        icon: Network,
+                        label:
+                          "Динамическая маршрутизация RIP, OSPF, BGP, ISIS",
+                        delay: 0.7,
+                      },
+                      {
+                        icon: Shuffle,
+                        label: "Модули расширения для интерфейсов 40G и 100G",
+                        delay: 0.8,
+                      },
+                    ].map(({ icon: Icon, label, delay }) => (
                       <motion.a
                         key={label}
                         href="#"
@@ -244,18 +265,24 @@ const SeriesCatalog4530Component = () => {
                   href="#"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  style={{ backgroundColor: "rgba(255,255,255,0.3)", color: "#000000" }}
-                  className="rounded-xl shadow-xl p-6 w-full max-w-md mx-[52px] font-semibold"
+                  style={{
+                    backgroundColor: "rgba(255,255,255,0.3)",
+                    color: "#000000",
+                  }}
+                  className="rounded-xl shadow-xl p-6 w-full max-w-md font-semibold mx-[53px]"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1 }}
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <Wifi className="w-5 h-5 text-[#313335]" />
-                    <span className="text-xl font-semibold text-[#313335]">Серия IDS4530</span>
+                    <span className="text-xl font-semibold text-[#313335]">
+                      Серия IDS4530
+                    </span>
                   </div>
                   <p className="text-sm text-[#313335]">
-                    Коммутаторы для построения уровня доступа или узлов агрегации в небольших корпоративных сетях.
+                    Коммутаторы для построения уровня доступа или узлов
+                    агрегации в небольших корпоративных сетях.
                   </p>
                   <div className="mt-4 grid grid-cols-3 gap-3">
                     <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">
