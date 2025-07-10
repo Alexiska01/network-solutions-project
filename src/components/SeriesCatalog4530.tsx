@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useViewportScroll, useTransform } from "framer-motion";
 import ModelCard from "@/components/ModelCard";
 import FilterButtons from "@/components/FilterButtons";
 import ComparisonPanel from "@/components/ComparisonPanel";
@@ -37,6 +37,10 @@ const SeriesCatalog4530Component = () => {
     if (filter === "all") return true;
     return model.category === filter;
   });
+
+  // Параллакс-эффект для фонового круга
+  const { scrollY } = useViewportScroll();
+  const circleY = useTransform(scrollY, [0, 500], [0, 100]);
 
   return (
     <div className="min-h-screen">
@@ -86,14 +90,15 @@ const SeriesCatalog4530Component = () => {
           }}
         />
 
-        {/* Круг на фоне */}
-        <svg
+        {/* Круг на фоне с параллаксом */}
+        <motion.svg
+          style={{ y: circleY }}
           className="absolute inset-0 w-full h-full pointer-events-none z-0"
           viewBox="0 0 1200 800"
           xmlns="http://www.w3.org/2000/svg"
         >
           <circle cx="1120" cy="340" r="260" fill="rgba(77, 177, 212, 0.6)" />
-        </svg>
+        </motion.svg>
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
@@ -166,73 +171,74 @@ const SeriesCatalog4530Component = () => {
             >
               <div className="relative z-10 flex flex-col items-start gap-6">
                 <div className="flex items-start gap-4 w-full">
-                <div className="flex items-start gap-4 w-full">
-  {/* Левая карточка — только изображение */}
-  <motion.div
-    whileHover={{ scale: 1.03 }}
-    whileTap={{ scale: 0.98 }}
-    className="flex justify-center items-center px-4 py-4 rounded-xl shadow-lg bg-white -ml-20"
-    style={{ minWidth: "290px", minHeight: "210px" }}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: 0.8 }}
-  >
-    <img
-      src="/img/Иерархия_4530.pn"
-      alt="Иерархия 4530"
-      className="h-44 object-contain rounded"
-    />
-  </motion.div>
 
-  {/* Правая колонка — три карточки с иконками и текстом */}
-  <div className="flex flex-col gap-3 md:ml-3">
-    {/* 1. Статистическая маршрутизация */}
-    <motion.a
-      href="#"
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-      style={{ backgroundColor: "rgba(255, 240, 213, 0.52)", color: "#000000" }}
-      className="flex items-center gap-2 px-4 py-2.5 rounded-lg shadow-md text-sm font-bold text-[#313335]"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 }}
-    >
-      <Route className="w-4 h-4" />
-      Статистическая маршрутизация
-    </motion.a>
+                  {/* Image-card с градиентом, блюром и рамкой */}
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="
+                      flex justify-center items-center px-4 py-4
+                      rounded-xl
+                      border border-[#A8A8AA]
+                      shadow-[0_8px_24px_0_rgba(30,54,99,0.07)]
+                      -ml-20
+                      bg-white/60
+                      backdrop-blur-md
+                    "
+                    style={{
+                      minWidth: "290px",
+                      minHeight: "210px",
+                      background: "linear-gradient(90deg, #005cb9 0%, #039ad4 100%)",
+                    }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    <img
+                      src="/img/Иерархия_4530.png"
+                      alt="Иерархия 4530"
+                      className="h-44 object-contain rounded"
+                    />
+                  </motion.div>
 
-    {/* 2. Динамическая маршрутизация */}
-    <motion.a
-      href="#"
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-      style={{ backgroundColor: "rgba(255, 240, 213, 0.52)", color: "#000000" }}
-      className="flex items-center gap-2 px-4 py-2.5 rounded-lg shadow-md text-sm font-bold text-[#313335]"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.7 }}
-    >
-      <Network className="w-4 h-4" />
-      Динамическая маршрутизация RIP, OSPF, BGP, ISIS
-    </motion.a>
+                  {/* Правая колонка — три feature-карточки */}
+                  <div className="flex flex-col gap-3 md:ml-3">
+                    {[{
+                      icon: Route,
+                      label: "Статистическая маршрутизация",
+                      delay: 0.6,
+                    },{
+                      icon: Network,
+                      label: "Динамическая маршрутизация RIP, OSPF, BGP, ISIS",
+                      delay: 0.7,
+                    },{
+                      icon: Shuffle,
+                      label: "Модули расширения для интерфейсов 40G и 100G",
+                      delay: 0.8,
+                    }].map(({ icon: Icon, label, delay }) => (
+                      <motion.a
+                        key={label}
+                        href="#"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="
+                          group flex items-center gap-2 px-4 py-2.5
+                          rounded-lg border border-transparent
+                          bg-white/20 transition-all duration-200
+                          shadow-sm
+                          hover:bg-white/40 hover:shadow-md hover:-translate-y-1
+                        "
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay }}
+                      >
+                        <Icon className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                        {label}
+                      </motion.a>
+                    ))}
+                  </div>
+                </div>
 
-    {/* 3. Модули расширения */}
-    <motion.a
-      href="#"
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-      style={{ backgroundColor: "rgba(255, 99, 132, 0.12)", color: "#000000" }}
-      className="flex items-center gap-2 px-4 py-4 rounded-xl shadow-lg text-sm font-medium text-[#313335]"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.8 }}
-    >
-      <Shuffle className="w-4 h-4" />
-      Модули расширения для интерфейсов 40G и 100G
-    </motion.a>
-    </div>
-  </div>
-</div>
                 {/* Карточка «Серия IDS4530» */}
                 <motion.a
                   href="#"
@@ -252,17 +258,28 @@ const SeriesCatalog4530Component = () => {
                     Коммутаторы для построения уровня доступа или узлов агрегации в небольших корпоративных сетях.
                   </p>
                   <div className="mt-4 grid grid-cols-3 gap-3">
-                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">48 портов</div>
-                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">PoE до 760 Вт</div>
-                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">2 слота расширения</div>
+                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">
+                      48 портов
+                    </div>
+                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">
+                      PoE до 760 Вт
+                    </div>
+                    <div className="py-2 px-3 bg-white/40 text-[#313335] text-center text-xs rounded-md shadow">
+                      2 слота расширения
+                    </div>
                   </div>
                 </motion.a>
               </div>
             </motion.div>
           </div>
         </div>
-        <style>{`@keyframes vanta-grid { 0% { transform: translate(0, 0); } 100% { transform: translate(50px, 50px); } }`}
-        </style>
+
+        <style>{`
+          @keyframes vanta-grid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+          }
+        `}</style>
       </section>
 
       {/* Models Section */}
@@ -275,8 +292,12 @@ const SeriesCatalog4530Component = () => {
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">Модели серии IDS4530</h2>
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans mb-8">Выберите оптимальную конфигурацию для ваших задач</p>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
+              Модели серии IDS4530
+            </h2>
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans mb-8">
+              Выберите оптимальную конфигурацию для ваших задач
+            </p>
             <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
