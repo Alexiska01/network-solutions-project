@@ -194,6 +194,39 @@ const SeriesCatalog4530Component = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
+              {/* Техно-сетка в фоне */}
+              <div className="absolute inset-0 opacity-6">
+                <svg
+                  width="100%"
+                  height="100%"
+                  className="absolute inset-0"
+                  style={{ opacity: 0.06 }}
+                >
+                  <defs>
+                    <pattern
+                      id="tech-grid"
+                      x="0"
+                      y="0"
+                      width="40"
+                      height="40"
+                      patternUnits="userSpaceOnUse"
+                    >
+                      <g stroke="white" strokeWidth="0.5" fill="none">
+                        <path d="M 40 0 L 0 0 0 40" />
+                        <path d="M 20 0 L 20 20 L 0 20" />
+                        <path d="M 40 20 L 20 20 L 20 40" />
+                        <circle cx="20" cy="20" r="2" strokeWidth="0.3" />
+                        <circle cx="0" cy="0" r="1" strokeWidth="0.3" />
+                        <circle cx="40" cy="0" r="1" strokeWidth="0.3" />
+                        <circle cx="0" cy="40" r="1" strokeWidth="0.3" />
+                        <circle cx="40" cy="40" r="1" strokeWidth="0.3" />
+                      </g>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#tech-grid)" />
+                </svg>
+              </div>
+
               <div className="relative z-10 flex flex-col items-center gap-4">
                 <div className="flex items-start gap-6 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
