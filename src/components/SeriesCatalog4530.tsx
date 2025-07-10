@@ -16,7 +16,15 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
-import { Shuffle, Route, Network, Wifi } from "lucide-react";
+import {
+  Shuffle,
+  Route,
+  Network,
+  Wifi,
+  Zap,
+  Shield,
+  Layers,
+} from "lucide-react";
 
 const SeriesCatalog4530Component = () => {
   const [filter, setFilter] = useState<FilterType>("all");
@@ -113,8 +121,19 @@ const SeriesCatalog4530Component = () => {
                 stiffness: 100,
               }}
             >
+              {/* Сабтайтл над заголовком */}
+              <motion.p
+                className="text-xs md:text-sm lg:text-base text-blue-200 font-medium mb-2 md:mb-3 uppercase tracking-wide"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                Серия корпоративных коммутаторов
+              </motion.p>
+
+              {/* Основной заголовок */}
               <motion.h1
-                className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 leading-tight"
+                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-2 md:mb-3 leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
@@ -124,45 +143,44 @@ const SeriesCatalog4530Component = () => {
                   stiffness: 120,
                 }}
               >
-                <motion.span
-                  className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.4,
-                    type: "spring",
-                    stiffness: 140,
-                  }}
-                >
-                  IDS4530
-                </motion.span>
-                <motion.span
-                  className="block text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-normal mt-2 transition-all duration-300 hover:scale-105 hover:drop-shadow-lg cursor-default"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                  — расширяемые коммутаторы
-                </motion.span>
+                IDS4530
               </motion.h1>
+
+              {/* Подзаголовок */}
               <motion.p
-                className="text-sm md:text-base lg:text-lg xl:text-xl mb-2 md:mb-3 text-blue-100 leading-relaxed"
+                className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-normal mb-4 md:mb-5 text-blue-100 leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
               >
-                для корпоративной и операторской сети
+                Расширяемые коммутаторы для корпоративной и операторской сети
               </motion.p>
-              <motion.p
-                className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 md:mb-6 lg:mb-8 text-blue-100 leading-relaxed max-w-3xl"
+              {/* Блок преимуществ с иконками */}
+              <motion.div
+                className="mb-4 md:mb-6 lg:mb-8 space-y-3"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
               >
-                До 736 Gbps, два слота расширения, двойное питание, PoE+ до 760
-                Вт
-              </motion.p>
+                <div className="flex items-center gap-3 text-blue-100">
+                  <Zap className="w-5 h-5 text-blue-300" />
+                  <span className="text-sm md:text-base lg:text-lg">
+                    До 736 Gbps производительность
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 text-blue-100">
+                  <Layers className="w-5 h-5 text-blue-300" />
+                  <span className="text-sm md:text-base lg:text-lg">
+                    Два слота расширения
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 text-blue-100">
+                  <Shield className="w-5 h-5 text-blue-300" />
+                  <span className="text-sm md:text-base lg:text-lg">
+                    Двойное питание и PoE+ до 760 Вт
+                  </span>
+                </div>
+              </motion.div>
               <motion.div
                 className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4 mb-6"
                 initial={{ opacity: 0, y: 20 }}
