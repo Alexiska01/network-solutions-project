@@ -101,7 +101,7 @@ const SeriesCatalog4530Component = () => {
         </motion.svg>
 
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
-          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start lg:items-center">
             {/* Левая часть */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -164,7 +164,7 @@ const SeriesCatalog4530Component = () => {
                 Вт
               </motion.p>
               <motion.div
-                className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4"
+                className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4 mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
@@ -176,17 +176,35 @@ const SeriesCatalog4530Component = () => {
                   Получить консультацию
                 </button>
               </motion.div>
+
+              {/* Карточка с характеристиками под кнопками */}
+              <motion.div
+                className="grid grid-cols-3 gap-3 max-w-md"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.4 }}
+              >
+                <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
+                  48 портов
+                </div>
+                <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
+                  PoE до 760 Вт
+                </div>
+                <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
+                  2 слота расширения
+                </div>
+              </motion.div>
             </motion.div>
 
             {/* Правая часть с карточками */}
             <motion.div
-              className="relative mt-6 md:mt-8 lg:mt-0"
+              className="relative mt-6 md:mt-8 lg:mt-0 lg:justify-self-center"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <div className="relative z-10 flex flex-col items-start gap-6">
-                <div className="flex items-start gap-4 w-full">
+              <div className="relative z-10 flex flex-col items-center gap-6">
+                <div className="flex items-start gap-4 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
                   <motion.div
                     whileHover={{ scale: 1.03, y: -4 }}
@@ -276,12 +294,12 @@ const SeriesCatalog4530Component = () => {
                   </div>
                 </div>
 
-                {/* Карточка «Серия IDS4530» */}
+                {/* Карточка «Серия IDS4530» без характеристик */}
                 <motion.a
                   href="#"
                   whileHover={{ scale: 1.02, y: -4 }}
                   whileTap={{ scale: 0.98 }}
-                  className="rounded-lg border border-white/30 bg-white/10 shadow-md px-5 py-3 w-full max-w-md font-semibold mx-[53px]"
+                  className="rounded-lg border border-white/30 bg-white/10 shadow-md px-5 py-3 w-full max-w-md font-semibold"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1 }}
@@ -307,17 +325,6 @@ const SeriesCatalog4530Component = () => {
                     Коммутаторы для построения уровня доступа или узлов
                     агрегации в небольших корпоративных сетях.
                   </p>
-                  <div className="mt-4 grid grid-cols-3 gap-3">
-                    <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
-                      48 портов
-                    </div>
-                    <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
-                      PoE до 760 Вт
-                    </div>
-                    <div className="py-2 px-3 bg-white/10 border border-white/30 text-white font-medium text-center text-xs rounded-md shadow-md">
-                      2 слота расширения
-                    </div>
-                  </div>
                 </motion.a>
               </div>
             </motion.div>
