@@ -220,6 +220,66 @@ const SeriesCatalog4530Component = () => {
                 </svg>
               </div>
 
+              {/* Схематичный узор под карточками */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ opacity: 0.04 }}
+              >
+                <svg width="100%" height="100%" className="absolute inset-0">
+                  <defs>
+                    <pattern
+                      id="tech-overlay"
+                      x="0"
+                      y="0"
+                      width="60"
+                      height="60"
+                      patternUnits="userSpaceOnUse"
+                    >
+                      <g
+                        stroke="rgba(255,255,255,0.6)"
+                        strokeWidth="0.5"
+                        fill="none"
+                      >
+                        {/* Основная сетка */}
+                        <path d="M 0 0 L 60 0 M 0 20 L 60 20 M 0 40 L 60 40 M 0 60 L 60 60" />
+                        <path d="M 0 0 L 0 60 M 20 0 L 20 60 M 40 0 L 40 60 M 60 0 L 60 60" />
+
+                        {/* Диагональные технологические линии */}
+                        <path
+                          d="M 0 0 L 20 20 M 20 0 L 40 20 M 40 0 L 60 20"
+                          strokeWidth="0.3"
+                        />
+                        <path
+                          d="M 0 20 L 20 40 M 20 20 L 40 40 M 40 20 L 60 40"
+                          strokeWidth="0.3"
+                        />
+                        <path
+                          d="M 0 40 L 20 60 M 20 40 L 40 60 M 40 40 L 60 60"
+                          strokeWidth="0.3"
+                        />
+
+                        {/* Узловые точки */}
+                        <circle cx="20" cy="20" r="1.5" strokeWidth="0.4" />
+                        <circle cx="40" cy="40" r="1.5" strokeWidth="0.4" />
+                        <circle cx="20" cy="40" r="1" strokeWidth="0.3" />
+                        <circle cx="40" cy="20" r="1" strokeWidth="0.3" />
+
+                        {/* Микро-детали */}
+                        <path
+                          d="M 10 10 L 15 15 M 45 15 L 50 10"
+                          strokeWidth="0.2"
+                        />
+                        <path
+                          d="M 10 50 L 15 45 M 45 45 L 50 50"
+                          strokeWidth="0.2"
+                        />
+                      </g>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#tech-overlay)" />
+                </svg>
+              </div>
+
               <div className="relative z-10 flex flex-col items-center gap-4">
                 <div className="flex items-start gap-6 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
