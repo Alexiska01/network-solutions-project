@@ -276,19 +276,18 @@ const SeriesCatalog4530Component = () => {
                     style={{
                       minWidth: "380px",
                       minHeight: "280px",
-                      boxShadow:
-                        "0px 8px 32px rgba(0,0,0,0.3), 0px 4px 16px rgba(0,0,0,0.2)",
+                      boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
                     }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.boxShadow =
-                        "0px 12px 48px rgba(0,0,0,0.4), 0px 8px 24px rgba(0,0,0,0.3)";
+                        "0px 4px 16px rgba(0,0,0,0.15)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.boxShadow =
-                        "0px 8px 32px rgba(0,0,0,0.3), 0px 4px 16px rgba(0,0,0,0.2)";
+                        "0px 2px 8px rgba(0,0,0,0.1)";
                     }}
                   >
                     <img
