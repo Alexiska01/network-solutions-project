@@ -289,7 +289,7 @@ const SeriesCatalog4530Component = () => {
 
                 {/* Четвертая карточка с описанием под тремя */}
                 <motion.div
-                  className="flex items-center gap-3 px-4 py-2 rounded-lg border transition-all duration-200 w-full -ml-16"
+                  className="flex items-center gap-3 px-4 py-2 rounded-lg border transition-all duration-200 w-full"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.9 }}
