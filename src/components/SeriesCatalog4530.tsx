@@ -47,7 +47,6 @@ const SeriesCatalog4530Component = () => {
 
   // Параллакс-эффект для фонового круга
   const { scrollY } = useViewportScroll();
-  const circleY = useTransform(scrollY, [0, 500], [0, 100]);
 
   return (
     <div className="min-h-screen">
@@ -439,9 +438,27 @@ const SeriesCatalog4530Component = () => {
                             />
 
                             {/* Узловые точки */}
-                            <circle cx="20" cy="20" r="2" strokeWidth="1" />
-                            <circle cx="0" cy="0" r="1" strokeWidth="1" />
-                            <circle cx="40" cy="40" r="1" strokeWidth="1" />
+                            <circle
+                              cx="20"
+                              cy="20"
+                              r="2"
+                              strokeWidth="1"
+                              fill="none"
+                            />
+                            <circle
+                              cx="0"
+                              cy="0"
+                              r="1"
+                              strokeWidth="1"
+                              fill="none"
+                            />
+                            <circle
+                              cx="40"
+                              cy="40"
+                              r="1"
+                              strokeWidth="1"
+                              fill="none"
+                            />
                           </g>
                         </pattern>
                       </defs>
