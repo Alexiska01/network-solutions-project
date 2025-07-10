@@ -204,7 +204,7 @@ const SeriesCatalog4530Component = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
             >
               <div className="relative z-10 flex flex-col items-center gap-4">
-                <div className="flex items-start gap-4 w-full justify-center">
+                <div className="relative flex items-start justify-center w-full">
                   {/* Image-card с градиентом, блюром и рамкой */}
                   <motion.div
                     whileHover={{ scale: 1.03, y: -4 }}
@@ -241,8 +241,8 @@ const SeriesCatalog4530Component = () => {
                     />
                   </motion.div>
 
-                  {/* Правая колонка — три feature-карточки */}
-                  <div className="flex flex-col gap-3 md:ml-3">
+                  {/* Правая колонка — три feature-карточки с наложением */}
+                  <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-8 flex flex-col gap-3 z-20">
                     {[
                       {
                         icon: Route,
@@ -267,10 +267,10 @@ const SeriesCatalog4530Component = () => {
                         whileHover={{ scale: 1.02, y: -4 }}
                         whileTap={{ scale: 0.98 }}
                         className="
-                          group flex items-center gap-2 px-5 py-3
-                          rounded-lg border border-white/30
-                          bg-white/10 transition-all duration-200
-                          shadow-md
+                          group flex items-center gap-2 px-4 py-2.5
+                          rounded-lg border border-white/40
+                          bg-white/20 backdrop-blur-sm transition-all duration-200
+                          shadow-lg
                         "
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
