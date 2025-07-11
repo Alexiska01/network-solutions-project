@@ -7,7 +7,6 @@ import FilterButtons from "@/components/FilterButtons";
 import ComparisonPanel from "@/components/ComparisonPanel";
 import ComparisonModal from "@/components/ComparisonModal";
 import KeyFeatures from "@/components/KeyFeatures";
-import DeviceGrid from "@/components/DeviceGrid";
 import { switchModels4530 } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
 import {
@@ -43,19 +42,16 @@ const SeriesCatalog4530Component = () => {
 
   const toggleCompareModel = useCallback((model: string) => {
     setCompareModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
     );
   }, []);
 
-  const handleNavigate = useCallback(
-    (url: string) => {
-      navigate(url);
-    },
-    [navigate],
-  );
+  const handleNavigate = useCallback((url: string) => {
+    navigate(url);
+  }, [navigate]);
 
   const filteredModels = switchModels4530.filter((model) =>
-    filter === "all" ? true : model.category === filter,
+    filter === "all" ? true : model.category === filter
   );
 
   useViewportScroll();
@@ -92,22 +88,69 @@ const SeriesCatalog4530Component = () => {
           </Breadcrumb>
         </div>
       </div>
+
       {/* Hero Section */}
-      <Hero4530 /> {/* <<< Просто вставляешь компонент Hero */}
+      <Hero4530 />   {/* <<< Просто вставляешь компонент Hero */}
+
+
       {/* Models Section */}
-      <DeviceGrid />
+      <motion.section
+        id="models-section"
+        className="py-16 px-6 bg-white"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-sans">
+              Модели серии IDS4530
+            </h2>
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans mb-8">
+              Выберите оптимальную конфигурацию для ваших задач
+            </p>
+            <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <AnimatePresence mode="popLayout">
+              {filteredModels.map((model, index) => (
+                <motion.div
+                  key={model.id}
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  custom={index}
+                  layout
+                >
+                  <ModelCard
+                    model={model}
+                    isInCompareList={compareModels.includes(model.id)}
+                    onToggleCompare={toggleCompareModel}
+                    onNavigate={handleNavigate}
+                    animationDelay={index * 0.1}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
+      </motion.section>
+
       <ComparisonPanel
         compareModels={compareModels}
         onClearAll={() => setCompareModels([])}
         onRemoveModel={toggleCompareModel}
         onShowModal={() => setShowCompareModal(true)}
       />
+
       <ComparisonModal
         isOpen={showCompareModal}
         compareModels={compareModels}
         onClose={() => setShowCompareModal(false)}
         onRemoveModel={toggleCompareModel}
       />
+
       {/* Key Features Section */}
       <motion.section
         className="py-16 px-6 bg-gradient-hero"
@@ -119,6 +162,7 @@ const SeriesCatalog4530Component = () => {
           <KeyFeatures />
         </div>
       </motion.section>
+
       {/* CTA Section */}
       <motion.section
         className="py-16 px-6 bg-white"
