@@ -40,14 +40,14 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     },
     {
       id: 3,
-      name: "DataCenter Integrators",
-      logo: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=200&h=120&fit=crop",
-      region: "Americas",
+      name: "КРОК",
+      logo: "https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png",
+      region: "Россия",
       type: "Интегратор",
       category: "Wi-Fi",
-      phone: "+7 (383) 345-67-89",
-      email: "contact@dcintegrators.ru",
-      website: "https://dcintegrators.ru",
+      phone: "+7 (495) 974-22-74",
+      email: "info@croc.ru",
+      website: "https://www.croc.ru",
     },
     {
       id: 4,
@@ -126,7 +126,9 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                 key={partner.id}
                 onClick={() => onPartnerClick(partner)}
                 className={`group ${
-                  partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП"
+                  partner.name === "Инфосэл" ||
+                  partner.name === "Инлайн ГРУП" ||
+                  partner.name === "КРОК"
                     ? "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
                     : "bg-white"
                 } rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden`}
@@ -136,7 +138,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : "w-full h-full object-cover"} rounded-lg`}
+                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" || partner.name === "КРОК" ? "w-auto h-auto" : "w-full h-full object-cover"} rounded-lg`}
                       loading="lazy"
                       onLoad={(e) => {
                         const placeholder =
