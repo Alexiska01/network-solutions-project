@@ -83,7 +83,7 @@ const KeyFeatures = () => {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {features.map((feature, index) => (
+        {features.slice(0, -1).map((feature, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 10 }}
@@ -107,6 +107,32 @@ const KeyFeatures = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* Последняя карточка на всю ширину */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: (features.length - 1) * 0.1 }}
+        className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all duration-300 mt-6"
+      >
+        <div className="flex items-start gap-4">
+          <div className="flex-shrink-0 w-6 h-6 rounded-full border border-white/40 flex items-center justify-center">
+            <Icon
+              name={features[features.length - 1].icon}
+              size={16}
+              className="text-white"
+            />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-base font-semibold text-white mb-2">
+              {features[features.length - 1].title}
+            </h3>
+            <p className="text-sm text-white/80 leading-relaxed">
+              {features[features.length - 1].description}
+            </p>
+          </div>
+        </div>
+      </motion.div>
     </motion.section>
   );
 };
