@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { FileText, BookOpen, Info, Shield, Wifi } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Icon from "@/components/ui/icon";
 
 const Hero = () => {
   const [typingText, setTypingText] = useState("");
   const [showTyping, setShowTyping] = useState(false);
   const [showIDATA, setShowIDATA] = useState(false);
+  const { scrollY } = useScroll();
 
   const fullText =
     " — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
 
+  // Parallax эффекты
+  const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
+  const contentY = useTransform(scrollY, [0, 500], [0, -50]);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowIDATA(true);
-    }, 1200);
+    }, 800);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -27,261 +32,426 @@ const Hero = () => {
       } else {
         clearInterval(typingInterval);
       }
-    }, 30);
+    }, 20);
     return () => clearInterval(typingInterval);
   }, [showTyping]);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 40, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
   return (
-    <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          viewBox="0 0 1200 800"
-          preserveAspectRatio="xMidYMid slice"
+    <section className="bg-gradient-hero text-white py-12 md:py-16 lg:py-20 xl:py-24 relative overflow-hidden min-h-[95vh] flex items-center">
+      {/* Простой градиентный фон */}
+      <motion.div
+        className="absolute inset-0 z-0 bg-gradient-hero"
+        style={{ y: backgroundY }}
+      />
+
+      <motion.div
+        className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10 w-full"
+        style={{ y: contentY }}
+      >
+        <motion.div
+          className="grid lg:grid-cols-2 gap-16 items-center min-h-[600px]"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <defs>
-            <pattern
-              id="wave-pattern"
-              x="0"
-              y="0"
-              width="100"
-              height="100"
-              patternUnits="userSpaceOnUse"
+          {/* Левая колонка - фиксированная структура */}
+          <div className="flex flex-col h-full min-h-[500px]">
+            {/* Заголовок - фиксированная позиция */}
+            <motion.div
+              variants={itemVariants}
+              className="h-80 flex items-start mb-8"
             >
-              <path
-                d="M0,50 Q25,20 50,50 T100,50"
-                stroke="white"
-                strokeWidth="1"
-                fill="none"
-                opacity="0.15"
-              />
-            </pattern>
-          </defs>
-          <path
-            d="M0,200 Q300,100 600,200 T1200,200"
-            stroke="white"
-            strokeWidth="1.5"
-            fill="none"
-            opacity="0.2"
-          />
-          <path
-            d="M0,300 Q400,150 800,300 T1200,300"
-            stroke="white"
-            strokeWidth="1"
-            fill="none"
-            opacity="0.15"
-          />
-          <path
-            d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400"
-            stroke="white"
-            strokeWidth="1"
-            fill="none"
-            opacity="0.1"
-          />
-          <path
-            d="M0,500 Q350,350 700,500 T1200,500"
-            stroke="white"
-            strokeWidth="1.5"
-            fill="none"
-            opacity="0.18"
-          />
-          <path
-            d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600"
-            stroke="white"
-            strokeWidth="1"
-            fill="none"
-            opacity="0.12"
-          />
-          <path
-            d="M0,0 Q400,200 800,100 T1200,300"
-            stroke="white"
-            strokeWidth="1"
-            fill="none"
-            opacity="0.1"
-          />
-          <path
-            d="M0,800 Q300,600 600,700 T1200,500"
-            stroke="white"
-            strokeWidth="1"
-            fill="none"
-            opacity="0.08"
-          />
-          <path
-            d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300"
-            stroke="white"
-            strokeWidth="1"
-            fill="none"
-            opacity="0.08"
-          />
-          <path
-            d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250"
-            stroke="white"
-            strokeWidth="1"
-            fill="none"
-            opacity="0.06"
-          />
-          <circle cx="800" cy="380" r="110" fill="rgba(77, 177, 212, 0.6)" />
-        </svg>
-      </div>
+              <motion.h1
+                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 15,
+                  duration: 1,
+                }}
+              >
+                Профессиональные
+                <br />
+                <span className="bg-gradient-to-r from-blue-200 to-white bg-clip-text">
+                  решения для сетевой
+                </span>
+                <br />
+                <span className="text-blue-100">инфраструктуры</span>
+              </motion.h1>
+            </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 items-center px-[21px]">
-          <div className="flex flex-col justify-between min-h-[260px]">
-            <motion.h1
-              initial={{ opacity: 0, y: 40, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ type: "spring", stiffness: 70, damping: 15 }}
-              className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-4 leading-tight"
+            {/* Подзаголовок - фиксированная высота */}
+            <motion.div
+              variants={itemVariants}
+              className="h-32 flex items-start justify-start mb-8"
             >
-              Профессиональные решения для сетевой инфраструктуры
-            </motion.h1>
-
-            <div className="relative max-w-2xl">
-              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 text-blue-100 leading-relaxed min-h-[3em] whitespace-pre-wrap">
+              <p className="text-lg md:text-xl lg:text-2xl text-blue-100 leading-relaxed">
                 {showIDATA && (
                   <motion.span
-                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ type: "spring", stiffness: 70, damping: 15 }}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 15,
+                      duration: 0.6,
+                    }}
                     onAnimationComplete={() => setShowTyping(true)}
-                    className="inline-block"
+                    className="inline-block font-bold text-white"
                   >
                     iDATA
                   </motion.span>
                 )}
-                {showTyping && typingText}
+                {showTyping && (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {typingText}
+                  </motion.span>
+                )}
                 {showTyping && typingText.length < fullText.length && (
-                  <span className="animate-pulse">|</span>
+                  <motion.span
+                    className="inline-block w-0.5 h-6 bg-blue-300 ml-1"
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
                 )}
               </p>
-              <span
-                className="invisible absolute pointer-events-none"
-                aria-hidden="true"
-              >
-                iDATA{fullText}
-              </span>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
-              <motion.button
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="bg-white text-[#0065B3] px-6 py-3 rounded-md text-sm font-medium hover:bg-gradient-brand hover:text-white transition-all"
-              >
-                Техническая поддержка
-              </motion.button>
-              <motion.button
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.6 }}
-                className="border border-white text-white px-6 py-3 rounded-md text-sm font-medium hover:bg-gradient-brand hover:border-gradient-brand transition-all"
-              >
-                Консультация
-              </motion.button>
-            </div>
-          </div>
-
-          <div className="w-full flex flex-col items-start gap-6 px-[5px]">
-            <div className="flex items-start gap-4 w-full">
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                style={{
-                  backgroundColor: "rgba(255, 99, 132, 0.12)",
-                  color: "#000000",
-                }}
-                className="px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1 my-[23px] text-[#313335]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-              >
-                <div
-                  className="flex items-center gap-2 mb-1"
-                  style={{ color: "#000000" }}
-                >
-                  <Shield className="w-4 h-4" />
-                  Безопасность
-                </div>
-                <p className="font-normal" style={{ color: "#000000" }}>
-                  Как обеспечить защиту сети?
-                </p>
-              </motion.a>
-
-              <div className="flex flex-col gap-3">
-                {[
-                  {
-                    icon: FileText,
-                    label: "Документация",
-                    color: "rgba(255, 240, 213, 0.52)",
-                  },
-                  {
-                    icon: BookOpen,
-                    label: "Инструкции",
-                    color: "rgba(255, 240, 213, 0.52)",
-                  },
-                  {
-                    icon: Info,
-                    label: "Справочные материалы",
-                    color: "rgba(255, 240, 213, 0.52)",
-                  },
-                ].map(({ icon: Icon, label, color }, i) => (
-                  <motion.a
-                    key={label}
-                    href="#"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                    style={{ backgroundColor: color, color: "#000000" }}
-                    className="flex items-center gap-2 px-4 rounded-lg text-sm shadow-md font-bold py-2.5 text-[#313335]"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + i * 0.1 }}
-                  >
-                    <Icon className="w-4 h-4" />
-                    {label}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-
-            <motion.a
-              href="#"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              style={{
-                backgroundColor: "rgba(54, 162, 235, 0.12)",
-                color: "#000000",
-              }}
-              className="rounded-xl shadow-xl p-6 w-full max-w-md mx-[52px] font-semibold"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
+            {/* Кнопки - фиксированная позиция внизу */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row gap-4 mt-auto"
             >
-              <div
-                className="flex items-center gap-2 mb-2"
-                style={{ color: "#000000" }}
+              <motion.button
+                className="group bg-white text-[#0065B3] px-8 py-4 rounded-xl text-lg font-semibold relative overflow-hidden transition-all duration-300"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+                }}
+                whileTap={{ scale: 0.95 }}
               >
-                <Wifi className="w-5 h-5" style={{ color: "#000000" }} />
-                <span className="text-xl font-semibold text-[#313335]">
-                  Wi-Fi
+                <span className="relative z-10">Техническая поддержка</span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-brand opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  whileHover={{ scale: 1.1 }}
+                />
+              </motion.button>
+
+              <motion.button
+                className="group border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold relative overflow-hidden transition-all duration-300"
+                whileHover={{
+                  scale: 1.05,
+                  borderColor: "transparent",
+                  boxShadow: "0 20px 40px rgba(255,255,255,0.1)",
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="relative z-10 group-hover:text-white transition-colors">
+                  Консультация
                 </span>
-              </div>
-              <p
-                className="text-sm text-[#313335]"
-                style={{ color: "#000000" }}
-              >
-                Беспроводные точки доступа
-              </p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <div className="h-4 bg-blue-200 rounded" />
-                <div className="h-4 bg-blue-300 rounded" />
-                <div className="h-4 bg-blue-100 rounded col-span-2" />
-              </div>
-            </motion.a>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-brand opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  whileHover={{ scale: 1.1 }}
+                />
+              </motion.button>
+            </motion.div>
           </div>
-        </div>
-      </div>
+
+          {/* Правая колонка - мировой уровень */}
+          <motion.div
+            className="relative h-full flex items-center justify-center"
+            variants={containerVariants}
+          >
+            {/* Главная интерактивная панель */}
+            <div className="relative w-full max-w-md">
+              {/* Центральная консоль */}
+              <motion.div
+                className="relative bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 shadow-2xl"
+                initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
+                animate={{ scale: 1, opacity: 1, rotateY: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 15,
+                  delay: 0.5,
+                }}
+                whileHover={{
+                  scale: 1.02,
+                  rotateY: 2,
+                  boxShadow: "0 30px 60px rgba(0,0,0,0.2)",
+                }}
+              >
+                {/* Заголовок панели */}
+                <motion.div
+                  className="text-center mb-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    Сетевое управление
+                  </h3>
+                  <p className="text-blue-200 text-sm">
+                    Централизованный контроль
+                  </p>
+                </motion.div>
+
+                {/* Интерактивные элементы */}
+                <div className="space-y-4">
+                  {/* Статус сети */}
+                  <motion.div
+                    className="flex items-center justify-between p-4 bg-white/10 rounded-2xl border border-white/10"
+                    initial={{ x: -50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    whileHover={{
+                      scale: 1.05,
+                      backgroundColor: "rgba(255,255,255,0.15)",
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <motion.div
+                        className="w-3 h-3 bg-green-400 rounded-full"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      <span className="text-white font-medium">
+                        Сеть активна
+                      </span>
+                    </div>
+                    <Icon name="Wifi" size={20} className="text-green-400" />
+                  </motion.div>
+
+                  {/* Производительность */}
+                  <motion.div
+                    className="p-4 bg-white/10 rounded-2xl border border-white/10"
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 1.2 }}
+                    whileHover={{
+                      scale: 1.05,
+                      backgroundColor: "rgba(255,255,255,0.15)",
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-white font-medium">Нагрузка</span>
+                      <span className="text-blue-200 text-sm">67%</span>
+                    </div>
+                    <div className="w-full bg-white/20 rounded-full h-2">
+                      <motion.div
+                        className="bg-gradient-to-r from-blue-400 to-cyan-400 h-2 rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: "67%" }}
+                        transition={{
+                          delay: 1.5,
+                          duration: 1.5,
+                          ease: "easeOut",
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+
+                  {/* Устройства */}
+                  <motion.div
+                    className="grid grid-cols-3 gap-3"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.4 }}
+                  >
+                    {[
+                      {
+                        icon: "Router",
+                        label: "Маршрутизатор",
+                        status: "active",
+                      },
+                      {
+                        icon: "Network",
+                        label: "Коммутатор",
+                        status: "active",
+                      },
+                      { icon: "Shield", label: "Firewall", status: "warning" },
+                    ].map((device, index) => (
+                      <motion.div
+                        key={device.label}
+                        className="p-3 bg-white/10 rounded-xl border border-white/10 text-center"
+                        whileHover={{
+                          scale: 1.1,
+                          backgroundColor: "rgba(255,255,255,0.2)",
+                          y: -2,
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{
+                          delay: 1.6 + index * 0.1,
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 15,
+                        }}
+                      >
+                        <Icon
+                          name={device.icon as any}
+                          size={24}
+                          className={`mx-auto mb-2 ${
+                            device.status === "active"
+                              ? "text-green-400"
+                              : "text-yellow-400"
+                          }`}
+                        />
+                        <div className="text-xs text-white font-medium">
+                          {device.label}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+
+                {/* Декоративные элементы */}
+                <motion.div
+                  className="absolute -top-2 -right-2 w-4 h-4 bg-blue-400 rounded-full"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.7, 1, 0.7],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+                <motion.div
+                  className="absolute -bottom-2 -left-2 w-3 h-3 bg-cyan-400 rounded-full"
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1,
+                  }}
+                />
+              </motion.div>
+
+              {/* Плавающие карточки */}
+              <motion.div
+                className="absolute -top-16 -left-12 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-xl"
+                initial={{ opacity: 0, x: -100, rotate: -10 }}
+                animate={{ opacity: 1, x: 0, rotate: 0 }}
+                transition={{ delay: 2, type: "spring", stiffness: 100 }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 5,
+                  y: -5,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+                }}
+              >
+                <div className="flex items-center gap-2">
+                  <Icon
+                    name="TrendingUp"
+                    size={16}
+                    className="text-green-400"
+                  />
+                  <span className="text-white text-sm font-medium">
+                    +24% скорость
+                  </span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="absolute -bottom-16 -right-12 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-xl"
+                initial={{ opacity: 0, x: 100, rotate: 10 }}
+                animate={{ opacity: 1, x: 0, rotate: 0 }}
+                transition={{ delay: 2.2, type: "spring", stiffness: 100 }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: -5,
+                  y: -5,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+                }}
+              >
+                <div className="flex items-center gap-2">
+                  <Icon name="Shield" size={16} className="text-blue-400" />
+                  <span className="text-white text-sm font-medium">
+                    100% защита
+                  </span>
+                </div>
+              </motion.div>
+
+              {/* Орбитальные элементы */}
+              <motion.div
+                className="absolute top-1/2 left-1/2 w-80 h-80 border border-white/10 rounded-full pointer-events-none"
+                style={{ x: "-50%", y: "-50%" }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              >
+                <motion.div
+                  className="absolute top-0 left-1/2 w-2 h-2 bg-blue-400 rounded-full"
+                  style={{ x: "-50%" }}
+                />
+                <motion.div
+                  className="absolute bottom-0 left-1/2 w-2 h-2 bg-cyan-400 rounded-full"
+                  style={{ x: "-50%" }}
+                />
+              </motion.div>
+            </div>
+
+            {/* Плавающие частицы */}
+            {[...Array(8)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/30 rounded-full"
+                style={{
+                  left: `${15 + i * 12}%`,
+                  top: `${25 + (i % 4) * 18}%`,
+                }}
+                animate={{
+                  y: [0, -25, 0],
+                  opacity: [0.3, 1, 0.3],
+                  scale: [1, 2, 1],
+                }}
+                transition={{
+                  duration: 5 + i * 0.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
