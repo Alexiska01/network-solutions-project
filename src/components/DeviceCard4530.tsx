@@ -1,11 +1,10 @@
-// src/components/DeviceCard4530.tsx
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
 
-// 1. Вспомогательные функции — ВНЕ компонента!
+// Вспомогательная функция для характеристик
 function getSpecs(model: SwitchModel) {
   const name = model.name.toLowerCase();
   const specs = {
@@ -65,21 +64,6 @@ function formatThroughput(gbps: number) {
   return gbps >= 1000 ? `${(gbps / 1000).toFixed(2)} Тбит/с` : `${gbps} Гбит/с`;
 }
 
-// 2. Варианты анимации для карточки
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (custom: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: custom ? custom * 0.07 : 0,
-      duration: 0.43,
-      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
-    },
-  }),
-};
-
-// 3. Типизация пропсов
 interface DeviceCard4530Props {
   model: SwitchModel;
   index: number;
@@ -88,7 +72,6 @@ interface DeviceCard4530Props {
   onNavigate: (url: string) => void;
 }
 
-// 4. Сам компонент (function, для декларативности!)
 export default function DeviceCard4530({
   model,
   index,
@@ -100,24 +83,28 @@ export default function DeviceCard4530({
 
   return (
     <motion.div
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.12 }}
-      custom={index}
-      className="bg-white rounded-2xl border border-gray-200 hover:shadow-xl transition-shadow duration-300 h-full flex flex-col overflow-hidden"
-      style={{
-        boxShadow:
-          "0 2px 12px 0 rgba(34, 84, 120, 0.06), 0 1.5px 6px 0 rgba(0,0,0,0.03)",
+      initial={{ opacity: 0, y: 24, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{
+        duration: 0.44,
+        delay: index * 0.07,
+        ease: [0.23, 1, 0.32, 1],
       }}
+      whileHover={{
+        y: -7,
+        boxShadow: "0px 8px 32px rgba(56,110,170,0.08), 0px 2px 8px rgba(0,0,0,0.05)",
+        scale: 1.025,
+        borderColor: "#87BFFF",
+        transition: { duration: 0.28 },
+      }}
+      className="bg-white rounded-2xl border border-gray-200 hover:border-blue-300 shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col w-full max-w-full"
     >
-      {/* Заголовок и фичи */}
+      {/* Верхушка */}
       <div className="p-4 pb-2">
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-gray-900 mb-2 truncate">
-              {model.name}
-            </h3>
+            <h3 className="text-lg xs:text-xl font-bold text-gray-900 mb-1 truncate">{model.name}</h3>
             <div className="flex flex-wrap gap-1">
               {(typeof specs.poeWatts === "string" || specs.poeWatts > 0) && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -144,14 +131,14 @@ export default function DeviceCard4530({
             checked={isInCompareList}
             onCheckedChange={() => onToggleCompare(model.id)}
             aria-label="Добавить в сравнение"
-            className="mt-0.5"
+            className="mt-0.5 scale-100 xs:scale-110"
           />
         </div>
       </div>
 
       {/* Основные характеристики */}
-      <div className="px-4 pb-4 flex-1">
-        <div className="space-y-2 text-sm">
+      <div className="px-4 pb-3 flex-1">
+        <div className="space-y-2 text-sm xs:text-base">
           {specs.baseTports > 0 && (
             <div className="flex justify-between">
               <span className="text-gray-600">Base-T порты:</span>
@@ -201,28 +188,13 @@ export default function DeviceCard4530({
               <span className="text-gray-600">Управление:</span>
               <div className="flex items-center space-x-2">
                 {specs.hasConsole && (
-                  <Icon
-                    name="Terminal"
-                    size={16}
-                    className="text-gray-500"
-                    title="RJ45 консоль"
-                  />
+                  <Icon name="Terminal" size={16} className="text-gray-500" title="RJ45 консоль" />
                 )}
                 {specs.hasUsb && (
-                  <Icon
-                    name="Usb"
-                    size={16}
-                    className="text-gray-500"
-                    title="USB порт"
-                  />
+                  <Icon name="Usb" size={16} className="text-gray-500" title="USB порт" />
                 )}
                 {specs.hasOobManagement && (
-                  <Icon
-                    name="Settings"
-                    size={16}
-                    className="text-gray-500"
-                    title="OOB-management"
-                  />
+                  <Icon name="Settings" size={16} className="text-gray-500" title="OOB-management" />
                 )}
               </div>
             </div>
@@ -230,20 +202,20 @@ export default function DeviceCard4530({
         </div>
       </div>
 
-      {/* Кнопки действий */}
+      {/* Кнопки */}
       <div className="px-4 pb-4 flex gap-2 mt-auto">
         <Button
           variant="outline"
           size="sm"
           onClick={() => onNavigate(model.url)}
-          className="flex-1"
+          className="flex-1 min-w-0 text-sm xs:text-base py-2.5"
         >
           Подробнее
         </Button>
         <Button
           size="sm"
           variant="outline"
-          className="flex-1 ml-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-400"
+          className="flex-1 min-w-0 ml-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-400 text-sm xs:text-base py-2.5"
           onClick={() => onNavigate("/partners")}
         >
           Выбрать

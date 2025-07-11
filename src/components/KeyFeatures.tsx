@@ -24,42 +24,26 @@ const FEATURES: Feature[] = [
   { title: "Технологии MPLS", description: "Поддержка технологии MPLS позволяет использовать коммутаторы серии в качестве пограничных устройств в сетях операторов услуг связи.", icon: "Network" },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.10,
-      delayChildren: 0.15,
-    },
-  },
-};
-
+// Только значения! (без transition, без ease)
 const cardVariants = {
-  hidden: { opacity: 0, y: 24, scale: 0.97 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
-    },
-  },
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1 },
 };
 
 function FeatureCard({ feature, big = false }: { feature: Feature; big?: boolean }) {
   return (
     <motion.div
       variants={cardVariants}
-      whileHover={{ y: -6, boxShadow: "0px 8px 24px rgba(0,0,0,0.11)" }}
-      className={`backdrop-blur-md bg-white/[0.16] rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${big ? "md:col-span-2" : ""}`}
+      whileHover={{ y: -6, boxShadow: "0px 8px 24px rgba(0,0,0,0.10)" }}
+      transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
+      className={`backdrop-blur-md bg-white/20 rounded-2xl p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 ${big ? "md:col-span-2" : ""}`}
     >
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0 w-8 h-8 rounded-full border border-white/30 flex items-center justify-center">
           <Icon name={feature.icon} size={20} className="text-white" />
         </div>
         <div className="flex-1">
-          <h3 className="text-base font-semibold text-white mb-2 tracking-wide">
+          <h3 className="text-base font-semibold text-white mb-1.5 tracking-wide">
             {feature.title}
           </h3>
           <p className="text-sm text-white/90 leading-relaxed">
@@ -72,42 +56,45 @@ function FeatureCard({ feature, big = false }: { feature: Feature; big?: boolean
 }
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.3);
-
-  // Флаг — была ли уже анимация
+  const { ref, inView } = useInViewAnimate(0.23);
   const wasAnimated = useRef(false);
 
   useEffect(() => {
     if (inView) wasAnimated.current = true;
   }, [inView]);
 
-  // Анимируем только 1 раз при первом попадании в зону видимости
   const animateState = wasAnimated.current ? "visible" : inView ? "visible" : "hidden";
 
   return (
     <motion.section
       ref={ref}
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="py-14 px-6 md:px-12 bg-white/10 rounded-3xl shadow-xl backdrop-blur-xl"
+      transition={{ duration: 0.55 }}
+      className="py-12 px-4 md:px-10 bg-white/10 rounded-3xl shadow-xl backdrop-blur-xl"
     >
-      <div className="text-center mb-10 pt-2">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 tracking-wide drop-shadow-sm">
+      <div className="text-center mb-8 pt-2">
+        <h2 className="text-xl md:text-3xl font-bold text-white mb-5 tracking-wide drop-shadow-sm">
           Ключевые характеристики коммутаторов серии
         </h2>
-        <div className="w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
+        <div className="w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80" />
       </div>
-
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-7"
         initial="hidden"
         animate={animateState}
-        variants={containerVariants}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: { staggerChildren: 0.11, delayChildren: 0.14 }
+          }
+        }}
       >
+        {/* Все карточки кроме последней */}
         {FEATURES.slice(0, -1).map((feature) => (
           <FeatureCard feature={feature} key={feature.title} />
         ))}
+        {/* Последняя карточка — big, на две колонки */}
         <FeatureCard feature={FEATURES[FEATURES.length - 1]} big />
       </motion.div>
     </motion.section>
