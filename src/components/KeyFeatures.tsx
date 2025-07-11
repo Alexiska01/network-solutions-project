@@ -138,7 +138,7 @@ function FeatureCard({
 const KeyFeatures = () => {
   const { ref, inView } = useInViewAnimate(0.1);
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     if (inView) {
@@ -146,8 +146,8 @@ const KeyFeatures = () => {
     }
   }, [inView]);
 
-  // Анимируем карточки
-  const animateState = isVisible ? "visible" : "hidden";
+  // Анимируем карточки - принудительно показываем
+  const animateState = "visible";
 
   return (
     <motion.section
