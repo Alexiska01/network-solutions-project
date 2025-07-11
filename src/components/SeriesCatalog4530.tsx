@@ -1,3 +1,4 @@
+// src/pages/SeriesCatalog4530Component.tsx
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
@@ -18,6 +19,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Hero4530 from "@/components/Hero4530";
+import { useIsMobile } from "@/hooks/useIsMobile"; // 👈 обязательно импортируем!
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -42,7 +44,7 @@ const SeriesCatalog4530Component = () => {
 
   const toggleCompareModel = useCallback((model: string) => {
     setCompareModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
     );
   }, []);
 
@@ -50,14 +52,16 @@ const SeriesCatalog4530Component = () => {
     (url: string) => {
       navigate(url);
     },
-    [navigate],
+    [navigate]
   );
 
   const filteredModels = switchModels4530.filter((model) =>
-    filter === "all" ? true : model.category === filter,
+    filter === "all" ? true : model.category === filter
   );
 
   useViewportScroll();
+
+  const isMobile = useIsMobile(); // 👈 юзаем флаг
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -117,35 +121,51 @@ const SeriesCatalog4530Component = () => {
               </div>
             </div>
           </div>
-          {/* >>>> Адаптивная сетка карточек */}
           <div
             className="
               grid gap-4 xs:gap-5 sm:gap-6 lg:gap-8
               grid-cols-1
               sm:grid-cols-2
-              "
+            "
           >
             <AnimatePresence mode="popLayout">
-              {filteredModels.map((model, index) => (
-                <motion.div
-                  key={model.id}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  custom={index}
-                  layout
-                  className="flex"
-                >
-                  <DeviceCard4530
-                    model={model}
-                    index={index}
-                    isInCompareList={compareModels.includes(model.id)}
-                    onToggleCompare={toggleCompareModel}
-                    onNavigate={handleNavigate}
-                  />
-                </motion.div>
-              ))}
+              {filteredModels.map((model, index) => {
+                if (isMobile) {
+                  // На мобиле — просто без анимации и motion.div
+                  return (
+                    <div key={model.id} className="flex">
+                      <DeviceCard4530
+                        model={model}
+                        index={index}
+                        isInCompareList={compareModels.includes(model.id)}
+                        onToggleCompare={toggleCompareModel}
+                        onNavigate={handleNavigate}
+                      />
+                    </div>
+                  );
+                }
+                // Десктоп — всё как прежде
+                return (
+                  <motion.div
+                    key={model.id}
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    custom={index}
+                    layout
+                    className="flex"
+                  >
+                    <DeviceCard4530
+                      model={model}
+                      index={index}
+                      isInCompareList={compareModels.includes(model.id)}
+                      onToggleCompare={toggleCompareModel}
+                      onNavigate={handleNavigate}
+                    />
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           </div>
         </div>

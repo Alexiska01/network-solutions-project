@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
@@ -79,13 +79,13 @@ const FEATURES: Feature[] = [
   },
 ];
 
-// Анимации карточек
+// Только duration и ease в variants!
 const cardVariants = {
   hidden: {
     opacity: 0,
     y: 24,
     scale: 0.95,
-    transition: { duration: 0.3 },
+    transition: { duration: 0.35 },
   },
   visible: {
     opacity: 1,
@@ -93,10 +93,7 @@ const cardVariants = {
     scale: 1,
     transition: {
       duration: 0.5,
-      ease: "easeOut",
-      type: "spring",
-      stiffness: 100,
-      damping: 15,
+      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
     },
   },
 };
@@ -117,7 +114,9 @@ function FeatureCard({
         transition: { duration: 0.3 },
       }}
       whileTap={{ scale: 0.98 }}
-      className={`backdrop-blur-md bg-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 transform-gpu ${big ? "md:col-span-2" : ""}`}
+      className={`backdrop-blur-md bg-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 transform-gpu ${
+        big ? "md:col-span-2" : ""
+      }`}
     >
       <div className="flex items-start gap-3 sm:gap-4">
         <div className="flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 rounded-full border border-white/30 flex items-center justify-center bg-white/10">
@@ -141,19 +140,12 @@ function FeatureCard({
 }
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.1); // Уменьшили threshold для мобильных
+  const { ref, inView } = useInViewAnimate(0.1);
   const [hasTriggered, setHasTriggered] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (inView && !hasTriggered && isMounted) {
-      setHasTriggered(true);
-    }
-  }, [inView, hasTriggered, isMounted]);
+    if (inView && !hasTriggered) setHasTriggered(true);
+  }, [inView, hasTriggered]);
 
   const animateState = hasTriggered ? "visible" : "hidden";
 
@@ -162,7 +154,7 @@ const KeyFeatures = () => {
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
       className="py-8 sm:py-10 md:py-12 px-3 sm:px-4 md:px-10 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl"
     >
       <div className="text-center mb-6 sm:mb-8 pt-1 sm:pt-2">

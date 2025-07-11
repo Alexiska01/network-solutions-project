@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
+import { useIsMobile } from "@/hooks/useIsMobile"; // Импортируем хук
 
 // Вспомогательная функция для характеристик
 function getSpecs(model: SwitchModel) {
@@ -80,12 +81,16 @@ export default function DeviceCard4530({
   onNavigate,
 }: DeviceCard4530Props) {
   const specs = getSpecs(model);
+  const isMobile = useIsMobile();
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 24, scale: 0.98 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.15 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      {...(!isMobile && {
+        whileInView: { opacity: 1, y: 0, scale: 1 },
+        viewport: { once: true, amount: 0.15 },
+      })}
       transition={{
         duration: 0.44,
         delay: index * 0.07,
