@@ -41,7 +41,7 @@ const Header = () => {
 
       {/* Оригинальная структура навигации без изменений */}
       <div className="max-w-7xl mx-auto py-2 sm:py-1.5 px-3 sm:px-4 md:px-[35px]">
-        <div className="flex items-center justify-between w-full min-h-[44px] sm:min-h-[48px]">
+        <div className="flex items-center justify-between w-full min-h-[44px] sm:min-h-[48px] pl-20 sm:pl-24 md:pl-28 lg:pl-32">
           <DesktopNavigation
             dropdownState={dropdownState}
             updateDropdownState={updateDropdownState}
