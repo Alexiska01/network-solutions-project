@@ -102,7 +102,7 @@ const DeviceCard = ({ model, photo, specs, index }: DeviceCardProps) => {
 
           {specs.poeWatts && (
             <div className="flex justify-between">
-              <span className="text-gray-600">Бюджет PoE:</span>
+              <span className="text-gray-600">Бюджет PoE/PoE+:</span>
               <span className="font-medium">{specs.poeWatts}Вт</span>
             </div>
           )}
