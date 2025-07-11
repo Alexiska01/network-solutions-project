@@ -1,0 +1,200 @@
+import { motion } from "framer-motion";
+import { BlurImage } from "@/components/BlurImage";
+import Icon from "@/components/ui/icon";
+
+const featuresRight = [
+  {
+    icon: "GitBranch",
+    label: "Статическая маршрутизация",
+  },
+  {
+    icon: "Network",
+    label: "Динамическая маршрутизация RIP, OSPF, BGP, ISIS",
+  },
+  {
+    icon: "ArrowUpDown",
+    label: "Модули расширения для интерфейсов 40G и 100G",
+  },
+];
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } },
+  hover: { scale: 1.03, y: -4 },
+  tap: { scale: 0.98 },
+};
+
+const Hero4530 = () => (
+  <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full">
+      <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start lg:items-center">
+        {/* Левая часть */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.2,
+            type: "spring",
+            stiffness: 100,
+          }}
+        >
+          <motion.p
+            className="text-xs md:text-sm lg:text-base text-blue-200 font-medium mb-2 md:mb-3 uppercase tracking-wide"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Серия корпоративных коммутаторов
+          </motion.p>
+          <motion.h1
+            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-2 md:mb-3 leading-tight"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.3,
+              type: "spring",
+              stiffness: 120,
+            }}
+          >
+            IDS4530
+          </motion.h1>
+          <motion.div
+            className="md:mb-6 lg:mb-8 space-y-3 my-[26px]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
+            <div className="flex items-center gap-3 text-blue-100">
+              <Icon name="Zap" size={24} strokeWidth={1.7} className="text-blue-300" />
+              <span className="text-sm md:text-base lg:text-lg">
+                До 736 Gbps производительность
+              </span>
+            </div>
+            <div className="flex items-center gap-3 text-blue-100">
+              <Icon name="Layers" size={24} strokeWidth={1.7} className="text-blue-300" />
+              <span className="text-sm md:text-base lg:text-lg">
+                Два слота расширения
+              </span>
+            </div>
+            <div className="flex items-center gap-3 text-blue-100">
+              <Icon name="Shield" size={24} strokeWidth={1.7} className="text-blue-300" />
+              <span className="text-sm md:text-base lg:text-lg">
+                Двойное питание и PoE+ до 760 Вт
+              </span>
+            </div>
+          </motion.div>
+          <motion.div
+            className="flex flex-col sm:flex-row gap-2 md:gap-3 lg:gap-4 my-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+          >
+            <button
+              className="bg-white text-[#0065B3] px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px] hover:scale-105 hover:shadow-lg"
+              onClick={() => document.getElementById('models-section')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Посмотреть все модели
+            </button>
+            <button className="border border-white text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-xs md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg">
+              Получить консультацию
+            </button>
+          </motion.div>
+        </motion.div>
+        {/* Правая часть */}
+        <motion.div
+          className="relative mt-6 md:mt-8 lg:mt-0 lg:justify-self-center"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <div className="relative z-10 flex flex-col items-center gap-4">
+            <div className="flex items-start gap-6 w-full justify-center flex-wrap md:flex-nowrap">
+              {/* Фото */}
+              <motion.div
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                whileHover="hover"
+                whileTap="tap"
+                custom={0}
+                className="relative flex items-center justify-center w-[340px] md:w-[380px] h-[200px] md:h-[280px] rounded-lg border border-white/30 overflow-hidden shadow transition-shadow duration-300 hover:shadow-lg hover:scale-105"
+              >
+                <div className="absolute inset-0 bg-white/10 backdrop-blur-md" />
+                <BlurImage
+                  src="/img/Иерархия_4530(1).png"
+                  alt="Иерархия 4530"
+                  className="relative z-10 h-[160px] md:h-56"
+                />
+              </motion.div>
+              {/* Фичи-иконки справа */}
+              <div className="flex flex-col gap-5 justify-center">
+{featuresRight.map(({ icon, label }, i) => (
+  <motion.a
+    key={label}
+    href="#"
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
+    className="group flex items-center gap-3 px-4 py-3 rounded-lg border transition-all duration-200 w-60 min-h-[56px] md:w-64 relative overflow-hidden"
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{
+      delay: 0.2 + i * 0.1,
+      duration: 0.5,
+      ease: "easeOut",
+    }}
+    style={{
+      backgroundColor: "rgba(255,255,255,0.08)",
+      borderColor: "rgba(255,255,255,0.2)",
+      borderWidth: "1px",
+      boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
+    }}
+  >
+    <div className="flex items-center justify-center w-6 h-6 min-w-[28px] min-h-[28px] rounded bg-white/5">
+      <Icon
+        name={icon as any}
+        size={20}
+        strokeWidth={1.7}
+        className="text-white"
+      />
+    </div>
+    <span className="text-white font-medium relative z-10">{label}</span>
+  </motion.a>
+))}
+              </div>
+            </div>
+            {/* Четвёртая карточка — описание */}
+            <motion.div
+              className="flex items-center gap-3 px-4 py-2 rounded-lg border transition-all duration-200 w-full relative overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.6,
+                duration: 0.6,
+                ease: "easeOut",
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                backgroundColor: "rgba(255,255,255,0.08)",
+                borderColor: "rgba(255,255,255,0.2)",
+                borderWidth: "1px",
+                boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
+              }}
+            >
+  <div className="flex items-center justify-center w-6 h-6 min-w-[28px] min-h-[28px] rounded bg-white/5">
+    <Icon name="Layers" size={20} strokeWidth={1.7} className="text-white/80" />
+  </div>
+              <span className="text-white font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis relative z-10">
+                Расширяемые коммутаторы уровня доступа и агрегации для небольших корпоративных сетей
+              </span>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  </section>
+);
+
+export default Hero4530;
