@@ -308,25 +308,18 @@ const SeriesCatalog4530Component = () => {
   className="
     relative flex items-center justify-center
     w-[380px] h-[280px]
-    rounded-lg border border-white/30
-    overflow-hidden
+    rounded-lg
     shadow transition-shadow duration-300
     hover:shadow-lg hover:scale-105
   "
 >
-  {/* 1) Слой, скрывающий волны */}
-  <div className="absolute inset-0 bg-white/10 backdrop-blur-md" />
-
-  {/* 2) Сетка (шаг 16px вместо 20px) */}
-  <div className="absolute inset-0 bg-grid-pattern bg-grid-16 pointer-events-none" />
-
-  {/* 3) Сам девайс */}
   <img
     src="/img/Иерархия_4530(1).png"
     alt="Иерархия 4530"
     className="relative z-10 h-56 object-contain"
   />
 </motion.div>
+
 
                   {/* Правая колонка — три feature-карточки справа от фото */}
                   <div className="flex flex-col gap-5 justify-center">
