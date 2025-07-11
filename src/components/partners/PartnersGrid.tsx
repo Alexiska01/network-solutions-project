@@ -29,14 +29,14 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     },
     {
       id: 2,
-      name: "NetworkPro Solutions",
-      logo: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=200&h=120&fit=crop",
-      region: "APAC",
+      name: "Инлайн ГРУП",
+      logo: "https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png",
+      region: "Россия",
       type: "Реселлер",
       category: "Маршрутизаторы",
-      phone: "+7 (812) 234-56-78",
-      email: "sales@networkpro.ru",
-      website: "https://networkpro.ru",
+      phone: "+7 (495) 787-59-40",
+      email: "info@inlinegroup.ru",
+      website: "https://inlinegroup.ru",
     },
     {
       id: 3,
@@ -126,7 +126,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                 key={partner.id}
                 onClick={() => onPartnerClick(partner)}
                 className={`group ${
-                  partner.name === "Инфосэл"
+                  partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП"
                     ? "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
                     : "bg-white"
                 } rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden`}
@@ -136,7 +136,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" ? "w-auto h-auto" : "w-full h-full object-cover"} rounded-lg`}
+                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : "w-full h-full object-cover"} rounded-lg`}
                       loading="lazy"
                       onLoad={(e) => {
                         const placeholder =
