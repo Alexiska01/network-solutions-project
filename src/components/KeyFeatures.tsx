@@ -78,9 +78,12 @@ const KeyFeatures = () => {
       transition={{ duration: 0.6 }}
       className="py-12 px-6 md:px-12 bg-white/10 rounded-lg shadow-md backdrop-blur-sm"
     >
-      <h2 className="text-2xl font-bold text-white mb-6">
-        Ключевые характеристики коммутаторов серии
-      </h2>
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-white mb-4">
+          Ключевые характеристики коммутаторов серии
+        </h2>
+        <div className="w-24 h-0.5 bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto"></div>
+      </div>
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
