@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import ModelCard from "@/components/ModelCard";
+import DeviceCard4530 from "@/components/DeviceCard4530";
 import FilterButtons from "@/components/FilterButtons";
 import ComparisonPanel from "@/components/ComparisonPanel";
 import ComparisonModal from "@/components/ComparisonModal";
@@ -42,16 +42,19 @@ const SeriesCatalog4530Component = () => {
 
   const toggleCompareModel = useCallback((model: string) => {
     setCompareModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
     );
   }, []);
 
-  const handleNavigate = useCallback((url: string) => {
-    navigate(url);
-  }, [navigate]);
+  const handleNavigate = useCallback(
+    (url: string) => {
+      navigate(url);
+    },
+    [navigate],
+  );
 
   const filteredModels = switchModels4530.filter((model) =>
-    filter === "all" ? true : model.category === filter
+    filter === "all" ? true : model.category === filter,
   );
 
   useViewportScroll();
@@ -88,11 +91,8 @@ const SeriesCatalog4530Component = () => {
           </Breadcrumb>
         </div>
       </div>
-
       {/* Hero Section */}
-      <Hero4530 />   {/* <<< Просто вставляешь компонент Hero */}
-
-
+      <Hero4530 /> {/* <<< Просто вставляешь компонент Hero */}
       {/* Models Section */}
       <motion.section
         id="models-section"
@@ -123,8 +123,9 @@ const SeriesCatalog4530Component = () => {
                   custom={index}
                   layout
                 >
-                  <ModelCard
+                  <DeviceCard4530
                     model={model}
+                    index={index}
                     isInCompareList={compareModels.includes(model.id)}
                     onToggleCompare={toggleCompareModel}
                     onNavigate={handleNavigate}
@@ -136,21 +137,18 @@ const SeriesCatalog4530Component = () => {
           </div>
         </div>
       </motion.section>
-
       <ComparisonPanel
         compareModels={compareModels}
         onClearAll={() => setCompareModels([])}
         onRemoveModel={toggleCompareModel}
         onShowModal={() => setShowCompareModal(true)}
       />
-
       <ComparisonModal
         isOpen={showCompareModal}
         compareModels={compareModels}
         onClose={() => setShowCompareModal(false)}
         onRemoveModel={toggleCompareModel}
       />
-
       {/* Key Features Section */}
       <motion.section
         className="py-16 px-6 bg-gradient-hero"
@@ -162,7 +160,6 @@ const SeriesCatalog4530Component = () => {
           <KeyFeatures />
         </div>
       </motion.section>
-
       {/* CTA Section */}
       <motion.section
         className="py-16 px-6 bg-white"
