@@ -319,14 +319,12 @@ const SeriesCatalog4530Component = () => {
     className="relative z-10 h-56 object-contain"
   />
 </motion.div>
-
-
                   {/* Правая колонка — три feature-карточки справа от фото */}
                   <div className="flex flex-col gap-5 justify-center">
                     {[
                       {
                         icon: GitBranch,
-                        label: "Статистическая маршрутизация",
+                        label: "Статическая маршрутизация",
                         delay: 0.2,
                       },
                       {
