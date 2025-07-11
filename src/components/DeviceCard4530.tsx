@@ -98,7 +98,7 @@ const DeviceCard4530 = ({
   return (
     <motion.div
       variants={cardVariants}
-      className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
+      className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
     >
       {/* Header with model, chips and compare checkbox */}
       <div className="p-4 pb-2">
@@ -139,7 +139,7 @@ const DeviceCard4530 = ({
       </div>
 
       {/* Specs table */}
-      <div className="px-4 pb-4">
+      <div className="px-4 pb-4 flex-1">
         <div className="space-y-2 text-sm">
           {specs.baseTports > 0 && (
             <div className="flex justify-between">
@@ -222,7 +222,7 @@ const DeviceCard4530 = ({
       </div>
 
       {/* Action buttons */}
-      <div className="px-4 pb-4 flex justify-between items-center">
+      <div className="px-4 pb-4 flex justify-between items-center mt-auto">
         <Button
           variant="outline"
           size="sm"
