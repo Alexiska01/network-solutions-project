@@ -119,7 +119,7 @@ export default function DeviceCard4530({
               {model.name}
             </h3>
             <div className="flex flex-wrap gap-1">
-              {specs.poeWatts && (
+              {specs.poeWatts && specs.poeWatts !== 0 && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                   <Icon name="Zap" size={13} className="mr-1" />
                   PoE{" "}
@@ -171,7 +171,7 @@ export default function DeviceCard4530({
               </span>
             </div>
           )}
-          {specs.poeWatts && (
+          {specs.poeWatts && specs.poeWatts !== 0 && (
             <div className="flex justify-between">
               <span className="text-gray-600">Бюджет PoE/PoE+:</span>
               <span className="font-medium">
