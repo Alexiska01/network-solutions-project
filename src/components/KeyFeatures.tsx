@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
@@ -84,7 +84,7 @@ const containerVariants = {
   visible: {
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.15,
+      delayChildren: 0.1,
     },
   },
 };
@@ -96,7 +96,7 @@ const cardVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
     },
   },
 };
@@ -112,14 +112,14 @@ function FeatureCard({
     <motion.div
       variants={cardVariants}
       whileHover={{ y: -4 }}
-      className={`backdrop-blur-md bg-white/[0.16] rounded-2xl p-4 sm:p-5 md:p-6 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${big ? "sm:col-span-2" : ""}`}
+      className={`backdrop-blur-md bg-white/[0.16] rounded-2xl p-4 sm:p-5 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${big ? "sm:col-span-2" : ""}`}
     >
       <div className="flex items-start gap-3 sm:gap-4">
-        <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/30 flex items-center justify-center">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-white/30 flex items-center justify-center">
           <Icon
             name={feature.icon}
-            size={16}
-            className="text-white sm:size-5"
+            size={20}
+            className="text-white"
           />
         </div>
         <div className="flex-1">
@@ -136,17 +136,13 @@ function FeatureCard({
 }
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.1);
-
+  const { ref, inView } = useInViewAnimate(0.15);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (inView) {
-      setIsVisible(true);
-    }
+    if (inView) setIsVisible(true);
   }, [inView]);
 
-  // Анимируем карточки
   const animateState = isVisible ? "visible" : "hidden";
 
   return (
@@ -155,17 +151,17 @@ const KeyFeatures = () => {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="py-8 sm:py-10 md:py-14 px-4 sm:px-6 md:px-12 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl"
+      className="py-8 sm:py-12 px-3 sm:px-6 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl"
     >
-      <div className="text-center mb-6 sm:mb-8 md:mb-10 pt-1 sm:pt-2">
+      <div className="text-center mb-7 sm:mb-10 pt-1 sm:pt-2">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6 tracking-wide drop-shadow-sm px-2">
           Ключевые характеристики коммутаторов серии
         </h2>
-        <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
+        <div className="w-14 sm:w-20 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
       </div>
 
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-7"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5"
         initial="hidden"
         animate={animateState}
         variants={containerVariants}

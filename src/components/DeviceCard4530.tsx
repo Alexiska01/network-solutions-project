@@ -86,6 +86,7 @@ interface DeviceCard4530Props {
   isInCompareList: boolean;
   onToggleCompare: (modelId: string) => void;
   onNavigate: (url: string) => void;
+  animationDelay?: number;
 }
 
 // 4. Сам компонент (function, для декларативности!)
