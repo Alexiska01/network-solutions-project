@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import Icon from "@/components/ui/icon";
+import { motion } from "framer-motion";
+import { FileText, BookOpen, Info, Shield, Wifi } from "lucide-react";
 
 const Hero = () => {
   const [typingText, setTypingText] = useState("");
   const [showTyping, setShowTyping] = useState(false);
   const [showIDATA, setShowIDATA] = useState(false);
-  const { scrollY } = useScroll();
 
   const fullText =
     " — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
 
-  // Parallax эффекты
-  const contentY = useTransform(scrollY, [0, 500], [0, -100]);
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowIDATA(true);
-    }, 1000);
+    }, 1200);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -31,415 +27,261 @@ const Hero = () => {
       } else {
         clearInterval(typingInterval);
       }
-    }, 25);
+    }, 30);
     return () => clearInterval(typingInterval);
   }, [showTyping]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  };
-
   return (
-    <section className="bg-gradient-hero text-white py-12 md:py-16 lg:py-20 xl:py-24 relative overflow-hidden min-h-[90vh] flex items-center">
-      <motion.div
-        className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10"
-        style={{ y: contentY }}
-      >
-        <motion.div
-          className="grid lg:grid-cols-2 gap-12 items-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+    <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox="0 0 1200 800"
+          preserveAspectRatio="xMidYMid slice"
         >
-          {/* Левая колонка - фиксированная структура */}
-          <div className="flex flex-col justify-between h-[600px] lg:h-[700px]">
-            {/* Заголовок */}
-            <motion.div variants={itemVariants} className="flex-shrink-0">
-              <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent"
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 15,
-                  duration: 1,
-                }}
-              >
-                Профессиональные
-                <br />
-                <span className="bg-gradient-to-r from-blue-200 to-white bg-clip-text">
-                  решения для сетевой
-                </span>
-                <br />
-                <span className="text-blue-100">инфраструктуры</span>
-              </motion.h1>
-            </motion.div>
-
-            {/* Подзаголовок с фиксированной высотой */}
-            <motion.div
-              variants={itemVariants}
-              className="flex-1 flex items-center min-h-[120px]"
+          <defs>
+            <pattern
+              id="wave-pattern"
+              x="0"
+              y="0"
+              width="100"
+              height="100"
+              patternUnits="userSpaceOnUse"
             >
-              <div className="relative w-full">
-                <p className="text-lg md:text-xl lg:text-2xl text-blue-100 leading-relaxed">
-                  {showIDATA && (
-                    <motion.span
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 15,
-                        duration: 0.8,
-                      }}
-                      onAnimationComplete={() => setShowTyping(true)}
-                      className="inline-block font-bold text-white"
-                    >
-                      iDATA
-                    </motion.span>
-                  )}
-                  {showTyping && (
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {typingText}
-                    </motion.span>
-                  )}
-                  {showTyping && typingText.length < fullText.length && (
-                    <motion.span
-                      className="inline-block w-0.5 h-6 bg-blue-300 ml-1"
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    />
-                  )}
-                </p>
-              </div>
-            </motion.div>
+              <path
+                d="M0,50 Q25,20 50,50 T100,50"
+                stroke="white"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.15"
+              />
+            </pattern>
+          </defs>
+          <path
+            d="M0,200 Q300,100 600,200 T1200,200"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.2"
+          />
+          <path
+            d="M0,300 Q400,150 800,300 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.15"
+          />
+          <path
+            d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,500 Q350,350 700,500 T1200,500"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.18"
+          />
+          <path
+            d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.12"
+          />
+          <path
+            d="M0,0 Q400,200 800,100 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,800 Q300,600 600,700 T1200,500"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.06"
+          />
+          <circle cx="800" cy="380" r="110" fill="rgba(77, 177, 212, 0.6)" />
+        </svg>
+      </div>
 
-            {/* Кнопки */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 flex-shrink-0"
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 items-center px-[21px]">
+          <div className="flex flex-col justify-between min-h-[260px]">
+            <motion.h1
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 70, damping: 15 }}
+              className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-4 leading-tight"
             >
-              <motion.button
-                className="group bg-white text-[#0065B3] px-8 py-4 rounded-xl text-lg font-semibold relative overflow-hidden transition-all duration-300"
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">Техническая поддержка</span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-brand opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  whileHover={{ scale: 1.1 }}
-                />
-              </motion.button>
+              Профессиональные решения для сетевой инфраструктуры
+            </motion.h1>
 
-              <motion.button
-                className="group border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold relative overflow-hidden transition-all duration-300"
-                whileHover={{
-                  scale: 1.05,
-                  borderColor: "transparent",
-                  boxShadow: "0 20px 40px rgba(255,255,255,0.1)",
-                }}
-                whileTap={{ scale: 0.95 }}
+            <div className="relative max-w-2xl">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 text-blue-100 leading-relaxed min-h-[3em] whitespace-pre-wrap">
+                {showIDATA && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 70, damping: 15 }}
+                    onAnimationComplete={() => setShowTyping(true)}
+                    className="inline-block"
+                  >
+                    iDATA
+                  </motion.span>
+                )}
+                {showTyping && typingText}
+                {showTyping && typingText.length < fullText.length && (
+                  <span className="animate-pulse">|</span>
+                )}
+              </p>
+              <span
+                className="invisible absolute pointer-events-none"
+                aria-hidden="true"
               >
-                <span className="relative z-10 group-hover:text-white transition-colors">
-                  Консультация
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-brand opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  whileHover={{ scale: 1.1 }}
-                />
+                iDATA{fullText}
+              </span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <motion.button
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="bg-white text-[#0065B3] px-6 py-3 rounded-md text-sm font-medium hover:bg-gradient-brand hover:text-white transition-all"
+              >
+                Техническая поддержка
               </motion.button>
-            </motion.div>
+              <motion.button
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.6 }}
+                className="border border-white text-white px-6 py-3 rounded-md text-sm font-medium hover:bg-gradient-brand hover:border-gradient-brand transition-all"
+              >
+                Консультация
+              </motion.button>
+            </div>
           </div>
 
-          {/* Правая колонка - интерактивный dashboard */}
-          <motion.div
-            className="relative h-full flex items-center justify-center"
-            variants={containerVariants}
-          >
-            {/* Основной контейнер dashboard */}
-            <motion.div
-              className="relative w-full max-w-2xl h-[600px] lg:h-[700px] bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8"
-              initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 1.2, delay: 0.5 }}
-            >
-              {/* Header dashboard */}
-              <motion.div
-                className="flex items-center justify-between mb-8"
+          <div className="w-full flex flex-col items-start gap-6 px-[5px]">
+            <div className="flex items-start gap-4 w-full">
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                style={{
+                  backgroundColor: "rgba(255, 99, 132, 0.12)",
+                  color: "#000000",
+                }}
+                className="px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1 my-[23px] text-[#313335]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 }}
+                transition={{ delay: 0.8 }}
               >
-                <div className="flex items-center space-x-4">
-                  <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse" />
-                  <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse" />
-                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                <div
+                  className="flex items-center gap-2 mb-1"
+                  style={{ color: "#000000" }}
+                >
+                  <Shield className="w-4 h-4" />
+                  Безопасность
                 </div>
-                <div className="text-white/60 text-sm font-mono">
-                  Network Dashboard
-                </div>
-              </motion.div>
+                <p className="font-normal" style={{ color: "#000000" }}>
+                  Как обеспечить защиту сети?
+                </p>
+              </motion.a>
 
-              {/* Мини-карты метрик */}
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="flex flex-col gap-3">
                 {[
                   {
-                    icon: "Activity",
-                    value: "99.9%",
-                    label: "Uptime",
-                    color: "emerald",
+                    icon: FileText,
+                    label: "Документация",
+                    color: "rgba(255, 240, 213, 0.52)",
                   },
                   {
-                    icon: "Zap",
-                    value: "1.2ms",
-                    label: "Latency",
-                    color: "blue",
+                    icon: BookOpen,
+                    label: "Инструкции",
+                    color: "rgba(255, 240, 213, 0.52)",
                   },
                   {
-                    icon: "Database",
-                    value: "847GB",
-                    label: "Traffic",
-                    color: "purple",
+                    icon: Info,
+                    label: "Справочные материалы",
+                    color: "rgba(255, 240, 213, 0.52)",
                   },
-                  {
-                    icon: "Users",
-                    value: "2,847",
-                    label: "Devices",
-                    color: "orange",
-                  },
-                ].map((metric, i) => (
-                  <motion.div
-                    key={metric.label}
-                    className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20"
-                    initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: 1.2 + i * 0.1 }}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                  >
-                    <div className="flex items-center space-x-3 mb-2">
-                      <div
-                        className={`p-2 rounded-lg bg-${metric.color}-500/20`}
-                      >
-                        <Icon
-                          name={metric.icon as any}
-                          size={16}
-                          className={`text-${metric.color}-400`}
-                        />
-                      </div>
-                    </div>
-                    <div className="text-2xl font-bold text-white mb-1">
-                      {metric.value}
-                    </div>
-                    <div className="text-white/60 text-sm">{metric.label}</div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Сетевая топология */}
-              <motion.div
-                className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-6"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.8 }}
-              >
-                <h3 className="text-white font-semibold mb-4 flex items-center">
-                  <Icon
-                    name="Network"
-                    size={20}
-                    className="mr-2 text-blue-400"
-                  />
-                  Network Topology
-                </h3>
-
-                {/* SVG топология */}
-                <div className="relative h-32">
-                  <svg className="w-full h-full" viewBox="0 0 300 120">
-                    {/* Соединительные линии */}
-                    <motion.path
-                      d="M50,60 L100,30 M100,30 L150,60 M150,60 L200,30 M200,30 L250,60"
-                      stroke="rgba(59, 130, 246, 0.5)"
-                      strokeWidth="2"
-                      fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 2, delay: 2 }}
-                    />
-                    <motion.path
-                      d="M100,30 L150,30 M150,60 L200,60"
-                      stroke="rgba(34, 197, 94, 0.5)"
-                      strokeWidth="2"
-                      fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 2, delay: 2.2 }}
-                    />
-
-                    {/* Узлы сети */}
-                    {[
-                      { x: 50, y: 60, type: "router" },
-                      { x: 100, y: 30, type: "switch" },
-                      { x: 150, y: 60, type: "router" },
-                      { x: 200, y: 30, type: "switch" },
-                      { x: 250, y: 60, type: "endpoint" },
-                    ].map((node, i) => (
-                      <motion.g key={i}>
-                        <motion.circle
-                          cx={node.x}
-                          cy={node.y}
-                          r="8"
-                          fill={
-                            node.type === "router"
-                              ? "#3b82f6"
-                              : node.type === "switch"
-                                ? "#22c55e"
-                                : "#f59e0b"
-                          }
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 2.5 + i * 0.1 }}
-                        />
-                        <motion.circle
-                          cx={node.x}
-                          cy={node.y}
-                          r="12"
-                          fill="none"
-                          stroke="rgba(255,255,255,0.3)"
-                          strokeWidth="1"
-                          initial={{ scale: 0, opacity: 0 }}
-                          animate={{
-                            scale: [1, 1.5, 1],
-                            opacity: [0.8, 0, 0.8],
-                          }}
-                          transition={{
-                            delay: 3 + i * 0.2,
-                            duration: 2,
-                            repeat: Infinity,
-                            repeatDelay: 3,
-                          }}
-                        />
-                      </motion.g>
-                    ))}
-
-                    {/* Пульсирующие точки данных */}
-                    <motion.circle
-                      cx="75"
-                      cy="45"
-                      r="2"
-                      fill="#06d6a0"
-                      initial={{ opacity: 0 }}
-                      animate={{
-                        opacity: [0, 1, 0],
-                        cx: [75, 125, 175, 225],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        delay: 4,
-                      }}
-                    />
-                  </svg>
-                </div>
-              </motion.div>
-
-              {/* Быстрые действия */}
-              <motion.div
-                className="grid grid-cols-3 gap-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.5 }}
-              >
-                {[
-                  { icon: "Settings", label: "Config", color: "slate" },
-                  { icon: "BarChart3", label: "Stats", color: "violet" },
-                  { icon: "Shield", label: "Security", color: "red" },
-                ].map((action, i) => (
-                  <motion.button
-                    key={action.label}
-                    className={`flex flex-col items-center p-3 rounded-xl bg-${action.color}-500/20 border border-${action.color}-500/30 text-white hover:bg-${action.color}-500/30 transition-all`}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
+                ].map(({ icon: Icon, label, color }, i) => (
+                  <motion.a
+                    key={label}
+                    href="#"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    style={{ backgroundColor: color, color: "#000000" }}
+                    className="flex items-center gap-2 px-4 rounded-lg text-sm shadow-md font-bold py-2.5 text-[#313335]"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 3 + i * 0.1 }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
                   >
-                    <Icon
-                      name={action.icon as any}
-                      size={20}
-                      className="mb-1"
-                    />
-                    <span className="text-xs font-medium">{action.label}</span>
-                  </motion.button>
+                    <Icon className="w-4 h-4" />
+                    {label}
+                  </motion.a>
                 ))}
-              </motion.div>
+              </div>
+            </div>
 
-              {/* Декоративные элементы */}
-              <motion.div
-                className="absolute top-4 right-4 w-2 h-2 bg-green-400 rounded-full"
-                animate={{ opacity: [0.3, 1, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <motion.div
-                className="absolute bottom-4 left-4 w-1 h-1 bg-blue-400 rounded-full"
-                animate={{
-                  opacity: [0.5, 1, 0.5],
-                  scale: [1, 1.5, 1],
-                }}
-                transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-              />
-            </motion.div>
-
-            {/* Плавающие частицы */}
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white/20 rounded-full"
-                style={{
-                  left: `${20 + i * 15}%`,
-                  top: `${30 + (i % 3) * 20}%`,
-                }}
-                animate={{
-                  y: [0, -20, 0],
-                  opacity: [0.2, 0.8, 0.2],
-                  scale: [1, 1.5, 1],
-                }}
-                transition={{
-                  duration: 4 + i,
-                  repeat: Infinity,
-                  delay: i * 0.5,
-                }}
-              />
-            ))}
-          </motion.div>
-        </motion.div>
-      </motion.div>
+            <motion.a
+              href="#"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                backgroundColor: "rgba(54, 162, 235, 0.12)",
+                color: "#000000",
+              }}
+              className="rounded-xl shadow-xl p-6 w-full max-w-md mx-[52px] font-semibold"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 }}
+            >
+              <div
+                className="flex items-center gap-2 mb-2"
+                style={{ color: "#000000" }}
+              >
+                <Wifi className="w-5 h-5" style={{ color: "#000000" }} />
+                <span className="text-xl font-semibold text-[#313335]">
+                  Wi-Fi
+                </span>
+              </div>
+              <p
+                className="text-sm text-[#313335]"
+                style={{ color: "#000000" }}
+              >
+                Беспроводные точки доступа
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="h-4 bg-blue-200 rounded" />
+                <div className="h-4 bg-blue-300 rounded" />
+                <div className="h-4 bg-blue-100 rounded col-span-2" />
+              </div>
+            </motion.a>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
