@@ -12,7 +12,7 @@ function getSpecs(model: SwitchModel) {
     baseTports: 0,
     sfpSlots: 0,
     sfpPlusSlots: 0,
-    poeWatts: 0,
+    poeWatts: 0 as number | string,
     expansionSlots: 0,
     powerSupplies: 2,
     throughput: 0,
@@ -53,9 +53,9 @@ function getSpecs(model: SwitchModel) {
   }
 
   if (name.includes("24p")) {
-    specs.poeWatts = 380;
+    specs.poeWatts = "380Вт/760Вт";
   } else if (name.includes("48p")) {
-    specs.poeWatts = 380;
+    specs.poeWatts = "380Вт/720Вт/1440Вт";
   }
 
   return specs;
@@ -119,10 +119,13 @@ export default function DeviceCard4530({
               {model.name}
             </h3>
             <div className="flex flex-wrap gap-1">
-              {specs.poeWatts > 0 && (
+              {specs.poeWatts && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                   <Icon name="Zap" size={13} className="mr-1" />
-                  PoE {specs.poeWatts}Вт
+                  PoE{" "}
+                  {typeof specs.poeWatts === "string"
+                    ? specs.poeWatts
+                    : `${specs.poeWatts}Вт`}
                 </span>
               )}
               {specs.sfpOnly && (
@@ -168,10 +171,14 @@ export default function DeviceCard4530({
               </span>
             </div>
           )}
-          {specs.poeWatts > 0 && (
+          {specs.poeWatts && (
             <div className="flex justify-between">
               <span className="text-gray-600">Бюджет PoE/PoE+:</span>
-              <span className="font-medium">{specs.poeWatts}Вт</span>
+              <span className="font-medium">
+                {typeof specs.poeWatts === "string"
+                  ? specs.poeWatts
+                  : `${specs.poeWatts}Вт`}
+              </span>
             </div>
           )}
           {specs.expansionSlots > 0 && (
