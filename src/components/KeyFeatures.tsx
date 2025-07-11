@@ -85,7 +85,18 @@ function FeatureCard({
 }) {
   return (
     <div
-      className={`backdrop-blur-md bg-white/[0.16] rounded-2xl p-4 sm:p-5 md:p-6 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${big ? "sm:col-span-2" : ""}`}
+      className={`backdrop-blur-md rounded-2xl p-4 sm:p-5 md:p-6 border border-white/20 shadow-lg transition-all duration-300 ${big ? "sm:col-span-2" : ""}`}
+      style={{
+        backgroundColor: "var(--glass-bg)",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = "var(--glass-bg-hover)";
+        e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.4)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = "var(--glass-bg)";
+        e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+      }}
     >
       <div className="flex items-start gap-3 sm:gap-4">
         <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/30 flex items-center justify-center">
