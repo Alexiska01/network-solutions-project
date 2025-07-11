@@ -18,14 +18,14 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
   const allPartners: Partner[] = [
     {
       id: 1,
-      name: "TechnoLink Systems",
-      logo: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=120&fit=crop",
-      region: "EMEA",
+      name: "Инфосэл",
+      logo: "https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png",
+      region: "Россия",
       type: "Дистрибьютор",
       category: "Коммутаторы",
-      phone: "+7 (495) 123-45-67",
-      email: "info@technolink.ru",
-      website: "https://technolink.ru",
+      phone: "+7 (495) 651-82-85",
+      email: "info@infocellprint.ru",
+      website: "https://infocellprint.ru",
     },
     {
       id: 2,
@@ -128,11 +128,11 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                 className="group bg-white rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
               >
                 <div className="p-3 md:p-6">
-                  <div className="relative h-[140px] w-full mb-3 md:mb-4 bg-gray-100 rounded-lg overflow-hidden group-hover:bg-blue-50 transition-colors">
+                  <div className="relative h-[140px] w-full mb-3 md:mb-4 bg-white border border-gray-200 rounded-lg overflow-hidden group-hover:border-blue-200 transition-colors flex items-center justify-center p-4">
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className="w-full h-full object-cover rounded-lg"
+                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" ? "w-auto h-auto" : "w-full h-full object-cover"} rounded-lg`}
                       loading="lazy"
                       onLoad={(e) => {
                         const placeholder =
