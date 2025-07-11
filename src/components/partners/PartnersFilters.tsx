@@ -17,7 +17,7 @@ const PartnersFilters: React.FC<FiltersProps> = ({
   selectedFilters,
   onFilterChange,
 }) => {
-  const regions = ["Все", "EMEA", "APAC", "Americas"];
+  const regions = ["Все", "Россия"];
   const types = ["Все", "Реселлер", "Дистрибьютор", "Интегратор"];
   const categories = ["Все", "Коммутаторы", "Маршрутизаторы", "Wi-Fi"];
 
