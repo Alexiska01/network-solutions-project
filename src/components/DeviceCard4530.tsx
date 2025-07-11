@@ -122,10 +122,7 @@ export default function DeviceCard4530({
               {(typeof specs.poeWatts === "string" || specs.poeWatts > 0) && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                   <Icon name="Zap" size={13} className="mr-1" />
-                  PoE{" "}
-                  {typeof specs.poeWatts === "string"
-                    ? specs.poeWatts
-                    : `${specs.poeWatts}Вт`}
+                  PoE
                 </span>
               )}
               {specs.sfpOnly && (
