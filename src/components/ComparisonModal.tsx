@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
-import { switchModels } from "@/data/switchModels";
+import { switchModels4530 } from "@/data/switchModels";
 
 interface ComparisonModalProps {
   isOpen: boolean;
@@ -20,7 +20,7 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({
   if (!isOpen) return null;
 
   const getModelSpecs = (modelId: string) => {
-    const model = switchModels.find((m) => m.id === modelId);
+    const model = switchModels4530.find((m) => m.id === modelId);
     return model || null;
   };
 
@@ -64,45 +64,112 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({
               </thead>
               <tbody>
                 <tr className="border-b border-gray-100">
-                  <td className="p-4 font-semibold">Порты 1G</td>
+                  <td className="p-4 font-semibold">Base-T порты</td>
                   {compareModels.map((modelId) => {
                     const model = getModelSpecs(modelId);
+                    const modelName = model?.name.toLowerCase() || "";
+                    let baseTports = 0;
+                    if (modelName.includes("24t") || modelName.includes("24p"))
+                      baseTports = 24;
+                    else if (
+                      modelName.includes("48t") ||
+                      modelName.includes("48p")
+                    )
+                      baseTports = 48;
                     return (
                       <td key={modelId} className="p-4">
-                        {model?.ports1G || "N/A"}
+                        {baseTports > 0 ? baseTports : "N/A"}
                       </td>
                     );
                   })}
                 </tr>
                 <tr className="border-b border-gray-100">
-                  <td className="p-4 font-semibold">Порты 10G</td>
+                  <td className="p-4 font-semibold">SFP слоты</td>
                   {compareModels.map((modelId) => {
                     const model = getModelSpecs(modelId);
+                    const modelName = model?.name.toLowerCase() || "";
+                    let sfpSlots = 0;
+                    if (modelName.includes("24s")) sfpSlots = 24;
+                    else if (modelName.includes("48s")) sfpSlots = 48;
                     return (
                       <td key={modelId} className="p-4">
-                        {model?.ports10G || "N/A"}
+                        {sfpSlots > 0 ? sfpSlots : "N/A"}
                       </td>
                     );
                   })}
                 </tr>
                 <tr className="border-b border-gray-100">
-                  <td className="p-4 font-semibold">PoE</td>
+                  <td className="p-4 font-semibold">SFP+ слоты</td>
                   {compareModels.map((modelId) => {
                     const model = getModelSpecs(modelId);
+                    const modelName = model?.name.toLowerCase() || "";
+                    let sfpPlusSlots = 0;
+                    if (modelName.includes("24t") || modelName.includes("24p"))
+                      sfpPlusSlots = 6;
+                    else if (
+                      modelName.includes("48t") ||
+                      modelName.includes("48p")
+                    )
+                      sfpPlusSlots = 6;
+                    else if (
+                      modelName.includes("24s") ||
+                      modelName.includes("48s")
+                    )
+                      sfpPlusSlots = 4;
                     return (
                       <td key={modelId} className="p-4">
-                        {model?.poe || "Нет"}
+                        {sfpPlusSlots > 0 ? sfpPlusSlots : "N/A"}
                       </td>
                     );
                   })}
                 </tr>
                 <tr className="border-b border-gray-100">
-                  <td className="p-4 font-semibold">Layer 3</td>
+                  <td className="p-4 font-semibold">PoE бюджет</td>
                   {compareModels.map((modelId) => {
                     const model = getModelSpecs(modelId);
+                    const modelName = model?.name.toLowerCase() || "";
+                    let poeWatts = 0;
+                    if (modelName.includes("24p") || modelName.includes("48p"))
+                      poeWatts = 380;
                     return (
                       <td key={modelId} className="p-4">
-                        {model?.layer3 ? "Да" : "Нет"}
+                        {poeWatts > 0 ? `${poeWatts}Вт` : "Нет"}
+                      </td>
+                    );
+                  })}
+                </tr>
+                <tr className="border-b border-gray-100">
+                  <td className="p-4 font-semibold">Пропускная способность</td>
+                  {compareModels.map((modelId) => {
+                    const model = getModelSpecs(modelId);
+                    const modelName = model?.name.toLowerCase() || "";
+                    let throughput = 0;
+                    if (modelName.includes("24t") || modelName.includes("24p"))
+                      throughput = 448;
+                    else if (
+                      modelName.includes("48t") ||
+                      modelName.includes("48p")
+                    )
+                      throughput = 496;
+                    else if (modelName.includes("24s")) throughput = 688;
+                    else if (modelName.includes("48s")) throughput = 216;
+                    return (
+                      <td key={modelId} className="p-4">
+                        {throughput > 0 ? `${throughput} Гбит/с` : "N/A"}
+                      </td>
+                    );
+                  })}
+                </tr>
+                <tr className="border-b border-gray-100">
+                  <td className="p-4 font-semibold">Управление</td>
+                  {compareModels.map((modelId) => {
+                    const model = getModelSpecs(modelId);
+                    const modelName = model?.name.toLowerCase() || "";
+                    const hasSfpOnly =
+                      modelName.includes("24s") || modelName.includes("48s");
+                    return (
+                      <td key={modelId} className="p-4">
+                        {hasSfpOnly ? "RJ45, USB, OOB" : "Стандартное"}
                       </td>
                     );
                   })}
