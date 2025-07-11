@@ -1,8 +1,5 @@
-import { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
-import { useInViewAnimate } from "@/hooks/useInViewAnimate";
 
 type Feature = {
   title: string;
@@ -79,28 +76,6 @@ const FEATURES: Feature[] = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.15,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
-
 function FeatureCard({
   feature,
   big = false,
@@ -109,9 +84,7 @@ function FeatureCard({
   big?: boolean;
 }) {
   return (
-    <motion.div
-      variants={cardVariants}
-      whileHover={{ y: -4 }}
+    <div
       className={`backdrop-blur-md bg-white/[0.16] rounded-2xl p-4 sm:p-5 md:p-6 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${big ? "sm:col-span-2" : ""}`}
     >
       <div className="flex items-start gap-3 sm:gap-4">
@@ -131,32 +104,13 @@ function FeatureCard({
           </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.1);
-
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    if (inView) {
-      setIsVisible(true);
-    }
-  }, [inView]);
-
-  // Анимируем карточки - принудительно показываем
-  const animateState = "visible";
-
   return (
-    <motion.section
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="py-8 sm:py-10 md:py-14 px-4 sm:px-6 md:px-12 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl"
-    >
+    <section className="py-8 sm:py-10 md:py-14 px-4 sm:px-6 md:px-12 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl">
       <div className="text-center mb-6 sm:mb-8 md:mb-10 pt-1 sm:pt-2">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6 tracking-wide drop-shadow-sm px-2">
           Ключевые характеристики коммутаторов серии
@@ -164,18 +118,13 @@ const KeyFeatures = () => {
         <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
       </div>
 
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-7"
-        initial="hidden"
-        animate={animateState}
-        variants={containerVariants}
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-7">
         {FEATURES.slice(0, -1).map((feature) => (
           <FeatureCard feature={feature} key={feature.title} />
         ))}
         <FeatureCard feature={FEATURES[FEATURES.length - 1]} big />
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   );
 };
 
