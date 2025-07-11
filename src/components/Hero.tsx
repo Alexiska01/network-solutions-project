@@ -79,7 +79,7 @@ const Hero = () => {
           animate="visible"
         >
           {/* Левая колонка - мировой уровень с фиксированной структурой */}
-          <div className="flex flex-col h-full min-h-[500px] relative overflow-hidden">
+          <div className="flex flex-col h-full min-h-[520px] relative overflow-visible p-4">
             {/* Фоновый эффект для всей левой колонки */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-br from-white/3 to-cyan-500/3 rounded-3xl backdrop-blur-sm border border-white/5"
@@ -120,7 +120,7 @@ const Hero = () => {
             {/* Заголовок - премиальный мировой уровень */}
             <motion.div
               variants={itemVariants}
-              className="h-80 flex items-start mb-8 relative"
+              className="h-72 flex items-start mb-6 relative"
             >
               {/* Декоративные элементы заголовка */}
               <motion.div
@@ -137,7 +137,7 @@ const Hero = () => {
               />
 
               <motion.h1
-                className="relative text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight"
+                className="relative text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight"
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{
@@ -218,7 +218,7 @@ const Hero = () => {
             {/* Подзаголовок - премиальная типографика */}
             <motion.div
               variants={itemVariants}
-              className="h-32 flex items-start justify-start mb-8 relative"
+              className="h-28 flex items-start justify-start mb-6 relative"
             >
               {/* Фоновый градиент для текста */}
               <motion.div
@@ -282,11 +282,11 @@ const Hero = () => {
             {/* Кнопки - премиальный дизайн мирового уровня */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 mt-auto relative"
+              className="flex flex-col sm:flex-row gap-4 mt-auto relative pb-8"
             >
               {/* Декоративный фон для кнопок */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-white/5 to-cyan-500/5 rounded-2xl backdrop-blur-sm border border-white/10 -m-4"
+                className="absolute inset-0 bg-gradient-to-r from-white/5 to-cyan-500/5 rounded-2xl backdrop-blur-sm border border-white/10 -m-2 mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5, duration: 0.8 }}
