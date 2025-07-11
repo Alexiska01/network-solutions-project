@@ -5,6 +5,7 @@ import ModelCard from "@/components/ModelCard";
 import FilterButtons from "@/components/FilterButtons";
 import ComparisonPanel from "@/components/ComparisonPanel";
 import ComparisonModal from "@/components/ComparisonModal";
+import KeyFeatures from "@/components/KeyFeatures";
 import { switchModels4530 } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
 import {
@@ -25,10 +26,10 @@ import {
   Layers,
 } from "lucide-react";
 const cardVariants = {
-  hidden:   { opacity: 0, y: 20 },
-  visible:  { opacity: 1, y: 0, transition: { delay: 0.8, duration: 0.6 } },
-  hover:    { scale: 1.03, y: -4 },
-  tap:      { scale: 0.98 },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { delay: 0.8, duration: 0.6 } },
+  hover: { scale: 1.03, y: -4 },
+  tap: { scale: 0.98 },
 };
 
 const SeriesCatalog4530Component = () => {
@@ -38,7 +39,7 @@ const SeriesCatalog4530Component = () => {
 
   const toggleCompareModel = (model: string) => {
     setCompareModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
     );
   };
 
@@ -255,7 +256,7 @@ const SeriesCatalog4530Component = () => {
                 </button>
               </motion.div>
             </motion.div>
-            
+
             {/* Правая часть с карточками */}
             <motion.div
               className="relative mt-6 md:mt-8 lg:mt-0 lg:justify-self-center"
@@ -299,13 +300,13 @@ const SeriesCatalog4530Component = () => {
               <div className="relative z-10 flex flex-col items-center gap-4">
                 <div className="flex items-start gap-6 w-full justify-center">
                   {/* Image-card с градиентом, блюром и рамкой */}
-<motion.div
-  variants={cardVariants}
-  initial="hidden"
-  animate="visible"
-  whileHover="hover"
-  whileTap="tap"
-  className="
+                  <motion.div
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover="hover"
+                    whileTap="tap"
+                    className="
     relative flex items-center justify-center
     w-[380px] h-[280px]
     rounded-lg border border-white/30
@@ -313,18 +314,17 @@ const SeriesCatalog4530Component = () => {
     shadow transition-shadow duration-300
     hover:shadow-lg hover:scale-105
   "
->
-  {/* 1) Скрываем волны под карточкой */}
-  <div className="absolute inset-0 bg-white/10 backdrop-blur-md" />
+                  >
+                    {/* 1) Скрываем волны под карточкой */}
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-md" />
 
-  {/* 2) Контент — фотография */}
-  <img
-    src="/img/Иерархия_4530(1).png"
-    alt="Иерархия 4530"
-    className="relative z-10 h-56 object-contain"
-  />
-</motion.div>
-
+                    {/* 2) Контент — фотография */}
+                    <img
+                      src="/img/Иерархия_4530(1).png"
+                      alt="Иерархия 4530"
+                      className="relative z-10 h-56 object-contain"
+                    />
+                  </motion.div>
 
                   {/* Правая колонка — три feature-карточки справа от фото */}
                   <div className="flex flex-col gap-5 justify-center">
@@ -605,6 +605,19 @@ const SeriesCatalog4530Component = () => {
         onClose={() => setShowCompareModal(false)}
         onRemoveModel={toggleCompareModel}
       />
+
+      {/* Key Features Section */}
+      <motion.section
+        className="py-16 px-6 bg-gradient-hero"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <KeyFeatures />
+        </div>
+      </motion.section>
 
       {/* CTA Section */}
       <motion.section
