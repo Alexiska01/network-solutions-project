@@ -138,30 +138,16 @@ function FeatureCard({
 const KeyFeatures = () => {
   const { ref, inView } = useInViewAnimate(0.1);
 
-  // Флаг — была ли уже анимация
-  const wasAnimated = useRef(false);
-  const [forceVisible, setForceVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (inView && !wasAnimated.current) {
-      wasAnimated.current = true;
-      setForceVisible(true);
+    if (inView) {
+      setIsVisible(true);
     }
-
-    // Fallback для мобильных устройств - принудительная анимация через 2 секунды
-    const fallbackTimer = setTimeout(() => {
-      if (!wasAnimated.current) {
-        setForceVisible(true);
-        wasAnimated.current = true;
-      }
-    }, 2000);
-
-    return () => clearTimeout(fallbackTimer);
   }, [inView]);
 
-  // Анимируем только 1 раз при первом попадании в зону видимости
-  const animateState =
-    inView || wasAnimated.current || forceVisible ? "visible" : "hidden";
+  // Анимируем карточки
+  const animateState = isVisible ? "visible" : "hidden";
 
   return (
     <motion.section
