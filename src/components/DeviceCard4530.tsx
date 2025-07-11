@@ -233,8 +233,8 @@ const DeviceCard4530 = ({
         </Button>
         <Button
           size="sm"
-          onClick={() => onNavigate(model.url)}
-          className="bg-blue-600 hover:bg-blue-700 text-white"
+          onClick={() => onNavigate("/partners")}
+          className="bg-brand-primary hover:bg-gradient-hero text-white"
         >
           Выбрать
         </Button>
