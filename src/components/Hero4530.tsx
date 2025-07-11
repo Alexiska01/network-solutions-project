@@ -81,7 +81,7 @@ const Hero4530 = () => (
                 className="text-blue-300 flex-shrink-0"
               />
               <span className="text-sm sm:text-base md:text-base lg:text-lg">
-                До 736 Gbps производительность
+                До 688 Гбит/сек производительность
               </span>
             </div>
             <div className="flex items-center gap-2 sm:gap-3 text-blue-100">
@@ -103,7 +103,7 @@ const Hero4530 = () => (
                 className="text-blue-300 flex-shrink-0"
               />
               <span className="text-sm sm:text-base md:text-base lg:text-lg">
-                Двойное питание и PoE+ до 760 Вт
+                Двойное питание и PoE+ до 1440 Вт
               </span>
             </div>
           </motion.div>
