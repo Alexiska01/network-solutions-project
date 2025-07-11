@@ -375,8 +375,3 @@ export const featureIcons6010: FeatureIcon[] = [
     ariaLabel: "Программно-определяемые сети",
   },
 ];
-
-// Фильтрация моделей для серии IDS4530
-export const switchModels4530 = switchModels.filter((model) =>
-  model.id.startsWith("IDS4530"),
-);
