@@ -162,22 +162,22 @@ const SeriesCatalog4530Component = () => {
       </motion.section>
       {/* CTA Section */}
       <motion.section
-        className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 bg-white"
+        className="py-6 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 bg-white"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="relative inline-block text-xl sm:text-2xl font-semibold mx-auto px-4">
+          <h2 className="relative inline-block text-lg sm:text-xl md:text-2xl font-semibold mx-auto px-2 sm:px-4">
             Нужна помощь с выбором оборудования?
-            <span className="block w-16 sm:w-24 h-0.5 bg-gray-300 mt-3 mb-4 sm:mb-6 mx-auto" />
+            <span className="block w-12 sm:w-16 md:w-24 h-0.5 bg-gray-300 mt-2 sm:mt-3 mb-3 sm:mb-4 md:mb-6 mx-auto" />
           </h2>
-          <p className="text-gray-600 mb-6 sm:mb-8 font-sans w-[90%] md:w-[70%] mx-auto text-base sm:text-lg md:text-[18px] leading-relaxed px-4">
+          <p className="text-gray-600 mb-4 sm:mb-6 md:mb-8 font-sans w-[95%] sm:w-[90%] md:w-[70%] mx-auto text-sm sm:text-base md:text-lg leading-relaxed px-2 sm:px-4">
             Свяжитесь с нашими партнёрами!
           </p>
           <Button
             size="lg"
-            className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-6 sm:px-8 py-3 shadow-lg hover:shadow-xl text-sm sm:text-base"
+            className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 shadow-lg hover:shadow-xl text-sm sm:text-base w-full sm:w-auto max-w-xs sm:max-w-none"
           >
             Связаться с партнёром
           </Button>
