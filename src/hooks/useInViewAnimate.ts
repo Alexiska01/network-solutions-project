@@ -19,7 +19,7 @@ export const useInViewAnimate = (threshold: number = 0.2) => {
       },
       {
         threshold,
-        rootMargin: "50px", // Запускаем анимацию немного раньше для плавности
+        rootMargin: "-100px", // Запускаем анимацию только когда элемент действительно виден
       },
     );
 

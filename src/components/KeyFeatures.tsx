@@ -3,7 +3,7 @@ import Icon from "@/components/ui/icon";
 import { useInViewAnimate } from "@/hooks/useInViewAnimate";
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.2);
+  const { ref, inView } = useInViewAnimate(0.3);
 
   const containerVariants = {
     hidden: {},
