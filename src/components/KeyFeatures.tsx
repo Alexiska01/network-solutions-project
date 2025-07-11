@@ -1,7 +1,32 @@
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
+import { useInViewAnimate } from "@/hooks/useInViewAnimate";
 
 const KeyFeatures = () => {
+  const { ref, inView } = useInViewAnimate(0.2);
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+
   const features = [
     {
       title: "Объединение устройств в стек",
@@ -73,6 +98,7 @@ const KeyFeatures = () => {
 
   return (
     <motion.section
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -87,16 +113,14 @@ const KeyFeatures = () => {
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ staggerChildren: 0.1, delayChildren: 0.2 }}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        variants={containerVariants}
       >
         {features.slice(0, -1).map((feature, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
+            variants={cardVariants}
             whileHover={{ y: -4 }}
             className="backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/15 hover:border-white/40 transition-all duration-300"
           >
@@ -119,9 +143,20 @@ const KeyFeatures = () => {
 
       {/* Последняя карточка на всю ширину */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: (features.length - 1) * 0.1 }}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+              duration: 0.5,
+              ease: "easeOut",
+              delay: 0.8,
+            },
+          },
+        }}
         whileHover={{ y: -4 }}
         className="backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/15 hover:border-white/40 transition-all duration-300 mt-6"
       >
