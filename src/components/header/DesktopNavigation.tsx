@@ -29,7 +29,7 @@ const DesktopNavigation = ({
   };
 
   return (
-    <nav className="hidden lg:flex items-center space-x-8 mx-0">
+    <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 mx-0">
       {navigationItems.map((item) => (
         <div key={item.path} className="relative">
           {item.hasSubmenu ? (
@@ -46,11 +46,11 @@ const DesktopNavigation = ({
           ) : (
             <Link
               to={item.path}
-              className="text-gray-700 hover:text-blue-600 py-2 text-sm font-medium transition-colors whitespace-nowrap flex items-center space-x-2 h-10"
-              style={{ paddingLeft: "15.1px", paddingRight: "15.1px" }}
+              className="text-gray-700 hover:text-blue-600 py-2 text-sm lg:text-base font-medium transition-colors whitespace-nowrap flex items-center space-x-1.5 lg:space-x-2 h-10 lg:h-12">
+              style={{ paddingLeft: "12px", paddingRight: "12px" }}
               onClick={handleNavItemClick}
             >
-              <Icon name={item.icon} size={16} />
+              <Icon name={item.icon} size={14} className="lg:size-4" />
               <span>{item.name}</span>
             </Link>
           )}

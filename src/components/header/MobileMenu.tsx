@@ -116,7 +116,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     const hasThirdLevel = item.hasThirdLevel && item.items;
 
     const baseClasses =
-      "group w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-emerald-50 transition-all duration-200 min-h-[44px] border-b border-gray-50 last:border-b-0";
+      "group w-full flex items-center justify-between px-3 sm:px-4 py-3 sm:py-3 text-gray-700 active:bg-gradient-to-r active:from-blue-50 active:to-emerald-50 transition-all duration-200 min-h-[48px] sm:min-h-[44px] border-b border-gray-50 last:border-b-0";
     const activeClasses = isActive
       ? "bg-gradient-to-r from-blue-100 to-emerald-100 text-blue-700"
       : "";
@@ -136,17 +136,19 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               {item.icon && level === 0 && (
                 <Icon
                   name={item.icon}
-                  size={20}
+                  size={22}
                   className={isActive ? "text-blue-600" : "text-gray-500"}
                 />
               )}
-              <span className="text-xs font-medium text-left">{item.name}</span>
+              <span className="text-sm sm:text-xs font-medium text-left">
+                {item.name}
+              </span>
             </div>
             <Icon
               name={
                 hasThirdLevel && isExpanded ? "ChevronDown" : "ChevronRight"
               }
-              size={16}
+              size={18}
               className={`transition-transform duration-200 ${
                 isActive ? "text-blue-500" : "text-gray-400"
               }`}
@@ -182,11 +184,13 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
           {item.icon && level === 0 && (
             <Icon
               name={item.icon}
-              size={20}
+              size={22}
               className={isActive ? "text-blue-600" : "text-gray-500"}
             />
           )}
-          <span className="text-xs font-medium text-left">{item.name}</span>
+          <span className="text-sm sm:text-xs font-medium text-left">
+            {item.name}
+          </span>
         </div>
       </Link>
     );
@@ -200,18 +204,18 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       {/* Кнопка гамбургера */}
       <button
         onClick={onToggle}
-        className="lg:hidden relative w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="lg:hidden relative w-11 h-11 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
       >
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-4 h-3 md:w-5 md:h-4 flex flex-col justify-center relative">
+          <div className="w-5 h-4 sm:w-5 sm:h-4 flex flex-col justify-center relative">
             <span
-              className={`block h-0.5 w-4 md:w-5 bg-gray-700 transition-all duration-300 ${
+              className={`block h-0.5 w-5 sm:w-5 bg-gray-700 transition-all duration-300 ${
                 isOpen ? "rotate-45 translate-y-0.5" : ""
               }`}
             />
             <span
-              className={`block h-0.5 w-4 md:w-5 bg-gray-700 mt-1 transition-all duration-300 ${
+              className={`block h-0.5 w-5 sm:w-5 bg-gray-700 mt-1 transition-all duration-300 ${
                 isOpen ? "-rotate-45 -translate-y-0.5" : ""
               }`}
             />
@@ -231,33 +235,33 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
 
       {/* Мобильное меню */}
       <div
-        className={`lg:hidden fixed top-0 right-0 w-full max-w-xs md:max-w-sm h-full bg-white z-50 shadow-2xl transition-transform duration-300 ease-out ${
+        className={`lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-full bg-white z-50 shadow-2xl transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Шапка меню */}
-        <div className="flex items-center justify-between h-16 px-4 bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
+        <div className="flex items-center justify-between h-14 sm:h-16 px-3 sm:px-4 bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
           <div className="flex items-center space-x-3">
             {canGoBack && (
               <button
                 onClick={navigateBack}
-                className="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center"
+                className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg bg-white/20 active:bg-white/30 transition-colors flex items-center justify-center"
                 aria-label="Назад"
               >
-                <Icon name="ArrowLeft" size={16} />
+                <Icon name="ArrowLeft" size={18} className="sm:size-4" />
               </button>
             )}
-            <h2 className="text-sm font-medium truncate">
+            <h2 className="text-base sm:text-sm font-medium truncate">
               {currentLevel?.title || "Меню"}
             </h2>
           </div>
 
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center"
+            className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg bg-white/20 active:bg-white/30 transition-colors flex items-center justify-center"
             aria-label="Закрыть меню"
           >
-            <Icon name="X" size={16} />
+            <Icon name="X" size={18} className="sm:size-4" />
           </button>
         </div>
 
