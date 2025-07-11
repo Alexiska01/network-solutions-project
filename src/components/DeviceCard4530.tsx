@@ -62,9 +62,7 @@ function getSpecs(model: SwitchModel) {
 }
 
 function formatThroughput(gbps: number) {
-  return gbps >= 1000
-    ? `${(gbps / 1000).toFixed(2)} Тбит/с`
-    : `${gbps} Гбит/с`;
+  return gbps >= 1000 ? `${(gbps / 1000).toFixed(2)} Тбит/с` : `${gbps} Гбит/с`;
 }
 
 // 2. Варианты анимации для карточки
@@ -172,7 +170,7 @@ export default function DeviceCard4530({
           )}
           {specs.poeWatts > 0 && (
             <div className="flex justify-between">
-              <span className="text-gray-600">Бюджет PoE:</span>
+              <span className="text-gray-600">Бюджет PoE/PoE+:</span>
               <span className="font-medium">{specs.poeWatts}Вт</span>
             </div>
           )}
@@ -238,15 +236,14 @@ export default function DeviceCard4530({
         >
           Подробнее
         </Button>
-<Button
-  size="sm"
-  variant="outline"
-  className="flex-1 ml-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-400"
-  onClick={() => onNavigate("/partners")}
->
-  Выбрать
-</Button>
-
+        <Button
+          size="sm"
+          variant="outline"
+          className="flex-1 ml-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-400"
+          onClick={() => onNavigate("/partners")}
+        >
+          Выбрать
+        </Button>
       </div>
     </motion.div>
   );
