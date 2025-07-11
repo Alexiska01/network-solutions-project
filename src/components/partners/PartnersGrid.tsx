@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Partner } from "@/pages/Partners";
 import Icon from "@/components/ui/icon";
 
@@ -50,6 +50,20 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
       website: "https://www.croc.ru",
     },
   ];
+
+  // Предварительная загрузка логотипов в фоне
+  useEffect(() => {
+    const preloadImages = () => {
+      allPartners.forEach((partner) => {
+        const img = new Image();
+        img.src = partner.logo;
+      });
+    };
+
+    // Запускаем предварительную загрузку через небольшую задержку
+    const timer = setTimeout(preloadImages, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredPartners = allPartners.filter((partner) => {
     return (
@@ -106,7 +120,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                       src={partner.logo}
                       alt={partner.name}
                       className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "КРОК" ? "w-auto h-auto scale-75" : "w-full h-full object-cover"} rounded-lg`}
-                      loading="lazy"
+                      loading="eager"
                       onLoad={(e) => {
                         const placeholder =
                           e.currentTarget.parentElement?.querySelector(
