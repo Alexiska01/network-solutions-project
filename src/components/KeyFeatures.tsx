@@ -79,48 +79,27 @@ const FEATURES: Feature[] = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
-    },
-  },
-};
-
 function FeatureCard({
   feature,
-  big = false,
+  className = "",
+  idx = 0,
 }: {
   feature: Feature;
-  big?: boolean;
+  className?: string;
+  idx?: number;
 }) {
   return (
     <motion.div
-      variants={cardVariants}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.6, delay: idx * 0.08 }}
       whileHover={{ y: -4 }}
-      className={`backdrop-blur-md bg-white/[0.16] rounded-2xl p-4 sm:p-5 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${big ? "sm:col-span-2" : ""}`}
+      className={`flex h-full flex-col justify-start backdrop-blur-md bg-white/[0.16] rounded-2xl p-4 sm:p-5 md:p-6 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${className}`}
     >
       <div className="flex items-start gap-3 sm:gap-4">
-        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-white/30 flex items-center justify-center">
-          <Icon
-            name={feature.icon}
-            size={20}
-            className="text-white"
-          />
+        <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/30 flex items-center justify-center">
+          <Icon name={feature.icon} size={20} className="text-white sm:size-5" />
         </div>
         <div className="flex-1">
           <h3 className="text-sm sm:text-base font-semibold text-white mb-1 sm:mb-2 tracking-wide">
@@ -136,41 +115,37 @@ function FeatureCard({
 }
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.15);
+  const { ref, inView } = useInViewAnimate(0.1);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (inView) setIsVisible(true);
   }, [inView]);
 
-  const animateState = isVisible ? "visible" : "hidden";
-
   return (
     <motion.section
       ref={ref}
       initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
-      className="py-8 sm:py-12 px-3 sm:px-6 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl"
+      className="py-10 md:py-16 px-4 md:px-0 bg-white/10 rounded-2xl md:rounded-3xl shadow-xl backdrop-blur-xl max-w-6xl mx-auto mt-10 md:mt-16"
     >
-      <div className="text-center mb-7 sm:mb-10 pt-1 sm:pt-2">
+      <div className="text-center mb-6 sm:mb-8 md:mb-10 pt-1 sm:pt-2">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6 tracking-wide drop-shadow-sm px-2">
           Ключевые характеристики коммутаторов серии
         </h2>
-        <div className="w-14 sm:w-20 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
+        <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
       </div>
-
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5"
-        initial="hidden"
-        animate={animateState}
-        variants={containerVariants}
-      >
-        {FEATURES.slice(0, -1).map((feature) => (
-          <FeatureCard feature={feature} key={feature.title} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-7 items-stretch">
+        {FEATURES.slice(0, -1).map((feature, i) => (
+          <FeatureCard feature={feature} key={feature.title} idx={i} />
         ))}
-        <FeatureCard feature={FEATURES[FEATURES.length - 1]} big />
-      </motion.div>
+        <FeatureCard
+          feature={FEATURES[FEATURES.length - 1]}
+          className="md:col-span-2"
+          idx={FEATURES.length - 1}
+        />
+      </div>
     </motion.section>
   );
 };

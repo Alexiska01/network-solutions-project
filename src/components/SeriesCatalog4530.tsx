@@ -103,7 +103,7 @@ const SeriesCatalog4530Component = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="w-full max-w-7xl mx-auto">
           <div className="text-center mb-6 sm:mb-8">
             <h2 className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4 font-sans px-2">
               Модели серии IDS4530
@@ -117,11 +117,14 @@ const SeriesCatalog4530Component = () => {
               </div>
             </div>
           </div>
-          <div className="
-            grid gap-4 sm:gap-6 lg:gap-8
-            grid-cols-1 
-            sm:grid-cols-2
-            ">
+          {/* ВАЖНО: здесь фикс — сетка всегда ровно 2 колонки на десктопе */}
+          <div
+            className="
+              grid grid-cols-1 sm:grid-cols-2 
+              gap-5 sm:gap-7 lg:gap-8
+              w-full
+            "
+          >
             <AnimatePresence mode="popLayout">
               {filteredModels.map((model, index) => (
                 <motion.div
@@ -140,7 +143,6 @@ const SeriesCatalog4530Component = () => {
                     isInCompareList={compareModels.includes(model.id)}
                     onToggleCompare={toggleCompareModel}
                     onNavigate={handleNavigate}
-                    animationDelay={index * 0.1}
                   />
                 </motion.div>
               ))}
@@ -172,7 +174,7 @@ const SeriesCatalog4530Component = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <KeyFeatures />
         </div>
       </motion.section>

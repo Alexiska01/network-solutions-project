@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
 
-// 1. Вспомогательные функции — ВНЕ компонента!
+// 1. Вспомогательные функции
 function getSpecs(model: SwitchModel) {
   const name = model.name.toLowerCase();
   const specs = {
@@ -65,31 +65,15 @@ function formatThroughput(gbps: number) {
   return gbps >= 1000 ? `${(gbps / 1000).toFixed(2)} Тбит/с` : `${gbps} Гбит/с`;
 }
 
-// 2. Варианты анимации для карточки
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (custom: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: custom ? custom * 0.07 : 0,
-      duration: 0.43,
-      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
-    },
-  }),
-};
-
-// 3. Типизация пропсов
 interface DeviceCard4530Props {
   model: SwitchModel;
   index: number;
   isInCompareList: boolean;
   onToggleCompare: (modelId: string) => void;
   onNavigate: (url: string) => void;
-  animationDelay?: number;
 }
 
-// 4. Сам компонент (function, для декларативности!)
+// Без variants — только initial/whileInView/transition (правильно для framer-motion 12+)
 export default function DeviceCard4530({
   model,
   index,
@@ -101,11 +85,14 @@ export default function DeviceCard4530({
 
   return (
     <motion.div
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.12 }}
-      custom={index}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.13 }}
+      transition={{
+        duration: 0.46,
+        delay: index * 0.07,
+        ease: [0.23, 1, 0.32, 1],
+      }}
       className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 hover:shadow-xl transition-shadow duration-300 h-full flex flex-col overflow-hidden"
       style={{
         boxShadow:
@@ -206,7 +193,6 @@ export default function DeviceCard4530({
                     name="Terminal"
                     size={14}
                     className="text-gray-500 sm:size-4"
-                    title="RJ45 консоль"
                   />
                 )}
                 {specs.hasUsb && (
@@ -214,7 +200,6 @@ export default function DeviceCard4530({
                     name="Usb"
                     size={14}
                     className="text-gray-500 sm:size-4"
-                    title="USB порт"
                   />
                 )}
                 {specs.hasOobManagement && (
@@ -222,7 +207,6 @@ export default function DeviceCard4530({
                     name="Settings"
                     size={14}
                     className="text-gray-500 sm:size-4"
-                    title="OOB-management"
                   />
                 )}
               </div>
