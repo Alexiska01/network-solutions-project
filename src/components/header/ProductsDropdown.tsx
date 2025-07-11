@@ -32,11 +32,6 @@ const ProductsDropdown = ({
       <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-normal transition-colors whitespace-nowrap flex items-center space-x-2 h-[44px] lg:h-[54px]">
         <Icon name="Network" size={16} className="" />
         <span>Оборудование</span>
-        <Icon
-          name="ChevronDown"
-          size={16}
-          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-        />
       </button>
 
       {isOpen && (
