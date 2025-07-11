@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
@@ -79,10 +79,26 @@ const FEATURES: Feature[] = [
   },
 ];
 
-// Только значения! (без transition, без ease)
+// Анимации карточек
 const cardVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.97 },
-  visible: { opacity: 1, y: 0, scale: 1 },
+  hidden: {
+    opacity: 0,
+    y: 24,
+    scale: 0.95,
+    transition: { duration: 0.3 },
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+    },
+  },
 };
 
 function FeatureCard({
@@ -95,16 +111,20 @@ function FeatureCard({
   return (
     <motion.div
       variants={cardVariants}
-      whileHover={{ y: -6, boxShadow: "0px 8px 24px rgba(0,0,0,0.10)" }}
-      transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
-      className={`backdrop-blur-md bg-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 ${big ? "md:col-span-2" : ""}`}
+      whileHover={{
+        y: -4,
+        boxShadow: "0px 6px 20px rgba(0,0,0,0.08)",
+        transition: { duration: 0.3 },
+      }}
+      whileTap={{ scale: 0.98 }}
+      className={`backdrop-blur-md bg-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 transform-gpu ${big ? "md:col-span-2" : ""}`}
     >
       <div className="flex items-start gap-3 sm:gap-4">
-        <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/30 flex items-center justify-center">
+        <div className="flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 rounded-full border border-white/30 flex items-center justify-center bg-white/10">
           <Icon
             name={feature.icon}
-            size={16}
-            className="text-white sm:size-5"
+            size={18}
+            className="text-white sm:size-5 md:size-4"
           />
         </div>
         <div className="flex-1">
@@ -121,25 +141,28 @@ function FeatureCard({
 }
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.23);
-  const wasAnimated = useRef(false);
+  const { ref, inView } = useInViewAnimate(0.1); // Уменьшили threshold для мобильных
+  const [hasTriggered, setHasTriggered] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (inView) wasAnimated.current = true;
-  }, [inView]);
+    setIsMounted(true);
+  }, []);
 
-  const animateState = wasAnimated.current
-    ? "visible"
-    : inView
-      ? "visible"
-      : "hidden";
+  useEffect(() => {
+    if (inView && !hasTriggered && isMounted) {
+      setHasTriggered(true);
+    }
+  }, [inView, hasTriggered, isMounted]);
+
+  const animateState = hasTriggered ? "visible" : "hidden";
 
   return (
     <motion.section
       ref={ref}
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="py-8 sm:py-10 md:py-12 px-3 sm:px-4 md:px-10 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl"
     >
       <div className="text-center mb-6 sm:mb-8 pt-1 sm:pt-2">
@@ -155,7 +178,11 @@ const KeyFeatures = () => {
         variants={{
           hidden: {},
           visible: {
-            transition: { staggerChildren: 0.11, delayChildren: 0.14 },
+            transition: {
+              staggerChildren: 0.08,
+              delayChildren: 0.1,
+              when: "beforeChildren",
+            },
           },
         }}
       >
