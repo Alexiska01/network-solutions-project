@@ -242,8 +242,9 @@ export default function DeviceCard4530({
         </Button>
         <Button
           size="sm"
+          variant="outline"
           onClick={() => onNavigate("/partners")}
-          className="flex-1 bg-brand-primary hover:bg-gradient-hero text-white text-xs sm:text-sm py-2 sm:py-2.5"
+          className="flex-1 ml-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-400 text-xs sm:text-sm py-2 sm:py-2.5"
         >
           Выбрать
         </Button>
