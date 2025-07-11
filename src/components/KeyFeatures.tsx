@@ -121,7 +121,7 @@ const KeyFeatures = () => {
           <motion.div
             key={index}
             variants={cardVariants}
-            whileHover={{ y: -4 }}
+            whileHover={{ y: -4, boxShadow: "0px 8px 24px rgba(0,0,0,0.1)" }}
             className="backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/15 hover:border-white/40 transition-all duration-300"
           >
             <div className="flex items-start gap-4">
@@ -157,7 +157,7 @@ const KeyFeatures = () => {
             },
           },
         }}
-        whileHover={{ y: -4 }}
+        whileHover={{ y: -4, boxShadow: "0px 8px 24px rgba(0,0,0,0.1)" }}
         className="backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/15 hover:border-white/40 transition-all duration-300 mt-6"
       >
         <div className="flex items-start gap-4">
