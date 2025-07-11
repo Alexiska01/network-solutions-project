@@ -15,10 +15,10 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-[35px] py-6 sm:py-8 md:py-12 lg:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-4 md:gap-6 lg:gap-8">
           {/* Company Info */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-1 sm:col-span-2 md:col-span-1">
             <div className="flex items-center space-x-1.5 md:space-x-2 mb-3 md:mb-4 lg:mb-6">
               <img
                 src="https://cdn.poehali.dev/files/af5eb132-2315-4857-b3f2-92c6d3b24788.png"
