@@ -125,7 +125,11 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
               <div
                 key={partner.id}
                 onClick={() => onPartnerClick(partner)}
-                className="group bg-white rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
+                className={`group ${
+                  partner.name === "Инфосэл"
+                    ? "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+                    : "bg-white"
+                } rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden`}
               >
                 <div className="p-3 md:p-6">
                   <div className="relative h-[140px] w-full mb-3 md:mb-4 bg-white border border-gray-200 rounded-lg overflow-hidden group-hover:border-blue-200 transition-colors flex items-center justify-center p-4">
