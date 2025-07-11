@@ -6,6 +6,7 @@ import MobileMenu from "./header/MobileMenu";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const {
     dropdownState,
     closeAllSubmenus,
@@ -15,7 +16,7 @@ const Header = () => {
   } = useDropdownMenu();
 
   const handleMobileMenuToggle = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setIsMobileMenuOpen((prev) => !prev);
   };
 
   const handleMobileMenuClose = () => {
@@ -23,39 +24,40 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
-      {/* Логотип в отдельном контейнере строго слева */}
-      <div className="absolute left-0 top-0 h-full flex items-center z-40 pl-3 sm:pl-4 md:pl-[35px]">
-        <Link
-          to="/"
-          className="transition-opacity hover:opacity-80"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <img
-            src="https://cdn.poehali.dev/files/8e9b5768-33e6-4132-af48-c9e933188013.png"
-            alt="IDATA Logo"
-            className="h-10 w-auto"
-          />
-        </Link>
-      </div>
-
-      {/* Оригинальная структура навигации без изменений */}
-      <div className="max-w-7xl mx-auto py-2 sm:py-1.5 px-3 sm:px-4 md:px-[35px]">
-        <div className="flex items-center justify-between w-full min-h-[44px] sm:min-h-[48px] pl-20 sm:pl-24 md:pl-28 lg:pl-32">
-          <DesktopNavigation
-            dropdownState={dropdownState}
-            updateDropdownState={updateDropdownState}
-            closeAllSubmenus={closeAllSubmenus}
-            cancelCloseTimeout={cancelCloseTimeout}
-            scheduleCloseAllSubmenus={scheduleCloseAllSubmenus}
-          />
-
-          <div className="lg:hidden ml-auto flex items-center">
-            <MobileMenu
-              isOpen={isMobileMenuOpen}
-              onToggle={handleMobileMenuToggle}
-              onClose={handleMobileMenuClose}
+    <header className="bg-white/95 shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-all backdrop-blur-xl">
+      <div className="relative w-full">
+        <div className="max-w-7xl mx-auto px-3 xs:px-4 md:px-[35px] flex items-center h-[58px] sm:h-[64px] lg:h-[74px] relative">
+          {/* Логотип строго слева, всегда видим */}
+          <div className="flex-shrink-0 flex items-center h-full z-40">
+            <Link
+              to="/"
+              className="transition-opacity hover:opacity-80"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
+              <img
+                src="https://cdn.poehali.dev/files/8e9b5768-33e6-4132-af48-c9e933188013.png"
+                alt="IDATA Logo"
+                className="h-9 w-auto sm:h-10"
+              />
+            </Link>
+          </div>
+          {/* Навигация (Desktop / Mobile) */}
+          <div className="flex-1 flex items-center min-w-0 justify-end lg:justify-between ml-2 sm:ml-4 lg:ml-8">
+            <DesktopNavigation
+              dropdownState={dropdownState}
+              updateDropdownState={updateDropdownState}
+              closeAllSubmenus={closeAllSubmenus}
+              cancelCloseTimeout={cancelCloseTimeout}
+              scheduleCloseAllSubmenus={scheduleCloseAllSubmenus}
             />
+            {/* Mobile menu burger (visible on mobile only) */}
+            <div className="lg:hidden ml-auto flex items-center z-40">
+              <MobileMenu
+                isOpen={isMobileMenuOpen}
+                onToggle={handleMobileMenuToggle}
+                onClose={handleMobileMenuClose}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -20,55 +20,50 @@ const SwitchesSubmenu = ({
   dropdownState,
   updateDropdownState,
 }: SwitchesSubmenuProps) => {
-  const handleCorporateLanHover = () => {
-    updateDropdownState({
-      isCorporateLanSubmenuOpen: true,
-      isDataCentersSubmenuOpen: false,
-    });
-  };
-
-  const handleDataCentersHover = () => {
+  // Обработчики ховеров для третьего/четвертого уровня
+  const openSubmenu = (level: keyof DropdownState) =>
     updateDropdownState({
       isCorporateLanSubmenuOpen: false,
-      isDataCentersSubmenuOpen: true,
-    });
-  };
-
-  const handleAccessLevelHover = () => {
-    updateDropdownState({
-      isAccessLevelSubmenuOpen: true,
-      isDistributionLevelSubmenuOpen: false,
-      isSpineLevelSubmenuOpen: false,
-      isLeafLevelSubmenuOpen: false,
-    });
-  };
-
-  const handleDistributionLevelHover = () => {
-    updateDropdownState({
-      isAccessLevelSubmenuOpen: false,
-      isDistributionLevelSubmenuOpen: true,
-      isSpineLevelSubmenuOpen: false,
-      isLeafLevelSubmenuOpen: false,
-    });
-  };
-
-  const handleSpineLevelHover = () => {
-    updateDropdownState({
-      isAccessLevelSubmenuOpen: false,
-      isDistributionLevelSubmenuOpen: false,
-      isSpineLevelSubmenuOpen: true,
-      isLeafLevelSubmenuOpen: false,
-    });
-  };
-
-  const handleLeafLevelHover = () => {
-    updateDropdownState({
+      isDataCentersSubmenuOpen: false,
       isAccessLevelSubmenuOpen: false,
       isDistributionLevelSubmenuOpen: false,
       isSpineLevelSubmenuOpen: false,
-      isLeafLevelSubmenuOpen: true,
+      isLeafLevelSubmenuOpen: false,
+      [level]: true,
     });
-  };
+
+  // Вспомогательные функции для третьего уровня
+  const renderFourthLevel = (
+    series: { name: string; path: string }[]
+  ) => (
+    <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-64 animate-fade-in">
+      <div className="py-2">
+        {series.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className="block px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200"
+          >
+            {item.name}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Уровни меню, которые требуют подменю
+  const isCorporateLan = (item: { path: string }) =>
+    item.path.includes("/corporate-lan");
+  const isDataCenters = (item: { path: string }) =>
+    item.path.includes("/data-centers");
+  const isAccessLevel = (item: { path: string }) =>
+    item.path.includes("/access-level");
+  const isDistributionLevel = (item: { path: string }) =>
+    item.path.includes("/distribution-level");
+  const isSpineLevel = (item: { path: string }) =>
+    item.path.includes("/spine-level");
+  const isLeafLevel = (item: { path: string }) =>
+    item.path.includes("/leaf-level");
 
   return (
     <div className="relative">
@@ -77,11 +72,8 @@ const SwitchesSubmenu = ({
           key={item.path}
           className="relative"
           onMouseEnter={() => {
-            if (item.name.includes("корпоративных ЛВС")) {
-              handleCorporateLanHover();
-            } else if (item.name.includes("центров обработки данных")) {
-              handleDataCentersHover();
-            }
+            if (isCorporateLan(item)) openSubmenu("isCorporateLanSubmenuOpen");
+            if (isDataCenters(item)) openSubmenu("isDataCentersSubmenuOpen");
           }}
         >
           <Link
@@ -98,151 +90,85 @@ const SwitchesSubmenu = ({
             )}
           </Link>
 
-          {/* Третий уровень - Корпоративные ЛВС */}
-          {item.name.includes("корпоративных ЛВС") &&
-            dropdownState.isCorporateLanSubmenuOpen && (
-              <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-72 animate-fade-in">
-                <div className="py-2">
-                  {corporateLanItems.map((subItem) => (
-                    <div
-                      key={subItem.path}
-                      className="relative"
-                      onMouseEnter={() => {
-                        if (subItem.name.includes("уровня доступа")) {
-                          handleAccessLevelHover();
-                        } else if (
-                          subItem.name.includes("уровня распределения")
-                        ) {
-                          handleDistributionLevelHover();
-                        }
-                      }}
+          {/* Корпоративные ЛВС */}
+          {isCorporateLan(item) && dropdownState.isCorporateLanSubmenuOpen && (
+            <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-72 animate-fade-in">
+              <div className="py-2">
+                {corporateLanItems.map((subItem) => (
+                  <div
+                    key={subItem.path}
+                    className="relative"
+                    onMouseEnter={() => {
+                      if (isAccessLevel(subItem))
+                        openSubmenu("isAccessLevelSubmenuOpen");
+                      if (isDistributionLevel(subItem))
+                        openSubmenu("isDistributionLevelSubmenuOpen");
+                    }}
+                  >
+                    <Link
+                      to={subItem.path}
+                      className="flex items-center justify-between px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200 group"
                     >
-                      <Link
-                        to={subItem.path}
-                        className="flex items-center justify-between px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200 group"
-                      >
-                        <span>{subItem.name}</span>
-                        {subItem.hasThirdLevel && (
-                          <Icon
-                            name="ChevronRight"
-                            size={16}
-                            className="text-gray-400 group-hover:text-gray-600"
-                          />
-                        )}
-                      </Link>
-
-                      {/* Четвертый уровень - Серии коммутаторов доступа */}
-                      {subItem.name.includes("уровня доступа") &&
-                        dropdownState.isAccessLevelSubmenuOpen && (
-                          <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-64 animate-fade-in">
-                            <div className="py-2">
-                              {accessLevelSeries.map((series) => (
-                                <Link
-                                  key={series.path}
-                                  to={series.path}
-                                  className="block px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200"
-                                >
-                                  {series.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                      {/* Четвертый уровень - Серии коммутаторов распределения */}
-                      {subItem.name.includes("уровня распределения") &&
-                        dropdownState.isDistributionLevelSubmenuOpen && (
-                          <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-64 animate-fade-in">
-                            <div className="py-2">
-                              {distributionLevelSeries.map((series) => (
-                                <Link
-                                  key={series.path}
-                                  to={series.path}
-                                  className="block px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200"
-                                >
-                                  {series.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                    </div>
-                  ))}
-                </div>
+                      <span>{subItem.name}</span>
+                      {subItem.hasThirdLevel && (
+                        <Icon
+                          name="ChevronRight"
+                          size={16}
+                          className="text-gray-400 group-hover:text-gray-600"
+                        />
+                      )}
+                    </Link>
+                    {/* Уровень доступа */}
+                    {isAccessLevel(subItem) && dropdownState.isAccessLevelSubmenuOpen &&
+                      renderFourthLevel(accessLevelSeries)}
+                    {/* Уровень распределения */}
+                    {isDistributionLevel(subItem) && dropdownState.isDistributionLevelSubmenuOpen &&
+                      renderFourthLevel(distributionLevelSeries)}
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+          )}
 
-          {/* Третий уровень - Центры обработки данных */}
-          {item.name.includes("центров обработки данных") &&
-            dropdownState.isDataCentersSubmenuOpen && (
-              <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-72 animate-fade-in">
-                <div className="py-2">
-                  {dataCentersItems.map((subItem) => (
-                    <div
-                      key={subItem.path}
-                      className="relative"
-                      onMouseEnter={() => {
-                        if (subItem.name.includes("уровня Spine")) {
-                          handleSpineLevelHover();
-                        } else if (subItem.name.includes("уровня Leaf")) {
-                          handleLeafLevelHover();
-                        }
-                      }}
+          {/* ЦОД */}
+          {isDataCenters(item) && dropdownState.isDataCentersSubmenuOpen && (
+            <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-72 animate-fade-in">
+              <div className="py-2">
+                {dataCentersItems.map((subItem) => (
+                  <div
+                    key={subItem.path}
+                    className="relative"
+                    onMouseEnter={() => {
+                      if (isSpineLevel(subItem))
+                        openSubmenu("isSpineLevelSubmenuOpen");
+                      if (isLeafLevel(subItem))
+                        openSubmenu("isLeafLevelSubmenuOpen");
+                    }}
+                  >
+                    <Link
+                      to={subItem.path}
+                      className="flex items-center justify-between px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200 group"
                     >
-                      <Link
-                        to={subItem.path}
-                        className="flex items-center justify-between px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200 group"
-                      >
-                        <span>{subItem.name}</span>
-                        {subItem.hasThirdLevel && (
-                          <Icon
-                            name="ChevronRight"
-                            size={16}
-                            className="text-gray-400 group-hover:text-gray-600"
-                          />
-                        )}
-                      </Link>
-
-                      {/* Четвертый уровень - Серии Spine */}
-                      {subItem.name.includes("уровня Spine") &&
-                        dropdownState.isSpineLevelSubmenuOpen && (
-                          <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-64 animate-fade-in">
-                            <div className="py-2">
-                              {spineLevelSeries.map((series) => (
-                                <Link
-                                  key={series.path}
-                                  to={series.path}
-                                  className="block px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200"
-                                >
-                                  {series.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                      {/* Четвертый уровень - Серии Leaf */}
-                      {subItem.name.includes("уровня Leaf") &&
-                        dropdownState.isLeafLevelSubmenuOpen && (
-                          <div className="absolute left-full top-0 bg-white border border-gray-100 rounded-lg shadow-lg z-50 w-64 animate-fade-in">
-                            <div className="py-2">
-                              {leafLevelSeries.map((series) => (
-                                <Link
-                                  key={series.path}
-                                  to={series.path}
-                                  className="block px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200"
-                                >
-                                  {series.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                    </div>
-                  ))}
-                </div>
+                      <span>{subItem.name}</span>
+                      {subItem.hasThirdLevel && (
+                        <Icon
+                          name="ChevronRight"
+                          size={16}
+                          className="text-gray-400 group-hover:text-gray-600"
+                        />
+                      )}
+                    </Link>
+                    {/* Spine */}
+                    {isSpineLevel(subItem) && dropdownState.isSpineLevelSubmenuOpen &&
+                      renderFourthLevel(spineLevelSeries)}
+                    {/* Leaf */}
+                    {isLeafLevel(subItem) && dropdownState.isLeafLevelSubmenuOpen &&
+                      renderFourthLevel(leafLevelSeries)}
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+          )}
         </div>
       ))}
     </div>

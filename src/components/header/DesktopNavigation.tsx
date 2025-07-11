@@ -29,9 +29,9 @@ const DesktopNavigation = ({
   };
 
   return (
-    <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 mx-0">
+    <nav className="hidden lg:flex items-center space-x-4 xl:space-x-8 mx-0 min-w-0">
       {navigationItems.map((item) => (
-        <div key={item.path} className="relative">
+        <div key={item.path} className="relative min-w-0">
           {item.hasSubmenu ? (
             <ProductsDropdown
               isOpen={dropdownState.isProductsDropdownOpen}
@@ -46,12 +46,18 @@ const DesktopNavigation = ({
           ) : (
             <Link
               to={item.path}
-              className="text-gray-700 hover:text-blue-600 py-2 text-sm lg:text-base font-medium transition-colors whitespace-nowrap flex items-center space-x-1.5 lg:space-x-2 h-10 lg:h-12"
-              style={{ paddingLeft: "12px", paddingRight: "12px" }}
+              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium transition-colors whitespace-nowrap flex items-center space-x-2 h-[44px] lg:h-[54px]"
               onClick={handleNavItemClick}
+              tabIndex={0}
             >
-              <Icon name={item.icon} size={14} className="lg:size-4" />
-              <span>{item.name}</span>
+              {item.icon && (
+                <Icon
+                  name={item.icon as keyof typeof import("lucide-react")}
+                  size={17}
+                  className="lg:size-5"
+                />
+              )}
+              <span className="truncate">{item.name}</span>
             </Link>
           )}
         </div>

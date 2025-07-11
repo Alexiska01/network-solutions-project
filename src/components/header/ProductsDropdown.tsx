@@ -15,7 +15,6 @@ interface ProductsDropdownProps {
 const ProductsDropdown = ({
   isOpen,
   dropdownState,
-  updateDropdownState,
   setActiveSubmenu,
   onMouseEnter,
   onMouseLeave,
@@ -36,9 +35,7 @@ const ProductsDropdown = ({
         <Icon
           name="ChevronDown"
           size={16}
-          className={`transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -59,9 +56,7 @@ const ProductsDropdown = ({
                 <Link
                   to={item.path}
                   className={`flex items-center justify-between px-6 py-4 text-base text-gray-700 hover:bg-gray-50 transition-all duration-200 group ${
-                    dropdownState.activeSubmenu === item.name
-                      ? "bg-gray-50"
-                      : ""
+                    dropdownState.activeSubmenu === item.name ? "bg-gray-50" : ""
                   }`}
                   onMouseEnter={() =>
                     item.hasNestedSubmenu
@@ -71,7 +66,7 @@ const ProductsDropdown = ({
                 >
                   <div className="flex items-center space-x-3">
                     <Icon
-                      name={item.icon}
+                      name={item.icon as any}
                       size={18}
                       className="text-gray-500 group-hover:text-blue-600 transition-colors"
                     />
@@ -90,7 +85,7 @@ const ProductsDropdown = ({
           </div>
 
           {/* Правая панель - подразделы */}
-          {activeItem?.submenuItems && (
+          {activeItem?.submenuItems && Array.isArray(activeItem.submenuItems) && (
             <div className="w-80 py-4">
               {activeItem.submenuItems.map((submenuItem) => (
                 <div key={submenuItem.path} className="mb-6">
@@ -102,7 +97,7 @@ const ProductsDropdown = ({
                   </Link>
 
                   {/* Третий уровень - категории */}
-                  {submenuItem.items && submenuItem.items.length > 0 && (
+                  {Array.isArray(submenuItem.items) && submenuItem.items.length > 0 && (
                     <div className="mt-2 space-y-3">
                       {submenuItem.items.map((categoryItem) => (
                         <div key={categoryItem.path} className="ml-2">
@@ -114,20 +109,19 @@ const ProductsDropdown = ({
                           </Link>
 
                           {/* Четвёртый уровень - серии коммутаторов */}
-                          {categoryItem.items &&
-                            categoryItem.items.length > 0 && (
-                              <div className="mt-1 ml-4 space-y-1">
-                                {categoryItem.items.map((seriesItem) => (
-                                  <Link
-                                    key={seriesItem.path}
-                                    to={seriesItem.path}
-                                    className="block px-3 py-1.5 text-xs text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded border-l-2 border-transparent hover:border-blue-300"
-                                  >
-                                    {seriesItem.name}
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
+                          {Array.isArray(categoryItem.items) && categoryItem.items.length > 0 && (
+                            <div className="mt-1 ml-4 space-y-1">
+                              {categoryItem.items.map((seriesItem: any) => (
+                                <Link
+                                  key={seriesItem.path}
+                                  to={seriesItem.path}
+                                  className="block px-3 py-1.5 text-xs text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded border-l-2 border-transparent hover:border-blue-300"
+                                >
+                                  {seriesItem.name}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

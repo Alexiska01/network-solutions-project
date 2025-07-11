@@ -1,6 +1,23 @@
-export const navigationItems = [
+// src/components/header/navigationData.ts
+
+import type * as LucideIcons from "lucide-react";
+
+/** Описание пункта меню */
+export interface NavItem {
+  name: string;
+  path: string;
+  icon?: keyof typeof LucideIcons;
+  hasSubmenu?: boolean;
+  hasNestedSubmenu?: boolean;
+  hasThirdLevel?: boolean;
+  submenuItems?: NavItem[];
+  items?: NavItem[];
+}
+
+/** Главные пункты хедера */
+export const navigationItems: NavItem[] = [
   {
-    name: "Оборудование",
+    name: "Оборудование iDATA",
     path: "/products",
     hasSubmenu: true,
     icon: "Network",
@@ -8,15 +25,10 @@ export const navigationItems = [
   { name: "Гарантия и сервис", path: "/warranty-service", icon: "ShieldCheck" },
   { name: "Программное обеспечение", path: "/software", icon: "Settings" },
   { name: "Документация", path: "/documentation", icon: "FileText" },
-  { name: "Отраслевые решения", path: "/vertical-solutions", icon: "Building" },
-  {
-    name: "Сетевая архитектура",
-    path: "/network-architecture",
-    icon: "GitBranch",
-  },
 ];
 
-export const productSubmenuItems = [
+/** Всё, что в "Оборудование" */
+export const productSubmenuItems: NavItem[] = [
   {
     name: "Коммутаторы",
     path: "/products/switches",
@@ -32,50 +44,26 @@ export const productSubmenuItems = [
             name: "Уровень доступа",
             path: "/products/switches/corporate-lan/access-level",
             items: [
-              {
-                name: "Коммутаторы серии IDS3530",
-                path: "/products/switches/ids3530",
-              },
-              {
-                name: "Коммутаторы серии IDS3730",
-                path: "/products/switches/ids3730",
-              },
-              {
-                name: "Коммутаторы серии IDS4530",
-                path: "/products/switches/ids4530",
-              },
-              {
-                name: "Коммутаторы серии IDS6012",
-                path: "/products/switches/ids6012",
-              },
+              { name: "Коммутаторы серии IDS3530", path: "/products/switches/ids3530" },
+              { name: "Коммутаторы серии IDS3730", path: "/products/switches/ids3730" },
+              { name: "Коммутаторы серии IDS4530", path: "/products/switches/ids4530" },
+              { name: "Коммутаторы серии IDS6012", path: "/products/switches/ids6012" },
             ],
           },
           {
             name: "Уровень распределения",
             path: "/products/switches/corporate-lan/distribution-level",
             items: [
-              {
-                name: "Коммутаторы серии IDS6010",
-                path: "/products/switches/ids6010",
-              },
-              {
-                name: "Коммутаторы серии IDS6030",
-                path: "/products/switches/ids6030",
-              },
-              {
-                name: "Коммутаторы серии IDS6032",
-                path: "/products/switches/ids6032",
-              },
+              { name: "Коммутаторы серии IDS6010", path: "/products/switches/ids6010" },
+              { name: "Коммутаторы серии IDS6030", path: "/products/switches/ids6030" },
+              { name: "Коммутаторы серии IDS6032", path: "/products/switches/ids6032" },
             ],
           },
           {
             name: "Уровень ядра",
             path: "/products/switches/corporate-lan/core-level",
             items: [
-              {
-                name: "Коммутаторы серии IDS8040",
-                path: "/products/switches/ids8040",
-              },
+              { name: "Коммутаторы серии IDS8040", path: "/products/switches/ids8040" },
             ],
           },
         ],
@@ -89,28 +77,16 @@ export const productSubmenuItems = [
             name: "Уровень Spine",
             path: "/products/switches/data-centers/spine-level",
             items: [
-              {
-                name: "Коммутаторы серии IDS8030",
-                path: "/products/switches/ids8030",
-              },
-              {
-                name: "Коммутаторы серии IDS8010",
-                path: "/products/switches/ids8010",
-              },
-              {
-                name: "Коммутаторы серии IDS6150",
-                path: "/products/switches/ids6150",
-              },
+              { name: "Коммутаторы серии IDS8030", path: "/products/switches/ids8030" },
+              { name: "Коммутаторы серии IDS8010", path: "/products/switches/ids8010" },
+              { name: "Коммутаторы серии IDS6150", path: "/products/switches/ids6150" },
             ],
           },
           {
             name: "Уровень Leaf",
             path: "/products/switches/data-centers/leaf-level",
             items: [
-              {
-                name: "Коммутаторы серии IDS6130",
-                path: "/products/switches/ids6130",
-              },
+              { name: "Коммутаторы серии IDS6130", path: "/products/switches/ids6130" },
             ],
           },
         ],
@@ -152,75 +128,25 @@ export const productSubmenuItems = [
   },
 ];
 
-export const switchesSubmenuItems = [
-  {
-    name: "Корпоративные ЛВС",
-    path: "/products/switches/corporate-lan",
-    hasThirdLevel: true,
-  },
-  {
-    name: "Центры обработки данных",
-    path: "/products/switches/data-centers",
-    hasThirdLevel: true,
-  },
-  {
-    name: "Коммутаторы с сертификацией ТОРП",
-    path: "/products/switches/torp-certified",
-  },
-];
+// --- Для SwitchesSubmenu ---
 
-export const routersSubmenuItems = [
-  {
-    name: "Маршрутизаторы для распределенных сетей связи",
-    path: "/products/routers/distributed-networks",
-  },
-];
+export const switchesSubmenuItems: NavItem[] =
+  productSubmenuItems[0]?.submenuItems || [];
 
-export const corporateLanItems = [
-  {
-    name: "Уровень доступа",
-    path: "/products/switches/corporate-lan/access-level",
-    hasThirdLevel: true,
-  },
-  {
-    name: "Уровень распределения",
-    path: "/products/switches/corporate-lan/distribution-level",
-    hasThirdLevel: true,
-  },
-];
+export const corporateLanItems: NavItem[] =
+  switchesSubmenuItems[0]?.items || [];
 
-export const accessLevelSeries = [
-  { name: "Коммутаторы серии IDS3530", path: "/products/switches/ids3530" },
-  { name: "Коммутаторы серии IDS3730", path: "/products/switches/ids3730" },
-  { name: "Коммутаторы серии IDS4530", path: "/products/switches/ids4530" },
-  { name: "Коммутаторы серии IDS6012", path: "/products/switches/ids6012" },
-];
+export const dataCentersItems: NavItem[] =
+  switchesSubmenuItems[1]?.items || [];
 
-export const distributionLevelSeries = [
-  { name: "Коммутаторы серии IDS6010", path: "/products/switches/ids6010" },
-  { name: "Коммутаторы серии IDS6030", path: "/products/switches/ids6030" },
-  { name: "Коммутаторы серии IDS6032", path: "/products/switches/ids6032" },
-];
+export const accessLevelSeries: NavItem[] =
+  corporateLanItems[0]?.items || [];
 
-export const dataCentersItems = [
-  {
-    name: "Уровень Spine",
-    path: "/products/switches/data-centers/spine-level",
-    hasThirdLevel: true,
-  },
-  {
-    name: "Уровень Leaf",
-    path: "/products/switches/data-centers/leaf-level",
-    hasThirdLevel: true,
-  },
-];
+export const distributionLevelSeries: NavItem[] =
+  corporateLanItems[1]?.items || [];
 
-export const spineLevelSeries = [
-  { name: "Коммутаторы серии IDS8030", path: "/products/switches/ids8030" },
-  { name: "Коммутаторы серии IDS8010", path: "/products/switches/ids8010" },
-  { name: "Коммутаторы серии IDS6150", path: "/products/switches/ids6150" },
-];
+export const spineLevelSeries: NavItem[] =
+  dataCentersItems[0]?.items || [];
 
-export const leafLevelSeries = [
-  { name: "Коммутаторы серии IDS6130", path: "/products/switches/ids6130" },
-];
+export const leafLevelSeries: NavItem[] =
+  dataCentersItems[1]?.items || [];
