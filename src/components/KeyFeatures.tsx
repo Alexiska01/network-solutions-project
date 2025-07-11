@@ -109,11 +109,11 @@ const KeyFeatures = () => {
       transition={{ duration: 0.6 }}
       className="py-12 px-6 md:px-12 bg-white/10 rounded-lg shadow-md backdrop-blur-sm"
     >
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-white mb-4">
+      <div className="text-center mb-10 pt-2">
+        <h2 className="text-2xl font-bold text-white mb-6 tracking-wide">
           Ключевые характеристики коммутаторов серии
         </h2>
-        <div className="w-24 h-0.5 bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto"></div>
+        <div className="w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
       </div>
 
       <motion.div
@@ -127,17 +127,17 @@ const KeyFeatures = () => {
             key={index}
             variants={cardVariants}
             whileHover={{ y: -4, boxShadow: "0px 8px 24px rgba(0,0,0,0.1)" }}
-            className="backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/15 hover:border-white/40 transition-all duration-300"
+            className="backdrop-blur-sm bg-white/[0.15] rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300"
           >
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-6 h-6 rounded-full border border-white/40 flex items-center justify-center">
                 <Icon name={feature.icon} size={16} className="text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="text-base font-semibold text-white mb-2">
+                <h3 className="text-base font-semibold text-white mb-2 tracking-wide">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white/90 leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -163,7 +163,7 @@ const KeyFeatures = () => {
           },
         }}
         whileHover={{ y: -4, boxShadow: "0px 8px 24px rgba(0,0,0,0.1)" }}
-        className="backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/15 hover:border-white/40 transition-all duration-300 mt-6"
+        className="backdrop-blur-sm bg-white/[0.15] rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 mt-6"
       >
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 w-6 h-6 rounded-full border border-white/40 flex items-center justify-center">
@@ -174,10 +174,10 @@ const KeyFeatures = () => {
             />
           </div>
           <div className="flex-1">
-            <h3 className="text-base font-semibold text-white mb-2">
+            <h3 className="text-base font-semibold text-white mb-2 tracking-wide">
               {features[features.length - 1].title}
             </h3>
-            <p className="text-sm text-white/80 leading-relaxed">
+            <p className="text-sm text-white/90 leading-relaxed">
               {features[features.length - 1].description}
             </p>
           </div>
