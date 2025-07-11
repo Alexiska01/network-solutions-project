@@ -23,9 +23,9 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto py-1.5 px-4 sm:px-6 lg:px-[35px]">
+      <div className="max-w-7xl mx-auto py-1.5 px-[35px]">
         {/* Логотип остается вне основного контейнера */}
-        <div className="px-2 sm:px-4">{/* Здесь будет логотип */}</div>
+        <div className="px-4">{/* Здесь будет логотип */}</div>
 
         {/* Навигация в общем контейнере */}
         <div className="max-w-7xl mx-auto py-1.5 px-0">

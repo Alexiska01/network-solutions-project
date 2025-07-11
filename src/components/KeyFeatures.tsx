@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
@@ -11,101 +11,58 @@ type Feature = {
 };
 
 const FEATURES: Feature[] = [
-  {
-    title: "Объединение устройств в стек",
-    description:
-      "Технология стекирования позволяет объединить в одно логическое устройство до 8 коммутаторов. Для стекирования используются стандартные порты 10G SFP+.",
-    icon: "GitBranch",
-  },
-  {
-    title: "Механизмы качества обслуживания",
-    description:
-      "Коммутаторы поддерживают восемь очередей на каждом порту устройства и возможность использования алгоритмов SP, RR, WRR и WDRR для управления очередями.",
-    icon: "Gauge",
-  },
-  {
-    title: "PoE/PoE+ для питания устройств",
-    description:
-      "Поддержка технологий PoE/PoE+ обеспечивает возможность подачи электропитания на подключенные устройства, такие как: точки доступа, телефоны, видеокамеры.",
-    icon: "Zap",
-  },
-  {
-    title: "Информационная безопасность",
-    description:
-      "Для аутентификации пользователей и разграничения прав доступа к сетевым ресурсам используются технологии 802.1X и списки доступа (ACL).",
-    icon: "Shield",
-  },
-  {
-    title: "Технологии высокой доступности",
-    description:
-      "Поддерживаются полный набор протоколов из семейства Spanning Tree, таких как STP, RSTP и MSTP. Кроме того, для работы в кольцевых топологиях, поддерживается ITU-T G.8032.",
-    icon: "Activity",
-  },
-  {
-    title: "Функции сетевого управления",
-    description:
-      "Для удаленного управления устройствами, поддерживается использование технологий SNMP v2 и v3, Netconf и Yang; RMON версий 1, 2, 3, а также Telnet и SSH.",
-    icon: "Settings",
-  },
-  {
-    title: "Быстрая начальная настройка",
-    description:
-      "Благодаря интегрированной поддержке технологии ZTP можно легко добавить новый коммутатор к существующей сети без участия сетевого администратора.",
-    icon: "Wrench",
-  },
-  {
-    title: "Поддержка технологий IPv4 и IPv6",
-    description:
-      "Благодаря аппаратной поддержке IPv4 и IPv6, коммутаторы серии могут быть использованы как при построении IPv4 или IPv6 сетей, так и смешанных сетях.",
-    icon: "Globe",
-  },
-  {
-    title: "Технологии сетевой виртуализации",
-    description:
-      "Благодаря различным поддерживаемым технологиям VXLAN в операционной системе коммутатора, устройства данной серии могут использоваться при построении центров обработки данных.",
-    icon: "Layers",
-  },
-  {
-    title: "Статическая и динамическая маршрутизация",
-    description:
-      "Коммутаторы поддерживают статическую и динамическую маршрутизацию для IPv4 и IPv6.",
-    icon: "Route",
-  },
-  {
-    title: "Технологии MPLS",
-    description:
-      "Поддержка технологии MPLS позволяет использовать коммутаторы серии в качестве пограничных устройств в сетях операторов услуг связи.",
-    icon: "Network",
-  },
+  { title: "Объединение устройств в стек", description: "Технология стекирования позволяет объединить в одно логическое устройство до 8 коммутаторов. Для стекирования используются стандартные порты 10G SFP+.", icon: "GitBranch" },
+  { title: "Механизмы качества обслуживания", description: "Коммутаторы поддерживают восемь очередей на каждом порту устройства и возможность использования алгоритмов SP, RR, WRR и WDRR для управления очередями.", icon: "Gauge" },
+  { title: "PoE/PoE+ для питания устройств", description: "Поддержка технологий PoE/PoE+ обеспечивает возможность подачи электропитания на подключенные устройства, такие как: точки доступа, телефоны, видеокамеры.", icon: "Zap" },
+  { title: "Информационная безопасность", description: "Для аутентификации пользователей и разграничения прав доступа к сетевым ресурсам используются технологии 802.1X и списки доступа (ACL).", icon: "Shield" },
+  { title: "Технологии высокой доступности", description: "Поддерживаются полный набор протоколов из семейства Spanning Tree, таких как STP, RSTP и MSTP. Кроме того, для работы в кольцевых топологиях, поддерживается ITU-T G.8032.", icon: "Activity" },
+  { title: "Функции сетевого управления", description: "Для удаленного управления устройствами, поддерживается использование технологий SNMP v2 и v3, Netconf и Yang; RMON версий 1, 2, 3, а также Telnet и SSH.", icon: "Settings" },
+  { title: "Быстрая начальная настройка", description: "Благодаря интегрированной поддержке технологии ZTP можно легко добавить новый коммутатор к существующей сети без участия сетевого администратора.", icon: "Wrench" },
+  { title: "Поддержка технологий IPv4 и IPv6", description: "Благодаря аппаратной поддержке IPv4 и IPv6, коммутаторы серии могут быть использованы как при построении IPv4 или IPv6 сетей, так и смешанных сетях.", icon: "Globe" },
+  { title: "Технологии сетевой виртуализации", description: "Благодаря различным поддерживаемым технологиям VXLAN в операционной системе коммутатора, устройства данной серии могут использоваться при построении центров обработки данных.", icon: "Layers" },
+  { title: "Статическая и динамическая маршрутизация", description: "Коммутаторы поддерживают статическую и динамическую маршрутизацию для IPv4 и IPv6.", icon: "Route" },
+  { title: "Технологии MPLS", description: "Поддержка технологии MPLS позволяет использовать коммутаторы серии в качестве пограничных устройств в сетях операторов услуг связи.", icon: "Network" },
 ];
 
-function FeatureCard({
-  feature,
-  className = "",
-  idx = 0,
-}: {
-  feature: Feature;
-  className?: string;
-  idx?: number;
-}) {
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.10,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
+    },
+  },
+};
+
+function FeatureCard({ feature, big = false }: { feature: Feature; big?: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.6, delay: idx * 0.08 }}
-      whileHover={{ y: -4 }}
-      className={`flex h-full flex-col justify-start backdrop-blur-md bg-white/[0.16] rounded-2xl p-4 sm:p-5 md:p-6 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${className}`}
+      variants={cardVariants}
+      whileHover={{ y: -6, boxShadow: "0px 8px 24px rgba(0,0,0,0.11)" }}
+      className={`backdrop-blur-md bg-white/[0.16] rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${big ? "md:col-span-2" : ""}`}
     >
-      <div className="flex items-start gap-3 sm:gap-4">
-        <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/30 flex items-center justify-center">
-          <Icon name={feature.icon} size={20} className="text-white sm:size-5" />
+      <div className="flex items-start gap-4">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-white/30 flex items-center justify-center">
+          <Icon name={feature.icon} size={20} className="text-white" />
         </div>
         <div className="flex-1">
-          <h3 className="text-sm sm:text-base font-semibold text-white mb-1 sm:mb-2 tracking-wide">
+          <h3 className="text-base font-semibold text-white mb-2 tracking-wide">
             {feature.title}
           </h3>
-          <p className="text-xs sm:text-sm text-white/90 leading-relaxed">
+          <p className="text-sm text-white/90 leading-relaxed">
             {feature.description}
           </p>
         </div>
@@ -115,37 +72,44 @@ function FeatureCard({
 }
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.1);
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref, inView } = useInViewAnimate(0.3);
+
+  // Флаг — была ли уже анимация
+  const wasAnimated = useRef(false);
 
   useEffect(() => {
-    if (inView) setIsVisible(true);
+    if (inView) wasAnimated.current = true;
   }, [inView]);
+
+  // Анимируем только 1 раз при первом попадании в зону видимости
+  const animateState = wasAnimated.current ? "visible" : inView ? "visible" : "hidden";
 
   return (
     <motion.section
       ref={ref}
       initial={{ opacity: 0, y: 16 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : {}}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="py-10 md:py-16 px-4 md:px-0 bg-white/10 rounded-2xl md:rounded-3xl shadow-xl backdrop-blur-xl max-w-6xl mx-auto mt-10 md:mt-16"
+      className="py-14 px-6 md:px-12 bg-white/10 rounded-3xl shadow-xl backdrop-blur-xl"
     >
-      <div className="text-center mb-6 sm:mb-8 md:mb-10 pt-1 sm:pt-2">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6 tracking-wide drop-shadow-sm px-2">
+      <div className="text-center mb-10 pt-2">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 tracking-wide drop-shadow-sm">
           Ключевые характеристики коммутаторов серии
         </h2>
-        <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
+        <div className="w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80"></div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-7 items-stretch">
-        {FEATURES.slice(0, -1).map((feature, i) => (
-          <FeatureCard feature={feature} key={feature.title} idx={i} />
+
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-7"
+        initial="hidden"
+        animate={animateState}
+        variants={containerVariants}
+      >
+        {FEATURES.slice(0, -1).map((feature) => (
+          <FeatureCard feature={feature} key={feature.title} />
         ))}
-        <FeatureCard
-          feature={FEATURES[FEATURES.length - 1]}
-          className="md:col-span-2"
-          idx={FEATURES.length - 1}
-        />
-      </div>
+        <FeatureCard feature={FEATURES[FEATURES.length - 1]} big />
+      </motion.div>
     </motion.section>
   );
 };

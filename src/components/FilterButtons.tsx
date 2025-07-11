@@ -18,13 +18,13 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
   ];
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6 sm:mb-8 px-4">
+    <div className="flex flex-wrap justify-center gap-4 mb-8">
       {filters.map((filter) => (
         <Button
           key={filter.value}
           variant={activeFilter === filter.value ? "default" : "outline"}
           onClick={() => onFilterChange(filter.value)}
-          className="px-3 sm:px-6 py-2 transition-all duration-300 text-xs sm:text-sm min-w-[85px] sm:min-w-auto"
+          className="px-6 py-2 transition-all duration-300"
         >
           {filter.label}
         </Button>

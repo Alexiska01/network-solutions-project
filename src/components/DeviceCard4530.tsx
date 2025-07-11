@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
 
-// 1. Вспомогательные функции
+// 1. Вспомогательные функции — ВНЕ компонента!
 function getSpecs(model: SwitchModel) {
   const name = model.name.toLowerCase();
   const specs = {
@@ -65,6 +65,21 @@ function formatThroughput(gbps: number) {
   return gbps >= 1000 ? `${(gbps / 1000).toFixed(2)} Тбит/с` : `${gbps} Гбит/с`;
 }
 
+// 2. Варианты анимации для карточки
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: custom ? custom * 0.07 : 0,
+      duration: 0.43,
+      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
+    },
+  }),
+};
+
+// 3. Типизация пропсов
 interface DeviceCard4530Props {
   model: SwitchModel;
   index: number;
@@ -73,7 +88,7 @@ interface DeviceCard4530Props {
   onNavigate: (url: string) => void;
 }
 
-// Без variants — только initial/whileInView/transition (правильно для framer-motion 12+)
+// 4. Сам компонент (function, для декларативности!)
 export default function DeviceCard4530({
   model,
   index,
@@ -85,43 +100,40 @@ export default function DeviceCard4530({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.13 }}
-      transition={{
-        duration: 0.46,
-        delay: index * 0.07,
-        ease: [0.23, 1, 0.32, 1],
-      }}
-      className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 hover:shadow-xl transition-shadow duration-300 h-full flex flex-col overflow-hidden"
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.12 }}
+      custom={index}
+      className="bg-white rounded-2xl border border-gray-200 hover:shadow-xl transition-shadow duration-300 h-full flex flex-col overflow-hidden"
       style={{
         boxShadow:
           "0 2px 12px 0 rgba(34, 84, 120, 0.06), 0 1.5px 6px 0 rgba(0,0,0,0.03)",
       }}
     >
       {/* Заголовок и фичи */}
-      <div className="p-3 sm:p-4 pb-2">
+      <div className="p-4 pb-2">
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex-1 min-w-0">
-            <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 truncate">
+            <h3 className="text-lg font-bold text-gray-900 mb-2 truncate">
               {model.name}
             </h3>
             <div className="flex flex-wrap gap-1">
               {(typeof specs.poeWatts === "string" || specs.poeWatts > 0) && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                  <Icon name="Zap" size={11} className="mr-1 sm:size-3" />
+                  <Icon name="Zap" size={13} className="mr-1" />
                   PoE
                 </span>
               )}
               {specs.sfpOnly && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                  <Icon name="Lightbulb" size={11} className="mr-1 sm:size-3" />
+                  <Icon name="Lightbulb" size={13} className="mr-1" />
                   SFP only
                 </span>
               )}
               {specs.powerSupplies > 1 && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                  <Icon name="Battery" size={11} className="mr-1 sm:size-3" />
+                  <Icon name="Battery" size={13} className="mr-1" />
                   Dual PSU
                 </span>
               )}
@@ -132,14 +144,14 @@ export default function DeviceCard4530({
             checked={isInCompareList}
             onCheckedChange={() => onToggleCompare(model.id)}
             aria-label="Добавить в сравнение"
-            className="mt-0.5 scale-90 sm:scale-100"
+            className="mt-0.5"
           />
         </div>
       </div>
 
       {/* Основные характеристики */}
-      <div className="px-3 sm:px-4 pb-3 sm:pb-4 flex-1">
-        <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
+      <div className="px-4 pb-4 flex-1">
+        <div className="space-y-2 text-sm">
           {specs.baseTports > 0 && (
             <div className="flex justify-between">
               <span className="text-gray-600">Base-T порты:</span>
@@ -187,26 +199,29 @@ export default function DeviceCard4530({
           {(specs.hasConsole || specs.hasUsb || specs.hasOobManagement) && (
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Управление:</span>
-              <div className="flex items-center space-x-1.5 sm:space-x-2">
+              <div className="flex items-center space-x-2">
                 {specs.hasConsole && (
                   <Icon
                     name="Terminal"
-                    size={14}
-                    className="text-gray-500 sm:size-4"
+                    size={16}
+                    className="text-gray-500"
+                    title="RJ45 консоль"
                   />
                 )}
                 {specs.hasUsb && (
                   <Icon
                     name="Usb"
-                    size={14}
-                    className="text-gray-500 sm:size-4"
+                    size={16}
+                    className="text-gray-500"
+                    title="USB порт"
                   />
                 )}
                 {specs.hasOobManagement && (
                   <Icon
                     name="Settings"
-                    size={14}
-                    className="text-gray-500 sm:size-4"
+                    size={16}
+                    className="text-gray-500"
+                    title="OOB-management"
                   />
                 )}
               </div>
@@ -216,20 +231,20 @@ export default function DeviceCard4530({
       </div>
 
       {/* Кнопки действий */}
-      <div className="px-3 sm:px-4 pb-3 sm:pb-4 flex gap-2 mt-auto">
+      <div className="px-4 pb-4 flex gap-2 mt-auto">
         <Button
           variant="outline"
           size="sm"
           onClick={() => onNavigate(model.url)}
-          className="flex-1 text-xs sm:text-sm py-2 sm:py-2.5"
+          className="flex-1"
         >
           Подробнее
         </Button>
         <Button
           size="sm"
           variant="outline"
+          className="flex-1 ml-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-400"
           onClick={() => onNavigate("/partners")}
-          className="flex-1 ml-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-400 text-xs sm:text-sm py-2 sm:py-2.5"
         >
           Выбрать
         </Button>

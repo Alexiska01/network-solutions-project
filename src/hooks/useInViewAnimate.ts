@@ -2,16 +2,24 @@ import { useEffect, useRef, useState } from "react";
 
 export const useInViewAnimate = (threshold: number = 0.2) => {
   const [inView, setInView] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setInView(entry.isIntersecting);
+        if (entry.isIntersecting && !hasAnimated) {
+          setInView(true);
+          setHasAnimated(true);
+          // Отключаем наблюдение после первого срабатывания
+          if (ref.current) {
+            observer.unobserve(ref.current);
+          }
+        }
       },
       {
         threshold,
-        rootMargin: "0px",
+        rootMargin: "-100px", // Запускаем анимацию только когда элемент действительно виден
       },
     );
 
@@ -24,7 +32,7 @@ export const useInViewAnimate = (threshold: number = 0.2) => {
         observer.unobserve(ref.current);
       }
     };
-  }, [threshold]);
+  }, [threshold, hasAnimated]);
 
   return { ref, inView };
 };
