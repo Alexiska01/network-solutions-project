@@ -117,7 +117,7 @@ const KeyFeatures = () => {
       </div>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6"
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={containerVariants}
@@ -130,8 +130,16 @@ const KeyFeatures = () => {
             className="backdrop-blur-sm bg-white/[0.15] rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300"
           >
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full border border-white/40 flex items-center justify-center">
-                <Icon name={feature.icon} size={16} className="text-white" />
+              <div
+                className="flex-shrink-0 w-6 h-6 rounded-full border border-white/40 flex items-center justify-center"
+                aria-label={`Иконка для ${feature.title}`}
+              >
+                <Icon
+                  name={feature.icon}
+                  size={16}
+                  className="text-white"
+                  aria-hidden="true"
+                />
               </div>
               <div className="flex-1">
                 <h3 className="text-base font-semibold text-white mb-2 tracking-wide">
@@ -166,11 +174,15 @@ const KeyFeatures = () => {
         className="backdrop-blur-sm bg-white/[0.15] rounded-xl p-6 border border-white/20 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 mt-6"
       >
         <div className="flex items-start gap-4">
-          <div className="flex-shrink-0 w-6 h-6 rounded-full border border-white/40 flex items-center justify-center">
+          <div
+            className="flex-shrink-0 w-6 h-6 rounded-full border border-white/40 flex items-center justify-center"
+            aria-label={`Иконка для ${features[features.length - 1].title}`}
+          >
             <Icon
               name={features[features.length - 1].icon}
               size={16}
               className="text-white"
+              aria-hidden="true"
             />
           </div>
           <div className="flex-1">
