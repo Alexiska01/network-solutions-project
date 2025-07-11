@@ -1,24 +1,19 @@
 import { useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import Icon from "@/components/ui/icon";
+import { motion } from "framer-motion";
+import { FileText, BookOpen, Info, Shield, Wifi } from "lucide-react";
 
 const Hero = () => {
   const [typingText, setTypingText] = useState("");
   const [showTyping, setShowTyping] = useState(false);
   const [showIDATA, setShowIDATA] = useState(false);
-  const { scrollY } = useScroll();
 
   const fullText =
     " — ведущий производитель коммутаторов, маршрутизаторов и беспроводного оборудования для корпоративных сетей любой сложности.";
 
-  // Parallax эффекты
-  const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
-  const contentY = useTransform(scrollY, [0, 500], [0, -100]);
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowIDATA(true);
-    }, 1000);
+    }, 1200);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -32,365 +27,261 @@ const Hero = () => {
       } else {
         clearInterval(typingInterval);
       }
-    }, 25);
+    }, 30);
     return () => clearInterval(typingInterval);
   }, [showTyping]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { scale: 0.8, opacity: 0, y: 40 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 120,
-        damping: 15,
-      },
-    },
-    hover: {
-      scale: 1.05,
-      y: -8,
-      rotateY: 5,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 20,
-      },
-    },
-  };
-
-  const floatingCards = [
-    {
-      icon: "Shield",
-      title: "Безопасность",
-      subtitle: "Как обеспечить защиту сети?",
-      color: "from-red-400/20 to-pink-400/20",
-      iconColor: "text-red-500",
-      delay: 0.8,
-    },
-    {
-      icon: "FileText",
-      title: "Документация",
-      subtitle: "Техническая документация",
-      color: "from-orange-400/20 to-yellow-400/20",
-      iconColor: "text-orange-500",
-      delay: 1.0,
-    },
-    {
-      icon: "BookOpen",
-      title: "Инструкции",
-      subtitle: "Руководства пользователя",
-      color: "from-green-400/20 to-emerald-400/20",
-      iconColor: "text-green-500",
-      delay: 1.2,
-    },
-    {
-      icon: "Info",
-      title: "Справочные материалы",
-      subtitle: "База знаний",
-      color: "from-blue-400/20 to-cyan-400/20",
-      iconColor: "text-blue-500",
-      delay: 1.4,
-    },
-  ];
-
   return (
-    <section className="bg-gradient-hero text-white py-12 md:py-16 lg:py-20 xl:py-24 relative overflow-hidden min-h-[90vh] flex items-center">
-      {/* Анимированный фон */}
-      <motion.div className="absolute inset-0 z-0" style={{ y: backgroundY }}>
-        {/* Геометрические элементы */}
-        <div className="absolute top-10 left-10 w-20 h-20 border border-white/10 rounded-full animate-pulse" />
-        <div className="absolute top-32 right-20 w-16 h-16 border border-white/15 rotate-45 animate-bounce" />
-        <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-white/5 rounded-full animate-ping" />
-
-        {/* Волны */}
+    <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
           viewBox="0 0 1200 800"
           preserveAspectRatio="xMidYMid slice"
         >
           <defs>
-            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
-              <stop offset="50%" stopColor="rgba(255,255,255,0.2)" />
-              <stop offset="100%" stopColor="rgba(255,255,255,0.1)" />
-            </linearGradient>
+            <pattern
+              id="wave-pattern"
+              x="0"
+              y="0"
+              width="100"
+              height="100"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M0,50 Q25,20 50,50 T100,50"
+                stroke="white"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.15"
+              />
+            </pattern>
           </defs>
-
-          {/* Анимированные волны */}
-          <motion.path
+          <path
             d="M0,200 Q300,100 600,200 T1200,200"
-            stroke="url(#waveGradient)"
-            strokeWidth="2"
-            fill="none"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 2, ease: "easeInOut" }}
-          />
-          <motion.path
-            d="M0,300 Q400,150 800,300 T1200,300"
-            stroke="rgba(255,255,255,0.15)"
+            stroke="white"
             strokeWidth="1.5"
             fill="none"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 2.5, delay: 0.5, ease: "easeInOut" }}
+            opacity="0.2"
           />
-
-          {/* Сетевые узлы */}
-          <motion.circle
-            cx="200"
-            cy="250"
-            r="4"
-            fill="rgba(255,255,255,0.3)"
-            initial={{ scale: 0 }}
-            animate={{ scale: [0, 1.2, 1] }}
-            transition={{ duration: 1, delay: 1 }}
+          <path
+            d="M0,300 Q400,150 800,300 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.15"
           />
-          <motion.circle
-            cx="600"
-            cy="200"
-            r="6"
-            fill="rgba(255,255,255,0.4)"
-            initial={{ scale: 0 }}
-            animate={{ scale: [0, 1.2, 1] }}
-            transition={{ duration: 1, delay: 1.2 }}
+          <path
+            d="M0,400 Q200,250 400,400 T800,400 Q1000,350 1200,400"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
           />
-          <motion.circle
-            cx="1000"
-            cy="280"
-            r="5"
-            fill="rgba(255,255,255,0.35)"
-            initial={{ scale: 0 }}
-            animate={{ scale: [0, 1.2, 1] }}
-            transition={{ duration: 1, delay: 1.4 }}
+          <path
+            d="M0,500 Q350,350 700,500 T1200,500"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.18"
           />
+          <path
+            d="M0,600 Q150,450 300,600 T600,600 Q750,550 900,600 T1200,600"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.12"
+          />
+          <path
+            d="M0,0 Q400,200 800,100 T1200,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.1"
+          />
+          <path
+            d="M0,800 Q300,600 600,700 T1200,500"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M100,150 L350,320 M350,320 L600,250 M600,250 L850,380 M850,380 L1100,300"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.08"
+          />
+          <path
+            d="M200,450 L450,280 M450,280 L700,420 M700,420 L950,250"
+            stroke="white"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.06"
+          />
+          <circle cx="800" cy="380" r="110" fill="rgba(77, 177, 212, 0.6)" />
         </svg>
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10"
-        style={{ y: contentY }}
-      >
-        <motion.div
-          className="grid lg:grid-cols-2 gap-12 items-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Левая колонка */}
-          <div className="space-y-8">
-            <motion.div variants={itemVariants}>
-              <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent"
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 15,
-                  duration: 1,
-                }}
-              >
-                Профессиональные
-                <br />
-                <span className="bg-gradient-to-r from-blue-200 to-white bg-clip-text">
-                  решения для сетевой
-                </span>
-                <br />
-                <span className="text-blue-100">инфраструктуры</span>
-              </motion.h1>
-            </motion.div>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 items-center px-[21px]">
+          <div className="flex flex-col justify-between min-h-[260px]">
+            <motion.h1
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 70, damping: 15 }}
+              className="text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-4 leading-tight"
+            >
+              Профессиональные решения для сетевой инфраструктуры
+            </motion.h1>
 
-            <motion.div variants={itemVariants} className="relative">
-              <p className="text-lg md:text-xl lg:text-2xl text-blue-100 leading-relaxed">
+            <div className="relative max-w-2xl">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl mb-4 text-blue-100 leading-relaxed min-h-[3em] whitespace-pre-wrap">
                 {showIDATA && (
                   <motion.span
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 15,
-                      duration: 0.8,
-                    }}
+                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 70, damping: 15 }}
                     onAnimationComplete={() => setShowTyping(true)}
-                    className="inline-block font-bold text-white"
+                    className="inline-block"
                   >
                     iDATA
                   </motion.span>
                 )}
-                {showTyping && (
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {typingText}
-                  </motion.span>
-                )}
+                {showTyping && typingText}
                 {showTyping && typingText.length < fullText.length && (
-                  <motion.span
-                    className="inline-block w-0.5 h-6 bg-blue-300 ml-1"
-                    animate={{ opacity: [0, 1, 0] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  />
+                  <span className="animate-pulse">|</span>
                 )}
               </p>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <motion.button
-                className="group bg-white text-[#0065B3] px-8 py-4 rounded-xl text-lg font-semibold relative overflow-hidden transition-all duration-300"
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
-                }}
-                whileTap={{ scale: 0.95 }}
+              <span
+                className="invisible absolute pointer-events-none"
+                aria-hidden="true"
               >
-                <span className="relative z-10">Техническая поддержка</span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-brand opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  whileHover={{ scale: 1.1 }}
-                />
-              </motion.button>
-
-              <motion.button
-                className="group border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold relative overflow-hidden transition-all duration-300"
-                whileHover={{
-                  scale: 1.05,
-                  borderColor: "transparent",
-                  boxShadow: "0 20px 40px rgba(255,255,255,0.1)",
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10 group-hover:text-white transition-colors">
-                  Консультация
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-brand opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  whileHover={{ scale: 1.1 }}
-                />
-              </motion.button>
-            </motion.div>
-          </div>
-
-          {/* Правая колонка - карточки */}
-          <motion.div
-            className="relative h-full flex items-center justify-center"
-            variants={containerVariants}
-          >
-            <div className="grid grid-cols-2 gap-6 w-full max-w-lg">
-              {floatingCards.map((card, index) => (
-                <motion.div
-                  key={card.title}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  whileHover="hover"
-                  className={`
-                    relative p-6 rounded-2xl backdrop-blur-xl border border-white/20
-                    bg-gradient-to-br ${card.color} shadow-2xl cursor-pointer
-                    ${index === 0 ? "col-span-2" : ""}
-                    ${index === 3 ? "col-span-2" : ""}
-                  `}
-                  style={{
-                    transformStyle: "preserve-3d",
-                    backfaceVisibility: "hidden",
-                  }}
-                  transition={{ delay: card.delay }}
-                >
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div
-                        className={`p-2 rounded-lg bg-white/20 ${card.iconColor}`}
-                      >
-                        <Icon name={card.icon as any} size={20} />
-                      </div>
-                      <h3 className="font-bold text-gray-800 text-lg">
-                        {card.title}
-                      </h3>
-                    </div>
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      {card.subtitle}
-                    </p>
-
-                    {/* Декоративные элементы */}
-                    <div className="absolute top-2 right-2">
-                      <div className="w-2 h-2 bg-white/30 rounded-full" />
-                    </div>
-                    <div className="absolute bottom-2 left-2">
-                      <div className="w-1 h-1 bg-white/20 rounded-full" />
-                    </div>
-                  </div>
-
-                  {/* Градиентная подсветка при ховере */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 rounded-2xl"
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.div>
-              ))}
+                iDATA{fullText}
+              </span>
             </div>
 
-            {/* Дополнительные плавающие элементы */}
-            <motion.div
-              className="absolute -top-4 -right-4 w-8 h-8 bg-white/10 rounded-full"
-              animate={{
-                y: [0, -10, 0],
-                rotate: [0, 180, 360],
+            <div className="flex flex-col sm:flex-row gap-3">
+              <motion.button
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="bg-white text-[#0065B3] px-6 py-3 rounded-md text-sm font-medium hover:bg-gradient-brand hover:text-white transition-all"
+              >
+                Техническая поддержка
+              </motion.button>
+              <motion.button
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.6 }}
+                className="border border-white text-white px-6 py-3 rounded-md text-sm font-medium hover:bg-gradient-brand hover:border-gradient-brand transition-all"
+              >
+                Консультация
+              </motion.button>
+            </div>
+          </div>
+
+          <div className="w-full flex flex-col items-start gap-6 px-[5px]">
+            <div className="flex items-start gap-4 w-full">
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                style={{
+                  backgroundColor: "rgba(255, 99, 132, 0.12)",
+                  color: "#000000",
+                }}
+                className="px-4 py-4 rounded-xl shadow-lg w-64 text-sm font-medium flex flex-col gap-1 my-[23px] text-[#313335]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <div
+                  className="flex items-center gap-2 mb-1"
+                  style={{ color: "#000000" }}
+                >
+                  <Shield className="w-4 h-4" />
+                  Безопасность
+                </div>
+                <p className="font-normal" style={{ color: "#000000" }}>
+                  Как обеспечить защиту сети?
+                </p>
+              </motion.a>
+
+              <div className="flex flex-col gap-3">
+                {[
+                  {
+                    icon: FileText,
+                    label: "Документация",
+                    color: "rgba(255, 240, 213, 0.52)",
+                  },
+                  {
+                    icon: BookOpen,
+                    label: "Инструкции",
+                    color: "rgba(255, 240, 213, 0.52)",
+                  },
+                  {
+                    icon: Info,
+                    label: "Справочные материалы",
+                    color: "rgba(255, 240, 213, 0.52)",
+                  },
+                ].map(({ icon: Icon, label, color }, i) => (
+                  <motion.a
+                    key={label}
+                    href="#"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    style={{ backgroundColor: color, color: "#000000" }}
+                    className="flex items-center gap-2 px-4 rounded-lg text-sm shadow-md font-bold py-2.5 text-[#313335]"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {label}
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+
+            <motion.a
+              href="#"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                backgroundColor: "rgba(54, 162, 235, 0.12)",
+                color: "#000000",
               }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="absolute -bottom-6 -left-6 w-6 h-6 bg-blue-300/20 rounded-full"
-              animate={{
-                y: [0, 15, 0],
-                x: [0, 5, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-            />
-          </motion.div>
-        </motion.div>
-      </motion.div>
+              className="rounded-xl shadow-xl p-6 w-full max-w-md mx-[52px] font-semibold"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 }}
+            >
+              <div
+                className="flex items-center gap-2 mb-2"
+                style={{ color: "#000000" }}
+              >
+                <Wifi className="w-5 h-5" style={{ color: "#000000" }} />
+                <span className="text-xl font-semibold text-[#313335]">
+                  Wi-Fi
+                </span>
+              </div>
+              <p
+                className="text-sm text-[#313335]"
+                style={{ color: "#000000" }}
+              >
+                Беспроводные точки доступа
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="h-4 bg-blue-200 rounded" />
+                <div className="h-4 bg-blue-300 rounded" />
+                <div className="h-4 bg-blue-100 rounded col-span-2" />
+              </div>
+            </motion.a>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
