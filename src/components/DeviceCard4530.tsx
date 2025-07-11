@@ -128,18 +128,12 @@ const DeviceCard4530 = ({
               )}
             </div>
           </div>
-          <div className="flex items-center space-x-2 ml-4">
+          <div className="ml-4">
             <Checkbox
               id={`compare-${model.id}`}
               checked={isInCompareList}
               onCheckedChange={() => onToggleCompare(model.id)}
             />
-            <label
-              htmlFor={`compare-${model.id}`}
-              className="text-sm text-gray-600"
-            >
-              Сравнить
-            </label>
           </div>
         </div>
       </div>
