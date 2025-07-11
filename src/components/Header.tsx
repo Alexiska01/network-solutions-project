@@ -41,6 +41,7 @@ const Header = () => {
               />
             </Link>
           </div>
+
           {/* Навигация (Desktop / Mobile) */}
           <div className="flex-1 flex items-center min-w-0 justify-end lg:justify-between ml-2 sm:ml-4 lg:ml-8">
             <DesktopNavigation
@@ -50,6 +51,7 @@ const Header = () => {
               cancelCloseTimeout={cancelCloseTimeout}
               scheduleCloseAllSubmenus={scheduleCloseAllSubmenus}
             />
+
             {/* Mobile menu burger (visible on mobile only) */}
             <div className="lg:hidden ml-auto flex items-center z-40">
               <MobileMenu
