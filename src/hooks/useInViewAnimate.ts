@@ -11,15 +11,17 @@ export const useInViewAnimate = (threshold: number = 0.2) => {
         if (entry.isIntersecting && !hasAnimated) {
           setInView(true);
           setHasAnimated(true);
-          // Отключаем наблюдение после первого срабатывания
-          if (ref.current) {
-            observer.unobserve(ref.current);
-          }
+          // Задержка перед отключением для iOS
+          setTimeout(() => {
+            if (ref.current) {
+              observer.unobserve(ref.current);
+            }
+          }, 100);
         }
       },
       {
         threshold,
-        rootMargin: "-100px", // Запускаем анимацию только когда элемент действительно виден
+        rootMargin: "-50px", // Менее агрессивный отступ для iOS
       },
     );
 

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
@@ -90,14 +90,13 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 24, scale: 0.97 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: {
-      duration: 0.5,
-      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
+      duration: 0.6,
+      ease: "easeOut",
     },
   },
 };
@@ -112,7 +111,7 @@ function FeatureCard({
   return (
     <motion.div
       variants={cardVariants}
-      whileHover={{ y: -6, boxShadow: "0px 8px 24px rgba(0,0,0,0.11)" }}
+      whileHover={{ y: -4 }}
       className={`backdrop-blur-md bg-white/[0.16] rounded-2xl p-4 sm:p-5 md:p-6 border border-white/20 shadow-lg hover:bg-white/[0.21] hover:border-white/40 transition-all duration-300 ${big ? "sm:col-span-2" : ""}`}
     >
       <div className="flex items-start gap-3 sm:gap-4">
@@ -137,21 +136,32 @@ function FeatureCard({
 }
 
 const KeyFeatures = () => {
-  const { ref, inView } = useInViewAnimate(0.3);
+  const { ref, inView } = useInViewAnimate(0.1);
 
   // Флаг — была ли уже анимация
   const wasAnimated = useRef(false);
+  const [forceVisible, setForceVisible] = useState(false);
 
   useEffect(() => {
-    if (inView) wasAnimated.current = true;
+    if (inView && !wasAnimated.current) {
+      wasAnimated.current = true;
+      setForceVisible(true);
+    }
+
+    // Fallback для мобильных устройств - принудительная анимация через 2 секунды
+    const fallbackTimer = setTimeout(() => {
+      if (!wasAnimated.current) {
+        setForceVisible(true);
+        wasAnimated.current = true;
+      }
+    }, 2000);
+
+    return () => clearTimeout(fallbackTimer);
   }, [inView]);
 
   // Анимируем только 1 раз при первом попадании в зону видимости
-  const animateState = wasAnimated.current
-    ? "visible"
-    : inView
-      ? "visible"
-      : "hidden";
+  const animateState =
+    inView || wasAnimated.current || forceVisible ? "visible" : "hidden";
 
   return (
     <motion.section
