@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import MetricCard from "./MetricCard";
-import HeroDeviceCard from "./DeviceCard";
+import DeviceCard from "./DeviceCard";
 import { MOBILE_METRICS, MOBILE_DEVICES } from "../constants";
 import { metricVariants, deviceVariants } from "../animations";
 
@@ -147,7 +147,7 @@ const MobileInterface = () => {
         transition={{ delay: 1.6 }}
       >
         {MOBILE_DEVICES.map((device, index) => (
-          <HeroDeviceCard
+          <DeviceCard
             key={device.label}
             device={device}
             index={index}

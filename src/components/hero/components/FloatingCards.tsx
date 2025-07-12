@@ -2,91 +2,126 @@ import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 
 /**
- * Компонент плавающих карточек (только для десктопа)
+ * Плавающие карточки для Hero секции (только для десктопа)
  */
 const FloatingCards = () => {
+  const cards = [
+    {
+      icon: "Shield",
+      value: "256-bit",
+      label: "Encryption",
+      position: { top: "10%", right: "-10%" },
+      color: "emerald",
+      delay: 0.5,
+    },
+    {
+      icon: "Zap",
+      value: "1Gbps",
+      label: "Speed",
+      position: { top: "50%", left: "-15%" },
+      color: "blue",
+      delay: 1.2,
+    },
+    {
+      icon: "Users",
+      value: "1024",
+      label: "Users",
+      position: { bottom: "20%", right: "-5%" },
+      color: "purple",
+      delay: 1.8,
+    },
+  ];
+
   return (
-    <div className="hidden lg:block">
-      <motion.div
-        className="absolute -top-20 -left-16 bg-gradient-to-br from-green-500/20 to-emerald-600/10 backdrop-blur-2xl border border-green-400/30 rounded-2xl p-4 shadow-2xl"
-        initial={{ opacity: 0, x: -120, rotate: -15, scale: 0.8 }}
-        animate={{ opacity: 1, x: 0, rotate: 0, scale: 1 }}
-        transition={{
-          delay: 2.5,
-          type: "spring",
-          stiffness: 80,
-          damping: 15,
-        }}
-        whileHover={{
-          scale: 1.15,
-          rotate: 8,
-          y: -8,
-          boxShadow: "0 25px 50px rgba(34, 197, 94, 0.3)",
-          borderColor: "rgba(34, 197, 94, 0.6)",
-        }}
-      >
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-green-500/30 rounded-lg shadow-lg">
-            <Icon name="TrendingUp" size={18} className="text-green-300" />
+    <div className="hidden xl:block">
+      {cards.map((card, index) => (
+        <motion.div
+          key={card.label}
+          className="absolute z-20 bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-xl rounded-xl p-4 border border-white/30 shadow-xl"
+          style={card.position}
+          initial={{
+            opacity: 0,
+            scale: 0.5,
+            rotateY: -90,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            rotateY: 0,
+          }}
+          transition={{
+            delay: card.delay,
+            type: "spring",
+            stiffness: 100,
+            damping: 15,
+            duration: 1.2,
+          }}
+          whileHover={{
+            scale: 1.1,
+            rotateY: 5,
+            z: 50,
+            boxShadow: "0 25px 50px -10px rgba(0,0,0,0.4)",
+          }}
+        >
+          <div className="text-center">
+            <motion.div
+              className={`w-8 h-8 mx-auto mb-2 p-1.5 rounded-lg bg-gradient-to-br from-${card.color}-500/30 to-${card.color}-600/20 shadow-lg`}
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Icon
+                name={card.icon as any}
+                size={20}
+                className={`text-${card.color}-300`}
+              />
+            </motion.div>
+            <motion.div
+              className="text-white font-bold text-sm mb-1"
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: card.delay + 0.3 }}
+            >
+              {card.value}
+            </motion.div>
+            <motion.div
+              className="text-white/70 text-xs"
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: card.delay + 0.5 }}
+            >
+              {card.label}
+            </motion.div>
           </div>
-          <div>
-            <div className="text-white text-sm font-bold">+24%</div>
-            <div className="text-green-200 text-xs">Производительность</div>
-          </div>
-        </div>
-      </motion.div>
 
-      <motion.div
-        className="absolute -bottom-20 -right-16 bg-gradient-to-br from-blue-500/20 to-cyan-600/10 backdrop-blur-2xl border border-blue-400/30 rounded-2xl p-4 shadow-2xl"
-        initial={{ opacity: 0, x: 120, rotate: 15, scale: 0.8 }}
-        animate={{ opacity: 1, x: 0, rotate: 0, scale: 1 }}
-        transition={{
-          delay: 2.8,
-          type: "spring",
-          stiffness: 80,
-          damping: 15,
-        }}
-        whileHover={{
-          scale: 1.15,
-          rotate: -8,
-          y: -8,
-          boxShadow: "0 25px 50px rgba(59, 130, 246, 0.3)",
-          borderColor: "rgba(59, 130, 246, 0.6)",
-        }}
-      >
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-blue-500/30 rounded-lg shadow-lg">
-            <Icon name="Shield" size={18} className="text-blue-300" />
-          </div>
-          <div>
-            <div className="text-white text-sm font-bold">99.9%</div>
-            <div className="text-blue-200 text-xs">Защищенность</div>
-          </div>
-        </div>
-      </motion.div>
+          {/* Светящаяся граница */}
+          <motion.div
+            className={`absolute inset-0 rounded-xl bg-gradient-to-br from-${card.color}-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+          />
 
-      <motion.div
-        className="absolute -top-8 -right-20 bg-gradient-to-br from-purple-500/20 to-pink-600/10 backdrop-blur-2xl border border-purple-400/30 rounded-xl p-3 shadow-2xl"
-        initial={{ opacity: 0, y: -50, rotate: 20, scale: 0.7 }}
-        animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
-        transition={{
-          delay: 3.1,
-          type: "spring",
-          stiffness: 100,
-          damping: 15,
-        }}
-        whileHover={{
-          scale: 1.1,
-          rotate: 5,
-          y: -5,
-          boxShadow: "0 20px 40px rgba(168, 85, 247, 0.3)",
-        }}
-      >
-        <div className="flex items-center gap-2">
-          <Icon name="Zap" size={16} className="text-purple-300" />
-          <span className="text-white text-sm font-bold">0.8ms</span>
-        </div>
-      </motion.div>
+          {/* Плавающие частицы вокруг карточки */}
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className={`absolute w-1 h-1 bg-${card.color}-400 rounded-full`}
+              style={{
+                left: `${20 + i * 30}%`,
+                top: `${10 + i * 20}%`,
+              }}
+              animate={{
+                y: [0, -10, 0],
+                opacity: [0.3, 1, 0.3],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 2 + i * 0.5,
+                repeat: Infinity,
+                delay: card.delay + i * 0.2,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </motion.div>
+      ))}
     </div>
   );
 };

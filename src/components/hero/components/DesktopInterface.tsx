@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import MetricCard from "./MetricCard";
-import HeroDeviceCard from "./DeviceCard";
+import DeviceCard from "./DeviceCard";
 import { DESKTOP_METRICS, HERO_DEVICES } from "../constants";
 import {
   desktopConsoleVariants,
@@ -144,7 +144,7 @@ const DesktopInterface = () => {
             transition={{ delay: 2 }}
           >
             {HERO_DEVICES.map((device, index) => (
-              <HeroDeviceCard
+              <DeviceCard
                 key={device.label}
                 device={device}
                 index={index}

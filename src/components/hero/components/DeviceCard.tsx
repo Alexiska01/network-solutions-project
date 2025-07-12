@@ -12,7 +12,7 @@ interface DeviceCardProps {
 /**
  * Компонент карточки устройства для Hero секции
  */
-const HeroDeviceCard = ({
+const DeviceCard = ({
   device,
   index,
   isMobile = false,
@@ -86,4 +86,4 @@ const HeroDeviceCard = ({
   );
 };
 
-export default HeroDeviceCard;
+export default DeviceCard;
