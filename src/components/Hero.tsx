@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
+import { HeroContent } from "@/components/hero/components/HeroContent";
+import { HeroInterface } from "@/components/hero/components/HeroInterface";
 import { useHeroAnimations } from "@/components/hero/hooks/useHeroAnimations";
+import { containerVariants } from "@/components/hero/animations";
 
 const Hero = () => {
   const { backgroundY, contentY } = useHeroAnimations();
@@ -16,22 +19,18 @@ const Hero = () => {
         className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10 w-full"
         style={{ y: contentY }}
       >
-        <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[600px]">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4">
-              Профессиональные решения для сетевой инфраструктуры
-            </h1>
-            <p className="text-xl mb-8">
-              iDATA — ведущий производитель коммутаторов и сетевого оборудования
-            </p>
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-              Оборудование
-            </button>
-          </div>
-          <div className="text-center">
-            <p className="text-lg">Надёжные сетевые решения</p>
-          </div>
-        </div>
+        <motion.div
+          className="grid lg:grid-cols-2 gap-16 items-center min-h-[600px]"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Левая колонка - основной контент */}
+          <HeroContent />
+
+          {/* Правая колонка - интерактивный интерфейс */}
+          <HeroInterface />
+        </motion.div>
       </motion.div>
     </section>
   );
