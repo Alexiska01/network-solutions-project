@@ -271,7 +271,7 @@ const Hero = () => {
               className="flex flex-col sm:flex-row gap-4 mt-auto relative pb-8"
             >
               <motion.button
-                className="group relative bg-gradient-to-r from-white to-blue-50 text-[#0065B3] px-8 py-4 rounded-2xl text-lg font-bold overflow-hidden transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(59,130,246,0.3)] z-10"
+                className="group relative bg-gradient-to-r from-white to-blue-50 hover:from-transparent hover:to-transparent text-[#0065B3] px-8 py-4 rounded-2xl text-lg font-bold overflow-hidden transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(59,130,246,0.3)] z-10"
                 whileHover={{
                   scale: 1.05,
                   rotateY: -2,
@@ -316,11 +316,11 @@ const Hero = () => {
 
                 <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
                   <Icon
-                    name="Headphones"
+                    name="HardDrive"
                     size={20}
                     className="group-hover:text-white transition-colors"
                   />
-                  Техническая поддержка
+                  Оборудование
                 </span>
               </motion.button>
 
