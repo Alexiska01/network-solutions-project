@@ -91,16 +91,28 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     if (item.path === "/products" && item.hasSubmenu) {
       e.preventDefault();
       navigateToLevel({
-        title: "Оборудование",
+        title: "Оборудование iDATA",
         items: productSubmenuItems,
       });
     } else if (item.path === "/contacts") {
       e.preventDefault();
       onClose();
-      const contactsSection = document.getElementById("contacts-section");
-      if (contactsSection) {
-        contactsSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      // Скролл к секции контактов с небольшой задержкой для закрытия меню
+      setTimeout(() => {
+        const contactsSection = document.getElementById("contacts-section");
+        if (contactsSection) {
+          contactsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        } else {
+          // Если секции нет на странице, переходим к концу страницы
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
     } else if (item.hasThirdLevel && item.items) {
       e.preventDefault();
       toggleExpanded(item.path);
@@ -213,11 +225,16 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               >
                 {item.name}
               </span>
-              {item.hasSubmenu && level === 0 && (
+              {level === 0 && (
                 <span className="text-xs text-gray-500 block mt-0.5">
-                  {item.path === "/products"
-                    ? "Коммутаторы, маршрутизаторы"
-                    : ""}
+                  {item.path === "/products" && "Коммутаторы, маршрутизаторы"}
+                  {item.path === "/warranty-service" &&
+                    "Техподдержка и обслуживание"}
+                  {item.path === "/software" && "ОС iDATA и утилиты"}
+                  {item.path === "/documentation" &&
+                    "Руководства и спецификации"}
+                  {item.path === "/partners" && "Сертифицированные партнеры"}
+                  {item.path === "/contacts" && "Связаться с нами"}
                 </span>
               )}
             </div>

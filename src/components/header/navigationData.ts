@@ -26,6 +26,7 @@ export const navigationItems: NavItem[] = [
   { name: "Программное обеспечение", path: "/software", icon: "Settings" },
   { name: "Документация", path: "/documentation", icon: "FileText" },
   { name: "Партнеры", path: "/partners", icon: "Users" },
+  { name: "Контакты", path: "/contacts", icon: "Phone" },
 ];
 
 /** Всё, что в "Оборудование" */
