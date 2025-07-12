@@ -17,15 +17,13 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Логотипы партнеров для предварительной загрузки
-const PARTNER_LOGOS = [
+// Все изображения для предварительной загрузки
+const PRELOAD_IMAGES = [
+  // Логотипы партнеров
   "https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png", // Инфосэл
   "https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png", // Инлайн ГРУП
   "https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png", // КРОК
-];
-
-// Изображения из public/img для предварительной загрузки
-const IMG_FILES = [
+  // Схемы из public/img
   "/img/Иерархия_3530.png",
   "/img/Иерархия_3730.png",
   "/img/Иерархия_4530(1).png",
@@ -34,25 +32,17 @@ const IMG_FILES = [
 ];
 
 const App = () => {
-  // Предварительная загрузка логотипов партнеров и изображений
+  // Предварительная загрузка всех изображений
   useEffect(() => {
     const preloadImages = () => {
-      // Загружаем логотипы партнеров
-      PARTNER_LOGOS.forEach((logoUrl) => {
+      PRELOAD_IMAGES.forEach((imageUrl) => {
         const img = new Image();
-        img.src = logoUrl;
-      });
-
-      // Загружаем изображения из public/img
-      IMG_FILES.forEach((imgPath) => {
-        const img = new Image();
-        img.src = imgPath;
+        img.src = imageUrl;
       });
     };
 
-    // Запускаем загрузку через 1 секунду после загрузки сайта
-    const timer = setTimeout(preloadImages, 1000);
-    return () => clearTimeout(timer);
+    // Запускаем загрузку сразу после монтирования компонента
+    preloadImages();
   }, []);
 
   return (
