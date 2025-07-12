@@ -3,28 +3,21 @@ import HeroTitle from "./HeroTitle";
 import HeroSubtitle from "./HeroSubtitle";
 import HeroButtons from "./HeroButtons";
 import HeroDecorations from "./HeroDecorations";
+import { useHeroAnimations } from "../hooks/useHeroAnimations";
 import { itemVariants } from "../animations";
-
-interface HeroContentProps {
-  showIDATA: boolean;
-  showTyping: boolean;
-  typingText: string;
-  isTypingComplete: boolean;
-  onShowTyping: () => void;
-  onProductsClick: () => void;
-}
 
 /**
  * Левая колонка Hero секции с основным контентом
  */
-const HeroContent = ({
-  showIDATA,
-  showTyping,
-  typingText,
-  isTypingComplete,
-  onShowTyping,
-  onProductsClick,
-}: HeroContentProps) => {
+const HeroContent = () => {
+  const {
+    showIDATA,
+    showTyping,
+    typingText,
+    isTypingComplete,
+    setShowTyping,
+    scrollToProducts,
+  } = useHeroAnimations();
   return (
     <div className="flex flex-col h-full min-h-[520px] relative overflow-visible">
       <HeroDecorations />
@@ -38,11 +31,11 @@ const HeroContent = ({
         showTyping={showTyping}
         typingText={typingText}
         isTypingComplete={isTypingComplete}
-        onShowTyping={onShowTyping}
+        onShowTyping={() => setShowTyping(true)}
       />
 
       {/* Кнопки - премиальный дизайн мирового уровня */}
-      <HeroButtons onProductsClick={onProductsClick} />
+      <HeroButtons onProductsClick={scrollToProducts} />
     </div>
   );
 };
