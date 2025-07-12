@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import type { MenuItemProps } from "./types";
@@ -16,6 +16,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   onClose,
   setActiveItem,
 }) => {
+  const navigate = useNavigate();
+
   const hasChildren =
     item.hasSubmenu ||
     item.submenuItems ||
@@ -252,9 +254,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
                         />
                       </button>
                     ) : (
-                      <button
-                        type="button"
-                        className="w-full text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 transition-colors duration-200 flex items-center gap-3 min-h-[48px] border-none outline-none"
+                      <Link
+                        to={subItem.path}
+                        className="w-full text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 transition-colors duration-200 flex items-center gap-3 min-h-[48px] no-underline block"
                         onClick={() => {
                           setActiveItem(subItem.path);
                           onClose();
@@ -273,7 +275,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                           size={14}
                           className="text-gray-400"
                         />
-                      </button>
+                      </Link>
                     )}
                   </div>
                 ))}
