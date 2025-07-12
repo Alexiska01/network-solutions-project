@@ -39,7 +39,7 @@ export const navigationItems: NavItem[] = [
 export const productSubmenuItems: NavItem[] = [
   {
     name: "Коммутаторы",
-    path: "/products/switches",
+    path: "/switches",
     hasNestedSubmenu: true,
     icon: "Network",
     description: "Управляемые коммутаторы для корпоративных сетей и ЦОД",
