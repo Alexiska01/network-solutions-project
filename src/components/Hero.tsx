@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { HeroContent } from "@/components/hero/components/HeroContent";
-import { HeroInterface } from "@/components/hero/components/HeroInterface";
+import HeroContent from "@/components/hero/components/HeroContent";
+import HeroInterface from "@/components/hero/components/HeroInterface";
 import { useHeroAnimations } from "@/components/hero/hooks/useHeroAnimations";
 import { containerVariants } from "@/components/hero/animations";
 
