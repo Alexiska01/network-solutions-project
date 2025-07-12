@@ -235,7 +235,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
 
       {/* Мобильное меню */}
       <div
-        className={`lg:hidden fixed top-0 right-0 w-full h-screen bg-white z-50 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
+        className={`lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-screen bg-white z-50 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
