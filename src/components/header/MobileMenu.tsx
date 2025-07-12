@@ -217,7 +217,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
           }}
           whileTap={{ scale: 0.98 }}
           className={`
-            group relative w-full flex items-center justify-between p-4 
+            group relative w-full flex items-center text-left pl-4 pr-4 py-4
             text-gray-700 transition-all duration-300 min-h-[56px] 
             border-b border-gray-50 last:border-b-0 rounded-lg mx-2 mb-1
             ${
@@ -232,7 +232,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               : undefined,
           }}
         >
-          <div className="flex items-center space-x-4 flex-1">
+          <div className="flex items-center space-x-3 flex-1 justify-start">
             {item.icon && level === 0 && (
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
@@ -368,7 +368,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                           setActiveItem(subItem.path);
                           onClose();
                         }}
-                        className="group relative flex items-center py-3 px-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm"
+                        className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm"
                       >
                         {/* Декоративная точка */}
                         <motion.div
