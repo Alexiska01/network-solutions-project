@@ -34,12 +34,18 @@ export const useTouchGestures = ({
     const diffX = currentX - touchStart.x;
     const diffY = Math.abs(currentY - touchStart.y);
 
-    // Проверяем что это горизонтальный свайп
-    if (Math.abs(diffX) > 10 && diffY < 50) {
-      setIsDragging(true);
-      if (diffX > 0) {
-        // Свайп вправо
-        dragX.set(Math.min(diffX, 200));
+    // Проверяем что это горизонтальный свайп и не клик по кнопке
+    if (Math.abs(diffX) > 15 && diffY < 50) {
+      // Проверяем что целевой элемент не является кнопкой или ссылкой
+      const target = e.target as HTMLElement;
+      const isClickable = target.closest('button, a, [role="button"]');
+
+      if (!isClickable) {
+        setIsDragging(true);
+        if (diffX > 0) {
+          // Свайп вправо
+          dragX.set(Math.min(diffX, 200));
+        }
       }
     }
   };

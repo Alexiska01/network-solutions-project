@@ -25,13 +25,21 @@ const MenuItem: React.FC<MenuItemProps> = ({
   const hasThirdLevel = item.hasThirdLevel && item.items;
 
   const MenuItemComponent = hasChildren ? motion.button : motion(Link);
+
+  const handleClick = (e: React.MouseEvent | React.TouchEvent) => {
+    e.stopPropagation();
+    onItemClick(item, e as React.MouseEvent);
+  };
+
   const menuItemProps = hasChildren
     ? {
-        onClick: (e: React.MouseEvent) => onItemClick(item, e),
+        onClick: handleClick,
+        onTouchEnd: handleClick,
       }
     : {
         to: item.path,
-        onClick: (e: React.MouseEvent) => onItemClick(item, e),
+        onClick: handleClick,
+        onTouchEnd: handleClick,
       };
 
   return (
@@ -57,10 +65,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
           group relative w-full flex items-center text-left pl-4 pr-4 py-4
           text-gray-700 transition-all duration-300 min-h-[56px] 
           border-b border-gray-50 last:border-b-0 rounded-lg mx-2 mb-1
+          touch-manipulation select-none
           ${
             isActive
               ? "bg-gradient-to-r from-blue-50 via-blue-50 to-emerald-50 text-blue-700 shadow-sm border-blue-100"
-              : "hover:bg-gray-25"
+              : "hover:bg-gray-25 active:bg-blue-50"
           }
         `}
         style={{
@@ -185,7 +194,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
                   >
                     {subItem.items && subItem.items.length > 0 ? (
                       <button
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setActiveItem(subItem.path);
                           onNavigateToLevel({
                             title: subItem.name,
@@ -193,7 +203,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
                             parentPath: subItem.path,
                           });
                         }}
-                        className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full"
+                        onTouchEnd={(e) => {
+                          e.stopPropagation();
+                          setActiveItem(subItem.path);
+                          onNavigateToLevel({
+                            title: subItem.name,
+                            items: subItem.items,
+                            parentPath: subItem.path,
+                          });
+                        }}
+                        className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full touch-manipulation"
                       >
                         {/* Декоративная точка */}
                         <motion.div
@@ -228,11 +247,17 @@ const MenuItem: React.FC<MenuItemProps> = ({
                     ) : (
                       <Link
                         to={subItem.path}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setActiveItem(subItem.path);
                           onClose();
                         }}
-                        className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm"
+                        onTouchEnd={(e) => {
+                          e.stopPropagation();
+                          setActiveItem(subItem.path);
+                          onClose();
+                        }}
+                        className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm touch-manipulation"
                       >
                         {/* Декоративная точка */}
                         <motion.div
