@@ -55,7 +55,7 @@ const HeroCommuts = () => {
     <motion.section
       ref={containerRef}
       style={{ y, opacity }}
-      className="relative min-h-[85vh] bg-gradient-hero text-white overflow-hidden"
+      className="relative min-h-[70vh] bg-gradient-hero text-white overflow-hidden"
     >
       {/* Animated Background Grid */}
       <div className="absolute inset-0 opacity-10">
@@ -98,7 +98,7 @@ const HeroCommuts = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8 py-16 lg:py-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8 py-12 lg:py-16">
         <div className="text-center">
           {/* Main Title */}
           <motion.h1
