@@ -225,10 +225,8 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                 ? "bg-gradient-to-r from-blue-50 via-blue-50 to-emerald-50 text-blue-700 shadow-sm border-blue-100"
                 : "hover:bg-gray-25"
             }
-            ${level > 0 ? "ml-6 border-l-2 border-blue-100" : ""}
           `}
           style={{
-            paddingLeft: `${16 + level * 24}px`,
             background: isActive
               ? "linear-gradient(135deg, rgb(239 246 255) 0%, rgb(243 244 246) 50%, rgb(236 253 245) 100%)"
               : undefined,
