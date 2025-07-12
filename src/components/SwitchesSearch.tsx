@@ -115,7 +115,7 @@ const SwitchesSearch = ({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   onClick={handleClear}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                  className="absolute right-4 top-0 h-full flex items-center p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
                 >
                   <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
                 </motion.button>
