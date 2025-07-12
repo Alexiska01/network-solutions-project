@@ -95,8 +95,9 @@ const App = () => {
                 path="/products/switches/ids3530/24p-6x"
                 element={<ModelIDS3530_24P_6X />}
               />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="/switches" element={<SwitchesCatalog />} />
+              <Route path="/products" element={<SwitchesCatalog />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
