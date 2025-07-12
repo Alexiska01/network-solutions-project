@@ -101,20 +101,6 @@
   }
 }
 
-@layer utilities {
-  /* Градиент для Hero секции */
-  .bg-gradient-hero {
-    background: linear-gradient(
-      135deg,
-      #1e3a8a 0%,
-      /* blue-800 */ #1e40af 25%,
-      /* blue-700 */ #2563eb 50%,
-      /* blue-600 */ #3b82f6 75%,
-      /* blue-500 */ #60a5fa 100% /* blue-400 */
-    );
-  }
-}
-
 /* Базовые стили для карточек */
 .switch-card-base {
   transition: all 0.3s ease-out;
