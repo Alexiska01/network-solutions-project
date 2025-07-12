@@ -542,7 +542,7 @@ const Hero = () => {
                         <Icon
                           name={metric.icon as any}
                           size={16}
-                          className={`text-${metric.color}-300`}
+                          className="text-blue-300"
                         />
                       </div>
                       <motion.div
@@ -559,7 +559,7 @@ const Hero = () => {
 
                       {/* Светящаяся граница при hover */}
                       <motion.div
-                        className={`absolute inset-0 rounded-xl bg-gradient-to-br from-${metric.color}-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+                        className={`absolute inset-0 rounded-xl bg-gradient-to-br from-blue-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
                       />
                     </motion.div>
                   ))}
@@ -655,7 +655,7 @@ const Hero = () => {
                   ].map((device, index) => (
                     <motion.div
                       key={device.label}
-                      className={`p-2 bg-gradient-to-br from-${device.color}-500/20 to-${device.color}-600/10 rounded-lg border border-${device.color}-400/30 text-center shadow-lg`}
+                      className={`p-2 bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-lg border border-blue-400/30 text-center shadow-lg`}
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ scale: 0, rotate: -90 }}
@@ -669,7 +669,7 @@ const Hero = () => {
                       <Icon
                         name={device.icon as any}
                         size={18}
-                        className={`mx-auto mb-1 text-${device.color}-300`}
+                        className="mx-auto mb-1 text-blue-300"
                       />
                       <div className="text-xs text-white font-medium">
                         {device.label}
@@ -804,12 +804,12 @@ const Hero = () => {
                       >
                         <div className="flex items-center justify-between mb-2">
                           <div
-                            className={`p-2 rounded-lg bg-gradient-to-br from-${metric.color}-400/30 to-${metric.color}-600/20 shadow-sm`}
+                            className={`p-2 rounded-lg bg-gradient-to-br from-blue-400/30 to-blue-600/20 shadow-sm`}
                           >
                             <Icon
                               name={metric.icon as any}
                               size={16}
-                              className={`text-${metric.color}-300`}
+                              className="text-blue-300"
                             />
                           </div>
                           <motion.span
@@ -835,7 +835,7 @@ const Hero = () => {
 
                         {/* Светящаяся граница */}
                         <motion.div
-                          className={`absolute inset-0 rounded-xl bg-gradient-to-br from-${metric.color}-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+                          className={`absolute inset-0 rounded-xl bg-gradient-to-br from-blue-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
                         />
                       </motion.div>
                     ))}
@@ -934,7 +934,7 @@ const Hero = () => {
                       ].map((device, index) => (
                         <motion.div
                           key={device.label}
-                          className={`p-2 bg-gradient-to-br from-${device.color}-500/20 to-${device.color}-600/10 rounded-lg border border-${device.color}-400/30 text-center shadow-lg`}
+                          className={`p-2 bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-lg border border-blue-400/30 text-center shadow-lg`}
                           whileHover={{
                             scale: 1.08,
                             y: -3,
@@ -954,22 +954,14 @@ const Hero = () => {
                           <Icon
                             name={device.icon as any}
                             size={20}
-                            className={`mx-auto mb-1 ${
-                              device.status === "active"
-                                ? `text-${device.color}-300`
-                                : "text-amber-300"
-                            }`}
+                            className="mx-auto mb-1 text-blue-300"
                           />
                           <div className="text-xs text-white font-medium">
                             {device.label}
                           </div>
                           {/* Статус-индикатор */}
                           <motion.div
-                            className={`w-1 h-1 mx-auto mt-1 rounded-full ${
-                              device.status === "active"
-                                ? "bg-green-400"
-                                : "bg-amber-400"
-                            }`}
+                            className="w-1 h-1 mx-auto mt-1 rounded-full bg-green-400"
                             animate={{ opacity: [0.5, 1, 0.5] }}
                             transition={
                               {
