@@ -15,6 +15,17 @@ const Hero = () => {
   const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
   const contentY = useTransform(scrollY, [0, 500], [0, -50]);
 
+  // Функция плавного скролла к секции продуктов
+  const scrollToProducts = () => {
+    const productsSection = document.getElementById("products");
+    if (productsSection) {
+      productsSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowIDATA(true);
@@ -280,7 +291,8 @@ const Hero = () => {
               className="flex flex-col sm:flex-row gap-4 mt-auto relative pb-8"
             >
               <motion.button
-                className="group relative bg-gradient-to-r from-white to-blue-50 hover:from-transparent hover:to-transparent text-[#0065B3] px-8 py-4 rounded-2xl text-lg font-bold overflow-hidden transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(59,130,246,0.3)] z-10"
+                className="group relative bg-gradient-to-r from-white to-blue-50 hover:from-transparent hover:to-transparent text-[#0065B3] px-6 sm:px-8 py-3 sm:py-4 rounded-2xl text-base sm:text-lg font-bold overflow-hidden transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(59,130,246,0.3)] z-10"
+                onClick={scrollToProducts}
                 whileHover={{
                   scale: 1.05,
                   rotateY: -2,
@@ -330,7 +342,7 @@ const Hero = () => {
               </motion.button>
 
               <motion.button
-                className="group relative border-2 border-white/40 text-white px-8 py-4 rounded-2xl text-lg font-bold overflow-hidden transition-all duration-500 backdrop-blur-sm hover:border-transparent shadow-[0_8px_30px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_60px_rgba(255,255,255,0.2)] z-10"
+                className="group relative border-2 border-white/40 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl text-base sm:text-lg font-bold overflow-hidden transition-all duration-500 backdrop-blur-sm hover:border-transparent shadow-[0_8px_30px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_60px_rgba(255,255,255,0.2)] z-10"
                 whileHover={{
                   scale: 1.05,
                   rotateY: 2,
