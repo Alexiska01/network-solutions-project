@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { navigationItems, productSubmenuItems } from "./navigationData";
+import {
+  navigationItems,
+  productSubmenuItems,
+  type NavItem,
+} from "./navigationData";
 import Icon from "@/components/ui/icon";
 
 interface MobileMenuProps {
@@ -11,7 +15,7 @@ interface MobileMenuProps {
 
 interface MenuLevel {
   title: string;
-  items: any[];
+  items: NavItem[];
   parentPath?: string;
 }
 
@@ -65,7 +69,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     });
   };
 
-  const handleItemClick = (item: any, e: React.MouseEvent) => {
+  const handleItemClick = (item: NavItem, e: React.MouseEvent) => {
     setActiveItem(item.path);
 
     if (item.path === "/products" && item.hasSubmenu) {
@@ -103,7 +107,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     }
   };
 
-  const renderMenuItem = (item: any, level: number = 0) => {
+  const renderMenuItem = (item: NavItem, level: number = 0) => {
     const hasChildren =
       item.hasSubmenu ||
       item.submenuItems ||
@@ -119,8 +123,13 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       : "";
 
     // Отступ для вложенных элементов
-    const indentClass = level > 0 ? `pl-${4 + level * 4}` : "px-4";
-    const adjustedClasses = baseClasses.replace("px-4", indentClass);
+    const getIndentClasses = () => {
+      if (level === 0) return "px-4";
+      if (level === 1) return "pl-8 pr-4";
+      if (level === 2) return "pl-12 pr-4";
+      return "pl-16 pr-4";
+    };
+    const adjustedClasses = baseClasses.replace("px-4", getIndentClasses());
 
     if (hasChildren) {
       return (
@@ -142,7 +151,9 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               </span>
             </div>
             <Icon
-              name={hasThirdLevel && isExpanded ? "ChevronDown" : "ChevronRight"}
+              name={
+                hasThirdLevel && isExpanded ? "ChevronDown" : "ChevronRight"
+              }
               size={18}
               className={`transition-transform duration-200 ${
                 isActive ? "text-blue-500" : "text-gray-400"
@@ -157,7 +168,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               }`}
             >
               <div className="bg-gray-25 border-l-2 border-blue-200 ml-4">
-                {item.items.map((subItem: any) =>
+                {item.items?.map((subItem: NavItem) =>
                   renderMenuItem(subItem, level + 1),
                 )}
               </div>
@@ -182,9 +193,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               className={isActive ? "text-blue-600" : "text-gray-500"}
             />
           )}
-          <span className="text-base font-medium text-left">
-            {item.name}
-          </span>
+          <span className="text-base font-medium text-left">{item.name}</span>
         </div>
       </Link>
     );
