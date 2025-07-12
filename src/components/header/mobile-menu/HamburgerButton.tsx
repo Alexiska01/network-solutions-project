@@ -11,7 +11,7 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
       onClick={onToggle}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="lg:hidden relative w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 overflow-hidden group"
+      className="lg:hidden relative w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none overflow-hidden group"
       aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
     >
       {/* Градиентный фон */}
@@ -29,7 +29,6 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
             animate={{
               rotate: isOpen ? 45 : 0,
               y: isOpen ? 6 : 0,
-              backgroundColor: isOpen ? "#3b82f6" : "#374151",
             }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           />
@@ -47,20 +46,11 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
             animate={{
               rotate: isOpen ? -45 : 0,
               y: isOpen ? -6 : 0,
-              backgroundColor: isOpen ? "#3b82f6" : "#374151",
             }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           />
         </div>
       </div>
-
-      {/* Пульсирующий эффект */}
-      <motion.div
-        className="absolute inset-0 rounded-2xl border-2 border-blue-400"
-        initial={{ scale: 1, opacity: 0 }}
-        animate={{ scale: isOpen ? 1.1 : 1, opacity: isOpen ? 0.3 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
     </motion.button>
   );
 };
