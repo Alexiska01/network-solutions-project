@@ -19,7 +19,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Hero4530 from "@/components/Hero4530";
-import { useIsMobile } from "@/hooks/useIsMobile"; // 👈 обязательно импортируем!
+import { useIsMobile } from "@/hooks/useIsMobile"; 
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
