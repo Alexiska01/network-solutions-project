@@ -119,9 +119,6 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
           });
         }
       }, 300);
-    } else if (item.hasThirdLevel && item.items) {
-      e.preventDefault();
-      toggleExpanded(item.path);
     } else if (item.submenuItems) {
       e.preventDefault();
       navigateToLevel({
@@ -131,11 +128,24 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       });
     } else if (item.items && item.items.length > 0) {
       e.preventDefault();
-      navigateToLevel({
-        title: item.name,
-        items: item.items,
-        parentPath: item.path,
-      });
+      // Проверяем, есть ли у дочерних элементов свои items (4-й уровень)
+      const hasDeepNesting = item.items.some(
+        (child) => child.items && child.items.length > 0,
+      );
+      if (hasDeepNesting && item.hasThirdLevel) {
+        // Если есть глубокая вложенность, показываем аккордеон
+        toggleExpanded(item.path);
+      } else {
+        // Иначе переходим на новый уровень
+        navigateToLevel({
+          title: item.name,
+          items: item.items,
+          parentPath: item.path,
+        });
+      }
+    } else if (item.hasThirdLevel && item.items) {
+      e.preventDefault();
+      toggleExpanded(item.path);
     } else if (!item.hasSubmenu && !item.submenuItems && !item.items) {
       onClose();
     }
@@ -362,14 +372,28 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                         ease: "easeOut",
                       }}
                     >
-                      <Link
-                        to={subItem.path}
-                        onClick={() => {
-                          setActiveItem(subItem.path);
-                          onClose();
-                        }}
-                        className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm"
-                      >
+                      {subItem.items && subItem.items.length > 0 ? (
+                        <button
+                          onClick={() => {
+                            setActiveItem(subItem.path);
+                            navigateToLevel({
+                              title: subItem.name,
+                              items: subItem.items,
+                              parentPath: subItem.path,
+                            });
+                          }}
+                          className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full"
+                        >
+                      ) : (
+                        <Link
+                          to={subItem.path}
+                          onClick={() => {
+                            setActiveItem(subItem.path);
+                            onClose();
+                          }}
+                          className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm"
+                        >
+                      )}
                         {/* Декоративная точка */}
                         <motion.div
                           whileHover={{ scale: 1.2 }}
@@ -399,7 +423,11 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                           initial={{ opacity: 0 }}
                           whileHover={{ opacity: 1 }}
                         />
-                      </Link>
+                      {subItem.items && subItem.items.length > 0 ? (
+                        </button>
+                      ) : (
+                        </Link>
+                      )}
                     </motion.div>
                   ))}
                 </div>
