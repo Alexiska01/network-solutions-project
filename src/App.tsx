@@ -24,18 +24,34 @@ const PARTNER_LOGOS = [
   "https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png", // КРОК
 ];
 
+// Изображения из public/img для предварительной загрузки
+const IMG_FILES = [
+  "/img/Иерархия_3530.png",
+  "/img/Иерархия_3730.png",
+  "/img/Иерархия_4530(1).png",
+  "/img/Иерархия_4530(2).png",
+  "/img/Иерархия_4530.png",
+];
+
 const App = () => {
-  // Предварительная загрузка логотипов партнеров
+  // Предварительная загрузка логотипов партнеров и изображений
   useEffect(() => {
-    const preloadPartnerLogos = () => {
+    const preloadImages = () => {
+      // Загружаем логотипы партнеров
       PARTNER_LOGOS.forEach((logoUrl) => {
         const img = new Image();
         img.src = logoUrl;
       });
+
+      // Загружаем изображения из public/img
+      IMG_FILES.forEach((imgPath) => {
+        const img = new Image();
+        img.src = imgPath;
+      });
     };
 
-    // Запускаем загрузку через 2 секунды после загрузки сайта
-    const timer = setTimeout(preloadPartnerLogos, 2000);
+    // Запускаем загрузку через 1 секунду после загрузки сайта
+    const timer = setTimeout(preloadImages, 1000);
     return () => clearTimeout(timer);
   }, []);
 
