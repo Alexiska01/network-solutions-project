@@ -282,37 +282,31 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0, rotateX: 0 }}
                 transition={{ delay: 1.8, type: "spring", stiffness: 100 }}
               >
-                {/* Анимированная подложка */}
+                {/* Градиентная подложка */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  initial={{ scale: 0, rotate: 45 }}
+                  className="absolute inset-0 bg-gradient-to-r from-cyan-600/80 to-blue-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  initial={{ scale: 0, rotate: -45 }}
                   whileHover={{ scale: 1.2, rotate: 0 }}
                   transition={{ duration: 0.5 }}
                 />
 
-                {/* Светящиеся частицы */}
-                <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {[...Array(8)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-1 h-1 bg-white rounded-full"
-                      style={{
-                        left: `${20 + i * 10}%`,
-                        top: `${30 + (i % 2) * 40}%`,
-                      }}
-                      animate={{
-                        opacity: [0, 1, 0],
-                        scale: [0, 1.5, 0],
-                        y: [0, -10, 0],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        delay: i * 0.1,
-                      }}
-                    />
-                  ))}
-                </motion.div>
+                {/* Бегущая граница */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)",
+                    backgroundSize: "200% 100%",
+                  }}
+                  animate={{
+                    backgroundPosition: ["-200% 0%", "200% 0%"],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
 
                 <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
                   <Icon
