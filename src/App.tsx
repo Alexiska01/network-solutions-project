@@ -12,6 +12,7 @@ import SeriesCatalog6010 from "./pages/SeriesCatalog6010";
 import SwitchesCatalog from "./pages/SwitchesCatalog";
 import ModelIDS3530_24P_6X from "./pages/ModelIDS3530_24P_6X";
 import Partners from "./pages/Partners";
+import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/partners" element={<Partners />} />
             <Route
               path="/products/switches/ids3730"
