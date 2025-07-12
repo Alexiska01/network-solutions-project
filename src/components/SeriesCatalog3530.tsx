@@ -42,7 +42,7 @@ const SeriesCatalog3530Component = () => {
 
   const toggleCompareModel = (model: string) => {
     setCompareModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
+      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model],
     );
   };
 
@@ -51,7 +51,7 @@ const SeriesCatalog3530Component = () => {
   };
 
   const filteredModels = switchModels3530.filter((model) =>
-    filter === "all" ? true : model.category === filter
+    filter === "all" ? true : model.category === filter,
   );
 
   const isMobile = useIsMobile();
@@ -71,7 +71,7 @@ const SeriesCatalog3530Component = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/products">Продукты</Link>
+                  <Link to="/#products">Продукты</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -110,7 +110,10 @@ const SeriesCatalog3530Component = () => {
             </p>
             <div className="w-full overflow-x-auto pb-1">
               <div className="inline-flex gap-2 sm:gap-3">
-                <FilterButtons activeFilter={filter} onFilterChange={setFilter} />
+                <FilterButtons
+                  activeFilter={filter}
+                  onFilterChange={setFilter}
+                />
               </div>
             </div>
           </div>
