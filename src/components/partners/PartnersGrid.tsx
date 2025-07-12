@@ -49,6 +49,17 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
       email: "info@croc.ru",
       website: "https://www.croc.ru",
     },
+    {
+      id: 4,
+      name: "САТЕЛ",
+      logo: "https://cdn.poehali.dev/files/5ebbdc36-0607-4a74-beca-446f7f24445d.png",
+      region: "Россия",
+      type: "Интегратор",
+      category: "Коммутаторы",
+      phone: "+7 495 785-88-77",
+      email: "office@satel.org",
+      website: "https://satel.ru",
+    },
   ];
 
   // Предварительная загрузка логотипов в фоне
@@ -109,7 +120,8 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                 className={`group ${
                   partner.name === "Инфосэл" ||
                   partner.name === "Инлайн ГРУП" ||
-                  partner.name === "КРОК"
+                  partner.name === "КРОК" ||
+                  partner.name === "САТЕЛ"
                     ? "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
                     : "bg-white"
                 } rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden`}
@@ -119,7 +131,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "КРОК" ? "w-auto h-auto scale-75" : "w-full h-full object-cover"} rounded-lg`}
+                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "КРОК" ? "w-auto h-auto scale-75" : partner.name === "САТЕЛ" ? "w-auto h-auto scale-90" : "w-full h-full object-cover"} rounded-lg`}
                       loading="eager"
                       onLoad={(e) => {
                         const placeholder =
