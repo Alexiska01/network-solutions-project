@@ -38,7 +38,7 @@ const HeroTitle = () => {
           Профессиональные
         </motion.span>
 
-        <motion.span
+        <motion.div
           className="block bg-gradient-to-r from-cyan-200 via-blue-200 to-white bg-clip-text text-transparent drop-shadow-2xl relative"
           {...titleSpanVariants.second}
         >
@@ -49,9 +49,9 @@ const HeroTitle = () => {
             animate={{ opacity: [0, 0.5, 0] }}
             transition={{ duration: 3, repeat: Infinity, delay: 2 }}
           />
-        </motion.span>
+        </motion.div>
 
-        <motion.span
+        <motion.div
           className="block bg-gradient-to-r from-blue-100 via-cyan-100 to-white bg-clip-text text-transparent drop-shadow-2xl relative"
           {...titleSpanVariants.third}
         >
@@ -65,7 +65,7 @@ const HeroTitle = () => {
             }}
             transition={{ duration: 2, repeat: Infinity, delay: 3 }}
           />
-        </motion.span>
+        </motion.div>
 
         {/* Интерактивные частицы вокруг текста */}
         {[...Array(6)].map((_, i) => (

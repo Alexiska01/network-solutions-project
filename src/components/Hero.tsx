@@ -154,16 +154,16 @@ const Hero = () => {
                 }}
               >
                 {/* Многослойный градиентный текст */}
-                <motion.span
+                <motion.div
                   className="block bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent drop-shadow-2xl"
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3, duration: 0.8 }}
                 >
                   Профессиональные
-                </motion.span>
+                </motion.div>
 
-                <motion.span
+                <motion.div
                   className="block bg-gradient-to-r from-cyan-200 via-blue-200 to-white bg-clip-text text-transparent drop-shadow-2xl relative"
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -178,9 +178,9 @@ const Hero = () => {
                       { duration: 3, repeat: Infinity, delay: 2 } as any
                     }
                   />
-                </motion.span>
+                </motion.div>
 
-                <motion.span
+                <motion.div
                   className="block bg-gradient-to-r from-blue-100 via-cyan-100 to-white bg-clip-text text-transparent drop-shadow-2xl relative"
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -198,7 +198,7 @@ const Hero = () => {
                       { duration: 2, repeat: Infinity, delay: 3 } as any
                     }
                   />
-                </motion.span>
+                </motion.div>
 
                 {/* Интерактивные частицы вокруг текста */}
                 {[...Array(6)].map((_, i) => (
@@ -233,7 +233,7 @@ const Hero = () => {
               className="h-28 flex items-start justify-start mb-6 relative"
             >
               <div className="relative z-10">
-                <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
+                <div className="text-lg md:text-xl lg:text-2xl leading-relaxed">
                   {showIDATA && (
                     <motion.span
                       initial={{ opacity: 0, scale: 0.3, rotateY: -90 }}
@@ -249,16 +249,7 @@ const Hero = () => {
                     >
                       iDATA
                       {/* Светящийся эффект для логотипа */}
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-lg blur-lg -z-10"
-                        animate={{
-                          opacity: [0, 0.8, 0],
-                          scale: [0.8, 1.2, 0.8],
-                        }}
-                        transition={
-                          { duration: 2, repeat: Infinity, delay: 1 } as any
-                        }
-                      />
+                      <span className="absolute inset-0 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-lg blur-lg -z-10 opacity-0 animate-pulse" />
                     </motion.span>
                   )}
                   {showTyping && (
@@ -281,7 +272,7 @@ const Hero = () => {
                       transition={{ duration: 0.8, repeat: Infinity } as any}
                     />
                   )}
-                </p>
+                </div>
               </div>
             </motion.div>
 
