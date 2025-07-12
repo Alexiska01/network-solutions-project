@@ -112,7 +112,7 @@ const Hero = () => {
             {/* Заголовок - премиальный мировой уровень */}
             <motion.div
               variants={itemVariants}
-              className="h-80 flex items-start mb-8 relative"
+              className="flex items-start relative"
             >
               {/* Декоративные элементы заголовка */}
               <motion.div
@@ -207,10 +207,10 @@ const Hero = () => {
               </motion.h1>
             </motion.div>
 
-            {/* Подзаголовок - премиальная типографика */}
+            {/* Подзаголовок - по центру между заголовком и кнопками */}
             <motion.div
               variants={itemVariants}
-              className="h-28 flex items-start justify-start mb-6 relative"
+              className="flex items-center justify-start flex-1 relative"
             >
               <div className="relative z-10">
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
