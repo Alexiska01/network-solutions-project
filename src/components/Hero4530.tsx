@@ -124,12 +124,13 @@ const Hero4530 = () => {
               <button
                 className="bg-white text-[#0065B3] px-4 sm:px-5 md:px-6 lg:px-6 py-3 sm:py-3 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-sm sm:text-sm md:text-sm lg:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 font-sans min-h-[44px] hover:scale-105 hover:shadow-lg"
                 onClick={() =>
-                  document
-                    .getElementById("models-section")
-                    ?.scrollIntoView({ behavior: "smooth" })
+                  window.open(
+                    "https://drive.google.com/file/d/14LsavLKoXR3eiJiTnnLzza9VnKKoU993/view?usp=drive_link",
+                    "_blank",
+                  )
                 }
               >
-                Посмотреть все модели
+                Посмотреть документацию
               </button>
               <button className="border border-white text-white px-4 sm:px-5 md:px-6 lg:px-6 py-3 sm:py-3 md:py-2.5 lg:py-3 rounded-md md:rounded-lg text-sm sm:text-sm md:text-sm lg:text-base font-medium relative overflow-hidden transition-all duration-300 font-sans min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg">
                 Получить консультацию
