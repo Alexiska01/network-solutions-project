@@ -9,7 +9,7 @@ export { default as HeroButtons } from "./components/HeroButtons";
 export { default as MobileInterface } from "./components/MobileInterface";
 export { default as DesktopInterface } from "./components/DesktopInterface";
 export { default as MetricCard } from "./components/MetricCard";
-export { default as DeviceCard } from "./components/DeviceCard";
+export { default as HeroDeviceCard } from "./components/DeviceCard";
 
 // Декоративные компоненты
 export { default as HeroDecorations } from "./components/HeroDecorations";
