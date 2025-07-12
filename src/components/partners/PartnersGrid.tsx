@@ -131,7 +131,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "КРОК" ? "w-auto h-auto scale-75" : partner.name === "САТЕЛ" ? "w-auto h-auto scale-125" : "w-full h-full object-cover"} rounded-lg`}
+                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "КРОК" ? "w-auto h-auto scale-75" : partner.name === "САТЕЛ" ? "w-auto h-auto scale-150" : "w-full h-full object-cover"} rounded-lg`}
                       loading="eager"
                       onLoad={(e) => {
                         const placeholder =
