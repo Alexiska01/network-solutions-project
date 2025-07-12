@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  navigationItems,
-  productSubmenuItems,
-  type NavItem,
-} from "./navigationData";
+import { navigationItems, productSubmenuItems } from "./navigationData";
 import Icon from "@/components/ui/icon";
 
 interface MobileMenuProps {
@@ -15,7 +11,7 @@ interface MobileMenuProps {
 
 interface MenuLevel {
   title: string;
-  items: NavItem[];
+  items: any[];
   parentPath?: string;
 }
 
@@ -25,12 +21,14 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // Инициализация главного меню
   useEffect(() => {
     if (isOpen && menuStack.length === 0) {
       setMenuStack([{ title: "Меню", items: navigationItems }]);
     }
   }, [isOpen, menuStack.length]);
 
+  // Сброс меню при закрытии
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
@@ -69,7 +67,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     });
   };
 
-  const handleItemClick = (item: NavItem, e: React.MouseEvent) => {
+  const handleItemClick = (item: any, e: React.MouseEvent) => {
     setActiveItem(item.path);
 
     if (item.path === "/products" && item.hasSubmenu) {
@@ -86,6 +84,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         contactsSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     } else if (item.hasThirdLevel && item.items) {
+      // Для элементов с третьим уровнем - используем аккордеон
       e.preventDefault();
       toggleExpanded(item.path);
     } else if (item.submenuItems) {
@@ -107,7 +106,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     }
   };
 
-  const renderMenuItem = (item: NavItem, level: number = 0) => {
+  const renderMenuItem = (item: any, level: number = 0) => {
     const hasChildren =
       item.hasSubmenu ||
       item.submenuItems ||
@@ -117,17 +116,14 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
     const hasThirdLevel = item.hasThirdLevel && item.items;
 
     const baseClasses =
-      "group w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 min-h-[48px] border-b border-gray-100 last:border-b-0";
-    const activeClasses = isActive ? "bg-blue-50 text-blue-700" : "";
+      "group w-full flex items-center justify-between px-3 sm:px-4 py-3 sm:py-3 text-gray-700 active:bg-gradient-to-r active:from-blue-50 active:to-emerald-50 transition-all duration-200 min-h-[48px] sm:min-h-[44px] border-b border-gray-50 last:border-b-0";
+    const activeClasses = isActive
+      ? "bg-gradient-to-r from-blue-100 to-emerald-100 text-blue-700"
+      : "";
 
-    // Отступ для вложенных элементов
-    const getIndentClasses = () => {
-      if (level === 0) return "px-4";
-      if (level === 1) return "pl-8 pr-4";
-      if (level === 2) return "pl-12 pr-4";
-      return "pl-16 pr-4";
-    };
-    const adjustedClasses = baseClasses.replace("px-4", getIndentClasses());
+    // Добавляем отступ для вложенных элементов
+    const indentClass = level > 0 ? `pl-${4 + level * 4}` : "px-4";
+    const adjustedClasses = baseClasses.replace("px-4", indentClass);
 
     if (hasChildren) {
       return (
@@ -140,11 +136,11 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               {item.icon && level === 0 && (
                 <Icon
                   name={item.icon}
-                  size={20}
+                  size={22}
                   className={isActive ? "text-blue-600" : "text-gray-500"}
                 />
               )}
-              <span className="text-base font-normal text-left">
+              <span className="text-sm sm:text-xs font-medium text-left">
                 {item.name}
               </span>
             </div>
@@ -158,6 +154,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               }`}
             />
           </button>
+
           {/* Аккордеон для третьего уровня */}
           {hasThirdLevel && (
             <div
@@ -165,8 +162,8 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
                 isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
               }`}
             >
-              <div className="bg-gray-50 border-l-2 border-blue-200 ml-4">
-                {item.items?.map((subItem: NavItem) =>
+              <div className="bg-gray-25 border-l-2 border-blue-200 ml-4">
+                {item.items.map((subItem: any) =>
                   renderMenuItem(subItem, level + 1),
                 )}
               </div>
@@ -187,11 +184,13 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
           {item.icon && level === 0 && (
             <Icon
               name={item.icon}
-              size={20}
+              size={22}
               className={isActive ? "text-blue-600" : "text-gray-500"}
             />
           )}
-          <span className="text-base font-normal text-left">{item.name}</span>
+          <span className="text-sm sm:text-xs font-medium text-left">
+            {item.name}
+          </span>
         </div>
       </Link>
     );
@@ -205,19 +204,19 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
       {/* Кнопка гамбургера */}
       <button
         onClick={onToggle}
-        className="lg:hidden relative w-11 h-11 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="lg:hidden relative w-11 h-11 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
       >
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-5 h-4 flex flex-col justify-center relative">
+          <div className="w-5 h-4 sm:w-5 sm:h-4 flex flex-col justify-center relative">
             <span
-              className={`block h-0.5 w-5 bg-gray-700 transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-1" : ""
+              className={`block h-0.5 w-5 sm:w-5 bg-gray-700 transition-all duration-300 ${
+                isOpen ? "rotate-45 translate-y-0.5" : ""
               }`}
             />
             <span
-              className={`block h-0.5 w-5 bg-gray-700 mt-1 transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-1" : ""
+              className={`block h-0.5 w-5 sm:w-5 bg-gray-700 mt-1 transition-all duration-300 ${
+                isOpen ? "-rotate-45 -translate-y-0.5" : ""
               }`}
             />
           </div>
@@ -234,38 +233,39 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         onClick={onClose}
       />
 
-      {/* Само мобильное меню */}
+      {/* Мобильное меню */}
       <div
         className={`lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-full bg-white z-50 shadow-2xl transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Шапка меню */}
-        <div className="flex items-center justify-between h-14 px-4 bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
+        <div className="flex items-center justify-between h-14 sm:h-16 px-3 sm:px-4 bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
           <div className="flex items-center space-x-3">
             {canGoBack && (
               <button
                 onClick={navigateBack}
-                className="w-9 h-9 rounded-lg bg-white/20 active:bg-white/30 transition-colors flex items-center justify-center"
+                className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg bg-white/20 active:bg-white/30 transition-colors flex items-center justify-center"
                 aria-label="Назад"
               >
-                <Icon name="ArrowLeft" size={18} />
+                <Icon name="ArrowLeft" size={18} className="sm:size-4" />
               </button>
             )}
-            <h2 className="text-lg font-medium truncate">
+            <h2 className="text-base sm:text-sm font-medium truncate">
               {currentLevel?.title || "Меню"}
             </h2>
           </div>
+
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-lg bg-white/20 active:bg-white/30 transition-colors flex items-center justify-center"
+            className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg bg-white/20 active:bg-white/30 transition-colors flex items-center justify-center"
             aria-label="Закрыть меню"
           >
-            <Icon name="X" size={18} />
+            <Icon name="X" size={18} className="sm:size-4" />
           </button>
         </div>
 
-        {/* Меню */}
+        {/* Контейнер меню */}
         <div className="h-full overflow-hidden">
           <div
             className={`h-full transition-all duration-300 ease-out ${
