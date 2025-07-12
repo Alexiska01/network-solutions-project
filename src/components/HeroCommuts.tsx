@@ -32,21 +32,21 @@ const HeroCommuts = () => {
       icon: "Network",
       title: "Корпоративные решения",
       subtitle: "Масштабируемость",
-      gradient: "from-cyan-400 to-blue-500",
+      gradient: "from-blue-400 to-blue-600",
       delay: 0.8,
     },
     {
       icon: "Zap",
       title: "Высокая производительность",
       subtitle: "До 100 Гбит/с",
-      gradient: "from-yellow-400 to-orange-500",
+      gradient: "from-blue-500 to-indigo-600",
       delay: 1.0,
     },
     {
       icon: "Shield",
       title: "Надёжность и безопасность",
       subtitle: "Защита данных",
-      gradient: "from-green-400 to-emerald-500",
+      gradient: "from-indigo-500 to-blue-700",
       delay: 1.2,
     },
   ];
@@ -100,19 +100,6 @@ const HeroCommuts = () => {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8 py-16 lg:py-20">
         <div className="text-center">
-          {/* Badge */}
-          <motion.div
-            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 mb-8"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-sm font-medium text-white/90">
-              Профессиональное сетевое оборудование
-            </span>
-          </motion.div>
-
           {/* Main Title */}
           <motion.h1
             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 leading-tight bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent"
