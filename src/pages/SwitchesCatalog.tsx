@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CatalogNavigation from "@/components/CatalogNavigation";
@@ -130,15 +131,23 @@ const SwitchesCatalog = () => {
           {/* Основной контент */}
           <div className="flex-1">
             {/* Поиск */}
-            <SwitchesSearch
-              searchTerm={searchTerm}
-              onSearchChange={setSearchTerm}
-            />
+            <div className={cn(
+              "mb-6 sm:mb-8",
+              isMobile && "px-1"
+            )}>
+              <SwitchesSearch
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+              />
+            </div>
 
             {/* Коммутаторы для корпоративных ЛВС */}
             <motion.section
               id="corporate-lan"
-              className="mb-16"
+              className={cn(
+                "mb-12 sm:mb-16",
+                isMobile && "px-1"
+              )}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -147,17 +156,36 @@ const SwitchesCatalog = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="mb-8"
+                className="mb-6 sm:mb-8"
               >
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
-                    <Icon name="Building2" size={20} className="text-white sm:w-6 sm:h-6" />
+                <div className={cn(
+                  "flex flex-col gap-3 mb-4",
+                  !isMobile && "sm:flex-row sm:items-center sm:gap-4"
+                )}>
+                  <div className={cn(
+                    "bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg",
+                    isMobile ? "w-12 h-12" : "w-10 h-10 sm:w-12 sm:h-12 sm:rounded-2xl"
+                  )}>
+                    <Icon 
+                      name="Building2" 
+                      size={isMobile ? 24 : 20} 
+                      className={cn(
+                        "text-white",
+                        !isMobile && "sm:w-6 sm:h-6"
+                      )} 
+                    />
                   </div>
-                  <div>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                  <div className={cn(isMobile && "text-center")}>
+                    <h2 className={cn(
+                      "font-bold text-gray-900",
+                      isMobile ? "text-2xl leading-tight" : "text-2xl sm:text-3xl"
+                    )}>
                       Коммутаторы для корпоративных ЛВС
                     </h2>
-                    <p className="text-sm sm:text-base text-gray-600 mt-1">
+                    <p className={cn(
+                      "text-gray-600 mt-1",
+                      isMobile ? "text-sm leading-relaxed" : "text-sm sm:text-base"
+                    )}>
                       Решения для корпоративных локальных сетей
                     </p>
                   </div>
@@ -168,20 +196,41 @@ const SwitchesCatalog = () => {
               {groupedSwitches.corporateAccess.length > 0 && (
                 <motion.div
                   id="access-level"
-                  className="mb-12"
+                  className={cn(
+                    "mb-10 sm:mb-12",
+                    isMobile && "px-2"
+                  )}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                  <div className="flex items-center gap-3 mb-4 sm:mb-6">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md">
-                      <Icon name="Wifi" size={14} className="text-white sm:w-4 sm:h-4" />
+                  <div className={cn(
+                    "flex items-center gap-3 mb-5 sm:mb-6",
+                    isMobile && "justify-center"
+                  )}>
+                    <div className={cn(
+                      "bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg flex items-center justify-center shadow-md",
+                      isMobile ? "w-8 h-8 rounded-xl" : "w-6 h-6 sm:w-8 sm:h-8 sm:rounded-xl"
+                    )}>
+                      <Icon 
+                        name="Wifi" 
+                        size={isMobile ? 16 : 14} 
+                        className={cn(
+                          "text-white",
+                          !isMobile && "sm:w-4 sm:h-4"
+                        )} 
+                      />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800">
+                    <h3 className={cn(
+                      "font-bold text-gray-800",
+                      isMobile ? "text-xl text-center" : "text-xl sm:text-2xl"
+                    )}>
                       Коммутаторы уровня доступа
                     </h3>
                   </div>
-                  <div className="space-y-6">
+                  <div className={cn(
+                    isMobile ? "space-y-4" : "space-y-6"
+                  )}>
                     {groupedSwitches.corporateAccess.map(
                       (switchData, index) => (
                         <motion.div
@@ -205,19 +254,37 @@ const SwitchesCatalog = () => {
               {groupedSwitches.corporateDistribution.length > 0 && (
                 <motion.div
                   id="distribution-level"
+                  className={cn(
+                    isMobile && "px-2"
+                  )}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
                 >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
-                      <Icon name="GitBranch" size={16} className="text-white" />
+                  <div className={cn(
+                    "flex items-center gap-3 mb-5 sm:mb-6",
+                    isMobile && "justify-center"
+                  )}>
+                    <div className={cn(
+                      "bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center shadow-md",
+                      isMobile ? "w-8 h-8" : "w-8 h-8"
+                    )}>
+                      <Icon 
+                        name="GitBranch" 
+                        size={16} 
+                        className="text-white" 
+                      />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-800">
+                    <h3 className={cn(
+                      "font-bold text-gray-800",
+                      isMobile ? "text-xl text-center" : "text-2xl"
+                    )}>
                       Коммутаторы уровня распределения
                     </h3>
                   </div>
-                  <div className="space-y-6">
+                  <div className={cn(
+                    isMobile ? "space-y-4" : "space-y-6"
+                  )}>
                     {groupedSwitches.corporateDistribution.map(
                       (switchData, index) => (
                         <motion.div
@@ -241,7 +308,10 @@ const SwitchesCatalog = () => {
             {/* Коммутаторы для ЦОД */}
             <motion.section
               id="data-center"
-              className="mb-16"
+              className={cn(
+                "mb-12 sm:mb-16",
+                isMobile && "px-1"
+              )}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
@@ -250,17 +320,33 @@ const SwitchesCatalog = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
-                className="mb-8"
+                className="mb-6 sm:mb-8"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center shadow-lg">
-                    <Icon name="Database" size={24} className="text-white" />
+                <div className={cn(
+                  "flex gap-4 mb-4",
+                  isMobile ? "flex-col items-center text-center" : "items-center"
+                )}>
+                  <div className={cn(
+                    "bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center shadow-lg",
+                    isMobile ? "w-12 h-12" : "w-12 h-12"
+                  )}>
+                    <Icon 
+                      name="Database" 
+                      size={24} 
+                      className="text-white" 
+                    />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-gray-900">
+                    <h2 className={cn(
+                      "font-bold text-gray-900",
+                      isMobile ? "text-2xl" : "text-3xl"
+                    )}>
                       Центры обработки данных
                     </h2>
-                    <p className="text-gray-600 mt-1">
+                    <p className={cn(
+                      "text-gray-600 mt-1",
+                      isMobile ? "text-sm" : ""
+                    )}>
                       Высокопроизводительные решения для ЦОД
                     </p>
                   </div>
@@ -271,18 +357,36 @@ const SwitchesCatalog = () => {
               {groupedSwitches.dataCenterSpine.length > 0 && (
                 <motion.div
                   id="spine-level"
-                  className="mb-12"
+                  className={cn(
+                    "mb-10 sm:mb-12",
+                    isMobile && "px-2"
+                  )}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 1.0 }}
                 >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
-                      <Icon name="TreePine" size={16} className="text-white" />
+                  <div className={cn(
+                    "flex items-center gap-3 mb-5 sm:mb-6",
+                    isMobile && "justify-center"
+                  )}>
+                    <div className={cn(
+                      "bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center shadow-md",
+                      isMobile ? "w-8 h-8" : "w-8 h-8"
+                    )}>
+                      <Icon 
+                        name="TreePine" 
+                        size={16} 
+                        className="text-white" 
+                      />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Spine</h3>
+                    <h3 className={cn(
+                      "font-bold text-gray-800",
+                      isMobile ? "text-xl" : "text-2xl"
+                    )}>Spine</h3>
                   </div>
-                  <div className="space-y-6">
+                  <div className={cn(
+                    isMobile ? "space-y-4" : "space-y-6"
+                  )}>
                     {groupedSwitches.dataCenterSpine.map(
                       (switchData, index) => (
                         <motion.div
@@ -306,21 +410,35 @@ const SwitchesCatalog = () => {
               {groupedSwitches.dataCenterLeaf.length > 0 && (
                 <motion.div
                   id="leaf-level"
+                  className={cn(
+                    isMobile && "px-2"
+                  )}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 1.2 }}
                 >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-md">
+                  <div className={cn(
+                    "flex items-center gap-3 mb-5 sm:mb-6",
+                    isMobile && "justify-center"
+                  )}>
+                    <div className={cn(
+                      "bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-md",
+                      isMobile ? "w-8 h-8" : "w-8 h-8"
+                    )}>
                       <Icon
                         name="TreeDeciduous"
                         size={16}
                         className="text-white"
                       />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Leaf</h3>
+                    <h3 className={cn(
+                      "font-bold text-gray-800",
+                      isMobile ? "text-xl" : "text-2xl"
+                    )}>Leaf</h3>
                   </div>
-                  <div className="space-y-6">
+                  <div className={cn(
+                    isMobile ? "space-y-4" : "space-y-6"
+                  )}>
                     {groupedSwitches.dataCenterLeaf.map((switchData, index) => (
                       <motion.div
                         key={switchData.id}
@@ -338,35 +456,75 @@ const SwitchesCatalog = () => {
 
             {/* CTA блок внизу */}
             <motion.section
-              className="relative overflow-hidden"
+              className={cn(
+                "relative overflow-hidden",
+                isMobile && "mx-2"
+              )}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.4 }}
             >
               {/* Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-3xl" />
-              <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-3xl border border-white/20" />
+              <div className={cn(
+                "absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
+                isMobile ? "rounded-2xl" : "rounded-3xl"
+              )} />
+              <div className={cn(
+                "absolute inset-0 bg-white/60 backdrop-blur-sm border border-white/20",
+                isMobile ? "rounded-2xl" : "rounded-3xl"
+              )} />
 
-              {/* Decorative elements */}
-              <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-full blur-xl" />
-              <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-xl" />
+              {/* Decorative elements - скрыты на мобильных */}
+              {!isMobile && (
+                <>
+                  <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-full blur-xl" />
+                  <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-xl" />
+                </>
+              )}
 
-              <div className="relative p-6 sm:p-8 lg:p-12 text-center">
+              <div className={cn(
+                "relative text-center",
+                isMobile ? "p-6" : "p-6 sm:p-8 lg:p-12"
+              )}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 1.5 }}
-                  className="mb-6"
+                  className={cn(
+                    isMobile ? "mb-5" : "mb-6"
+                  )}
                 >
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
-                    <Icon name="Headphones" size={24} className="text-white sm:w-8 sm:h-8" />
+                  <div className={cn(
+                    "bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center mx-auto shadow-lg",
+                    isMobile 
+                      ? "w-14 h-14 rounded-2xl mb-4" 
+                      : "w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl mb-4 sm:mb-6"
+                  )}>
+                    <Icon 
+                      name="Headphones" 
+                      size={isMobile ? 28 : 24} 
+                      className={cn(
+                        "text-white",
+                        !isMobile && "sm:w-8 sm:h-8"
+                      )} 
+                    />
                   </div>
 
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                  <h2 className={cn(
+                    "font-bold text-gray-900 mb-4",
+                    isMobile 
+                      ? "text-xl leading-tight px-2" 
+                      : "text-2xl sm:text-3xl lg:text-4xl"
+                  )}>
                     Нужна помощь с выбором оборудования?
                   </h2>
 
-                  <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
+                  <p className={cn(
+                    "text-gray-600 max-w-3xl mx-auto leading-relaxed",
+                    isMobile 
+                      ? "text-sm mb-5 px-2" 
+                      : "text-base sm:text-lg mb-6 sm:mb-8"
+                  )}>
                     Наши инженеры помогут выбрать оптимальное решение для вашей
                     инфраструктуры. Консультация и техническая поддержка —
                     бесплатно.
@@ -377,11 +535,19 @@ const SwitchesCatalog = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 1.6 }}
-                  className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                  className={cn(
+                    "flex justify-center items-center",
+                    isMobile ? "flex-col gap-4" : "flex-col sm:flex-row gap-4"
+                  )}
                 >
                   <Button
                     size={isMobile ? "default" : "lg"}
-                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-4 w-full sm:w-auto"
+                    className={cn(
+                      "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300",
+                      isMobile 
+                        ? "w-full px-6 py-3" 
+                        : "px-6 py-3 sm:px-8 sm:py-4 w-full sm:w-auto"
+                    )}
                     asChild
                   >
                     <Link to="/partners">
@@ -391,7 +557,12 @@ const SwitchesCatalog = () => {
                     </Link>
                   </Button>
 
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-sm text-gray-600">
+                  <div className={cn(
+                    "flex items-center justify-center text-sm text-gray-600",
+                    isMobile 
+                      ? "flex-col gap-3" 
+                      : "flex-col sm:flex-row gap-4 sm:gap-6"
+                  )}>
                     <div className="flex items-center gap-2">
                       <Icon name="Clock" size={16} className="text-green-600" />
                       <span>24/7 поддержка</span>

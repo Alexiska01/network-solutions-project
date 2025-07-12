@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, Filter, Zap, Network, Shield } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 import Icon from "@/components/ui/icon";
 
 interface SwitchesSearchProps {
@@ -14,6 +16,7 @@ const SwitchesSearch = ({
   onSearchChange,
 }: SwitchesSearchProps) => {
   const [isFocused, setIsFocused] = useState(false);
+  const isMobile = useIsMobile();
   const [suggestions] = useState([
     { id: "ids3530", name: "IDS3530", category: "access", icon: "Router" },
     { id: "ids3730", name: "IDS3730", category: "access", icon: "Zap" },
@@ -88,16 +91,28 @@ const SwitchesSearch = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative mb-8"
+      className={cn(
+        "relative",
+        isMobile ? "mb-6" : "mb-8"
+      )}
     >
       {/* Search container */}
       <div className="relative">
         {/* Background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl" />
-        <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-2xl border border-white/20" />
+        <div className={cn(
+          "absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50",
+          isMobile ? "rounded-xl" : "rounded-2xl"
+        )} />
+        <div className={cn(
+          "absolute inset-0 bg-white/60 backdrop-blur-sm border border-white/20",
+          isMobile ? "rounded-xl" : "rounded-2xl"
+        )} />
 
         {/* Search input */}
-        <div className="relative p-4">
+        <div className={cn(
+          "relative",
+          isMobile ? "p-3" : "p-4"
+        )}>
           <div className="relative group">
             {/* Icon */}
             <motion.div
@@ -114,12 +129,17 @@ const SwitchesSearch = ({
             {/* Input field */}
             <Input
               type="text"
-              placeholder="Найти серию коммутатора... (например: IDS3730)"
+              placeholder={isMobile ? "Поиск коммутатора..." : "Найти серию коммутатора... (например: IDS3730)"}
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-              className="pl-12 pr-12 py-4 text-base bg-white/80 border-0 ring-1 ring-gray-200 focus:ring-2 focus:ring-blue-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 placeholder:text-gray-400"
+              className={cn(
+                "pl-12 pr-12 bg-white/80 border-0 ring-1 ring-gray-200 focus:ring-2 focus:ring-blue-500 shadow-sm hover:shadow-md transition-all duration-300 placeholder:text-gray-400",
+                isMobile 
+                  ? "py-3.5 text-base rounded-lg" 
+                  : "py-4 text-base rounded-xl"
+              )}
             />
 
             {/* Clear button */}
@@ -139,7 +159,10 @@ const SwitchesSearch = ({
 
             {/* Focus ring animation */}
             <motion.div
-              className="absolute inset-0 rounded-xl ring-2 ring-blue-500 pointer-events-none"
+              className={cn(
+                "absolute inset-0 ring-2 ring-blue-500 pointer-events-none",
+                isMobile ? "rounded-lg" : "rounded-xl"
+              )}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{
                 opacity: isFocused ? 0.2 : 0,
@@ -157,15 +180,25 @@ const SwitchesSearch = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
-                className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-xl z-50 overflow-hidden"
+                className={cn(
+                  "absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 shadow-xl z-50 overflow-hidden",
+                  isMobile ? "rounded-lg mx-1" : "rounded-xl"
+                )}
               >
-                <div className="p-2">
-                  <div className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
+                <div className={cn(
+                  isMobile ? "p-1.5" : "p-2"
+                )}>
+                  <div className={cn(
+                    "flex items-center gap-2 text-xs font-medium text-gray-500 uppercase tracking-wide",
+                    isMobile ? "px-2 py-1.5" : "px-3 py-2"
+                  )}>
                     <Filter className="h-3 w-3" />
                     Быстрый поиск
                   </div>
 
-                  <div className="space-y-1">
+                  <div className={cn(
+                    isMobile ? "space-y-0.5" : "space-y-1"
+                  )}>
                     {filteredSuggestions.map((suggestion, index) => (
                       <motion.button
                         key={suggestion.id}
@@ -173,26 +206,38 @@ const SwitchesSearch = ({
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.2, delay: index * 0.05 }}
                         onClick={() => handleSuggestionClick(suggestion.name)}
-                        className="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 group"
+                        className={cn(
+                          "w-full flex items-center gap-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 group",
+                          isMobile ? "px-2 py-2.5" : "px-3 py-3"
+                        )}
                       >
                         <div
-                          className={`p-2 rounded-lg ${getCategoryColor(suggestion.category)} group-hover:scale-110 transition-transform duration-200`}
+                          className={cn(
+                            `rounded-lg ${getCategoryColor(suggestion.category)} group-hover:scale-110 transition-transform duration-200`,
+                            isMobile ? "p-1.5" : "p-2"
+                          )}
                         >
-                          <Icon name={suggestion.icon as any} size={16} />
+                          <Icon name={suggestion.icon as any} size={isMobile ? 14 : 16} />
                         </div>
 
                         <div className="flex-1 text-left">
-                          <div className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                          <div className={cn(
+                            "font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200",
+                            isMobile ? "text-sm" : ""
+                          )}>
                             {suggestion.name}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className={cn(
+                            "text-gray-500",
+                            isMobile ? "text-xs" : "text-sm"
+                          )}>
                             {getCategoryLabel(suggestion.category)} уровень
                           </div>
                         </div>
 
                         <Icon
                           name="ArrowRight"
-                          size={14}
+                          size={isMobile ? 12 : 14}
                           className="text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-200"
                         />
                       </motion.button>
@@ -200,14 +245,26 @@ const SwitchesSearch = ({
                   </div>
 
                   {filteredSuggestions.length === 0 && searchTerm && (
-                    <div className="px-3 py-6 text-center">
+                    <div className={cn(
+                      "text-center",
+                      isMobile ? "px-2 py-4" : "px-3 py-6"
+                    )}>
                       <div className="text-gray-400 mb-2">
-                        <Search className="h-8 w-8 mx-auto" />
+                        <Search className={cn(
+                          "mx-auto",
+                          isMobile ? "h-6 w-6" : "h-8 w-8"
+                        )} />
                       </div>
-                      <p className="text-gray-500 text-sm">
+                      <p className={cn(
+                        "text-gray-500",
+                        isMobile ? "text-xs" : "text-sm"
+                      )}>
                         Ничего не найдено для "{searchTerm}"
                       </p>
-                      <p className="text-gray-400 text-xs mt-1">
+                      <p className={cn(
+                        "text-gray-400 mt-1",
+                        isMobile ? "text-xs" : "text-xs"
+                      )}>
                         Попробуйте другой запрос
                       </p>
                     </div>

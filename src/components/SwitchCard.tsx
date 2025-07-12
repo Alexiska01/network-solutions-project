@@ -221,17 +221,18 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
           </div>
         </div>
       ) : (
-        /* --- МЕДИА ДЛЯ МОБИЛЬНЫХ --- */
-        <div className="p-4">
-          <div className="aspect-video mb-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden relative">
-            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:15px_15px]" />
+        /* --- МОБИЛЬНАЯ ВЕРСИЯ --- */
+        <div className="p-5">
+          {/* Изображение с улучшенными пропорциями */}
+          <div className="aspect-[4/3] mb-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden relative shadow-sm">
+            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.03)_25%,rgba(59,130,246,0.03)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.03)_75%)] bg-[length:20px_20px]" />
 
             <motion.img
               src={switchData.image}
               alt={switchData.title}
-              className="relative z-10 w-full h-full object-contain p-4"
-              animate={{ scale: isHovered ? 1.05 : 1 }}
-              transition={{ duration: 0.3 }}
+              className="relative z-10 w-full h-full object-contain p-6"
+              animate={{ scale: isHovered ? 1.03 : 1 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
               onError={() => setImgErrored(true)}
             />
 
@@ -240,10 +241,10 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                 <div className="text-center">
                   <Icon
                     name="ImageOff"
-                    size={24}
-                    className="text-gray-400 mx-auto mb-1"
+                    size={28}
+                    className="text-gray-400 mx-auto mb-2"
                   />
-                  <span className="text-gray-500 text-xs">
+                  <span className="text-gray-500 text-sm">
                     Изображение недоступно
                   </span>
                 </div>
@@ -251,42 +252,53 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             )}
           </div>
 
-          <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+          {/* Заголовок с улучшенной типографикой */}
+          <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors duration-300">
             {switchData.title}
           </h3>
 
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+          {/* Описание с увеличенным размером */}
+          <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-3">
             {switchData.description}
           </p>
 
-          {/* Mobile specs */}
-          <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
-            {specs.map((spec) => (
-              <div
+          {/* Улучшенные спецификации */}
+          <div className="grid grid-cols-1 gap-3 mb-5">
+            {specs.map((spec, index) => (
+              <motion.div
                 key={spec.label}
-                className="flex-shrink-0 bg-gray-50 rounded-lg px-3 py-2 min-w-fit"
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors duration-300"
               >
-                <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-white rounded-lg shadow-sm flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={spec.icon as any}
-                    size={14}
-                    className="text-gray-500"
+                    size={16}
+                    className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
                   />
-                  <span className="text-xs font-medium text-gray-900">
-                    {spec.value}
-                  </span>
                 </div>
-              </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                    {spec.label}
+                  </p>
+                  <p className="text-sm font-semibold text-gray-900 truncate">
+                    {spec.value}
+                  </p>
+                </div>
+              </motion.div>
             ))}
           </div>
 
+          {/* Улучшенная кнопка */}
           <Button
             variant="outline"
-            size="sm"
-            className="w-full group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all duration-300"
+            size="default"
+            className="w-full h-12 group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
             onClick={handleLinkClick}
           >
-            <span className="mr-2">Подробнее</span>
+            <span className="mr-2 font-medium">Подробнее</span>
             <Icon
               name="ArrowRight"
               className="h-4 w-4 transition-transform group-hover/btn:translate-x-1"
@@ -306,30 +318,50 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{CardContent}</DialogTrigger>
-      <DialogContent className="max-w-lg">
-        <DialogTitle className="flex items-center gap-3">
+      <DialogContent className={cn(
+        "max-w-lg",
+        isMobile && "max-w-[95vw] mx-2"
+      )}>
+        <DialogTitle className={cn(
+          "flex gap-3",
+          isMobile ? "flex-col items-center text-center" : "items-center"
+        )}>
           <div
-            className={`w-10 h-10 rounded-full bg-gradient-to-r ${getCategoryColor(switchData.category)} flex items-center justify-center`}
+            className={`w-12 h-12 rounded-full bg-gradient-to-r ${getCategoryColor(switchData.category)} flex items-center justify-center ${isMobile ? 'mb-2' : ''}`}
           >
             <Icon
               name={getCategoryIcon(switchData.category)}
-              size={20}
+              size={22}
               className="text-white"
             />
           </div>
           <div>
-            <h3 className="font-bold text-lg">{switchData.title}</h3>
-            <p className="text-sm text-gray-500 capitalize">
+            <h3 className={cn(
+              "font-bold",
+              isMobile ? "text-lg text-center" : "text-lg"
+            )}>{switchData.title}</h3>
+            <p className={cn(
+              "text-sm text-gray-500 capitalize",
+              isMobile && "text-center"
+            )}>
               Спецификации {switchData.category}
             </p>
           </div>
         </DialogTitle>
 
-        <div className="space-y-4 mt-6">
+        <div className={cn(
+          "space-y-4",
+          isMobile ? "mt-4" : "mt-6"
+        )}>
           {specs.map((spec) => (
             <div
               key={spec.label}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+              className={cn(
+                "p-3 bg-gray-50 rounded-lg",
+                isMobile 
+                  ? "flex flex-col gap-2" 
+                  : "flex items-center justify-between"
+              )}
             >
               <div className="flex items-center gap-3">
                 <Icon
@@ -339,7 +371,10 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                 />
                 <span className="font-medium text-gray-900">{spec.label}</span>
               </div>
-              <span className="text-gray-700 font-semibold">{spec.value}</span>
+              <span className={cn(
+                "text-gray-700 font-semibold",
+                isMobile && "ml-9"
+              )}>{spec.value}</span>
             </div>
           ))}
 
@@ -348,11 +383,17 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
               <Icon name="Settings" size={18} className="text-blue-600" />
               <span className="font-medium text-gray-900">Функции</span>
             </div>
-            <div className="flex flex-wrap gap-1">
+            <div className={cn(
+              "flex flex-wrap",
+              isMobile ? "gap-2" : "gap-1"
+            )}>
               {switchData.specs.features.map((feature, index) => (
                 <span
                   key={index}
-                  className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-md"
+                  className={cn(
+                    "inline-block bg-blue-100 text-blue-800 rounded-md",
+                    isMobile ? "text-xs px-3 py-1.5" : "text-xs px-2 py-1"
+                  )}
                 >
                   {feature}
                 </span>
@@ -361,7 +402,10 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
           </div>
         </div>
 
-        <div className="flex gap-3 mt-6">
+        <div className={cn(
+          "flex gap-3",
+          isMobile ? "mt-5 flex-col" : "mt-6"
+        )}>
           <DialogClose asChild>
             <Button variant="outline" className="flex-1">
               Закрыть
