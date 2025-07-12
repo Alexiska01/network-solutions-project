@@ -34,18 +34,6 @@ const MenuItem: React.FC<MenuItemProps> = ({
         onClick: (e: React.MouseEvent) => onItemClick(item, e),
       };
 
-  const getItemDescription = (path: string) => {
-    const descriptions: Record<string, string> = {
-      "/products": "Коммутаторы и оборудование",
-      "/warranty-service": "Поддержка и обслуживание",
-      "/software": "Программное обеспечение",
-      "/documentation": "Техническая документация",
-      "/partners": "Партнерская сеть",
-      "/contacts": "Свяжитесь с нами",
-    };
-    return descriptions[path] || "";
-  };
-
   return (
     <motion.div
       key={item.path}
@@ -109,16 +97,6 @@ const MenuItem: React.FC<MenuItemProps> = ({
             >
               {item.name}
             </motion.span>
-            {level === 0 && (
-              <motion.span
-                className="text-xs text-gray-500 block mt-0.5"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                {getItemDescription(item.path)}
-              </motion.span>
-            )}
           </div>
         </div>
 
