@@ -45,14 +45,14 @@ const MenuItem: React.FC<MenuItemProps> = ({
   return (
     <motion.div
       key={item.path}
-      initial={{ opacity: 0, x: -30 }}
+      initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{
-        delay: index * 0.08,
-        duration: 0.4,
-        ease: [0.4, 0, 0.2, 1],
+        delay: index * 0.05,
+        duration: 0.25,
+        ease: "easeOut",
       }}
-      className="overflow-hidden"
+      className="overflow-hidden will-change-transform"
     >
       <MenuItemComponent
         {...menuItemProps}
@@ -168,7 +168,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             className="overflow-hidden mt-2"
           >
             <div className="relative ml-4 pl-4 border-l border-gray-200">
@@ -184,11 +184,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
                 {item.items?.map((subItem, subIndex) => (
                   <motion.div
                     key={subItem.path}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -15 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
-                      delay: subIndex * 0.1 + 0.2,
-                      duration: 0.3,
+                      delay: subIndex * 0.06 + 0.15,
+                      duration: 0.2,
                       ease: "easeOut",
                     }}
                   >

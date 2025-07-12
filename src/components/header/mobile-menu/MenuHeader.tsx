@@ -13,24 +13,15 @@ const MenuHeader: React.FC<MenuHeaderProps> = ({
   return (
     <motion.div
       className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-emerald-600 text-white overflow-hidden"
-      initial={{ y: -20, opacity: 0 }}
+      initial={{ y: -15, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.1, duration: 0.4 }}
+      transition={{ delay: 0.05, duration: 0.25, ease: "easeOut" }}
     >
       {/* Декоративные элементы */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-      <motion.div
-        className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full"
-        animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 180, 360],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        style={{ x: 60, y: -60 }}
+      <div
+        className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full"
+        style={{ transform: "translate(60px, -60px)" }}
       />
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-400/20 rounded-full -translate-x-12 translate-y-12" />
 
@@ -47,8 +38,15 @@ const MenuHeader: React.FC<MenuHeaderProps> = ({
                   backgroundColor: "rgba(255,255,255,0.3)",
                 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={onNavigateBack}
-                className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm transition-all duration-200 flex items-center justify-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNavigateBack();
+                }}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                  onNavigateBack();
+                }}
+                className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 active:bg-white/40 transition-all duration-200 flex items-center justify-center touch-manipulation"
                 aria-label="Назад"
               >
                 <Icon name="ArrowLeft" size={18} />
@@ -58,8 +56,9 @@ const MenuHeader: React.FC<MenuHeaderProps> = ({
           <div>
             <motion.h2
               key={currentLevel?.title}
-              initial={{ x: 20, opacity: 0 }}
+              initial={{ x: 15, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className="text-lg font-semibold"
             >
               {currentLevel?.title || "Меню"}
@@ -68,7 +67,7 @@ const MenuHeader: React.FC<MenuHeaderProps> = ({
               className="text-xs text-white/80 font-medium"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.15, duration: 0.2 }}
             >
               iDATA Navigation
             </motion.div>
@@ -76,10 +75,17 @@ const MenuHeader: React.FC<MenuHeaderProps> = ({
         </div>
 
         <motion.button
-          onClick={onClose}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+          onTouchEnd={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
           whileHover={{ scale: 1.1, rotate: 90 }}
           whileTap={{ scale: 0.9 }}
-          className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-200 flex items-center justify-center"
+          className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 active:bg-white/40 transition-all duration-200 flex items-center justify-center touch-manipulation"
           aria-label="Закрыть меню"
         >
           <Icon name="X" size={18} />

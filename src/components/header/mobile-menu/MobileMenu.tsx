@@ -75,15 +75,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className="lg:hidden fixed inset-0 bg-black/30 backdrop-blur-md z-40"
             onClick={onClose}
           >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-emerald-900/20"
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-emerald-900/10" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -93,20 +89,21 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         {isOpen && (
           <motion.div
             ref={menuRef}
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
             transition={{
               type: "spring",
-              stiffness: 300,
-              damping: 30,
-              mass: 0.8,
+              stiffness: 400,
+              damping: 25,
+              mass: 0.6,
+              duration: 0.3,
             }}
             style={{ x: dragX, opacity: dragOpacity }}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-screen bg-white/95 backdrop-blur-xl z-50 shadow-2xl flex flex-col border-l border-gray-100"
+            className="lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-screen bg-white/95 backdrop-blur-xl z-50 shadow-2xl flex flex-col border-l border-gray-100 will-change-transform"
           >
             {/* Премиальная шапка */}
             <MenuHeader
@@ -121,10 +118,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             <div className="flex-1 overflow-hidden relative">
               <motion.div
                 key={menuStack.length}
-                initial={{ x: 20, opacity: 0 }}
+                initial={{ x: 15, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -20, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                exit={{ x: -15, opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
                 className="h-full"
               >
                 <nav className="h-full overflow-y-auto px-2 py-4 scrollbar-thin scrollbar-thumb-gray-200 hover:scrollbar-thumb-gray-300 scrollbar-track-transparent">
