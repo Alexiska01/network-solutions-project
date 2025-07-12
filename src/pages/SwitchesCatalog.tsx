@@ -95,7 +95,7 @@ const SwitchesCatalog = () => {
       <Header />
       <div className="bg-gray-50">
         {/* Breadcrumb */}
-        <div className="max-w-7xl mx-auto py-4 px-[35px]">
+        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-[35px]">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -120,14 +120,12 @@ const SwitchesCatalog = () => {
 
       <HeroCommuts />
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex gap-6">
-          {/* Левое меню навигации - только на десктопе */}
-          {!isMobile && (
-            <div className="w-96 flex-shrink-0">
-              <CatalogNavigation onNavigate={handleScrollToCard} />
-            </div>
-          )}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
+          {/* Левое меню навигации - скрыто на мобильных */}
+          <div className="hidden lg:block w-96 flex-shrink-0">
+            <CatalogNavigation onNavigate={handleScrollToCard} />
+          </div>
 
           {/* Основной контент */}
           <div className="flex-1">
@@ -151,15 +149,15 @@ const SwitchesCatalog = () => {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="mb-8"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-                    <Icon name="Building2" size={24} className="text-white" />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
+                    <Icon name="Building2" size={20} className="text-white sm:w-6 sm:h-6" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-gray-900">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
                       Коммутаторы для корпоративных ЛВС
                     </h2>
-                    <p className="text-gray-600 mt-1">
+                    <p className="text-sm sm:text-base text-gray-600 mt-1">
                       Решения для корпоративных локальных сетей
                     </p>
                   </div>
@@ -175,11 +173,11 @@ const SwitchesCatalog = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-md">
-                      <Icon name="Wifi" size={16} className="text-white" />
+                  <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md">
+                      <Icon name="Wifi" size={14} className="text-white sm:w-4 sm:h-4" />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-800">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800">
                       Коммутаторы уровня доступа
                     </h3>
                   </div>
@@ -353,22 +351,22 @@ const SwitchesCatalog = () => {
               <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-full blur-xl" />
               <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-xl" />
 
-              <div className="relative p-8 lg:p-12 text-center">
+              <div className="relative p-6 sm:p-8 lg:p-12 text-center">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 1.5 }}
                   className="mb-6"
                 >
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                    <Icon name="Headphones" size={32} className="text-white" />
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
+                    <Icon name="Headphones" size={24} className="text-white sm:w-8 sm:h-8" />
                   </div>
 
-                  <h2 className="lg:text-4xl font-bold text-gray-900 mb-4 text-3xl">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                     Нужна помощь с выбором оборудования?
                   </h2>
 
-                  <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                  <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
                     Наши инженеры помогут выбрать оптимальное решение для вашей
                     инфраструктуры. Консультация и техническая поддержка —
                     бесплатно.
@@ -382,8 +380,8 @@ const SwitchesCatalog = () => {
                   className="flex flex-col sm:flex-row gap-4 justify-center items-center"
                 >
                   <Button
-                    size="lg"
-                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-4"
+                    size={isMobile ? "default" : "lg"}
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-4 w-full sm:w-auto"
                     asChild
                   >
                     <Link to="/partners">
@@ -393,7 +391,7 @@ const SwitchesCatalog = () => {
                     </Link>
                   </Button>
 
-                  <div className="flex items-center gap-6 text-sm text-gray-600">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
                       <Icon name="Clock" size={16} className="text-green-600" />
                       <span>24/7 поддержка</span>
