@@ -112,7 +112,8 @@ const Hero = () => {
             {/* Заголовок - премиальный мировой уровень */}
             <motion.div
               variants={itemVariants}
-              className="h-80 flex items-start mb-8 relative"
+              className="flex items-start relative"
+              style={{ marginTop: "15%" }}
             >
               {/* Декоративные элементы заголовка */}
               <motion.div
