@@ -485,9 +485,10 @@ const Hero = () => {
                       }
                     />
                   </div>
-                  <div className="text-white/90 text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
+                  <div className="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
                     Network Intelligence
                   </div>
+
                   <motion.div
                     className="absolute top-0 right-0 w-2 h-2 bg-cyan-400 rounded-full"
                     animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
