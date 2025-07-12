@@ -41,34 +41,26 @@ const ProductsDropdown = memo(
         </button>
 
         {isOpen && (
-          <div className="absolute left-0 top-full bg-white border border-gray-100 rounded-xl shadow-2xl z-50 animate-fade-in flex min-h-[500px]">
+          <div className="absolute left-0 top-full bg-white border border-gray-100 rounded-xl shadow-2xl z-50 animate-fade-in flex max-h-[600px] overflow-hidden">
             {/* Левая панель - основные разделы */}
-            <div className="w-80 py-6 border-r border-gray-100 bg-gradient-to-b from-gray-50 to-white">
+            <div className="w-72 py-4 border-r border-gray-100 bg-gradient-to-b from-gray-50 to-white overflow-y-auto">
               {/* Заголовок раздела */}
-              <div className="px-6 mb-4">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">
+              <div className="px-4 mb-3">
+                <h3 className="text-base font-bold text-gray-900 mb-1">
                   Оборудование iDATA
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs text-gray-600">
                   Сетевые решения корпоративного класса
                 </p>
               </div>
 
-              {/* Ссылка "Все коммутаторы" */}
-              <Link
-                to="/products/switches.html"
-                className="block mx-6 mb-4 px-4 py-3 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors rounded-lg text-center shadow-sm"
-              >
-                📋 Посмотреть все продукты
-              </Link>
-
               {productSubmenuItems.map((item) => (
-                <div key={item.path} className="mb-2">
+                <div key={item.path} className="mb-1">
                   <Link
                     to={item.path}
-                    className={`relative flex items-start justify-between mx-4 px-4 py-4 text-base text-gray-700 hover:bg-white hover:shadow-md transition-all duration-200 group rounded-lg border border-transparent hover:border-blue-100 ${
+                    className={`relative flex items-center justify-between mx-3 px-3 py-2 text-sm text-gray-700 hover:bg-white hover:shadow-sm transition-all duration-200 group rounded-lg border border-transparent hover:border-blue-100 ${
                       dropdownState.activeSubmenu === item.name
-                        ? "bg-white shadow-md border-blue-100"
+                        ? "bg-white shadow-sm border-blue-100"
                         : ""
                     }`}
                     onMouseEnter={() =>
@@ -77,55 +69,31 @@ const ProductsDropdown = memo(
                         : setActiveSubmenu(null)
                     }
                   >
-                    <div className="flex items-start space-x-3 flex-1">
-                      <div className="p-2 rounded-lg bg-blue-50 group-hover:bg-blue-100 transition-colors">
+                    <div className="flex items-center space-x-2 flex-1">
+                      <div className="p-1.5 rounded bg-blue-50 group-hover:bg-blue-100 transition-colors">
                         <Icon
                           name={item.icon as any}
-                          size={18}
+                          size={14}
                           className="text-blue-600"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-semibold text-gray-900 group-hover:text-blue-700">
-                            {item.name}
-                          </span>
-                          {item.isPopular && (
-                            <span className="px-2 py-0.5 text-xs font-medium bg-orange-100 text-orange-700 rounded-full">
-                              🔥 Популярно
-                            </span>
-                          )}
-                          {item.isNew && (
-                            <span className="px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                              ✨ Новинка
-                            </span>
-                          )}
-                        </div>
+                        <h3 className="text-xs font-semibold text-gray-900 leading-tight truncate">
+                          {item.name}
+                        </h3>
                         {item.description && (
-                          <p className="text-sm text-gray-600 leading-relaxed">
+                          <p className="text-xs text-gray-500 leading-tight truncate">
                             {item.description}
                           </p>
-                        )}
-                        {item.category && (
-                          <span className="inline-block mt-2 text-xs text-blue-600 font-medium">
-                            {item.category}
-                          </span>
                         )}
                       </div>
                     </div>
                     {item.hasNestedSubmenu && (
-                      <div className="flex flex-col items-center justify-center ml-2">
-                        <Icon
-                          name="ChevronRight"
-                          size={16}
-                          className="text-gray-400 group-hover:text-blue-600 transition-colors"
-                        />
-                        {item.badge && (
-                          <span className="mt-1 px-1.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded text-center">
-                            {item.badge}
-                          </span>
-                        )}
-                      </div>
+                      <Icon
+                        name="ChevronRight"
+                        size={14}
+                        className="text-gray-400 group-hover:text-blue-600 transition-colors"
+                      />
                     )}
                   </Link>
                 </div>
@@ -135,31 +103,26 @@ const ProductsDropdown = memo(
             {/* Правая панель - подразделы */}
             {activeItem?.submenuItems &&
               Array.isArray(activeItem.submenuItems) && (
-                <div className="w-96 py-6 px-2 bg-white">
+                <div className="w-80 py-4 px-2 bg-white overflow-y-auto">
                   {activeItem.submenuItems.map((submenuItem) => (
-                    <div key={submenuItem.path} className="mb-8 last:mb-4">
+                    <div key={submenuItem.path} className="mb-4 last:mb-2">
                       <Link
                         to={submenuItem.path}
-                        className="group flex items-center gap-3 px-4 py-3 mb-3 text-base font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 rounded-lg"
+                        className="group flex items-center gap-2 px-3 py-2 mb-2 text-sm font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 rounded-lg"
                       >
                         {submenuItem.icon && (
                           <Icon
                             name={submenuItem.icon as any}
-                            size={20}
+                            size={16}
                             className="text-blue-600"
                           />
                         )}
                         <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            <span>{submenuItem.name}</span>
-                            {submenuItem.badge && (
-                              <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded-full">
-                                {submenuItem.badge}
-                              </span>
-                            )}
-                          </div>
+                          <span className="text-xs font-semibold">
+                            {submenuItem.name}
+                          </span>
                           {submenuItem.description && (
-                            <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                            <p className="text-xs text-gray-500 mt-0.5 leading-tight">
                               {submenuItem.description}
                             </p>
                           )}
@@ -169,32 +132,29 @@ const ProductsDropdown = memo(
                       {/* Третий уровень - категории */}
                       {Array.isArray(submenuItem.items) &&
                         submenuItem.items.length > 0 && (
-                          <div className="space-y-4 ml-2">
+                          <div className="space-y-2 ml-1">
                             {submenuItem.items.map((categoryItem) => (
                               <div
                                 key={categoryItem.path}
-                                className="border-l-2 border-blue-100 pl-4"
+                                className="border-l-2 border-blue-100 pl-3"
                               >
                                 <Link
                                   to={categoryItem.path}
-                                  className="group flex items-center gap-2 px-3 py-2 text-sm font-semibold text-gray-800 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 rounded-lg"
+                                  className="group flex items-center gap-2 px-2 py-1.5 text-xs font-semibold text-gray-800 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 rounded"
                                 >
                                   {categoryItem.icon && (
                                     <Icon
                                       name={categoryItem.icon as any}
-                                      size={16}
+                                      size={12}
                                       className="text-blue-500"
                                     />
                                   )}
-                                  <span>{categoryItem.name}</span>
-                                  {categoryItem.badge && (
-                                    <span className="px-1.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">
-                                      {categoryItem.badge}
-                                    </span>
-                                  )}
+                                  <span className="truncate">
+                                    {categoryItem.name}
+                                  </span>
                                 </Link>
                                 {categoryItem.description && (
-                                  <p className="text-xs text-gray-600 mt-1 px-3 leading-relaxed">
+                                  <p className="text-xs text-gray-500 mt-0.5 px-2 leading-tight truncate">
                                     {categoryItem.description}
                                   </p>
                                 )}
@@ -202,36 +162,17 @@ const ProductsDropdown = memo(
                                 {/* Четвёртый уровень - серии коммутаторов */}
                                 {Array.isArray(categoryItem.items) &&
                                   categoryItem.items.length > 0 && (
-                                    <div className="mt-3 ml-2 space-y-2">
+                                    <div className="mt-1 ml-1 space-y-1">
                                       {categoryItem.items.map(
                                         (seriesItem: any) => (
                                           <Link
                                             key={seriesItem.path}
                                             to={seriesItem.path}
-                                            className="group flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:text-blue-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 rounded-lg border border-transparent hover:border-blue-200 hover:shadow-sm"
+                                            className="group flex items-center px-2 py-1 text-xs text-gray-600 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 rounded"
                                           >
-                                            <div className="flex items-center gap-2 flex-1 min-w-0">
-                                              <span className="font-medium truncate">
-                                                {seriesItem.name}
-                                              </span>
-                                              {seriesItem.isNew && (
-                                                <span
-                                                  className="flex-shrink-0 w-2 h-2 bg-green-400 rounded-full animate-pulse"
-                                                  title="Новинка"
-                                                ></span>
-                                              )}
-                                              {seriesItem.isPopular && (
-                                                <span
-                                                  className="flex-shrink-0 w-2 h-2 bg-orange-400 rounded-full"
-                                                  title="Популярное"
-                                                ></span>
-                                              )}
-                                            </div>
-                                            {seriesItem.badge && (
-                                              <span className="flex-shrink-0 px-1.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded ml-2">
-                                                {seriesItem.badge}
-                                              </span>
-                                            )}
+                                            <span className="font-medium truncate">
+                                              {seriesItem.name}
+                                            </span>
                                           </Link>
                                         ),
                                       )}
