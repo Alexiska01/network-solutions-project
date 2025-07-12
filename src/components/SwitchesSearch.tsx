@@ -208,7 +208,7 @@ const SwitchesSearch = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap gap-2 px-4 pb-4"
+          className="flex flex-wrap gap-2 px-4 pb-4 relative z-10"
         >
           {[
             { label: "Доступ", icon: "Wifi", color: "blue" },
