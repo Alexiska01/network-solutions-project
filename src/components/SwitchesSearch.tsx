@@ -86,7 +86,7 @@ const SwitchesSearch = ({
           <div className="relative group">
             {/* Icon */}
             <motion.div
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center"
               animate={{
                 scale: isFocused ? 1.1 : 1,
                 color: isFocused ? "#3B82F6" : "#9CA3AF",
