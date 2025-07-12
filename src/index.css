@@ -8,6 +8,16 @@
     scroll-behavior: smooth;
   }
 
+  /* Скрытие полосы прокрутки для мобильной навигации */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
