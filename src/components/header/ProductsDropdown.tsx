@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { memo, useMemo } from "react";
 import Icon from "@/components/ui/icon";
 import { DropdownState } from "@/hooks/useDropdownMenu";
@@ -21,6 +21,9 @@ const ProductsDropdown = memo(
     onMouseEnter,
     onMouseLeave,
   }: ProductsDropdownProps) => {
+    const location = useLocation();
+    const isHomePage = location.pathname === "/";
+
     const activeItem = useMemo(
       () =>
         productSubmenuItems.find(
@@ -41,9 +44,13 @@ const ProductsDropdown = memo(
         </button>
 
         {isOpen && (
-          <div className="absolute left-0 top-full bg-white border border-gray-100 rounded-xl shadow-2xl z-50 animate-fade-in flex max-h-[600px] overflow-hidden">
+          <div
+            className={`absolute left-0 top-full bg-white border border-gray-100 rounded-xl shadow-2xl z-50 animate-fade-in flex max-h-[600px] overflow-hidden ${isHomePage ? "w-80" : ""}`}
+          >
             {/* Левая панель - основные разделы */}
-            <div className="w-80 py-4 border-r border-gray-100 bg-gradient-to-b from-gray-50 to-white overflow-y-auto">
+            <div
+              className={`py-4 bg-gradient-to-b from-gray-50 to-white overflow-y-auto ${isHomePage ? "w-full" : "w-80 border-r border-gray-100"}`}
+            >
               {/* Заголовок раздела */}
               <div className="px-4 mb-3">
                 <h3 className="text-base font-bold text-gray-900 mb-1">
@@ -64,7 +71,7 @@ const ProductsDropdown = memo(
                         : ""
                     }`}
                     onMouseEnter={() =>
-                      item.hasNestedSubmenu
+                      !isHomePage && item.hasNestedSubmenu
                         ? setActiveSubmenu(item.name)
                         : setActiveSubmenu(null)
                     }
@@ -88,7 +95,7 @@ const ProductsDropdown = memo(
                         )}
                       </div>
                     </div>
-                    {item.hasNestedSubmenu && (
+                    {!isHomePage && item.hasNestedSubmenu && (
                       <Icon
                         name="ChevronRight"
                         size={14}
@@ -100,8 +107,9 @@ const ProductsDropdown = memo(
               ))}
             </div>
 
-            {/* Правая панель - подразделы */}
-            {activeItem?.submenuItems &&
+            {/* Правая панель - подразделы (только не на главной) */}
+            {!isHomePage &&
+              activeItem?.submenuItems &&
               Array.isArray(activeItem.submenuItems) && (
                 <div className="w-96 py-4 px-2 bg-white overflow-y-auto">
                   {activeItem.submenuItems.map((submenuItem) => (
