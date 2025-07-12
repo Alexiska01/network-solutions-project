@@ -226,23 +226,20 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Правая колонка - интерактивная панель с метриками мирового уровня */}
+          {/* Правая колонка - интерактивная панель */}
           <div className="relative h-full min-h-[600px] flex items-center justify-center">
-            {/* Основная панель консоли */}
             <motion.div
-              className="relative w-full max-w-lg bg-gradient-to-br from-blue-900/40 to-cyan-900/40 backdrop-blur-xl rounded-3xl border border-cyan-400/20 shadow-[0_20px_50px_rgba(6,182,212,0.3)] overflow-hidden"
-              initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+              className="relative w-full max-w-lg bg-gradient-to-br from-blue-900/30 to-cyan-900/30 backdrop-blur-lg rounded-2xl border border-cyan-400/20 shadow-2xl overflow-hidden"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{
                 type: "spring",
-                stiffness: 80,
+                stiffness: 100,
                 damping: 20,
-                duration: 1.2,
-                delay: 0.5,
+                delay: 0.8,
               }}
-              whileHover={{ scale: 1.02, rotateY: 2 }}
+              whileHover={{ scale: 1.02 }}
             >
-              {/* Заголовок консоли */}
               <motion.div
                 className="flex items-center justify-between p-6 border-b border-cyan-400/20"
                 initial={{ opacity: 0, y: -20 }}
@@ -251,351 +248,83 @@ export default function Hero() {
               >
                 <div className="flex items-center gap-3">
                   <div className="flex gap-2">
-                    <motion.div
-                      className="w-3 h-3 bg-green-400 rounded-full shadow-lg shadow-green-400/50"
-                      animate={{
-                        boxShadow: [
-                          "0 0 10px rgba(74, 222, 128, 0.5)",
-                          "0 0 20px rgba(74, 222, 128, 0.8)",
-                          "0 0 10px rgba(74, 222, 128, 0.5)",
-                        ],
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                    <motion.div
-                      className="w-3 h-3 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/50"
-                      animate={{
-                        boxShadow: [
-                          "0 0 10px rgba(251, 191, 36, 0.5)",
-                          "0 0 20px rgba(251, 191, 36, 0.8)",
-                          "0 0 10px rgba(251, 191, 36, 0.5)",
-                        ],
-                      }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-                    />
-                    <motion.div
-                      className="w-3 h-3 bg-red-400 rounded-full shadow-lg shadow-red-400/50"
-                      animate={{
-                        boxShadow: [
-                          "0 0 10px rgba(248, 113, 113, 0.5)",
-                          "0 0 20px rgba(248, 113, 113, 0.8)",
-                          "0 0 10px rgba(248, 113, 113, 0.5)",
-                        ],
-                      }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-                    />
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-red-400 rounded-full"></div>
                   </div>
                   <span className="text-cyan-100 font-medium">
-                    Network Intelligence
+                    System Monitor
                   </span>
                 </div>
-                <motion.div
-                  className="flex items-center gap-2 text-cyan-300 text-sm"
-                  animate={{ opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <Icon name="Zap" size={16} />
-                  0.8ms
-                </motion.div>
+                <span className="text-cyan-300 text-sm">
+                  <Icon name="Zap" size={16} className="inline mr-1" />
+                  Online
+                </span>
               </motion.div>
 
-              {/* Сетка метрик */}
-              <div className="p-6 grid grid-cols-2 gap-4">
-                {/* Uptime */}
+              <div className="p-6 space-y-4">
                 <motion.div
-                  className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-sm rounded-2xl p-4 border border-green-400/30 relative overflow-hidden"
+                  className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-sm rounded-xl p-4 border border-blue-400/30"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 1.2 }}
-                  whileHover={{ scale: 1.05 }}
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-green-400/10 to-transparent"
-                    animate={{ x: ["-100%", "100%"] }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  />
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
                       <Icon
-                        name="TrendingUp"
-                        size={16}
-                        className="text-green-400"
+                        name="Activity"
+                        size={20}
+                        className="text-blue-400"
                       />
-                      <span className="text-green-400 text-xs">+0.2%</span>
+                      <span className="text-white font-medium">Сеть</span>
                     </div>
-                    <motion.div
-                      className="text-2xl font-bold text-white"
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      99.9%
-                    </motion.div>
-                    <div className="text-green-100 text-sm">Uptime</div>
+                    <span className="text-green-400">99.5%</span>
                   </div>
                 </motion.div>
 
-                {/* Latency */}
                 <motion.div
-                  className="bg-gradient-to-br from-blue-500/20 to-cyan-600/20 backdrop-blur-sm rounded-2xl p-4 border border-blue-400/30 relative overflow-hidden"
+                  className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm rounded-xl p-4 border border-green-400/30"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 1.4 }}
-                  whileHover={{ scale: 1.05 }}
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-transparent"
-                    animate={{ x: ["-100%", "100%"] }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear",
-                      delay: 1,
-                    }}
-                  />
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-2">
-                      <Icon name="Zap" size={16} className="text-blue-400" />
-                      <span className="text-red-400 text-xs">-15%</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Icon
+                        name="Shield"
+                        size={20}
+                        className="text-green-400"
+                      />
+                      <span className="text-white font-medium">
+                        Безопасность
+                      </span>
                     </div>
-                    <motion.div
-                      className="text-2xl font-bold text-white"
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                    >
-                      0.8ms
-                    </motion.div>
-                    <div className="text-blue-100 text-sm">Latency</div>
+                    <span className="text-green-400">Активна</span>
                   </div>
                 </motion.div>
 
-                {/* Traffic */}
                 <motion.div
-                  className="bg-gradient-to-br from-purple-500/20 to-pink-600/20 backdrop-blur-sm rounded-2xl p-4 border border-purple-400/30 relative overflow-hidden"
+                  className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl p-4 border border-purple-400/30"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.6 }}
-                  whileHover={{ scale: 1.05 }}
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-transparent"
-                    animate={{ x: ["-100%", "100%"] }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear",
-                      delay: 2,
-                    }}
-                  />
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
                       <Icon
-                        name="BarChart3"
-                        size={16}
+                        name="TrendingUp"
+                        size={20}
                         className="text-purple-400"
                       />
-                      <span className="text-green-400 text-xs">+24%</span>
+                      <span className="text-white font-medium">
+                        Производительность
+                      </span>
                     </div>
-                    <motion.div
-                      className="text-2xl font-bold text-white"
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                    >
-                      1.2TB
-                    </motion.div>
-                    <div className="text-purple-100 text-sm">Traffic</div>
-                  </div>
-                </motion.div>
-
-                {/* Devices */}
-                <motion.div
-                  className="bg-gradient-to-br from-cyan-500/20 to-teal-600/20 backdrop-blur-sm rounded-2xl p-4 border border-cyan-400/30 relative overflow-hidden"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.8 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-transparent"
-                    animate={{ x: ["-100%", "100%"] }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear",
-                      delay: 3,
-                    }}
-                  />
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-2">
-                      <Icon name="Cpu" size={16} className="text-cyan-400" />
-                      <span className="text-green-400 text-xs">+12%</span>
-                    </div>
-                    <motion.div
-                      className="text-2xl font-bold text-white"
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
-                    >
-                      3,247
-                    </motion.div>
-                    <div className="text-cyan-100 text-sm">Devices</div>
+                    <span className="text-green-400">Отлично</span>
                   </div>
                 </motion.div>
               </div>
-
-              {/* Производительность */}
-              <motion.div
-                className="p-6 border-t border-cyan-400/20"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2 }}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-cyan-100 font-medium flex items-center gap-2">
-                    <Icon name="Activity" size={16} />
-                    Network Online
-                  </span>
-                  <span className="text-green-400 text-sm">67%</span>
-                </div>
-                <div className="w-full bg-cyan-900/30 rounded-full h-2 mb-4">
-                  <motion.div
-                    className="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full relative overflow-hidden"
-                    initial={{ width: 0 }}
-                    animate={{ width: "67%" }}
-                    transition={{ duration: 2, delay: 2.2 }}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                      animate={{ x: ["-100%", "100%"] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "linear",
-                        delay: 3,
-                      }}
-                    />
-                  </motion.div>
-                </div>
-                <div className="text-cyan-200 text-sm">Производительность</div>
-              </motion.div>
-
-              {/* Сетевые устройства */}
-              <motion.div
-                className="p-6 border-t border-cyan-400/20"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.4 }}
-              >
-                <div className="grid grid-cols-3 gap-4">
-                  <motion.div
-                    className="bg-gradient-to-br from-blue-500/30 to-cyan-600/30 backdrop-blur-sm rounded-xl p-3 border border-blue-400/40 text-center relative overflow-hidden"
-                    whileHover={{ scale: 1.05, rotateY: 5 }}
-                  >
-                    <Icon
-                      name="Router"
-                      size={24}
-                      className="text-blue-300 mx-auto mb-2"
-                    />
-                    <div className="text-blue-100 text-xs">Router</div>
-                    <motion.div
-                      className="absolute inset-0 bg-blue-400/20 rounded-xl"
-                      animate={{ opacity: [0, 0.3, 0] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    className="bg-gradient-to-br from-green-500/30 to-emerald-600/30 backdrop-blur-sm rounded-xl p-3 border border-green-400/40 text-center relative overflow-hidden"
-                    whileHover={{ scale: 1.05, rotateY: 5 }}
-                  >
-                    <Icon
-                      name="Workflow"
-                      size={24}
-                      className="text-green-300 mx-auto mb-2"
-                    />
-                    <div className="text-green-100 text-xs">Switch</div>
-                    <motion.div
-                      className="absolute inset-0 bg-green-400/20 rounded-xl"
-                      animate={{ opacity: [0, 0.3, 0] }}
-                      transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    className="bg-gradient-to-br from-orange-500/30 to-red-600/30 backdrop-blur-sm rounded-xl p-3 border border-orange-400/40 text-center relative overflow-hidden"
-                    whileHover={{ scale: 1.05, rotateY: 5 }}
-                  >
-                    <Icon
-                      name="Shield"
-                      size={24}
-                      className="text-orange-300 mx-auto mb-2"
-                    />
-                    <div className="text-orange-100 text-xs">Firewall</div>
-                    <motion.div
-                      className="absolute inset-0 bg-orange-400/20 rounded-xl"
-                      animate={{ opacity: [0, 0.3, 0] }}
-                      transition={{ duration: 3, repeat: Infinity, delay: 2 }}
-                    />
-                  </motion.div>
-                </div>
-              </motion.div>
-
-              {/* Светящиеся частицы */}
-              {[...Array(12)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
-                  style={{
-                    left: `${10 + (i % 4) * 25}%`,
-                    top: `${15 + Math.floor(i / 4) * 30}%`,
-                  }}
-                  animate={{
-                    y: [0, -20, 0],
-                    opacity: [0.3, 1, 0.3],
-                    scale: [1, 1.5, 1],
-                  }}
-                  transition={{
-                    duration: 4 + (i % 3),
-                    repeat: Infinity,
-                    delay: i * 0.3,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
             </motion.div>
-
-            {/* Плавающие карточки вокруг */}
-            <motion.div
-              className="absolute -top-8 -right-8 bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-xl rounded-2xl p-4 border border-green-400/30 shadow-lg"
-              initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ delay: 3, type: "spring", stiffness: 100 }}
-              whileHover={{ scale: 1.1, rotate: 5 }}
-            >
-              <div className="flex items-center gap-2">
-                <Icon name="TrendingUp" size={16} className="text-green-400" />
-                <span className="text-green-400 font-semibold">+24%</span>
-              </div>
-              <div className="text-green-100 text-xs">Производительность</div>
-            </motion.div>
-
-            <motion.div
-              className="absolute -bottom-8 -left-8 bg-gradient-to-br from-blue-500/20 to-cyan-600/20 backdrop-blur-xl rounded-2xl p-4 border border-blue-400/30 shadow-lg"
-              initial={{ opacity: 0, scale: 0.5, rotate: 10 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ delay: 3.5, type: "spring", stiffness: 100 }}
-              whileHover={{ scale: 1.1, rotate: -5 }}
-            >
-              <div className="flex items-center gap-2">
-                <Icon name="Circle" size={16} className="text-blue-400" />
-                <span className="text-blue-400 font-semibold">99.3%</span>
-              </div>
-              <div className="text-blue-100 text-xs">Защищенность</div>
-            </motion.div>
-
-            {/* Орбитальные элементы */}
             <motion.div
               className="absolute inset-0 pointer-events-none"
               animate={{ rotate: 360 }}
