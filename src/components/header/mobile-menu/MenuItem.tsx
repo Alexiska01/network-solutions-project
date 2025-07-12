@@ -195,6 +195,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                     {subItem.items && subItem.items.length > 0 ? (
                       <button
                         onClick={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           setActiveItem(subItem.path);
                           onNavigateToLevel({
@@ -202,8 +203,12 @@ const MenuItem: React.FC<MenuItemProps> = ({
                             items: subItem.items,
                             parentPath: subItem.path,
                           });
+                        }}
+                        onTouchStart={(e) => {
+                          e.stopPropagation();
                         }}
                         onTouchEnd={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           setActiveItem(subItem.path);
                           onNavigateToLevel({
@@ -212,12 +217,18 @@ const MenuItem: React.FC<MenuItemProps> = ({
                             parentPath: subItem.path,
                           });
                         }}
-                        className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full touch-manipulation"
+                        onMouseDown={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onPointerDown={(e) => {
+                          e.stopPropagation();
+                        }}
+                        className="group relative flex items-center text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 focus:bg-blue-100/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none"
                       >
                         {/* Декоративная точка */}
                         <motion.div
                           whileHover={{ scale: 1.2 }}
-                          className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors duration-300 mr-3 flex-shrink-0"
+                          className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors duration-300 mr-3 flex-shrink-0 pointer-events-none"
                         />
 
                         <span className="font-medium group-hover:translate-x-1 transition-transform duration-300">
@@ -228,7 +239,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           whileHover={{ opacity: 1, x: 0 }}
-                          className="ml-auto"
+                          className="ml-auto pointer-events-none"
                         >
                           <Icon
                             name="ArrowRight"
@@ -239,7 +250,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 
                         {/* Gradient hover effect */}
                         <motion.div
-                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-50/0 to-emerald-50/0 group-hover:from-blue-50/50 group-hover:to-emerald-50/30 transition-all duration-300 -z-10"
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-50/0 to-emerald-50/0 group-hover:from-blue-50/50 group-hover:to-emerald-50/30 transition-all duration-300 -z-10 pointer-events-none"
                           initial={{ opacity: 0 }}
                           whileHover={{ opacity: 1 }}
                         />
@@ -248,21 +259,34 @@ const MenuItem: React.FC<MenuItemProps> = ({
                       <Link
                         to={subItem.path}
                         onClick={(e) => {
+                          console.log("Click на серии:", subItem.name);
+                          e.preventDefault();
                           e.stopPropagation();
                           setActiveItem(subItem.path);
                           onClose();
+                        }}
+                        onTouchStart={(e) => {
+                          e.stopPropagation();
                         }}
                         onTouchEnd={(e) => {
+                          console.log("Touch end на серии:", subItem.name);
+                          e.preventDefault();
                           e.stopPropagation();
                           setActiveItem(subItem.path);
                           onClose();
                         }}
-                        className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm touch-manipulation"
+                        onMouseDown={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onPointerDown={(e) => {
+                          e.stopPropagation();
+                        }}
+                        className="group relative flex items-center text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 focus:bg-blue-100/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm touch-manipulation cursor-pointer select-none"
                       >
                         {/* Декоративная точка */}
                         <motion.div
                           whileHover={{ scale: 1.2 }}
-                          className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors duration-300 mr-3 flex-shrink-0"
+                          className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors duration-300 mr-3 flex-shrink-0 pointer-events-none"
                         />
 
                         <span className="font-medium group-hover:translate-x-1 transition-transform duration-300">
@@ -273,7 +297,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           whileHover={{ opacity: 1, x: 0 }}
-                          className="ml-auto"
+                          className="ml-auto pointer-events-none"
                         >
                           <Icon
                             name="ArrowRight"
@@ -284,7 +308,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 
                         {/* Gradient hover effect */}
                         <motion.div
-                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-50/0 to-emerald-50/0 group-hover:from-blue-50/50 group-hover:to-emerald-50/30 transition-all duration-300 -z-10"
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-50/0 to-emerald-50/0 group-hover:from-blue-50/50 group-hover:to-emerald-50/30 transition-all duration-300 -z-10 pointer-events-none"
                           initial={{ opacity: 0 }}
                           whileHover={{ opacity: 1 }}
                         />

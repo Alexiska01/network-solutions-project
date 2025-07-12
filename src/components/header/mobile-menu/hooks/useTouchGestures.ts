@@ -35,10 +35,10 @@ export const useTouchGestures = ({
     const diffY = Math.abs(currentY - touchStart.y);
 
     // Проверяем что это горизонтальный свайп и не клик по кнопке
-    if (Math.abs(diffX) > 15 && diffY < 50) {
+    if (Math.abs(diffX) > 20 && diffY < 60) {
       // Проверяем что целевой элемент не является кнопкой или ссылкой
       const target = e.target as HTMLElement;
-      const isClickable = target.closest('button, a, [role="button"]');
+      const isClickable = target.closest('button, a, [role="button"], .group');
 
       if (!isClickable) {
         setIsDragging(true);
