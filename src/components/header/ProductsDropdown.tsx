@@ -43,7 +43,7 @@ const ProductsDropdown = memo(
         {isOpen && (
           <div className="absolute left-0 top-full bg-white border border-gray-100 rounded-xl shadow-2xl z-50 animate-fade-in flex max-h-[600px] overflow-hidden">
             {/* Левая панель - основные разделы */}
-            <div className="w-72 py-4 border-r border-gray-100 bg-gradient-to-b from-gray-50 to-white overflow-y-auto">
+            <div className="w-80 py-4 border-r border-gray-100 bg-gradient-to-b from-gray-50 to-white overflow-y-auto">
               {/* Заголовок раздела */}
               <div className="px-4 mb-3">
                 <h3 className="text-base font-bold text-gray-900 mb-1">
@@ -78,11 +78,11 @@ const ProductsDropdown = memo(
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-xs font-semibold text-gray-900 leading-tight truncate">
+                        <h3 className="text-xs font-semibold text-gray-900 leading-tight">
                           {item.name}
                         </h3>
                         {item.description && (
-                          <p className="text-xs text-gray-500 leading-tight truncate">
+                          <p className="text-xs text-gray-500 leading-tight">
                             {item.description}
                           </p>
                         )}
@@ -103,7 +103,7 @@ const ProductsDropdown = memo(
             {/* Правая панель - подразделы */}
             {activeItem?.submenuItems &&
               Array.isArray(activeItem.submenuItems) && (
-                <div className="w-80 py-4 px-2 bg-white overflow-y-auto">
+                <div className="w-96 py-4 px-2 bg-white overflow-y-auto">
                   {activeItem.submenuItems.map((submenuItem) => (
                     <div key={submenuItem.path} className="mb-4 last:mb-2">
                       <Link
