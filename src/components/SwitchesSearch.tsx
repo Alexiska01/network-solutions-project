@@ -68,6 +68,21 @@ const SwitchesSearch = ({
     }
   };
 
+  const getCategoryLabel = (category: string) => {
+    switch (category) {
+      case "access":
+        return "Доступ";
+      case "distribution":
+        return "Распределение";
+      case "spine":
+        return "Магистраль";
+      case "leaf":
+        return "Лист";
+      default:
+        return category;
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -170,8 +185,8 @@ const SwitchesSearch = ({
                           <div className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
                             {suggestion.name}
                           </div>
-                          <div className="text-sm text-gray-500 capitalize">
-                            {suggestion.category} уровень
+                          <div className="text-sm text-gray-500">
+                            {getCategoryLabel(suggestion.category)} уровень
                           </div>
                         </div>
 
@@ -202,44 +217,6 @@ const SwitchesSearch = ({
             )}
           </AnimatePresence>
         </div>
-
-        {/* Quick filters */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap gap-2 px-4 pb-4 relative z-10"
-        >
-          {[
-            { label: "Доступ", icon: "Wifi", color: "blue" },
-            { label: "Распределение", icon: "GitBranch", color: "indigo" },
-            { label: "PoE+", icon: "Zap", color: "yellow" },
-            { label: "10G", icon: "Network", color: "emerald" },
-          ].map((filter, index) => (
-            <motion.button
-              key={filter.label}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onSearchChange(filter.label)}
-              className={`inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 hover:shadow-md
-                ${
-                  filter.color === "blue"
-                    ? "bg-blue-50 text-blue-700 hover:bg-blue-100"
-                    : filter.color === "indigo"
-                      ? "bg-indigo-50 text-indigo-700 hover:bg-indigo-100"
-                      : filter.color === "yellow"
-                        ? "bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
-                        : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                }`}
-            >
-              <Icon name={filter.icon as any} size={12} />
-              {filter.label}
-            </motion.button>
-          ))}
-        </motion.div>
       </div>
     </motion.div>
   );
