@@ -1,6 +1,6 @@
 import { SwitchModel, FeatureIcon } from "@/types/models";
 
-export const switchModels: SwitchModel[] = [
+export const switchModels3530: SwitchModel[] = [
   {
     id: "IDS3530-24P-6X",
     name: "IDS3530-24P-6X",
@@ -10,7 +10,7 @@ export const switchModels: SwitchModel[] = [
     poe: "380 Вт",
     layer3: true,
     category: "poe",
-    url: "/products/switches/ids3530/24p-6x",
+    url: "/models/ids3530-24p-6x.html",
     animationDelay: 0.1,
   },
   {
@@ -48,6 +48,18 @@ export const switchModels: SwitchModel[] = [
     category: "sfp",
     url: "/models/ids3530-48t-6x.html",
     animationDelay: 0.4,
+  },
+  {
+    id: "IDS3530-24S-6X",
+    name: "IDS3530-24S-6X",
+    description: "24×1G SFP, 6×10G SFP+",
+    ports1G: "24×1G SFP",
+    ports10G: "6×10G SFP+",
+    poe: null,
+    layer3: true,
+    category: "sfp",
+    url: "/models/ids3530-24s-6x.html",
+    animationDelay: 0.5,
   },
 ];
 
