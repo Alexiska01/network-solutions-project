@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CatalogNavigation from "@/components/CatalogNavigation";
 import SwitchCard from "@/components/SwitchCard";
+import HeroCommuts from "@/components/HeroCommuts";
 import {
   Pagination,
   PaginationContent,
@@ -95,114 +96,123 @@ const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
           if (k === "ports") return sw.specs.ports === v;
           if (k === "power") return sw.specs.power === v;
           return true;
-        })
+        }),
       ),
-    [data, filters]
+    [data, filters],
   );
 
   const paged = filtered.slice((page - 1) * pageSize, page * pageSize);
   const pageCount = Math.ceil(filtered.length / pageSize);
 
   return (
-    <div className="flex">
-      {!isMobile && (
-        <aside className="w-64 pr-6">
-          <CatalogNavigation
-            onNavigate={(sectionId) => {
-              setFilters({ category: sectionId });
-              setPage(1);
-            }}
-            activeSection={filters.category}
-          />
-        </aside>
-      )}
+    <>
+      <HeroCommuts />
 
-      <main className="flex-1">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Коммутаторы</h1>
-          <p className="text-gray-600">
-            Полный каталог коммутаторов для корпоративных сетей и центров обработки данных
-          </p>
-        </div>
-
-        {isMobile && (
-          <div className="mb-4">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button size="sm" variant="outline">
-                  Фильтры
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="w-80">
-                <CatalogNavigation
-                  onNavigate={(sectionId) => {
-                    setFilters({ category: sectionId });
-                    setPage(1);
-                  }}
-                  activeSection={filters.category}
-                />
-              </DialogContent>
-            </Dialog>
-          </div>
-        )}
-
-        {filters.category && (
-          <div className="mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500">Категория:</span>
-              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-sm">
-                {categoryLabels[filters.category as keyof typeof categoryLabels]}
-              </span>
-              <button
-                onClick={() => {
-                  setFilters({});
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8 py-8">
+        <div className="flex">
+          {!isMobile && (
+            <aside className="w-64 pr-6">
+              <CatalogNavigation
+                onNavigate={(sectionId) => {
+                  setFilters({ category: sectionId });
                   setPage(1);
                 }}
-                className="text-sm text-gray-500 hover:text-gray-700"
-              >
-                Сбросить
-              </button>
+                activeSection={filters.category}
+              />
+            </aside>
+          )}
+
+          <main className="flex-1">
+            {isMobile && (
+              <div className="mb-4">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button size="sm" variant="outline">
+                      Фильтры
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="w-80">
+                    <CatalogNavigation
+                      onNavigate={(sectionId) => {
+                        setFilters({ category: sectionId });
+                        setPage(1);
+                      }}
+                      activeSection={filters.category}
+                    />
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
+
+            {filters.category && (
+              <div className="mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">Категория:</span>
+                  <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-sm">
+                    {
+                      categoryLabels[
+                        filters.category as keyof typeof categoryLabels
+                      ]
+                    }
+                  </span>
+                  <button
+                    onClick={() => {
+                      setFilters({});
+                      setPage(1);
+                    }}
+                    className="text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    Сбросить
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="mb-4">
+              <p className="text-sm text-gray-500">
+                Найдено {filtered.length} коммутаторов
+              </p>
             </div>
-          </div>
-        )}
 
-        <div className="mb-4">
-          <p className="text-sm text-gray-500">Найдено {filtered.length} коммутаторов</p>
+            <div
+              className={
+                isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-3 gap-6"
+              }
+            >
+              {paged.map((sw) => (
+                <SwitchCard
+                  key={sw.id}
+                  switchData={sw}
+                  onSpecFilter={(k, v) => {
+                    setFilters((prev) => ({ ...prev, [k]: v }));
+                    setPage(1);
+                  }}
+                />
+              ))}
+            </div>
+
+            {pageCount > 1 && (
+              <div className="mt-8 flex justify-center">
+                <SimplePagination
+                  page={page}
+                  onPageChange={(newPage) => setPage(newPage)}
+                  totalPages={pageCount}
+                />
+              </div>
+            )}
+
+            {filtered.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-500 text-lg">Коммутаторы не найдены</p>
+                <p className="text-gray-400 text-sm mt-2">
+                  Попробуйте изменить фильтры или сбросить их
+                </p>
+              </div>
+            )}
+          </main>
         </div>
-
-        <div className={isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-3 gap-6"}>
-          {paged.map((sw) => (
-            <SwitchCard
-              key={sw.id}
-              switchData={sw}
-              onSpecFilter={(k, v) => {
-                setFilters((prev) => ({ ...prev, [k]: v }));
-                setPage(1);
-              }}
-            />
-          ))}
-        </div>
-
-        {pageCount > 1 && (
-          <div className="mt-8 flex justify-center">
-            <SimplePagination
-              page={page}
-              onPageChange={(newPage) => setPage(newPage)}
-              totalPages={pageCount}
-            />
-          </div>
-        )}
-
-        {filtered.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">Коммутаторы не найдены</p>
-            <p className="text-gray-400 text-sm mt-2">
-              Попробуйте изменить фильтры или сбросить их
-            </p>
-          </div>
-        )}
-      </main>
-    </div>
+      </div>
+    </>
   );
 };
 
