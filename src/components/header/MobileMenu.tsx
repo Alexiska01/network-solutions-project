@@ -235,7 +235,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
 
       {/* Мобильное меню */}
       <div
-        className={`lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-full bg-white z-50 shadow-2xl transition-transform duration-300 ease-out ${
+        className={`lg:hidden fixed top-0 right-0 w-full h-screen bg-white z-50 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -266,7 +266,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
         </div>
 
         {/* Контейнер меню */}
-        <div className="h-full overflow-hidden">
+        <div className="flex-1 overflow-hidden">
           <div
             className={`h-full transition-all duration-300 ease-out ${
               isTransitioning
