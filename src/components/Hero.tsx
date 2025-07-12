@@ -79,15 +79,7 @@ const Hero = () => {
           animate="visible"
         >
           {/* Левая колонка - мировой уровень с фиксированной структурой */}
-          <div className="flex flex-col h-full min-h-[520px] relative overflow-visible p-4">
-            {/* Фоновый эффект для всей левой колонки */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-white/3 to-cyan-500/3 rounded-3xl backdrop-blur-sm border border-white/5"
-              initial={{ opacity: 0, scale: 0.95, rotateX: -5 }}
-              animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-              transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
-            />
-
+          <div className="flex flex-col h-full min-h-[520px] relative overflow-visible">
             {/* Плавающие декоративные элементы */}
             <motion.div
               className="absolute top-10 right-10 w-20 h-20 bg-gradient-to-br from-cyan-400/10 to-blue-500/10 rounded-full blur-xl"
@@ -120,7 +112,7 @@ const Hero = () => {
             {/* Заголовок - премиальный мировой уровень */}
             <motion.div
               variants={itemVariants}
-              className="h-72 flex items-start mb-6 relative"
+              className="h-80 flex items-start mb-8 relative"
             >
               {/* Декоративные элементы заголовка */}
               <motion.div
@@ -137,7 +129,7 @@ const Hero = () => {
               />
 
               <motion.h1
-                className="relative text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight"
+                className="relative text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black leading-tight"
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{
@@ -220,15 +212,7 @@ const Hero = () => {
               variants={itemVariants}
               className="h-28 flex items-start justify-start mb-6 relative"
             >
-              {/* Фоновый градиент для текста */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-2xl backdrop-blur-sm border border-white/5"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1, duration: 0.8 }}
-              />
-
-              <div className="relative z-10 p-4">
+              <div className="relative z-10">
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
                   {showIDATA && (
                     <motion.span
@@ -284,14 +268,6 @@ const Hero = () => {
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 mt-auto relative pb-8"
             >
-              {/* Декоративный фон для кнопок */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-white/5 to-cyan-500/5 rounded-2xl backdrop-blur-sm border border-white/10 -m-2 mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.5, duration: 0.8 }}
-              />
-
               <motion.button
                 className="group relative bg-gradient-to-r from-white to-blue-50 text-[#0065B3] px-8 py-4 rounded-2xl text-lg font-bold overflow-hidden transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(59,130,246,0.3)] z-10"
                 whileHover={{
