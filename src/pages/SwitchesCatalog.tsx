@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -23,6 +23,11 @@ import Icon from "@/components/ui/icon";
 const SwitchesCatalog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const isMobile = useIsMobile();
+
+  // Прокрутка к верху страницы при монтировании компонента
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const filteredSwitches = useMemo(() => {
     let filtered = switchesData;
