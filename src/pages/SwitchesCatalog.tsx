@@ -364,8 +364,8 @@ const SwitchesCatalog = () => {
                     <Icon name="Headphones" size={32} className="text-white" />
                   </div>
 
-                  <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                    Нужна помощь с подбором?
+                  <h2 className="lg:text-4xl font-bold text-gray-900 mb-4 text-3xl">
+                    Нужна помощь с выбором оборудования?
                   </h2>
 
                   <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
