@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import Icon from "@/components/ui/icon";
 
 const Hero = () => {
@@ -36,7 +36,7 @@ const Hero = () => {
     return () => clearInterval(typingInterval);
   }, [showTyping]);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -47,7 +47,7 @@ const Hero = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 40, opacity: 0 },
     visible: {
       y: 0,
@@ -113,7 +113,6 @@ const Hero = () => {
             <motion.div
               variants={itemVariants}
               className="flex items-start relative"
-              style={{ marginBottom: "10%" }}
               style={{ marginTop: "5%", marginBottom: "10%" }}
             >
               {/* Декоративные элементы заголовка */}
@@ -123,11 +122,13 @@ const Hero = () => {
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.6, 0.3],
                 }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={
+                  {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  } as any
+                }
               />
 
               <motion.h1
@@ -162,7 +163,9 @@ const Hero = () => {
                   <motion.div
                     className="absolute -inset-1 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 rounded-lg blur-sm -z-10"
                     animate={{ opacity: [0, 0.5, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, delay: 2 }}
+                    transition={
+                      { duration: 3, repeat: Infinity, delay: 2 } as any
+                    }
                   />
                 </motion.span>
 
@@ -180,7 +183,9 @@ const Hero = () => {
                       scaleX: [0, 1, 0],
                       opacity: [0, 1, 0],
                     }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 3 }}
+                    transition={
+                      { duration: 2, repeat: Infinity, delay: 3 } as any
+                    }
                   />
                 </motion.span>
 
@@ -198,12 +203,14 @@ const Hero = () => {
                       opacity: [0.3, 1, 0.3],
                       scale: [1, 1.5, 1],
                     }}
-                    transition={{
-                      duration: 3 + i * 0.5,
-                      repeat: Infinity,
-                      delay: i * 0.5,
-                      ease: "easeInOut",
-                    }}
+                    transition={
+                      {
+                        duration: 3 + i * 0.5,
+                        repeat: Infinity,
+                        delay: i * 0.5,
+                        ease: "easeInOut",
+                      } as any
+                    }
                   />
                 ))}
               </motion.h1>
@@ -237,7 +244,9 @@ const Hero = () => {
                           opacity: [0, 0.8, 0],
                           scale: [0.8, 1.2, 0.8],
                         }}
-                        transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                        transition={
+                          { duration: 2, repeat: Infinity, delay: 1 } as any
+                        }
                       />
                     </motion.span>
                   )}
@@ -258,7 +267,7 @@ const Hero = () => {
                         opacity: [0, 1, 0],
                         scaleY: [1, 1.2, 1],
                       }}
-                      transition={{ duration: 0.8, repeat: Infinity }}
+                      transition={{ duration: 0.8, repeat: Infinity } as any}
                     />
                   )}
                 </p>
@@ -301,11 +310,13 @@ const Hero = () => {
                   animate={{
                     backgroundPosition: ["-200% 0%", "200% 0%"],
                   }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
+                  transition={
+                    {
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "linear",
+                    } as any
+                  }
                 />
 
                 <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
@@ -349,11 +360,13 @@ const Hero = () => {
                   animate={{
                     backgroundPosition: ["-200% 0%", "200% 0%"],
                   }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
+                  transition={
+                    {
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "linear",
+                    } as any
+                  }
                 />
 
                 <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
@@ -374,11 +387,13 @@ const Hero = () => {
                   scaleX: [0, 1, 0],
                   opacity: [0, 0.8, 0],
                 }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  delay: 2.5,
-                }}
+                transition={
+                  {
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: 2.5,
+                  } as any
+                }
               />
             </motion.div>
 
@@ -390,11 +405,13 @@ const Hero = () => {
                 scaleY: [0.5, 1, 0.5],
                 opacity: [0.3, 0.8, 0.3],
               }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              transition={
+                {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                } as any
+              }
             />
 
             <motion.div
@@ -403,12 +420,14 @@ const Hero = () => {
                 scaleY: [0.3, 1, 0.3],
                 opacity: [0.2, 0.6, 0.2],
               }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
+              transition={
+                {
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1,
+                } as any
+              }
             />
           </div>
 
@@ -449,17 +468,21 @@ const Hero = () => {
                     <motion.div
                       className="w-4 h-4 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50"
                       animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={{ duration: 2, repeat: Infinity } as any}
                     />
                     <motion.div
                       className="w-4 h-4 bg-amber-400 rounded-full shadow-lg shadow-amber-400/50"
                       animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+                      transition={
+                        { duration: 2, repeat: Infinity, delay: 0.3 } as any
+                      }
                     />
                     <motion.div
                       className="w-4 h-4 bg-rose-400 rounded-full shadow-lg shadow-rose-400/50"
                       animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+                      transition={
+                        { duration: 2, repeat: Infinity, delay: 0.6 } as any
+                      }
                     />
                   </div>
                   <div className="text-white/90 text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
@@ -468,7 +491,7 @@ const Hero = () => {
                   <motion.div
                     className="absolute top-0 right-0 w-2 h-2 bg-cyan-400 rounded-full"
                     animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
+                    transition={{ duration: 3, repeat: Infinity } as any}
                   />
                 </motion.div>
 
@@ -578,7 +601,7 @@ const Hero = () => {
                       <motion.div
                         className="w-3 h-3 bg-green-400 rounded-full shadow-lg shadow-green-400/50"
                         animate={{ scale: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        transition={{ duration: 2, repeat: Infinity } as any}
                       />
                       <span className="text-white font-semibold text-sm">
                         Network Online
@@ -687,11 +710,13 @@ const Hero = () => {
                               : "bg-amber-400"
                           }`}
                           animate={{ opacity: [0.5, 1, 0.5] }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            delay: index * 0.3,
-                          }}
+                          transition={
+                            {
+                              duration: 2,
+                              repeat: Infinity,
+                              delay: index * 0.3,
+                            } as any
+                          }
                         />
                       </motion.div>
                     ))}
@@ -706,11 +731,13 @@ const Hero = () => {
                     opacity: [0.8, 1, 0.8],
                     rotate: [0, 180, 360],
                   }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
+                  transition={
+                    {
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    } as any
+                  }
                 />
                 <motion.div
                   className="absolute -bottom-3 -left-3 w-4 h-4 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full shadow-lg shadow-purple-400/50"
@@ -719,12 +746,14 @@ const Hero = () => {
                     opacity: [0.6, 1, 0.6],
                     rotate: [360, 180, 0],
                   }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1.5,
-                  }}
+                  transition={
+                    {
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1.5,
+                    } as any
+                  }
                 />
                 {/* Дополнительные световые акценты */}
                 <motion.div
@@ -733,11 +762,13 @@ const Hero = () => {
                     y: [-5, 5, -5],
                     opacity: [0.4, 1, 0.4],
                   }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
+                  transition={
+                    {
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    } as any
+                  }
                 />
                 <motion.div
                   className="absolute bottom-1/4 -left-1 w-2 h-2 bg-orange-400 rounded-full shadow-lg shadow-orange-400/50"
@@ -745,12 +776,14 @@ const Hero = () => {
                     y: [5, -5, 5],
                     opacity: [0.4, 1, 0.4],
                   }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1,
-                  }}
+                  transition={
+                    {
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1,
+                    } as any
+                  }
                 />
               </motion.div>
 
@@ -847,7 +880,9 @@ const Hero = () => {
                 className="absolute top-1/2 left-1/2 w-96 h-96 pointer-events-none"
                 style={{ x: "-50%", y: "-50%" }}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                transition={
+                  { duration: 25, repeat: Infinity, ease: "linear" } as any
+                }
               >
                 <div className="absolute inset-0 border border-white/5 rounded-full" />
                 <div className="absolute inset-4 border border-white/8 rounded-full" />
@@ -855,19 +890,23 @@ const Hero = () => {
                   className="absolute top-0 left-1/2 w-3 h-3 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full shadow-lg shadow-cyan-400/50"
                   style={{ x: "-50%" }}
                   animate={{ scale: [1, 1.5, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  transition={{ duration: 2, repeat: Infinity } as any}
                 />
                 <motion.div
                   className="absolute bottom-0 left-1/2 w-2 h-2 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full shadow-lg shadow-purple-400/50"
                   style={{ x: "-50%" }}
                   animate={{ scale: [1, 1.3, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+                  transition={
+                    { duration: 1.5, repeat: Infinity, delay: 0.5 } as any
+                  }
                 />
                 <motion.div
                   className="absolute top-1/2 right-0 w-2 h-2 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full shadow-lg shadow-emerald-400/50"
                   style={{ y: "-50%" }}
                   animate={{ scale: [1, 1.4, 1] }}
-                  transition={{ duration: 1.8, repeat: Infinity, delay: 1 }}
+                  transition={
+                    { duration: 1.8, repeat: Infinity, delay: 1 } as any
+                  }
                 />
               </motion.div>
             </div>
@@ -892,12 +931,14 @@ const Hero = () => {
                   x: [0, Math.sin(i) * 15, 0],
                   rotate: [0, 360, 0],
                 }}
-                transition={{
-                  duration: 6 + i * 0.4,
-                  repeat: Infinity,
-                  delay: i * 0.5,
-                  ease: "easeInOut",
-                }}
+                transition={
+                  {
+                    duration: 6 + i * 0.4,
+                    repeat: Infinity,
+                    delay: i * 0.5,
+                    ease: "easeInOut",
+                  } as any
+                }
               />
             ))}
           </motion.div>
