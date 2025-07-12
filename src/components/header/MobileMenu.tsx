@@ -333,7 +333,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
           />
         </MenuItem>
 
-        {/* Аккордеон для третьего уровня */}
+        {/* Элегантный аккордеон для третьего уровня */}
         <AnimatePresence>
           {hasThirdLevel && isExpanded && (
             <motion.div
@@ -341,12 +341,70 @@ const MobileMenu = ({ isOpen, onToggle, onClose }: MobileMenuProps) => {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              className="overflow-hidden"
+              className="overflow-hidden mt-2"
             >
-              <div className="bg-gradient-to-r from-gray-25 to-blue-25 border-l-2 border-blue-200 ml-6 rounded-lg mt-2">
-                {item.items.map((subItem: any, subIndex: number) =>
-                  renderMenuItem(subItem, level + 1, subIndex),
-                )}
+              <div className="relative ml-4 pl-4 border-l border-gray-200">
+                {/* Декоративная линия */}
+                <motion.div
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: 1 }}
+                  className="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-blue-300 via-emerald-300 to-transparent"
+                  style={{ transformOrigin: "top" }}
+                />
+
+                <div className="space-y-1 py-2">
+                  {item.items.map((subItem: any, subIndex: number) => (
+                    <motion.div
+                      key={subItem.path}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: subIndex * 0.1 + 0.2,
+                        duration: 0.3,
+                        ease: "easeOut",
+                      }}
+                    >
+                      <Link
+                        to={subItem.path}
+                        onClick={() => {
+                          setActiveItem(subItem.path);
+                          onClose();
+                        }}
+                        className="group relative flex items-center py-3 px-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm"
+                      >
+                        {/* Декоративная точка */}
+                        <motion.div
+                          whileHover={{ scale: 1.2 }}
+                          className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors duration-300 mr-3 flex-shrink-0"
+                        />
+
+                        <span className="font-medium group-hover:translate-x-1 transition-transform duration-300">
+                          {subItem.name}
+                        </span>
+
+                        {/* Стрелка при ховере */}
+                        <motion.div
+                          initial={{ opacity: 0, x: -10 }}
+                          whileHover={{ opacity: 1, x: 0 }}
+                          className="ml-auto"
+                        >
+                          <Icon
+                            name="ArrowRight"
+                            size={14}
+                            className="text-blue-400"
+                          />
+                        </motion.div>
+
+                        {/* Gradient hover effect */}
+                        <motion.div
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-50/0 to-emerald-50/0 group-hover:from-blue-50/50 group-hover:to-emerald-50/30 transition-all duration-300 -z-10"
+                          initial={{ opacity: 0 }}
+                          whileHover={{ opacity: 1 }}
+                        />
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           )}
