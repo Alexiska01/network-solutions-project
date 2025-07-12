@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -132,99 +133,274 @@ const SwitchesCatalog = () => {
             />
 
             {/* Коммутаторы для корпоративных ЛВС */}
-            <section id="corporate-lan" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                Коммутаторы для корпоративных ЛВС
-              </h2>
+            <motion.section
+              id="corporate-lan"
+              className="mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mb-8"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <Icon name="Building2" size={24} className="text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold text-gray-900">
+                      Коммутаторы для корпоративных ЛВС
+                    </h2>
+                    <p className="text-gray-600 mt-1">
+                      Решения для корпоративных локальных сетей
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
 
               {/* Уровень доступа */}
               {groupedSwitches.corporateAccess.length > 0 && (
-                <div id="access-level" className="mb-10">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                    <div className="w-3 h-3 bg-[#2E5BFF] rounded-full mr-3"></div>
-                    Коммутаторы уровня доступа
-                  </h3>
-                  <div className="space-y-4">
-                    {groupedSwitches.corporateAccess.map((switchData) => (
-                      <SwitchCard key={switchData.id} switchData={switchData} />
-                    ))}
+                <motion.div
+                  id="access-level"
+                  className="mb-12"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                      <Icon name="Wifi" size={16} className="text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800">
+                      Коммутаторы уровня доступа
+                    </h3>
                   </div>
-                </div>
+                  <div className="space-y-6">
+                    {groupedSwitches.corporateAccess.map(
+                      (switchData, index) => (
+                        <motion.div
+                          key={switchData.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            duration: 0.5,
+                            delay: 0.5 + index * 0.1,
+                          }}
+                        >
+                          <SwitchCard switchData={switchData} />
+                        </motion.div>
+                      ),
+                    )}
+                  </div>
+                </motion.div>
               )}
 
               {/* Уровень распределения */}
               {groupedSwitches.corporateDistribution.length > 0 && (
-                <div id="distribution-level">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                    <div className="w-3 h-3 bg-[#FF6B35] rounded-full mr-3"></div>
-                    Коммутаторы уровня распределения
-                  </h3>
-                  <div className="space-y-4">
-                    {groupedSwitches.corporateDistribution.map((switchData) => (
-                      <SwitchCard key={switchData.id} switchData={switchData} />
-                    ))}
+                <motion.div
+                  id="distribution-level"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-8 h-8 bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+                      <Icon name="GitBranch" size={16} className="text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800">
+                      Коммутаторы уровня распределения
+                    </h3>
                   </div>
-                </div>
+                  <div className="space-y-6">
+                    {groupedSwitches.corporateDistribution.map(
+                      (switchData, index) => (
+                        <motion.div
+                          key={switchData.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            duration: 0.5,
+                            delay: 0.7 + index * 0.1,
+                          }}
+                        >
+                          <SwitchCard switchData={switchData} />
+                        </motion.div>
+                      ),
+                    )}
+                  </div>
+                </motion.div>
               )}
-            </section>
+            </motion.section>
 
             {/* Коммутаторы для ЦОД */}
-            <section id="data-center" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                Центры обработки данных
-              </h2>
+            <motion.section
+              id="data-center"
+              className="mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.9 }}
+                className="mb-8"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center shadow-lg">
+                    <Icon name="Database" size={24} className="text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold text-gray-900">
+                      Центры обработки данных
+                    </h2>
+                    <p className="text-gray-600 mt-1">
+                      Высокопроизводительные решения для ЦОД
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
 
               {/* Spine */}
               {groupedSwitches.dataCenterSpine.length > 0 && (
-                <div id="spine-level" className="mb-10">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                    <div className="w-3 h-3 bg-[#10B981] rounded-full mr-3"></div>
-                    Spine
-                  </h3>
-                  <div className="space-y-4">
-                    {groupedSwitches.dataCenterSpine.map((switchData) => (
-                      <SwitchCard key={switchData.id} switchData={switchData} />
-                    ))}
+                <motion.div
+                  id="spine-level"
+                  className="mb-12"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.0 }}
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                      <Icon name="TreePine" size={16} className="text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800">Spine</h3>
                   </div>
-                </div>
+                  <div className="space-y-6">
+                    {groupedSwitches.dataCenterSpine.map(
+                      (switchData, index) => (
+                        <motion.div
+                          key={switchData.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            duration: 0.5,
+                            delay: 1.1 + index * 0.1,
+                          }}
+                        >
+                          <SwitchCard switchData={switchData} />
+                        </motion.div>
+                      ),
+                    )}
+                  </div>
+                </motion.div>
               )}
 
               {/* Leaf */}
               {groupedSwitches.dataCenterLeaf.length > 0 && (
-                <div id="leaf-level">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                    <div className="w-3 h-3 bg-[#8B5CF6] rounded-full mr-3"></div>
-                    Leaf
-                  </h3>
-                  <div className="space-y-4">
-                    {groupedSwitches.dataCenterLeaf.map((switchData) => (
-                      <SwitchCard key={switchData.id} switchData={switchData} />
+                <motion.div
+                  id="leaf-level"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.2 }}
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-8 h-8 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-md">
+                      <Icon
+                        name="TreeDeciduous"
+                        size={16}
+                        className="text-white"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800">Leaf</h3>
+                  </div>
+                  <div className="space-y-6">
+                    {groupedSwitches.dataCenterLeaf.map((switchData, index) => (
+                      <motion.div
+                        key={switchData.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 1.3 + index * 0.1 }}
+                      >
+                        <SwitchCard switchData={switchData} />
+                      </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               )}
-            </section>
+            </motion.section>
 
             {/* CTA блок внизу */}
-            <section className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Нужна помощь с подбором?
-              </h2>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                Наши специалисты помогут выбрать оптимальное решение для вашей
-                инфраструктуры
-              </p>
-              <Button
-                size="lg"
-                className="bg-[#2E5BFF] hover:bg-[#1E4FFF]"
-                asChild
-              >
-                <Link to="/partners">
-                  Связаться с нами
-                  <Icon name="ArrowRight" className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </section>
+            <motion.section
+              className="relative overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.4 }}
+            >
+              {/* Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-3xl" />
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-3xl border border-white/20" />
+
+              {/* Decorative elements */}
+              <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-full blur-xl" />
+              <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-xl" />
+
+              <div className="relative p-8 lg:p-12 text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.5 }}
+                  className="mb-6"
+                >
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <Icon name="Headphones" size={32} className="text-white" />
+                  </div>
+
+                  <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                    Нужна помощь с подбором?
+                  </h2>
+
+                  <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Наши инженеры помогут выбрать оптимальное решение для вашей
+                    инфраструктуры. Консультация и техническая поддержка —
+                    бесплатно.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1.6 }}
+                  className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                >
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-4"
+                    asChild
+                  >
+                    <Link to="/partners">
+                      <Icon name="MessageCircle" className="mr-2 h-5 w-5" />
+                      Связаться с нами
+                      <Icon name="ArrowRight" className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+
+                  <div className="flex items-center gap-6 text-sm text-gray-600">
+                    <div className="flex items-center gap-2">
+                      <Icon name="Clock" size={16} className="text-green-600" />
+                      <span>24/7 поддержка</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon name="Users" size={16} className="text-blue-600" />
+                      <span>Команда экспертов</span>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.section>
           </div>
         </div>
       </div>

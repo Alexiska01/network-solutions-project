@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Icon from "@/components/ui/icon";
 
@@ -84,13 +85,37 @@ const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
   }
 
   return (
-    <div className="bg-white border-r border-gray-200 h-full">
-      <div className="container mx-auto px-[4px]">
-        <div className="py-6 px-0">
-          <nav className="space-y-2 mx-0 px-[7px]">
-            {navigationData.map((item) => (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative"
+    >
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 rounded-2xl" />
+      <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg" />
+
+      {/* Content */}
+      <div className="relative p-6">
+        <div className="mb-6">
+          <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full" />
+            Каталог продуктов
+          </h3>
+          <p className="text-sm text-gray-600">
+            Выберите категорию для навигации
+          </p>
+        </div>
+
+        <nav className="space-y-1">
+          {navigationData.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
               <NavigationItem
-                key={item.id}
                 item={item}
                 onNavigate={onNavigate}
                 activeSection={activeSection}
@@ -98,11 +123,11 @@ const CatalogNavigation: React.FC<CatalogNavigationProps> = ({
                 openMap={openMap}
                 setOpenMap={setOpenMap}
               />
-            ))}
-          </nav>
-        </div>
+            </motion.div>
+          ))}
+        </nav>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -126,12 +151,12 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   setOpenMap,
 }) => {
   const isOpen = openMap[level] === item.id;
+  const isActive = activeSection === item.id;
 
   const handleHeaderClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
     if (item.children) {
-      // Для элементов с детьми только раскрываем/сворачиваем меню
       setOpenMap((prev) => {
         const next = {
           ...prev,
@@ -142,34 +167,28 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
         });
         return next;
       });
-      // НЕ вызываем onNavigate для элементов с детьми - только toggle меню
     } else {
-      // Для финальных серий выполняем плавный скролл с центрированием
       e.preventDefault();
       onNavigate(item.id);
 
       const el = document.getElementById(item.id.toLowerCase());
       if (el) {
-        // Убираем предыдущую подсветку
         document.querySelectorAll(".active").forEach((elem) => {
           elem.classList.remove("active");
         });
 
-        // Плавный скролл с центрированием
         el.scrollIntoView({
           behavior: "smooth",
           block: "center",
           inline: "nearest",
         });
 
-        // Удаляем хеш из URL, чтобы псевдокласс :target больше не применялся
         window.history.replaceState(
           null,
           "",
           window.location.pathname + window.location.search,
         );
 
-        // Добавляем класс active и слушаем событие animationend
         el.classList.add("active");
         el.addEventListener(
           "animationend",
@@ -180,53 +199,125 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
     }
   };
 
+  const getIconColor = () => {
+    if (isActive) return "text-blue-600";
+    if (level === 0) return "text-gray-700";
+    if (level === 1) return "text-gray-600";
+    return "text-gray-500";
+  };
+
+  const getGradientForLevel = () => {
+    if (level === 0) return "from-blue-500 to-indigo-600";
+    if (level === 1) return "from-blue-400 to-blue-500";
+    return "from-gray-400 to-gray-500";
+  };
+
   return (
     <div>
-      <button
+      <motion.button
         onClick={handleHeaderClick}
+        whileHover={{ scale: 1.02, x: 4 }}
+        whileTap={{ scale: 0.98 }}
         className={`
-          w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center justify-between
-          ${level === 0 ? "font-semibold" : level === 1 ? "font-medium" : "font-normal"}
+          group w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center justify-between relative overflow-hidden
+          ${level === 0 ? "font-bold text-base" : level === 1 ? "font-semibold text-sm" : "font-medium text-sm"}
           ${
-            activeSection === item.id
-              ? "bg-gray-100 text-gray-800 border-l-4 border-gray-600"
-              : "text-gray-700 hover:bg-gray-50"
+            isActive
+              ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
+              : "text-gray-700 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50/50 hover:shadow-md"
           }
         `}
-        style={{ marginLeft: `${level * 12}px` }}
+        style={{ marginLeft: `${level * 16}px` }}
       >
-        <div className="flex items-center gap-2">
-          <Icon name={item.icon} size={16} />
-          <span>{item.name}</span>
-        </div>
-        {item.children && (
-          <Icon
-            name="ChevronDown"
-            size={12}
-            className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+        {/* Background gradient on hover */}
+        {!isActive && (
+          <div
+            className={`absolute inset-0 bg-gradient-to-r ${getGradientForLevel()} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
           />
         )}
-      </button>
 
-      {item.children && (
+        {/* Left border indicator */}
         <div
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          className={`absolute left-0 top-0 bottom-0 w-1 rounded-r-full transition-all duration-300 ${
+            isActive
+              ? "bg-white"
+              : level === 0
+                ? "bg-blue-500 scale-y-0 group-hover:scale-y-100"
+                : level === 1
+                  ? "bg-blue-400 scale-y-0 group-hover:scale-y-100"
+                  : "bg-gray-400 scale-y-0 group-hover:scale-y-100"
           }`}
-        >
-          {item.children.map((child) => (
-            <NavigationItem
-              key={child.id}
-              item={child}
-              onNavigate={onNavigate}
-              activeSection={activeSection}
-              level={level + 1}
-              openMap={openMap}
-              setOpenMap={setOpenMap}
+        />
+
+        <div className="flex items-center gap-3 relative z-10">
+          <div
+            className={`p-1.5 rounded-lg transition-all duration-300 ${
+              isActive
+                ? "bg-white/20"
+                : "group-hover:bg-white/60 group-hover:shadow-sm"
+            }`}
+          >
+            <Icon
+              name={item.icon}
+              size={level === 0 ? 18 : 16}
+              className={`transition-colors duration-300 ${
+                isActive ? "text-white" : getIconColor()
+              }`}
             />
-          ))}
+          </div>
+          <span className="relative z-10">{item.name}</span>
         </div>
-      )}
+
+        {item.children && (
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+            className={`p-1 rounded-lg transition-all duration-300 ${
+              isActive ? "bg-white/20" : "group-hover:bg-white/60"
+            }`}
+          >
+            <Icon
+              name="ChevronDown"
+              size={14}
+              className={`transition-colors duration-300 ${
+                isActive ? "text-white" : "text-gray-500"
+              }`}
+            />
+          </motion.div>
+        )}
+      </motion.button>
+
+      <AnimatePresence>
+        {item.children && isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="mt-1 space-y-1">
+              {item.children.map((child, index) => (
+                <motion.div
+                  key={child.id}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: index * 0.05 }}
+                >
+                  <NavigationItem
+                    item={child}
+                    onNavigate={onNavigate}
+                    activeSection={activeSection}
+                    level={level + 1}
+                    openMap={openMap}
+                    setOpenMap={setOpenMap}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
