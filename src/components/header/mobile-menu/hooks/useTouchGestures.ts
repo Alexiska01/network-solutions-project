@@ -19,6 +19,12 @@ export const useTouchGestures = ({
   onClose,
 }: UseTouchGesturesProps) => {
   const handleTouchStart = (e: React.TouchEvent) => {
+    // Не обрабатываем touch на кнопках
+    const target = e.target as HTMLElement;
+    if (target.closest("button")) {
+      return;
+    }
+
     setTouchStart({
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
@@ -35,12 +41,12 @@ export const useTouchGestures = ({
     const diffY = Math.abs(currentY - touchStart.y);
 
     // Проверяем что это горизонтальный свайп и не клик по кнопке
-    if (Math.abs(diffX) > 20 && diffY < 60) {
-      // Проверяем что целевой элемент не является кнопкой или ссылкой
+    if (Math.abs(diffX) > 25 && diffY < 50) {
+      // Проверяем что целевой элемент не является кнопкой
       const target = e.target as HTMLElement;
-      const isClickable = target.closest('button, a, [role="button"], .group');
+      const isButton = target.closest("button");
 
-      if (!isClickable) {
+      if (!isButton) {
         setIsDragging(true);
         if (diffX > 0) {
           // Свайп вправо

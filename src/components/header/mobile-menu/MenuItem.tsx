@@ -252,43 +252,28 @@ const MenuItem: React.FC<MenuItemProps> = ({
                         />
                       </button>
                     ) : (
-                      <div
-                        className="group relative flex items-center text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 focus:bg-blue-100/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm touch-manipulation cursor-pointer select-none"
-                        onClick={(e) => {
-                          console.log("Click на серии:", subItem.name);
-                          e.preventDefault();
-                          e.stopPropagation();
+                      <button
+                        type="button"
+                        className="w-full text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 transition-colors duration-200 flex items-center gap-3 min-h-[48px] border-none outline-none"
+                        onClick={() => {
                           setActiveItem(subItem.path);
                           onClose();
                         }}
-                        onTouchStart={(e) => {
-                          console.log("Touch start на серии:", subItem.name);
-                          e.stopPropagation();
-                        }}
-                        onTouchEnd={(e) => {
-                          console.log("Touch end на серии:", subItem.name);
-                          e.preventDefault();
-                          e.stopPropagation();
+                        onTouchEnd={() => {
                           setActiveItem(subItem.path);
                           onClose();
                         }}
-                        role="button"
-                        tabIndex={0}
                       >
-                        {/* Декоративная точка */}
-                        <div className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors duration-300 mr-3 flex-shrink-0" />
-
-                        <span className="font-medium">{subItem.name}</span>
-
-                        {/* Стрелка при ховере */}
-                        <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <Icon
-                            name="ArrowRight"
-                            size={14}
-                            className="text-blue-400"
-                          />
-                        </div>
-                      </div>
+                        <div className="w-2 h-2 rounded-full bg-gray-400 flex-shrink-0" />
+                        <span className="font-medium flex-1">
+                          {subItem.name}
+                        </span>
+                        <Icon
+                          name="ArrowRight"
+                          size={14}
+                          className="text-gray-400"
+                        />
+                      </button>
                     )}
                   </div>
                 ))}
