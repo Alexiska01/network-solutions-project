@@ -310,10 +310,11 @@ const ModelIDS3530_24P_6XComponent = () => {
             <Button
               size="lg"
               onClick={() => navigate("/partners")}
-              className="group bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] px-10 py-4 rounded-2xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
+              className="group relative bg-white text-[#1A2980] hover:bg-gray-100 font-semibold px-10 py-4 rounded-2xl shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
             >
               <Icon name="MessageSquare" className="h-6 w-6 mr-3 group-hover:rotate-12 transition-transform" />
               Связаться с партнером
+              <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
             </Button>
             
             <Button
