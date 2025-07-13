@@ -20,10 +20,10 @@ function getSpecs(model: SwitchModel) {
     hasOob: false,
   };
 
-  if (name === "ids3530-24s-6x") {
-    specs.sfpSlots = 24;
+  if (name === "ids3530-24t-6x") {
+    specs.baseTports = 24;
     specs.sfpPlusSlots = 6;
-    specs.throughput = 136;
+    specs.throughput = 168;
     specs.hasConsole = true;
     specs.hasUsb = true;
     specs.hasOob = true;
