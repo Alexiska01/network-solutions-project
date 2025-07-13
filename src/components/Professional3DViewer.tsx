@@ -46,8 +46,6 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   const [showWireframe, setShowWireframe] = useState(false);
   const [showSpecs, setShowSpecs] = useState(false);
   const [modelLoaded, setModelLoaded] = useState(false);
-  
-  const modelViewerRef = useRef<any>(null);
 
   // Hotspots data for IDS3530-24P-6X
   const hotspots: Hotspot[] = [
@@ -101,7 +99,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   };
 
   useEffect(() => {
-    if (modelViewerRef.current) {
+    if (modelRef.current) {
       const handleLoad = () => {
         console.log('Model loaded successfully');
         setModelLoaded(true);
@@ -112,13 +110,13 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
         setModelLoaded(false);
       };
 
-      modelViewerRef.current.addEventListener('load', handleLoad);
-      modelViewerRef.current.addEventListener('error', handleError);
+      modelRef.current.addEventListener('load', handleLoad);
+      modelRef.current.addEventListener('error', handleError);
       
       return () => {
-        if (modelViewerRef.current) {
-          modelViewerRef.current.removeEventListener('load', handleLoad);
-          modelViewerRef.current.removeEventListener('error', handleError);
+        if (modelRef.current) {
+          modelRef.current.removeEventListener('load', handleLoad);
+          modelRef.current.removeEventListener('error', handleError);
         }
       };
     }
@@ -140,19 +138,19 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 
   const setCameraView = (preset: string) => {
     setCameraPreset(preset);
-    if (modelViewerRef.current) {
+    if (modelRef.current) {
       const orbitValue = cameraPresets[preset as keyof typeof cameraPresets];
-      modelViewerRef.current.cameraOrbit = orbitValue;
-      modelViewerRef.current.jumpCameraToGoal();
+      modelRef.current.cameraOrbit = orbitValue;
+      modelRef.current.jumpCameraToGoal();
     }
   };
 
   const resetView = () => {
     setCameraPreset("default");
     setSelectedHotspot(null);
-    if (modelViewerRef.current) {
-      modelViewerRef.current.cameraOrbit = cameraPresets.default;
-      modelViewerRef.current.jumpCameraToGoal();
+    if (modelRef.current) {
+      modelRef.current.cameraOrbit = cameraPresets.default;
+      modelRef.current.jumpCameraToGoal();
     }
   };
 
@@ -161,8 +159,8 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 
 
   const takeScreenshot = () => {
-    if (modelViewerRef.current) {
-      const screenshot = modelViewerRef.current.toDataURL();
+    if (modelRef.current) {
+      const screenshot = modelRef.current.toDataURL();
       const link = document.createElement('a');
       link.download = 'ids3530-24p-6x-3d.png';
       link.href = screenshot;
@@ -242,7 +240,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
           {/* 3D Model */}
           <div className="aspect-[16/10] p-6">
             <model-viewer
-              ref={modelViewerRef}
+              ref={modelRef}
               src={modelPath}
               camera-controls
               exposure="1.2"
