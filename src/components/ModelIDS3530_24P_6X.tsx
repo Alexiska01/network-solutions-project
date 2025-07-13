@@ -270,27 +270,27 @@ const ModelIDS3530_24P_6XComponent = () => {
         
         <div className="relative max-w-6xl mx-auto text-center">
           {/* Badge */}
-          <div className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8">
+          <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/40 mb-8">
             <Icon name="Sparkles" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-            <span className="text-sm font-semibold text-white/80">Готовы к внедрению</span>
+            <span className="text-sm font-semibold text-white">Готовы к внедрению</span>
           </div>
 
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Получите{" "}
-            <span className="bg-gradient-to-r from-[#0065B3] to-[#00B5AD] bg-clip-text text-transparent">
+            <span className="text-white">
               профессиональную
             </span>{" "}
             консультацию
           </h2>
           
           {/* Subheading */}
-          <p className="text-xl md:text-2xl text-white/80 mb-4 max-w-4xl mx-auto font-light">
+          <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-4xl mx-auto font-light">
             Наши эксперты помогут подобрать оптимальное решение для вашей инфраструктуры
           </p>
           
           {/* Benefits */}
-          <div className="flex flex-wrap justify-center gap-6 mb-12 text-white/70">
+          <div className="flex flex-wrap justify-center gap-6 mb-12 text-white/90">
             <div className="flex items-center">
               <Icon name="CheckCircle" className="h-5 w-5 mr-2 text-[#00B5AD]" />
               <span className="text-sm">Бесплатная консультация</span>
@@ -310,7 +310,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             <Button
               size="lg"
               onClick={() => navigate("/partners")}
-              className="group relative bg-gradient-to-r from-[#0065B3] to-[#00B5AD] hover:from-[#1A2980] hover:to-[#0065B3] text-white font-semibold px-10 py-4 rounded-2xl shadow-2xl hover:shadow-[#0065B3]/25 transition-all duration-300 hover:scale-105 border-0"
+              className="group relative bg-white text-[#1A2980] hover:bg-gray-100 font-semibold px-10 py-4 rounded-2xl shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
             >
               <Icon name="MessageSquare" className="h-6 w-6 mr-3 group-hover:rotate-12 transition-transform" />
               Связаться с партнером
@@ -320,7 +320,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             <Button
               size="lg"
               variant="outline"
-              className="group bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white hover:text-[#1A2980] px-10 py-4 rounded-2xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
+              className="group bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] px-10 py-4 rounded-2xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
             >
               <Icon name="Phone" className="h-6 w-6 mr-3 group-hover:scale-110 transition-transform" />
               Получить консультацию
