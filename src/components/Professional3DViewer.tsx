@@ -43,7 +43,6 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
   const [showControls, setShowControls] = useState(true);
   const [cameraPreset, setCameraPreset] = useState("default");
-  const [isRotating, setIsRotating] = useState(true);
   const [showWireframe, setShowWireframe] = useState(false);
   const [showSpecs, setShowSpecs] = useState(false);
   const [modelLoaded, setModelLoaded] = useState(false);
@@ -148,21 +147,45 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 
   const resetView = () => {
     setCameraPreset("default");
-    setIsRotating(true);
     setSelectedHotspot(null);
     if (modelViewerRef.current) {
       modelViewerRef.current.cameraOrbit = cameraPresets.default;
-      modelViewerRef.current.autoRotate = true;
       modelViewerRef.current.jumpCameraToGoal();
     }
   };
 
-  const toggleRotation = () => {
-    setIsRotating(!isRotating);
+  const toggleIndicators = () => {
     if (modelViewerRef.current) {
-      modelViewerRef.current.autoRotate = !isRotating;
+      const materialIndicator = modelViewerRef.current.model?.materials?.find((material: any) => 
+        material.name === 'Material_Indicator'
+      );
+      const materialIndicator2 = modelViewerRef.current.model?.materials?.find((material: any) => 
+        material.name === 'Material_Indicator2'
+      );
+      
+      if (materialIndicator) {
+        const currentColor = materialIndicator.pbrMetallicRoughness.baseColorFactor;
+        const isOn = currentColor[0] > 0.5; // проверяем яркость
+        
+        if (isOn) {
+          // Выключаем - делаем темными
+          materialIndicator.pbrMetallicRoughness.setBaseColorFactor([0.1, 0.1, 0.1, 1]);
+          if (materialIndicator2) {
+            materialIndicator2.pbrMetallicRoughness.setBaseColorFactor([0.1, 0.1, 0.1, 1]);
+          }
+        } else {
+          // Включаем - делаем яркими (зеленый)
+          materialIndicator.pbrMetallicRoughness.setBaseColorFactor([0, 1, 0, 1]);
+          if (materialIndicator2) {
+            materialIndicator2.pbrMetallicRoughness.setBaseColorFactor([0, 1, 0, 1]);
+          }
+        }
+      }
     }
+    onToggleIndicators();
   };
+
+
 
   const takeScreenshot = () => {
     if (modelViewerRef.current) {
@@ -249,7 +272,6 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               ref={modelViewerRef}
               src={modelPath}
               camera-controls
-              auto-rotate={isRotating}
               exposure="1.2"
               interaction-prompt="none"
               loading="eager"
@@ -309,15 +331,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               {/* Action Buttons */}
               <div className="flex items-center gap-2">
                 <button
-                  onClick={toggleRotation}
-                  className={`p-2 rounded-lg transition-all ${getButtonColor(background, isRotating)}`}
-                  title={isRotating ? "Остановить вращение" : "Запустить вращение"}
-                >
-                  <Icon name={isRotating ? "Pause" : "Play"} size={16} />
-                </button>
-
-                <button
-                  onClick={onToggleIndicators}
+                  onClick={toggleIndicators}
                   disabled={!modelLoaded}
                   className={`p-2 rounded-lg transition-all ${
                     indicatorsOn 
@@ -502,7 +516,6 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               <model-viewer
                 src={modelPath}
                 camera-controls
-                auto-rotate={isRotating}
                 exposure="1.2"
                 interaction-prompt="none"
                 camera-orbit={cameraPresets[cameraPreset as keyof typeof cameraPresets]}
@@ -535,13 +548,16 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 
                   {/* Action Buttons */}
                   <button
-                    onClick={toggleRotation}
+                    onClick={toggleIndicators}
+                    disabled={!modelLoaded}
                     className={`p-2 rounded-lg transition-all ${
-                      isRotating ? 'bg-[#00B5AD] text-white' : 'bg-white/20 text-white hover:bg-white/30'
-                    }`}
-                    title={isRotating ? "Остановить вращение" : "Запустить вращение"}
+                      indicatorsOn 
+                        ? 'bg-[#00B5AD] text-white' 
+                        : 'bg-white/20 text-white hover:bg-white/30'
+                    } ${!modelLoaded ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    title="Переключить индикаторы"
                   >
-                    <Icon name={isRotating ? "Pause" : "Play"} size={16} />
+                    <Icon name="Lightbulb" size={16} />
                   </button>
                   
                   <button
