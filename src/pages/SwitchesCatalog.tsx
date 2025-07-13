@@ -354,11 +354,15 @@ const SwitchesCatalog = () => {
                   )}>
                     <Icon 
                       name="Building2" 
-                      size={isMobile ? 24 : 20} 
-                      className={cn(
-                        "text-white",
-                        !isMobile && "sm:w-6 sm:h-6"
-                      )} 
+                      className="text-white"
+                      style={{ 
+                        width: isMobile ? '24px' : '20px', 
+                        height: isMobile ? '24px' : '20px',
+                        minWidth: isMobile ? '24px' : '20px',
+                        minHeight: isMobile ? '24px' : '20px',
+                        maxWidth: isMobile ? '24px' : '20px',
+                        maxHeight: isMobile ? '24px' : '20px'
+                      }}
                     />
                   </div>
                   <div className={cn(isMobile && "text-center")}>
@@ -400,11 +404,15 @@ const SwitchesCatalog = () => {
                     )}>
                       <Icon 
                         name="Wifi" 
-                        size={isMobile ? 16 : 14} 
-                        className={cn(
-                          "text-white",
-                          !isMobile && "sm:w-4 sm:h-4"
-                        )} 
+                        className="text-white"
+                        style={{ 
+                          width: isMobile ? '16px' : '14px', 
+                          height: isMobile ? '16px' : '14px',
+                          minWidth: isMobile ? '16px' : '14px',
+                          minHeight: isMobile ? '16px' : '14px',
+                          maxWidth: isMobile ? '16px' : '14px',
+                          maxHeight: isMobile ? '16px' : '14px'
+                        }}
                       />
                     </div>
                     <h3 className={cn(
@@ -457,8 +465,15 @@ const SwitchesCatalog = () => {
                     )}>
                       <Icon 
                         name="GitBranch" 
-                        size={16} 
-                        className="text-white" 
+                        className="text-white"
+                        style={{ 
+                          width: '16px', 
+                          height: '16px',
+                          minWidth: '16px',
+                          minHeight: '16px',
+                          maxWidth: '16px',
+                          maxHeight: '16px'
+                        }}
                       />
                     </div>
                     <h3 className={cn(
@@ -518,8 +533,15 @@ const SwitchesCatalog = () => {
                   )}>
                     <Icon 
                       name="Database" 
-                      size={24} 
-                      className="text-white" 
+                      className="text-white"
+                      style={{ 
+                        width: '24px', 
+                        height: '24px',
+                        minWidth: '24px',
+                        minHeight: '24px',
+                        maxWidth: '24px',
+                        maxHeight: '24px'
+                      }}
                     />
                   </div>
                   <div>
@@ -561,8 +583,15 @@ const SwitchesCatalog = () => {
                     )}>
                       <Icon 
                         name="TreePine" 
-                        size={16} 
-                        className="text-white" 
+                        className="text-white"
+                        style={{ 
+                          width: '16px', 
+                          height: '16px',
+                          minWidth: '16px',
+                          minHeight: '16px',
+                          maxWidth: '16px',
+                          maxHeight: '16px'
+                        }}
                       />
                     </div>
                     <h3 className={cn(
@@ -613,8 +642,15 @@ const SwitchesCatalog = () => {
                     )}>
                       <Icon
                         name="TreeDeciduous"
-                        size={16}
                         className="text-white"
+                        style={{ 
+                          width: '16px', 
+                          height: '16px',
+                          minWidth: '16px',
+                          minHeight: '16px',
+                          maxWidth: '16px',
+                          maxHeight: '16px'
+                        }}
                       />
                     </div>
                     <h3 className={cn(
