@@ -122,7 +122,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
           <div className="absolute top-3 right-3 md:top-4 md:right-4 z-30 flex gap-2">
             <button
               onClick={() => setIsFullscreen(true)}
-              className="bg-black/20 backdrop-blur-md rounded-lg p-2 md:p-2 border border-white/10 text-white hover:bg-black/30 active:bg-black/40 transition-all"
+              className="hidden md:flex bg-black/20 backdrop-blur-md rounded-lg p-2 md:p-2 border border-white/10 text-white hover:bg-black/30 active:bg-black/40 transition-all"
               title="Полноэкранный режим"
             >
               <Icon name="Maximize" size={16} className="md:w-[18px] md:h-[18px]" />
