@@ -354,14 +354,15 @@ const SwitchesCatalog = () => {
                   )}>
                     <Icon 
                       name="Building2" 
-                      className="text-white"
+                      className="text-white !w-6 !h-6"
                       style={{ 
-                        width: isMobile ? '24px' : '20px', 
-                        height: isMobile ? '24px' : '20px',
-                        minWidth: isMobile ? '24px' : '20px',
-                        minHeight: isMobile ? '24px' : '20px',
-                        maxWidth: isMobile ? '24px' : '20px',
-                        maxHeight: isMobile ? '24px' : '20px'
+                        width: '24px !important', 
+                        height: '24px !important',
+                        minWidth: '24px !important',
+                        minHeight: '24px !important',
+                        maxWidth: '24px !important',
+                        maxHeight: '24px !important',
+                        display: 'block !important'
                       }}
                     />
                   </div>
@@ -404,7 +405,7 @@ const SwitchesCatalog = () => {
                     )}>
                       <Icon 
                         name="Wifi" 
-                        className="text-white"
+                        className="text-white !w-6 !h-6"
                         style={{ 
                           width: isMobile ? '16px' : '14px', 
                           height: isMobile ? '16px' : '14px',
@@ -465,7 +466,7 @@ const SwitchesCatalog = () => {
                     )}>
                       <Icon 
                         name="GitBranch" 
-                        className="text-white"
+                        className="text-white !w-6 !h-6"
                         style={{ 
                           width: '16px', 
                           height: '16px',
@@ -533,7 +534,7 @@ const SwitchesCatalog = () => {
                   )}>
                     <Icon 
                       name="Database" 
-                      className="text-white"
+                      className="text-white !w-6 !h-6"
                       style={{ 
                         width: '24px', 
                         height: '24px',
@@ -583,7 +584,7 @@ const SwitchesCatalog = () => {
                     )}>
                       <Icon 
                         name="TreePine" 
-                        className="text-white"
+                        className="text-white !w-6 !h-6"
                         style={{ 
                           width: '16px', 
                           height: '16px',
@@ -642,7 +643,7 @@ const SwitchesCatalog = () => {
                     )}>
                       <Icon
                         name="TreeDeciduous"
-                        className="text-white"
+                        className="text-white !w-6 !h-6"
                         style={{ 
                           width: '16px', 
                           height: '16px',
