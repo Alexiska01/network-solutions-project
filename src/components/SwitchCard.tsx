@@ -200,8 +200,15 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                     <div className="w-8 h-8 bg-white rounded-lg shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow duration-300">
                       <Icon
                         name={spec.icon as any}
-                        size={16}
                         className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                        style={{ 
+                          width: '16px', 
+                          height: '16px',
+                          minWidth: '16px',
+                          minHeight: '16px',
+                          maxWidth: '16px',
+                          maxHeight: '16px'
+                        }}
                       />
                     </div>
                     <div>
@@ -292,8 +299,15 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                 <div className="w-8 h-8 bg-white rounded-lg shadow-sm flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={spec.icon as any}
-                    size={16}
                     className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                    style={{ 
+                      width: '16px', 
+                      height: '16px',
+                      minWidth: '16px',
+                      minHeight: '16px',
+                      maxWidth: '16px',
+                      maxHeight: '16px'
+                    }}
                   />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -416,8 +430,15 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                     <div className="w-8 h-8 bg-white rounded-lg shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow duration-300">
                       <Icon
                         name={spec.icon as any}
-                        size={16}
                         className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                        style={{ 
+                          width: '16px', 
+                          height: '16px',
+                          minWidth: '16px',
+                          minHeight: '16px',
+                          maxWidth: '16px',
+                          maxHeight: '16px'
+                        }}
                       />
                     </div>
                     <div>
@@ -508,8 +529,15 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
                 <div className="w-8 h-8 bg-white rounded-lg shadow-sm flex items-center justify-center flex-shrink-0">
                   <Icon
                     name={spec.icon as any}
-                    size={16}
                     className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                    style={{ 
+                      width: '16px', 
+                      height: '16px',
+                      minWidth: '16px',
+                      minHeight: '16px',
+                      maxWidth: '16px',
+                      maxHeight: '16px'
+                    }}
                   />
                 </div>
                 <div className="min-w-0 flex-1">
