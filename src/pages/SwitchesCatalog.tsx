@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CatalogNavigation from "@/components/CatalogNavigation";
+import MobileCatalogNavigation from "@/components/MobileCatalogNavigation";
 import HeroCommuts from "@/components/HeroCommuts";
 import {
   Breadcrumb,
@@ -120,6 +121,9 @@ const SwitchesCatalog = () => {
       </div>
 
       <HeroCommuts />
+
+      {/* Мобильная навигация */}
+      <MobileCatalogNavigation onNavigate={handleScrollToCard} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
