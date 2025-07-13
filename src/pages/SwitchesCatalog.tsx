@@ -353,8 +353,8 @@ const SwitchesCatalog = () => {
 "w-10 h-10"
                   )}>
                     <Icon 
-                      name="Router" 
-                      className="text-white !w-6 !h-6"
+                      name="Building2" 
+                      className="text-white"
                       style={{ 
                         width: '16px', 
                         height: '16px',
@@ -400,15 +400,15 @@ const SwitchesCatalog = () => {
                   )}>
                     <div className="bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-md w-8 h-8">
                       <Icon 
-                        name="Router" 
+                        name="Wifi" 
                         className="text-white"
                         style={{ 
                           width: '16px', 
                           height: '16px',
-                          minWidth: isMobile ? '16px' : '14px',
-                          minHeight: isMobile ? '16px' : '14px',
-                          maxWidth: isMobile ? '16px' : '14px',
-                          maxHeight: isMobile ? '16px' : '14px'
+                          minWidth: '16px',
+                          minHeight: '16px',
+                          maxWidth: '16px',
+                          maxHeight: '16px'
                         }}
                       />
                     </div>
@@ -458,7 +458,7 @@ const SwitchesCatalog = () => {
                   )}>
                     <div className="bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center shadow-md w-8 h-8">
                       <Icon 
-                        name="Router" 
+                        name="Network" 
                         className="text-white"
                         style={{ 
                           width: '16px', 
@@ -523,8 +523,8 @@ const SwitchesCatalog = () => {
                 )}>
                   <div className="bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center shadow-lg w-12 h-12">
                     <Icon 
-                      name="Router" 
-                      className="text-white !w-6 !h-6"
+                      name="Database" 
+                      className="text-white"
                       style={{ 
                         width: '24px', 
                         height: '24px',
@@ -570,7 +570,7 @@ const SwitchesCatalog = () => {
                   )}>
                     <div className="bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center shadow-md w-8 h-8">
                       <Icon 
-                        name="Router" 
+                        name="TreePine" 
                         className="text-white"
                         style={{ 
                           width: '16px', 
@@ -626,7 +626,7 @@ const SwitchesCatalog = () => {
                   )}>
                     <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-md w-8 h-8">
                       <Icon
-                        name="Router"
+                        name="Layers"
                         className="text-white"
                         style={{ 
                           width: '16px', 
