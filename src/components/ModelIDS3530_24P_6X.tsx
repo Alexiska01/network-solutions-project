@@ -284,10 +284,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             консультацию
           </h2>
           
-          {/* Subheading */}
-          <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-4xl mx-auto font-light">
-            Свяжитесь с нашими партнерами!
-          </p>
+
           
           {/* Benefits */}
           <div className="flex flex-wrap justify-center gap-6 mb-12 text-white/90">
