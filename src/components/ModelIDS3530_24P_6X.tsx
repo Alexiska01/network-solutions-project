@@ -263,7 +263,7 @@ const ModelIDS3530_24P_6XComponent = () => {
       </section>
 
       {/* Professional CTA Section */}
-      <section className="relative py-24 px-6 bg-gradient-to-br from-[#1A2980] via-[#0065B3] to-[#00B5AD] overflow-hidden">
+      <section className="relative py-12 md:py-24 px-4 md:px-6 bg-gradient-to-br from-[#1A2980] via-[#0065B3] to-[#00B5AD] overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px]" />
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00B5AD] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
@@ -271,13 +271,13 @@ const ModelIDS3530_24P_6XComponent = () => {
         
         <div className="relative max-w-6xl mx-auto text-center">
           {/* Badge */}
-          <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/40 mb-8">
-            <Icon name="Sparkles" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-            <span className="text-sm font-semibold text-white">Готовы к внедрению</span>
+          <div className="inline-flex items-center px-3 md:px-6 py-2 md:py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/40 mb-6 md:mb-8">
+            <Icon name="Sparkles" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#00B5AD]" />
+            <span className="text-xs md:text-sm font-semibold text-white">Готовы к внедрению</span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <h2 className="text-xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight px-2">
             Получите{" "}
             <span className="text-white">
               профессиональную
@@ -288,37 +288,37 @@ const ModelIDS3530_24P_6XComponent = () => {
 
           
           {/* Benefits */}
-          <div className="flex flex-wrap justify-center gap-6 mb-12 text-white/90">
-            <div className="flex items-center">
-              <Icon name="CheckCircle" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-              <span className="text-sm">Бесплатная консультация</span>
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-6 mb-8 md:mb-12 text-white/90 px-4">
+            <div className="flex items-center justify-center">
+              <Icon name="CheckCircle" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#00B5AD]" />
+              <span className="text-xs md:text-sm">Бесплатная консультация</span>
             </div>
 
-            <div className="flex items-center">
-              <Icon name="Users" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-              <span className="text-sm">Персональный менеджер</span>
+            <div className="flex items-center justify-center">
+              <Icon name="Users" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#00B5AD]" />
+              <span className="text-xs md:text-sm">Персональный менеджер</span>
             </div>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-6 justify-center items-center px-4">
             <Button
               size="lg"
               onClick={() => navigate("/partners")}
-              className="group relative bg-white text-[#1A2980] hover:bg-gray-100 font-semibold px-10 py-4 rounded-2xl shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
+              className="group relative w-full sm:w-auto bg-white text-[#1A2980] hover:bg-gray-100 active:bg-gray-200 font-semibold px-6 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
             >
-              <Icon name="MessageSquare" className="h-6 w-6 mr-3 group-hover:rotate-12 transition-transform" />
-              Связаться с партнером
-              <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
+              <Icon name="MessageSquare" className="h-5 w-5 md:h-6 md:w-6 mr-2 md:mr-3 group-hover:rotate-12 transition-transform" />
+              <span className="text-sm md:text-base">Связаться с партнером</span>
+              <div className="absolute inset-0 bg-white/20 rounded-xl md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
             </Button>
             
             <Button
               size="lg"
               variant="outline"
-              className="group bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] px-10 py-4 rounded-2xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
+              className="group w-full sm:w-auto bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] active:bg-white/90 px-6 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
             >
-              <Icon name="Phone" className="h-6 w-6 mr-3 group-hover:scale-110 transition-transform" />
-              Получить консультацию
+              <Icon name="Phone" className="h-5 w-5 md:h-6 md:w-6 mr-2 md:mr-3 group-hover:scale-110 transition-transform" />
+              <span className="text-sm md:text-base">Получить консультацию</span>
             </Button>
           </div>
 
