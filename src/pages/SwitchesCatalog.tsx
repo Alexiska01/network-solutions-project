@@ -73,6 +73,27 @@ const SwitchesCatalog = () => {
     }
   };
 
+  // Функция для мобильной навигации с автозакрытием меню
+  const handleMobileNavigation = (cardId: string) => {
+    // Haptic feedback для поддерживаемых устройств
+    if ('vibrate' in navigator) {
+      navigator.vibrate(50);
+    }
+    
+    // Закрываем мобильное меню с небольшой задержкой для visual feedback
+    setTimeout(() => {
+      const detailsElement = document.querySelector('details[open]');
+      if (detailsElement) {
+        (detailsElement as HTMLDetailsElement).open = false;
+      }
+    }, 150);
+    
+    // Выполняем навигацию с небольшой задержкой
+    setTimeout(() => {
+      handleScrollToCard(cardId);
+    }, 200);
+  };
+
   const groupedSwitches = useMemo(() => {
     const corporate = filteredSwitches.filter((s) =>
       ["access", "distribution"].includes(s.category),
@@ -141,7 +162,7 @@ const SwitchesCatalog = () => {
             <div className="mt-3 p-4 bg-gradient-to-b from-gray-50 to-white rounded-lg border shadow-inner space-y-3">
               <div className="grid grid-cols-1 gap-2">
                 <button 
-                  onClick={() => handleScrollToCard('corporate-lan')}
+                  onClick={() => handleMobileNavigation('corporate-lan')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm"
                 >
                   <Icon name="Building2" size={16} className="text-blue-600" />
@@ -149,7 +170,7 @@ const SwitchesCatalog = () => {
                 </button>
                 
                 <button 
-                  onClick={() => handleScrollToCard('access-level')}
+                  onClick={() => handleMobileNavigation('access-level')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm"
                 >
                   <Icon name="Wifi" size={16} className="text-blue-500" />
@@ -157,7 +178,7 @@ const SwitchesCatalog = () => {
                 </button>
                 
                 <button 
-                  onClick={() => handleScrollToCard('distribution-level')}
+                  onClick={() => handleMobileNavigation('distribution-level')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all duration-200 shadow-sm"
                 >
                   <Icon name="GitBranch" size={16} className="text-indigo-600" />
@@ -165,7 +186,7 @@ const SwitchesCatalog = () => {
                 </button>
                 
                 <button 
-                  onClick={() => handleScrollToCard('data-center')}
+                  onClick={() => handleMobileNavigation('data-center')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 shadow-sm"
                 >
                   <Icon name="Database" size={16} className="text-purple-600" />
@@ -173,7 +194,7 @@ const SwitchesCatalog = () => {
                 </button>
                 
                 <button 
-                  onClick={() => handleScrollToCard('spine-level')}
+                  onClick={() => handleMobileNavigation('spine-level')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 shadow-sm"
                 >
                   <Icon name="TreePine" size={16} className="text-purple-500" />
@@ -181,23 +202,13 @@ const SwitchesCatalog = () => {
                 </button>
                 
                 <button 
-                  onClick={() => handleScrollToCard('leaf-level')}
+                  onClick={() => handleMobileNavigation('leaf-level')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 shadow-sm"
                 >
                   <Icon name="TreeDeciduous" size={16} className="text-emerald-600" />
                   <span className="font-medium">Leaf коммутаторы</span>
                 </button>
               </div>
-              
-              <hr className="border-gray-200" />
-              
-              <button 
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all duration-200 text-gray-700 font-medium"
-              >
-                <Icon name="ArrowUp" size={16} />
-                <span>Наверх страницы</span>
-              </button>
             </div>
           </details>
         </div>
