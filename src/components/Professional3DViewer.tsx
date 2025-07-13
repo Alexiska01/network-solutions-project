@@ -29,7 +29,6 @@ interface Professional3DViewerProps {
   modelPath: string;
   indicatorsOn: boolean;
   onToggleIndicators: () => void;
-  modelLoaded?: boolean;
 }
 
 const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
@@ -37,7 +36,6 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   modelPath,
   indicatorsOn,
   onToggleIndicators,
-  modelLoaded = false,
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [background, setBackground] = useState("studio");
@@ -48,6 +46,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   const [isRotating, setIsRotating] = useState(true);
   const [showWireframe, setShowWireframe] = useState(false);
   const [showSpecs, setShowSpecs] = useState(false);
+  const [modelLoaded, setModelLoaded] = useState(false);
   
   const modelViewerRef = useRef<any>(null);
 
@@ -105,11 +104,29 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 
   useEffect(() => {
     if (modelViewerRef.current) {
-      modelViewerRef.current.addEventListener('load', () => {
+      const handleLoad = () => {
         console.log('Model loaded successfully');
-      });
-    }
+        setModelLoaded(true);
+      };
+      
+      const handleError = () => {
+        console.error('Model failed to load');
+        setModelLoaded(false);
+      };
 
+      modelViewerRef.current.addEventListener('load', handleLoad);
+      modelViewerRef.current.addEventListener('error', handleError);
+      
+      return () => {
+        if (modelViewerRef.current) {
+          modelViewerRef.current.removeEventListener('load', handleLoad);
+          modelViewerRef.current.removeEventListener('error', handleError);
+        }
+      };
+    }
+  }, []);
+
+  useEffect(() => {
     // ESC key handler for fullscreen
     const handleEscKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isFullscreen) {

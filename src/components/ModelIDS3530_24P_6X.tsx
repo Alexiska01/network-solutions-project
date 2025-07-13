@@ -101,7 +101,6 @@ const ModelIDS3530_24P_6XComponent = () => {
                 modelRef={modelViewerRef}
                 modelPath={ids353024p6xData.modelPath}
                 indicatorsOn={indicatorsOn}
-                modelLoaded={modelLoaded}
                 onToggleIndicators={toggleIndicators}
               />
             </div>
