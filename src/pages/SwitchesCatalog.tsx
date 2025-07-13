@@ -122,68 +122,86 @@ const SwitchesCatalog = () => {
 
       <HeroCommuts />
 
-      {/* Мобильная навигация */}
-      <MobileCatalogNavigation onNavigate={handleScrollToCard} />
-      
-      {/* Временная отладочная мобильная навигация */}
-      {isMobile && (
-        <div className="lg:hidden bg-blue-500 text-white p-4 text-center">
-          <p>Мобильная версия - отладка</p>
-          <p>isMobile: {String(isMobile)}</p>
-        </div>
-      )}
-
-      {/* Простая backup мобильная навигация */}
-      {isMobile && (
-        <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
-          <div className="px-4 py-3">
-            <details className="group">
-              <summary className="flex items-center justify-between px-4 py-3 bg-blue-500 text-white rounded-lg cursor-pointer">
+      {/* ПРИНУДИТЕЛЬНАЯ мобильная навигация - показывается на всех экранах менее 1024px */}
+      <div className="block lg:hidden sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div className="px-4 py-3">
+          <div className="bg-red-500 text-white p-2 mb-2 text-center text-sm rounded">
+            ОТЛАДКА: isMobile = {String(isMobile)} | Экран &lt; 1024px
+          </div>
+          
+          <details className="group">
+            <summary className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg cursor-pointer shadow-md">
+              <div className="flex items-center gap-2">
+                <Icon name="Navigation" size={16} />
                 <span className="font-medium">Навигация по каталогу</span>
-                <Icon name="ChevronDown" size={16} className="group-open:rotate-180 transition-transform" />
-              </summary>
-              <div className="mt-2 p-4 bg-gray-50 rounded-lg space-y-2">
+              </div>
+              <Icon name="ChevronDown" size={16} className="group-open:rotate-180 transition-transform duration-300" />
+            </summary>
+            
+            <div className="mt-3 p-4 bg-gradient-to-b from-gray-50 to-white rounded-lg border shadow-inner space-y-3">
+              <div className="grid grid-cols-1 gap-2">
                 <button 
                   onClick={() => handleScrollToCard('corporate-lan')}
-                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                  className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm"
                 >
-                  Корпоративные ЛВС
+                  <Icon name="Building2" size={16} className="text-blue-600" />
+                  <span className="font-medium">Корпоративные ЛВС</span>
                 </button>
+                
                 <button 
                   onClick={() => handleScrollToCard('access-level')}
-                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                  className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm"
                 >
-                  Уровень доступа
+                  <Icon name="Wifi" size={16} className="text-blue-500" />
+                  <span className="font-medium">Уровень доступа</span>
                 </button>
+                
                 <button 
                   onClick={() => handleScrollToCard('distribution-level')}
-                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                  className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all duration-200 shadow-sm"
                 >
-                  Уровень распределения
+                  <Icon name="GitBranch" size={16} className="text-indigo-600" />
+                  <span className="font-medium">Уровень распределения</span>
                 </button>
+                
                 <button 
                   onClick={() => handleScrollToCard('data-center')}
-                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                  className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 shadow-sm"
                 >
-                  Центры обработки данных
+                  <Icon name="Database" size={16} className="text-purple-600" />
+                  <span className="font-medium">Центры обработки данных</span>
                 </button>
+                
                 <button 
                   onClick={() => handleScrollToCard('spine-level')}
-                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                  className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 shadow-sm"
                 >
-                  Spine коммутаторы
+                  <Icon name="TreePine" size={16} className="text-purple-500" />
+                  <span className="font-medium">Spine коммутаторы</span>
                 </button>
+                
                 <button 
                   onClick={() => handleScrollToCard('leaf-level')}
-                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                  className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 shadow-sm"
                 >
-                  Leaf коммутаторы
+                  <Icon name="TreeDeciduous" size={16} className="text-emerald-600" />
+                  <span className="font-medium">Leaf коммутаторы</span>
                 </button>
               </div>
-            </details>
-          </div>
+              
+              <hr className="border-gray-200" />
+              
+              <button 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="flex items-center justify-center gap-2 w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all duration-200 text-gray-700 font-medium"
+              >
+                <Icon name="ArrowUp" size={16} />
+                <span>Наверх страницы</span>
+              </button>
+            </div>
+          </details>
         </div>
-      )}
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
