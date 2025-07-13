@@ -286,7 +286,7 @@ const ModelIDS3530_24P_6XComponent = () => {
           
           {/* Subheading */}
           <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-4xl mx-auto font-light">
-            Наши эксперты помогут подобрать оптимальное решение для вашей инфраструктуры
+            Свяжитесь с нашими партнерами!
           </p>
           
           {/* Benefits */}
@@ -295,10 +295,7 @@ const ModelIDS3530_24P_6XComponent = () => {
               <Icon name="CheckCircle" className="h-5 w-5 mr-2 text-[#00B5AD]" />
               <span className="text-sm">Бесплатная консультация</span>
             </div>
-            <div className="flex items-center">
-              <Icon name="Clock" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-              <span className="text-sm">Ответ в течение 2 часов</span>
-            </div>
+
             <div className="flex items-center">
               <Icon name="Users" className="h-5 w-5 mr-2 text-[#00B5AD]" />
               <span className="text-sm">Персональный менеджер</span>
