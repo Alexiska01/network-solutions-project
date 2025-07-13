@@ -47,13 +47,6 @@ const FullscreenViewer: React.FC<FullscreenViewerProps> = ({
           >
             <Icon name="X" size={24} className="group-hover:rotate-90 transition-transform" />
           </button>
-          <button
-            onClick={onClose}
-            className="bg-white/20 hover:bg-white/30 text-white p-3 rounded-xl transition-all backdrop-blur-sm border border-white/20"
-            title="Свернуть"
-          >
-            <Icon name="Minimize2" size={24} />
-          </button>
         </div>
 
         {/* Fullscreen Title */}
@@ -127,15 +120,7 @@ const FullscreenViewer: React.FC<FullscreenViewerProps> = ({
               <Icon name="Camera" size={16} />
             </button>
 
-            <div className="h-6 w-px bg-white/20 mx-1"></div>
 
-            <button
-              onClick={onClose}
-              className="p-2 rounded-lg bg-red-500/80 text-white hover:bg-red-500 transition-all"
-              title="Выйти из полноэкранного режима"
-            >
-              <Icon name="Minimize2" size={16} />
-            </button>
           </div>
         </div>
 

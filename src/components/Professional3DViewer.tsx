@@ -93,6 +93,43 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
     }
   };
 
+  const resetViewMobile = () => {
+    setCameraPreset("default");
+    setSelectedHotspot(null);
+    if (modelRef.current) {
+      // Полный сброс для мобильной версии
+      const mv = modelRef.current as any;
+      
+      // Сбрасываем все параметры камеры
+      modelRef.current.cameraOrbit = cameraPresets.default;
+      modelRef.current.fieldOfView = "25deg";
+      
+      // Сбрасываем zoom к начальным границам
+      modelRef.current.minCameraOrbit = "auto auto 0.4m";
+      modelRef.current.maxCameraOrbit = "auto auto 2m";
+      
+      // Принудительно устанавливаем камеру на минимальное расстояние
+      const [theta, phi] = cameraPresets.default.split(' ');
+      modelRef.current.cameraOrbit = `${theta} ${phi} 0.8m`;
+      
+      if (mv.resetTurntableRotation) {
+        mv.resetTurntableRotation();
+      }
+      
+      // Принудительный переход к цели
+      modelRef.current.jumpCameraToGoal();
+      
+      // Дополнительный сброс через небольшую задержку
+      setTimeout(() => {
+        if (modelRef.current) {
+          modelRef.current.cameraOrbit = `${theta} ${phi} 0.8m`;
+          modelRef.current.fieldOfView = "25deg";
+          modelRef.current.jumpCameraToGoal();
+        }
+      }, 50);
+    }
+  };
+
   const takeScreenshot = () => {
     if (modelRef.current) {
       const screenshot = modelRef.current.toDataURL();
@@ -196,7 +233,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               onBackgroundChange={setBackground}
               onToggleIndicators={onToggleIndicators}
               onTakeScreenshot={takeScreenshot}
-              onResetView={resetView}
+              onResetView={resetViewMobile}
             />
           </div>
         </div>
