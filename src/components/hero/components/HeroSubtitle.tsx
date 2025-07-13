@@ -25,9 +25,9 @@ const HeroSubtitle = ({
       className="h-28 flex items-start justify-start mb-6 relative"
     >
       <div className="relative z-10">
-        <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
+        <div className="text-lg md:text-xl lg:text-2xl leading-relaxed">
           {showIDATA && (
-            <motion.span
+            <motion.div
               initial={{ opacity: 0, scale: 0.3, rotateY: -90 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{
@@ -41,15 +41,8 @@ const HeroSubtitle = ({
             >
               iDATA
               {/* Светящийся эффект для логотипа */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-lg blur-lg -z-10"
-                animate={{
-                  opacity: [0, 0.8, 0],
-                  scale: [0.8, 1.2, 0.8],
-                }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-              />
-            </motion.span>
+              <span className="absolute inset-0 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-lg blur-lg -z-10 opacity-0 animate-pulse" />
+            </motion.div>
           )}
           {showTyping && (
             <motion.span
@@ -71,7 +64,7 @@ const HeroSubtitle = ({
               transition={{ duration: 0.8, repeat: Infinity }}
             />
           )}
-        </p>
+        </div>
       </div>
     </motion.div>
   );
