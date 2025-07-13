@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,7 @@ interface SwitchCardProps {
 }
 
 const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [imgErrored, setImgErrored] = useState(false);
   const isMobile = useIsMobile();
@@ -46,7 +48,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
 
   const handleLinkClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    window.location.href = switchData.link;
+    navigate(switchData.link);
   };
 
   const getCategoryColor = (category: string) => {

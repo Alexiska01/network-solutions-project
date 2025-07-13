@@ -53,8 +53,13 @@ const SwitchesCatalog = () => {
         el.classList.remove("active");
       });
 
-      // Скроллим к элементу
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Скроллим к элементу с учетом высоты sticky навигации
+      const offset = isMobile ? 80 : 0; // высота мобильной навигации
+      const elementPosition = element.offsetTop - offset;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth"
+      });
 
       // Очищаем хеш из URL
       window.history.replaceState(
@@ -147,7 +152,7 @@ const SwitchesCatalog = () => {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="block lg:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm"
+        className="block lg:hidden sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm"
       >
         <div className="px-4 py-3">
           <details className="group">
@@ -165,7 +170,9 @@ const SwitchesCatalog = () => {
                   onClick={() => handleMobileNavigation('corporate-lan')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm"
                 >
-                  <Icon name="Building2" size={16} className="text-blue-600" />
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    <Icon name="Building2" size={16} className="text-blue-600" />
+                  </div>
                   <span className="font-medium">Корпоративные ЛВС</span>
                 </button>
                 
@@ -173,7 +180,9 @@ const SwitchesCatalog = () => {
                   onClick={() => handleMobileNavigation('access-level')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm"
                 >
-                  <Icon name="Wifi" size={16} className="text-blue-500" />
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    <Icon name="Wifi" size={16} className="text-blue-500" />
+                  </div>
                   <span className="font-medium">Уровень доступа</span>
                 </button>
                 
@@ -181,7 +190,9 @@ const SwitchesCatalog = () => {
                   onClick={() => handleMobileNavigation('distribution-level')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all duration-200 shadow-sm"
                 >
-                  <Icon name="GitBranch" size={16} className="text-indigo-600" />
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    <Icon name="GitBranch" size={16} className="text-indigo-600" />
+                  </div>
                   <span className="font-medium">Уровень распределения</span>
                 </button>
                 
@@ -189,7 +200,9 @@ const SwitchesCatalog = () => {
                   onClick={() => handleMobileNavigation('data-center')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 shadow-sm"
                 >
-                  <Icon name="Database" size={16} className="text-purple-600" />
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    <Icon name="Database" size={16} className="text-purple-600" />
+                  </div>
                   <span className="font-medium">Центры обработки данных</span>
                 </button>
                 
@@ -197,7 +210,9 @@ const SwitchesCatalog = () => {
                   onClick={() => handleMobileNavigation('spine-level')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 shadow-sm"
                 >
-                  <Icon name="TreePine" size={16} className="text-purple-500" />
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    <Icon name="TreePine" size={16} className="text-purple-500" />
+                  </div>
                   <span className="font-medium">Spine коммутаторы</span>
                 </button>
                 
@@ -205,7 +220,9 @@ const SwitchesCatalog = () => {
                   onClick={() => handleMobileNavigation('leaf-level')}
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 shadow-sm"
                 >
-                  <Icon name="TreeDeciduous" size={16} className="text-emerald-600" />
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    <Icon name="TreeDeciduous" size={16} className="text-emerald-600" />
+                  </div>
                   <span className="font-medium">Leaf коммутаторы</span>
                 </button>
               </div>
