@@ -146,7 +146,7 @@ const ModelIDS3530_24P_6XComponent = () => {
           <div className="flex flex-col sm:flex-row gap-4 mt-12 justify-center">
             <Button
               size="lg"
-              className="bg-white text-[#1A2980] hover:bg-cyan-50 px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+              className="bg-white text-[#1A2980] hover:bg-gray-50 px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
             >
               <Icon name="FileText" className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
               Посмотреть документацию
@@ -167,7 +167,7 @@ const ModelIDS3530_24P_6XComponent = () => {
 
 
       {/* Enhanced Technical Specifications */}
-      <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-cyan-50/30 relative overflow-hidden">
+      <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:20px_20px]" />
         <div className="absolute top-10 right-10 w-32 h-32 bg-[#00B5AD]/10 rounded-full opacity-30 blur-2xl" />
@@ -175,7 +175,7 @@ const ModelIDS3530_24P_6XComponent = () => {
         
         <div className="relative max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-cyan-100 rounded-full mb-6">
+            <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-full mb-6">
               <Icon name="Database" className="h-5 w-5 mr-2 text-[#0065B3]" />
               <span className="text-sm font-semibold text-[#1A2980]">Полная спецификация</span>
             </div>
@@ -213,7 +213,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                     {specGroup.specs.map((spec, specIndex) => (
                       <div 
                         key={specIndex} 
-                        className="flex justify-between items-start py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-4 hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
+                        className="flex justify-between items-start py-3 border-b border-gray-100 last:border-b-0 hover:bg-blue-50/50 hover:px-4 hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
                       >
                         <span className="text-gray-700 font-medium flex-1 pr-4">
                           {spec.label}:
@@ -226,7 +226,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                   </div>
 
                   {/* Decorative element */}
-                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-cyan-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-blue-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
             ))}
