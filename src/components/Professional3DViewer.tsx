@@ -6,7 +6,7 @@ import ViewerControls from "./ViewerControls";
 import MobileViewerControls from "./MobileViewerControls";
 import HotspotPanel from "./HotspotPanel";
 import FullscreenViewer from "./FullscreenViewer";
-import TechSpecsOverlay from "./TechSpecsOverlay";
+
 import { Professional3DViewerProps } from "./ViewerTypes";
 import { cameraPresets, backgrounds, hotspots, getHotspotIcon, getHotspotColor } from "./ViewerConstants";
 
@@ -248,10 +248,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
           )}
         </AnimatePresence>
 
-        {/* Technical Specs Overlay */}
-        <AnimatePresence>
-          <TechSpecsOverlay isVisible={showSpecs} />
-        </AnimatePresence>
+
       </div>
 
       {/* Fullscreen Modal */}
