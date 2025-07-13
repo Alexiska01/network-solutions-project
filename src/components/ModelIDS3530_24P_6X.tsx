@@ -84,12 +84,12 @@ const ModelIDS3530_24P_6XComponent = () => {
           <div className="text-center mb-12 lg:mb-16">
             <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
               <Icon name="Cpu" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-              <span className="text-sm font-medium text-cyan-100">Промышленный коммутатор L3</span>
+              <span className="text-sm font-medium text-white/80">Промышленный коммутатор L3</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
               {ids353024p6xData.title}
             </h1>
-            <p className="text-xl md:text-2xl text-cyan-200 font-light max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/80 font-light max-w-3xl mx-auto">
               Управляемый коммутатор уровня L3 с PoE+ и высокой производительностью
             </p>
           </div>
@@ -115,7 +115,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                 <div className="space-y-4">
                   {ids353024p6xData.basicSpecs.map((spec, index) => (
                     <div key={index} className="flex justify-between items-center py-3 border-b border-white/10 last:border-b-0">
-                      <span className="text-cyan-200 font-medium">{spec.label}:</span>
+                      <span className="text-white/70 font-medium">{spec.label}:</span>
                       <span className="text-white font-semibold text-right">{spec.value}</span>
                     </div>
                   ))}
@@ -127,16 +127,16 @@ const ModelIDS3530_24P_6XComponent = () => {
                 <div className="bg-gradient-to-br from-[#00B5AD]/20 to-[#0065B3]/20 backdrop-blur-sm rounded-xl border border-[#00B5AD]/20 p-4">
                   <div className="flex items-center mb-2">
                     <Icon name="Zap" className="h-5 w-5 text-[#00B5AD] mr-2" />
-                    <span className="text-sm font-semibold text-cyan-300">PoE+</span>
+                    <span className="text-sm font-semibold text-white">PoE+</span>
                   </div>
-                  <p className="text-xs text-cyan-200">380W мощности для питания устройств</p>
+                  <p className="text-xs text-white/80">380W мощности для питания устройств</p>
                 </div>
                 <div className="bg-gradient-to-br from-[#0065B3]/20 to-[#1A2980]/20 backdrop-blur-sm rounded-xl border border-[#0065B3]/20 p-4">
                   <div className="flex items-center mb-2">
                     <Icon name="Network" className="h-5 w-5 text-[#0065B3] mr-2" />
-                    <span className="text-sm font-semibold text-blue-300">L3</span>
+                    <span className="text-sm font-semibold text-white">L3</span>
                   </div>
-                  <p className="text-xs text-blue-200">Полная поддержка маршрутизации</p>
+                  <p className="text-xs text-white/80">Полная поддержка маршрутизации</p>
                 </div>
               </div>
             </div>
@@ -272,25 +272,25 @@ const ModelIDS3530_24P_6XComponent = () => {
           {/* Badge */}
           <div className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8">
             <Icon name="Sparkles" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-            <span className="text-sm font-semibold text-cyan-200">Готовы к внедрению</span>
+            <span className="text-sm font-semibold text-white/80">Готовы к внедрению</span>
           </div>
 
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Получите{" "}
-            <span className="bg-gradient-to-r from-[#00B5AD] to-cyan-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#00B5AD] to-[#0065B3] bg-clip-text text-transparent">
               профессиональную
             </span>{" "}
             консультацию
           </h2>
           
           {/* Subheading */}
-          <p className="text-xl md:text-2xl text-cyan-200 mb-4 max-w-4xl mx-auto font-light">
+          <p className="text-xl md:text-2xl text-white/80 mb-4 max-w-4xl mx-auto font-light">
             Наши эксперты помогут подобрать оптимальное решение для вашей инфраструктуры
           </p>
           
           {/* Benefits */}
-          <div className="flex flex-wrap justify-center gap-6 mb-12 text-cyan-300">
+          <div className="flex flex-wrap justify-center gap-6 mb-12 text-white/70">
             <div className="flex items-center">
               <Icon name="CheckCircle" className="h-5 w-5 mr-2 text-[#00B5AD]" />
               <span className="text-sm">Бесплатная консультация</span>
@@ -327,23 +327,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             </Button>
           </div>
 
-          {/* Contact info */}
-          <div className="mt-12 pt-8 border-t border-white/20">
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-8 text-cyan-300">
-              <div className="flex items-center">
-                <Icon name="Mail" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-                <span className="text-sm">info@company.ru</span>
-              </div>
-              <div className="flex items-center">
-                <Icon name="Phone" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-                <span className="text-sm">+7 (495) 123-45-67</span>
-              </div>
-              <div className="flex items-center">
-                <Icon name="MapPin" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-                <span className="text-sm">Москва, офисы в 15 городах</span>
-              </div>
-            </div>
-          </div>
+
         </div>
       </section>
     </div>
