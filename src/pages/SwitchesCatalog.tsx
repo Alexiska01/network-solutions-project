@@ -226,6 +226,16 @@ const SwitchesCatalog = () => {
                   <span className="font-medium">Leaf коммутаторы</span>
                 </button>
               </div>
+              
+              <hr className="border-gray-200" />
+              
+              <button 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="flex items-center justify-center gap-2 w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all duration-200 text-gray-700 font-medium"
+              >
+                <Icon name="ArrowUp" size={16} />
+                <span>Наверх страницы</span>
+              </button>
             </div>
           </details>
         </div>

@@ -47,7 +47,9 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
   };
 
   const handleLinkClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
+    console.log('Navigating to:', switchData.link); // Отладка
     navigate(switchData.link);
   };
 
@@ -298,7 +300,12 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
             variant="outline"
             size="default"
             className="w-full h-12 group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
-            onClick={handleLinkClick}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('Mobile button clicked:', switchData.link);
+              navigate(switchData.link);
+            }}
           >
             <span className="mr-2 font-medium">Подробнее</span>
             <Icon
@@ -317,6 +324,11 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
   );
 
   /* --- Модалка со спецификациями --- */
+  if (isMobile) {
+    // В мобильной версии возвращаем карточку без Dialog wrapper
+    return CardContent;
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>{CardContent}</DialogTrigger>
@@ -415,7 +427,10 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
           </DialogClose>
           <Button
             className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-            onClick={handleLinkClick}
+            onClick={(e) => {
+              console.log('Modal button clicked:', switchData.link);
+              handleLinkClick(e);
+            }}
           >
             Подробнее
             <Icon name="ExternalLink" className="ml-2 h-4 w-4" />
