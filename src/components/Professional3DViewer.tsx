@@ -136,6 +136,34 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
     return () => document.removeEventListener('keydown', handleEscKey);
   }, [isFullscreen]);
 
+  // Handle indicators change
+  useEffect(() => {
+    if (modelViewerRef.current && modelLoaded) {
+      const materialIndicator = modelViewerRef.current.model?.materials?.find((material: any) => 
+        material.name === 'Material_Indicator'
+      );
+      const materialIndicator2 = modelViewerRef.current.model?.materials?.find((material: any) => 
+        material.name === 'Material_Indicator2'
+      );
+      
+      if (materialIndicator) {
+        if (indicatorsOn) {
+          // Включаем - делаем яркими (зеленый)
+          materialIndicator.pbrMetallicRoughness.setBaseColorFactor([0, 1, 0, 1]);
+          if (materialIndicator2) {
+            materialIndicator2.pbrMetallicRoughness.setBaseColorFactor([0, 1, 0, 1]);
+          }
+        } else {
+          // Выключаем - делаем темными
+          materialIndicator.pbrMetallicRoughness.setBaseColorFactor([0.1, 0.1, 0.1, 1]);
+          if (materialIndicator2) {
+            materialIndicator2.pbrMetallicRoughness.setBaseColorFactor([0.1, 0.1, 0.1, 1]);
+          }
+        }
+      }
+    }
+  }, [indicatorsOn, modelLoaded]);
+
   const setCameraView = (preset: string) => {
     setCameraPreset(preset);
     if (modelViewerRef.current) {
@@ -154,36 +182,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
     }
   };
 
-  const toggleIndicators = () => {
-    if (modelViewerRef.current) {
-      const materialIndicator = modelViewerRef.current.model?.materials?.find((material: any) => 
-        material.name === 'Material_Indicator'
-      );
-      const materialIndicator2 = modelViewerRef.current.model?.materials?.find((material: any) => 
-        material.name === 'Material_Indicator2'
-      );
-      
-      if (materialIndicator) {
-        const currentColor = materialIndicator.pbrMetallicRoughness.baseColorFactor;
-        const isOn = currentColor[0] > 0.5; // проверяем яркость
-        
-        if (isOn) {
-          // Выключаем - делаем темными
-          materialIndicator.pbrMetallicRoughness.setBaseColorFactor([0.1, 0.1, 0.1, 1]);
-          if (materialIndicator2) {
-            materialIndicator2.pbrMetallicRoughness.setBaseColorFactor([0.1, 0.1, 0.1, 1]);
-          }
-        } else {
-          // Включаем - делаем яркими (зеленый)
-          materialIndicator.pbrMetallicRoughness.setBaseColorFactor([0, 1, 0, 1]);
-          if (materialIndicator2) {
-            materialIndicator2.pbrMetallicRoughness.setBaseColorFactor([0, 1, 0, 1]);
-          }
-        }
-      }
-    }
-    onToggleIndicators();
-  };
+
 
 
 
@@ -331,7 +330,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               {/* Action Buttons */}
               <div className="flex items-center gap-2">
                 <button
-                  onClick={toggleIndicators}
+                  onClick={onToggleIndicators}
                   disabled={!modelLoaded}
                   className={`p-2 rounded-lg transition-all ${
                     indicatorsOn 
@@ -548,7 +547,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 
                   {/* Action Buttons */}
                   <button
-                    onClick={toggleIndicators}
+                    onClick={onToggleIndicators}
                     disabled={!modelLoaded}
                     className={`p-2 rounded-lg transition-all ${
                       indicatorsOn 
