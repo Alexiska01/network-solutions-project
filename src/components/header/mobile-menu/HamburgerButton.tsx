@@ -20,7 +20,7 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
         y: 0,
         transition: { duration: 0.1 }
       }}
-      className="lg:hidden relative w-12 h-12 rounded-2xl bg-white/95 backdrop-blur-2xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none overflow-hidden group"
+      className="lg:hidden relative w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none overflow-hidden group"
       aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
     >
       {/* Градиентный фон */}

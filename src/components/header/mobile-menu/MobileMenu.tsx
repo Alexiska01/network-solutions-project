@@ -109,7 +109,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-screen bg-white/98 backdrop-blur-2xl z-50 shadow-[0_0_100px_rgba(0,0,0,0.15)] flex flex-col border-l border-white/50 will-change-transform"
+            className="lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-screen bg-white/95 backdrop-blur-xl z-50 shadow-2xl flex flex-col border-l border-gray-100 will-change-transform"
           >
             {/* Премиальная шапка */}
             <MenuHeader
