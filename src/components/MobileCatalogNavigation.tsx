@@ -81,9 +81,15 @@ const MobileCatalogNavigation: React.FC<MobileCatalogNavigationProps> = ({
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
-  // Не показывать на десктопе
-  if (!isMobile) {
+  // Убираем hydration issues
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Не показывать на десктопе или пока не смонтировано
+  if (!mounted || !isMobile) {
     return null;
   }
 

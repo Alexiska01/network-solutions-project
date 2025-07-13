@@ -124,6 +124,66 @@ const SwitchesCatalog = () => {
 
       {/* Мобильная навигация */}
       <MobileCatalogNavigation onNavigate={handleScrollToCard} />
+      
+      {/* Временная отладочная мобильная навигация */}
+      {isMobile && (
+        <div className="lg:hidden bg-blue-500 text-white p-4 text-center">
+          <p>Мобильная версия - отладка</p>
+          <p>isMobile: {String(isMobile)}</p>
+        </div>
+      )}
+
+      {/* Простая backup мобильная навигация */}
+      {isMobile && (
+        <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+          <div className="px-4 py-3">
+            <details className="group">
+              <summary className="flex items-center justify-between px-4 py-3 bg-blue-500 text-white rounded-lg cursor-pointer">
+                <span className="font-medium">Навигация по каталогу</span>
+                <Icon name="ChevronDown" size={16} className="group-open:rotate-180 transition-transform" />
+              </summary>
+              <div className="mt-2 p-4 bg-gray-50 rounded-lg space-y-2">
+                <button 
+                  onClick={() => handleScrollToCard('corporate-lan')}
+                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                >
+                  Корпоративные ЛВС
+                </button>
+                <button 
+                  onClick={() => handleScrollToCard('access-level')}
+                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                >
+                  Уровень доступа
+                </button>
+                <button 
+                  onClick={() => handleScrollToCard('distribution-level')}
+                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                >
+                  Уровень распределения
+                </button>
+                <button 
+                  onClick={() => handleScrollToCard('data-center')}
+                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                >
+                  Центры обработки данных
+                </button>
+                <button 
+                  onClick={() => handleScrollToCard('spine-level')}
+                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                >
+                  Spine коммутаторы
+                </button>
+                <button 
+                  onClick={() => handleScrollToCard('leaf-level')}
+                  className="w-full text-left px-3 py-2 bg-white rounded border hover:bg-blue-50"
+                >
+                  Leaf коммутаторы
+                </button>
+              </div>
+            </details>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
