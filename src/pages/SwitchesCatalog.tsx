@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CatalogNavigation from "@/components/CatalogNavigation";
-import MobileCatalogNavigation from "@/components/MobileCatalogNavigation";
 import HeroCommuts from "@/components/HeroCommuts";
 import {
   Breadcrumb,
@@ -122,15 +121,16 @@ const SwitchesCatalog = () => {
 
       <HeroCommuts />
 
-      {/* ПРИНУДИТЕЛЬНАЯ мобильная навигация - показывается на всех экранах менее 1024px */}
-      <div className="block lg:hidden sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+      {/* Мобильная навигация */}
+      <motion.div 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="block lg:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm"
+      >
         <div className="px-4 py-3">
-          <div className="bg-red-500 text-white p-2 mb-2 text-center text-sm rounded">
-            ОТЛАДКА: isMobile = {String(isMobile)} | Экран &lt; 1024px
-          </div>
-          
           <details className="group">
-            <summary className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg cursor-pointer shadow-md">
+            <summary className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-lg cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]">
               <div className="flex items-center gap-2">
                 <Icon name="Navigation" size={16} />
                 <span className="font-medium">Навигация по каталогу</span>
@@ -201,7 +201,7 @@ const SwitchesCatalog = () => {
             </div>
           </details>
         </div>
-      </div>
+      </motion.div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
