@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { useNavigate, Link } from "react-router-dom";
 import { useModelViewer } from "@/hooks/useModelViewer";
-import ModelViewer from "@/components/ModelViewer";
+import Professional3DViewer from "@/components/Professional3DViewer";
 import SpecTable from "@/components/SpecTable";
 import FeatureCard from "@/components/FeatureCard";
 import DetailedSpecCard from "@/components/DetailedSpecCard";
@@ -95,40 +95,15 @@ const ModelIDS3530_24P_6XComponent = () => {
           </div>
 
           <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
-            {/* 3D Model - Enhanced */}
+            {/* Professional 3D Model Viewer */}
             <div className="lg:col-span-3">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0065B3] to-[#00B5AD] rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
-                <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 shadow-2xl">
-                  <div className="bg-white rounded-xl overflow-hidden shadow-2xl">
-                    <ModelViewer
-                      modelRef={modelViewerRef}
-                      modelPath={ids353024p6xData.modelPath}
-                      indicatorsOn={indicatorsOn}
-                      modelLoaded={modelLoaded}
-                      onToggleIndicators={toggleIndicators}
-                    />
-                  </div>
-                  
-                  {/* 3D Model Controls */}
-                  <div className="mt-4 flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                        <span className="text-sm text-white/80">3D модель</span>
-                      </div>
-                      {modelLoaded && (
-                        <button
-                          onClick={toggleIndicators}
-                          className="text-xs px-3 py-1 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 transition-colors"
-                        >
-                          {indicatorsOn ? 'Скрыть индикаторы' : 'Показать индикаторы'}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Professional3DViewer
+                modelRef={modelViewerRef}
+                modelPath={ids353024p6xData.modelPath}
+                indicatorsOn={indicatorsOn}
+                modelLoaded={modelLoaded}
+                onToggleIndicators={toggleIndicators}
+              />
             </div>
 
             {/* Specifications - Enhanced */}
