@@ -278,7 +278,7 @@ const ModelIDS3530_24P_6XComponent = () => {
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Получите{" "}
-            <span className="bg-gradient-to-r from-[#00B5AD] to-[#0065B3] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0065B3] to-[#00B5AD] bg-clip-text text-transparent">
               профессиональную
             </span>{" "}
             консультацию
@@ -310,7 +310,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             <Button
               size="lg"
               onClick={() => navigate("/partners")}
-              className="group relative bg-gradient-to-r from-[#00B5AD] to-[#0065B3] hover:from-[#0065B3] hover:to-[#1A2980] text-white font-semibold px-10 py-4 rounded-2xl shadow-2xl hover:shadow-[#00B5AD]/25 transition-all duration-300 hover:scale-105 border-0"
+              className="group relative bg-gradient-to-r from-[#0065B3] to-[#00B5AD] hover:from-[#1A2980] hover:to-[#0065B3] text-white font-semibold px-10 py-4 rounded-2xl shadow-2xl hover:shadow-[#0065B3]/25 transition-all duration-300 hover:scale-105 border-0"
             >
               <Icon name="MessageSquare" className="h-6 w-6 mr-3 group-hover:rotate-12 transition-transform" />
               Связаться с партнером
