@@ -14,7 +14,7 @@ const HeroCommuts = () => {
 
   // Отключаем параллакс на мобильных для производительности
   const y = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], isMobile ? [1, 1] : [1, 0]);
 
   // Floating animation for background elements - отключено на мобильных
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -300,8 +300,10 @@ const HeroCommuts = () => {
         </div>
       </div>
 
-      {/* Bottom Gradient Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-transparent to-transparent" />
+      {/* Bottom Gradient Fade - только на десктопе */}
+      {!isMobile && (
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-transparent to-transparent" />
+      )}
     </motion.section>
   );
 };
