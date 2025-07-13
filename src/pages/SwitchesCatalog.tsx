@@ -356,13 +356,12 @@ const SwitchesCatalog = () => {
                       name="Router" 
                       className="text-white !w-6 !h-6"
                       style={{ 
-                        width: '24px !important', 
-                        height: '24px !important',
-                        minWidth: '24px !important',
-                        minHeight: '24px !important',
-                        maxWidth: '24px !important',
-                        maxHeight: '24px !important',
-                        display: 'block !important'
+                        width: '16px', 
+                        height: '16px',
+                        minWidth: '16px',
+                        minHeight: '16px',
+                        maxWidth: '16px',
+                        maxHeight: '16px'
                       }}
                     />
                   </div>
@@ -399,13 +398,10 @@ const SwitchesCatalog = () => {
                     "flex items-center gap-3 mb-5 sm:mb-6",
                     isMobile && "justify-center"
                   )}>
-                    <div className={cn(
-                      "bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg flex items-center justify-center shadow-md",
-"w-8 h-8 rounded-xl"
-                    )}>
+                    <div className="bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-md w-8 h-8">
                       <Icon 
                         name="Router" 
-                        className="text-white !w-6 !h-6"
+                        className="text-white"
                         style={{ 
                           width: '16px', 
                           height: '16px',
@@ -460,13 +456,10 @@ const SwitchesCatalog = () => {
                     "flex items-center gap-3 mb-5 sm:mb-6",
                     isMobile && "justify-center"
                   )}>
-                    <div className={cn(
-                      "bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center shadow-md",
-"w-8 h-8"
-                    )}>
+                    <div className="bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center shadow-md w-8 h-8">
                       <Icon 
                         name="Router" 
-                        className="text-white !w-6 !h-6"
+                        className="text-white"
                         style={{ 
                           width: '16px', 
                           height: '16px',
@@ -528,10 +521,7 @@ const SwitchesCatalog = () => {
                   "flex gap-4 mb-4",
                   isMobile ? "flex-col items-center text-center" : "items-center"
                 )}>
-                  <div className={cn(
-                    "bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center shadow-lg",
-"w-12 h-12"
-                  )}>
+                  <div className="bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center shadow-lg w-12 h-12">
                     <Icon 
                       name="Router" 
                       className="text-white !w-6 !h-6"
@@ -578,13 +568,10 @@ const SwitchesCatalog = () => {
                     "flex items-center gap-3 mb-5 sm:mb-6",
                     isMobile && "justify-center"
                   )}>
-                    <div className={cn(
-                      "bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center shadow-md",
-"w-8 h-8"
-                    )}>
+                    <div className="bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center shadow-md w-8 h-8">
                       <Icon 
                         name="Router" 
-                        className="text-white !w-6 !h-6"
+                        className="text-white"
                         style={{ 
                           width: '16px', 
                           height: '16px',
@@ -637,13 +624,10 @@ const SwitchesCatalog = () => {
                     "flex items-center gap-3 mb-5 sm:mb-6",
                     isMobile && "justify-center"
                   )}>
-                    <div className={cn(
-                      "bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-md",
-"w-8 h-8"
-                    )}>
+                    <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-md w-8 h-8">
                       <Icon
                         name="Router"
-                        className="text-white !w-6 !h-6"
+                        className="text-white"
                         style={{ 
                           width: '16px', 
                           height: '16px',
