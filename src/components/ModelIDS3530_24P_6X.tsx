@@ -262,7 +262,7 @@ const ModelIDS3530_24P_6XComponent = () => {
       </section>
 
       {/* Professional CTA Section */}
-      <section className="relative py-24 px-6 bg-gradient-to-br from-gray-900 via-[#1A2980] to-[#0065B3] overflow-hidden">
+      <section className="relative py-24 px-6 bg-gradient-to-br from-[#1A2980] via-[#0065B3] to-[#00B5AD] overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px]" />
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00B5AD] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
