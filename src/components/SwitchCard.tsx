@@ -71,9 +71,9 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case "access":
-        return "Wifi";
+        return "Router";
       case "distribution":
-        return "Network";
+        return "Router";
       case "spine":
         return "Router";
       case "leaf":
@@ -116,11 +116,13 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
         <div
           className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${getCategoryColor(switchData.category)} text-white text-xs font-semibold shadow-lg backdrop-blur-sm`}
         >
-          <Icon 
-            name={getCategoryIcon(switchData.category)} 
-            size={14}
-            className="flex-shrink-0"
-          />
+          <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+            <Icon 
+              name={getCategoryIcon(switchData.category)} 
+              size={14}
+              className="text-white"
+            />
+          </div>
           <span className="capitalize">{switchData.category}</span>
         </div>
       </div>
