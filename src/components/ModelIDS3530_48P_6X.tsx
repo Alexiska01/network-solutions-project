@@ -211,7 +211,7 @@ const ModelIDS3530_48P_6XComponent = () => {
                   </div>
 
                   <div className="space-y-2 md:space-y-4">
-                    {specGroup.specs.map((spec, specIndex) => (
+                    {specGroup.specs.slice(0, 5).map((spec, specIndex) => (
                       <div 
                         key={specIndex} 
                         className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
