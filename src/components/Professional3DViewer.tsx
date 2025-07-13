@@ -95,11 +95,10 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   };
 
   const backgrounds = {
-    studio: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    studio: "linear-gradient(135deg, #1A2980 0%, #0065B3 50%, #00B5AD 100%)",
     neutral: "#f8f9fa",
     dark: "#1a1a1a",
-    tech: "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
-    white: "#ffffff"
+    tech: "linear-gradient(135deg, #1A2980 0%, #0065B3 100%)"
   };
 
   useEffect(() => {
@@ -141,14 +140,21 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   const setCameraView = (preset: string) => {
     setCameraPreset(preset);
     if (modelViewerRef.current) {
-      modelViewerRef.current.cameraOrbit = cameraPresets[preset as keyof typeof cameraPresets];
+      const orbitValue = cameraPresets[preset as keyof typeof cameraPresets];
+      modelViewerRef.current.cameraOrbit = orbitValue;
+      modelViewerRef.current.jumpCameraToGoal();
     }
   };
 
   const resetView = () => {
-    setCameraView("default");
+    setCameraPreset("default");
     setIsRotating(true);
     setSelectedHotspot(null);
+    if (modelViewerRef.current) {
+      modelViewerRef.current.cameraOrbit = cameraPresets.default;
+      modelViewerRef.current.autoRotate = true;
+      modelViewerRef.current.jumpCameraToGoal();
+    }
   };
 
   const toggleRotation = () => {
@@ -186,6 +192,22 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
     }
   };
 
+  const getTextColor = (bg: string) => {
+    if (bg === 'neutral') return 'text-gray-900';
+    return 'text-white';
+  };
+
+  const getButtonColor = (bg: string, active: boolean = false) => {
+    if (bg === 'neutral') {
+      return active 
+        ? 'bg-[#0065B3] text-white' 
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300';
+    }
+    return active 
+      ? 'bg-[#0065B3] text-white' 
+      : 'bg-white/10 text-white/70 hover:bg-white/20';
+  };
+
   return (
     <>
       <div className="relative">
@@ -210,70 +232,16 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
             </div>
           )}
 
-          {/* Controls Overlay */}
-          <AnimatePresence>
-            {showControls && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="absolute top-4 left-4 right-4 z-30 flex justify-between items-start"
-              >
-                {/* Left Controls */}
-                <div className="flex flex-col gap-2">
-                  <div className="bg-black/20 backdrop-blur-md rounded-xl p-3 border border-white/10">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Icon name="Eye" className="w-4 h-4 text-white" />
-                      <span className="text-white text-sm font-medium">Режим просмотра</span>
-                    </div>
-                    <div className="flex gap-1">
-                      {['explore', 'annotate', 'analyze'].map((mode) => (
-                        <button
-                          key={mode}
-                          onClick={() => setViewMode(mode)}
-                          className={`px-2 py-1 rounded-lg text-xs transition-all ${
-                            viewMode === mode 
-                              ? 'bg-[#00B5AD] text-white' 
-                              : 'bg-white/10 text-white/70 hover:bg-white/20'
-                          }`}
-                        >
-                          {mode === 'explore' ? 'Обзор' : mode === 'annotate' ? 'Аннотации' : 'Анализ'}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Controls */}
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setShowControls(false)}
-                    className="bg-black/20 backdrop-blur-md rounded-lg p-2 border border-white/10 text-white hover:bg-black/30 transition-all"
-                    title="Скрыть панель"
-                  >
-                    <Icon name="EyeOff" size={18} />
-                  </button>
-                  <button
-                    onClick={() => setIsFullscreen(true)}
-                    className="bg-black/20 backdrop-blur-md rounded-lg p-2 border border-white/10 text-white hover:bg-black/30 transition-all"
-                    title="Полноэкранный режим"
-                  >
-                    <Icon name="Maximize" size={18} />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Show Controls Button (when hidden) */}
-          {!showControls && (
+          {/* Top Controls */}
+          <div className="absolute top-4 right-4 z-30 flex gap-2">
             <button
-              onClick={() => setShowControls(true)}
-              className="absolute top-4 right-4 z-30 bg-black/20 backdrop-blur-md rounded-lg p-2 border border-white/10 text-white hover:bg-black/30 transition-all"
+              onClick={() => setIsFullscreen(true)}
+              className="bg-black/20 backdrop-blur-md rounded-lg p-2 border border-white/10 text-white hover:bg-black/30 transition-all"
+              title="Полноэкранный режим"
             >
-              <Icon name="Settings" size={18} />
+              <Icon name="Maximize" size={18} />
             </button>
-          )}
+          </div>
 
           {/* 3D Model */}
           <div className="aspect-[16/10] p-6">
@@ -316,21 +284,17 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
           </div>
 
           {/* Bottom Controls Panel */}
-          <div className="bg-white/5 backdrop-blur-md border-t border-white/10 p-4">
+          <div className={`${background === 'neutral' ? 'bg-white/90' : 'bg-white/5'} backdrop-blur-md border-t ${background === 'neutral' ? 'border-gray-200' : 'border-white/10'} p-4`}>
             <div className="flex items-center justify-between gap-4">
               {/* Camera Presets */}
               <div className="flex items-center gap-2">
-                <span className="text-white text-sm font-medium min-w-max">Ракурс:</span>
+                <span className={`${getTextColor(background)} text-sm font-medium min-w-max`}>Ракурс:</span>
                 <div className="flex gap-1">
                   {Object.keys(cameraPresets).map((preset) => (
                     <button
                       key={preset}
                       onClick={() => setCameraView(preset)}
-                      className={`px-2 py-1 rounded-lg text-xs transition-all ${
-                        cameraPreset === preset 
-                          ? 'bg-[#0065B3] text-white' 
-                          : 'bg-white/10 text-white/70 hover:bg-white/20'
-                      }`}
+                      className={`px-2 py-1 rounded-lg text-xs transition-all ${getButtonColor(background, cameraPreset === preset)}`}
                     >
                       {preset === 'default' ? 'По умолчанию' :
                        preset === 'front' ? 'Спереди' :
@@ -346,11 +310,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               <div className="flex items-center gap-2">
                 <button
                   onClick={toggleRotation}
-                  className={`p-2 rounded-lg transition-all ${
-                    isRotating 
-                      ? 'bg-[#00B5AD] text-white' 
-                      : 'bg-white/10 text-white/70 hover:bg-white/20'
-                  }`}
+                  className={`p-2 rounded-lg transition-all ${getButtonColor(background, isRotating)}`}
                   title={isRotating ? "Остановить вращение" : "Запустить вращение"}
                 >
                   <Icon name={isRotating ? "Pause" : "Play"} size={16} />
@@ -361,8 +321,8 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
                   disabled={!modelLoaded}
                   className={`p-2 rounded-lg transition-all ${
                     indicatorsOn 
-                      ? 'bg-yellow-500 text-yellow-900' 
-                      : 'bg-white/10 text-white/70 hover:bg-white/20'
+                      ? 'bg-[#00B5AD] text-white' 
+                      : getButtonColor(background, false)
                   } ${!modelLoaded ? 'opacity-50 cursor-not-allowed' : ''}`}
                   title="Переключить индикаторы"
                 >
@@ -371,7 +331,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 
                 <button
                   onClick={takeScreenshot}
-                  className="p-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-all"
+                  className={`p-2 rounded-lg transition-all ${getButtonColor(background, false)}`}
                   title="Сделать скриншот"
                 >
                   <Icon name="Camera" size={16} />
@@ -379,7 +339,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 
                 <button
                   onClick={resetView}
-                  className="p-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-all"
+                  className={`p-2 rounded-lg transition-all ${getButtonColor(background, false)}`}
                   title="Сбросить вид"
                 >
                   <Icon name="RotateCcw" size={16} />
@@ -388,20 +348,21 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
             </div>
 
             {/* Background Controls */}
-            <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/10">
-              <span className="text-white text-sm font-medium min-w-max">Фон:</span>
+            <div className={`flex items-center gap-2 mt-3 pt-3 border-t ${background === 'neutral' ? 'border-gray-200' : 'border-white/10'}`}>
+              <span className={`${getTextColor(background)} text-sm font-medium min-w-max`}>Фон:</span>
               {Object.keys(backgrounds).map((bg) => (
                 <button
                   key={bg}
                   onClick={() => setBackground(bg)}
                   className={`w-6 h-6 rounded-full border-2 transition-all ${
-                    background === bg ? 'border-white scale-110' : 'border-white/30'
+                    background === bg 
+                      ? `${background === 'neutral' ? 'border-[#0065B3]' : 'border-white'} scale-110` 
+                      : `${background === 'neutral' ? 'border-gray-300' : 'border-white/30'}`
                   }`}
                   style={{ background: backgrounds[bg as keyof typeof backgrounds] }}
                   title={bg === 'studio' ? 'Студийный' :
                          bg === 'neutral' ? 'Нейтральный' :
-                         bg === 'dark' ? 'Темный' :
-                         bg === 'tech' ? 'Технический' : 'Белый'}
+                         bg === 'dark' ? 'Темный' : 'Технический'}
                 />
               ))}
             </div>
@@ -499,16 +460,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
           )}
         </AnimatePresence>
 
-        {/* Quick Actions */}
-        <div className="absolute bottom-6 right-6 flex flex-col gap-2 z-30">
-          <button
-            onClick={() => setShowSpecs(!showSpecs)}
-            className="bg-white/90 backdrop-blur-md rounded-lg p-3 shadow-lg hover:bg-white transition-all group"
-            title="Технические характеристики"
-          >
-            <Icon name="Info" size={18} className="text-gray-700 group-hover:text-[#0065B3]" />
-          </button>
-        </div>
+
       </div>
 
       {/* Fullscreen Modal */}
