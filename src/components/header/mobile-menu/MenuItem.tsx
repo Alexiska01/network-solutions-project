@@ -47,27 +47,35 @@ const MenuItem: React.FC<MenuItemProps> = ({
   return (
     <motion.div
       key={item.path}
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, x: -15, filter: "blur(2px)" }}
+      animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
       transition={{
-        delay: index * 0.05,
-        duration: 0.25,
-        ease: "easeOut",
+        delay: index * 0.04,
+        duration: 0.35,
+        ease: [0.25, 0.1, 0.25, 1],
+        filter: { duration: 0.2 }
       }}
       className="overflow-hidden will-change-transform"
     >
       <MenuItemComponent
         {...menuItemProps}
         whileHover={{
-          backgroundColor: "rgba(59, 130, 246, 0.05)",
-          scale: 1.02,
+          backgroundColor: "rgba(59, 130, 246, 0.06)",
+          scale: 1.015,
+          y: -1,
+          boxShadow: "0 4px 20px rgba(59, 130, 246, 0.15)"
         }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{ 
+          scale: 0.985,
+          y: 0,
+          transition: { duration: 0.1 }
+        }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className={`
           group relative w-full flex items-center text-left pl-4 pr-4 py-4
           text-gray-700 transition-all duration-300 min-h-[56px] 
-          border-b border-gray-50 last:border-b-0 rounded-lg mx-2 mb-1
-          touch-manipulation select-none
+          border-b border-gray-50/80 last:border-b-0 rounded-xl mx-2 mb-1
+          touch-manipulation select-none backdrop-blur-sm
           ${
             isActive
               ? "bg-gradient-to-r from-blue-50 via-blue-50 to-emerald-50 text-blue-700 shadow-sm border-blue-100"
@@ -83,14 +91,22 @@ const MenuItem: React.FC<MenuItemProps> = ({
         <div className="flex items-center space-x-3 flex-1 justify-start">
           {item.icon && level === 0 && (
             <motion.div
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ 
+                scale: 1.15, 
+                rotate: 8,
+                y: -1,
+                transition: { type: "spring", stiffness: 400, damping: 15 }
+              }}
+              whileTap={{ 
+                scale: 0.85,
+                transition: { duration: 0.1 }
+              }}
               className={`
                 p-2.5 rounded-xl transition-all duration-300 shadow-sm
                 ${
                   isActive
-                    ? "bg-gradient-to-br from-blue-100 to-emerald-100 text-blue-600 shadow-blue-200/50"
-                    : "bg-white text-gray-500 group-hover:bg-blue-50 group-hover:text-blue-500 shadow-gray-200/50"
+                    ? "bg-gradient-to-br from-blue-100 to-emerald-100 text-blue-600 shadow-lg shadow-blue-200/50"
+                    : "bg-white/90 text-gray-500 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:to-blue-50 group-hover:text-blue-500 shadow-md shadow-gray-200/50 group-hover:shadow-lg group-hover:shadow-blue-200/30"
                 }
               `}
             >
@@ -117,8 +133,12 @@ const MenuItem: React.FC<MenuItemProps> = ({
               rotate: hasThirdLevel && isExpanded ? 90 : 0,
               scale: isActive ? 1.1 : 1,
             }}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            whileHover={{ 
+              scale: 1.2,
+              rotate: hasThirdLevel && isExpanded ? 135 : 15,
+              transition: { type: "spring", stiffness: 400, damping: 20 }
+            }}
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             className={`
               p-2 rounded-lg transition-all duration-300
               ${
@@ -150,15 +170,18 @@ const MenuItem: React.FC<MenuItemProps> = ({
           )}
         </AnimatePresence>
 
-        {/* Ripple эффект */}
+        {/* Улучшенный Ripple эффект */}
         <motion.div
-          className="absolute inset-0 rounded-lg pointer-events-none"
-          initial={{ scale: 0, opacity: 0.5 }}
-          whileTap={{ scale: 1.5, opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          className="absolute inset-0 rounded-xl pointer-events-none overflow-hidden"
+          initial={{ scale: 0, opacity: 0 }}
+          whileTap={{ 
+            scale: [0, 1.2, 2],
+            opacity: [0.3, 0.15, 0],
+            transition: { duration: 0.6, ease: "easeOut" }
+          }}
           style={{
             background:
-              "radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(16, 185, 129, 0.1) 50%, transparent 70%)",
           }}
         />
       </MenuItemComponent>
@@ -167,10 +190,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
       <AnimatePresence>
         {hasThirdLevel && isExpanded && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            initial={{ height: 0, opacity: 0, scale: 0.95 }}
+            animate={{ height: "auto", opacity: 1, scale: 1 }}
+            exit={{ height: 0, opacity: 0, scale: 0.95 }}
+            transition={{ 
+              duration: 0.4, 
+              ease: [0.25, 0.1, 0.25, 1],
+              height: { duration: 0.3 },
+              opacity: { duration: 0.25 },
+              scale: { duration: 0.2 }
+            }}
             className="overflow-hidden mt-2"
           >
             <div className="relative ml-4 pl-4 border-l border-gray-200">
@@ -226,7 +255,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                         {/* Декоративная точка */}
                         <motion.div
                           whileHover={{ scale: 1.2 }}
-                          className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors duration-300 mr-3 flex-shrink-0 pointer-events-none"
+                          className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-emerald-400 transition-all duration-300 mr-3 flex-shrink-0 pointer-events-none group-hover:shadow-lg group-hover:shadow-blue-400/50"
                         />
 
                         <span className="font-medium group-hover:translate-x-1 transition-transform duration-300">

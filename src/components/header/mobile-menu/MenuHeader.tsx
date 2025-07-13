@@ -8,9 +8,14 @@ const MenuHeader: React.FC<MenuHeaderProps> = memo(
     return (
       <motion.div
         className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-emerald-600 text-white overflow-hidden"
-        initial={{ y: -15, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.05, duration: 0.25, ease: "easeOut" }}
+        initial={{ y: -20, opacity: 0, scale: 0.98 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={{ 
+          delay: 0.05, 
+          duration: 0.35, 
+          ease: [0.25, 0.1, 0.25, 1],
+          scale: { duration: 0.25 }
+        }}
       >
         {/* Декоративные элементы */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
@@ -25,14 +30,20 @@ const MenuHeader: React.FC<MenuHeaderProps> = memo(
             <AnimatePresence>
               {canGoBack && (
                 <motion.button
-                  initial={{ scale: 0, rotate: -90 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  exit={{ scale: 0, rotate: 90 }}
+                  initial={{ scale: 0, rotate: -180, opacity: 0 }}
+                  animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                  exit={{ scale: 0, rotate: 180, opacity: 0 }}
                   whileHover={{
-                    scale: 1.1,
-                    backgroundColor: "rgba(255,255,255,0.3)",
+                    scale: 1.15,
+                    y: -1,
+                    backgroundColor: "rgba(255,255,255,0.35)",
+                    boxShadow: "0 4px 15px rgba(255,255,255,0.2)",
+                    transition: { type: "spring", stiffness: 400, damping: 20 }
                   }}
-                  whileTap={{ scale: 0.9 }}
+                  whileTap={{ 
+                    scale: 0.85,
+                    transition: { duration: 0.1 }
+                  }}
                   onClick={(e) => {
                     e.stopPropagation();
                     onNavigateBack();
@@ -51,9 +62,13 @@ const MenuHeader: React.FC<MenuHeaderProps> = memo(
             <div>
               <motion.h2
                 key={currentLevel?.title}
-                initial={{ x: 15, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                initial={{ x: 20, opacity: 0, filter: "blur(2px)" }}
+                animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+                transition={{ 
+                  duration: 0.3, 
+                  ease: [0.25, 0.1, 0.25, 1],
+                  filter: { duration: 0.2 }
+                }}
                 className="text-lg font-semibold"
               >
                 {currentLevel?.title || "Меню"}
@@ -78,8 +93,18 @@ const MenuHeader: React.FC<MenuHeaderProps> = memo(
               e.stopPropagation();
               onClose();
             }}
-            whileHover={{ scale: 1.1, rotate: 90 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ 
+              scale: 1.15, 
+              rotate: 90,
+              y: -1,
+              backgroundColor: "rgba(255,255,255,0.4)",
+              transition: { type: "spring", stiffness: 400, damping: 20 }
+            }}
+            whileTap={{ 
+              scale: 0.85,
+              rotate: 180,
+              transition: { duration: 0.15 }
+            }}
             className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 active:bg-white/40 transition-all duration-200 flex items-center justify-center touch-manipulation"
             aria-label="Закрыть меню"
           >
@@ -91,8 +116,15 @@ const MenuHeader: React.FC<MenuHeaderProps> = memo(
         <motion.div
           className="absolute bottom-0 left-1/2 w-12 h-1 bg-white/30 rounded-full"
           style={{ x: "-50%" }}
-          animate={{ scale: isDragging ? [1, 1.2, 1] : 1 }}
-          transition={{ duration: 0.5, repeat: isDragging ? Infinity : 0 }}
+          animate={{ 
+            scale: isDragging ? [1, 1.3, 1] : 1,
+            opacity: isDragging ? [0.3, 0.8, 0.3] : 0.3
+          }}
+          transition={{ 
+            duration: 0.8, 
+            repeat: isDragging ? Infinity : 0,
+            ease: "easeInOut"
+          }}
         />
       </motion.div>
     );
