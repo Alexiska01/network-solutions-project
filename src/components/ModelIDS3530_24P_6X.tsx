@@ -155,7 +155,7 @@ const ModelIDS3530_24P_6XComponent = () => {
               onClick={() => navigate("/partners")}
               variant="outline"
               size="lg"
-              className="border-2 border-white/30 text-white hover:bg-white hover:text-[#1A2980] px-8 py-4 rounded-xl font-semibold backdrop-blur-sm transition-all duration-300 hover:scale-105"
+              className="border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] px-8 py-4 rounded-xl font-semibold backdrop-blur-sm transition-all duration-300 hover:scale-105 shadow-lg"
             >
               <Icon name="ShoppingCart" className="h-5 w-5 mr-2" />
               Запросить цену
@@ -261,30 +261,88 @@ const ModelIDS3530_24P_6XComponent = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xl md:text-[34px] font-semibold text-gray-900 mb-6 font-sans w-[90%] md:w-[70%] mx-auto">
-            Хотите получить КП по IDS3530-24P-6X?
+      {/* Professional CTA Section */}
+      <section className="relative py-24 px-6 bg-gradient-to-br from-gray-900 via-[#1A2980] to-[#0065B3] overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00B5AD] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#0065B3] rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse animation-delay-2000" />
+        
+        <div className="relative max-w-6xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8">
+            <Icon name="Sparkles" className="h-5 w-5 mr-2 text-[#00B5AD]" />
+            <span className="text-sm font-semibold text-cyan-200">Готовы к внедрению</span>
+          </div>
+
+          {/* Heading */}
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            Получите{" "}
+            <span className="bg-gradient-to-r from-[#00B5AD] to-cyan-300 bg-clip-text text-transparent">
+              профессиональную
+            </span>{" "}
+            консультацию
           </h2>
-          <p className="text-sm md:text-[16px] text-gray-600 mb-8 font-sans w-[90%] md:w-[70%] mx-auto">
-            Оставьте заявку — мы подготовим коммерческое предложение и расчёт
+          
+          {/* Subheading */}
+          <p className="text-xl md:text-2xl text-cyan-200 mb-4 max-w-4xl mx-auto font-light">
+            Наши эксперты помогут подобрать оптимальное решение для вашей инфраструктуры
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          
+          {/* Benefits */}
+          <div className="flex flex-wrap justify-center gap-6 mb-12 text-cyan-300">
+            <div className="flex items-center">
+              <Icon name="CheckCircle" className="h-5 w-5 mr-2 text-[#00B5AD]" />
+              <span className="text-sm">Бесплатная консультация</span>
+            </div>
+            <div className="flex items-center">
+              <Icon name="Clock" className="h-5 w-5 mr-2 text-[#00B5AD]" />
+              <span className="text-sm">Ответ в течение 2 часов</span>
+            </div>
+            <div className="flex items-center">
+              <Icon name="Users" className="h-5 w-5 mr-2 text-[#00B5AD]" />
+              <span className="text-sm">Персональный менеджер</span>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button
               size="lg"
               onClick={() => navigate("/partners")}
-              className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-8 py-3 shadow-lg hover:shadow-xl"
+              className="group relative bg-gradient-to-r from-[#00B5AD] to-[#0065B3] hover:from-[#0065B3] hover:to-[#1A2980] text-white font-semibold px-10 py-4 rounded-2xl shadow-2xl hover:shadow-[#00B5AD]/25 transition-all duration-300 hover:scale-105 border-0"
             >
-              Получить КП
+              <Icon name="MessageSquare" className="h-6 w-6 mr-3 group-hover:rotate-12 transition-transform" />
+              Связаться с партнером
+              <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
             </Button>
+            
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white font-medium transition-all duration-300 px-8 py-3"
+              className="group bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white hover:text-[#1A2980] px-10 py-4 rounded-2xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
             >
-              Связаться с нами
+              <Icon name="Phone" className="h-6 w-6 mr-3 group-hover:scale-110 transition-transform" />
+              Получить консультацию
             </Button>
+          </div>
+
+          {/* Contact info */}
+          <div className="mt-12 pt-8 border-t border-white/20">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-8 text-cyan-300">
+              <div className="flex items-center">
+                <Icon name="Mail" className="h-5 w-5 mr-2 text-[#00B5AD]" />
+                <span className="text-sm">info@company.ru</span>
+              </div>
+              <div className="flex items-center">
+                <Icon name="Phone" className="h-5 w-5 mr-2 text-[#00B5AD]" />
+                <span className="text-sm">+7 (495) 123-45-67</span>
+              </div>
+              <div className="flex items-center">
+                <Icon name="MapPin" className="h-5 w-5 mr-2 text-[#00B5AD]" />
+                <span className="text-sm">Москва, офисы в 15 городах</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
