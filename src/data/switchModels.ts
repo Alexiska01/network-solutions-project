@@ -34,7 +34,7 @@ export const switchModels3530: SwitchModel[] = [
     poe: null,
     layer3: true,
     category: "sfp",
-    url: "/models/ids3530-24s-8t-6x.html",
+    url: "/products/switches/ids3530/24s-8t-6x",
     animationDelay: 0.3,
   },
   {
