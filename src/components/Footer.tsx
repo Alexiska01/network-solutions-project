@@ -75,7 +75,7 @@ const Footer = () => {
               Контакты
             </h3>
             <div className="space-y-2 md:space-y-3 text-xs md:text-sm text-gray-400 font-sans">
-              <p>+7 (495) 123-45-66</p>
+              <p>+7 (495) 123-45-60</p>
               <p>info@idata.ru</p>
               <p>Москва, ул. Примерная, 123</p>
             </div>
