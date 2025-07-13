@@ -11,6 +11,15 @@ export const useModelViewer = () => {
       const handleLoad = () => {
         setModelLoaded(true);
         console.log("3D модель загружена успешно");
+        
+        // Устанавливаем начальные параметры камеры после загрузки
+        setTimeout(() => {
+          if (modelViewer) {
+            modelViewer.cameraOrbit = "0deg 75deg 1.2m";
+            modelViewer.fieldOfView = "25deg";
+            modelViewer.jumpCameraToGoal();
+          }
+        }, 100);
       };
 
       const handleError = (error: any) => {

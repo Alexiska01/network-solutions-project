@@ -149,8 +149,24 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
     setCameraPreset("default");
     setSelectedHotspot(null);
     if (modelRef.current) {
+      // Полный сброс камеры к начальному состоянию
       modelRef.current.cameraOrbit = cameraPresets.default;
-      modelRef.current.jumpCameraToGoal();
+      modelRef.current.fieldOfView = "25deg";
+      
+      // Сбрасываем все взаимодействия с камерой
+      const mv = modelRef.current as any;
+      if (mv.resetTurntableRotation) {
+        mv.resetTurntableRotation();
+      }
+      
+      // Принудительно устанавливаем начальные параметры
+      setTimeout(() => {
+        if (modelRef.current) {
+          modelRef.current.cameraOrbit = cameraPresets.default;
+          modelRef.current.fieldOfView = "25deg";
+          modelRef.current.jumpCameraToGoal();
+        }
+      }, 10);
     }
   };
 
@@ -251,6 +267,8 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               min-camera-orbit="auto auto 0.4m"
               max-camera-orbit="auto auto 2m"
               field-of-view="25deg"
+              min-field-of-view="15deg"
+              max-field-of-view="45deg"
               shadow-intensity="0.3"
               environment-image="neutral"
               style={{
