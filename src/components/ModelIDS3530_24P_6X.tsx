@@ -155,7 +155,7 @@ const ModelIDS3530_24P_6XComponent = () => {
               onClick={() => navigate("/partners")}
               variant="outline"
               size="lg"
-              className="border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] px-8 py-4 rounded-xl font-semibold backdrop-blur-sm transition-all duration-300 hover:scale-105 shadow-lg"
+              className="bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] px-8 py-4 rounded-xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
             >
               <Icon name="ShoppingCart" className="h-5 w-5 mr-2" />
               Запросить цену
