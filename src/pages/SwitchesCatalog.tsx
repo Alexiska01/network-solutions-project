@@ -171,7 +171,18 @@ const SwitchesCatalog = () => {
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm"
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
-                    <Icon name="Building2" size={16} className="text-blue-600" />
+                    <Icon 
+                      name="Building2" 
+                      className="text-blue-600" 
+                      style={{ 
+                        width: '16px', 
+                        height: '16px',
+                        minWidth: '16px',
+                        minHeight: '16px',
+                        maxWidth: '16px',
+                        maxHeight: '16px'
+                      }}
+                    />
                   </div>
                   <span className="font-medium">Корпоративные ЛВС</span>
                 </button>
@@ -181,7 +192,18 @@ const SwitchesCatalog = () => {
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm"
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
-                    <Icon name="Wifi" size={16} className="text-blue-500" />
+                    <Icon 
+                      name="Wifi" 
+                      className="text-blue-500" 
+                      style={{ 
+                        width: '16px', 
+                        height: '16px',
+                        minWidth: '16px',
+                        minHeight: '16px',
+                        maxWidth: '16px',
+                        maxHeight: '16px'
+                      }}
+                    />
                   </div>
                   <span className="font-medium">Уровень доступа</span>
                 </button>
@@ -191,7 +213,18 @@ const SwitchesCatalog = () => {
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all duration-200 shadow-sm"
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
-                    <Icon name="GitBranch" size={16} className="text-indigo-600" />
+                    <Icon 
+                      name="GitBranch" 
+                      className="text-indigo-600" 
+                      style={{ 
+                        width: '16px', 
+                        height: '16px',
+                        minWidth: '16px',
+                        minHeight: '16px',
+                        maxWidth: '16px',
+                        maxHeight: '16px'
+                      }}
+                    />
                   </div>
                   <span className="font-medium">Уровень распределения</span>
                 </button>
@@ -201,7 +234,18 @@ const SwitchesCatalog = () => {
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 shadow-sm"
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
-                    <Icon name="Database" size={16} className="text-purple-600" />
+                    <Icon 
+                      name="Database" 
+                      className="text-purple-600" 
+                      style={{ 
+                        width: '16px', 
+                        height: '16px',
+                        minWidth: '16px',
+                        minHeight: '16px',
+                        maxWidth: '16px',
+                        maxHeight: '16px'
+                      }}
+                    />
                   </div>
                   <span className="font-medium">Центры обработки данных</span>
                 </button>
@@ -211,7 +255,18 @@ const SwitchesCatalog = () => {
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 shadow-sm"
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
-                    <Icon name="TreePine" size={16} className="text-purple-500" />
+                    <Icon 
+                      name="TreePine" 
+                      className="text-purple-500" 
+                      style={{ 
+                        width: '16px', 
+                        height: '16px',
+                        minWidth: '16px',
+                        minHeight: '16px',
+                        maxWidth: '16px',
+                        maxHeight: '16px'
+                      }}
+                    />
                   </div>
                   <span className="font-medium">Spine коммутаторы</span>
                 </button>
@@ -221,7 +276,18 @@ const SwitchesCatalog = () => {
                   className="flex items-center gap-3 w-full text-left px-4 py-3 bg-white rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 shadow-sm"
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
-                    <Icon name="TreeDeciduous" size={16} className="text-emerald-600" />
+                    <Icon 
+                      name="TreeDeciduous" 
+                      className="text-emerald-600" 
+                      style={{ 
+                        width: '16px', 
+                        height: '16px',
+                        minWidth: '16px',
+                        minHeight: '16px',
+                        maxWidth: '16px',
+                        maxHeight: '16px'
+                      }}
+                    />
                   </div>
                   <span className="font-medium">Leaf коммутаторы</span>
                 </button>
