@@ -175,51 +175,51 @@ const ModelIDS3530_24P_6XComponent = () => {
         <div className="absolute bottom-10 left-10 w-40 h-40 bg-[#0065B3]/10 rounded-full opacity-20 blur-3xl" />
         
         <div className="relative max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-cyan-100 rounded-full mb-6">
-              <Icon name="Database" className="h-5 w-5 mr-2 text-[#0065B3]" />
-              <span className="text-sm font-semibold text-[#1A2980]">Полная спецификация</span>
+          <div className="text-center mb-8 md:mb-16">
+            <div className="inline-flex items-center px-3 md:px-4 py-2 bg-cyan-100 rounded-full mb-4 md:mb-6">
+              <Icon name="Database" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#0065B3]" />
+              <span className="text-xs md:text-sm font-semibold text-[#1A2980]">Полная спецификация</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 md:mb-6">
               Технические характеристики
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto px-4">
               Детальная информация обо всех параметрах и возможностях коммутатора IDS3530-24P-6X
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
             {ids353024p6xData.specGroups.map((specGroup, index) => (
               <div 
                 key={index} 
-                className="group relative bg-white rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
               >
                 {/* Card header gradient */}
                 <div className="h-1 bg-gradient-to-r from-[#1A2980] via-[#0065B3] to-[#00B5AD]" />
                 
-                <div className="p-8">
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="p-3 md:p-8">
+                  <div className="flex items-center mb-3 md:mb-6">
+                    <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
                       <Icon 
                         name={index === 0 ? "Network" : index === 1 ? "Zap" : index === 2 ? "Shield" : "Settings"} 
-                        className="h-6 w-6 text-white" 
+                        className="h-3 w-3 md:h-6 md:w-6 text-white" 
                       />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
+                    <h3 className="text-base md:text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
                       {specGroup.title}
                     </h3>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-2 md:space-y-4">
                     {specGroup.specs.map((spec, specIndex) => (
                       <div 
                         key={specIndex} 
-                        className="flex justify-between items-start py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-4 hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
+                        className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
                       >
-                        <span className="text-gray-700 font-medium flex-1 pr-4">
+                        <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">
                           {spec.label}:
                         </span>
-                        <span className="text-gray-900 font-semibold text-right flex-1 max-w-xs">
+                        <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">
                           {spec.value}
                         </span>
                       </div>
@@ -234,29 +234,29 @@ const ModelIDS3530_24P_6XComponent = () => {
           </div>
 
           {/* Additional info cards */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-[#00B5AD]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="CheckCircle" className="h-8 w-8 text-[#00B5AD]" />
+          <div className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            <div className="bg-white rounded-lg border border-gray-200 p-3 md:p-6 text-center hover:shadow-lg transition-shadow">
+              <div className="w-8 h-8 md:w-16 md:h-16 bg-[#00B5AD]/10 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-4">
+                <Icon name="CheckCircle" className="h-4 w-4 md:h-8 md:w-8 text-[#00B5AD]" />
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Сертификация</h4>
-              <p className="text-sm text-gray-600">Соответствует международным стандартам качества и безопасности</p>
+              <h4 className="text-sm md:text-lg font-semibold text-gray-900 mb-1 md:mb-2">Сертификация</h4>
+              <p className="text-xs md:text-sm text-gray-600">Соответствует международным стандартам качества и безопасности</p>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-[#0065B3]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Clock" className="h-8 w-8 text-[#0065B3]" />
+            <div className="bg-white rounded-lg border border-gray-200 p-3 md:p-6 text-center hover:shadow-lg transition-shadow">
+              <div className="w-8 h-8 md:w-16 md:h-16 bg-[#0065B3]/10 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-4">
+                <Icon name="Clock" className="h-4 w-4 md:h-8 md:w-8 text-[#0065B3]" />
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Надёжность</h4>
-              <p className="text-sm text-gray-600">MTBF более 100,000 часов при непрерывной работе</p>
+              <h4 className="text-sm md:text-lg font-semibold text-gray-900 mb-1 md:mb-2">Надёжность</h4>
+              <p className="text-xs md:text-sm text-gray-600">MTBF более 100,000 часов при непрерывной работе</p>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-[#1A2980]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Thermometer" className="h-8 w-8 text-[#1A2980]" />
+            <div className="bg-white rounded-lg border border-gray-200 p-3 md:p-6 text-center hover:shadow-lg transition-shadow">
+              <div className="w-8 h-8 md:w-16 md:h-16 bg-[#1A2980]/10 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-4">
+                <Icon name="Thermometer" className="h-4 w-4 md:h-8 md:w-8 text-[#1A2980]" />
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Рабочая среда</h4>
-              <p className="text-sm text-gray-600">Работа в диапазоне температур от -40°C до +75°C</p>
+              <h4 className="text-sm md:text-lg font-semibold text-gray-900 mb-1 md:mb-2">Рабочая среда</h4>
+              <p className="text-xs md:text-sm text-gray-600">Работа в диапазоне температур от -40°C до +75°C</p>
             </div>
           </div>
         </div>
