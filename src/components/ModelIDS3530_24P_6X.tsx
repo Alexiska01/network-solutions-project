@@ -61,12 +61,12 @@ const ModelIDS3530_24P_6XComponent = () => {
       </div>
 
       {/* Hero Section with 3D Model */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
+      <section className="relative bg-gradient-hero text-white overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob" />
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000" />
+        <div className="absolute top-0 -left-4 w-72 h-72 bg-[#0065B3] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob" />
+        <div className="absolute top-0 -right-4 w-72 h-72 bg-[#00B5AD] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000" />
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#1A2980] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000" />
 
         {/* Back Button */}
         <div className="absolute top-6 left-6 z-30">
@@ -83,13 +83,13 @@ const ModelIDS3530_24P_6XComponent = () => {
           {/* Enhanced title section */}
           <div className="text-center mb-12 lg:mb-16">
             <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
-              <Icon name="Cpu" className="h-5 w-5 mr-2 text-blue-300" />
-              <span className="text-sm font-medium text-blue-100">Промышленный коммутатор L3</span>
+              <Icon name="Cpu" className="h-5 w-5 mr-2 text-[#00B5AD]" />
+              <span className="text-sm font-medium text-cyan-100">Промышленный коммутатор L3</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
               {ids353024p6xData.title}
             </h1>
-            <p className="text-xl md:text-2xl text-blue-200 font-light max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-cyan-200 font-light max-w-3xl mx-auto">
               Управляемый коммутатор уровня L3 с PoE+ и высокой производительностью
             </p>
           </div>
@@ -98,7 +98,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             {/* 3D Model - Enhanced */}
             <div className="lg:col-span-3">
               <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0065B3] to-[#00B5AD] rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
                 <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 shadow-2xl">
                   <div className="bg-white rounded-xl overflow-hidden shadow-2xl">
                     <ModelViewer
@@ -135,13 +135,13 @@ const ModelIDS3530_24P_6XComponent = () => {
             <div className="lg:col-span-2">
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 shadow-xl">
                 <h3 className="text-2xl font-bold mb-6 text-white flex items-center">
-                  <Icon name="Settings" className="h-6 w-6 mr-3 text-blue-300" />
+                  <Icon name="Settings" className="h-6 w-6 mr-3 text-[#00B5AD]" />
                   Технические характеристики
                 </h3>
                 <div className="space-y-4">
                   {ids353024p6xData.basicSpecs.map((spec, index) => (
                     <div key={index} className="flex justify-between items-center py-3 border-b border-white/10 last:border-b-0">
-                      <span className="text-blue-200 font-medium">{spec.label}:</span>
+                      <span className="text-cyan-200 font-medium">{spec.label}:</span>
                       <span className="text-white font-semibold text-right">{spec.value}</span>
                     </div>
                   ))}
@@ -150,16 +150,16 @@ const ModelIDS3530_24P_6XComponent = () => {
 
               {/* Key Features Cards */}
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-sm rounded-xl border border-green-400/20 p-4">
+                <div className="bg-gradient-to-br from-[#00B5AD]/20 to-[#0065B3]/20 backdrop-blur-sm rounded-xl border border-[#00B5AD]/20 p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Zap" className="h-5 w-5 text-green-400 mr-2" />
-                    <span className="text-sm font-semibold text-green-300">PoE+</span>
+                    <Icon name="Zap" className="h-5 w-5 text-[#00B5AD] mr-2" />
+                    <span className="text-sm font-semibold text-cyan-300">PoE+</span>
                   </div>
-                  <p className="text-xs text-green-200">380W мощности для питания устройств</p>
+                  <p className="text-xs text-cyan-200">380W мощности для питания устройств</p>
                 </div>
-                <div className="bg-gradient-to-br from-blue-500/20 to-cyan-600/20 backdrop-blur-sm rounded-xl border border-blue-400/20 p-4">
+                <div className="bg-gradient-to-br from-[#0065B3]/20 to-[#1A2980]/20 backdrop-blur-sm rounded-xl border border-[#0065B3]/20 p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Network" className="h-5 w-5 text-blue-400 mr-2" />
+                    <Icon name="Network" className="h-5 w-5 text-[#0065B3] mr-2" />
                     <span className="text-sm font-semibold text-blue-300">L3</span>
                   </div>
                   <p className="text-xs text-blue-200">Полная поддержка маршрутизации</p>
@@ -172,7 +172,7 @@ const ModelIDS3530_24P_6XComponent = () => {
           <div className="flex flex-col sm:flex-row gap-4 mt-12 justify-center">
             <Button
               size="lg"
-              className="bg-white text-slate-900 hover:bg-blue-50 px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+              className="bg-white text-[#1A2980] hover:bg-cyan-50 px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
             >
               <Icon name="FileText" className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
               Посмотреть документацию
@@ -181,7 +181,7 @@ const ModelIDS3530_24P_6XComponent = () => {
               onClick={() => navigate("/partners")}
               variant="outline"
               size="lg"
-              className="border-2 border-white/30 text-white hover:bg-white hover:text-slate-900 px-8 py-4 rounded-xl font-semibold backdrop-blur-sm transition-all duration-300 hover:scale-105"
+              className="border-2 border-white/30 text-white hover:bg-white hover:text-[#1A2980] px-8 py-4 rounded-xl font-semibold backdrop-blur-sm transition-all duration-300 hover:scale-105"
             >
               <Icon name="ShoppingCart" className="h-5 w-5 mr-2" />
               Запросить цену
@@ -193,17 +193,17 @@ const ModelIDS3530_24P_6XComponent = () => {
 
 
       {/* Enhanced Technical Specifications */}
-      <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-blue-50/30 relative overflow-hidden">
+      <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-cyan-50/30 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:20px_20px]" />
-        <div className="absolute top-10 right-10 w-32 h-32 bg-blue-100 rounded-full opacity-30 blur-2xl" />
-        <div className="absolute bottom-10 left-10 w-40 h-40 bg-indigo-100 rounded-full opacity-20 blur-3xl" />
+        <div className="absolute top-10 right-10 w-32 h-32 bg-[#00B5AD]/10 rounded-full opacity-30 blur-2xl" />
+        <div className="absolute bottom-10 left-10 w-40 h-40 bg-[#0065B3]/10 rounded-full opacity-20 blur-3xl" />
         
         <div className="relative max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full mb-6">
-              <Icon name="Database" className="h-5 w-5 mr-2 text-blue-600" />
-              <span className="text-sm font-semibold text-blue-800">Полная спецификация</span>
+            <div className="inline-flex items-center px-4 py-2 bg-cyan-100 rounded-full mb-6">
+              <Icon name="Database" className="h-5 w-5 mr-2 text-[#0065B3]" />
+              <span className="text-sm font-semibold text-[#1A2980]">Полная спецификация</span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               Технические характеристики
@@ -217,20 +217,20 @@ const ModelIDS3530_24P_6XComponent = () => {
             {ids353024p6xData.specGroups.map((specGroup, index) => (
               <div 
                 key={index} 
-                className="group relative bg-white rounded-2xl border border-gray-200 hover:border-blue-300 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                className="group relative bg-white rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
               >
                 {/* Card header gradient */}
-                <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500" />
+                <div className="h-1 bg-gradient-to-r from-[#1A2980] via-[#0065B3] to-[#00B5AD]" />
                 
                 <div className="p-8">
                   <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
                       <Icon 
                         name={index === 0 ? "Network" : index === 1 ? "Zap" : index === 2 ? "Shield" : "Settings"} 
                         className="h-6 w-6 text-white" 
                       />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
                       {specGroup.title}
                     </h3>
                   </div>
@@ -239,7 +239,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                     {specGroup.specs.map((spec, specIndex) => (
                       <div 
                         key={specIndex} 
-                        className="flex justify-between items-start py-3 border-b border-gray-100 last:border-b-0 hover:bg-blue-50/50 hover:px-4 hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
+                        className="flex justify-between items-start py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-4 hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
                       >
                         <span className="text-gray-700 font-medium flex-1 pr-4">
                           {spec.label}:
@@ -252,7 +252,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                   </div>
 
                   {/* Decorative element */}
-                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-blue-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-cyan-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
             ))}
@@ -261,24 +261,24 @@ const ModelIDS3530_24P_6XComponent = () => {
           {/* Additional info cards */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="CheckCircle" className="h-8 w-8 text-green-600" />
+              <div className="w-16 h-16 bg-[#00B5AD]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="CheckCircle" className="h-8 w-8 text-[#00B5AD]" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Сертификация</h4>
               <p className="text-sm text-gray-600">Соответствует международным стандартам качества и безопасности</p>
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Clock" className="h-8 w-8 text-blue-600" />
+              <div className="w-16 h-16 bg-[#0065B3]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Clock" className="h-8 w-8 text-[#0065B3]" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Надёжность</h4>
               <p className="text-sm text-gray-600">MTBF более 100,000 часов при непрерывной работе</p>
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Thermometer" className="h-8 w-8 text-purple-600" />
+              <div className="w-16 h-16 bg-[#1A2980]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Thermometer" className="h-8 w-8 text-[#1A2980]" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Рабочая среда</h4>
               <p className="text-sm text-gray-600">Работа в диапазоне температур от -40°C до +75°C</p>
