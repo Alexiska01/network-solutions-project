@@ -425,16 +425,21 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
               Закрыть
             </Button>
           </DialogClose>
-          <Button
-            className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-            onClick={(e) => {
-              console.log('Modal button clicked:', switchData.link);
-              handleLinkClick(e);
-            }}
-          >
-            Подробнее
-            <Icon name="ExternalLink" className="ml-2 h-4 w-4" />
-          </Button>
+          <DialogClose asChild>
+            <Button
+              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+              onClick={(e) => {
+                console.log('Modal button clicked:', switchData.link);
+                // Небольшая задержка для корректного закрытия модального окна
+                setTimeout(() => {
+                  navigate(switchData.link);
+                }, 100);
+              }}
+            >
+              Подробнее
+              <Icon name="ExternalLink" className="ml-2 h-4 w-4" />
+            </Button>
+          </DialogClose>
         </div>
       </DialogContent>
     </Dialog>
