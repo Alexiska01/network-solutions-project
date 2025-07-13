@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useModelViewer } from "@/hooks/useModelViewer";
 import ModelViewer from "@/components/ModelViewer";
 import SpecTable from "@/components/SpecTable";
 import FeatureCard from "@/components/FeatureCard";
 import DetailedSpecCard from "@/components/DetailedSpecCard";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { ids353024p6xData } from "@/data/ids3530-24p-6x";
 
 const ModelIDS3530_24P_6XComponent = () => {
@@ -15,6 +23,43 @@ const ModelIDS3530_24P_6XComponent = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Breadcrumb */}
+      <div className="bg-white/80 border-b border-gray-100 sticky top-0 z-20 backdrop-blur">
+        <div className="max-w-7xl mx-auto py-3 px-3 xs:px-4 sm:px-6 lg:px-[35px]">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Главная</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/#products">Продукты</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/switches">Коммутаторы</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/products/switches/ids3530">IDS3530</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>IDS3530-24P-6X</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
+
       {/* Hero Section with 3D Model */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative">
         {/* Back Button */}
