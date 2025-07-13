@@ -323,10 +323,228 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
     </motion.div>
   );
 
-  /* --- Модалка со спецификациями --- */
+  // Создаем содержимое карточки БЕЗ кнопки для мобильной версии
+  const CardContentWithoutButton = (
+    <motion.div
+      id={switchData.id.toLowerCase()}
+      className={cn(
+        "group relative cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm transition-all duration-300",
+        "hover:shadow-xl hover:border-blue-200 hover:-translate-y-1",
+        isMobile 
+          ? "mx-auto max-w-sm" 
+          : isTablet 
+            ? "h-auto" 
+            : "h-full"
+      )}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      whileHover={{ y: isMobile ? 0 : -4 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      {!isTablet && !isMobile ? (
+        /* --- ДЕСКТОПНАЯ ВЕРСИЯ --- */
+        <div className="flex h-full">
+          {/* Image Section */}
+          <div className="w-2/5 relative">
+            <div className="h-full bg-gradient-to-br from-gray-50 to-gray-100 rounded-l-2xl overflow-hidden relative">
+              <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.03)_25%,rgba(59,130,246,0.03)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.03)_75%)] bg-[length:30px_30px]" />
+              
+              <motion.img
+                src={switchData.image}
+                alt={switchData.title}
+                className="relative z-10 w-full h-full object-contain p-8"
+                animate={{ scale: isHovered ? 1.05 : 1 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                onError={() => setImgErrored(true)}
+              />
+
+              {imgErrored && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                  <div className="text-center">
+                    <Icon
+                      name="ImageOff"
+                      size={32}
+                      className="text-gray-400 mx-auto mb-2"
+                    />
+                    <span className="text-gray-500 text-sm">
+                      Изображение недоступно
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Content Section */}
+          <div className="flex-1 p-6 flex flex-col justify-between">
+            <div>
+              <motion.h3
+                className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300"
+                animate={{ x: isHovered ? 4 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {switchData.title}
+              </motion.h3>
+
+              <p className="text-gray-600 text-base mb-6 leading-relaxed line-clamp-3">
+                {switchData.description}
+              </p>
+
+              {/* Specs Grid */}
+              <div className="grid grid-cols-1 gap-3 mb-6">
+                {specs.map((spec, index) => (
+                  <motion.div
+                    key={spec.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors duration-300"
+                  >
+                    <div className="w-8 h-8 bg-white rounded-lg shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow duration-300">
+                      <Icon
+                        name={spec.icon as any}
+                        size={16}
+                        className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                        {spec.label}
+                      </p>
+                      <p className="text-sm font-semibold text-gray-900">
+                        {spec.value}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Button */}
+            <motion.div
+              animate={{ x: isHovered ? 4 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent shadow-sm hover:shadow-lg transition-all duration-300"
+                onClick={handleLinkClick}
+              >
+                <span className="mr-2">Подробнее</span>
+                <Icon
+                  name="ArrowRight"
+                  className="h-4 w-4 transition-transform group-hover/btn:translate-x-1"
+                />
+              </Button>
+            </motion.div>
+          </div>
+        </div>
+      ) : (
+        /* --- МОБИЛЬНАЯ ВЕРСИЯ БЕЗ КНОПКИ --- */
+        <div className="p-5">
+          {/* Изображение с улучшенными пропорциями */}
+          <div className="aspect-[4/3] mb-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden relative shadow-sm">
+            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.03)_25%,rgba(59,130,246,0.03)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.03)_75%)] bg-[length:20px_20px]" />
+
+            <motion.img
+              src={switchData.image}
+              alt={switchData.title}
+              className="relative z-10 w-full h-full object-contain p-6"
+              animate={{ scale: isHovered ? 1.03 : 1 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              onError={() => setImgErrored(true)}
+            />
+
+            {imgErrored && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                <div className="text-center">
+                  <Icon
+                    name="ImageOff"
+                    size={28}
+                    className="text-gray-400 mx-auto mb-2"
+                  />
+                  <span className="text-gray-500 text-sm">
+                    Изображение недоступно
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Заголовок с улучшенной типографикой */}
+          <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors duration-300">
+            {switchData.title}
+          </h3>
+
+          {/* Описание с увеличенным размером */}
+          <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-3">
+            {switchData.description}
+          </p>
+
+          {/* Улучшенные спецификации */}
+          <div className="grid grid-cols-1 gap-3 mb-5">
+            {specs.map((spec, index) => (
+              <motion.div
+                key={spec.label}
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors duration-300"
+              >
+                <div className="w-8 h-8 bg-white rounded-lg shadow-sm flex items-center justify-center flex-shrink-0">
+                  <Icon
+                    name={spec.icon as any}
+                    size={16}
+                    className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                    {spec.label}
+                  </p>
+                  <p className="text-sm font-semibold text-gray-900 truncate">
+                    {spec.value}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Hover glow effect */}
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+        <div className="absolute inset-0 rounded-2xl shadow-2xl shadow-blue-500/10" />
+      </div>
+    </motion.div>
+  );
+
+  /* --- Возврат результата --- */
   if (isMobile) {
-    // В мобильной версии возвращаем карточку без Dialog wrapper
-    return CardContent;
+    // В мобильной версии возвращаем карточку без Dialog И отдельную кнопку
+    return (
+      <div className="space-y-4">
+        {CardContentWithoutButton}
+        <Button
+          variant="outline"
+          size="default"
+          className="w-full h-12 group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Mobile button clicked:', switchData.link);
+            navigate(switchData.link);
+          }}
+        >
+          <span className="mr-2 font-medium">Подробнее</span>
+          <Icon
+            name="ArrowRight"
+            className="h-4 w-4 transition-transform group-hover/btn:translate-x-1"
+          />
+        </Button>
+      </div>
+    );
   }
 
   return (
