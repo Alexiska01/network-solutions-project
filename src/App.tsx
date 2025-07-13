@@ -5,13 +5,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
+import SwitchesCatalog from "./pages/SwitchesCatalog";
 
 // Lazy loading для второстепенных страниц
 const SeriesCatalog3730 = lazy(() => import("./pages/SeriesCatalog3730"));
 const SeriesCatalog3530 = lazy(() => import("./pages/SeriesCatalog3530"));
 const SeriesCatalog4530 = lazy(() => import("./pages/SeriesCatalog4530"));
 const SeriesCatalog6010 = lazy(() => import("./pages/SeriesCatalog6010"));
-const SwitchesCatalog = lazy(() => import("./pages/SwitchesCatalog"));
+
 const ModelIDS3530_24P_6X = lazy(() => import("./pages/ModelIDS3530_24P_6X"));
 const Partners = lazy(() => import("./pages/Partners"));
 const NotFound = lazy(() => import("./pages/NotFound"));
