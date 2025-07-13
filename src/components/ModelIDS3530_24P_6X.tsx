@@ -79,22 +79,23 @@ const ModelIDS3530_24P_6XComponent = () => {
           </Button>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-          {/* Enhanced title section */}
-          <div className="text-center mb-12 lg:mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
-              <Icon name="Cpu" className="h-5 w-5 mr-2 text-[#00B5AD]" />
-              <span className="text-sm font-medium text-white/80">Промышленный коммутатор L3</span>
+        <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-20">
+          {/* Enhanced title section - Mobile Optimized */}
+          <div className="text-center mb-8 md:mb-12 lg:mb-16">
+            <div className="inline-flex items-center px-3 md:px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-4 md:mb-6">
+              <Icon name="Cpu" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#00B5AD]" />
+              <span className="text-xs md:text-sm font-medium text-white/80">Промышленный коммутатор L3</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent leading-tight">
               {ids353024p6xData.title}
             </h1>
-            <p className="text-xl md:text-2xl text-white/80 font-light max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light max-w-3xl mx-auto px-4 sm:px-0">
               Управляемый коммутатор уровня L3 с PoE+ и высокой производительностью
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+          {/* Mobile-First Layout */}
+          <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-5 lg:gap-12 lg:items-start">
             {/* Professional 3D Model Viewer */}
             <div className="lg:col-span-3">
               <Professional3DViewer
@@ -105,35 +106,35 @@ const ModelIDS3530_24P_6XComponent = () => {
               />
             </div>
 
-            {/* Specifications - Enhanced */}
+            {/* Specifications - Mobile Optimized */}
             <div className="lg:col-span-2">
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 shadow-xl">
-                <h3 className="text-2xl font-bold mb-6 text-white flex items-center">
-                  <Icon name="Settings" className="h-6 w-6 mr-3 text-[#00B5AD]" />
-                  Технические характеристики
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 md:p-6 shadow-xl">
+                <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-white flex items-center">
+                  <Icon name="Settings" className="h-5 w-5 md:h-6 md:w-6 mr-2 md:mr-3 text-[#00B5AD]" />
+                  Характеристики
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   {ids353024p6xData.basicSpecs.map((spec, index) => (
-                    <div key={index} className="flex justify-between items-center py-3 border-b border-white/10 last:border-b-0">
-                      <span className="text-white/70 font-medium">{spec.label}:</span>
-                      <span className="text-white font-semibold text-right">{spec.value}</span>
+                    <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
+                      <span className="text-white/70 font-medium text-sm md:text-base">{spec.label}:</span>
+                      <span className="text-white font-semibold text-sm md:text-base">{spec.value}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Key Features Cards */}
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-[#00B5AD]/20 to-[#0065B3]/20 backdrop-blur-sm rounded-xl border border-[#00B5AD]/20 p-4">
+              {/* Key Features Cards - Mobile Optimized */}
+              <div className="mt-4 md:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                <div className="bg-gradient-to-br from-[#00B5AD]/20 to-[#0065B3]/20 backdrop-blur-sm rounded-xl border border-[#00B5AD]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Zap" className="h-5 w-5 text-[#00B5AD] mr-2" />
+                    <Icon name="Zap" className="h-4 w-4 md:h-5 md:w-5 text-[#00B5AD] mr-2" />
                     <span className="text-sm font-semibold text-white">PoE+</span>
                   </div>
                   <p className="text-xs text-white/80">380W мощности для питания устройств</p>
                 </div>
-                <div className="bg-gradient-to-br from-[#0065B3]/20 to-[#1A2980]/20 backdrop-blur-sm rounded-xl border border-[#0065B3]/20 p-4">
+                <div className="bg-gradient-to-br from-[#0065B3]/20 to-[#1A2980]/20 backdrop-blur-sm rounded-xl border border-[#0065B3]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Network" className="h-5 w-5 text-[#0065B3] mr-2" />
+                    <Icon name="Network" className="h-4 w-4 md:h-5 md:w-5 text-[#0065B3] mr-2" />
                     <span className="text-sm font-semibold text-white">L3</span>
                   </div>
                   <p className="text-xs text-white/80">Полная поддержка маршрутизации</p>
@@ -142,23 +143,23 @@ const ModelIDS3530_24P_6XComponent = () => {
             </div>
           </div>
 
-          {/* Enhanced Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-12 justify-center">
+          {/* Enhanced Action Buttons - Mobile Optimized */}
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-8 md:mt-12 justify-center px-4 sm:px-0">
             <Button
               size="lg"
-              className="bg-white text-[#1A2980] hover:bg-cyan-50 px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+              className="w-full sm:w-auto bg-white text-[#1A2980] hover:bg-gray-50 active:bg-gray-100 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
             >
               <Icon name="FileText" className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
-              Посмотреть документацию
+              <span className="text-sm md:text-base">Документация</span>
             </Button>
             <Button
               onClick={() => navigate("/partners")}
               variant="outline"
               size="lg"
-              className="bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] px-8 py-4 rounded-xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
+              className="w-full sm:w-auto bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] active:bg-white/90 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
             >
               <Icon name="ShoppingCart" className="h-5 w-5 mr-2" />
-              Запросить цену
+              <span className="text-sm md:text-base">Запросить цену</span>
             </Button>
           </div>
         </div>

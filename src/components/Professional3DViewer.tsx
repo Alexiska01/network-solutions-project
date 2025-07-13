@@ -3,6 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import LoadingOverlay from "./LoadingOverlay";
 import ViewerControls from "./ViewerControls";
+import MobileViewerControls from "./MobileViewerControls";
 import HotspotPanel from "./HotspotPanel";
 import FullscreenViewer from "./FullscreenViewer";
 import TechSpecsOverlay from "./TechSpecsOverlay";
@@ -111,25 +112,25 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
       <div className="relative">
         {/* Main 3D Viewer Container */}
         <div 
-          className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+          className="relative rounded-2xl md:rounded-2xl overflow-hidden shadow-2xl border border-white/10"
           style={{ background: backgrounds[background as keyof typeof backgrounds] }}
         >
           {/* Loading Overlay */}
           <LoadingOverlay isVisible={!modelLoaded} />
 
           {/* Top Controls */}
-          <div className="absolute top-4 right-4 z-30 flex gap-2">
+          <div className="absolute top-3 right-3 md:top-4 md:right-4 z-30 flex gap-2">
             <button
               onClick={() => setIsFullscreen(true)}
-              className="bg-black/20 backdrop-blur-md rounded-lg p-2 border border-white/10 text-white hover:bg-black/30 transition-all"
+              className="bg-black/20 backdrop-blur-md rounded-lg p-2 md:p-2 border border-white/10 text-white hover:bg-black/30 active:bg-black/40 transition-all"
               title="Полноэкранный режим"
             >
-              <Icon name="Maximize" size={18} />
+              <Icon name="Maximize" size={16} className="md:w-[18px] md:h-[18px]" />
             </button>
           </div>
 
           {/* 3D Model */}
-          <div className="aspect-[16/10] p-6">
+          <div className="aspect-[4/3] md:aspect-[16/10] p-4 md:p-6">
             <model-viewer
               ref={modelRef}
               src={modelPath}
@@ -160,27 +161,44 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
                   slot="hotspot"
                   data-position={hotspot.position}
                   data-normal="0m 1m 0m"
-                  className={`hotspot-button bg-gradient-to-r ${getHotspotColor(hotspot.type)} w-8 h-8 rounded-full border-2 border-white shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center`}
+                  className={`hotspot-button bg-gradient-to-r ${getHotspotColor(hotspot.type)} w-10 h-10 md:w-8 md:h-8 rounded-full border-2 border-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-200 flex items-center justify-center`}
                   onClick={() => setSelectedHotspot(selectedHotspot === hotspot.id ? null : hotspot.id)}
                 >
-                  <Icon name={getHotspotIcon(hotspot.type)} size={14} className="text-white" />
+                  <Icon name={getHotspotIcon(hotspot.type)} size={16} className="text-white md:w-[14px] md:h-[14px]" />
                 </button>
               ))}
             </model-viewer>
           </div>
 
           {/* Bottom Controls Panel */}
-          <ViewerControls
-            background={background}
-            cameraPreset={cameraPreset}
-            indicatorsOn={indicatorsOn}
-            modelLoaded={modelLoaded}
-            onCameraViewChange={setCameraView}
-            onBackgroundChange={setBackground}
-            onToggleIndicators={onToggleIndicators}
-            onTakeScreenshot={takeScreenshot}
-            onResetView={resetView}
-          />
+          <div className="hidden md:block">
+            <ViewerControls
+              background={background}
+              cameraPreset={cameraPreset}
+              indicatorsOn={indicatorsOn}
+              modelLoaded={modelLoaded}
+              onCameraViewChange={setCameraView}
+              onBackgroundChange={setBackground}
+              onToggleIndicators={onToggleIndicators}
+              onTakeScreenshot={takeScreenshot}
+              onResetView={resetView}
+            />
+          </div>
+          
+          {/* Mobile Controls */}
+          <div className="block md:hidden">
+            <MobileViewerControls
+              background={background}
+              cameraPreset={cameraPreset}
+              indicatorsOn={indicatorsOn}
+              modelLoaded={modelLoaded}
+              onCameraViewChange={setCameraView}
+              onBackgroundChange={setBackground}
+              onToggleIndicators={onToggleIndicators}
+              onTakeScreenshot={takeScreenshot}
+              onResetView={resetView}
+            />
+          </div>
         </div>
 
         {/* Hotspot Information Panel */}
