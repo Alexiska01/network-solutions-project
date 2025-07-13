@@ -308,12 +308,12 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
                   disabled={!modelLoaded}
                   className={`p-2 rounded-lg transition-all ${
                     indicatorsOn 
-                      ? 'bg-[#00B5AD] text-white' 
+                      ? 'bg-yellow-500 text-yellow-900 shadow-lg shadow-yellow-500/30' 
                       : getButtonColor(background, false)
                   } ${!modelLoaded ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  title="Переключить индикаторы"
+                  title={indicatorsOn ? "Выключить индикаторы" : "Включить индикаторы"}
                 >
-                  <Icon name="Lightbulb" size={16} />
+                  <Icon name={indicatorsOn ? "Lightbulb" : "LightbulbOff"} size={16} />
                 </button>
 
                 <button
@@ -525,12 +525,12 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
                     disabled={!modelLoaded}
                     className={`p-2 rounded-lg transition-all ${
                       indicatorsOn 
-                        ? 'bg-[#00B5AD] text-white' 
+                        ? 'bg-yellow-500 text-yellow-900 shadow-lg shadow-yellow-500/30' 
                         : 'bg-white/20 text-white hover:bg-white/30'
                     } ${!modelLoaded ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    title="Переключить индикаторы"
+                    title={indicatorsOn ? "Выключить индикаторы" : "Включить индикаторы"}
                   >
-                    <Icon name="Lightbulb" size={16} />
+                    <Icon name={indicatorsOn ? "Lightbulb" : "LightbulbOff"} size={16} />
                   </button>
                   
                   <button
