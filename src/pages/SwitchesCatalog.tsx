@@ -172,7 +172,7 @@ const SwitchesCatalog = () => {
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
                     <Icon 
-                      name="Building2" 
+                      name="Router" 
                       className="text-blue-600" 
                       style={{ 
                         width: '16px', 
@@ -193,7 +193,7 @@ const SwitchesCatalog = () => {
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
                     <Icon 
-                      name="Wifi" 
+                      name="Router" 
                       className="text-blue-500" 
                       style={{ 
                         width: '16px', 
@@ -214,7 +214,7 @@ const SwitchesCatalog = () => {
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
                     <Icon 
-                      name="GitBranch" 
+                      name="Router" 
                       className="text-indigo-600" 
                       style={{ 
                         width: '16px', 
@@ -235,7 +235,7 @@ const SwitchesCatalog = () => {
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
                     <Icon 
-                      name="Database" 
+                      name="Router" 
                       className="text-purple-600" 
                       style={{ 
                         width: '16px', 
@@ -256,7 +256,7 @@ const SwitchesCatalog = () => {
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
                     <Icon 
-                      name="TreePine" 
+                      name="Router" 
                       className="text-purple-500" 
                       style={{ 
                         width: '16px', 
@@ -277,7 +277,7 @@ const SwitchesCatalog = () => {
                 >
                   <div className="w-4 h-4 flex items-center justify-center">
                     <Icon 
-                      name="TreeDeciduous" 
+                      name="Router" 
                       className="text-emerald-600" 
                       style={{ 
                         width: '16px', 
@@ -350,10 +350,10 @@ const SwitchesCatalog = () => {
                 )}>
                   <div className={cn(
                     "bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg",
-                    isMobile ? "w-12 h-12" : "w-10 h-10 sm:w-12 sm:h-12 sm:rounded-2xl"
+"w-10 h-10"
                   )}>
                     <Icon 
-                      name="Building2" 
+                      name="Router" 
                       className="text-white !w-6 !h-6"
                       style={{ 
                         width: '24px !important', 
@@ -401,14 +401,14 @@ const SwitchesCatalog = () => {
                   )}>
                     <div className={cn(
                       "bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg flex items-center justify-center shadow-md",
-                      isMobile ? "w-8 h-8 rounded-xl" : "w-6 h-6 sm:w-8 sm:h-8 sm:rounded-xl"
+"w-8 h-8 rounded-xl"
                     )}>
                       <Icon 
-                        name="Wifi" 
+                        name="Router" 
                         className="text-white !w-6 !h-6"
                         style={{ 
-                          width: isMobile ? '16px' : '14px', 
-                          height: isMobile ? '16px' : '14px',
+                          width: '16px', 
+                          height: '16px',
                           minWidth: isMobile ? '16px' : '14px',
                           minHeight: isMobile ? '16px' : '14px',
                           maxWidth: isMobile ? '16px' : '14px',
@@ -462,10 +462,10 @@ const SwitchesCatalog = () => {
                   )}>
                     <div className={cn(
                       "bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center shadow-md",
-                      isMobile ? "w-8 h-8" : "w-8 h-8"
+"w-8 h-8"
                     )}>
                       <Icon 
-                        name="GitBranch" 
+                        name="Router" 
                         className="text-white !w-6 !h-6"
                         style={{ 
                           width: '16px', 
@@ -530,10 +530,10 @@ const SwitchesCatalog = () => {
                 )}>
                   <div className={cn(
                     "bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center shadow-lg",
-                    isMobile ? "w-12 h-12" : "w-12 h-12"
+"w-12 h-12"
                   )}>
                     <Icon 
-                      name="Database" 
+                      name="Router" 
                       className="text-white !w-6 !h-6"
                       style={{ 
                         width: '24px', 
@@ -580,10 +580,10 @@ const SwitchesCatalog = () => {
                   )}>
                     <div className={cn(
                       "bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center shadow-md",
-                      isMobile ? "w-8 h-8" : "w-8 h-8"
+"w-8 h-8"
                     )}>
                       <Icon 
-                        name="TreePine" 
+                        name="Router" 
                         className="text-white !w-6 !h-6"
                         style={{ 
                           width: '16px', 
@@ -639,10 +639,10 @@ const SwitchesCatalog = () => {
                   )}>
                     <div className={cn(
                       "bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-md",
-                      isMobile ? "w-8 h-8" : "w-8 h-8"
+"w-8 h-8"
                     )}>
                       <Icon
-                        name="TreeDeciduous"
+                        name="Router"
                         className="text-white !w-6 !h-6"
                         style={{ 
                           width: '16px', 
