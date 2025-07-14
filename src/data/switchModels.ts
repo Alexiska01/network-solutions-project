@@ -160,7 +160,7 @@ export const switchModels4530: SwitchModel[] = [
     poe: "760 Вт",
     layer3: true,
     category: "poe",
-    url: "/models/ids4530-24p-6x.html",
+    url: "/products/switches/ids4530/24p-6x",
     animationDelay: 0.2,
   },
   {
