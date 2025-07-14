@@ -67,10 +67,10 @@ const ModelIDS3530_24S_8T_6XComponent = () => {
     {
       title: "Питание и охлаждение",
       specs: [
-        { label: "Источник питания", value: ids3530_24s_8t_6x.power.input },
-        { label: "Потребление", value: ids3530_24s_8t_6x.power.consumption },
-        { label: "Вентиляция", value: ids3530_24s_8t_6x.physical.ventilation },
-        { label: "Шум", value: "< 40 дБ" },
+        { label: "Источник питания", value: ids3530_24s_8t_6x.powerCooling.powerSupply },
+        { label: "Потребление", value: ids3530_24s_8t_6x.powerCooling.consumption },
+        { label: "Напряжение", value: ids3530_24s_8t_6x.powerCooling.voltage },
+        { label: "Охлаждение", value: ids3530_24s_8t_6x.powerCooling.cooling },
       ]
     },
     {
