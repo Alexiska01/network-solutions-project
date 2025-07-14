@@ -221,13 +221,7 @@ export default function DeviceCard3730({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => {
-            if (model.name === "IDS3730-24T-6X") {
-              onNavigate("/products/switches/ids3730/3730-24t-6x");
-            } else {
-              onNavigate(model.url);
-            }
-          }}
+          onClick={() => onNavigate(model.url)}
           className="flex-1 min-w-0 text-sm lg:text-base py-2 sm:py-2.5"
         >
           Подробнее

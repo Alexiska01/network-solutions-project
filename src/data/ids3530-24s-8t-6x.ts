@@ -2,7 +2,7 @@ export const ids3530_24s_8t_6x = {
   model: "IDS3530-24S-8T-6X",
   name: "IDS3530-24S-8T-6X",
   description: "8×1000M Base-T, 24×SFP, 6×10G SFP+",
-  modelUrl: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb",
+  modelUrl: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24T.glb",
   
   // Характеристики
   characteristics: {
