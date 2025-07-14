@@ -17,6 +17,7 @@ const ModelIDS3530_48P_6X = lazy(() => import("./pages/ModelIDS3530_48P_6X"));
 const ModelIDS3530_48T_6X = lazy(() => import("./pages/ModelIDS3530_48T_6X"));
 const ModelIDS3530_24T_6X = lazy(() => import("./pages/ModelIDS3530_24T_6X"));
 const ModelIDS3530_24S_8T_6X = lazy(() => import("./pages/ModelIDS3530_24S_8T_6X"));
+const ModelIDS3730_24T_6X = lazy(() => import("@/components/ModelIDS3730_24T_6X"));
 const Partners = lazy(() => import("./pages/Partners"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
