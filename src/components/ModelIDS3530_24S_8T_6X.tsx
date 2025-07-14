@@ -44,8 +44,15 @@ const ModelIDS3530_24S_8T_6XComponent = () => {
         { label: "Пропускная способность", value: ids3530_24s_8t_6x.performance.throughput },
         { label: "Flash-память", value: ids3530_24s_8t_6x.performance.flash },
         { label: "ОЗУ", value: ids3530_24s_8t_6x.performance.ram },
+      ]
+    },
+    {
+      title: "Маршрутизация L3",
+      specs: [
         { label: "IPv4 маршрутов", value: ids3530_24s_8t_6x.performance.ipv4Routes },
         { label: "IPv6 маршрутов", value: ids3530_24s_8t_6x.performance.ipv6Routes },
+        { label: "Таблица MAC-адресов", value: "32K" },
+        { label: "VLAN", value: "4K" },
       ]
     },
     {
@@ -55,7 +62,15 @@ const ModelIDS3530_24S_8T_6XComponent = () => {
         { label: "Вес", value: ids3530_24s_8t_6x.physical.weight },
         { label: "Монтаж", value: ids3530_24s_8t_6x.physical.mounting },
         { label: "Корпус", value: ids3530_24s_8t_6x.physical.housing },
+      ]
+    },
+    {
+      title: "Питание и охлаждение",
+      specs: [
+        { label: "Источник питания", value: ids3530_24s_8t_6x.power.input },
+        { label: "Потребление", value: ids3530_24s_8t_6x.power.consumption },
         { label: "Вентиляция", value: ids3530_24s_8t_6x.physical.ventilation },
+        { label: "Шум", value: "< 40 дБ" },
       ]
     },
     {
@@ -64,9 +79,7 @@ const ModelIDS3530_24S_8T_6XComponent = () => {
         { label: "Рабочая температура", value: ids3530_24s_8t_6x.environment.operatingTemp },
         { label: "Температура хранения", value: ids3530_24s_8t_6x.environment.storageTemp },
         { label: "Влажность (рабочая)", value: ids3530_24s_8t_6x.environment.operatingHumidity },
-        { label: "Влажность (хранение)", value: ids3530_24s_8t_6x.environment.storageHumidity },
         { label: "Высота над уровнем моря", value: ids3530_24s_8t_6x.environment.altitude },
-        { label: "Антистатическая защита", value: ids3530_24s_8t_6x.environment.staticProtection },
       ]
     }
   ];
@@ -249,7 +262,7 @@ const ModelIDS3530_24S_8T_6XComponent = () => {
                   <div className="flex items-center mb-3 md:mb-6">
                     <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
                       <Icon 
-                        name={index === 0 ? "Network" : index === 1 ? "Gauge" : index === 2 ? "Box" : "Settings"} 
+                        name={index === 0 ? "Network" : index === 1 ? "Gauge" : index === 2 ? "Route" : index === 3 ? "Box" : index === 4 ? "Zap" : "Settings"} 
                         className="h-3 w-3 md:h-6 md:w-6 text-white" 
                       />
                     </div>
