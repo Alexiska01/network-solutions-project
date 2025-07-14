@@ -5,9 +5,6 @@ import { useModelViewer } from "@/hooks/useModelViewer";
 import Professional3DViewer from "@/components/Professional3DViewer";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SpecTable from "@/components/SpecTable";
-import FeatureCard from "@/components/FeatureCard";
-import DetailedSpecCard from "@/components/DetailedSpecCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,11 +20,10 @@ const ModelIDS3730_24T_6XComponent = () => {
   const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
     useModelViewer();
 
-
-
   return (
     <div className="min-h-screen">
       <Header />
+      
       {/* Breadcrumb */}
       <div className="bg-white/80 border-b border-gray-100 sticky top-0 z-20 backdrop-blur">
         <div className="max-w-7xl mx-auto py-3 px-3 xs:px-4 sm:px-6 lg:px-[35px]">
@@ -95,7 +91,7 @@ const ModelIDS3730_24T_6XComponent = () => {
               {ids373024t6xData.title}
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light max-w-3xl mx-auto px-4 sm:px-0">
-              Управляемый коммутатор уровня L3 с высокой производительностью
+              {ids373024t6xData.description}
             </p>
           </div>
 
@@ -121,7 +117,7 @@ const ModelIDS3730_24T_6XComponent = () => {
                 <div className="space-y-3 md:space-y-4">
                   {ids373024t6xData.basicSpecs.map((spec, index) => (
                     <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
-                      <span className="text-white/70 font-medium text-sm md:text-base">{spec.label}:</span>
+                      <span className="text-white/70 font-medium text-sm md:text-base">{spec.label}</span>
                       <span className="text-white font-semibold text-sm md:text-base">{spec.value}</span>
                     </div>
                   ))}
@@ -132,17 +128,17 @@ const ModelIDS3730_24T_6XComponent = () => {
               <div className="mt-4 md:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 <div className="bg-gradient-to-br from-[#00B5AD]/20 to-[#0065B3]/20 backdrop-blur-sm rounded-xl border border-[#00B5AD]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Network" className="h-4 w-4 md:h-5 md:w-5 text-[#00B5AD] mr-2" />
+                    <Icon name="Route" className="h-4 w-4 md:h-5 md:w-5 text-[#00B5AD] mr-2" />
                     <span className="text-sm font-semibold text-white">L3</span>
                   </div>
                   <p className="text-xs text-white/80">Полная поддержка маршрутизации</p>
                 </div>
                 <div className="bg-gradient-to-br from-[#0065B3]/20 to-[#1A2980]/20 backdrop-blur-sm rounded-xl border border-[#0065B3]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Gauge" className="h-4 w-4 md:h-5 md:w-5 text-[#0065B3] mr-2" />
-                    <span className="text-sm font-semibold text-white">168 Gbps</span>
+                    <Icon name="Battery" className="h-4 w-4 md:h-5 md:w-5 text-[#0065B3] mr-2" />
+                    <span className="text-sm font-semibold text-white">Dual PSU</span>
                   </div>
-                  <p className="text-xs text-white/80">Высокая производительность</p>
+                  <p className="text-xs text-white/80">Два слота для блоков питания</p>
                 </div>
               </div>
             </div>
@@ -202,7 +198,7 @@ const ModelIDS3730_24T_6XComponent = () => {
                 
                 <div className="p-3 md:p-8">
                   <div className="flex items-center mb-3 md:mb-6">
-                    <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
+                    <div className={`w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300`}>
                       <Icon 
                         name={specGroup.icon} 
                         className="h-3 w-3 md:h-6 md:w-6 text-white" 
@@ -214,13 +210,13 @@ const ModelIDS3730_24T_6XComponent = () => {
                   </div>
 
                   <div className="space-y-2 md:space-y-4">
-                    {specGroup.specs.slice(0, 5).map((spec, specIndex) => (
+                    {specGroup.specs.map((spec, specIndex) => (
                       <div 
                         key={specIndex} 
                         className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
                       >
                         <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">
-                          {spec.label}:
+                          {spec.label}
                         </span>
                         <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">
                           {spec.value}
@@ -324,6 +320,7 @@ const ModelIDS3730_24T_6XComponent = () => {
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );

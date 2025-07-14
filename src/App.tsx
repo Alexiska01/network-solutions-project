@@ -96,6 +96,10 @@ const App = () => {
                 element={<ModelIDS3530_24P_6X />}
               />
               <Route
+                path="/products/switches/ids3730/3730-24t-6x"
+                element={<ModelIDS3730_24T_6X />}
+              />
+              <Route
                 path="/products/switches/ids3530/24p-6x"
                 element={<ModelIDS3530_24P_6X />}
               />
