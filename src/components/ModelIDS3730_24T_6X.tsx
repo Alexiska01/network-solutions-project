@@ -2,10 +2,12 @@ import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { useNavigate, Link } from "react-router-dom";
 import { useModelViewer } from "@/hooks/useModelViewer";
-import { useEffect } from "react";
 import Professional3DViewer from "@/components/Professional3DViewer";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SpecTable from "@/components/SpecTable";
+import FeatureCard from "@/components/FeatureCard";
+import DetailedSpecCard from "@/components/DetailedSpecCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,23 +16,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { ids3730_24t_6x } from "@/data/ids3730-24t-6x";
+import { ids373024t6xData } from "@/data/ids3730-24t-6x-product";
 
 const ModelIDS3730_24T_6XComponent = () => {
   const navigate = useNavigate();
   const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
     useModelViewer();
-
-  // Настройки камеры специально для IDS3730
-  useEffect(() => {
-    if (modelViewerRef.current && modelLoaded) {
-      const modelViewer = modelViewerRef.current;
-      // Подходящие настройки камеры для IDS3730
-      modelViewer.cameraOrbit = "0deg 65deg 1.5m";
-      modelViewer.fieldOfView = "30deg";
-      modelViewer.jumpCameraToGoal();
-    }
-  }, [modelLoaded]);
 
   // 6 карточек спецификаций в том же порядке что и в ModelIDS3530_24P_6X
   const specGroups = [
@@ -172,7 +163,7 @@ const ModelIDS3730_24T_6XComponent = () => {
               <span className="text-xs md:text-sm font-medium text-white/80">Промышленный коммутатор L3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent leading-tight">
-              {ids3730_24t_6x.name}
+              {ids373024t6xData.title}
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light max-w-3xl mx-auto px-4 sm:px-0">
               Управляемый коммутатор уровня L3 с высокой производительностью
@@ -185,7 +176,7 @@ const ModelIDS3730_24T_6XComponent = () => {
             <div className="lg:col-span-3">
               <Professional3DViewer
                 modelRef={modelViewerRef}
-                modelPath={ids3730_24t_6x.modelUrl}
+                modelPath={ids373024t6xData.modelPath}
                 indicatorsOn={indicatorsOn}
                 onToggleIndicators={toggleIndicators}
               />
@@ -199,7 +190,7 @@ const ModelIDS3730_24T_6XComponent = () => {
                   Характеристики
                 </h3>
                 <div className="space-y-3 md:space-y-4">
-                  {basicSpecs.map((spec, index) => (
+                  {ids373024t6xData.basicSpecs.map((spec, index) => (
                     <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
                       <span className="text-white/70 font-medium text-sm md:text-base">{spec.label}:</span>
                       <span className="text-white font-semibold text-sm md:text-base">{spec.value}</span>
@@ -272,7 +263,7 @@ const ModelIDS3730_24T_6XComponent = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-            {specGroups.map((specGroup, index) => (
+            {ids373024t6xData.specGroups.map((specGroup, index) => (
               <div 
                 key={index} 
                 className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
@@ -284,7 +275,7 @@ const ModelIDS3730_24T_6XComponent = () => {
                   <div className="flex items-center mb-3 md:mb-6">
                     <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
                       <Icon 
-                        name={index === 0 ? "Network" : index === 1 ? "Gauge" : index === 2 ? "Route" : index === 3 ? "Box" : index === 4 ? "Zap" : "Settings"} 
+                        name={specGroup.icon} 
                         className="h-3 w-3 md:h-6 md:w-6 text-white" 
                       />
                     </div>
