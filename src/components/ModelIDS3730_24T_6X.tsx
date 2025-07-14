@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { useNavigate, Link } from "react-router-dom";
 import { useModelViewer } from "@/hooks/useModelViewer";
+import { useEffect } from "react";
 import Professional3DViewer from "@/components/Professional3DViewer";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -19,6 +20,17 @@ const ModelIDS3730_24T_6XComponent = () => {
   const navigate = useNavigate();
   const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
     useModelViewer();
+
+  // Настройки камеры специально для IDS3730
+  useEffect(() => {
+    if (modelViewerRef.current && modelLoaded) {
+      const modelViewer = modelViewerRef.current;
+      // Подходящие настройки камеры для IDS3730
+      modelViewer.cameraOrbit = "0deg 65deg 1.5m";
+      modelViewer.fieldOfView = "30deg";
+      modelViewer.jumpCameraToGoal();
+    }
+  }, [modelLoaded]);
 
   // 6 карточек спецификаций в том же порядке что и в ModelIDS3530_24P_6X
   const specGroups = [
