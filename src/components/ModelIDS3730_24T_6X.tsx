@@ -23,78 +23,7 @@ const ModelIDS3730_24T_6XComponent = () => {
   const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
     useModelViewer();
 
-  // 6 карточек спецификаций в том же порядке что и в ModelIDS3530_24P_6X
-  const specGroups = [
-    {
-      title: "Порты и интерфейсы",
-      icon: "Network",
-      specs: [
-        { label: "Ethernet-порты", value: ids3730_24t_6x.ports.ethernet },
-        { label: "SFP+ слоты", value: ids3730_24t_6x.ports.sfpPlus },
-        { label: "Консольный порт", value: ids3730_24t_6x.ports.console },
-        { label: "Управление", value: ids3730_24t_6x.ports.management },
-        { label: "Общее количество портов", value: "30 портов" },
-      ]
-    },
-    {
-      title: "Производительность",
-      icon: "Gauge",
-      specs: [
-        { label: "Коммутационная способность", value: ids3730_24t_6x.performance.switchingCapacity },
-        { label: "Пропускная способность", value: ids3730_24t_6x.performance.throughput },
-        { label: "Flash-память", value: ids3730_24t_6x.performance.flash },
-        { label: "ОЗУ", value: ids3730_24t_6x.performance.ram },
-      ]
-    },
-    {
-      title: "Маршрутизация L3",
-      icon: "Route",
-      specs: [
-        { label: "IPv4 маршрутов", value: ids3730_24t_6x.performance.ipv4Routes },
-        { label: "IPv6 маршрутов", value: ids3730_24t_6x.performance.ipv6Routes },
-        { label: "Поддержка VLAN", value: "4094 VLAN" },
-        { label: "Статическая маршрутизация", value: "Да" },
-      ]
-    },
-    {
-      title: "Физические характеристики",
-      icon: "Box",
-      specs: [
-        { label: "Размеры (Ш×Г×В)", value: ids3730_24t_6x.physical.dimensions },
-        { label: "Вес", value: ids3730_24t_6x.physical.weight },
-        { label: "Монтаж", value: ids3730_24t_6x.physical.mounting },
-        { label: "Корпус", value: ids3730_24t_6x.physical.housing },
-      ]
-    },
-    {
-      title: "Питание и охлаждение",
-      icon: "Zap",
-      specs: [
-        { label: "Источник питания", value: ids3730_24t_6x.powerCooling.powerSupply },
-        { label: "Потребление", value: ids3730_24t_6x.powerCooling.consumption },
-        { label: "Напряжение", value: ids3730_24t_6x.powerCooling.voltage },
-        { label: "Охлаждение", value: ids3730_24t_6x.powerCooling.cooling },
-      ]
-    },
-    {
-      title: "Условия эксплуатации",
-      icon: "Settings",
-      specs: [
-        { label: "Рабочая температура", value: ids3730_24t_6x.environment.operatingTemp },
-        { label: "Температура хранения", value: ids3730_24t_6x.environment.storageTemp },
-        { label: "Влажность (рабочая)", value: ids3730_24t_6x.environment.operatingHumidity },
-        { label: "Молниезащита", value: ids3730_24t_6x.environment.staticProtection },
-      ]
-    },
-  ];
 
-  const basicSpecs = [
-    { label: "Порты", value: ids3730_24t_6x.characteristics.ports },
-    { label: "Слоты", value: ids3730_24t_6x.characteristics.slots },
-    { label: "PoE", value: ids3730_24t_6x.characteristics.poe },
-    { label: "Производительность", value: ids3730_24t_6x.characteristics.performance },
-    { label: "Питание", value: ids3730_24t_6x.characteristics.power },
-  ];
 
   return (
     <div className="min-h-screen">
