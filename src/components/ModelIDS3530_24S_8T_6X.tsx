@@ -28,45 +28,29 @@ const ModelIDS3530_24S_8T_6XComponent = () => {
 
   const specGroups = [
     {
-      title: "Порты и интерфейсы",
+      title: "Комбинированные порты",
       specs: [
-        { label: "Ethernet-порты", value: ids3530_24s_8t_6x.ports.ethernet },
         { label: "SFP-слоты", value: ids3530_24s_8t_6x.ports.sfp },
+        { label: "Ethernet-порты", value: ids3530_24s_8t_6x.ports.ethernet },
         { label: "SFP+ слоты", value: ids3530_24s_8t_6x.ports.sfpPlus },
         { label: "Консольный порт", value: ids3530_24s_8t_6x.ports.console },
-        { label: "Управление", value: ids3530_24s_8t_6x.ports.management },
       ]
     },
     {
-      title: "Производительность",
+      title: "Производительность L3",
       specs: [
         { label: "Коммутационная способность", value: ids3530_24s_8t_6x.performance.switchingCapacity },
-        { label: "Пропускная способность", value: ids3530_24s_8t_6x.performance.throughput },
-        { label: "Flash-память", value: ids3530_24s_8t_6x.performance.flash },
-        { label: "ОЗУ", value: ids3530_24s_8t_6x.performance.ram },
         { label: "IPv4 маршрутов", value: ids3530_24s_8t_6x.performance.ipv4Routes },
         { label: "IPv6 маршрутов", value: ids3530_24s_8t_6x.performance.ipv6Routes },
+        { label: "ОЗУ", value: ids3530_24s_8t_6x.performance.ram },
       ]
     },
     {
-      title: "Физические характеристики",
+      title: "Компактный корпус",
       specs: [
         { label: "Размеры", value: ids3530_24s_8t_6x.physical.dimensions },
         { label: "Вес", value: ids3530_24s_8t_6x.physical.weight },
-        { label: "Монтаж", value: ids3530_24s_8t_6x.physical.mounting },
-        { label: "Корпус", value: ids3530_24s_8t_6x.physical.housing },
         { label: "Вентиляция", value: ids3530_24s_8t_6x.physical.ventilation },
-      ]
-    },
-    {
-      title: "Условия эксплуатации",
-      specs: [
-        { label: "Рабочая температура", value: ids3530_24s_8t_6x.environment.operatingTemp },
-        { label: "Температура хранения", value: ids3530_24s_8t_6x.environment.storageTemp },
-        { label: "Влажность (рабочая)", value: ids3530_24s_8t_6x.environment.operatingHumidity },
-        { label: "Влажность (хранение)", value: ids3530_24s_8t_6x.environment.storageHumidity },
-        { label: "Высота над уровнем моря", value: ids3530_24s_8t_6x.environment.altitude },
-        { label: "Антистатическая защита", value: ids3530_24s_8t_6x.environment.staticProtection },
       ]
     }
   ];
