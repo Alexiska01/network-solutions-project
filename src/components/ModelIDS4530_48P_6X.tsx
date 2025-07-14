@@ -198,155 +198,55 @@ const ModelIDS4530_48P_6XComponent = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-            {/* First Column */}
-            <div className="space-y-4 md:space-y-8">
-              {/* Ports Card */}
-              <div className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
+            {[
+              { spec: ids4530_48p_6x.specifications.ports, icon: "Network" },
+              { spec: ids4530_48p_6x.specifications.poe, icon: "Zap" },
+              { spec: ids4530_48p_6x.specifications.performance, icon: "Zap" },
+              { spec: ids4530_48p_6x.specifications.physical, icon: "Settings" },
+              { spec: ids4530_48p_6x.specifications.power, icon: "Shield" },
+              { spec: ids4530_48p_6x.specifications.environmental, icon: "Thermometer" }
+            ].map((specGroup, index) => (
+              <div 
+                key={index} 
+                className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+              >
+                {/* Card header gradient */}
                 <div className="h-1 bg-gradient-to-r from-[#1A2980] via-[#0065B3] to-[#00B5AD]" />
+                
                 <div className="p-3 md:p-8">
                   <div className="flex items-center mb-3 md:mb-6">
                     <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Network" className="h-3 w-3 md:h-6 md:w-6 text-white" />
+                      <Icon 
+                        name={specGroup.icon} 
+                        className="h-3 w-3 md:h-6 md:w-6 text-white" 
+                      />
                     </div>
                     <h3 className="text-base md:text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
-                      {ids4530_48p_6x.specifications.ports.title}
+                      {specGroup.spec.title}
                     </h3>
                   </div>
-                  <div className="space-y-2 md:space-y-4">
-                    {ids4530_48p_6x.specifications.ports.items.map((spec, index) => (
-                      <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200">
-                        <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">{spec.label}:</span>
-                        <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">{spec.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-cyan-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </div>
 
-              {/* Performance Card */}
-              <div className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                <div className="h-1 bg-gradient-to-r from-[#1A2980] via-[#0065B3] to-[#00B5AD]" />
-                <div className="p-3 md:p-8">
-                  <div className="flex items-center mb-3 md:mb-6">
-                    <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Zap" className="h-3 w-3 md:h-6 md:w-6 text-white" />
-                    </div>
-                    <h3 className="text-base md:text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
-                      {ids4530_48p_6x.specifications.performance.title}
-                    </h3>
-                  </div>
                   <div className="space-y-2 md:space-y-4">
-                    {ids4530_48p_6x.specifications.performance.items.map((spec, index) => (
-                      <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200">
-                        <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">{spec.label}:</span>
-                        <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">{spec.value}</span>
+                    {specGroup.spec.items.map((spec, specIndex) => (
+                      <div 
+                        key={specIndex} 
+                        className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
+                      >
+                        <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">
+                          {spec.label}:
+                        </span>
+                        <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">
+                          {spec.value}
+                        </span>
                       </div>
                     ))}
                   </div>
-                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-cyan-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </div>
 
-              {/* Power Card */}
-              <div className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                <div className="h-1 bg-gradient-to-r from-[#1A2980] via-[#0065B3] to-[#00B5AD]" />
-                <div className="p-3 md:p-8">
-                  <div className="flex items-center mb-3 md:mb-6">
-                    <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Shield" className="h-3 w-3 md:h-6 md:w-6 text-white" />
-                    </div>
-                    <h3 className="text-base md:text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
-                      {ids4530_48p_6x.specifications.power.title}
-                    </h3>
-                  </div>
-                  <div className="space-y-2 md:space-y-4">
-                    {ids4530_48p_6x.specifications.power.items.map((spec, index) => (
-                      <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200">
-                        <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">{spec.label}:</span>
-                        <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">{spec.value}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {/* Decorative element */}
                   <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-cyan-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-            </div>
-
-            {/* Second Column */}
-            <div className="space-y-4 md:space-y-8">
-              {/* PoE Card */}
-              <div className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                <div className="h-1 bg-gradient-to-r from-[#1A2980] via-[#0065B3] to-[#00B5AD]" />
-                <div className="p-3 md:p-8">
-                  <div className="flex items-center mb-3 md:mb-6">
-                    <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Zap" className="h-3 w-3 md:h-6 md:w-6 text-white" />
-                    </div>
-                    <h3 className="text-base md:text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
-                      {ids4530_48p_6x.specifications.poe.title}
-                    </h3>
-                  </div>
-                  <div className="space-y-2 md:space-y-4">
-                    {ids4530_48p_6x.specifications.poe.items.map((spec, index) => (
-                      <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200">
-                        <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">{spec.label}:</span>
-                        <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">{spec.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-cyan-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </div>
-
-              {/* Physical Card */}
-              <div className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                <div className="h-1 bg-gradient-to-r from-[#1A2980] via-[#0065B3] to-[#00B5AD]" />
-                <div className="p-3 md:p-8">
-                  <div className="flex items-center mb-3 md:mb-6">
-                    <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Settings" className="h-3 w-3 md:h-6 md:w-6 text-white" />
-                    </div>
-                    <h3 className="text-base md:text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
-                      {ids4530_48p_6x.specifications.physical.title}
-                    </h3>
-                  </div>
-                  <div className="space-y-2 md:space-y-4">
-                    {ids4530_48p_6x.specifications.physical.items.map((spec, index) => (
-                      <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200">
-                        <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">{spec.label}:</span>
-                        <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">{spec.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-cyan-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </div>
-
-              {/* Environmental Card */}
-              <div className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                <div className="h-1 bg-gradient-to-r from-[#1A2980] via-[#0065B3] to-[#00B5AD]" />
-                <div className="p-3 md:p-8">
-                  <div className="flex items-center mb-3 md:mb-6">
-                    <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Thermometer" className="h-3 w-3 md:h-6 md:w-6 text-white" />
-                    </div>
-                    <h3 className="text-base md:text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
-                      {ids4530_48p_6x.specifications.environmental.title}
-                    </h3>
-                  </div>
-                  <div className="space-y-2 md:space-y-4">
-                    {ids4530_48p_6x.specifications.environmental.items.map((spec, index) => (
-                      <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200">
-                        <span className="text-xs md:text-base text-gray-700 font-medium sm:flex-1 sm:pr-4 mb-0.5 sm:mb-0">{spec.label}:</span>
-                        <span className="text-xs md:text-base text-gray-900 font-semibold sm:text-right sm:flex-1 sm:max-w-xs">{spec.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-cyan-100 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Additional info cards */}
