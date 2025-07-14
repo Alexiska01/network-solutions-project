@@ -3,6 +3,8 @@ import Icon from "@/components/ui/icon";
 import { useNavigate, Link } from "react-router-dom";
 import { useModelViewer } from "@/hooks/useModelViewer";
 import Professional3DViewer from "@/components/Professional3DViewer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -93,6 +95,7 @@ const ModelIDS3730_24T_6XComponent = () => {
 
   return (
     <div className="min-h-screen">
+      <Header />
       {/* Breadcrumb */}
       <div className="bg-white/80 border-b border-gray-100 sticky top-0 z-20 backdrop-blur">
         <div className="max-w-7xl mx-auto py-3 px-3 xs:px-4 sm:px-6 lg:px-[35px]">
@@ -389,6 +392,7 @@ const ModelIDS3730_24T_6XComponent = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
