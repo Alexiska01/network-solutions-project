@@ -64,7 +64,7 @@ export const useModelPreloader = (): ModelPreloaderState => {
 
       console.log('🚀 Начинаю предзагрузку модели:', url);
 
-      // Создаем скрытый model-viewer
+      // Создаем скрытый model-viewer с агрессивными настройками
       const modelViewerHTML = `
         <model-viewer
           src="${url}"
@@ -73,6 +73,8 @@ export const useModelPreloader = (): ModelPreloaderState => {
           reveal="auto"
           auto-rotate="false"
           camera-controls="false"
+          preload="eager"
+          interaction-prompt="none"
           data-preload-url="${url}">
         </model-viewer>
       `;
@@ -84,11 +86,12 @@ export const useModelPreloader = (): ModelPreloaderState => {
       const modelViewer = tempContainer.querySelector('model-viewer');
 
       if (modelViewer) {
+        // Увеличиваем таймаут для больших моделей
         const timeout = setTimeout(() => {
-          console.warn('⏰ Таймаут предзагрузки модели:', url);
+          console.warn('⏰ Таймаут предзагрузки модели (30 сек):', url);
           cleanup();
-          resolve(); // Не блокируем интерфейс
-        }, 10000);
+          resolve(); // Не блокируем интерфейс даже при таймауте
+        }, 30000);
 
         const cleanup = () => {
           clearTimeout(timeout);
