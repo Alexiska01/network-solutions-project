@@ -44,7 +44,6 @@ const seriesData: SeriesData[] = [
 const InteractiveHero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const [carouselRotation, setCarouselRotation] = useState(0);
   const [textCarouselOffset, setTextCarouselOffset] = useState(0);
 
   useEffect(() => {
@@ -53,7 +52,6 @@ const InteractiveHero: React.FC = () => {
       
       setTimeout(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % seriesData.length);
-        setCarouselRotation(prev => prev - 120); // Поворот на 120 градусов (360/3)
         setTextCarouselOffset(prev => prev - 100); // Сдвиг текста на 100%
         setIsVisible(true);
       }, 150);
@@ -62,15 +60,7 @@ const InteractiveHero: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Определяем активную серию на основе поворота карусели
-  const getActiveSeriesIndex = () => {
-    const normalizedRotation = Math.abs(carouselRotation) % 360;
-    const step = normalizedRotation / 120;
-    return Math.round(step) % seriesData.length;
-  };
-
-  const activeSeriesIndex = getActiveSeriesIndex();
-  const activeSeries = seriesData[activeSeriesIndex];
+  const activeSeries = seriesData[currentIndex];
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -83,6 +73,62 @@ const InteractiveHero: React.FC = () => {
 
       {/* Сетка фона */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+
+      <style jsx>{`
+        @keyframes cylinderSpin {
+          0% { transform: rotateY(0deg); }
+          100% { transform: rotateY(360deg); }
+        }
+        
+        .cylinder-container {
+          animation: cylinderSpin 3s linear infinite;
+        }
+        
+        .cylinder-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          writing-mode: vertical-lr;
+          text-orientation: mixed;
+          font-size: 2rem;
+          font-weight: bold;
+          color: white;
+          text-shadow: 0 0 20px rgba(255,255,255,0.5);
+          z-index: 10;
+        }
+        
+        .cylinder-base {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 300px;
+          height: 20px;
+          background: linear-gradient(45deg, #4f46e5, #7c3aed);
+          border-radius: 50%;
+          box-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
+        }
+        
+        .cylinder-surface {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 300px;
+          height: 400px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(124, 58, 237, 0.3) 25%,
+            rgba(124, 58, 237, 0.5) 50%,
+            rgba(124, 58, 237, 0.3) 75%,
+            transparent
+          );
+          border-radius: 150px / 200px;
+          backdrop-filter: blur(10px);
+        }
+      `}</style>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
@@ -169,7 +215,7 @@ const InteractiveHero: React.FC = () => {
                     <div
                       key={index}
                       className={`h-2 w-8 rounded-full transition-all duration-500 ${
-                        index === activeSeriesIndex 
+                        index === currentIndex 
                           ? 'bg-gradient-to-r from-blue-400 to-purple-400 shadow-lg shadow-blue-500/50' 
                           : 'bg-white/20 hover:bg-white/30'
                       }`}
@@ -180,88 +226,51 @@ const InteractiveHero: React.FC = () => {
             </div>
           </div>
 
-          {/* Правая колонка с 3D-каруселью */}
+          {/* Правая колонка с цилиндрической 3D-каруселью */}
           <div className="relative h-[600px] lg:h-[800px] overflow-hidden">
             {/* Светящийся фон */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-emerald-500/20 rounded-3xl blur-3xl" />
             
-            {/* Внешний контейнер карусели */}
+            {/* Цилиндрическая карусель */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-full h-full">
-                {/* Карусель */}
-                <div 
-                  className="absolute inset-0 transition-transform duration-1000 ease-in-out"
-                  style={{
-                    transform: `rotateY(${carouselRotation}deg)`,
-                    transformStyle: 'preserve-3d'
-                  }}
-                >
-                  {seriesData.map((series, index) => {
-                    const angle = (index * 120) - 60; // Размещение по кругу: 0°, 120°, 240°
-                    const radius = 320; // Увеличенный радиус карусели
-                    const isActive = index === activeSeriesIndex;
-                    
-                    return (
-                      <div
-                        key={series.id}
-                        className="absolute w-80 h-80 lg:w-96 lg:h-96"
-                        style={{
-                          transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
-                          transformStyle: 'preserve-3d',
-                          left: '50%',
-                          top: '50%',
-                          marginLeft: '-160px', // Половина ширины для центровки
-                          marginTop: '-160px', // Половина высоты для центровки
-                        }}
-                      >
-                        <div 
-                          className={`w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden transition-all duration-1000 ${
-                            isActive ? 'shadow-2xl shadow-purple-500/30 scale-110' : 'shadow-xl'
-                          }`}
-                          style={{
-                            transform: `rotateY(${-angle}deg)`, // Компенсация поворота для правильного отображения
-                            backfaceVisibility: 'hidden'
-                          }}
-                        >
-                          {/* Светящийся градиент для активной модели */}
-                          {isActive && (
-                            <div className={`absolute inset-0 bg-gradient-to-br ${series.color} opacity-10 rounded-3xl`} />
-                          )}
-                          
-                          {/* Модель */}
-                          <model-viewer
-                            className="w-full h-full"
-                            src={series.modelUrl}
-                            alt={`3D модель ${series.title}`}
-                            auto-rotate
-                            auto-rotate-delay="0"
-                            rotation-per-second={isActive ? "90deg" : "60deg"}
-                            camera-controls
-                            background-color="transparent"
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              display: 'block'
-                            }}
-                          />
-                          
-                          {/* Лейбл серии */}
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <div className="bg-black/50 backdrop-blur-sm rounded-xl px-4 py-2 text-center">
-                              <div className="text-white font-semibold text-sm">
-                                {series.title}
-                              </div>
-                              <div className={`inline-flex items-center gap-1 bg-gradient-to-r ${series.color} text-white px-2 py-1 rounded-full text-xs font-medium mt-1`}>
-                                <Icon name="Star" size={10} />
-                                <span>{series.badge}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div className="cylinder-container relative w-full h-full">
+                  {/* Основание цилиндра */}
+                  <div className="cylinder-base" />
+                  
+                  {/* Боковая поверхность цилиндра */}
+                  <div className="cylinder-surface" />
+                  
+                  {/* Текст на боковой поверхности */}
+                  <div className="cylinder-text">
+                    <div className={`bg-gradient-to-r ${activeSeries.color} bg-clip-text text-transparent text-4xl font-bold tracking-wider`}>
+                      {activeSeries.id}
+                    </div>
+                    <div className="text-white/80 text-lg mt-2 font-medium">
+                      {activeSeries.badge}
+                    </div>
+                  </div>
+                  
+                  {/* Верхнее основание */}
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-80 h-6 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full opacity-80" />
+                  
+                  {/* Световые эффекты */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-transparent via-purple-500/10 to-transparent rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/10 to-transparent rounded-full" />
+                  
+                  {/* Дополнительные световые лучи */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-purple-400/5 to-transparent rounded-full animate-pulse" />
                 </div>
+              </div>
+            </div>
+            
+            {/* Индикатор прогресса вращения */}
+            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+              <div className="flex items-center gap-2 bg-black/30 backdrop-blur-sm rounded-full px-4 py-2">
+                <Icon name="RotateCw" size={16} className="text-white/60 animate-spin" />
+                <span className="text-white/80 text-sm font-medium">
+                  {activeSeries.id} • 360° за 3 сек
+                </span>
               </div>
             </div>
           </div>
