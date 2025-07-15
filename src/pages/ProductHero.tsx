@@ -32,19 +32,11 @@ const ProductHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [modelsPreloaded, setModelsPreloaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Сначала показываем интерфейс, затем предзагружаем модели
+  // Предзагрузка всех 3D моделей при монтировании компонента
   useEffect(() => {
-    console.log('ProductHero компонент загружен');
-    
-    // Сразу показываем интерфейс
-    setIsLoading(false);
-    
-    // Затем начинаем предзагрузку моделей в фоне
     const modelUrls = heroData.map(item => item.modelUrl);
-    console.log('Начинаем предзагрузку моделей:', modelUrls);
     
     preloadModels(modelUrls).then(() => {
       setModelsPreloaded(true);
@@ -82,20 +74,6 @@ const ProductHero = () => {
   }, [modelsPreloaded]);
 
   const currentData = heroData[currentIndex];
-
-  // Показываем loading только если что-то пошло не так
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-        <div className="text-center space-y-6">
-          <div className="w-16 h-16 mx-auto">
-            <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
-          </div>
-          <div className="text-white text-xl font-semibold">Загрузка...</div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">

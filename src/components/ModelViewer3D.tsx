@@ -41,19 +41,8 @@ export const preloadModel = async (src: string): Promise<void> => {
     const modelViewer = hiddenContainer.querySelector('model-viewer');
     
     if (modelViewer) {
-      let isCleanedUp = false;
       const cleanup = () => {
-        if (!isCleanedUp) {
-          try {
-            if (hiddenContainer.parentNode) {
-              hiddenContainer.parentNode.removeChild(hiddenContainer);
-            }
-          } catch (error) {
-            console.warn('Элемент уже удален:', error);
-          } finally {
-            isCleanedUp = true;
-          }
-        }
+        document.body.removeChild(hiddenContainer);
       };
       
       modelViewer.addEventListener('load', () => {
@@ -77,13 +66,7 @@ export const preloadModel = async (src: string): Promise<void> => {
         resolve(); // Не блокируем интерфейс
       }, 10000);
     } else {
-      try {
-        if (hiddenContainer.parentNode) {
-          hiddenContainer.parentNode.removeChild(hiddenContainer);
-        }
-      } catch (error) {
-        console.warn('Не удалось удалить hiddenContainer:', error);
-      }
+      document.body.removeChild(hiddenContainer);
       reject(new Error('Не удалось создать model-viewer'));
     }
   });
@@ -117,11 +100,8 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
           auto-rotate
           auto-rotate-delay="${wasPreloaded ? '0' : '500'}"
           rotation-per-second="30deg"
-          disable-tap
-          disable-pan
-          disable-zoom
-          interaction-policy="allow-when-focused"
-          style="width: 100%; height: 100%; background: transparent; border-radius: 1rem; --poster-color: transparent;"
+          camera-controls
+          style="width: 100%; height: 100%; background: transparent; border-radius: 1rem;"
           loading="eager"
           reveal="${wasPreloaded ? 'auto' : 'interaction'}"
           exposure="1.2"
@@ -184,7 +164,7 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full model-viewer-container"
+      className="w-full h-full"
     />
   );
 };
