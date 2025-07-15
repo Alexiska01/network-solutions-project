@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
-import ModelViewer3D, { preloadModels } from '@/components/ModelViewer3D';
 
 const heroData = [
   {
@@ -31,34 +30,13 @@ const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const [modelsPreloaded, setModelsPreloaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Сначала показываем интерфейс, затем предзагружаем модели
-  useEffect(() => {
-    console.log('ProductHero компонент загружен');
-    
-    // Сразу показываем интерфейс
-    setIsLoading(false);
-    
-    // Затем начинаем предзагрузку моделей в фоне
-    const modelUrls = heroData.map(item => item.modelUrl);
-    console.log('Начинаем предзагрузку моделей:', modelUrls);
-    
-    preloadModels(modelUrls).then(() => {
-      setModelsPreloaded(true);
-      console.log('Все 3D модели предзагружены и готовы к отображению');
-    }).catch((error) => {
-      console.error('Ошибка предзагрузки моделей:', error);
-      setModelsPreloaded(true); // Всё равно показываем интерфейс
-    });
-  }, []);
+  console.log('ProductHero рендерится');
 
-  // Автокарусель запускается только после предзагрузки моделей
   useEffect(() => {
-    if (!modelsPreloaded) return;
-
+    console.log('ProductHero useEffect сработал');
+    
     const startCarousel = () => {
       intervalRef.current = setInterval(() => {
         setIsVisible(false);
@@ -70,8 +48,7 @@ const ProductHero = () => {
       }, 5000);
     };
 
-    // Небольшая задержка для плавного запуска
-    const timeout = setTimeout(startCarousel, 1000);
+    const timeout = setTimeout(startCarousel, 2000);
 
     return () => {
       if (intervalRef.current) {
@@ -79,23 +56,9 @@ const ProductHero = () => {
       }
       clearTimeout(timeout);
     };
-  }, [modelsPreloaded]);
+  }, []);
 
   const currentData = heroData[currentIndex];
-
-  // Показываем loading только если что-то пошло не так
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-        <div className="text-center space-y-6">
-          <div className="w-16 h-16 mx-auto">
-            <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
-          </div>
-          <div className="text-white text-xl font-semibold">Загрузка...</div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
@@ -178,22 +141,28 @@ const ProductHero = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl" />
               
               <div className={`relative w-full h-full transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-                <ModelViewer3D 
-                  src={currentData.modelUrl}
-                  alt={currentData.title}
-                  isPreloaded={modelsPreloaded}
-                />
+                <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl border border-white/10 backdrop-blur-sm flex items-center justify-center">
+                  <div className="text-center space-y-6">
+                    <div className="w-32 h-32 mx-auto bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center">
+                      <Icon name="Router" size={64} className="text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-white mb-2">{currentData.title}</h3>
+                      <p className="text-blue-200">3D модель (тестовый режим)</p>
+                    </div>
+                  </div>
+                </div>
                 
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 border border-white/10">
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="text-white font-semibold">{currentData.title}</h3>
-                        <p className="text-slate-300 text-sm">3D модель • Автоповорот</p>
+                        <p className="text-slate-300 text-sm">Упрощенная версия</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                        <span className="text-green-400 text-sm">Готово</span>
+                        <span className="text-green-400 text-sm">Работает</span>
                       </div>
                     </div>
                   </div>
@@ -207,21 +176,10 @@ const ProductHero = () => {
 
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3">
-          {!modelsPreloaded ? (
-            <>
-              <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse" />
-              <span className="text-white text-sm">
-                Загрузка 3D моделей...
-              </span>
-            </>
-          ) : (
-            <>
-              <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
-              <span className="text-white text-sm">
-                Автосмена через 5 сек
-              </span>
-            </>
-          )}
+          <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
+          <span className="text-white text-sm">
+            Автосмена через 5 сек
+          </span>
         </div>
       </div>
     </div>

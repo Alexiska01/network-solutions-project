@@ -184,40 +184,8 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full"
-      style={{
-        // Скрываем все интерактивные элементы model-viewer
-        '--progress-bar-color': 'transparent',
-        '--progress-ring-color': 'transparent'
-      } as React.CSSProperties}
-    >
-      <style jsx>{`
-        :global(model-viewer) {
-          pointer-events: none !important;
-        }
-        :global(model-viewer .default-progress-mask) {
-          display: none !important;
-        }
-        :global(model-viewer .progress-bar) {
-          display: none !important;
-        }
-        :global(model-viewer .interaction-prompt) {
-          display: none !important;
-        }
-        :global(model-viewer .default-progress-bar) {
-          display: none !important;
-        }
-        :global(model-viewer button) {
-          display: none !important;
-        }
-        :global(model-viewer .hotspot) {
-          display: none !important;
-        }
-        :global(model-viewer .pan-target) {
-          display: none !important;
-        }
-      `}</style>
-    </div>
+      className="w-full h-full model-viewer-container"
+    />
   );
 };
 
