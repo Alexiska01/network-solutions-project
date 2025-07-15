@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
-import ModelViewer3D, { preloadModels } from '@/components/ModelViewer3D';
+import ModelViewer3D from '@/components/ModelViewer3D';
 
 const heroData = [
   {
@@ -31,26 +31,9 @@ const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const [modelsPreloaded, setModelsPreloaded] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Предзагрузка всех 3D моделей при монтировании компонента
   useEffect(() => {
-    const modelUrls = heroData.map(item => item.modelUrl);
-    
-    preloadModels(modelUrls).then(() => {
-      setModelsPreloaded(true);
-      console.log('Все 3D модели предзагружены и готовы к отображению');
-    }).catch((error) => {
-      console.error('Ошибка предзагрузки моделей:', error);
-      setModelsPreloaded(true); // Всё равно показываем интерфейс
-    });
-  }, []);
-
-  // Автокарусель запускается только после предзагрузки моделей
-  useEffect(() => {
-    if (!modelsPreloaded) return;
-
     const startCarousel = () => {
       intervalRef.current = setInterval(() => {
         setIsVisible(false);
@@ -62,16 +45,14 @@ const ProductHero = () => {
       }, 5000);
     };
 
-    // Небольшая задержка для плавного запуска
-    const timeout = setTimeout(startCarousel, 1000);
+    startCarousel();
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
-      clearTimeout(timeout);
     };
-  }, [modelsPreloaded]);
+  }, []);
 
   const currentData = heroData[currentIndex];
 
@@ -159,7 +140,6 @@ const ProductHero = () => {
                 <ModelViewer3D 
                   src={currentData.modelUrl}
                   alt={currentData.title}
-                  isPreloaded={modelsPreloaded}
                 />
                 
                 <div className="absolute bottom-6 left-6 right-6">
@@ -185,21 +165,10 @@ const ProductHero = () => {
 
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3">
-          {!modelsPreloaded ? (
-            <>
-              <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse" />
-              <span className="text-white text-sm">
-                Загрузка 3D моделей...
-              </span>
-            </>
-          ) : (
-            <>
-              <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
-              <span className="text-white text-sm">
-                Автосмена через 5 сек
-              </span>
-            </>
-          )}
+          <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
+          <span className="text-white text-sm">
+            Автосмена через 5 сек
+          </span>
         </div>
       </div>
     </div>
