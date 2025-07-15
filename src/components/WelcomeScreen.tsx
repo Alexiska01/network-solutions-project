@@ -18,15 +18,15 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
     setTimeout(() => setShowSubtitle(true), 2500);
     setTimeout(() => setShowLoader(true), 3000);
     
-    // Начинаем исчезновение на 8.5 секунде
+    // Начинаем исчезновение на 13.5 секунде
     setTimeout(() => {
       setFadeOut(true);
-    }, 8500);
+    }, 13500);
     
-    // Завершаем на 10 секунде
+    // Завершаем на 15 секунде
     setTimeout(() => {
       onComplete();
-    }, 10000);
+    }, 15000);
   }, [onComplete]);
 
   return (
