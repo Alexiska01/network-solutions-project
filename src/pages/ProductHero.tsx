@@ -9,21 +9,21 @@ const heroData = [
     id: 'IDS3530-24S',
     title: 'IDS3530-24S',
     description: 'Промышленный коммутатор 24 порта SFP+',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb',
     features: ['24x SFP+ 10G портов', 'Управляемый Layer 2/3', 'Резервирование питания']
   },
   {
     id: 'IDS3530-48T',
     title: 'IDS3530-48T',
     description: 'Промышленный коммутатор 48 портов Ethernet',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48T.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb',
     features: ['48x 10/100/1000 портов', 'Расширенная диагностика', 'Промышленное исполнение']
   },
   {
     id: 'IDS3530-48P',
     title: 'IDS3530-48P',
     description: 'Промышленный PoE+ коммутатор 48 портов',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48P.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb',
     features: ['48x PoE+ портов', 'До 30W на порт', 'Интеллектуальное управление питанием']
   }
 ];
