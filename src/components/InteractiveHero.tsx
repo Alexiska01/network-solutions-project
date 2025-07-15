@@ -47,7 +47,15 @@ const InteractiveHero: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const currentSeries = seriesData[currentIndex];
+  // Определяем активную серию на основе поворота карусели
+  const getActiveSeriesIndex = () => {
+    const normalizedRotation = Math.abs(carouselRotation) % 360;
+    const step = normalizedRotation / 120;
+    return Math.round(step) % seriesData.length;
+  };
+
+  const activeSeriesIndex = getActiveSeriesIndex();
+  const activeSeries = seriesData[activeSeriesIndex];
 
   return (
     <section className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center">
@@ -69,10 +77,10 @@ const InteractiveHero: React.FC = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
               <div className={`transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                  {currentSeries.title}
+                  {activeSeries.title}
                 </h2>
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  {currentSeries.description}
+                  {activeSeries.description}
                 </p>
               </div>
               
@@ -82,7 +90,7 @@ const InteractiveHero: React.FC = () => {
                   <div
                     key={index}
                     className={`h-2 w-8 rounded-full transition-colors duration-300 ${
-                      index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
+                      index === activeSeriesIndex ? 'bg-blue-600' : 'bg-gray-300'
                     }`}
                   />
                 ))}
