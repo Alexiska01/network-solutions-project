@@ -3,6 +3,7 @@ import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
 import { useModelPreloader } from '@/hooks/useModelPreloader';
+import WelcomeScreen from '@/components/WelcomeScreen';
 
 const heroData = [
   {
@@ -32,6 +33,7 @@ const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { isModelReady, preloadModels } = useModelPreloader();
 
@@ -66,6 +68,10 @@ const ProductHero = () => {
   }, []);
 
   const currentData = heroData[currentIndex];
+
+  if (showWelcome) {
+    return <WelcomeScreen onComplete={() => setShowWelcome(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
