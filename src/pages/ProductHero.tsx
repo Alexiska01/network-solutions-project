@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft } from 'lucide-react';
+import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
-import '@google/model-viewer';
 
-// Данные для карусели
 const heroData = [
   {
     id: 'IDS3530-24S',
@@ -34,7 +32,6 @@ const ProductHero = () => {
   const [isVisible, setIsVisible] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Автоматическое переключение каждые 5 секунд
   useEffect(() => {
     const startCarousel = () => {
       intervalRef.current = setInterval(() => {
@@ -43,7 +40,7 @@ const ProductHero = () => {
         setTimeout(() => {
           setCurrentIndex((prev) => (prev + 1) % heroData.length);
           setIsVisible(true);
-        }, 300); // Время затухания
+        }, 300);
       }, 5000);
     };
 
@@ -60,30 +57,25 @@ const ProductHero = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
-      {/* Фоновые эффекты */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-blue-400/10 via-transparent to-transparent rounded-full" />
       </div>
 
-      {/* Кнопка возврата */}
       <button
         onClick={() => navigate('/')}
         className="absolute top-8 left-8 z-20 flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg text-white hover:bg-white/20 transition-all duration-300 group"
       >
-        <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+        <Icon name="ChevronLeft" size={20} className="group-hover:-translate-x-1 transition-transform" />
         <span>Назад</span>
       </button>
 
-      {/* Основной контент */}
       <div className="relative z-10 min-h-screen flex items-center">
         <div className="w-full max-w-7xl mx-auto px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             
-            {/* Левая колонка - Текст */}
             <div className="space-y-8">
-              {/* Статичный заголовок */}
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 backdrop-blur-sm rounded-full text-blue-200 text-sm font-medium">
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
@@ -102,7 +94,6 @@ const ProductHero = () => {
                 </p>
               </div>
 
-              {/* Динамический контент */}
               <div className={`space-y-6 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <div className="space-y-4">
                   <h2 className="text-3xl font-bold text-white">
@@ -123,7 +114,6 @@ const ProductHero = () => {
                   </div>
                 </div>
 
-                {/* Индикаторы прогресса */}
                 <div className="flex items-center gap-4">
                   {heroData.map((_, index) => (
                     <div
@@ -142,34 +132,31 @@ const ProductHero = () => {
               </div>
             </div>
 
-            {/* Правая колонка - 3D Модель */}
             <div className="relative h-[600px] lg:h-[700px]">
-              {/* Светящийся фон для модели */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl" />
               
-              {/* Контейнер для модели */}
               <div className={`relative w-full h-full transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-                <model-viewer
-                  src={currentData.modelUrl}
-                  alt={currentData.title}
-                  auto-rotate
-                  auto-rotate-delay="0"
-                  rotation-per-second="30deg"
-                  camera-controls
-                  disable-zoom
-                  style={{
+                {React.createElement('model-viewer', {
+                  src: currentData.modelUrl,
+                  alt: currentData.title,
+                  'auto-rotate': true,
+                  'auto-rotate-delay': '0',
+                  'rotation-per-second': '30deg',
+                  'camera-controls': true,
+                  'disable-zoom': true,
+                  style: {
                     width: '100%',
                     height: '100%',
-                    background: 'transparent'
-                  }}
-                  loading="eager"
-                  reveal="auto"
-                  exposure="1.2"
-                  shadow-intensity="0.3"
-                  environment-image="neutral"
-                />
+                    background: 'transparent',
+                    borderRadius: '1rem'
+                  },
+                  loading: 'eager',
+                  reveal: 'auto',
+                  exposure: '1.2',
+                  'shadow-intensity': '0.3',
+                  'environment-image': 'neutral'
+                } as any)}
                 
-                {/* Overlay с информацией о модели */}
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 border border-white/10">
                     <div className="flex items-center justify-between">
@@ -179,7 +166,7 @@ const ProductHero = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                        <span className="text-green-400 text-sm">Загружено</span>
+                        <span className="text-green-400 text-sm">Готово</span>
                       </div>
                     </div>
                   </div>
@@ -191,7 +178,6 @@ const ProductHero = () => {
         </div>
       </div>
 
-      {/* Нижний индикатор времени */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3">
           <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
