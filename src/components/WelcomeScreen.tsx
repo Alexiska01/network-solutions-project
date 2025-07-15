@@ -97,10 +97,10 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         <div className={`transition-all duration-1000 delay-1500 ${
           stage >= 3 ? 'opacity-100' : 'opacity-0'
         }`}>
-          <div className="flex items-center justify-center space-y-4">
+          <div className="flex flex-col items-center justify-center space-y-4">
             <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
+            <p className="text-slate-400 text-sm">Загрузка системы...</p>
           </div>
-          <p className="text-slate-400 text-sm mt-4">Загрузка системы...</p>
         </div>
       </div>
     </div>
