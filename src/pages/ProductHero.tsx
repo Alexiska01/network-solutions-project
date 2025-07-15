@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
-import ModelViewer3D, { preloadModels, isModelReady } from '@/components/ModelViewer3D';
+import ModelViewer3D, { preloadModels } from '@/components/ModelViewer3D';
 
 const heroData = [
   {
@@ -32,26 +32,33 @@ const ProductHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [modelsPreloaded, setModelsPreloaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Запускаем предзагрузку моделей сразу при монтировании
+  // Сначала показываем интерфейс, затем предзагружаем модели
   useEffect(() => {
-    console.log('🚀 ProductHero: начинаем агрессивную предзагрузку моделей');
+    console.log('ProductHero компонент загружен');
     
+    // Сразу показываем интерфейс
+    setIsLoading(false);
+    
+    // Затем начинаем предзагрузку моделей в фоне
     const modelUrls = heroData.map(item => item.modelUrl);
+    console.log('Начинаем предзагрузку моделей:', modelUrls);
     
-    // Запускаем предзагрузку немедленно
     preloadModels(modelUrls).then(() => {
       setModelsPreloaded(true);
-      console.log('🎉 Все 3D модели готовы к мгновенному показу');
+      console.log('Все 3D модели предзагружены и готовы к отображению');
     }).catch((error) => {
-      console.error('❌ Ошибка предзагрузки моделей:', error);
-      setModelsPreloaded(true); // Всё равно запускаем карусель
+      console.error('Ошибка предзагрузки моделей:', error);
+      setModelsPreloaded(true); // Всё равно показываем интерфейс
     });
   }, []);
 
-  // Автокарусель запускается сразу, не дожидаясь предзагрузки
+  // Автокарусель запускается только после предзагрузки моделей
   useEffect(() => {
+    if (!modelsPreloaded) return;
+
     const startCarousel = () => {
       intervalRef.current = setInterval(() => {
         setIsVisible(false);
@@ -60,11 +67,11 @@ const ProductHero = () => {
           setCurrentIndex((prev) => (prev + 1) % heroData.length);
           setIsVisible(true);
         }, 300);
-      }, 6000); // Увеличил время для лучшего просмотра
+      }, 5000);
     };
 
-    // Запускаем карусель через небольшую задержку
-    const timeout = setTimeout(startCarousel, 2000);
+    // Небольшая задержка для плавного запуска
+    const timeout = setTimeout(startCarousel, 1000);
 
     return () => {
       if (intervalRef.current) {
@@ -72,10 +79,23 @@ const ProductHero = () => {
       }
       clearTimeout(timeout);
     };
-  }, []); // Убрал зависимость от modelsPreloaded
+  }, [modelsPreloaded]);
 
   const currentData = heroData[currentIndex];
-  const currentModelReady = isModelReady(currentData.modelUrl);
+
+  // Показываем loading только если что-то пошло не так
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center space-y-6">
+          <div className="w-16 h-16 mx-auto">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
+          </div>
+          <div className="text-white text-xl font-semibold">Загрузка...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
@@ -161,7 +181,7 @@ const ProductHero = () => {
                 <ModelViewer3D 
                   src={currentData.modelUrl}
                   alt={currentData.title}
-                  isPreloaded={currentModelReady}
+                  isPreloaded={modelsPreloaded}
                 />
                 
                 <div className="absolute bottom-6 left-6 right-6">
@@ -169,19 +189,11 @@ const ProductHero = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="text-white font-semibold">{currentData.title}</h3>
-                        <p className="text-slate-300 text-sm">
-                          3D модель • {currentModelReady ? 'Готова' : 'Загружается...'}
-                        </p>
+                        <p className="text-slate-300 text-sm">3D модель • Автоповорот</p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full animate-pulse ${
-                          currentModelReady ? 'bg-green-400' : 'bg-yellow-400'
-                        }`} />
-                        <span className={`text-sm ${
-                          currentModelReady ? 'text-green-400' : 'text-yellow-400'
-                        }`}>
-                          {currentModelReady ? 'Готово' : 'Загрузка'}
-                        </span>
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                        <span className="text-green-400 text-sm">Готово</span>
                       </div>
                     </div>
                   </div>
@@ -199,14 +211,14 @@ const ProductHero = () => {
             <>
               <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse" />
               <span className="text-white text-sm">
-                Предзагрузка моделей...
+                Загрузка 3D моделей...
               </span>
             </>
           ) : (
             <>
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
               <span className="text-white text-sm">
-                Автосмена через 6 сек
+                Автосмена через 5 сек
               </span>
             </>
           )}
