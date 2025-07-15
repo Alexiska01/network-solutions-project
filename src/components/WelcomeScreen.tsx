@@ -36,7 +36,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   }, [onComplete]);
 
   return (
-    <div className={`fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center transition-all duration-1500 ${
+    <div className={`fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center transition-opacity duration-1500 ${
       isVisible ? 'opacity-100' : 'opacity-0'
     }`}>
       {/* Фоновые эффекты */}
@@ -64,8 +64,8 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
 
       <div className="relative z-10 text-center space-y-8 max-w-2xl mx-auto px-8">
         {/* Логотип */}
-        <div className={`transition-all duration-1000 ${
-          stage >= 1 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'
+        <div className={`transition-opacity duration-1000 ${
+          stage >= 1 ? 'opacity-100' : 'opacity-0'
         }`}>
           <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl">
             <div className="text-white text-4xl font-bold">iD</div>
@@ -73,8 +73,8 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         </div>
 
         {/* Основной текст */}
-        <div className={`transition-all duration-1000 delay-500 ${
-          stage >= 2 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'
+        <div className={`transition-opacity duration-1000 delay-500 ${
+          stage >= 2 ? 'opacity-100' : 'opacity-0'
         }`}>
           <h1 className="text-5xl lg:text-6xl font-bold text-white mb-4">
             Добро пожаловать в
@@ -85,8 +85,8 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         </div>
 
         {/* Подзаголовок */}
-        <div className={`transition-all duration-1000 delay-1000 ${
-          stage >= 3 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'
+        <div className={`transition-opacity duration-1000 delay-1000 ${
+          stage >= 3 ? 'opacity-100' : 'opacity-0'
         }`}>
           <p className="text-xl text-slate-300 leading-relaxed mb-12">
             Промышленные сетевые решения нового поколения
@@ -94,7 +94,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         </div>
 
         {/* Стрелочка загрузки - появляется после всех текстов и крутится до конца */}
-        <div className={`transition-all duration-1000 delay-1500 ${
+        <div className={`transition-opacity duration-1000 delay-1500 ${
           stage >= 3 ? 'opacity-100' : 'opacity-0'
         }`}>
           <div className="flex flex-col items-center justify-center space-y-4">
