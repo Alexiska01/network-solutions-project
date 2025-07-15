@@ -12,14 +12,19 @@ const SeriesCatalog3530 = lazy(() => import("./pages/SeriesCatalog3530"));
 const SeriesCatalog4530 = lazy(() => import("./pages/SeriesCatalog4530"));
 const SeriesCatalog6010 = lazy(() => import("./pages/SeriesCatalog6010"));
 const SwitchesCatalog = lazy(() => import("./pages/SwitchesCatalog"));
-const ModelIDS3530_24P_6X = lazy(() => import("./pages/ModelIDS3530_24P_6X"));
-const ModelIDS3530_48P_6X = lazy(() => import("./pages/ModelIDS3530_48P_6X"));
-const ModelIDS3530_48T_6X = lazy(() => import("./pages/ModelIDS3530_48T_6X"));
-const ModelIDS3530_24T_6X = lazy(() => import("./pages/ModelIDS3530_24T_6X"));
-const ModelIDS3530_24S_8T_6X = lazy(() => import("./pages/ModelIDS3530_24S_8T_6X"));
-const ModelIDS4530_48P_6X = lazy(() => import("./pages/ModelIDS4530_48P_6X"));
-const ModelIDS4530_48T_6X = lazy(() => import("./pages/ModelIDS4530_48T_6X"));
-const ModelIDS4530_24P_6X = lazy(() => import("./pages/ModelIDS4530_24P_6X"));
+const ModelIDS3530_24P_6X = lazy(() => import("./pages/3530/ModelIDS3530_24P_6X"));
+const ModelIDS3530_48P_6X = lazy(() => import("./pages/3530/ModelIDS3530_48P_6X"));
+const ModelIDS3530_48T_6X = lazy(() => import("./pages/3530/ModelIDS3530_48T_6X"));
+const ModelIDS3530_24T_6X = lazy(() => import("./pages/3530/ModelIDS3530_24T_6X"));
+const ModelIDS3530_24S_8T_6X = lazy(() => import("./pages/3530/ModelIDS3530_24S_8T_6X"));
+const ModelIDS4530_48P_6X = lazy(() => import("./pages/4530/ModelIDS4530_48P_6X"));
+const ModelIDS4530_48T_6X = lazy(() => import("./pages/4530/ModelIDS4530_48T_6X"));
+const ModelIDS4530_24P_6X = lazy(() => import("./pages/4530/ModelIDS4530_24P_6X"));
+const ModelIDS4530_24T_6X = lazy(() => import("./pages/4530/ModelIDS4530_24T_6X"));
+const ModelIDS4530_24S_4X = lazy(() => import("./pages/4530/ModelIDS4530_24S_4X"));
+const ModelIDS4530_48S_4X = lazy(() => import("./pages/4530/ModelIDS4530_48S_4X"));
+const ModelIDS3730_24T_6X = lazy(() => import("./pages/ModelIDS3730_24T_6X"));
+const ModelIDS3730_24P_6X = lazy(() => import("./pages/ModelIDS3730_24P_6X"));
 const Partners = lazy(() => import("./pages/Partners"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -129,6 +134,26 @@ const App = () => {
               <Route
                 path="/products/switches/ids4530/24p-6x"
                 element={<ModelIDS4530_24P_6X />}
+              />
+              <Route
+                path="/products/switches/ids4530/24t-6x"
+                element={<ModelIDS4530_24T_6X />}
+              />
+              <Route
+                path="/products/switches/ids4530/24s-4x"
+                element={<ModelIDS4530_24S_4X />}
+              />
+              <Route
+                path="/products/switches/ids4530/48s-4x"
+                element={<ModelIDS4530_48S_4X />}
+              />
+              <Route
+                path="/products/switches/ids3730/24t-6x"
+                element={<ModelIDS3730_24T_6X />}
+              />
+              <Route
+                path="/products/switches/ids3730/24p-6x"
+                element={<ModelIDS3730_24P_6X />}
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="/switches" element={<SwitchesCatalog />} />

@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ModelIDS3530_24S_8T_6XComponent from "@/components/ModelIDS3530_24S_8T_6X";
+import ModelIDS3530_24S_8T_6XComponent from "@/components/3530/ModelIDS3530_24S_8T_6X";
 
 const ModelIDS3530_24S_8T_6X = () => {
   return (

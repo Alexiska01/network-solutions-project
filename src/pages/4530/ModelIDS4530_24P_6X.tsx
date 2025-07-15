@@ -1,15 +1,15 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ModelIDS4530_48T_6XComponent from "@/components/ModelIDS4530_48T_6X";
+import ModelIDS4530_24P_6XComponent from "@/components/4530/ModelIDS4530_24P_6X";
 
-const ModelIDS4530_48T_6X = () => {
+const ModelIDS4530_24P_6X = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <ModelIDS4530_48T_6XComponent />
+      <ModelIDS4530_24P_6XComponent />
       <Footer />
     </div>
   );
 };
 
-export default ModelIDS4530_48T_6X;
+export default ModelIDS4530_24P_6X;

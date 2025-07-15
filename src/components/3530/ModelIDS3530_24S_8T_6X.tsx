@@ -11,7 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { ids3530_24s_8t_6x } from "@/data/ids3530-24s-8t-6x";
+import { ids3530_24s_8t_6x } from "@/data/3530/ids3530-24s-8t-6x";
 
 const ModelIDS3530_24S_8T_6XComponent = () => {
   const navigate = useNavigate();

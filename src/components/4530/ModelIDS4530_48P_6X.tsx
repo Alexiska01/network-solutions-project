@@ -3,9 +3,6 @@ import Icon from "@/components/ui/icon";
 import { useNavigate, Link } from "react-router-dom";
 import { useModelViewer } from "@/hooks/useModelViewer";
 import Professional3DViewer from "@/components/Professional3DViewer";
-import SpecTable from "@/components/SpecTable";
-import FeatureCard from "@/components/FeatureCard";
-import DetailedSpecCard from "@/components/DetailedSpecCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,9 +11,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { ids353048t6xData } from "@/data/ids3530-48t-6x";
+import { ids4530_48p_6x } from "@/data/4530/ids4530-48p-6x";
 
-const ModelIDS3530_48T_6XComponent = () => {
+const ModelIDS4530_48P_6XComponent = () => {
   const navigate = useNavigate();
   const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
     useModelViewer();
@@ -48,12 +45,12 @@ const ModelIDS3530_48T_6XComponent = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/products/switches/ids3530">IDS3530</Link>
+                  <Link to="/products/switches/ids4530">IDS4530</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>IDS3530-48T-6X</BreadcrumbPage>
+                <BreadcrumbPage>IDS4530-48P-6X</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -72,7 +69,7 @@ const ModelIDS3530_48T_6XComponent = () => {
         <div className="absolute top-6 left-6 z-30">
           <Button
             variant="ghost"
-            onClick={() => navigate("/products/switches/ids3530")}
+            onClick={() => navigate("/products/switches/ids4530")}
             className="bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-white/20 text-white hover:text-white p-3 rounded-xl transition-all duration-300 hover:scale-105"
           >
             <Icon name="ChevronLeft" className="h-5 w-5" />
@@ -87,10 +84,10 @@ const ModelIDS3530_48T_6XComponent = () => {
               <span className="text-xs md:text-sm font-medium text-white/80">Промышленный коммутатор L3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent leading-tight">
-              {ids353048t6xData.title}
+              IDS4530-48P-6X
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light max-w-3xl mx-auto px-4 sm:px-0">
-              Управляемый коммутатор уровня L3 без PoE с высокой производительностью
+              Управляемый коммутатор уровня L3 с 48 портами PoE+ и высокой производительностью
             </p>
           </div>
 
@@ -100,7 +97,7 @@ const ModelIDS3530_48T_6XComponent = () => {
             <div className="lg:col-span-3">
               <Professional3DViewer
                 modelRef={modelViewerRef}
-                modelPath={ids353048t6xData.modelPath}
+                modelPath={ids4530_48p_6x.modelUrl}
                 indicatorsOn={indicatorsOn}
                 onToggleIndicators={toggleIndicators}
               />
@@ -114,12 +111,26 @@ const ModelIDS3530_48T_6XComponent = () => {
                   Характеристики
                 </h3>
                 <div className="space-y-3 md:space-y-4">
-                  {ids353048t6xData.basicSpecs.map((spec, index) => (
-                    <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
-                      <span className="text-white/70 font-medium text-sm md:text-base">{spec.label}:</span>
-                      <span className="text-white font-semibold text-sm md:text-base">{spec.value}</span>
-                    </div>
-                  ))}
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
+                    <span className="text-white/70 font-medium text-sm md:text-base">Порты:</span>
+                    <span className="text-white font-semibold text-sm md:text-base">48×1000M Base-T</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
+                    <span className="text-white/70 font-medium text-sm md:text-base">Слоты:</span>
+                    <span className="text-white font-semibold text-sm md:text-base">6×10G SFP+</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
+                    <span className="text-white/70 font-medium text-sm md:text-base">Мощность PoE:</span>
+                    <span className="text-white font-semibold text-sm md:text-base">380Вт / 720Вт / 1440Вт</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
+                    <span className="text-white/70 font-medium text-sm md:text-base">Пропускная способность:</span>
+                    <span className="text-white font-semibold text-sm md:text-base">496 Гбит/сек</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
+                    <span className="text-white/70 font-medium text-sm md:text-base">Монтаж:</span>
+                    <span className="text-white font-semibold text-sm md:text-base">19\" стойка, 1U</span>
+                  </div>
                 </div>
               </div>
 
@@ -127,17 +138,17 @@ const ModelIDS3530_48T_6XComponent = () => {
               <div className="mt-4 md:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 <div className="bg-gradient-to-br from-[#00B5AD]/20 to-[#0065B3]/20 backdrop-blur-sm rounded-xl border border-[#00B5AD]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Network" className="h-4 w-4 md:h-5 md:w-5 text-[#00B5AD] mr-2" />
-                    <span className="text-sm font-semibold text-white">10G SFP+</span>
+                    <Icon name="Zap" className="h-4 w-4 md:h-5 md:w-5 text-[#00B5AD] mr-2" />
+                    <span className="text-sm font-semibold text-white">PoE+</span>
                   </div>
-                  <p className="text-xs text-white/80">6 высокоскоростных портов</p>
+                  <p className="text-xs text-white/80">До 1440Вт мощности для питания устройств</p>
                 </div>
                 <div className="bg-gradient-to-br from-[#0065B3]/20 to-[#1A2980]/20 backdrop-blur-sm rounded-xl border border-[#0065B3]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Cpu" className="h-4 w-4 md:h-5 md:w-5 text-[#0065B3] mr-2" />
-                    <span className="text-sm font-semibold text-white">Dual PSU</span>
+                    <Icon name="Network" className="h-4 w-4 md:h-5 md:w-5 text-[#0065B3] mr-2" />
+                    <span className="text-sm font-semibold text-white">L3</span>
                   </div>
-                  <p className="text-xs text-white/80">Двойное резервирование питания</p>
+                  <p className="text-xs text-white/80">Полная поддержка маршрутизации</p>
                 </div>
               </div>
             </div>
@@ -165,8 +176,6 @@ const ModelIDS3530_48T_6XComponent = () => {
         </div>
       </section>
 
-
-
       {/* Enhanced Technical Specifications */}
       <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-cyan-50/30 relative overflow-hidden">
         {/* Background decoration */}
@@ -184,12 +193,19 @@ const ModelIDS3530_48T_6XComponent = () => {
               Технические характеристики
             </h2>
             <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto px-4">
-              Детальная информация обо всех параметрах и возможностях коммутатора IDS3530-48T-6X
+              Детальная информация обо всех параметрах и возможностях коммутатора IDS4530-48P-6X
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-            {ids353048t6xData.specGroups.map((specGroup, index) => (
+            {[
+              { spec: ids4530_48p_6x.specifications.ports, icon: "Network" },
+              { spec: ids4530_48p_6x.specifications.poe, icon: "Zap" },
+              { spec: ids4530_48p_6x.specifications.performance, icon: "Zap" },
+              { spec: ids4530_48p_6x.specifications.physical, icon: "Settings" },
+              { spec: ids4530_48p_6x.specifications.power, icon: "Shield" },
+              { spec: ids4530_48p_6x.specifications.environmental, icon: "Thermometer" }
+            ].map((specGroup, index) => (
               <div 
                 key={index} 
                 className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
@@ -206,12 +222,12 @@ const ModelIDS3530_48T_6XComponent = () => {
                       />
                     </div>
                     <h3 className="text-base md:text-2xl font-bold text-gray-900 group-hover:text-[#0065B3] transition-colors">
-                      {specGroup.title}
+                      {specGroup.spec.title}
                     </h3>
                   </div>
 
                   <div className="space-y-2 md:space-y-4">
-                    {specGroup.specs.slice(0, 5).map((spec, specIndex) => (
+                    {specGroup.spec.items.map((spec, specIndex) => (
                       <div 
                         key={specIndex} 
                         className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
@@ -285,8 +301,6 @@ const ModelIDS3530_48T_6XComponent = () => {
             консультацию
           </h2>
           
-
-          
           {/* Benefits */}
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-6 mb-8 md:mb-12 text-white/90 px-4">
             <div className="flex items-center justify-center">
@@ -321,12 +335,10 @@ const ModelIDS3530_48T_6XComponent = () => {
               <span className="text-sm md:text-base">Получить консультацию</span>
             </Button>
           </div>
-
-
         </div>
       </section>
     </div>
   );
 };
 
-export default ModelIDS3530_48T_6XComponent;
+export default ModelIDS4530_48P_6XComponent;

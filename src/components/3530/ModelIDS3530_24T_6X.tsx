@@ -14,9 +14,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { ids353024p6xData } from "@/data/ids3530-24p-6x";
+import { ids353024t6xData } from "@/data/3530/ids3530-24t-6x";
 
-const ModelIDS3530_24P_6XComponent = () => {
+const ModelIDS3530_24T_6XComponent = () => {
   const navigate = useNavigate();
   const { modelViewerRef, indicatorsOn, modelLoaded, toggleIndicators } =
     useModelViewer();
@@ -53,7 +53,7 @@ const ModelIDS3530_24P_6XComponent = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>IDS3530-24P-6X</BreadcrumbPage>
+                <BreadcrumbPage>IDS3530-24T-6X</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -87,10 +87,10 @@ const ModelIDS3530_24P_6XComponent = () => {
               <span className="text-xs md:text-sm font-medium text-white/80">Промышленный коммутатор L3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent leading-tight">
-              {ids353024p6xData.title}
+              {ids353024t6xData.title}
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light max-w-3xl mx-auto px-4 sm:px-0">
-              Управляемый коммутатор уровня L3 с PoE+ и высокой производительностью
+              Управляемый коммутатор уровня L3 без PoE с компактным дизайном
             </p>
           </div>
 
@@ -100,7 +100,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             <div className="lg:col-span-3">
               <Professional3DViewer
                 modelRef={modelViewerRef}
-                modelPath={ids353024p6xData.modelPath}
+                modelPath={ids353024t6xData.modelPath}
                 indicatorsOn={indicatorsOn}
                 onToggleIndicators={toggleIndicators}
               />
@@ -114,7 +114,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                   Характеристики
                 </h3>
                 <div className="space-y-3 md:space-y-4">
-                  {ids353024p6xData.basicSpecs.map((spec, index) => (
+                  {ids353024t6xData.basicSpecs.map((spec, index) => (
                     <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 md:py-3 border-b border-white/10 last:border-b-0 gap-1 sm:gap-0">
                       <span className="text-white/70 font-medium text-sm md:text-base">{spec.label}:</span>
                       <span className="text-white font-semibold text-sm md:text-base">{spec.value}</span>
@@ -127,17 +127,17 @@ const ModelIDS3530_24P_6XComponent = () => {
               <div className="mt-4 md:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 <div className="bg-gradient-to-br from-[#00B5AD]/20 to-[#0065B3]/20 backdrop-blur-sm rounded-xl border border-[#00B5AD]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Zap" className="h-4 w-4 md:h-5 md:w-5 text-[#00B5AD] mr-2" />
-                    <span className="text-sm font-semibold text-white">PoE+</span>
+                    <Icon name="Network" className="h-4 w-4 md:h-5 md:w-5 text-[#00B5AD] mr-2" />
+                    <span className="text-sm font-semibold text-white">10G SFP+</span>
                   </div>
-                  <p className="text-xs text-white/80">380W мощности для питания устройств</p>
+                  <p className="text-xs text-white/80">6 высокоскоростных портов</p>
                 </div>
                 <div className="bg-gradient-to-br from-[#0065B3]/20 to-[#1A2980]/20 backdrop-blur-sm rounded-xl border border-[#0065B3]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
-                    <Icon name="Network" className="h-4 w-4 md:h-5 md:w-5 text-[#0065B3] mr-2" />
-                    <span className="text-sm font-semibold text-white">L3</span>
+                    <Icon name="Cpu" className="h-4 w-4 md:h-5 md:w-5 text-[#0065B3] mr-2" />
+                    <span className="text-sm font-semibold text-white">Пассивное</span>
                   </div>
-                  <p className="text-xs text-white/80">Полная поддержка маршрутизации</p>
+                  <p className="text-xs text-white/80">Охлаждение без вентиляторов</p>
                 </div>
               </div>
             </div>
@@ -184,12 +184,12 @@ const ModelIDS3530_24P_6XComponent = () => {
               Технические характеристики
             </h2>
             <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto px-4">
-              Детальная информация обо всех параметрах и возможностях коммутатора IDS3530-24P-6X
+              Детальная информация обо всех параметрах и возможностях коммутатора IDS3530-24T-6X
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-            {ids353024p6xData.specGroups.map((specGroup, index) => (
+            {ids353024t6xData.specGroups.map((specGroup, index) => (
               <div 
                 key={index} 
                 className="group relative bg-white rounded-lg md:rounded-2xl border border-gray-200 hover:border-[#00B5AD] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
@@ -201,7 +201,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                   <div className="flex items-center mb-3 md:mb-6">
                     <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
                       <Icon 
-                        name={index === 0 ? "Network" : index === 1 ? "Zap" : index === 2 ? "Shield" : "Settings"} 
+                        name={specGroup.icon} 
                         className="h-3 w-3 md:h-6 md:w-6 text-white" 
                       />
                     </div>
@@ -211,7 +211,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                   </div>
 
                   <div className="space-y-2 md:space-y-4">
-                    {specGroup.specs.map((spec, specIndex) => (
+                    {specGroup.specs.slice(0, 5).map((spec, specIndex) => (
                       <div 
                         key={specIndex} 
                         className="flex flex-col sm:flex-row sm:justify-between sm:items-start py-1.5 md:py-3 border-b border-gray-100 last:border-b-0 hover:bg-cyan-50/50 hover:px-2 md:hover:px-4 hover:mx-[-8px] md:hover:mx-[-16px] hover:rounded-lg transition-all duration-200"
@@ -256,7 +256,7 @@ const ModelIDS3530_24P_6XComponent = () => {
                 <Icon name="Thermometer" className="h-4 w-4 md:h-8 md:w-8 text-[#1A2980]" />
               </div>
               <h4 className="text-sm md:text-lg font-semibold text-gray-900 mb-1 md:mb-2">Рабочая среда</h4>
-              <p className="text-xs md:text-sm text-gray-600">Работа в диапазоне температур от -40°C до +75°C</p>
+              <p className="text-xs md:text-sm text-gray-600">Работа в диапазоне температур от -5°C до +45°C</p>
             </div>
           </div>
         </div>
@@ -329,4 +329,4 @@ const ModelIDS3530_24P_6XComponent = () => {
   );
 };
 
-export default ModelIDS3530_24P_6XComponent;
+export default ModelIDS3530_24T_6XComponent;

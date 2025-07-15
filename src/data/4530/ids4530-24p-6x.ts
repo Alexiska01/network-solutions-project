@@ -1,11 +1,11 @@
-export const ids4530_48p_6x = {
-  modelUrl: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-48P.glb",
+export const ids4530_24p_6x = {
+  modelUrl: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24P.glb",
   
   specifications: {
     ports: {
       title: "Порты и интерфейсы",
       items: [
-        { label: "Ethernet-порты", value: "48×10/100/1000M Base-T RJ45" },
+        { label: "Ethernet-порты", value: "24×10/100/1000M Base-T RJ45" },
         { label: "SFP+ слоты", value: "6×10G SFP+" },
         { label: "Консольный порт", value: "RJ45" },
         { label: "Управление", value: "OOB интерфейс, 1×USB 2.0" }
@@ -27,9 +27,9 @@ export const ids4530_48p_6x = {
     power: {
       title: "Питание и охлаждение",
       items: [
-        { label: "Источник питания", value: "2 слота под блоки питания переменного тока" },
-        { label: "Напряжение", value: "100–240V AC, 50/60Hz" },
-        { label: "Потребление (без PoE)", value: "≤79W" },
+        { label: "Источник питания", value: "2 встроенных блока питания переменного тока" },
+        { label: "Напряжение", value: "100~240V AC, 50/60Hz" },
+        { label: "Потребление (без PoE)", value: "<79Вт" },
         { label: "Охлаждение", value: "Активное, интеллектуальные вентиляторы" }
       ]
     },
@@ -37,7 +37,7 @@ export const ids4530_48p_6x = {
     poe: {
       title: "PoE характеристики",
       items: [
-        { label: "Общая мощность PoE", value: "380W / 720W / 1440W" },
+        { label: "Общая мощность PoE", value: "380Вт /760Вт" },
         { label: "Стандарты", value: "IEEE 802.3af/at" },
         { label: "Поддержка PoE&PoE+", value: "В зависимости от конфигурации" }
       ]
@@ -59,8 +59,8 @@ export const ids4530_48p_6x = {
       items: [
         { label: "Рабочая температура", value: "-5°C ~ 50°C" },
         { label: "Температура хранения", value: "-40°C ~ 70°C" },
-        { label: "Влажность (рабочая)", value: "10% ~ 90%" },
-        { label: "Влажность (хранение)", value: "5% ~ 95%" },
+        { label: "Влажность (рабочая)", value: "10% ~ 90% (без конденсата)" },
+        { label: "Влажность (хранение)", value: "5% ~ 95% (без конденсата)" },
         { label: "Высота над уровнем моря", value: "до 3000 м" },
         { label: "Молниезащита", value: "6KV" }
       ]

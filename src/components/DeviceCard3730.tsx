@@ -21,7 +21,7 @@ function getSpecs(model: SwitchModel) {
     sfpOnly: false,
   };
 
-  if (name.includes("24t-6x")) {
+  if (name.includes("ids3730-24t-6x")) {
     specs.baseTports = 24;
     specs.sfpPlusSlots = 6;
     specs.throughput = 168;

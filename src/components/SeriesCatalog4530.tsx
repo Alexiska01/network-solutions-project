@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import DeviceCard4530 from "@/components/DeviceCard4530";
+import DeviceCard4530 from "@/components/4530/DeviceCard4530";
 import FilterButtons from "@/components/FilterButtons";
 import ComparisonPanel from "@/components/ComparisonPanel";
 import ComparisonModal from "@/components/ComparisonModal";

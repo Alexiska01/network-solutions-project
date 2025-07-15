@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import DeviceCard3530 from "@/components/DeviceCard3530";
+import DeviceCard3530 from "@/components/3530/DeviceCard3530";
 import FilterButtons from "@/components/FilterButtons";
 import ComparisonPanel from "@/components/ComparisonPanel";
 import ComparisonModal from "@/components/ComparisonModal";

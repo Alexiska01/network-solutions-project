@@ -73,7 +73,7 @@ export const switchModels3730: SwitchModel[] = [
     poe: null,
     layer3: true,
     category: "sfp",
-    url: "/models/ids3730-24t-6x.html",
+    url: "/products/switches/ids3730/24t-6x",
     animationDelay: 0.1,
   },
   {
@@ -97,7 +97,7 @@ export const switchModels3730: SwitchModel[] = [
     poe: "760 Вт",
     layer3: true,
     category: "poe",
-    url: "/models/ids3730-24p-6x.html",
+    url: "/products/switches/ids3730/24p-6x",
     animationDelay: 0.3,
   },
   {
@@ -148,7 +148,7 @@ export const switchModels4530: SwitchModel[] = [
     poe: null,
     layer3: true,
     category: "sfp",
-    url: "/models/ids4530-24t-6x.html",
+    url: "/products/switches/ids4530/24t-6x",
     animationDelay: 0.1,
   },
   {
@@ -196,7 +196,7 @@ export const switchModels4530: SwitchModel[] = [
     poe: null,
     layer3: true,
     category: "sfp",
-    url: "/models/ids4530-24s-4x.html",
+    url: "/products/switches/ids4530/24s-4x",
     animationDelay: 0.5,
   },
   {
@@ -208,7 +208,7 @@ export const switchModels4530: SwitchModel[] = [
     poe: null,
     layer3: true,
     category: "sfp",
-    url: "/models/ids4530-48s-4x.html",
+    url: "/products/switches/ids4530/48s-4x",
     animationDelay: 0.6,
   },
 ];

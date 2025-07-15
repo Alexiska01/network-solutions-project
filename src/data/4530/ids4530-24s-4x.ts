@@ -1,5 +1,5 @@
-export const ids4530_24p_6x = {
-  modelUrl: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24P.glb",
+export const ids4530_24s_4x = {
+  modelUrl: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24S.glb",
   
   specifications: {
     ports: {
