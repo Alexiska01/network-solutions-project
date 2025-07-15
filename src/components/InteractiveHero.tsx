@@ -31,6 +31,7 @@ const seriesData: SeriesData[] = [
 const InteractiveHero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [carouselRotation, setCarouselRotation] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,6 +39,7 @@ const InteractiveHero: React.FC = () => {
       
       setTimeout(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % seriesData.length);
+        setCarouselRotation(prev => prev - 120); // Поворот на 120 градусов (360/3)
         setIsVisible(true);
       }, 150);
     }, 3000);
@@ -88,34 +90,65 @@ const InteractiveHero: React.FC = () => {
             </div>
           </div>
 
-          {/* Правая колонка с 3D-моделями */}
-          <div className="relative h-[600px] lg:h-[700px]">
-            {seriesData.map((series, index) => (
-              <div
-                key={series.id}
-                className={`absolute inset-0 transition-opacity duration-300 ${
-                  index === currentIndex ? 'opacity-100' : 'opacity-0'
-                }`}
-              >
-                <div className="w-full h-full bg-white rounded-2xl shadow-xl overflow-hidden">
-                  <model-viewer
-                    className="w-full h-full spinning-model"
-                    src={series.modelUrl}
-                    alt={`3D модель ${series.title}`}
-                    auto-rotate
-                    auto-rotate-delay="0"
-                    rotation-per-second="120deg"
-                    camera-controls
-                    background-color="#ffffff"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'block'
-                    }}
-                  />
+          {/* Правая колонка с 3D-каруселью */}
+          <div className="relative h-[600px] lg:h-[700px] overflow-hidden">
+            {/* Внешний контейнер карусели */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-full h-full">
+                {/* Карусель */}
+                <div 
+                  className="absolute inset-0 transition-transform duration-1000 ease-in-out"
+                  style={{
+                    transform: `rotateY(${carouselRotation}deg)`,
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
+                  {seriesData.map((series, index) => {
+                    const angle = (index * 120) - 60; // Размещение по кругу: 0°, 120°, 240°
+                    const radius = 280; // Радиус карусели
+                    
+                    return (
+                      <div
+                        key={series.id}
+                        className="absolute w-80 h-80 lg:w-96 lg:h-96"
+                        style={{
+                          transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                          transformStyle: 'preserve-3d',
+                          left: '50%',
+                          top: '50%',
+                          marginLeft: '-160px', // Половина ширины для центровки
+                          marginTop: '-160px', // Половина высоты для центровки
+                        }}
+                      >
+                        <div 
+                          className="w-full h-full bg-white rounded-2xl shadow-xl overflow-hidden"
+                          style={{
+                            transform: `rotateY(${-angle}deg)`, // Компенсация поворота для правильного отображения
+                            backfaceVisibility: 'hidden'
+                          }}
+                        >
+                          <model-viewer
+                            className="w-full h-full"
+                            src={series.modelUrl}
+                            alt={`3D модель ${series.title}`}
+                            auto-rotate
+                            auto-rotate-delay="0"
+                            rotation-per-second="60deg"
+                            camera-controls
+                            background-color="#ffffff"
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              display: 'block'
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
