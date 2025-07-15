@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
+import ModelViewer3D from '@/components/ModelViewer3D';
 
 const heroData = [
   {
@@ -136,26 +137,10 @@ const ProductHero = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl" />
               
               <div className={`relative w-full h-full transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-                {React.createElement('model-viewer', {
-                  src: currentData.modelUrl,
-                  alt: currentData.title,
-                  'auto-rotate': true,
-                  'auto-rotate-delay': '0',
-                  'rotation-per-second': '30deg',
-                  'camera-controls': true,
-                  'disable-zoom': true,
-                  style: {
-                    width: '100%',
-                    height: '100%',
-                    background: 'transparent',
-                    borderRadius: '1rem'
-                  },
-                  loading: 'eager',
-                  reveal: 'auto',
-                  exposure: '1.2',
-                  'shadow-intensity': '0.3',
-                  'environment-image': 'neutral'
-                } as any)}
+                <ModelViewer3D 
+                  src={currentData.modelUrl}
+                  alt={currentData.title}
+                />
                 
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 border border-white/10">
