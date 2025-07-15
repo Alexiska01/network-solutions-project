@@ -41,8 +41,19 @@ export const preloadModel = async (src: string): Promise<void> => {
     const modelViewer = hiddenContainer.querySelector('model-viewer');
     
     if (modelViewer) {
+      let isCleanedUp = false;
       const cleanup = () => {
-        document.body.removeChild(hiddenContainer);
+        if (!isCleanedUp) {
+          try {
+            if (hiddenContainer.parentNode) {
+              hiddenContainer.parentNode.removeChild(hiddenContainer);
+            }
+          } catch (error) {
+            console.warn('Элемент уже удален:', error);
+          } finally {
+            isCleanedUp = true;
+          }
+        }
       };
       
       modelViewer.addEventListener('load', () => {
@@ -66,7 +77,13 @@ export const preloadModel = async (src: string): Promise<void> => {
         resolve(); // Не блокируем интерфейс
       }, 10000);
     } else {
-      document.body.removeChild(hiddenContainer);
+      try {
+        if (hiddenContainer.parentNode) {
+          hiddenContainer.parentNode.removeChild(hiddenContainer);
+        }
+      } catch (error) {
+        console.warn('Не удалось удалить hiddenContainer:', error);
+      }
       reject(new Error('Не удалось создать model-viewer'));
     }
   });
