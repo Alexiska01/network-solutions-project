@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
+import { useModelPreloader } from '@/hooks/useModelPreloader';
 
 const heroData = [
   {
@@ -32,7 +33,15 @@ const ProductHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const { isModelReady, preloadModels } = useModelPreloader();
 
+  // Немедленно запускаем предзагрузку всех моделей
+  useEffect(() => {
+    const modelUrls = heroData.map(item => item.modelUrl);
+    preloadModels(modelUrls);
+  }, [preloadModels]);
+
+  // Запускаем карусель
   useEffect(() => {
     const startCarousel = () => {
       intervalRef.current = setInterval(() => {
@@ -42,15 +51,17 @@ const ProductHero = () => {
           setCurrentIndex((prev) => (prev + 1) % heroData.length);
           setIsVisible(true);
         }, 300);
-      }, 5000);
+      }, 6000);
     };
 
-    startCarousel();
+    // Запускаем карусель через небольшую задержку
+    const timeout = setTimeout(startCarousel, 2000);
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
+      clearTimeout(timeout);
     };
   }, []);
 
@@ -140,6 +151,7 @@ const ProductHero = () => {
                 <ModelViewer3D 
                   src={currentData.modelUrl}
                   alt={currentData.title}
+                  isPreloaded={isModelReady(currentData.modelUrl)}
                 />
                 
                 <div className="absolute bottom-6 left-6 right-6">
@@ -147,11 +159,19 @@ const ProductHero = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="text-white font-semibold">{currentData.title}</h3>
-                        <p className="text-slate-300 text-sm">3D модель • Автоповорот</p>
+                        <p className="text-slate-300 text-sm">
+                          3D модель • {isModelReady(currentData.modelUrl) ? 'Готова к показу' : 'Загружается...'}
+                        </p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                        <span className="text-green-400 text-sm">Готово</span>
+                        <div className={`w-2 h-2 rounded-full animate-pulse ${
+                          isModelReady(currentData.modelUrl) ? 'bg-green-400' : 'bg-yellow-400'
+                        }`} />
+                        <span className={`text-sm ${
+                          isModelReady(currentData.modelUrl) ? 'text-green-400' : 'text-yellow-400'
+                        }`}>
+                          {isModelReady(currentData.modelUrl) ? 'Готово' : 'Загрузка'}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -165,9 +185,9 @@ const ProductHero = () => {
 
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3">
-          <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
+          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
           <span className="text-white text-sm">
-            Автосмена через 5 сек
+            Модели предзагружаются • Автосмена через 6 сек
           </span>
         </div>
       </div>

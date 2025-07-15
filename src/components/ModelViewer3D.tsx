@@ -4,16 +4,22 @@ import Icon from '@/components/ui/icon';
 interface ModelViewer3DProps {
   src: string;
   alt: string;
+  isPreloaded?: boolean;
 }
 
-const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt }) => {
+const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = false }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!isPreloaded);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     if (containerRef.current) {
-      setIsLoading(true);
+      // Если модель предзагружена, сразу показываем без лоадера
+      if (isPreloaded) {
+        setIsLoading(false);
+      } else {
+        setIsLoading(true);
+      }
       setHasError(false);
       
       const modelViewerHTML = `
@@ -21,7 +27,7 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt }) => {
           src="${src}"
           alt="${alt}"
           auto-rotate
-          auto-rotate-delay="1000"
+          auto-rotate-delay="${isPreloaded ? '100' : '1000'}"
           rotation-per-second="30deg"
           camera-controls
           style="width: 100%; height: 100%; background: transparent; border-radius: 1rem;"
@@ -30,13 +36,14 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt }) => {
           exposure="1.2"
           shadow-intensity="0.3"
           environment-image="neutral">
+          ${!isPreloaded ? `
           <div slot="poster" style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1)); border-radius: 1rem;">
             <div style="text-align: center; color: white;">
               <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(45deg, #3b82f6, #9333ea); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px;">📡</div>
               <div style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">${alt}</div>
               <div style="font-size: 14px; opacity: 0.7;">Загрузка 3D модели...</div>
             </div>
-          </div>
+          </div>` : ''}
         </model-viewer>
       `;
       
@@ -45,19 +52,24 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt }) => {
       const modelViewer = containerRef.current.querySelector('model-viewer');
       
       if (modelViewer) {
-        modelViewer.addEventListener('load', () => {
-          setIsLoading(false);
-          console.log('3D модель загружена:', src);
-        });
-        
-        modelViewer.addEventListener('error', (e) => {
-          setHasError(true);
-          setIsLoading(false);
-          console.error('Ошибка загрузки 3D модели:', e, src);
-        });
+        if (!isPreloaded) {
+          modelViewer.addEventListener('load', () => {
+            setIsLoading(false);
+            console.log('3D модель загружена:', src);
+          });
+          
+          modelViewer.addEventListener('error', (e) => {
+            setHasError(true);
+            setIsLoading(false);
+            console.error('Ошибка загрузки 3D модели:', e, src);
+          });
+        } else {
+          // Для предзагруженных моделей сразу запускаем auto-rotate
+          console.log('🎯 Показываю предзагруженную модель:', src);
+        }
       }
     }
-  }, [src, alt]);
+  }, [src, alt, isPreloaded]);
 
   if (hasError) {
     return (
