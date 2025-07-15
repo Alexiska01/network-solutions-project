@@ -76,57 +76,93 @@ const InteractiveHero: React.FC = () => {
 
       <style jsx>{`
         @keyframes cylinderSpin {
-          0% { transform: rotateY(0deg); }
-          100% { transform: rotateY(360deg); }
+          0% { transform: rotateX(-15deg) rotateY(0deg); }
+          100% { transform: rotateX(-15deg) rotateY(360deg); }
         }
         
-        .cylinder-container {
+        .cylinder-3d {
           animation: cylinderSpin 3s linear infinite;
+          transform-style: preserve-3d;
+          perspective: 1000px;
+        }
+        
+        .cylinder-top {
+          position: absolute;
+          top: 20%;
+          left: 50%;
+          transform: translateX(-50%) rotateX(90deg);
+          width: 240px;
+          height: 240px;
+          background: linear-gradient(45deg, rgba(124, 58, 237, 0.8), rgba(79, 70, 229, 0.8));
+          border-radius: 50%;
+          box-shadow: 
+            0 0 30px rgba(124, 58, 237, 0.5),
+            inset 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+        
+        .cylinder-bottom {
+          position: absolute;
+          bottom: 20%;
+          left: 50%;
+          transform: translateX(-50%) rotateX(90deg);
+          width: 240px;
+          height: 240px;
+          background: linear-gradient(45deg, rgba(79, 70, 229, 0.9), rgba(124, 58, 237, 0.9));
+          border-radius: 50%;
+          box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.3),
+            0 0 30px rgba(124, 58, 237, 0.4);
+        }
+        
+        .cylinder-side {
+          position: absolute;
+          top: 20%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 240px;
+          height: 60%;
+          background: linear-gradient(
+            90deg,
+            rgba(124, 58, 237, 0.1),
+            rgba(124, 58, 237, 0.3) 25%,
+            rgba(124, 58, 237, 0.4) 50%,
+            rgba(124, 58, 237, 0.3) 75%,
+            rgba(124, 58, 237, 0.1)
+          );
+          border-left: 2px solid rgba(124, 58, 237, 0.3);
+          border-right: 2px solid rgba(124, 58, 237, 0.3);
+          backdrop-filter: blur(10px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         .cylinder-text {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          writing-mode: vertical-lr;
-          text-orientation: mixed;
-          font-size: 2rem;
-          font-weight: bold;
+          font-size: 2.5rem;
+          font-weight: 800;
           color: white;
-          text-shadow: 0 0 20px rgba(255,255,255,0.5);
+          text-shadow: 
+            0 0 20px rgba(255,255,255,0.8),
+            0 0 40px rgba(124, 58, 237, 0.6);
+          letter-spacing: 4px;
+          transform: rotateY(0deg);
           z-index: 10;
         }
         
-        .cylinder-base {
+        .cylinder-highlight {
           position: absolute;
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 300px;
-          height: 20px;
-          background: linear-gradient(45deg, #4f46e5, #7c3aed);
-          border-radius: 50%;
-          box-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
-        }
-        
-        .cylinder-surface {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 300px;
-          height: 400px;
+          top: 30%;
+          left: 10%;
+          width: 80%;
+          height: 40%;
           background: linear-gradient(
-            90deg,
+            45deg,
             transparent,
-            rgba(124, 58, 237, 0.3) 25%,
-            rgba(124, 58, 237, 0.5) 50%,
-            rgba(124, 58, 237, 0.3) 75%,
+            rgba(255, 255, 255, 0.1) 50%,
             transparent
           );
-          border-radius: 150px / 200px;
-          backdrop-filter: blur(10px);
+          border-radius: 50% / 80%;
+          opacity: 0.6;
         }
       `}</style>
 
@@ -231,35 +267,46 @@ const InteractiveHero: React.FC = () => {
             {/* Светящийся фон */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-emerald-500/20 rounded-3xl blur-3xl" />
             
-            {/* Цилиндрическая карусель */}
+            {/* 3D Цилиндрическая карусель */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-full h-full">
-                <div className="cylinder-container relative w-full h-full">
-                  {/* Основание цилиндра */}
-                  <div className="cylinder-base" />
+              <div className="relative w-full h-full perspective-1000">
+                <div className="cylinder-3d relative w-full h-full">
                   
-                  {/* Боковая поверхность цилиндра */}
-                  <div className="cylinder-surface" />
-                  
-                  {/* Текст на боковой поверхности */}
-                  <div className="cylinder-text">
-                    <div className={`bg-gradient-to-r ${activeSeries.color} bg-clip-text text-transparent text-4xl font-bold tracking-wider`}>
-                      {activeSeries.id}
-                    </div>
-                    <div className="text-white/80 text-lg mt-2 font-medium">
-                      {activeSeries.badge}
-                    </div>
+                  {/* Верхнее основание цилиндра */}
+                  <div className="cylinder-top">
+                    <div className="absolute inset-0 bg-gradient-radial from-white/20 via-transparent to-transparent rounded-full" />
                   </div>
                   
-                  {/* Верхнее основание */}
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-80 h-6 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full opacity-80" />
+                  {/* Нижнее основание цилиндра */}
+                  <div className="cylinder-bottom">
+                    <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/20 rounded-full" />
+                  </div>
                   
-                  {/* Световые эффекты */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-transparent via-purple-500/10 to-transparent rounded-full" />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/10 to-transparent rounded-full" />
+                  {/* Боковая поверхность цилиндра */}
+                  <div className="cylinder-side">
+                    {/* Текст серии на боковой поверхности */}
+                    <div className="cylinder-text">
+                      <div className={`bg-gradient-to-r ${activeSeries.color} bg-clip-text text-transparent`}>
+                        {activeSeries.id}
+                      </div>
+                    </div>
+                    
+                    {/* Световой блик на цилиндре */}
+                    <div className="cylinder-highlight" />
+                  </div>
                   
-                  {/* Дополнительные световые лучи */}
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-purple-400/5 to-transparent rounded-full animate-pulse" />
+                  {/* Дополнительные 3D эффекты */}
+                  <div className="absolute inset-0 pointer-events-none">
+                    {/* Левая тень */}
+                    <div className="absolute left-0 top-20% w-4 h-60% bg-gradient-to-r from-black/30 to-transparent" />
+                    {/* Правая тень */}
+                    <div className="absolute right-0 top-20% w-4 h-60% bg-gradient-to-l from-black/30 to-transparent" />
+                    {/* Верхняя тень */}
+                    <div className="absolute top-20% left-1/2 transform -translate-x-1/2 w-60 h-4 bg-gradient-to-b from-black/20 to-transparent rounded-full" />
+                    {/* Нижняя тень */}
+                    <div className="absolute bottom-20% left-1/2 transform -translate-x-1/2 w-60 h-8 bg-gradient-to-t from-black/40 to-transparent rounded-full" />
+                  </div>
+                  
                 </div>
               </div>
             </div>
