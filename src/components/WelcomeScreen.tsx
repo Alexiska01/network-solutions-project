@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 interface WelcomeScreenProps {
   onComplete: () => void;
+  modelsReady?: boolean;
 }
 
-const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
+const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady = false }) => {
   const [showLogo, setShowLogo] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [showSubtitle, setShowSubtitle] = useState(false);
@@ -17,17 +18,23 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
     setTimeout(() => setShowTitle(true), 1500);
     setTimeout(() => setShowSubtitle(true), 2500);
     setTimeout(() => setShowLoader(true), 3000);
-    
-    // Начинаем исчезновение на 8.5 секунде  
-    setTimeout(() => {
-      setFadeOut(true);
-    }, 8500);
-    
-    // Завершаем на 10 секунде
-    setTimeout(() => {
-      onComplete();
-    }, 10000);
-  }, [onComplete]);
+  }, []);
+
+  // Отдельный эффект для завершения - ждем модели
+  useEffect(() => {
+    if (modelsReady) {
+      console.log('🎉 Модели готовы! Завершаем Welcome экран через 2 секунды...');
+      
+      // Даем еще 2 секунды после готовности моделей
+      setTimeout(() => {
+        setFadeOut(true);
+      }, 2000);
+      
+      setTimeout(() => {
+        onComplete();
+      }, 3500);
+    }
+  }, [modelsReady, onComplete]);
 
   return (
     <div className={`fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center transition-opacity duration-1500 ${
@@ -69,7 +76,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         <div className={`transition-opacity duration-1000 ${showLoader ? 'opacity-100' : 'opacity-0'}`}>
           <div className="flex flex-col items-center justify-center space-y-4">
             <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
-            <p className="text-slate-400 text-sm">Загрузка системы...</p>
+            <p className="text-slate-400 text-sm">
+              {modelsReady ? 'Модели готовы! Переход...' : 'Загрузка 3D моделей...'}
+            </p>
           </div>
         </div>
       </div>

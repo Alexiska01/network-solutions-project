@@ -73,9 +73,15 @@ const ProductHero = () => {
   }, []);
 
   const currentData = heroData[currentIndex];
+  
+  // Проверяем готовность всех моделей
+  const allModelsReady = heroData.every(item => isModelReady(item.modelUrl));
 
   if (showWelcome) {
-    return <WelcomeScreen onComplete={() => setShowWelcome(false)} />;
+    return <WelcomeScreen 
+      onComplete={() => setShowWelcome(false)} 
+      modelsReady={allModelsReady}
+    />;
   }
 
   return (
