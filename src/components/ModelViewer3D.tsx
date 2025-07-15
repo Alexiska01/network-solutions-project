@@ -36,7 +36,8 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
           exposure="1.2"
           shadow-intensity="0.3"
           environment-image="neutral"
-          interaction-prompt="none">
+          interaction-prompt="none"
+          loading-model="none">
           ${!isPreloaded ? `
           <div slot="poster" style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1)); border-radius: 1rem;">
             <div style="text-align: center; color: white;">
