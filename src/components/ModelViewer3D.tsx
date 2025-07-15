@@ -8,184 +8,237 @@ interface ModelViewer3DProps {
 }
 
 // Глобальный кэш для предзагруженных моделей
-const modelCache = new Set<string>();
-const preloadedModels = new Map<string, boolean>();
+const modelCache = new Map<string, boolean>();
+const loadingPromises = new Map<string, Promise<void>>();
 
-// Функция предзагрузки 3D модели
+// Функция предзагрузки 3D модели с агрессивным кэшированием
 export const preloadModel = async (src: string): Promise<void> => {
+  // Если уже загружена
   if (modelCache.has(src)) {
     return Promise.resolve();
   }
 
-  return new Promise((resolve, reject) => {
-    // Создаем скрытый model-viewer для предзагрузки
-    const hiddenContainer = document.createElement('div');
-    hiddenContainer.style.position = 'absolute';
-    hiddenContainer.style.left = '-9999px';
-    hiddenContainer.style.width = '1px';
-    hiddenContainer.style.height = '1px';
-    hiddenContainer.style.opacity = '0';
-    hiddenContainer.style.pointerEvents = 'none';
+  // Если уже идет загрузка
+  if (loadingPromises.has(src)) {
+    return loadingPromises.get(src)!;
+  }
+
+  // Создаем промис загрузки
+  const loadPromise = new Promise<void>((resolve, reject) => {
+    console.log(`🔄 Начинаем предзагрузку: ${src}`);
     
-    hiddenContainer.innerHTML = `
+    // Создаем скрытый model-viewer для предзагрузки
+    const container = document.createElement('div');
+    container.style.cssText = `
+      position: fixed;
+      top: -1000px;
+      left: -1000px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: -1;
+    `;
+    
+    container.innerHTML = `
       <model-viewer
         src="${src}"
         loading="eager"
         reveal="manual"
-        style="width: 1px; height: 1px;">
+        camera-controls="false"
+        auto-rotate="false"
+        style="width: 1px; height: 1px; opacity: 0;">
       </model-viewer>
     `;
     
-    document.body.appendChild(hiddenContainer);
+    document.body.appendChild(container);
+    const viewer = container.querySelector('model-viewer') as any;
     
-    const modelViewer = hiddenContainer.querySelector('model-viewer');
+    let resolved = false;
     
-    if (modelViewer) {
-      let isCleanedUp = false;
-      const cleanup = () => {
-        if (!isCleanedUp) {
-          try {
-            if (hiddenContainer.parentNode) {
-              hiddenContainer.parentNode.removeChild(hiddenContainer);
-            }
-          } catch (error) {
-            console.warn('Элемент уже удален:', error);
-          } finally {
-            isCleanedUp = true;
-          }
-        }
-      };
-      
-      modelViewer.addEventListener('load', () => {
-        modelCache.add(src);
-        preloadedModels.set(src, true);
-        console.log('3D модель предзагружена:', src);
-        cleanup();
-        resolve();
-      });
-      
-      modelViewer.addEventListener('error', (e) => {
-        console.error('Ошибка предзагрузки 3D модели:', e, src);
-        cleanup();
-        reject(e);
-      });
-      
-      // Таймаут на случай долгой загрузки
-      setTimeout(() => {
-        console.warn('Таймаут предзагрузки модели:', src);
-        cleanup();
-        resolve(); // Не блокируем интерфейс
-      }, 10000);
-    } else {
-      try {
-        if (hiddenContainer.parentNode) {
-          hiddenContainer.parentNode.removeChild(hiddenContainer);
-        }
-      } catch (error) {
-        console.warn('Не удалось удалить hiddenContainer:', error);
+    const cleanup = () => {
+      if (container.parentNode) {
+        container.parentNode.removeChild(container);
       }
-      reject(new Error('Не удалось создать model-viewer'));
-    }
+    };
+    
+    const handleSuccess = () => {
+      if (resolved) return;
+      resolved = true;
+      
+      modelCache.set(src, true);
+      loadingPromises.delete(src);
+      console.log(`✅ Модель предзагружена: ${src}`);
+      cleanup();
+      resolve();
+    };
+    
+    const handleError = (error: any) => {
+      if (resolved) return;
+      resolved = true;
+      
+      loadingPromises.delete(src);
+      console.error(`❌ Ошибка предзагрузки: ${src}`, error);
+      cleanup();
+      // Не отклоняем промис, чтобы не блокировать интерфейс
+      resolve();
+    };
+    
+    // События загрузки
+    viewer.addEventListener('load', handleSuccess);
+    viewer.addEventListener('error', handleError);
+    
+    // Fallback таймаут
+    setTimeout(() => {
+      if (!resolved) {
+        console.warn(`⏰ Таймаут предзагрузки: ${src}`);
+        handleSuccess(); // Считаем успехом
+      }
+    }, 15000);
   });
+
+  loadingPromises.set(src, loadPromise);
+  return loadPromise;
 };
 
-// Функция массовой предзагрузки
-export const preloadModels = async (urls: string[]): Promise<void[]> => {
-  console.log('Начинаем предзагрузку 3D моделей:', urls);
-  return Promise.allSettled(urls.map(preloadModel)).then(results => {
-    const successful = results.filter(r => r.status === 'fulfilled').length;
-    console.log(`Предзагружено ${successful} из ${urls.length} 3D моделей`);
-    return results.map(r => r.status === 'fulfilled' ? r.value : undefined).filter(Boolean) as void[];
-  });
+// Предзагрузка массива моделей
+export const preloadModels = async (urls: string[]): Promise<void> => {
+  console.log(`🚀 Предзагрузка ${urls.length} моделей...`);
+  
+  try {
+    await Promise.allSettled(urls.map(url => preloadModel(url)));
+    console.log(`🎉 Предзагрузка завершена для всех моделей`);
+  } catch (error) {
+    console.error('Ошибка при предзагрузке моделей:', error);
+  }
+};
+
+// Проверка готовности модели
+export const isModelReady = (src: string): boolean => {
+  return modelCache.has(src);
 };
 
 const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = false }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState(!preloadedModels.get(src));
+  const [isLoading, setIsLoading] = useState(!isPreloaded);
   const [hasError, setHasError] = useState(false);
+  const viewerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (containerRef.current) {
-      const wasPreloaded = preloadedModels.get(src);
-      setIsLoading(!wasPreloaded);
+    // Если модель предзагружена, сразу показываем
+    if (isModelReady(src)) {
+      setIsLoading(false);
       setHasError(false);
-      
-      const modelViewerHTML = `
-        <model-viewer
-          src="${src}"
-          alt="${alt}"
-          auto-rotate
-          auto-rotate-delay="${wasPreloaded ? '0' : '500'}"
-          rotation-per-second="30deg"
-          disable-tap
-          disable-pan
-          disable-zoom
-          interaction-policy="allow-when-focused"
-          style="width: 100%; height: 100%; background: transparent; border-radius: 1rem; --poster-color: transparent;"
-          loading="eager"
-          reveal="${wasPreloaded ? 'auto' : 'interaction'}"
-          exposure="1.2"
-          shadow-intensity="0.3"
-          environment-image="neutral"
-          ${wasPreloaded ? '' : 'poster="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMjEyMTIxIi8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjM2MzYzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7QmtCx0YDQsNC30YPQtdGC0YHRjzwvdGV4dD4KPHN2Zz4K"'}>
-          ${!wasPreloaded ? `
-          <div slot="poster" style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1)); border-radius: 1rem;">
-            <div style="text-align: center; color: white;">
-              <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(45deg, #3b82f6, #9333ea); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px;">📡</div>
-              <div style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">${alt}</div>
-              <div style="font-size: 14px; opacity: 0.7;">Инициализация 3D модели...</div>
-            </div>
-          </div>
-          ` : ''}
-        </model-viewer>
-      `;
-      
-      containerRef.current.innerHTML = modelViewerHTML;
-      
-      const modelViewer = containerRef.current.querySelector('model-viewer');
-      
-      if (modelViewer) {
-        modelViewer.addEventListener('load', () => {
-          setIsLoading(false);
-          preloadedModels.set(src, true);
-          console.log('3D модель готова к отображению:', src);
-        });
-        
-        modelViewer.addEventListener('error', (e) => {
-          setHasError(true);
-          setIsLoading(false);
-          console.error('Ошибка загрузки 3D модели:', e, src);
-        });
-
-        // Если модель уже предзагружена, сразу начинаем вращение
-        if (wasPreloaded) {
-          setIsLoading(false);
-        }
-      }
+      return;
     }
-  }, [src, alt]);
 
+    // Если не предзагружена, загружаем сейчас
+    const loadModel = async () => {
+      try {
+        await preloadModel(src);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Ошибка загрузки модели:', error);
+        setHasError(true);
+        setIsLoading(false);
+      }
+    };
+
+    loadModel();
+  }, [src]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer || isLoading) return;
+
+    // Настройки для плавного отображения
+    viewer.addEventListener('load', () => {
+      console.log('Model viewer загружен:', src);
+      setIsLoading(false);
+      setHasError(false);
+    });
+
+    viewer.addEventListener('error', (e: any) => {
+      console.error('Model viewer ошибка:', e);
+      setHasError(true);
+      setIsLoading(false);
+    });
+
+  }, [src, isLoading]);
+
+  // Показываем ошибку
   if (hasError) {
     return (
-      <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl border border-white/10 backdrop-blur-sm flex items-center justify-center">
+      <div className="w-full h-full bg-gradient-to-br from-red-600/20 to-red-800/20 rounded-2xl border border-red-500/20 backdrop-blur-sm flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-24 h-24 mx-auto bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center">
-            <Icon name="AlertTriangle" size={48} className="text-white" />
+          <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center">
+            <Icon name="AlertTriangle" size={32} className="text-red-400" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-white mb-2">{alt}</h3>
-            <p className="text-red-200 text-sm">Ошибка загрузки 3D модели</p>
+            <h3 className="text-white font-semibold">Ошибка загрузки</h3>
+            <p className="text-red-300 text-sm">3D модель недоступна</p>
           </div>
         </div>
       </div>
     );
   }
 
+  // Показываем загрузку
+  if (isLoading) {
+    return (
+      <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl border border-white/10 backdrop-blur-sm flex items-center justify-center">
+        <div className="text-center space-y-6">
+          <div className="w-20 h-20 mx-auto">
+            <div className="animate-spin rounded-full h-20 w-20 border-4 border-blue-500 border-t-transparent"></div>
+          </div>
+          <div>
+            <h3 className="text-white font-semibold text-lg">Загрузка 3D модели</h3>
+            <p className="text-blue-200 text-sm">Подготовка к отображению...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Показываем модель
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full model-viewer-container"
-    />
+      className="w-full h-full relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-white/10"
+    >
+      <model-viewer
+        ref={viewerRef}
+        src={src}
+        alt={alt}
+        auto-rotate
+        auto-rotate-delay="0"
+        rotation-per-second="20deg"
+        camera-controls
+        touch-action="pan-y"
+        disable-zoom
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'transparent'
+        }}
+        loading="eager"
+        reveal="auto"
+        camera-orbit="0deg 75deg 4m"
+        field-of-view="30deg"
+        min-camera-orbit="auto auto 2m"
+        max-camera-orbit="auto auto 8m"
+        interaction-prompt="none"
+      />
+      
+      {/* Градиентная рамка */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 pointer-events-none" />
+      
+      {/* Подсветка углов */}
+      <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-transparent rounded-tl-2xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-400/20 to-transparent rounded-tr-2xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/20 to-transparent rounded-bl-2xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-purple-400/20 to-transparent rounded-br-2xl pointer-events-none" />
+    </div>
   );
 };
 
