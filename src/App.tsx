@@ -27,6 +27,7 @@ const ModelIDS3730_24T_6X = lazy(() => import("./pages/ModelIDS3730_24T_6X"));
 const ModelIDS3730_24P_6X = lazy(() => import("./pages/ModelIDS3730_24P_6X"));
 const SoftwarePage = lazy(() => import("./pages/SoftwarePage"));
 const Partners = lazy(() => import("./pages/Partners"));
+const ProductHero = lazy(() => import("./pages/ProductHero"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -157,6 +158,7 @@ const App = () => {
                 element={<ModelIDS3730_24P_6X />}
               />
               <Route path="/software" element={<SoftwarePage />} />
+              <Route path="/product-hero" element={<ProductHero />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="/switches" element={<SwitchesCatalog />} />
               <Route path="*" element={<NotFound />} />
