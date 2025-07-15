@@ -14,15 +14,18 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
       { delay: 500, stage: 1 },  // Показываем логотип
       { delay: 1500, stage: 2 }, // Показываем текст
       { delay: 3000, stage: 3 }, // Показываем подзаголовок - все тексты появились
-      { delay: 9000, stage: 4 }, // Начинаем исчезновение
-      { delay: 10000, stage: 5 } // Завершаем ровно через 10 секунд
+      { delay: 8500, stage: 4 }, // Начинаем исчезновение
+      { delay: 10000, stage: 5 } // Завершаем через 10 секунд (даем 1.5 сек на анимацию)
     ];
 
     const timeouts = stages.map(({ delay, stage }) =>
       setTimeout(() => {
+        console.log('Welcome screen stage:', stage, 'at', delay + 'ms');
         if (stage === 4) {
+          console.log('Starting fadeout...');
           setIsVisible(false);
         } else if (stage === 5) {
+          console.log('Completing welcome screen...');
           onComplete();
         } else {
           setStage(stage);
