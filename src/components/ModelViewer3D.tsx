@@ -30,14 +30,18 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
           auto-rotate-delay="${isPreloaded ? '100' : '1000'}"
           rotation-per-second="30deg"
           camera-controls
-          style="width: 100%; height: 100%; background: transparent; border-radius: 1rem;"
+          style="width: 100%; height: 100%; background: transparent; border-radius: 1rem; --progress-bar-color: transparent; --progress-mask: transparent;"
           loading="eager"
           reveal="auto"
           exposure="1.2"
           shadow-intensity="0.3"
           environment-image="neutral"
           interaction-prompt="none"
-          loading-model="none">
+          loading-model="none"
+          disable-zoom="false"
+          disable-pan="false"
+          disable-tap="false"
+          preload="false">
           ${!isPreloaded ? `
           <div slot="poster" style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1)); border-radius: 1rem;">
             <div style="text-align: center; color: white;">
@@ -50,6 +54,27 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
       `;
       
       containerRef.current.innerHTML = modelViewerHTML;
+      
+      // Добавляем CSS для скрытия прогресс-бара
+      const style = document.createElement('style');
+      style.textContent = `
+        model-viewer .progress-bar {
+          display: none !important;
+        }
+        model-viewer .progress-mask {
+          display: none !important;
+        }
+        model-viewer #default-progress-bar {
+          display: none !important;
+        }
+        model-viewer .loading {
+          display: none !important;
+        }
+      `;
+      if (!document.head.querySelector('style[data-model-viewer-progress]')) {
+        style.setAttribute('data-model-viewer-progress', 'true');
+        document.head.appendChild(style);
+      }
       
       const modelViewer = containerRef.current.querySelector('model-viewer');
       
