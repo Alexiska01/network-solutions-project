@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Icon from '@/components/ui/icon';
 
 interface WelcomeScreenProps {
   onComplete: () => void;
@@ -10,11 +11,11 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
 
   useEffect(() => {
     const stages = [
-      { delay: 1000, stage: 1 }, // Показываем логотип
-      { delay: 2500, stage: 2 }, // Показываем текст
-      { delay: 5000, stage: 3 }, // Показываем подзаголовок
-      { delay: 8000, stage: 4 }, // Начинаем исчезновение
-      { delay: 9500, stage: 5 }  // Завершаем
+      { delay: 500, stage: 1 },  // Показываем логотип
+      { delay: 1500, stage: 2 }, // Показываем текст
+      { delay: 3000, stage: 3 }, // Показываем подзаголовок - все тексты появились
+      { delay: 9000, stage: 4 }, // Начинаем исчезновение
+      { delay: 10000, stage: 5 } // Завершаем ровно через 10 секунд
     ];
 
     const timeouts = stages.map(({ delay, stage }) =>
@@ -87,36 +88,19 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         <div className={`transition-all duration-1000 delay-1000 ${
           stage >= 3 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'
         }`}>
-          <p className="text-xl text-slate-300 leading-relaxed mb-8">
+          <p className="text-xl text-slate-300 leading-relaxed mb-12">
             Промышленные сетевые решения нового поколения
           </p>
-          
-          <div className="flex items-center justify-center space-x-8 text-sm text-slate-400">
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span>Система готовится</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse delay-300" />
-              <span>Загрузка моделей</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse delay-700" />
-              <span>Подготовка интерфейса</span>
-            </div>
-          </div>
         </div>
 
-        {/* Прогресс-бар */}
+        {/* Стрелочка загрузки - появляется после всех текстов и крутится до конца */}
         <div className={`transition-all duration-1000 delay-1500 ${
           stage >= 3 ? 'opacity-100' : 'opacity-0'
         }`}>
-          <div className="w-full max-w-md mx-auto bg-white/10 rounded-full h-1 overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-6000 ease-out"
-              style={{ width: stage >= 3 ? '100%' : '0%' }}
-            />
+          <div className="flex items-center justify-center space-y-4">
+            <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
           </div>
+          <p className="text-slate-400 text-sm mt-4">Загрузка системы...</p>
         </div>
       </div>
     </div>
