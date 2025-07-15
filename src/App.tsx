@@ -25,6 +25,7 @@ const ModelIDS4530_24S_4X = lazy(() => import("./pages/4530/ModelIDS4530_24S_4X"
 const ModelIDS4530_48S_4X = lazy(() => import("./pages/4530/ModelIDS4530_48S_4X"));
 const ModelIDS3730_24T_6X = lazy(() => import("./pages/ModelIDS3730_24T_6X"));
 const ModelIDS3730_24P_6X = lazy(() => import("./pages/ModelIDS3730_24P_6X"));
+const SoftwarePage = lazy(() => import("./pages/SoftwarePage"));
 const Partners = lazy(() => import("./pages/Partners"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -155,6 +156,7 @@ const App = () => {
                 path="/products/switches/ids3730/24p-6x"
                 element={<ModelIDS3730_24P_6X />}
               />
+              <Route path="/software" element={<SoftwarePage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="/switches" element={<SwitchesCatalog />} />
               <Route path="*" element={<NotFound />} />
