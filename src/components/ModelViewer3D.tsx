@@ -100,8 +100,11 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
           auto-rotate
           auto-rotate-delay="${wasPreloaded ? '0' : '500'}"
           rotation-per-second="30deg"
-          camera-controls
-          style="width: 100%; height: 100%; background: transparent; border-radius: 1rem;"
+          disable-tap
+          disable-pan
+          disable-zoom
+          interaction-policy="allow-when-focused"
+          style="width: 100%; height: 100%; background: transparent; border-radius: 1rem; --poster-color: transparent;"
           loading="eager"
           reveal="${wasPreloaded ? 'auto' : 'interaction'}"
           exposure="1.2"
@@ -165,7 +168,39 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
     <div 
       ref={containerRef}
       className="w-full h-full"
-    />
+      style={{
+        // Скрываем все интерактивные элементы model-viewer
+        '--progress-bar-color': 'transparent',
+        '--progress-ring-color': 'transparent'
+      } as React.CSSProperties}
+    >
+      <style jsx>{`
+        :global(model-viewer) {
+          pointer-events: none !important;
+        }
+        :global(model-viewer .default-progress-mask) {
+          display: none !important;
+        }
+        :global(model-viewer .progress-bar) {
+          display: none !important;
+        }
+        :global(model-viewer .interaction-prompt) {
+          display: none !important;
+        }
+        :global(model-viewer .default-progress-bar) {
+          display: none !important;
+        }
+        :global(model-viewer button) {
+          display: none !important;
+        }
+        :global(model-viewer .hotspot) {
+          display: none !important;
+        }
+        :global(model-viewer .pan-target) {
+          display: none !important;
+        }
+      `}</style>
+    </div>
   );
 };
 
