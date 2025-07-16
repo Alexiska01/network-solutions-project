@@ -9,6 +9,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
   const [showLogo, setShowLogo] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [showSubtitle, setShowSubtitle] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [welcomePhaseComplete, setWelcomePhaseComplete] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
@@ -18,6 +19,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
     setTimeout(() => setShowLogo(true), 500);
     setTimeout(() => setShowTitle(true), 1500);
     setTimeout(() => setShowSubtitle(true), 2500);
+    
+    // Показываем загрузку через 2 секунды после подзаголовка
+    setTimeout(() => setShowLoading(true), 4500);
     
     // Через 10 секунд переходим к фазе ожидания моделей
     setTimeout(() => {
@@ -113,7 +117,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
 
         {/* Профессиональный индикатор загрузки */}
         <div className={`transition-all duration-1000 ease-out ${
-          welcomePhaseComplete ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
+          showLoading ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
         } ${fadeOut ? 'transform translate-y-[20px] scale-110' : ''}`}>
           <div className="flex flex-col items-center justify-center space-y-6">
             {/* Продвинутый спиннер */}
