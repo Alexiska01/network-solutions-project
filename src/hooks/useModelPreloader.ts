@@ -3,17 +3,22 @@ import { useEffect, useRef, useState } from 'react';
 interface ModelPreloaderState {
   loadedModels: Set<string>;
   preloadingModels: Set<string>;
+  partiallyLoadedModels: Set<string>;
   isModelReady: (url: string) => boolean;
+  isModelPartiallyReady: (url: string) => boolean;
   preloadModel: (url: string) => Promise<void>;
+  preloadModelPartially: (url: string, percentage: number) => Promise<void>;
   preloadModels: (urls: string[]) => Promise<void>;
 }
 
 // Глобальный кэш загруженных моделей
 const globalModelCache = new Set<string>();
+const globalPartialCache = new Set<string>();
 const globalPreloadPromises = new Map<string, Promise<void>>();
 
 export const useModelPreloader = (): ModelPreloaderState => {
   const [loadedModels, setLoadedModels] = useState<Set<string>>(new Set(globalModelCache));
+  const [partiallyLoadedModels, setPartiallyLoadedModels] = useState<Set<string>>(new Set(globalPartialCache));
   const [preloadingModels, setPreloadingModels] = useState<Set<string>>(new Set());
   const preloaderRef = useRef<HTMLDivElement | null>(null);
 
@@ -236,17 +241,62 @@ export const useModelPreloader = (): ModelPreloaderState => {
     }
   };
 
+  const preloadModelPartially = async (url: string, percentage: number): Promise<void> => {
+    console.log(`🎯 Начинаю частичную загрузку модели (${percentage}%):`, url);
+    
+    try {
+      const response = await fetch(url, { method: 'HEAD' });
+      const contentLength = response.headers.get('content-length');
+      
+      if (!contentLength) {
+        console.warn('⚠️ Не удалось получить размер файла, загружаю полностью');
+        return preloadModel(url);
+      }
+      
+      const totalSize = parseInt(contentLength);
+      const partialSize = Math.floor(totalSize * percentage / 100);
+      
+      console.log(`📊 Частичная загрузка: ${partialSize} из ${totalSize} байт (${percentage}%)`);
+      
+      const partialResponse = await fetch(url, {
+        headers: {
+          'Range': `bytes=0-${partialSize - 1}`
+        }
+      });
+      
+      if (partialResponse.status === 206) {
+        console.log(`✅ Частичная загрузка завершена (${percentage}%):`, url);
+        globalPartialCache.add(url);
+        setPartiallyLoadedModels(new Set(globalPartialCache));
+      } else {
+        console.warn('⚠️ Сервер не поддерживает Range запросы, загружаю полностью');
+        return preloadModel(url);
+      }
+    } catch (error) {
+      console.error('❌ Ошибка частичной загрузки:', error);
+      // Fallback на полную загрузку
+      return preloadModel(url);
+    }
+  };
+
   const isModelReady = (url: string): boolean => {
     const ready = globalModelCache.has(url);
     console.log('🔍 isModelReady:', { url, ready, cacheSize: globalModelCache.size });
     return ready;
   };
 
+  const isModelPartiallyReady = (url: string): boolean => {
+    return globalPartialCache.has(url) || globalModelCache.has(url);
+  };
+
   return {
     loadedModels,
+    partiallyLoadedModels,
     preloadingModels,
     isModelReady,
+    isModelPartiallyReady,
     preloadModel,
+    preloadModelPartially,
     preloadModels
   };
 };

@@ -3,6 +3,7 @@ import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
 import { useModelPreloader } from '@/hooks/useModelPreloader';
+import { useWelcomePreloader } from '@/hooks/useWelcomePreloader';
 import WelcomeScreen from '@/components/WelcomeScreen';
 
 const heroData = [
@@ -75,30 +76,32 @@ const ProductHero = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const { isModelReady, preloadModel, preloadModels } = useModelPreloader();
+  const { isModelReady, isModelPartiallyReady, preloadModel, preloadModelPartially, preloadModels } = useModelPreloader();
+  const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
 
-  // Оптимизированная предзагрузка: сначала первая модель, потом остальные
+  // Умная предзагрузка: дозагружаем 3730 и фоново остальные
   useEffect(() => {
-    const firstModelUrl = heroData[0].modelUrl;
-    const otherModelUrls = heroData.slice(1).map(item => item.modelUrl);
+    const firstModelUrl = heroData[0].modelUrl; // 3530
+    const secondModelUrl = heroData[1].modelUrl; // 3730
+    const otherModelUrls = heroData.slice(2).map(item => item.modelUrl); // 4530, 6010
     
-    console.log('🚀 Приоритетная загрузка первой модели:', firstModelUrl);
+    console.log('🎯 Дозагрузка и фоновая загрузка моделей в ProductHero');
     
-    // Сначала загружаем только первую модель
-    preloadModel(firstModelUrl).then(() => {
-      console.log('✅ Первая модель загружена, можно показывать страницу');
-      
-      // Фоновая загрузка остальных моделей сразу
-      console.log('🔄 Начинаю фоновую загрузку остальных моделей:', otherModelUrls);
-      preloadModels(otherModelUrls).then(() => {
-        console.log('🎉 Все модели предзагружены!');
+    // Дозагружаем 3730 если он был частично загружен
+    if (isModelPartiallyReady(secondModelUrl) && !isModelReady(secondModelUrl)) {
+      console.log('🔄 Дозагружаю 3730 серию до 100%:', secondModelUrl);
+      preloadModel(secondModelUrl).then(() => {
+        console.log('✅ 3730 серия полностью загружена');
       });
-    }).catch(error => {
-      console.warn('⚠️ Ошибка загрузки первой модели, загружаем все:', error);
-      // Fallback: загружаем все модели
-      const allModelUrls = heroData.map(item => item.modelUrl);
-      preloadModels(allModelUrls);
-    });
+    }
+    
+    // Фоновая загрузка остальных серий
+    if (otherModelUrls.length > 0) {
+      console.log('🔄 Фоновая загрузка остальных серий:', otherModelUrls);
+      preloadModels(otherModelUrls).then(() => {
+        console.log('🎉 Все серии загружены!');
+      });
+    }
   }, []);
 
   // Запускаем карусель с мировой анимацией
@@ -132,29 +135,20 @@ const ProductHero = () => {
 
   const currentData = heroData[currentIndex];
   
-  // Проверяем готовность первой модели для показа страницы
-  const firstModelReady = isModelReady(heroData[0].modelUrl);
-  const allModelsReady = heroData.every(item => isModelReady(item.modelUrl));
-
   // Отладочная информация
   console.log('🔍 Debug ProductHero:', {
     showWelcome,
-    firstModelReady,
-    allModelsReady,
-    firstModelUrl: heroData[0].modelUrl
+    isWelcomeLoadingComplete,
+    loadingProgress
   });
 
-  // Принудительный переход через 10 секунд если модель не загрузилась
+  // Переход с WelcomeScreen когда загрузка завершена
   useEffect(() => {
-    if (showWelcome) {
-      const forceTimeout = setTimeout(() => {
-        console.log('⏰ Принудительный переход через 10 секунд');
-        setShowWelcome(false);
-      }, 10000);
-
-      return () => clearTimeout(forceTimeout);
+    if (isWelcomeLoadingComplete) {
+      console.log('✅ WelcomeScreen загрузка завершена, переходим');
+      setShowWelcome(false);
     }
-  }, [showWelcome]);
+  }, [isWelcomeLoadingComplete]);
 
   if (showWelcome) {
     return <WelcomeScreen 
@@ -162,7 +156,8 @@ const ProductHero = () => {
         console.log('✅ WelcomeScreen onComplete вызван');
         setShowWelcome(false);
       }} 
-      modelsReady={firstModelReady}
+      modelsReady={isWelcomeLoadingComplete}
+      loadingProgress={loadingProgress}
     />;
   }
 

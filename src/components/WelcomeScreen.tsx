@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 interface WelcomeScreenProps {
   onComplete: () => void;
   modelsReady?: boolean;
+  loadingProgress?: number;
 }
 
-const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady = false }) => {
+const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady = false, loadingProgress = 0 }) => {
   const [showLogo, setShowLogo] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [showSubtitle, setShowSubtitle] = useState(false);
@@ -156,24 +157,35 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
               }`}>
                 {!welcomePhaseComplete 
                   ? 'Добро пожаловать...' 
-                  : modelsReady 
-                    ? 'Модели готовы! Переход...' 
-                    : 'Ожидание моделей...'
+                  : loadingProgress >= 100
+                    ? 'Загрузка завершена! Переход...' 
+                    : loadingProgress >= 50
+                      ? 'Загружаю 3730 серию...'
+                      : 'Загружаю 3530 серию...'
                 }
               </p>
               
-              {/* Прогресс бар */}
+              {/* Прогресс бар с реальным прогрессом */}
               <div className={`w-64 h-1 bg-slate-700 rounded-full overflow-hidden transition-all duration-[3500ms] ${
                 fadeOut ? 'bg-white/20 h-2' : ''
               }`}>
-                <div className={`h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000 ${
-                  !welcomePhaseComplete 
-                    ? 'w-[70%]' 
-                    : modelsReady 
-                      ? 'w-full' 
-                      : 'w-[85%]'
-                } ${fadeOut ? 'bg-gradient-to-r from-white to-blue-200 shadow-[0_0_20px_rgba(255,255,255,0.5)]' : ''}`} />
+                <div 
+                  className={`h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500 ${
+                    fadeOut ? 'bg-gradient-to-r from-white to-blue-200 shadow-[0_0_20px_rgba(255,255,255,0.5)]' : ''
+                  }`}
+                  style={{ 
+                    width: `${Math.max(
+                      !welcomePhaseComplete ? 20 : Math.min(loadingProgress, 100),
+                      20
+                    )}%` 
+                  }}
+                />
               </div>
+              
+              {/* Числовой прогресс */}
+              <p className="text-slate-500 text-sm">
+                {!welcomePhaseComplete ? '20%' : `${Math.min(loadingProgress, 100)}%`}
+              </p>
             </div>
           </div>
         </div>
