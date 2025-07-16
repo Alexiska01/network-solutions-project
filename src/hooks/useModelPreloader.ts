@@ -42,7 +42,7 @@ export const useModelPreloader = (): ModelPreloaderState => {
     };
   }, []);
 
-  const preloadModel = async (url: string): Promise<void> => {
+  const preloadModel = async (url: string, retryCount = 0): Promise<void> => {
     // Если модель уже загружена
     if (globalModelCache.has(url)) {
       return Promise.resolve();
@@ -57,71 +57,115 @@ export const useModelPreloader = (): ModelPreloaderState => {
     setPreloadingModels(prev => new Set([...prev, url]));
 
     const preloadPromise = new Promise<void>((resolve, reject) => {
-      if (!preloaderRef.current) {
-        reject(new Error('Preloader container not available'));
-        return;
-      }
+      console.log(`🚀 Начинаю предзагрузку модели (попытка ${retryCount + 1}):`, url);
 
-      console.log('🚀 Начинаю предзагрузку модели:', url);
+      // Ждем загрузки model-viewer если еще не готов
+      const waitForModelViewer = () => {
+        if (typeof customElements !== 'undefined' && customElements.get('model-viewer')) {
+          startPreload();
+        } else {
+          console.log('⏳ Ожидаю загрузки model-viewer...');
+          setTimeout(waitForModelViewer, 100);
+        }
+      };
 
-      // Создаем скрытый model-viewer с агрессивными настройками
-      const modelViewerHTML = `
-        <model-viewer
-          src="${url}"
-          style="width: 1px; height: 1px; display: block;"
-          loading="eager"
-          reveal="auto"
-          auto-rotate="false"
-          camera-controls="false"
-          preload="eager"
-          interaction-prompt="none"
-          data-preload-url="${url}">
-        </model-viewer>
-      `;
+      const startPreload = () => {
+        if (!preloaderRef.current) {
+          reject(new Error('Preloader container not available'));
+          return;
+        }
 
-      const tempContainer = document.createElement('div');
-      tempContainer.innerHTML = modelViewerHTML;
-      preloaderRef.current.appendChild(tempContainer);
+        // Создаем скрытый model-viewer с оптимизированными настройками
+        const modelViewerHTML = `
+          <model-viewer
+            src="${url}"
+            style="width: 1px; height: 1px; display: block; pointer-events: none;"
+            loading="eager"
+            reveal="auto"
+            auto-rotate="false"
+            camera-controls="false"
+            interaction-prompt="none"
+            data-preload-url="${url}">
+          </model-viewer>
+        `;
 
-      const modelViewer = tempContainer.querySelector('model-viewer');
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = modelViewerHTML;
+        preloaderRef.current.appendChild(tempContainer);
 
-      if (modelViewer) {
-        // Увеличиваем таймаут для больших моделей
-        const timeout = setTimeout(() => {
-          console.warn('⏰ Таймаут предзагрузки модели (30 сек):', url);
-          cleanup();
-          resolve(); // Не блокируем интерфейс даже при таймауте
-        }, 30000);
+        const modelViewer = tempContainer.querySelector('model-viewer') as any;
 
-        const cleanup = () => {
-          clearTimeout(timeout);
-          if (preloaderRef.current && preloaderRef.current.contains(tempContainer)) {
-            preloaderRef.current.removeChild(tempContainer);
+        if (modelViewer) {
+          // Уменьшаем таймаут и добавляем retry
+          const timeout = setTimeout(() => {
+            console.warn(`⏰ Таймаут предзагрузки модели (15 сек, попытка ${retryCount + 1}):`, url);
+            cleanup();
+            
+            if (retryCount < 2) {
+              // Повторная попытка
+              setTimeout(() => {
+                preloadModel(url, retryCount + 1).then(resolve).catch(reject);
+              }, 1000);
+            } else {
+              console.error('❌ Все попытки предзагрузки исчерпаны:', url);
+              resolve(); // Не блокируем интерфейс
+            }
+          }, 15000);
+
+          const cleanup = () => {
+            clearTimeout(timeout);
+            if (preloaderRef.current && preloaderRef.current.contains(tempContainer)) {
+              try {
+                preloaderRef.current.removeChild(tempContainer);
+              } catch (e) {
+                console.warn('Ошибка при удалении контейнера:', e);
+              }
+            }
+            setPreloadingModels(prev => {
+              const newSet = new Set(prev);
+              newSet.delete(url);
+              return newSet;
+            });
+          };
+
+          // Обработчики событий
+          const onLoad = () => {
+            console.log('✅ Модель предзагружена:', url);
+            globalModelCache.add(url);
+            setLoadedModels(new Set(globalModelCache));
+            cleanup();
+            resolve();
+          };
+
+          const onError = (e: any) => {
+            console.error(`❌ Ошибка предзагрузки модели (попытка ${retryCount + 1}):`, url, e);
+            cleanup();
+            
+            if (retryCount < 2) {
+              // Повторная попытка
+              setTimeout(() => {
+                preloadModel(url, retryCount + 1).then(resolve).catch(reject);
+              }, 2000);
+            } else {
+              console.error('❌ Все попытки предзагрузки исчерпаны:', url);
+              resolve(); // Не блокируем интерфейс
+            }
+          };
+
+          modelViewer.addEventListener('load', onLoad, { once: true });
+          modelViewer.addEventListener('error', onError, { once: true });
+
+          // Дополнительная проверка через model-viewer API
+          if (modelViewer.loaded) {
+            onLoad();
           }
-          setPreloadingModels(prev => {
-            const newSet = new Set(prev);
-            newSet.delete(url);
-            return newSet;
-          });
-        };
 
-        modelViewer.addEventListener('load', () => {
-          console.log('✅ Модель предзагружена:', url);
-          globalModelCache.add(url);
-          setLoadedModels(new Set(globalModelCache));
-          cleanup();
-          resolve();
-        }, { once: true });
+        } else {
+          reject(new Error('Failed to create model-viewer element'));
+        }
+      };
 
-        modelViewer.addEventListener('error', (e) => {
-          console.error('❌ Ошибка предзагрузки модели:', url, e);
-          cleanup();
-          reject(new Error(`Failed to preload model: ${url}`));
-        }, { once: true });
-
-      } else {
-        reject(new Error('Failed to create model-viewer element'));
-      }
+      waitForModelViewer();
     });
 
     globalPreloadPromises.set(url, preloadPromise);
@@ -129,8 +173,7 @@ export const useModelPreloader = (): ModelPreloaderState => {
     try {
       await preloadPromise;
     } catch (error) {
-      console.error('Ошибка предзагрузки модели:', error);
-      // Не бросаем ошибку дальше, чтобы не сломать интерфейс
+      console.error('Критическая ошибка предзагрузки модели:', error);
     } finally {
       globalPreloadPromises.delete(url);
     }
@@ -139,12 +182,23 @@ export const useModelPreloader = (): ModelPreloaderState => {
   const preloadModels = async (urls: string[]): Promise<void> => {
     console.log('🔄 Начинаю предзагрузку всех моделей:', urls);
     
-    // Запускаем все загрузки параллельно
-    const preloadPromises = urls.map(url => preloadModel(url));
+    // Запускаем загрузки с небольшой задержкой между ними для стабильности
+    const preloadPromises = urls.map((url, index) => 
+      new Promise<void>(resolve => {
+        setTimeout(() => {
+          preloadModel(url).then(resolve).catch(resolve);
+        }, index * 500); // 500мс задержка между моделями
+      })
+    );
     
     try {
-      await Promise.allSettled(preloadPromises);
+      await Promise.all(preloadPromises);
       console.log('🎉 Предзагрузка всех моделей завершена');
+      
+      // Дополнительная проверка готовности
+      const readyModels = urls.filter(url => globalModelCache.has(url));
+      console.log(`📊 Готовые модели: ${readyModels.length}/${urls.length}`, readyModels);
+      
     } catch (error) {
       console.error('Ошибка при предзагрузке моделей:', error);
     }
