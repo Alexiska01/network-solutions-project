@@ -9,32 +9,37 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
   const [showLogo, setShowLogo] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [showSubtitle, setShowSubtitle] = useState(false);
-  const [showLoader, setShowLoader] = useState(false);
+  const [welcomePhaseComplete, setWelcomePhaseComplete] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
+  // Фаза приветствия - фиксированная 10 секунд
   useEffect(() => {
     // Показываем элементы по очереди
     setTimeout(() => setShowLogo(true), 500);
     setTimeout(() => setShowTitle(true), 1500);
     setTimeout(() => setShowSubtitle(true), 2500);
-    setTimeout(() => setShowLoader(true), 3000);
+    
+    // Через 10 секунд переходим к фазе ожидания моделей
+    setTimeout(() => {
+      console.log('🎉 Фаза приветствия завершена (10 сек). Переходим к ожиданию моделей...');
+      setWelcomePhaseComplete(true);
+    }, 10000);
   }, []);
 
-  // Отдельный эффект для завершения - ждем модели
+  // Фаза ожидания моделей - как только все готовы
   useEffect(() => {
-    if (modelsReady) {
-      console.log('🎉 Модели готовы! Завершаем Welcome экран через 2 секунды...');
+    if (welcomePhaseComplete && modelsReady) {
+      console.log('🎯 Все модели готовы! Завершаем экран загрузки...');
       
-      // Даем еще 2 секунды после готовности моделей
       setTimeout(() => {
         setFadeOut(true);
-      }, 2000);
+      }, 500);
       
       setTimeout(() => {
         onComplete();
-      }, 3500);
+      }, 2000);
     }
-  }, [modelsReady, onComplete]);
+  }, [welcomePhaseComplete, modelsReady, onComplete]);
 
   return (
     <div className={`fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center transition-opacity duration-1500 ${
@@ -72,12 +77,17 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
           </p>
         </div>
 
-        {/* Стрелочка загрузки */}
-        <div className={`transition-opacity duration-1000 ${showLoader ? 'opacity-100' : 'opacity-0'}`}>
+        {/* Индикатор состояния */}
+        <div className={`transition-opacity duration-1000 ${welcomePhaseComplete ? 'opacity-100' : 'opacity-0'}`}>
           <div className="flex flex-col items-center justify-center space-y-4">
             <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
             <p className="text-slate-400 text-sm">
-              {modelsReady ? 'Модели готовы! Переход...' : 'Загрузка 3D моделей...'}
+              {!welcomePhaseComplete 
+                ? 'Добро пожаловать...' 
+                : modelsReady 
+                  ? 'Модели готовы! Переход...' 
+                  : 'Ожидание моделей...'
+              }
             </p>
           </div>
         </div>
