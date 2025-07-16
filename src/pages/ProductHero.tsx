@@ -167,7 +167,7 @@ const ProductHero = () => {
                   : 'opacity-100 transform translate-x-0 scale-100 blur-0'
               }`}>
                 <div className="space-y-4">
-                  <h2 className={`text-3xl font-bold text-white transition-all duration-700 ease-out ${
+                  <h2 className={`text-2xl font-bold text-white transition-all duration-700 ease-out ${
                     isTransitioning 
                       ? 'transform translate-y-[-20px] opacity-0' 
                       : 'transform translate-y-0 opacity-100'
@@ -175,7 +175,7 @@ const ProductHero = () => {
                     {currentData.title}
                   </h2>
                   
-                  <p className={`text-lg text-slate-300 transition-all duration-700 ease-out delay-100 ${
+                  <p className={`text-base text-slate-300 transition-all duration-700 ease-out delay-100 ${
                     isTransitioning 
                       ? 'transform translate-y-[-15px] opacity-0' 
                       : 'transform translate-y-0 opacity-100'
@@ -197,7 +197,7 @@ const ProductHero = () => {
                         {feature ? (
                           <>
                             <div className="w-2 h-2 bg-blue-400 rounded-full" />
-                            <span className="text-slate-300">{feature}</span>
+                            <span className="text-sm text-slate-300">{feature}</span>
                           </>
                         ) : (
                           <div className="h-6"></div>
