@@ -161,7 +161,7 @@ const ProductHero = () => {
                 </h1>
               </div>
 
-              <div className={`space-y-6 transition-all duration-700 ease-in-out ${
+              <div className={`h-96 flex flex-col space-y-6 transition-all duration-700 ease-in-out ${
                 isTransitioning 
                   ? 'opacity-0 transform translate-x-[-50px] scale-95 blur-sm' 
                   : 'opacity-100 transform translate-x-0 scale-100 blur-0'
@@ -183,7 +183,7 @@ const ProductHero = () => {
                     {currentData.description}
                   </p>
                   
-                  <div className={`space-y-3 transition-all duration-700 ease-out delay-200 ${
+                  <div className={`space-y-3 flex-1 transition-all duration-700 ease-out delay-200 ${
                     isTransitioning 
                       ? 'transform translate-y-[-10px] opacity-0' 
                       : 'transform translate-y-0 opacity-100'
