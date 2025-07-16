@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
@@ -10,7 +10,7 @@ const heroData = [
     id: 'IDS3530',
     title: 'Коммутаторы серии IDS3530',
     description: 'Промышленные управляемые коммутаторы для критически важных применений',
-    modelUrl: '/models/compressed/S3530-all.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb',
     features: [
       'Уровень доступа в корпоративных ЛВС;',
       'Два модульных блока питания;',
@@ -25,7 +25,7 @@ const heroData = [
     id: 'IDS4530',
     title: 'Коммутаторы серии IDS4530',
     description: 'Модульные коммутаторы с расширенными возможностями управления        ',
-    modelUrl: '/models/compressed/S4530-all.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb',
     features: [
       'Уровень доступа в корпоративных ЛВС;',
       'Два модульных блока питания;',
@@ -40,15 +40,15 @@ const heroData = [
     id: 'IDS6010',
     title: 'Коммутаторы серии IDS6010',
     description: 'Модульные коммутаторы с расширенными возможностями управления         ',
-    modelUrl: '/models/compressed/IDS6010-all.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb',
     features: [
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      ''
+      '-;',
+      '-;',
+      '-;',
+      '-;',
+      '-;',
+      '-;',
+      '-.'
     ]
   },
   {
