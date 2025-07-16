@@ -120,7 +120,7 @@ const ProductHero = () => {
                 </p>
               </div>
 
-              <div className={`space-y-6 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <div className="space-y-6">
                 <div className="space-y-4">
                   <h2 className="text-3xl font-bold text-white">
                     {currentData.title}
