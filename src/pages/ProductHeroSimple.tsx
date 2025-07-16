@@ -4,25 +4,25 @@ import { useNavigate } from 'react-router-dom';
 
 const heroData = [
   {
-    id: 'IDS3530-24S',
-    title: 'IDS3530-24S',
-    description: 'Промышленный коммутатор 24 порта SFP+',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb',
-    features: ['24x SFP+ 10G портов', 'Управляемый Layer 2/3', 'Резервирование питания']
+    id: 'IDS3530',
+    title: 'Коммутаторы серии IDS3530',
+    description: 'Промышленные управляемые коммутаторы для критически важных применений',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb',
+    features: ['Уровень доступа в корпоративных ЛВС', 'Поддержка PoE/PoE+', 'Развитые возможности по управлению']
   },
   {
-    id: 'IDS3530-48T',
-    title: 'IDS3530-48T',
-    description: 'Промышленный коммутатор 48 портов Ethernet',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48T.glb',
-    features: ['48x 10/100/1000 портов', 'Расширенная диагностика', 'Промышленное исполнение']
+    id: 'IDS3730',
+    title: 'Коммутаторы серии IDS3730',
+    description: 'Высокопроизводительные коммутаторы для корпоративных сетей',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb',
+    features: ['Статическая и динамическая маршрутизация', 'Два модульных блока питания', 'Поддержка PoE/PoE+']
   },
   {
-    id: 'IDS3530-48P',
-    title: 'IDS3530-48P',
-    description: 'Промышленный PoE+ коммутатор 48 портов',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48P.glb',
-    features: ['48x PoE+ портов', 'До 30W на порт', 'Интеллектуальное управление питанием']
+    id: 'IDS4530',
+    title: 'Коммутаторы серии IDS4530',
+    description: 'Модульные коммутаторы с расширенными возможностями управления',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb',
+    features: ['Модули расширения', 'Поддержка технологии VxLAN', 'Развитые возможности по управлению']
   }
 ];
 

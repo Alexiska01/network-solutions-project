@@ -12,19 +12,19 @@ const seriesData: SeriesData[] = [
     id: 'IDS3530',
     title: 'Серия IDS3530',
     description: 'Управляемые коммутаторы L2+ с поддержкой 10G портов и расширенными возможностями маршрутизации',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb'
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb'
   },
   {
     id: 'IDS3730',
     title: 'Серия IDS3730',
     description: 'Высокопроизводительные коммутаторы с поддержкой 40G портов для корпоративных сетей',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48T.glb'
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb'
   },
   {
     id: 'IDS4530',
     title: 'Серия IDS4530',
     description: 'Мощные коммутаторы L3 с поддержкой PoE+ и расширенными функциями безопасности',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48P.glb'
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb'
   }
 ];
 
