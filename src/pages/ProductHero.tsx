@@ -33,6 +33,7 @@ const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { isModelReady, preloadModels } = useModelPreloader();
@@ -48,16 +49,21 @@ const ProductHero = () => {
     });
   }, []); // Убираем зависимость от preloadModels для немедленного запуска
 
-  // Запускаем карусель
+  // Запускаем карусель с мировой анимацией
   useEffect(() => {
     const startCarousel = () => {
       intervalRef.current = setInterval(() => {
+        setIsTransitioning(true);
         setIsVisible(false);
         
         setTimeout(() => {
           setCurrentIndex((prev) => (prev + 1) % heroData.length);
+        }, 600);
+        
+        setTimeout(() => {
           setIsVisible(true);
-        }, 300);
+          setIsTransitioning(false);
+        }, 900);
       }, 6000);
     };
 
@@ -120,19 +126,39 @@ const ProductHero = () => {
                 </p>
               </div>
 
-              <div className="space-y-6">
+              <div className={`space-y-6 transition-all duration-700 ease-in-out ${
+                isTransitioning 
+                  ? 'opacity-0 transform translate-x-[-50px] scale-95 blur-sm' 
+                  : 'opacity-100 transform translate-x-0 scale-100 blur-0'
+              }`}>
                 <div className="space-y-4">
-                  <h2 className="text-3xl font-bold text-white">
+                  <h2 className={`text-3xl font-bold text-white transition-all duration-700 ease-out ${
+                    isTransitioning 
+                      ? 'transform translate-y-[-20px] opacity-0' 
+                      : 'transform translate-y-0 opacity-100'
+                  }`}>
                     {currentData.title}
                   </h2>
                   
-                  <p className="text-lg text-slate-300">
+                  <p className={`text-lg text-slate-300 transition-all duration-700 ease-out delay-100 ${
+                    isTransitioning 
+                      ? 'transform translate-y-[-15px] opacity-0' 
+                      : 'transform translate-y-0 opacity-100'
+                  }`}>
                     {currentData.description}
                   </p>
                   
-                  <div className="space-y-3">
+                  <div className={`space-y-3 transition-all duration-700 ease-out delay-200 ${
+                    isTransitioning 
+                      ? 'transform translate-y-[-10px] opacity-0' 
+                      : 'transform translate-y-0 opacity-100'
+                  }`}>
                     {currentData.features.map((feature, index) => (
-                      <div key={index} className="flex items-center gap-3">
+                      <div key={index} className={`flex items-center gap-3 transition-all duration-500 ease-out ${
+                        isTransitioning 
+                          ? 'transform translate-x-[-30px] opacity-0' 
+                          : 'transform translate-x-0 opacity-100'
+                      }`} style={{ transitionDelay: `${index * 50 + 300}ms` }}>
                         <div className="w-2 h-2 bg-blue-400 rounded-full" />
                         <span className="text-slate-300">{feature}</span>
                       </div>
@@ -159,16 +185,26 @@ const ProductHero = () => {
             </div>
 
             <div className="relative h-[600px] lg:h-[700px]">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl" />
+              {/* Динамический фоновый градиент с анимацией */}
+              <div className={`absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl transition-all duration-1000 ${
+                isTransitioning ? 'scale-110 opacity-50' : 'scale-100 opacity-100'
+              }`} />
               
-              <div className={`relative w-full h-full transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+              {/* Дополнительные световые эффекты при переходе */}
+              <div className={`absolute inset-0 bg-gradient-radial from-blue-400/30 via-transparent to-transparent rounded-3xl transition-all duration-700 ${
+                isTransitioning ? 'opacity-100 scale-150' : 'opacity-0 scale-100'
+              }`} />
+              
+              <div className={`relative w-full h-full transition-all duration-800 ease-in-out ${
+                isTransitioning 
+                  ? 'opacity-0 scale-90 transform rotate-2 blur-sm' 
+                  : 'opacity-100 scale-100 transform rotate-0 blur-0'
+              }`}>
                 <ModelViewer3D 
                   src={currentData.modelUrl}
                   alt={currentData.title}
                   isPreloaded={isModelReady(currentData.modelUrl)}
                 />
-                
-
               </div>
             </div>
 
