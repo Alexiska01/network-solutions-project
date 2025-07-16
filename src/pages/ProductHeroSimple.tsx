@@ -45,7 +45,7 @@ const ProductHero = () => {
           setCurrentIndex((prev) => (prev + 1) % heroData.length);
           setIsVisible(true);
         }, 300);
-      }, 5000);
+      }, 12000);
     };
 
     const timeout = setTimeout(startCarousel, 2000);
@@ -178,7 +178,7 @@ const ProductHero = () => {
         <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3">
           <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
           <span className="text-white text-sm">
-            Автосмена через 5 сек
+            Автосмена через 12 сек
           </span>
         </div>
       </div>

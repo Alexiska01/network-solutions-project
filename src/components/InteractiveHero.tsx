@@ -40,7 +40,7 @@ const InteractiveHero: React.FC = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % seriesData.length);
         setIsVisible(true);
       }, 150);
-    }, 3000);
+    }, 12000);
 
     return () => clearInterval(interval);
   }, []);

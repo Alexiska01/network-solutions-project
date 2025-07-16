@@ -75,18 +75,33 @@ const ProductHero = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const { isModelReady, preloadModels } = useModelPreloader();
+  const { isModelReady, preloadModel, preloadModels } = useModelPreloader();
 
-  // Немедленно запускаем предзагрузку всех моделей сразу при монтировании
+  // Оптимизированная предзагрузка: сначала первая модель, потом остальные
   useEffect(() => {
-    const modelUrls = heroData.map(item => item.modelUrl);
-    console.log('🚀 Запускаю агрессивную предзагрузку моделей:', modelUrls);
+    const firstModelUrl = heroData[0].modelUrl;
+    const otherModelUrls = heroData.slice(1).map(item => item.modelUrl);
     
-    // Запускаем предзагрузку без задержек
-    preloadModels(modelUrls).then(() => {
-      console.log('🎉 Все модели предзагружены и готовы!');
+    console.log('🚀 Приоритетная загрузка первой модели:', firstModelUrl);
+    
+    // Сначала загружаем только первую модель
+    preloadModel(firstModelUrl).then(() => {
+      console.log('✅ Первая модель загружена, можно показывать страницу');
+      
+      // Фоновая загрузка остальных моделей с задержкой
+      setTimeout(() => {
+        console.log('🔄 Начинаю фоновую загрузку остальных моделей:', otherModelUrls);
+        preloadModels(otherModelUrls).then(() => {
+          console.log('🎉 Все модели предзагружены!');
+        });
+      }, 2000); // 2 секунды задержки для стабильности
+    }).catch(error => {
+      console.warn('⚠️ Ошибка загрузки первой модели, загружаем все:', error);
+      // Fallback: загружаем все модели
+      const allModelUrls = heroData.map(item => item.modelUrl);
+      preloadModels(allModelUrls);
     });
-  }, []); // Убираем зависимость от preloadModels для немедленного запуска
+  }, []);
 
   // Запускаем карусель с мировой анимацией
   useEffect(() => {
@@ -103,11 +118,11 @@ const ProductHero = () => {
           setIsVisible(true);
           setIsTransitioning(false);
         }, 900);
-      }, 6000);
+      }, 12000);
     };
 
     // Запускаем карусель через небольшую задержку
-    const timeout = setTimeout(startCarousel, 2000);
+    const timeout = setTimeout(startCarousel, 3000);
 
     return () => {
       if (intervalRef.current) {
@@ -119,13 +134,14 @@ const ProductHero = () => {
 
   const currentData = heroData[currentIndex];
   
-  // Проверяем готовность всех моделей
+  // Проверяем готовность первой модели для показа страницы
+  const firstModelReady = isModelReady(heroData[0].modelUrl);
   const allModelsReady = heroData.every(item => isModelReady(item.modelUrl));
 
   if (showWelcome) {
     return <WelcomeScreen 
       onComplete={() => setShowWelcome(false)} 
-      modelsReady={allModelsReady}
+      modelsReady={firstModelReady}
     />;
   }
 
