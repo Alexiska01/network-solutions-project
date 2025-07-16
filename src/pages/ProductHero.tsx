@@ -153,19 +153,9 @@ const ProductHero = () => {
               <div className="space-y-6">
 
                 
-                <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight">
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    Высококачественное оборудование
-                  </span>
-                  {' '}для сетевой инфраструктуры
+                <h1 className="text-2xl lg:text-3xl font-semibold text-white leading-tight">
+                  Высококачественное оборудование для сетевой инфраструктуры
                 </h1>
-                
-                <div className="relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg blur opacity-75"></div>
-                  <p className="relative text-xl font-medium text-white/90 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/10 shadow-2xl">
-                    Передовые решения корпоративного уровня для критически важной инфраструктуры
-                  </p>
-                </div>
               </div>
 
               <div className={`space-y-6 transition-all duration-700 ease-in-out ${
