@@ -29,16 +29,10 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
   // Фаза ожидания моделей - как только все готовы
   useEffect(() => {
     if (welcomePhaseComplete && modelsReady) {
-      console.log('🎯 Все модели готовы! Запускаем кинематографический переход...');
+      console.log('🎯 Все модели готовы! Мгновенный переход...');
       
-      // Более длинный профессиональный переход
-      setTimeout(() => {
-        setFadeOut(true);
-      }, 1000);
-      
-      setTimeout(() => {
-        onComplete();
-      }, 3500);
+      // Мгновенный переход без анимаций
+      onComplete();
     }
   }, [welcomePhaseComplete, modelsReady, onComplete]);
 

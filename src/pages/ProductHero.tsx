@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
 import { useModelPreloader } from '@/hooks/useModelPreloader';
 import WelcomeScreen from '@/components/WelcomeScreen';
-import CinematicTransition from '@/components/CinematicTransition';
 
 const heroData = [
   {
@@ -35,7 +34,6 @@ const ProductHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [showWelcome, setShowWelcome] = useState(true);
-  const [showTransition, setShowTransition] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { isModelReady, preloadModels } = useModelPreloader();
 
@@ -79,24 +77,11 @@ const ProductHero = () => {
   // Проверяем готовность всех моделей
   const allModelsReady = heroData.every(item => isModelReady(item.modelUrl));
 
-  const handleWelcomeComplete = () => {
-    setShowTransition(true);
-    setTimeout(() => {
-      setShowWelcome(false);
-      setShowTransition(false);
-    }, 3500);
-  };
-
   if (showWelcome) {
-    return (
-      <>
-        <WelcomeScreen 
-          onComplete={handleWelcomeComplete} 
-          modelsReady={allModelsReady}
-        />
-        <CinematicTransition isActive={showTransition} />
-      </>
-    );
+    return <WelcomeScreen 
+      onComplete={() => setShowWelcome(false)} 
+      modelsReady={allModelsReady}
+    />;
   }
 
   return (
