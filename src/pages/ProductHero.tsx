@@ -15,7 +15,9 @@ const heroData = [
       'Уровень доступа в корпоративных ЛВС;',
       'Встроенные блоки питания;',
       'Поддержка PoE/PoE+;',
+      '',
       'Статическая и динамическая маршрутизация;',
+      '',
       'Развитые возможности по управлению.'
     ]
   },
@@ -58,7 +60,9 @@ const heroData = [
       'Уровень доступа в корпоративных ЛВС;',
       'Два модульных блока питания;',
       'Поддержка PoE/PoE+;',
+      '',
       'Статическая и динамическая маршрутизация;',
+      '',
       'Развитые возможности по управлению.'
     ]
   }
@@ -155,6 +159,13 @@ const ProductHero = () => {
                   </span>
                   {' '}для сетевой инфраструктуры
                 </h1>
+                
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg blur opacity-75"></div>
+                  <p className="relative text-xl font-medium text-white/90 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/10 shadow-2xl">
+                    Передовые решения корпоративного уровня для критически важной инфраструктуры
+                  </p>
+                </div>
               </div>
 
               <div className={`space-y-6 transition-all duration-700 ease-in-out ${
@@ -190,8 +201,14 @@ const ProductHero = () => {
                           ? 'transform translate-x-[-30px] opacity-0' 
                           : 'transform translate-x-0 opacity-100'
                       }`} style={{ transitionDelay: `${index * 50 + 300}ms` }}>
-                        <div className="w-2 h-2 bg-blue-400 rounded-full" />
-                        <span className="text-slate-300">{feature}</span>
+                        {feature ? (
+                          <>
+                            <div className="w-2 h-2 bg-blue-400 rounded-full" />
+                            <span className="text-slate-300">{feature}</span>
+                          </>
+                        ) : (
+                          <div className="h-6"></div>
+                        )}
                       </div>
                     ))}
                   </div>
