@@ -62,9 +62,30 @@ export const useModelPreloader = (): ModelPreloaderState => {
       // Ждем загрузки model-viewer если еще не готов
       const waitForModelViewer = () => {
         if (typeof customElements !== 'undefined' && customElements.get('model-viewer')) {
+          console.log('✅ model-viewer готов, начинаю предзагрузку');
           startPreload();
         } else {
-          console.log('⏳ Ожидаю загрузки model-viewer...');
+          console.log('⏳ Ожидаю загрузки model-viewer...', {
+            customElementsExists: typeof customElements !== 'undefined',
+            modelViewerRegistered: typeof customElements !== 'undefined' ? !!customElements.get('model-viewer') : false
+          });
+          
+          // Fallback через простой fetch через 3 секунды ожидания
+          setTimeout(() => {
+            if (!globalModelCache.has(url)) {
+              console.log('🔄 Fallback: пробую простой fetch вместо model-viewer');
+              fetch(url).then(() => {
+                console.log('✅ Модель загружена через fetch:', url);
+                globalModelCache.add(url);
+                setLoadedModels(new Set(globalModelCache));
+                resolve();
+              }).catch(() => {
+                console.warn('❌ Fallback fetch тоже не сработал');
+                resolve(); // Не блокируем интерфейс
+              });
+            }
+          }, 3000);
+          
           setTimeout(waitForModelViewer, 100);
         }
       };
@@ -205,7 +226,9 @@ export const useModelPreloader = (): ModelPreloaderState => {
   };
 
   const isModelReady = (url: string): boolean => {
-    return globalModelCache.has(url);
+    const ready = globalModelCache.has(url);
+    console.log('🔍 isModelReady:', { url, ready, cacheSize: globalModelCache.size });
+    return ready;
   };
 
   return {

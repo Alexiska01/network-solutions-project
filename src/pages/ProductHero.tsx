@@ -136,9 +136,32 @@ const ProductHero = () => {
   const firstModelReady = isModelReady(heroData[0].modelUrl);
   const allModelsReady = heroData.every(item => isModelReady(item.modelUrl));
 
+  // Отладочная информация
+  console.log('🔍 Debug ProductHero:', {
+    showWelcome,
+    firstModelReady,
+    allModelsReady,
+    firstModelUrl: heroData[0].modelUrl
+  });
+
+  // Принудительный переход через 10 секунд если модель не загрузилась
+  useEffect(() => {
+    if (showWelcome) {
+      const forceTimeout = setTimeout(() => {
+        console.log('⏰ Принудительный переход через 10 секунд');
+        setShowWelcome(false);
+      }, 10000);
+
+      return () => clearTimeout(forceTimeout);
+    }
+  }, [showWelcome]);
+
   if (showWelcome) {
     return <WelcomeScreen 
-      onComplete={() => setShowWelcome(false)} 
+      onComplete={() => {
+        console.log('✅ WelcomeScreen onComplete вызван');
+        setShowWelcome(false);
+      }} 
       modelsReady={firstModelReady}
     />;
   }

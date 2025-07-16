@@ -30,15 +30,34 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
     }, 5000);
   }, []);
 
+  // Отладочная информация
+  console.log('🔍 Debug WelcomeScreen:', {
+    welcomePhaseComplete,
+    modelsReady,
+    shouldTransition: welcomePhaseComplete && modelsReady
+  });
+
   // Фаза ожидания моделей - как только все готовы
   useEffect(() => {
+    console.log('🔄 WelcomeScreen useEffect:', { welcomePhaseComplete, modelsReady });
+    
     if (welcomePhaseComplete && modelsReady) {
-      console.log('🎯 Все модели готовы! Мгновенный переход...');
-      
-      // Мгновенный переход без анимаций
+      console.log('🎯 Модель готова! Мгновенный переход...');
       onComplete();
     }
   }, [welcomePhaseComplete, modelsReady, onComplete]);
+
+  // Принудительный переход если застряли
+  useEffect(() => {
+    const emergencyTimeout = setTimeout(() => {
+      if (!modelsReady) {
+        console.log('🚨 Аварийный переход - модель не загрузилась за 15 секунд');
+        onComplete();
+      }
+    }, 15000);
+
+    return () => clearTimeout(emergencyTimeout);
+  }, [modelsReady, onComplete]);
 
   return (
     <div className={`fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center transition-all duration-[3500ms] ease-in-out ${
