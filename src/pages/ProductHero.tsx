@@ -55,7 +55,7 @@ const heroData = [
     id: 'IDS3730',
     title: 'Коммутаторы серии IDS3730',
     description: 'Высокопроизводительные коммутаторы для корпоративных сетей             ',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3730_all.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb',
     features: [
       'Уровень доступа в корпоративных ЛВС;',
       'Два модульных блока питания;',

@@ -12,7 +12,7 @@ const modelUrls = [
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS3730_all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48T.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48P.glb',
