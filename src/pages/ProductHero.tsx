@@ -212,14 +212,7 @@ const ProductHero = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3">
-          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-          <span className="text-white text-sm">
-            Модели предзагружаются • Автосмена через 6 сек
-          </span>
-        </div>
-      </div>
+
     </div>
   );
 };
