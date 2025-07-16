@@ -153,44 +153,64 @@ const ProductHero = () => {
               <div className="space-y-6">
 
                 
-                <div className="space-y-4">
-                  <h1 className="text-4xl lg:text-5xl font-bold text-white leading-snug tracking-tight">
-                    Высококачественное оборудование для сетевой инфраструктуры
-                  </h1>
+                <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight">
+                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    Высококачественное оборудование
+                  </span>
+                  {' '}для сетевой инфраструктуры
+                </h1>
+                
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg blur opacity-75"></div>
+                  <p className="relative text-xl font-medium text-white/90 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/10 shadow-2xl">
+                    Передовые решения корпоративного уровня для критически важной инфраструктуры
+                  </p>
                 </div>
               </div>
 
-              <div className={`transition-all duration-600 ease-in-out ${
+              <div className={`space-y-6 transition-all duration-700 ease-in-out ${
                 isTransitioning 
-                  ? 'opacity-0 transform translate-y-4' 
-                  : 'opacity-100 transform translate-y-0'
+                  ? 'opacity-0 transform translate-x-[-50px] scale-95 blur-sm' 
+                  : 'opacity-100 transform translate-x-0 scale-100 blur-0'
               }`}>
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 shadow-xl">
-                  <div className="space-y-6">
-                    <div className="space-y-3">
-                      <h2 className="text-2xl font-semibold text-white leading-tight">
-                        {currentData.title}
-                      </h2>
-                      
-                      <p className="text-slate-300 leading-relaxed">
-                        {currentData.description}
-                      </p>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      {currentData.features.map((feature, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          {feature ? (
-                            <>
-                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
-                              <span className="text-slate-200 text-sm leading-relaxed">{feature}</span>
-                            </>
-                          ) : (
-                            <div className="h-5"></div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                <div className="space-y-4">
+                  <h2 className={`text-3xl font-bold text-white transition-all duration-700 ease-out ${
+                    isTransitioning 
+                      ? 'transform translate-y-[-20px] opacity-0' 
+                      : 'transform translate-y-0 opacity-100'
+                  }`}>
+                    {currentData.title}
+                  </h2>
+                  
+                  <p className={`text-lg text-slate-300 transition-all duration-700 ease-out delay-100 ${
+                    isTransitioning 
+                      ? 'transform translate-y-[-15px] opacity-0' 
+                      : 'transform translate-y-0 opacity-100'
+                  }`}>
+                    {currentData.description}
+                  </p>
+                  
+                  <div className={`space-y-3 transition-all duration-700 ease-out delay-200 ${
+                    isTransitioning 
+                      ? 'transform translate-y-[-10px] opacity-0' 
+                      : 'transform translate-y-0 opacity-100'
+                  }`}>
+                    {currentData.features.map((feature, index) => (
+                      <div key={index} className={`flex items-center gap-3 transition-all duration-500 ease-out ${
+                        isTransitioning 
+                          ? 'transform translate-x-[-30px] opacity-0' 
+                          : 'transform translate-x-0 opacity-100'
+                      }`} style={{ transitionDelay: `${index * 50 + 300}ms` }}>
+                        {feature ? (
+                          <>
+                            <div className="w-2 h-2 bg-blue-400 rounded-full" />
+                            <span className="text-slate-300">{feature}</span>
+                          </>
+                        ) : (
+                          <div className="h-6"></div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
