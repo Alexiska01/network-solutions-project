@@ -168,16 +168,7 @@ const ProductHero = () => {
                   isPreloaded={isModelReady(currentData.modelUrl)}
                 />
                 
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 border border-white/10">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-white font-semibold">{currentData.title}</h3>
-                        <p className="text-slate-300 text-sm">3D модель</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
 
