@@ -106,10 +106,7 @@ const ProductHero = () => {
             
             <div className="space-y-8">
               <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 backdrop-blur-sm rounded-full text-blue-200 text-sm font-medium">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                  Промышленные коммутаторы
-                </div>
+
                 
                 <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight">
                   Серия
@@ -176,19 +173,7 @@ const ProductHero = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="text-white font-semibold">{currentData.title}</h3>
-                        <p className="text-slate-300 text-sm">
-                          3D модель • {isModelReady(currentData.modelUrl) ? 'Готова к показу' : 'Загружается...'}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full animate-pulse ${
-                          isModelReady(currentData.modelUrl) ? 'bg-green-400' : 'bg-yellow-400'
-                        }`} />
-                        <span className={`text-sm ${
-                          isModelReady(currentData.modelUrl) ? 'text-green-400' : 'text-yellow-400'
-                        }`}>
-                          {isModelReady(currentData.modelUrl) ? 'Готово' : 'Загрузка'}
-                        </span>
+                        <p className="text-slate-300 text-sm">3D модель</p>
                       </div>
                     </div>
                   </div>
