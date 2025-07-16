@@ -8,10 +8,16 @@ import WelcomeScreen from '@/components/WelcomeScreen';
 const heroData = [
   {
     id: 'IDS3530-24S',
-    title: 'IDS3530-24S',
-    description: 'Промышленный коммутатор 24 порта SFP+',
+    title: 'Коммутаторы серии IDS3530',
+    description: 'Промышленные управляемые коммутаторы для критически важных применений',
     modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb',
-    features: ['24x SFP+ 10G портов', 'Управляемый Layer 2/3', 'Резервирование питания']
+    features: [
+      'Уровень доступа в корпоративных ЛВС;',
+      'Встроенные блоки питания;',
+      'Поддержка PoE/PoE+;',
+      'Статическая и динамическая маршрутизация;',
+      'Развитые возможности по управлению.'
+    ]
   },
   {
     id: 'IDS3530-48T',
