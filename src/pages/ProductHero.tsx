@@ -10,7 +10,7 @@ const heroData = [
     id: 'IDS3530',
     title: 'Коммутаторы серии IDS3530',
     description: 'Промышленные управляемые коммутаторы для критически важных применений',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb',
     features: [
       'Уровень доступа в корпоративных ЛВС;',
       'Два модульных блока питания;',

@@ -12,7 +12,7 @@ const seriesData: SeriesData[] = [
     id: 'IDS3530',
     title: 'Серия IDS3530',
     description: 'Управляемые коммутаторы L2+ с поддержкой 10G портов и расширенными возможностями маршрутизации',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb'
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb'
   },
   {
     id: 'IDS3730',

@@ -73,14 +73,25 @@ export const useModelPreloader = (): ModelPreloaderState => {
           // Fallback через простой fetch через 3 секунды ожидания
           setTimeout(() => {
             if (!globalModelCache.has(url)) {
-              console.log('🔄 Fallback: пробую простой fetch вместо model-viewer');
-              fetch(url).then(() => {
-                console.log('✅ Модель загружена через fetch:', url);
-                globalModelCache.add(url);
-                setLoadedModels(new Set(globalModelCache));
-                resolve();
-              }).catch(() => {
-                console.warn('❌ Fallback fetch тоже не сработал');
+              console.log('🔄 Fallback: пробую простой fetch вместо model-viewer для:', url);
+              fetch(url, { method: 'HEAD' }).then(response => {
+                console.log('📊 Fetch response:', {
+                  url,
+                  status: response.status,
+                  headers: Object.fromEntries(response.headers.entries()),
+                  size: response.headers.get('content-length')
+                });
+                if (response.ok) {
+                  console.log('✅ Модель доступна, помечаю как загруженную:', url);
+                  globalModelCache.add(url);
+                  setLoadedModels(new Set(globalModelCache));
+                  resolve();
+                } else {
+                  console.warn('❌ Модель недоступна, статус:', response.status);
+                  resolve(); // Не блокируем интерфейс
+                }
+              }).catch(error => {
+                console.error('❌ Fallback fetch ошибка:', url, error);
                 resolve(); // Не блокируем интерфейс
               });
             }
