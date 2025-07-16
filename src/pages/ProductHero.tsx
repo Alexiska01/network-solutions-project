@@ -104,34 +104,59 @@ const ProductHero = () => {
     }
   }, []);
 
-  // Запускаем карусель с мировой анимацией
+  // Запускаем карусель: первая серия показывается ровно 12 секунд
   useEffect(() => {
-    const startCarousel = () => {
-      intervalRef.current = setInterval(() => {
+    // Запускаем только если страница открыта (не показываем Welcome)
+    if (!showWelcome) {
+      console.log('🎬 Страница открыта, начинаю показ 3530 серии на 12 секунд');
+      
+      // Убеждаемся что показываем 3530 серию
+      setCurrentIndex(0);
+      setIsVisible(true);
+      setIsTransitioning(false);
+      
+      // Первый переход с 3530 на 3730 через 12 секунд
+      const firstTransition = setTimeout(() => {
+        console.log('🔄 Первый переход: 3530 → 3730');
         setIsTransitioning(true);
         setIsVisible(false);
         
         setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % heroData.length);
+          setCurrentIndex(1); // Переходим на 3730 (второй элемент)
         }, 600);
         
         setTimeout(() => {
           setIsVisible(true);
           setIsTransitioning(false);
         }, 900);
-      }, 12000);
-    };
+        
+        // Запускаем регулярную карусель для остальных серий
+        setTimeout(() => {
+          intervalRef.current = setInterval(() => {
+            setIsTransitioning(true);
+            setIsVisible(false);
+            
+            setTimeout(() => {
+              setCurrentIndex((prev) => (prev + 1) % heroData.length);
+            }, 600);
+            
+            setTimeout(() => {
+              setIsVisible(true);
+              setIsTransitioning(false);
+            }, 900);
+          }, 12000);
+        }, 12000); // Следующий переход тоже через 12 сек
+        
+      }, 12000); // Первый переход через 12 секунд
 
-    // Запускаем карусель через небольшую задержку
-    const timeout = setTimeout(startCarousel, 3000);
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      clearTimeout(timeout);
-    };
-  }, []);
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+        clearTimeout(firstTransition);
+      };
+    }
+  }, [showWelcome]); // Зависимость от showWelcome
 
   const currentData = heroData[currentIndex];
   
@@ -139,13 +164,17 @@ const ProductHero = () => {
   console.log('🔍 Debug ProductHero:', {
     showWelcome,
     isWelcomeLoadingComplete,
-    loadingProgress
+    loadingProgress,
+    currentIndex,
+    currentSeries: heroData[currentIndex]?.id
   });
 
   // Переход с WelcomeScreen когда загрузка завершена
   useEffect(() => {
     if (isWelcomeLoadingComplete) {
       console.log('✅ WelcomeScreen загрузка завершена, переходим');
+      // Убеждаемся что начинаем с 3530 серии (индекс 0)
+      setCurrentIndex(0);
       setShowWelcome(false);
     }
   }, [isWelcomeLoadingComplete]);
