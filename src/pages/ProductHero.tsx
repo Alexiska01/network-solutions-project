@@ -155,10 +155,6 @@ const ProductHero = () => {
                   </span>
                   {' '}для сетевой инфраструктуры
                 </h1>
-                
-                <p className="text-xl text-slate-300 leading-relaxed max-w-2xl">
-                  Высокопроизводительные управляемые коммутаторы для критически важных промышленных применений
-                </p>
               </div>
 
               <div className={`space-y-6 transition-all duration-700 ease-in-out ${
