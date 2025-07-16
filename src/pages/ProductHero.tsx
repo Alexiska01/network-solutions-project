@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
@@ -42,13 +42,13 @@ const heroData = [
     description: 'Модульные коммутаторы с расширенными возможностями управления         ',
     modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb',
     features: [
-      '-;',
-      '-;',
-      '-;',
-      '-;',
-      '-;',
-      '-;',
-      '-.'
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      ''
     ]
   },
   {
