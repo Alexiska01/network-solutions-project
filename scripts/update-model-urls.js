@@ -9,7 +9,7 @@ const modelMapping = {
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb': '/models/compressed/S3530-all.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb': '/models/compressed/S4530-all.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb': '/models/compressed/IDS6010-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb': '/models/compressed/IDS3730_all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb': '/models/compressed/3730all.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb': '/models/compressed/S3530-24S.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48T.glb': '/models/compressed/S3530-48T.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48P.glb': '/models/compressed/S3530-48P.glb',

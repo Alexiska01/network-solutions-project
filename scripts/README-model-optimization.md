@@ -88,7 +88,7 @@ node scripts/compress-models.js && cp models/compressed/*.glb public/models/comp
 - `S3530-all.glb` - Модель серии IDS3530
 - `S4530-all.glb` - Модель серии IDS4530  
 - `IDS6010-all.glb` - Модель серии IDS6010
-- `IDS3730_all.glb` - Модель серии IDS3730
+- `3730all.glb` - Модель серии IDS3730
 
 ### Детальные модели продуктов:
 - `S3530-24S.glb`, `S3530-48T.glb`, `S3530-48P.glb` - Варианты IDS3530
