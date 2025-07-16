@@ -58,7 +58,7 @@ const ProductHero = () => {
           setCurrentIndex((prev) => (prev + 1) % heroData.length);
           setIsVisible(true);
         }, 300);
-      }, 6000);
+      }, 3500);
     };
 
     // Запускаем карусель через небольшую задержку
