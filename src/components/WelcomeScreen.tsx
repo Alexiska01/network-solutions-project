@@ -8,6 +8,7 @@ interface WelcomeScreenProps {
 export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
+  const [use3D, setUse3D] = useState(false); // Пока отключено
 
   console.log('🎬 WelcomeScreen рендерится:', { progress });
 
