@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
+import ProductHero from "./pages/ProductHero";
 
 // Lazy loading для второстепенных страниц
 const SeriesCatalog3730 = lazy(() => import("./pages/SeriesCatalog3730"));
@@ -27,7 +28,7 @@ const ModelIDS3730_24T_6X = lazy(() => import("./pages/ModelIDS3730_24T_6X"));
 const ModelIDS3730_24P_6X = lazy(() => import("./pages/ModelIDS3730_24P_6X"));
 const SoftwarePage = lazy(() => import("./pages/SoftwarePage"));
 const Partners = lazy(() => import("./pages/Partners"));
-const ProductHero = lazy(() => import("./pages/ProductHero"));
+// const ProductHero = lazy(() => import("./pages/ProductHero")); // Заменён на прямой импорт
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
