@@ -159,9 +159,11 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, modelsReady =
                   ? 'Добро пожаловать...' 
                   : loadingProgress >= 100
                     ? 'Загрузка завершена! Переход...' 
-                    : loadingProgress >= 50
-                      ? 'Предзагрузка 3730 серии...'
-                      : 'Загружаю 3530 серию...'
+                    : loadingProgress >= 70
+                      ? 'Загружаю основные серии...'
+                      : loadingProgress >= 30
+                        ? 'Предзагрузка 3730 серии...'
+                        : 'Предзагрузка 3530 серии...'
                 }
               </p>
               
