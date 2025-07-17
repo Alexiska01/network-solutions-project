@@ -12,6 +12,7 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
 
   useEffect(() => {
     let progressInterval: NodeJS.Timeout;
+    let timeoutId: NodeJS.Timeout;
     
     const loadWelcome = async () => {
       console.log('🚀 WelcomeScreen: Запуск фоновой загрузки всех моделей');
@@ -61,11 +62,9 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
       });
       
       // Представление длится 15 секунд, но переход возможен только после загрузки критических моделей
-      setTimeout(() => {
-        if (criticalModelsLoaded) {
-          setIsWelcomeLoadingComplete(true);
-          console.log('✅ WelcomeScreen готов! Представление завершено за 15 секунд');
-        }
+      timeoutId = setTimeout(() => {
+        console.log('✅ WelcomeScreen готов! Представление завершено за 15 секунд');
+        setIsWelcomeLoadingComplete(true);
       }, 15000); // Представление 15 секунд
     };
 
@@ -75,8 +74,23 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
       if (progressInterval) {
         clearInterval(progressInterval);
       }
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
-  }, [heroData, criticalModelsLoaded]);
+  }, [heroData]);
+
+  // Отдельный useEffect для отслеживания завершения загрузки
+  useEffect(() => {
+    if (criticalModelsLoaded && loadingProgress >= 100) {
+      const delay = setTimeout(() => {
+        setIsWelcomeLoadingComplete(true);
+        console.log('✅ WelcomeScreen готов! Критические модели загружены и прогресс завершен');
+      }, 500);
+      
+      return () => clearTimeout(delay);
+    }
+  }, [criticalModelsLoaded, loadingProgress]);
 
   return {
     isWelcomeLoadingComplete,
