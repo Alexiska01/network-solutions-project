@@ -1,26 +1,38 @@
-import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-
-function ThreeTest() {
-  return (
-    <Canvas>
-      <ambientLight intensity={0.5} />
-      <mesh>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="hotpink" />
-      </mesh>
-    </Canvas>
-  );
-}
+import { useEffect, useRef } from "react";
 
 export default function Test3D() {
-  console.log('🔥 Test3D рендерится');
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Создаём звёзды
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'absolute bg-white rounded-full animate-pulse';
+      star.style.width = Math.random() * 3 + 1 + 'px';
+      star.style.height = star.style.width;
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 2 + 's';
+      containerRef.current.appendChild(star);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.innerHTML = '';
+      }
+    };
+  }, []);
 
   return (
-    <div className="w-full h-64 bg-black border-4 border-yellow-400">
-      <Suspense fallback={<div className="text-white p-4">Loading 3D...</div>}>
-        <ThreeTest />
-      </Suspense>
+    <div 
+      ref={containerRef}
+      className="w-full h-64 bg-black relative overflow-hidden flex items-center justify-center"
+    >
+      <div className="text-white text-xl font-bold z-10">
+        ✨ CSS ЗВЁЗДЫ РАБОТАЮТ! ✨
+      </div>
     </div>
   );
 }
