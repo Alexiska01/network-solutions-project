@@ -268,7 +268,7 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
   const [isExiting, setIsExiting] = useState(false);
   const [isHyperspace, setIsHyperspace] = useState(false);
   const [showFlash, setShowFlash] = useState(false);
-  const [use3D, setUse3D] = useState(true);
+  const [use3D, setUse3D] = useState(false); // Временно отключаем 3D
 
   // Обработка ошибок 3D
   useEffect(() => {
