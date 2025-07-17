@@ -57,37 +57,44 @@ const StarField: React.FC = () => {
   );
 };
 
-// Компонент орбитального загрузчика
-const OrbitalLoader: React.FC<{ progress: number }> = ({ progress }) => {
+// Компонент спутникового загрузчика
+const SatelliteLoader: React.FC<{ progress: number }> = ({ progress }) => {
   return (
     <div className="relative w-32 h-32 mx-auto mb-8">
-      {/* Основная орбита */}
-      <motion.div
-        className="absolute inset-0 border-2 border-blue-500/30 rounded-full"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-      />
+      {/* Орбитальная траектория (тонкая) */}
+      <div className="absolute inset-0 border border-blue-500/20 rounded-full" />
       
       {/* Вращающийся спутник */}
       <motion.div
         className="absolute inset-0"
         animate={{ rotate: 360 }}
-        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
       >
-        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50" />
+        {/* Основное тело спутника */}
+        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 flex items-center">
+          <div className="w-4 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-sm shadow-lg shadow-cyan-400/50">
+            {/* Антенна */}
+            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0.5 h-2 bg-cyan-300" />
+            {/* Солнечные панели */}
+            <div className="absolute top-0 -left-2 w-1.5 h-3 bg-blue-400/80 rounded-sm" />
+            <div className="absolute top-0 -right-2 w-1.5 h-3 bg-blue-400/80 rounded-sm" />
+            {/* Световой индикатор */}
+            <motion.div
+              className="absolute top-1 right-0.5 w-1 h-1 bg-cyan-300 rounded-full"
+              animate={{
+                opacity: [1, 0.3, 1],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ duration: 1, repeat: Infinity }}
+            />
+          </div>
+        </div>
       </motion.div>
-      
-      {/* Внутренняя орбита */}
-      <motion.div
-        className="absolute inset-4 border border-cyan-400/40 rounded-full"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-      />
       
       {/* Центральная станция */}
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.div
-          className="w-4 h-4 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full"
+          className="w-5 h-5 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full"
           animate={{
             boxShadow: [
               "0 0 10px rgba(34, 211, 238, 0.5)",
@@ -233,13 +240,13 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               </motion.span>
             </motion.h1>
             
-            {/* Орбитальный загрузчик */}
+            {/* Спутниковый загрузчик */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 1 }}
             >
-              <OrbitalLoader progress={loadingProgress} />
+              <SatelliteLoader progress={loadingProgress} />
             </motion.div>
             
             {/* Статус загрузки */}
