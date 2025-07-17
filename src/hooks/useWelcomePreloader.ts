@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useProgressCounter } from './useProgressCounter';
 
 interface WelcomePreloaderState {
   isWelcomeLoadingComplete: boolean;
@@ -7,19 +8,28 @@ interface WelcomePreloaderState {
 
 export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
   const [isWelcomeLoadingComplete, setIsWelcomeLoadingComplete] = useState(false);
-  const [loadingProgress, setLoadingProgress] = useState(0);
   const [criticalModelsLoaded, setCriticalModelsLoaded] = useState(false);
+  
+  // Профессиональный счетчик прогресса
+  const { progress: loadingProgress, start: startProgress, isComplete: progressComplete } = useProgressCounter({
+    duration: 15000, // 15 секунд
+    updateInterval: 50, // Обновление каждые 50мс для плавности
+    onComplete: () => {
+      console.log('✅ Progress Counter: Достигнут 100%');
+    }
+  });
 
+  // Загрузка моделей
   useEffect(() => {
-    let progressInterval: NodeJS.Timeout;
-    let timeoutId: NodeJS.Timeout;
+    console.log('🚀 WelcomeScreen: Запуск системы загрузки');
     
-    const loadWelcome = async () => {
-      console.log('🚀 WelcomeScreen: Запуск фоновой загрузки всех моделей');
-      
+    // Запускаем счетчик сразу
+    startProgress();
+    
+    const loadModels = async () => {
       // Получаем все URL моделей
       const allUrls = heroData.map(item => item.modelUrl);
-      console.log('📎 WelcomeScreen: Начинаю загрузку моделей:', allUrls);
+      console.log('📎 WelcomeScreen: URL моделей:', allUrls);
       
       // Приоритетная загрузка критически важных моделей (3530 и 3730)
       const criticalUrls = heroData.slice(0, 2).map(item => item.modelUrl);
@@ -40,57 +50,38 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
         }
       });
       
-      // Плавный прогресс загрузки синхронизированный с временем
-      const totalDuration = 15000; // 15 секунд
-      const updateInterval = 100; // Обновление каждые 100мс
-      let currentProgress = 0;
-      
-      progressInterval = setInterval(() => {
-        currentProgress += (100 / (totalDuration / updateInterval));
-        if (currentProgress >= 100) {
-          setLoadingProgress(100);
-          clearInterval(progressInterval);
-        } else {
-          setLoadingProgress(currentProgress);
-        }
-      }, updateInterval);
-      
       // Ждем загрузки критически важных моделей
-      Promise.all(loadingPromises.slice(0, 2)).then(() => {
+      try {
+        await Promise.all(loadingPromises.slice(0, 2));
         console.log('✅ WelcomeScreen: Критически важные модели (3530, 3730) загружены!');
         setCriticalModelsLoaded(true);
-      });
-      
-      // Представление длится 15 секунд, но переход возможен только после загрузки критических моделей
-      timeoutId = setTimeout(() => {
-        console.log('✅ WelcomeScreen готов! Представление завершено за 15 секунд');
-        setIsWelcomeLoadingComplete(true);
-      }, 15000); // Представление 15 секунд
-    };
-
-    loadWelcome();
-
-    return () => {
-      if (progressInterval) {
-        clearInterval(progressInterval);
-      }
-      if (timeoutId) {
-        clearTimeout(timeoutId);
+      } catch (error) {
+        console.error('❌ WelcomeScreen: Ошибка загрузки критических моделей:', error);
+        // Даже при ошибке разрешаем переход через некоторое время
+        setTimeout(() => setCriticalModelsLoaded(true), 5000);
       }
     };
-  }, [heroData]);
 
-  // Отдельный useEffect для отслеживания завершения загрузки
+    loadModels();
+  }, [heroData, startProgress]);
+
+  // Отслеживание завершения загрузки
   useEffect(() => {
-    if (criticalModelsLoaded && loadingProgress >= 100) {
-      const delay = setTimeout(() => {
-        setIsWelcomeLoadingComplete(true);
-        console.log('✅ WelcomeScreen готов! Критические модели загружены и прогресс завершен');
-      }, 500);
-      
-      return () => clearTimeout(delay);
+    if (progressComplete && criticalModelsLoaded) {
+      console.log('🎉 WelcomeScreen: Все условия выполнены - прогресс 100% и критические модели загружены');
+      setIsWelcomeLoadingComplete(true);
     }
-  }, [criticalModelsLoaded, loadingProgress]);
+  }, [progressComplete, criticalModelsLoaded]);
+
+  // Принудительное завершение через 16 секунд (safety net)
+  useEffect(() => {
+    const safetyTimeout = setTimeout(() => {
+      console.log('🚨 WelcomeScreen: Принудительное завершение через 16 секунд');
+      setIsWelcomeLoadingComplete(true);
+    }, 16000);
+
+    return () => clearTimeout(safetyTimeout);
+  }, []);
 
   return {
     isWelcomeLoadingComplete,
