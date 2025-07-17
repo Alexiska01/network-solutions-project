@@ -102,10 +102,7 @@ const OrbitalLoader: React.FC<{ progress: number }> = ({ progress }) => {
       {/* Процент загрузки */}
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.span
-          className="text-base font-mono text-white font-semibold mt-16 drop-shadow-lg"
-          style={{
-            textShadow: '0 0 10px rgba(34, 211, 238, 0.8), 0 0 20px rgba(34, 211, 238, 0.4)'
-          }}
+          className="text-base font-mono text-cyan-300 font-semibold mt-16"
           key={progress}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
