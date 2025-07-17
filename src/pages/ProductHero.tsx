@@ -3,7 +3,6 @@ import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
 import { useModelPreloader } from '@/hooks/useModelPreloader';
-import { useWelcomePreloader } from '@/hooks/useWelcomePreloader';
 import WelcomeScreen from '@/components/WelcomeScreen';
 
 const heroData = [
@@ -76,7 +75,6 @@ const ProductHero = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
-  const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
   // const { getModelUrl, isLoading: isModelsLoading } = useCompressedModels();
 
   // Простая фоновая загрузка всех моделей
@@ -113,8 +111,6 @@ const ProductHero = () => {
   // Отладочная информация
   console.log('🔍 Debug ProductHero:', {
     showWelcome,
-    isWelcomeLoadingComplete,
-    loadingProgress,
     currentIndex,
     currentSeries: heroData[currentIndex]?.id,
     currentModelUrl: heroData[currentIndex]?.modelUrl,
@@ -152,15 +148,11 @@ const ProductHero = () => {
     });
   }, []);
 
-  // Переход с WelcomeScreen когда загрузка завершена
+  // Простая автозагрузка welcome screen
   useEffect(() => {
-    if (isWelcomeLoadingComplete) {
-      console.log('✅ WelcomeScreen загрузка завершена, мгновенный переход');
-      // Убеждаемся что начинаем с 3530 серии (индекс 0)
-      setCurrentIndex(0);
-      setShowWelcome(false);
-    }
-  }, [isWelcomeLoadingComplete]);
+    // WelcomeScreen сам управляет временем (15 секунд)
+    // Никаких дополнительных действий не требуется
+  }, []);
 
   if (showWelcome) {
     return <WelcomeScreen 
@@ -168,8 +160,6 @@ const ProductHero = () => {
         console.log('✅ WelcomeScreen onComplete вызван');
         setShowWelcome(false);
       }} 
-      modelsReady={isWelcomeLoadingComplete}
-      loadingProgress={loadingProgress}
     />;
   }
 
