@@ -44,18 +44,19 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
           console.warn('⚠️ Ошибка фоновой загрузки 3730:', error);
         });
         
-        // Имитируем прогресс загрузки
-        setTimeout(() => setLoadingProgress(30), 500);
-        setTimeout(() => setLoadingProgress(50), 1000);
-        setTimeout(() => setLoadingProgress(70), 1500);
-        setTimeout(() => setLoadingProgress(90), 2000);
+        // Имитируем прогресс загрузки за 10 секунд
+        setTimeout(() => setLoadingProgress(20), 2000);
+        setTimeout(() => setLoadingProgress(40), 4000);
+        setTimeout(() => setLoadingProgress(60), 6000);
+        setTimeout(() => setLoadingProgress(80), 8000);
+        setTimeout(() => setLoadingProgress(95), 9000);
         
-        // Завершаем показ WelcomeScreen
+        // Завершаем показ WelcomeScreen через 10 секунд
         setTimeout(() => {
           setLoadingProgress(100);
           setIsWelcomeLoadingComplete(true);
           console.log('🎉 WelcomeScreen предзагрузка завершена!');
-        }, 2500);
+        }, 10000);
         
       } catch (error) {
         console.error('❌ Ошибка предзагрузки в WelcomeScreen:', error);
