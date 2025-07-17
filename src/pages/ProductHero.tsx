@@ -134,12 +134,12 @@ const ProductHero = () => {
         
         setTimeout(() => {
           setCurrentIndex(1); // Переходим на 3730 (второй элемент)
-        }, 600);
+        }, 300);
         
         setTimeout(() => {
           setIsVisible(true);
           setIsTransitioning(false);
-        }, 900);
+        }, 400);
         
         // Запускаем регулярную карусель для остальных серий
         setTimeout(() => {
@@ -149,16 +149,16 @@ const ProductHero = () => {
             
             setTimeout(() => {
               setCurrentIndex((prev) => (prev + 1) % heroData.length);
-            }, 600);
+            }, 300);
             
             setTimeout(() => {
               setIsVisible(true);
               setIsTransitioning(false);
-            }, 900);
-          }, 8000);
-        }, 8000); // Следующий переход через 8 сек
+            }, 400);
+          }, 5000);
+        }, 5000); // Следующий переход через 5 сек
         
-      }, 8000); // Первый переход через 8 секунд
+      }, 5000); // Первый переход через 5 секунд
 
       return () => {
         if (intervalRef.current) {
@@ -183,7 +183,7 @@ const ProductHero = () => {
   // Переход с WelcomeScreen когда загрузка завершена
   useEffect(() => {
     if (isWelcomeLoadingComplete) {
-      console.log('✅ WelcomeScreen загрузка завершена, переходим');
+      console.log('✅ WelcomeScreen загрузка завершена, мгновенный переход');
       // Убеждаемся что начинаем с 3530 серии (индекс 0)
       setCurrentIndex(0);
       setShowWelcome(false);
@@ -267,7 +267,7 @@ const ProductHero = () => {
                         isTransitioning 
                           ? 'transform translate-x-[-30px] opacity-0' 
                           : 'transform translate-x-0 opacity-100'
-                      }`} style={{ transitionDelay: `${index * 50 + 300}ms` }}>
+                      }`} style={{ transitionDelay: `${index * 20 + 100}ms` }}>
                         {feature ? (
                           <>
                             <div className="w-2 h-2 bg-blue-400 rounded-full" />
@@ -301,18 +301,18 @@ const ProductHero = () => {
 
             <div className="relative h-[600px] lg:h-[700px]">
               {/* Динамический фоновый градиент с анимацией */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl transition-all duration-1000 ${
+              <div className={`absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl transition-all duration-500 ${
                 isTransitioning ? 'scale-110 opacity-50' : 'scale-100 opacity-100'
               }`} />
               
               {/* Дополнительные световые эффекты при переходе */}
-              <div className={`absolute inset-0 bg-gradient-radial from-blue-400/30 via-transparent to-transparent rounded-3xl transition-all duration-700 ${
+              <div className={`absolute inset-0 bg-gradient-radial from-blue-400/30 via-transparent to-transparent rounded-3xl transition-all duration-300 ${
                 isTransitioning ? 'opacity-100 scale-150' : 'opacity-0 scale-100'
               }`} />
               
-              <div className={`relative w-full h-full transition-all duration-800 ease-in-out ${
+              <div className={`relative w-full h-full transition-all duration-400 ease-in-out ${
                 isTransitioning 
-                  ? 'opacity-0 scale-90 transform rotate-2 blur-sm' 
+                  ? 'opacity-0 scale-95 transform rotate-1 blur-sm' 
                   : 'opacity-100 scale-100 transform rotate-0 blur-0'
               }`}>
                 <ModelViewer3D 
