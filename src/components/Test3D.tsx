@@ -10,50 +10,54 @@ export default function Test3D() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !window.THREE) {
-      console.error('Three.js not loaded');
-      return;
-    }
+    if (!containerRef.current) return;
 
-    const container = containerRef.current;
-    const { Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, MeshStandardMaterial, Mesh, AmbientLight } = window.THREE;
+    const initThree = () => {
+      if (!window.THREE) {
+        console.log('Ждём загрузки Three.js...');
+        setTimeout(initThree, 100);
+        return;
+      }
 
-    // Создаём сцену
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    const renderer = new WebGLRenderer({ antialias: true });
-    
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    renderer.setClearColor(0x000000);
-    container.appendChild(renderer.domElement);
+      const container = containerRef.current;
+      if (!container) return;
 
-    // Освещение
-    const light = new AmbientLight(0xffffff, 1);
-    scene.add(light);
+      const { Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, MeshStandardMaterial, Mesh, AmbientLight } = window.THREE;
 
-    // Куб
-    const geometry = new BoxGeometry(1, 1, 1);
-    const material = new MeshStandardMaterial({ color: 0xff1493 });
-    const cube = new Mesh(geometry, material);
-    scene.add(cube);
+      // Создаём сцену
+      const scene = new Scene();
+      const camera = new PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+      const renderer = new WebGLRenderer({ antialias: true });
+      
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+      renderer.setClearColor(0x000000);
+      container.appendChild(renderer.domElement);
 
-    camera.position.z = 3;
+      // Освещение
+      const light = new AmbientLight(0xffffff, 1);
+      scene.add(light);
 
-    // Анимация
-    const animate = () => {
-      requestAnimationFrame(animate);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      renderer.render(scene, camera);
+      // Куб
+      const geometry = new BoxGeometry(1, 1, 1);
+      const material = new MeshStandardMaterial({ color: 0xff1493 });
+      const cube = new Mesh(geometry, material);
+      scene.add(cube);
+
+      camera.position.z = 3;
+
+      // Анимация
+      const animate = () => {
+        requestAnimationFrame(animate);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      };
+      animate();
+
+      console.log('🚀 Vanilla Three.js работает!');
     };
-    animate();
 
-    console.log('🚀 Vanilla Three.js работает!');
-
-    return () => {
-      container.removeChild(renderer.domElement);
-      renderer.dispose();
-    };
+    initThree();
   }, []);
 
   return (
