@@ -55,16 +55,16 @@ const heroData = [
   {
     id: 'IDS6010',
     title: 'Коммутаторы серии IDS6010',
-    description: 'Модульные коммутаторы с расширенными возможностями управления',
+    description: 'Высокопроизводительные модульные коммутаторы для дата-центров',
     modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb',
     features: [
-      '-;',
-      '-;',
-      '-;',
-      '-;',
-      '-;',
-      '-;',
-      '-.'
+      'Высокая плотность портов;',
+      'Поддержка 100G интерфейсов;',
+      'Расширенные функции безопасности;',
+      'Отказоустойчивость;',
+      'Централизованное управление;',
+      'Масштабируемость;',
+      'Энергоэффективность.'
     ]
   }
 ];
@@ -86,10 +86,10 @@ const ProductHero = () => {
     preloadModels(allUrls);
   }, [preloadModels]);
 
-  // Простая карусель - смена каждые 4 секунды
+  // Простая карусель - смена каждые 9 секунд
   useEffect(() => {
     if (!showWelcome) {
-      console.log('🎬 Запускаю карусель каждые 4 секунды');
+      console.log('🎬 Запускаю карусель каждые 9 секунд');
       
       const interval = setInterval(() => {
         // Запускаем переход
@@ -100,7 +100,7 @@ const ProductHero = () => {
           setCurrentIndex(prev => (prev + 1) % heroData.length);
           setIsTransitioning(false);
         }, 300);
-      }, 4000);
+      }, 9000);
       
       intervalRef.current = interval;
       
@@ -116,7 +116,10 @@ const ProductHero = () => {
     isWelcomeLoadingComplete,
     loadingProgress,
     currentIndex,
-    currentSeries: heroData[currentIndex]?.id
+    currentSeries: heroData[currentIndex]?.id,
+    currentModelUrl: heroData[currentIndex]?.modelUrl,
+    totalSeries: heroData.length,
+    allSeriesIds: heroData.map(item => item.id)
   });
 
   // Переход с WelcomeScreen когда загрузка завершена
