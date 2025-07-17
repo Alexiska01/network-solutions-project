@@ -1,8 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Stars } from "@react-three/drei";
-import * as THREE from "three";
 
 interface WelcomeScreenProps {
   onComplete?: () => void;
@@ -42,212 +39,119 @@ const TypewriterText = ({ text, speed = 50 }: { text: string; speed?: number }) 
   );
 };
 
-// Звезда в гиперпространстве
-function HyperspaceStars({ count = 2000, isHyperspace = false }: { count?: number; isHyperspace?: boolean }) {
-  const mesh = useRef<THREE.InstancedMesh>(null);
-  const positions = useRef<Float32Array>();
-  const velocities = useRef<Float32Array>();
-
-  useEffect(() => {
-    if (!mesh.current) return;
-
-    const positionsArray = new Float32Array(count * 3);
-    const velocitiesArray = new Float32Array(count * 3);
-
-    for (let i = 0; i < count; i++) {
-      // Позиции звезд в сфере
-      const radius = Math.random() * 200 + 50;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.random() * Math.PI;
+// Простой космический фон с звёздами
+const SpaceBackground = () => {
+  return (
+    <div className="absolute inset-0">
+      {/* Градиентный фон */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900" />
       
-      positionsArray[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      positionsArray[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positionsArray[i * 3 + 2] = radius * Math.cos(phi);
+      {/* Анимированные звёзды */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 200 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute bg-white rounded-full"
+            style={{
+              width: Math.random() * 3 + 1,
+              height: Math.random() * 3 + 1,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              opacity: [0.3, 1, 0.3],
+              scale: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: Math.random() * 4 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+            }}
+          />
+        ))}
+      </div>
 
-      // Скорости для гиперпространства
-      velocitiesArray[i * 3] = (Math.random() - 0.5) * 0.1;
-      velocitiesArray[i * 3 + 1] = (Math.random() - 0.5) * 0.1;
-      velocitiesArray[i * 3 + 2] = Math.random() * -5 - 1;
-    }
-
-    positions.current = positionsArray;
-    velocities.current = velocitiesArray;
-
-    // Установка начальных позиций
-    for (let i = 0; i < count; i++) {
-      const matrix = new THREE.Matrix4();
-      matrix.setPosition(
-        positionsArray[i * 3],
-        positionsArray[i * 3 + 1],
-        positionsArray[i * 3 + 2]
-      );
-      mesh.current.setMatrixAt(i, matrix);
-    }
-    mesh.current.instanceMatrix.needsUpdate = true;
-  }, [count]);
-
-  useFrame((state, delta) => {
-    if (!mesh.current || !positions.current || !velocities.current) return;
-
-    const hyperSpeed = isHyperspace ? 20 : 1;
-    
-    for (let i = 0; i < count; i++) {
-      if (isHyperspace) {
-        // Движение к камере с ускорением
-        positions.current[i * 3 + 2] += velocities.current[i * 3 + 2] * delta * hyperSpeed;
-        
-        // Перезапуск звезды сзади
-        if (positions.current[i * 3 + 2] > 10) {
-          positions.current[i * 3 + 2] = -200;
-          positions.current[i * 3] = (Math.random() - 0.5) * 200;
-          positions.current[i * 3 + 1] = (Math.random() - 0.5) * 200;
-        }
-      } else {
-        // Медленное вращение звезд
-        const time = state.clock.elapsedTime * 0.1;
-        const radius = Math.sqrt(
-          positions.current[i * 3] ** 2 + positions.current[i * 3 + 1] ** 2
-        );
-        positions.current[i * 3] = radius * Math.cos(time + i * 0.01);
-        positions.current[i * 3 + 1] = radius * Math.sin(time + i * 0.01);
-      }
-
-      const matrix = new THREE.Matrix4();
-      matrix.setPosition(
-        positions.current[i * 3],
-        positions.current[i * 3 + 1],
-        positions.current[i * 3 + 2]
-      );
-      mesh.current.setMatrixAt(i, matrix);
-    }
-    mesh.current.instanceMatrix.needsUpdate = true;
-  });
-
-  return (
-    <instancedMesh ref={mesh} args={[undefined, undefined, count]}>
-      <sphereGeometry args={[0.05, 6, 6]} />
-      <meshBasicMaterial color={isHyperspace ? "#ffffff" : "#64b5f6"} />
-    </instancedMesh>
+      {/* Светящиеся орбы */}
+      <motion.div
+        className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.6, 0.3],
+        }}
+        transition={{ duration: 4, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.4, 0.7, 0.4],
+        }}
+        transition={{ duration: 5, repeat: Infinity, delay: 2 }}
+      />
+    </div>
   );
-}
+};
 
-// Простые пролетающие объекты
-function MovingObjects() {
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.05;
-    }
-  });
-
+// Простой орбитальный загрузчик
+const OrbitalLoader = ({ progress }: { progress: number }) => {
   return (
-    <group ref={groupRef}>
-      {Array.from({ length: 3 }).map((_, i) => (
-        <mesh
-          key={i}
-          position={[
-            Math.cos(i * 2.1) * 80,
-            Math.sin(i * 2.8) * 40,
-            Math.sin(i * 1.3) * 60
-          ]}
-        >
-          <sphereGeometry args={[0.8]} />
-          <meshBasicMaterial color="#00d4ff" />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-// Спутник на орбите
-function OrbitalSatellite({ progress }: { progress: number }) {
-  const satelliteRef = useRef<THREE.Group>(null);
-  const orbitRef = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    if (orbitRef.current) {
-      orbitRef.current.rotation.z = (progress / 100) * Math.PI * 2;
-    }
-    if (satelliteRef.current) {
-      satelliteRef.current.rotation.y = state.clock.elapsedTime * 2;
-    }
-  });
-
-  return (
-    <group ref={orbitRef}>
-      <group ref={satelliteRef} position={[15, 0, 0]}>
-        {/* Тело спутника */}
-        <mesh>
-          <boxGeometry args={[2, 1, 1]} />
-          <meshBasicMaterial color="#888888" />
-        </mesh>
-        {/* Солнечные панели */}
-        <mesh position={[-1.5, 0, 0]}>
-          <boxGeometry args={[0.1, 3, 2]} />
-          <meshBasicMaterial color="#1a237e" />
-        </mesh>
-        <mesh position={[1.5, 0, 0]}>
-          <boxGeometry args={[0.1, 3, 2]} />
-          <meshBasicMaterial color="#1a237e" />
-        </mesh>
-        {/* Антенна */}
-        <mesh position={[0, 1, 0]}>
-          <cylinderGeometry args={[0.05, 0.05, 2]} />
-          <meshBasicMaterial color="#ffffff" />
-        </mesh>
-      </group>
-      
+    <div className="relative w-32 h-32 mx-auto mb-8">
       {/* Орбитальная траектория */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[14.8, 15.2, 64]} />
-        <meshBasicMaterial color="#444444" transparent opacity={0.3} />
-      </mesh>
-    </group>
-  );
-}
-
-// 3D Космическая сцена
-function SpaceScene({ progress, isHyperspace }: { progress: number; isHyperspace: boolean }) {
-  return (
-    <Canvas
-      camera={{ position: [0, 0, 10], fov: 75 }}
-      style={{ position: "absolute", inset: 0 }}
-    >
-      <ambientLight intensity={0.2} />
-      <pointLight position={[10, 10, 10]} intensity={0.5} />
+      <div className="absolute inset-0 border border-blue-500/20 rounded-full" />
       
-      <HyperspaceStars count={2000} isHyperspace={isHyperspace} />
+      {/* Вращающийся спутник */}
+      <motion.div
+        className="absolute inset-0"
+        animate={{ rotate: (progress / 100) * 360 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 flex items-center">
+          <div className="w-4 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-sm shadow-lg shadow-cyan-400/50">
+            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0.5 h-2 bg-cyan-300" />
+            <div className="absolute top-0 -left-2 w-1.5 h-3 bg-blue-400/80 rounded-sm" />
+            <div className="absolute top-0 -right-2 w-1.5 h-3 bg-blue-400/80 rounded-sm" />
+            <motion.div
+              className="absolute top-1 right-0.5 w-1 h-1 bg-cyan-300 rounded-full"
+              animate={{
+                opacity: [1, 0.3, 1],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ duration: 1, repeat: Infinity }}
+            />
+          </div>
+        </div>
+      </motion.div>
       
-      {!isHyperspace && (
-        <>
-          <Stars radius={300} depth={50} count={5000} factor={4} saturation={0} />
-          <MovingObjects />
-          <OrbitalSatellite progress={progress} />
-        </>
-      )}
-
-      {/* Туманности */}
-      <mesh position={[50, 30, -100]} scale={[20, 20, 20]}>
-        <sphereGeometry args={[1, 16, 16]} />
-        <meshBasicMaterial 
-          color="#4a148c" 
-          transparent 
-          opacity={0.1} 
+      {/* Центральная станция */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.div
+          className="w-5 h-5 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full"
+          animate={{
+            boxShadow: [
+              "0 0 10px rgba(34, 211, 238, 0.5)",
+              "0 0 20px rgba(34, 211, 238, 0.8)",
+              "0 0 10px rgba(34, 211, 238, 0.5)"
+            ]
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
         />
-      </mesh>
+      </div>
       
-      <mesh position={[-60, -40, -120]} scale={[25, 25, 25]}>
-        <sphereGeometry args={[1, 16, 16]} />
-        <meshBasicMaterial 
-          color="#01579b" 
-          transparent 
-          opacity={0.1} 
-        />
-      </mesh>
-    </Canvas>
+      {/* Процент загрузки */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.span
+          className="text-base font-mono text-cyan-300 font-semibold mt-16"
+          key={progress}
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {Math.round(progress)}%
+        </motion.span>
+      </div>
+    </div>
   );
-}
+};
 
 export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
   const [currentPhase, setCurrentPhase] = useState(0);
@@ -272,8 +176,8 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
       }
     }, LOADING_PHASES[currentPhase]?.duration || 2000);
 
-    // Гиперпространство на 90%
-    if (progress > 90 && !isHyperspace) {
+    // Гиперпространство на 85%
+    if (progress > 85 && !isHyperspace) {
       setIsHyperspace(true);
     }
 
@@ -307,8 +211,8 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
           transition={{ duration: 0.8 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
         >
-          {/* 3D Космическая сцена */}
-          <SpaceScene progress={progress} isHyperspace={isHyperspace} />
+          {/* Космический фон */}
+          <SpaceBackground />
 
           {/* Гиперпространство эффект */}
           {isHyperspace && (
@@ -391,17 +295,7 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
               transition={{ duration: 0.8, delay: 1 }}
               className="mb-8 relative"
             >
-              <div className="relative w-80 h-3 bg-slate-800/50 rounded-full mx-auto mb-4 overflow-hidden">
-                <motion.div
-                  className="absolute left-0 top-0 h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 rounded-full"
-                  style={{ width: `${progress}%` }}
-                  transition={{ type: "spring", stiffness: 50 }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" />
-              </div>
-              <div className="text-sm font-mono text-cyan-300">
-                {Math.round(progress)}%
-              </div>
+              <OrbitalLoader progress={progress} />
             </motion.div>
 
             {/* Текст состояния */}
