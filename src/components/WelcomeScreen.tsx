@@ -19,40 +19,73 @@ const LOADING_STAGES: LoadingStage[] = [
   { id: 'complete', text: 'Система готова к работе', duration: 2000 }
 ];
 
-// Компонент анимированных звезд
+// Компонент профессионального звездного поля
 const StarField: React.FC = () => {
-  const stars = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 2 + 1,
-    opacity: Math.random() * 0.8 + 0.2,
-    animationDelay: Math.random() * 5
-  }));
+  const stars = Array.from({ length: 40 }, (_, i) => {
+    const baseOpacity = Math.random() * 0.6 + 0.4; // 0.4-1.0
+    const animationType = Math.random();
+    
+    return {
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 1.5 + 0.5, // Меньше размер
+      baseOpacity,
+      animationType,
+      animationDelay: Math.random() * 10
+    };
+  });
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {stars.map((star) => (
-        <motion.div
-          key={star.id}
-          className="absolute bg-white rounded-full"
-          style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-          }}
-          animate={{
-            opacity: [star.opacity, star.opacity * 0.3, star.opacity],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 2 + Math.random() * 3,
+      {stars.map((star) => {
+        // Разные типы анимации для естественности
+        let animate, transition;
+        
+        if (star.animationType < 0.3) {
+          // Статичные звезды (30%)
+          animate = {};
+          transition = {};
+        } else if (star.animationType < 0.7) {
+          // Медленное мерцание (40%)
+          animate = {
+            opacity: [star.baseOpacity, star.baseOpacity * 0.7, star.baseOpacity],
+          };
+          transition = {
+            duration: 4 + Math.random() * 4, // 4-8 секунд
             repeat: Infinity,
             delay: star.animationDelay,
-          }}
-        />
-      ))}
+            ease: "easeInOut"
+          };
+        } else {
+          // Очень медленное мерцание (30%)
+          animate = {
+            opacity: [star.baseOpacity, star.baseOpacity * 0.85, star.baseOpacity],
+          };
+          transition = {
+            duration: 6 + Math.random() * 6, // 6-12 секунд
+            repeat: Infinity,
+            delay: star.animationDelay,
+            ease: "easeInOut"
+          };
+        }
+
+        return (
+          <motion.div
+            key={star.id}
+            className="absolute bg-white rounded-full"
+            style={{
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              opacity: star.baseOpacity
+            }}
+            animate={animate}
+            transition={transition}
+          />
+        );
+      })}
     </div>
   );
 };
