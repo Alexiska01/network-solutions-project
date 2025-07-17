@@ -78,7 +78,7 @@ const ProductHero = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
   const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
-  // const { getModelUrl } = useCompressedModels();
+  const { getModelUrl } = useCompressedModels();
 
   // Простая фоновая загрузка всех моделей
   useEffect(() => {
