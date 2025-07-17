@@ -84,6 +84,24 @@ const ProductHero = () => {
   useEffect(() => {
     const allUrls = heroData.map(item => getModelUrl(item.modelUrl));
     console.log('🔄 Фоновая загрузка моделей:', allUrls);
+    
+    // Проверяем доступность каждой модели
+    heroData.forEach(async (item, index) => {
+      const url = getModelUrl(item.modelUrl);
+      console.log(`🔍 Проверка модели ${item.id}:`, url);
+      
+      try {
+        const response = await fetch(url, { method: 'HEAD' });
+        if (response.ok) {
+          console.log(`✅ Модель ${item.id} доступна`);
+        } else {
+          console.error(`❌ Модель ${item.id} недоступна, статус:`, response.status);
+        }
+      } catch (error) {
+        console.error(`❌ Ошибка при загрузке модели ${item.id}:`, error);
+      }
+    });
+    
     preloadModels(allUrls);
   }, [preloadModels, getModelUrl]);
 

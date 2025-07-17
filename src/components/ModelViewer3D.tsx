@@ -88,7 +88,11 @@ const ModelViewer3D: React.FC<ModelViewer3DProps> = ({ src, alt, isPreloaded = f
           modelViewer.addEventListener('error', (e) => {
             setHasError(true);
             setIsLoading(false);
-            console.error('Ошибка загрузки 3D модели:', e, src);
+            console.error('❌ ОШИБКА ЗАГРУЗКИ 3D МОДЕЛИ:', {
+              url: src,
+              error: e,
+              errorDetails: e.detail || 'No details available'
+            });
           });
         } else {
           // Для предзагруженных моделей сразу запускаем auto-rotate
