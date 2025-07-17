@@ -104,8 +104,8 @@ const OrbitalLoader: React.FC<{ progress: number }> = ({ progress }) => {
         <motion.span
           className="text-base font-mono text-cyan-300 font-semibold mt-16"
           key={progress}
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
           transition={{ duration: 0.3 }}
         >
           {Math.round(progress)}%
