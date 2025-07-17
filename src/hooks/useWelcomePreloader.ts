@@ -12,7 +12,7 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
   
   // Профессиональный счетчик прогресса
   const { progress: loadingProgress, start: startProgress, isComplete: progressComplete } = useProgressCounter({
-    duration: 25000, // 25 секунд для демонстрации космической сцены
+    duration: 15000, // 15 секунд
     updateInterval: 50, // Обновление каждые 50мс для плавности
     onComplete: () => {
       console.log('✅ Progress Counter: Достигнут 100%');
@@ -73,12 +73,12 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
     }
   }, [progressComplete, criticalModelsLoaded]);
 
-  // Принудительное завершение через 26 секунд (safety net)
+  // Принудительное завершение через 16 секунд (safety net)
   useEffect(() => {
     const safetyTimeout = setTimeout(() => {
-      console.log('🚨 WelcomeScreen: Принудительное завершение через 26 секунд');
+      console.log('🚨 WelcomeScreen: Принудительное завершение через 16 секунд');
       setIsWelcomeLoadingComplete(true);
-    }, 26000);
+    }, 16000);
 
     return () => clearTimeout(safetyTimeout);
   }, []);

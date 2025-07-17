@@ -118,8 +118,6 @@ export default {
           linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
           linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
         `,
-        // радиальные градиенты для космической сцены
-        "gradient-radial": "radial-gradient(circle, var(--tw-gradient-stops))",
       },
       // размер «ячейки» в паттерне
       backgroundSize: {

@@ -19,343 +19,74 @@ const LOADING_STAGES: LoadingStage[] = [
   { id: 'complete', text: 'Система готова к работе', duration: 2000 }
 ];
 
-// Компонент космической сцены
-const SpaceScene: React.FC = () => {
+// Компонент профессионального звездного поля
+const StarField: React.FC = () => {
+  const stars = Array.from({ length: 40 }, (_, i) => {
+    const baseOpacity = Math.random() * 0.6 + 0.4; // 0.4-1.0
+    const animationType = Math.random();
+    
+    return {
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 1.5 + 0.5, // Меньше размер
+      baseOpacity,
+      animationType,
+      animationDelay: Math.random() * 10
+    };
+  });
+
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Туманности на заднем плане */}
-      <Nebula />
-      
-      {/* Планета Земля */}
-      <EarthPlanet />
-      
-      {/* Летающие звёзды */}
-      <FloatingStars />
-      
-      {/* Спутники */}
-      <Satellites />
-      
-      {/* Кометы */}
-      <Comets />
-      
-      {/* Космический мусор */}
-      <SpaceDebris />
-      
-      {/* Parallax эффект */}
-      <ParallaxCamera />
-    </div>
-  );
-};
-
-// Туманности
-const Nebula: React.FC = () => {
-  const nebulae = Array.from({ length: 3 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 120 - 10,
-    y: Math.random() * 120 - 10,
-    size: 200 + Math.random() * 300,
-    color: ['from-purple-500/20', 'from-blue-500/20', 'from-cyan-500/20'][i % 3],
-    animationDelay: Math.random() * 5
-  }));
-
-  return (
-    <>
-      {nebulae.map((nebula) => (
-        <motion.div
-          key={nebula.id}
-          className={`absolute rounded-full bg-gradient-radial ${nebula.color} to-transparent blur-xl`}
-          style={{
-            left: `${nebula.x}%`,
-            top: `${nebula.y}%`,
-            width: `${nebula.size}px`,
-            height: `${nebula.size}px`,
-          }}
-          animate={{
-            opacity: [0.3, 0.6, 0.3],
-            scale: [0.8, 1.2, 0.8],
-          }}
-          transition={{
-            duration: 8 + Math.random() * 4,
+      {stars.map((star) => {
+        // Разные типы анимации для естественности
+        let animate, transition;
+        
+        if (star.animationType < 0.3) {
+          // Статичные звезды (30%)
+          animate = {};
+          transition = {};
+        } else if (star.animationType < 0.7) {
+          // Медленное мерцание (40%)
+          animate = {
+            opacity: [star.baseOpacity, star.baseOpacity * 0.7, star.baseOpacity],
+          };
+          transition = {
+            duration: 4 + Math.random() * 4, // 4-8 секунд
             repeat: Infinity,
-            delay: nebula.animationDelay,
+            delay: star.animationDelay,
             ease: "easeInOut"
-          }}
-        />
-      ))}
-    </>
-  );
-};
-
-// Планета Земля
-const EarthPlanet: React.FC = () => {
-  return (
-    <motion.div
-      className="absolute bottom-0 right-0 w-80 h-80 rounded-full opacity-40"
-      style={{
-        background: 'conic-gradient(from 0deg, #1e40af, #0ea5e9, #06b6d4, #10b981, #22c55e, #84cc16, #eab308, #f59e0b, #ef4444, #8b5cf6, #1e40af)',
-        transform: 'translate(30%, 30%)',
-        filter: 'blur(1px)',
-      }}
-      animate={{
-        rotate: [0, 360],
-      }}
-      transition={{
-        duration: 60,
-        repeat: Infinity,
-        ease: "linear"
-      }}
-    >
-      {/* Атмосфера */}
-      <div className="absolute inset-0 rounded-full bg-gradient-radial from-blue-400/30 to-transparent scale-110" />
-      
-      {/* Облака */}
-      <motion.div
-        className="absolute inset-0 rounded-full"
-        style={{
-          background: 'radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.2) 0%, transparent 40%)',
-        }}
-        animate={{
-          rotate: [0, 360],
-        }}
-        transition={{
-          duration: 45,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-    </motion.div>
-  );
-};
-
-// Летающие звёзды
-const FloatingStars: React.FC = () => {
-  const stars = Array.from({ length: 25 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 2 + 1,
-    speed: 0.5 + Math.random() * 1.5,
-    direction: Math.random() * 360,
-    opacity: 0.3 + Math.random() * 0.7
-  }));
-
-  return (
-    <>
-      {stars.map((star) => (
-        <motion.div
-          key={star.id}
-          className="absolute bg-white rounded-full"
-          style={{
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-            opacity: star.opacity
-          }}
-          animate={{
-            x: [0, Math.cos(star.direction) * star.speed * 200],
-            y: [0, Math.sin(star.direction) * star.speed * 200],
-          }}
-          transition={{
-            duration: 20 + Math.random() * 10,
+          };
+        } else {
+          // Очень медленное мерцание (30%)
+          animate = {
+            opacity: [star.baseOpacity, star.baseOpacity * 0.85, star.baseOpacity],
+          };
+          transition = {
+            duration: 6 + Math.random() * 6, // 6-12 секунд
             repeat: Infinity,
-            ease: "linear"
-          }}
-          initial={{
-            x: `${star.x}%`,
-            y: `${star.y}%`,
-          }}
-        />
-      ))}
-    </>
-  );
-};
+            delay: star.animationDelay,
+            ease: "easeInOut"
+          };
+        }
 
-// Спутники
-const Satellites: React.FC = () => {
-  const satellites = Array.from({ length: 3 }, (_, i) => ({
-    id: i,
-    orbitRadius: 150 + i * 80,
-    speed: 8 + i * 2,
-    size: 6 + i * 2,
-    delay: i * 3
-  }));
-
-  return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      {satellites.map((sat) => (
-        <motion.div
-          key={sat.id}
-          className="absolute"
-          style={{
-            width: `${sat.orbitRadius * 2}px`,
-            height: `${sat.orbitRadius * 2}px`,
-            left: `-${sat.orbitRadius}px`,
-            top: `-${sat.orbitRadius}px`,
-          }}
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: sat.speed,
-            repeat: Infinity,
-            ease: "linear",
-            delay: sat.delay
-          }}
-        >
-          <div
-            className="absolute bg-gradient-to-r from-cyan-400 to-blue-500 rounded-sm shadow-lg"
+        return (
+          <motion.div
+            key={star.id}
+            className="absolute bg-white rounded-full"
             style={{
-              width: `${sat.size}px`,
-              height: `${sat.size * 0.6}px`,
-              top: '0px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              boxShadow: '0 0 10px rgba(6, 182, 212, 0.5)'
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              opacity: star.baseOpacity
             }}
-          >
-            {/* Антенна */}
-            <div className="absolute w-0.5 h-3 bg-gray-300 -top-3 left-1/2 transform -translate-x-1/2" />
-            
-            {/* Солнечные панели */}
-            <div className="absolute w-3 h-2 bg-blue-600 -left-4 top-1/2 transform -translate-y-1/2" />
-            <div className="absolute w-3 h-2 bg-blue-600 -right-4 top-1/2 transform -translate-y-1/2" />
-            
-            {/* Мигающий индикатор */}
-            <motion.div
-              className="absolute w-1 h-1 bg-red-400 rounded-full top-1 right-1"
-              animate={{
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                delay: sat.delay
-              }}
-            />
-          </div>
-        </motion.div>
-      ))}
+            animate={animate}
+            transition={transition}
+          />
+        );
+      })}
     </div>
-  );
-};
-
-// Кометы
-const Comets: React.FC = () => {
-  const comets = Array.from({ length: 2 }, (_, i) => ({
-    id: i,
-    startX: -50,
-    startY: Math.random() * 100,
-    endX: 150,
-    endY: Math.random() * 100,
-    duration: 8 + Math.random() * 4,
-    delay: i * 6
-  }));
-
-  return (
-    <>
-      {comets.map((comet) => (
-        <motion.div
-          key={comet.id}
-          className="absolute"
-          initial={{
-            x: `${comet.startX}%`,
-            y: `${comet.startY}%`,
-          }}
-          animate={{
-            x: `${comet.endX}%`,
-            y: `${comet.endY}%`,
-          }}
-          transition={{
-            duration: comet.duration,
-            repeat: Infinity,
-            delay: comet.delay,
-            ease: "easeOut"
-          }}
-        >
-          {/* Ядро кометы */}
-          <div className="w-2 h-2 bg-white rounded-full shadow-lg" />
-          
-          {/* Хвост */}
-          <div
-            className="absolute w-20 h-0.5 bg-gradient-to-r from-white via-cyan-300 to-transparent blur-sm"
-            style={{
-              right: '100%',
-              top: '50%',
-              transform: 'translateY(-50%)',
-            }}
-          />
-          
-          {/* Внешний хвост */}
-          <div
-            className="absolute w-32 h-1 bg-gradient-to-r from-cyan-200/30 via-blue-200/20 to-transparent blur-md"
-            style={{
-              right: '100%',
-              top: '50%',
-              transform: 'translateY(-50%)',
-            }}
-          />
-        </motion.div>
-      ))}
-    </>
-  );
-};
-
-// Космический мусор
-const SpaceDebris: React.FC = () => {
-  const debris = Array.from({ length: 15 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    rotation: Math.random() * 360,
-    speed: 0.3 + Math.random() * 0.7,
-    opacity: 0.2 + Math.random() * 0.5
-  }));
-
-  return (
-    <>
-      {debris.map((item) => (
-        <motion.div
-          key={item.id}
-          className="absolute bg-gray-400 opacity-60"
-          style={{
-            width: `${item.size}px`,
-            height: `${item.size}px`,
-            left: `${item.x}%`,
-            top: `${item.y}%`,
-            opacity: item.opacity,
-            clipPath: 'polygon(0% 0%, 100% 25%, 75% 100%, 25% 75%)',
-          }}
-          animate={{
-            rotate: [item.rotation, item.rotation + 360],
-            x: [0, Math.random() * 100 - 50],
-            y: [0, Math.random() * 100 - 50],
-          }}
-          transition={{
-            duration: 15 + Math.random() * 10,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        />
-      ))}
-    </>
-  );
-};
-
-// Parallax эффект камеры
-const ParallaxCamera: React.FC = () => {
-  return (
-    <motion.div
-      className="absolute inset-0 pointer-events-none"
-      animate={{
-        x: [0, 10, 0, -10, 0],
-        y: [0, -5, 0, 5, 0],
-      }}
-      transition={{
-        duration: 20,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }}
-    />
   );
 };
 
@@ -505,8 +236,8 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             `
           }}
         >
-          {/* Космическая сцена */}
-          <SpaceScene />
+          {/* Звездное поле */}
+          <StarField />
           
           {/* Тонкая сетка */}
           <div 
