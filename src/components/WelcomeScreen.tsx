@@ -14,10 +14,9 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
   useEffect(() => {
     console.log('🚀 WelcomeScreen запущен');
     
-    // Простой прогресс за 15 секунд
     const progressInterval = setInterval(() => {
       setProgress(prev => {
-        const newProgress = prev + (100 / 150); // 15 секунд
+        const newProgress = prev + (100 / 150);
         console.log('📊 Прогресс:', Math.round(newProgress));
         
         if (newProgress >= 100) {
@@ -36,7 +35,7 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
         }
         return newProgress;
       });
-    }, 100); // Обновление каждые 100мс
+    }, 100);
 
     return () => {
       console.log('🧹 WelcomeScreen cleanup');
@@ -54,7 +53,6 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
           transition={{ duration: 0.5 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"
         >
-          {/* Простые звёзды */}
           <div className="absolute inset-0">
             {Array.from({ length: 200 }).map((_, i) => (
               <motion.div
@@ -79,7 +77,6 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
             ))}
           </div>
 
-          {/* Светящиеся орбы */}
           <motion.div
             className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
             animate={{
@@ -97,7 +94,6 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
             transition={{ duration: 5, repeat: Infinity, delay: 2 }}
           />
 
-          {/* Контент */}
           <div className="relative z-10 text-center px-8">
             <motion.h1 
               className="text-6xl font-thin text-white mb-6"
@@ -115,7 +111,7 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
               >
                 iDATA
               </motion.span>
-            </h1>
+            </motion.h1>
             
             <motion.p 
               className="text-xl text-slate-300 mb-12"
@@ -126,7 +122,6 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
               Корпоративная сеть нового поколения
             </motion.p>
 
-            {/* Прогресс-бар */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
