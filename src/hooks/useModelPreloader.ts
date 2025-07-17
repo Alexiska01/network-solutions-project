@@ -21,27 +21,32 @@ export const useModelPreloader = (): ModelPreloaderState => {
   const [preloadingModels, setPreloadingModels] = useState<Set<string>>(new Set());
 
   const preloadModel = async (url: string): Promise<void> => {
-    // Упрощенная быстрая загрузка - просто помечаем как готовое
     if (!globalModelCache.has(url)) {
-      console.log('✅ Помечаю модель как готовую:', url);
-      globalModelCache.add(url);
-      setLoadedModels(new Set(globalModelCache));
+      console.log('🔄 ProductHero: Загружаю модель:', url);
+      
+      try {
+        const response = await fetch(url, { method: 'HEAD' });
+        if (response.ok) {
+          console.log('✅ ProductHero: Модель загружена:', url);
+          globalModelCache.add(url);
+          setLoadedModels(new Set(globalModelCache));
+        } else {
+          console.warn('⚠️ ProductHero: Модель недоступна:', url);
+        }
+      } catch (error) {
+        console.error('❌ ProductHero: Ошибка загрузки модели:', url, error);
+      }
     }
-    return Promise.resolve();
   };
 
   const preloadModels = async (urls: string[]): Promise<void> => {
-    console.log('✅ Помечаю все модели как готовые:', urls);
+    console.log('🔄 ProductHero: Фоновая загрузка моделей:', urls);
     
-    // Быстро помечаем все модели как готовые
-    urls.forEach(url => {
-      if (!globalModelCache.has(url)) {
-        globalModelCache.add(url);
-      }
-    });
+    // Загружаем все модели параллельно
+    const loadingPromises = urls.map(preloadModel);
+    await Promise.all(loadingPromises);
     
-    setLoadedModels(new Set(globalModelCache));
-    return Promise.resolve();
+    console.log('✅ ProductHero: Все модели загружены!');
   };
 
   const preloadModelPartially = async (url: string, percentage: number): Promise<void> => {
