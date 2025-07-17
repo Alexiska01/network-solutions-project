@@ -1,9 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface WelcomeScreenProps {
   onComplete?: () => void;
 }
+
+// Динамические 3D компоненты (загружаются только при необходимости)
+let Canvas: any = null;
+let useFrame: any = null; 
+let Stars: any = null;
+let THREE: any = null;
+
+const load3DLibs = async () => {
+  try {
+    console.log('🔄 Попытка загрузки 3D библиотек...');
+    const [fiber, drei, three] = await Promise.all([
+      import("@react-three/fiber"),
+      import("@react-three/drei"),
+      import("three")
+    ]);
+    Canvas = fiber.Canvas;
+    useFrame = fiber.useFrame;
+    Stars = drei.Stars;
+    THREE = three;
+    console.log('✅ 3D библиотеки загружены успешно');
+    return true;
+  } catch (error) {
+    console.log('❌ 3D библиотеки недоступны:', error);
+    return false;
+  }
+};
 
 export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
   const [progress, setProgress] = useState(0);
@@ -14,6 +40,14 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
 
   useEffect(() => {
     console.log('🚀 WelcomeScreen запущен');
+    
+    // Попытка загрузить 3D (в фоне, без блокировки)
+    load3DLibs().then(success => {
+      if (success) {
+        console.log('🌌 3D готов к использованию');
+        // setUse3D(true); // Пока не включаем
+      }
+    });
     
     const progressInterval = setInterval(() => {
       setProgress(prev => {
