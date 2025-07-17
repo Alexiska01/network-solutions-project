@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
 import { useModelPreloader } from '@/hooks/useModelPreloader';
 import { useWelcomePreloader } from '@/hooks/useWelcomePreloader';
+import { useCompressedModels } from '@/hooks/useCompressedModels';
 import WelcomeScreen from '@/components/WelcomeScreen';
 
 const heroData = [
@@ -73,18 +74,18 @@ const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-
   const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
   const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
+  const { getModelUrl } = useCompressedModels();
 
   // Простая фоновая загрузка всех моделей
   useEffect(() => {
-    const allUrls = heroData.map(item => item.modelUrl);
+    const allUrls = heroData.map(item => getModelUrl(item.modelUrl));
     console.log('🔄 Фоновая загрузка моделей:', allUrls);
     preloadModels(allUrls);
-  }, [preloadModels]);
+  }, [preloadModels, getModelUrl]);
 
   // Простая карусель - смена каждые 9 секунд
   useEffect(() => {
@@ -118,6 +119,7 @@ const ProductHero = () => {
     currentIndex,
     currentSeries: heroData[currentIndex]?.id,
     currentModelUrl: heroData[currentIndex]?.modelUrl,
+    resolvedModelUrl: getModelUrl(heroData[currentIndex]?.modelUrl || ''),
     totalSeries: heroData.length,
     allSeriesIds: heroData.map(item => item.id)
   });
@@ -258,9 +260,9 @@ const ProductHero = () => {
                   : 'opacity-100 scale-100 transform rotate-0 blur-0'
               }`}>
                 <ModelViewer3D 
-                  src={currentData.modelUrl}
+                  src={getModelUrl(currentData.modelUrl)}
                   alt={currentData.title}
-                  isPreloaded={isModelReady(currentData.modelUrl)}
+                  isPreloaded={isModelReady(getModelUrl(currentData.modelUrl))}
                 />
               </div>
             </div>

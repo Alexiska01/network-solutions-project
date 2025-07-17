@@ -6,9 +6,13 @@ interface ModelConfig {
 }
 
 const MODEL_CONFIGS: Record<string, ModelConfig> = {
-  'S3530-all.glb': {
-    compressed: '/models/compressed/S3530-all.glb',
-    original: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb'
+  '3530all.glb': {
+    compressed: '/models/compressed/3530all.glb',
+    original: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb'
+  },
+  '3730all.glb': {
+    compressed: '/models/compressed/3730all.glb',
+    original: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb'
   },
   '4530all.glb': {
     compressed: '/models/compressed/4530all.glb', 
