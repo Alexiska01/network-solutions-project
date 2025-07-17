@@ -72,15 +72,16 @@ const heroData = [
 const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const { preloadModels } = useModelPreloader();
+  const { preloadModels, isModelReady } = useModelPreloader();
   const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
 
   // Простая фоновая загрузка всех моделей
   useEffect(() => {
-    const allUrls = heroData.map(item => item.model3d);
+    const allUrls = heroData.map(item => item.modelUrl);
     console.log('🔄 Фоновая загрузка моделей:', allUrls);
     preloadModels(allUrls);
   }, [preloadModels]);
@@ -91,7 +92,14 @@ const ProductHero = () => {
       console.log('🎬 Запускаю карусель каждые 4 секунды');
       
       const interval = setInterval(() => {
-        setCurrentIndex(prev => (prev + 1) % heroData.length);
+        // Запускаем переход
+        setIsTransitioning(true);
+        
+        // Через 300ms меняем контент
+        setTimeout(() => {
+          setCurrentIndex(prev => (prev + 1) % heroData.length);
+          setIsTransitioning(false);
+        }, 300);
       }, 4000);
       
       intervalRef.current = interval;
