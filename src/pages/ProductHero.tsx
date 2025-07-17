@@ -72,102 +72,33 @@ const heroData = [
 const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+
   const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const { isModelReady, isModelPartiallyReady, preloadModel, preloadModelPartially, preloadModels } = useModelPreloader();
-  const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
+  const { preloadModels } = useModelPreloader();
+  const { isWelcomeLoadingComplete } = useWelcomePreloader(heroData);
 
-  // Умная предзагрузка: дозагружаем 3730 и фоново остальные
+  // Простая фоновая загрузка всех моделей
   useEffect(() => {
-    const firstModelUrl = heroData[0].modelUrl; // 3530
-    const secondModelUrl = heroData[1].modelUrl; // 3730
-    const otherModelUrls = heroData.slice(2).map(item => item.modelUrl); // 4530, 6010
-    
-    console.log('🎯 Дозагрузка и фоновая загрузка моделей в ProductHero');
-    
-    // Проверяем и дозагружаем основные серии если нужно
-    if (!isModelReady(firstModelUrl)) {
-      console.log('🔄 Дозагружаю 3530 серию:', firstModelUrl);
-      preloadModel(firstModelUrl).then(() => {
-        console.log('✅ 3530 серия полностью загружена');
-      });
-    } else {
-      console.log('✅ 3530 серия уже готова');
-    }
-    
-    if (!isModelReady(secondModelUrl)) {
-      console.log('🔄 Дозагружаю 3730 серию:', secondModelUrl);
-      preloadModel(secondModelUrl).then(() => {
-        console.log('✅ 3730 серия полностью загружена');
-      });
-    } else {
-      console.log('✅ 3730 серия уже готова');
-    }
-    
-    // Фоновая загрузка остальных серий
-    if (otherModelUrls.length > 0) {
-      console.log('🔄 Фоновая загрузка остальных серий:', otherModelUrls);
-      preloadModels(otherModelUrls).then(() => {
-        console.log('🎉 Все серии загружены!');
-      });
-    }
-  }, []);
+    const allUrls = heroData.map(item => item.model3d);
+    console.log('🔄 Фоновая загрузка моделей:', allUrls);
+    preloadModels(allUrls);
+  }, [preloadModels]);
 
-  // Запускаем карусель: первая серия показывается ровно 12 секунд
+  // Простая карусель - смена каждые 4 секунды
   useEffect(() => {
-    // Запускаем только если страница открыта (модели должны быть готовы из WelcomeScreen)
     if (!showWelcome) {
-      console.log('🎬 Страница открыта, начинаю показ 3530 серии на 8 секунд');
+      console.log('🎬 Запускаю карусель каждые 4 секунды');
       
-      // Убеждаемся что показываем 3530 серию
-      setCurrentIndex(0);
-      setIsVisible(true);
-      setIsTransitioning(false);
+      const interval = setInterval(() => {
+        setCurrentIndex(prev => (prev + 1) % heroData.length);
+      }, 4000);
       
-      // Первый переход с 3530 на 3730 через 12 секунд
-      const firstTransition = setTimeout(() => {
-        console.log('🔄 Первый переход: 3530 → 3730');
-        setIsTransitioning(true);
-        setIsVisible(false);
-        
-        setTimeout(() => {
-          setCurrentIndex(1); // Переходим на 3730 (второй элемент)
-        }, 300);
-        
-        setTimeout(() => {
-          setIsVisible(true);
-          setIsTransitioning(false);
-        }, 400);
-        
-        // Запускаем регулярную карусель для остальных серий
-        setTimeout(() => {
-          intervalRef.current = setInterval(() => {
-            setIsTransitioning(true);
-            setIsVisible(false);
-            
-            setTimeout(() => {
-              setCurrentIndex((prev) => (prev + 1) % heroData.length);
-            }, 300);
-            
-            setTimeout(() => {
-              setIsVisible(true);
-              setIsTransitioning(false);
-            }, 400);
-          }, 5000);
-        }, 5000); // Следующий переход через 5 сек
-        
-      }, 5000); // Первый переход через 5 секунд
-
-      return () => {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-        }
-        clearTimeout(firstTransition);
-      };
+      intervalRef.current = interval;
+      
+      return () => clearInterval(interval);
     }
-  }, [showWelcome]); // Зависимость только от showWelcome
+  }, [showWelcome]);
 
   const currentData = heroData[currentIndex];
   
