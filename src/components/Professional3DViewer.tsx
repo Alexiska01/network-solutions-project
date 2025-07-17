@@ -28,12 +28,13 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   useEffect(() => {
     if (modelRef.current) {
       const handleLoad = () => {
-        console.log('Model loaded successfully');
+        console.log('✅ Professional3DViewer: Model loaded successfully');
         setModelLoaded(true);
       };
       
-      const handleError = () => {
-        console.error('Model failed to load');
+      const handleError = (error: any) => {
+        console.error('❌ Professional3DViewer: Model failed to load', error);
+        console.error('❌ Professional3DViewer: Model path:', modelPath);
         setModelLoaded(false);
       };
 
@@ -47,7 +48,12 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
         }
       };
     }
-  }, []);
+  }, [modelPath]);
+
+  // Отладка изменения modelPath
+  useEffect(() => {
+    console.log('🔍 Professional3DViewer: modelPath изменился:', modelPath);
+  }, [modelPath]);
 
   // ESC key handler for fullscreen
   useEffect(() => {

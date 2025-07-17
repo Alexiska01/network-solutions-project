@@ -99,11 +99,16 @@ const ProductHero = () => {
     heroData.forEach((item, index) => {
       console.log(`🔥 ПРОВЕРКА МОДЕЛИ ${index}: ${item.id} - ${item.modelUrl}`);
       
+      const resolvedUrl = getModelUrl(item.modelUrl);
+      console.log(`🔍 RESOLVED URL для ${item.id}: ${resolvedUrl}`);
+      
       if (item.modelUrl.includes('4530') || item.modelUrl.includes('6010')) {
         console.log(`🚨 ПРОБЛЕМНАЯ МОДЕЛЬ: ${item.id}`);
+        console.log(`🔍 ORIGINAL URL: ${item.modelUrl}`);
+        console.log(`🔍 RESOLVED URL: ${resolvedUrl}`);
         
         // Проверим доступность
-        fetch(item.modelUrl, { method: 'HEAD' })
+        fetch(resolvedUrl, { method: 'HEAD' })
           .then(response => {
             if (response.ok) {
               console.log(`✅ ${item.id} ДОСТУПНА!`);
@@ -116,7 +121,7 @@ const ProductHero = () => {
           });
       }
     });
-  }, []);
+  }, [getModelUrl]);
 
   // Переход с WelcomeScreen когда загрузка завершена
   useEffect(() => {
