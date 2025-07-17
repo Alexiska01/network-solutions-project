@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Stars, Trail } from "@react-three/drei";
+import { Stars } from "@react-three/drei";
 import * as THREE from "three";
 
 interface WelcomeScreenProps {
@@ -131,37 +131,30 @@ function HyperspaceStars({ count = 2000, isHyperspace = false }: { count?: numbe
   );
 }
 
-// Пролетающие кометы
-function Comets() {
+// Простые пролетающие объекты
+function MovingObjects() {
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.1;
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.05;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Trail
+      {Array.from({ length: 3 }).map((_, i) => (
+        <mesh
           key={i}
-          width={2}
-          length={20}
-          color="#00d4ff"
-          attenuation={(t) => t * t}
+          position={[
+            Math.cos(i * 2.1) * 80,
+            Math.sin(i * 2.8) * 40,
+            Math.sin(i * 1.3) * 60
+          ]}
         >
-          <mesh
-            position={[
-              Math.cos(i * 2) * 100,
-              Math.sin(i * 3) * 50,
-              Math.sin(i * 1.5) * 80
-            ]}
-          >
-            <sphereGeometry args={[0.5]} />
-            <meshBasicMaterial color="#00d4ff" />
-          </mesh>
-        </Trail>
+          <sphereGeometry args={[0.8]} />
+          <meshBasicMaterial color="#00d4ff" />
+        </mesh>
       ))}
     </group>
   );
@@ -229,7 +222,7 @@ function SpaceScene({ progress, isHyperspace }: { progress: number; isHyperspace
       {!isHyperspace && (
         <>
           <Stars radius={300} depth={50} count={5000} factor={4} saturation={0} />
-          <Comets />
+          <MovingObjects />
           <OrbitalSatellite progress={progress} />
         </>
       )}
