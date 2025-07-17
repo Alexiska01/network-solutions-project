@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import StarField3D from "./StarField3D";
 
 interface WelcomeScreenProps {
   onComplete?: () => void;
@@ -104,48 +105,25 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"
+          className="fixed inset-0 z-[9999]"
         >
-          <div className="absolute inset-0">
-            {Array.from({ length: 200 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute bg-white rounded-full"
-                style={{
-                  width: Math.random() * 3 + 1,
-                  height: Math.random() * 3 + 1,
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  opacity: [0.3, 1, 0.3],
-                  scale: [0.5, 1, 0.5],
-                }}
-                transition={{
-                  duration: Math.random() * 4 + 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                }}
-              />
-            ))}
-          </div>
-
-          <motion.div
-            className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{ duration: 4, repeat: Infinity }}
-          />
-          <motion.div
-            className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.4, 0.7, 0.4],
-            }}
-            transition={{ duration: 5, repeat: Infinity, delay: 2 }}
-          />
+          <StarField3D className="w-full h-full flex items-center justify-center">
+            <motion.div
+              className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
+              animate={{
+                scale: [1.2, 1, 1.2],
+                opacity: [0.4, 0.7, 0.4],
+              }}
+              transition={{ duration: 5, repeat: Infinity, delay: 2 }}
+            />
 
           {/* Гиперпространство эффект */}
           {isHyperspace && (
@@ -266,7 +244,7 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
                 />
               ))}
             </motion.div>
-          </div>
+          </StarField3D>
         </motion.div>
       )}
     </AnimatePresence>
