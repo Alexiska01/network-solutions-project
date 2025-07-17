@@ -75,7 +75,6 @@ const ProductHero = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
-  const [areMainModelsReady, setAreMainModelsReady] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { isModelReady, isModelPartiallyReady, preloadModel, preloadModelPartially, preloadModels } = useModelPreloader();
   const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
@@ -88,22 +87,11 @@ const ProductHero = () => {
     
     console.log('🎯 Дозагрузка и фоновая загрузка моделей в ProductHero');
     
-    // Проверяем готовность основных серий (3530 и 3730)
-    const checkMainModelsReady = () => {
-      const firstReady = isModelReady(firstModelUrl);
-      const secondReady = isModelReady(secondModelUrl);
-      
-      if (firstReady && secondReady) {
-        setAreMainModelsReady(true);
-        console.log('✅ Основные модели (3530 и 3730) готовы');
-      }
-    };
-    
+    // Проверяем и дозагружаем основные серии если нужно
     if (!isModelReady(firstModelUrl)) {
       console.log('🔄 Дозагружаю 3530 серию:', firstModelUrl);
       preloadModel(firstModelUrl).then(() => {
         console.log('✅ 3530 серия полностью загружена');
-        checkMainModelsReady();
       });
     } else {
       console.log('✅ 3530 серия уже готова');
@@ -113,14 +101,10 @@ const ProductHero = () => {
       console.log('🔄 Дозагружаю 3730 серию:', secondModelUrl);
       preloadModel(secondModelUrl).then(() => {
         console.log('✅ 3730 серия полностью загружена');
-        checkMainModelsReady();
       });
     } else {
       console.log('✅ 3730 серия уже готова');
     }
-    
-    // Проверяем готовность сразу если обе модели уже загружены
-    checkMainModelsReady();
     
     // Фоновая загрузка остальных серий
     if (otherModelUrls.length > 0) {
@@ -133,9 +117,9 @@ const ProductHero = () => {
 
   // Запускаем карусель: первая серия показывается ровно 12 секунд
   useEffect(() => {
-    // Запускаем только если страница открыта и основные модели готовы
-    if (!showWelcome && areMainModelsReady) {
-      console.log('🎬 Страница открыта и основные модели готовы, начинаю показ 3530 серии на 8 секунд');
+    // Запускаем только если страница открыта (модели должны быть готовы из WelcomeScreen)
+    if (!showWelcome) {
+      console.log('🎬 Страница открыта, начинаю показ 3530 серии на 8 секунд');
       
       // Убеждаемся что показываем 3530 серию
       setCurrentIndex(0);
@@ -183,7 +167,7 @@ const ProductHero = () => {
         clearTimeout(firstTransition);
       };
     }
-  }, [showWelcome, areMainModelsReady]); // Зависимость от showWelcome и areMainModelsReady
+  }, [showWelcome]); // Зависимость только от showWelcome
 
   const currentData = heroData[currentIndex];
   
@@ -217,18 +201,7 @@ const ProductHero = () => {
     />;
   }
 
-  // Показываем индикатор загрузки пока основные модели не готовы
-  if (!areMainModelsReady) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-white text-lg">Загрузка основных моделей...</p>
-          <p className="text-slate-400 text-sm">Подготовка 3530 и 3730 серий</p>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">

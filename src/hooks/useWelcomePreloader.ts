@@ -51,11 +51,30 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
         setTimeout(() => setLoadingProgress(80), 8000);
         setTimeout(() => setLoadingProgress(95), 9000);
         
-        // Завершаем показ WelcomeScreen через 10 секунд
+        // Ждем загрузки основных моделей но не менее 10 секунд
+        const checkModelsAndComplete = () => {
+          const firstReady = isModelReady(firstModelUrl);
+          const secondReady = isModelReady(secondModelUrl);
+          
+          if (firstReady && secondReady) {
+            setLoadingProgress(100);
+            setIsWelcomeLoadingComplete(true);
+            console.log('🎉 WelcomeScreen предзагрузка завершена - основные модели готовы!');
+            return true;
+          }
+          return false;
+        };
+        
+        // Минимум 10 секунд показа
         setTimeout(() => {
-          setLoadingProgress(100);
-          setIsWelcomeLoadingComplete(true);
-          console.log('🎉 WelcomeScreen предзагрузка завершена!');
+          if (!checkModelsAndComplete()) {
+            // Если модели не готовы, продолжаем ждать
+            const checkInterval = setInterval(() => {
+              if (checkModelsAndComplete()) {
+                clearInterval(checkInterval);
+              }
+            }, 500);
+          }
         }, 10000);
         
       } catch (error) {
@@ -66,7 +85,7 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
     };
 
     loadWelcomeModels();
-  }, [heroData, preloadModel, preloadModelPartially]);
+  }, [heroData, preloadModel, preloadModelPartially, isModelReady]);
 
   return {
     isWelcomeLoadingComplete,
