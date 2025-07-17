@@ -10,13 +10,13 @@ const MODEL_CONFIGS: Record<string, ModelConfig> = {
     compressed: '/models/compressed/S3530-all.glb',
     original: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb'
   },
-  'S4530-all.glb': {
-    compressed: '/models/compressed/S4530-all.glb', 
-    original: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb'
+  '4530all.glb': {
+    compressed: '/models/compressed/4530all.glb', 
+    original: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb'
   },
-  'IDS6010-all.glb': {
-    compressed: '/models/compressed/IDS6010-all.glb',
-    original: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb'
+  '6010all.glb': {
+    compressed: '/models/compressed/6010all.glb',
+    original: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb'
   }
 };
 

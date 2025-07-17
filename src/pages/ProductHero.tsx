@@ -41,7 +41,7 @@ const heroData = [
     id: 'IDS4530',
     title: 'Коммутаторы серии IDS4530',
     description: 'Модульные коммутаторы с расширенными возможностями управления',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb',
     features: [
       'Уровень доступа в корпоративных ЛВС;',
       'Два модульных блока питания;',
@@ -56,7 +56,7 @@ const heroData = [
     id: 'IDS6010',
     title: 'Коммутаторы серии IDS6010',
     description: 'Модульные коммутаторы с расширенными возможностями управления',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb',
     features: [
       '-;',
       '-;',

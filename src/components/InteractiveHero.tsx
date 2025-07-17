@@ -24,7 +24,13 @@ const seriesData: SeriesData[] = [
     id: 'IDS4530',
     title: 'Серия IDS4530',
     description: 'Мощные коммутаторы L3 с поддержкой PoE+ и расширенными функциями безопасности',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb'
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb'
+  },
+  {
+    id: 'IDS6010',
+    title: 'Серия IDS6010',
+    description: 'Высокопроизводительные коммутаторы с поддержкой 100G портов для дата-центров',
+    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb'
   }
 ];
 
