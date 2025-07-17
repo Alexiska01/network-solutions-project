@@ -76,7 +76,7 @@ const ProductHero = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels } = useModelPreloader();
-  const { isWelcomeLoadingComplete } = useWelcomePreloader(heroData);
+  const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
 
   // Простая фоновая загрузка всех моделей
   useEffect(() => {
