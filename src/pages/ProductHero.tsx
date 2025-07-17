@@ -78,7 +78,7 @@ const ProductHero = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
   const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
-  const { getModelUrl } = useCompressedModels();
+  const { getModelUrl, isLoading: isModelsLoading } = useCompressedModels();
 
   // Простая фоновая загрузка всех моделей
   useEffect(() => {
@@ -119,9 +119,10 @@ const ProductHero = () => {
     currentIndex,
     currentSeries: heroData[currentIndex]?.id,
     currentModelUrl: heroData[currentIndex]?.modelUrl,
-    resolvedModelUrl: heroData[currentIndex]?.modelUrl || '',
+    resolvedModelUrl: isModelsLoading ? 'LOADING...' : (heroData[currentIndex]?.modelUrl ? getModelUrl(heroData[currentIndex].modelUrl) : ''),
     totalSeries: heroData.length,
-    allSeriesIds: heroData.map(item => item.id)
+    allSeriesIds: heroData.map(item => item.id),
+    isModelsLoading
   });
 
   // ПРИНУДИТЕЛЬНАЯ ПРОВЕРКА КАЖДОЙ МОДЕЛИ
@@ -289,7 +290,7 @@ const ProductHero = () => {
                   : 'opacity-100 scale-100 transform rotate-0 blur-0'
               }`}>
                 <ModelViewer3D 
-                  src={currentData.modelUrl}
+                  src={isModelsLoading ? '' : getModelUrl(currentData.modelUrl)}
                   alt={currentData.title}
                   isPreloaded={isModelReady(currentData.modelUrl)}
                 />
