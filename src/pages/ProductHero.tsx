@@ -78,7 +78,7 @@ const ProductHero = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
   const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
-  const { getModelUrl, isLoading: isModelsLoading } = useCompressedModels();
+  // const { getModelUrl, isLoading: isModelsLoading } = useCompressedModels();
 
   // Простая фоновая загрузка всех моделей
   useEffect(() => {
@@ -119,10 +119,9 @@ const ProductHero = () => {
     currentIndex,
     currentSeries: heroData[currentIndex]?.id,
     currentModelUrl: heroData[currentIndex]?.modelUrl,
-    resolvedModelUrl: isModelsLoading ? 'LOADING...' : (heroData[currentIndex]?.modelUrl ? getModelUrl(heroData[currentIndex].modelUrl) : ''),
+    resolvedModelUrl: heroData[currentIndex]?.modelUrl || '',
     totalSeries: heroData.length,
-    allSeriesIds: heroData.map(item => item.id),
-    isModelsLoading
+    allSeriesIds: heroData.map(item => item.id)
   });
 
   // ПРИНУДИТЕЛЬНАЯ ПРОВЕРКА КАЖДОЙ МОДЕЛИ
@@ -130,7 +129,7 @@ const ProductHero = () => {
     heroData.forEach((item, index) => {
       console.log(`🔥 ПРОВЕРКА МОДЕЛИ ${index}: ${item.id} - ${item.modelUrl}`);
       
-      const resolvedUrl = getModelUrl(item.modelUrl);
+      const resolvedUrl = item.modelUrl;
       console.log(`🔍 RESOLVED URL для ${item.id}: ${resolvedUrl}`);
       
       if (item.modelUrl.includes('4530') || item.modelUrl.includes('6010')) {
@@ -152,7 +151,7 @@ const ProductHero = () => {
           });
       }
     });
-  }, [getModelUrl]);
+  }, []);
 
   // Переход с WelcomeScreen когда загрузка завершена
   useEffect(() => {
@@ -290,7 +289,7 @@ const ProductHero = () => {
                   : 'opacity-100 scale-100 transform rotate-0 blur-0'
               }`}>
                 <ModelViewer3D 
-                  src={isModelsLoading ? '' : getModelUrl(currentData.modelUrl)}
+                  src={currentData.modelUrl}
                   alt={currentData.title}
                   isPreloaded={isModelReady(currentData.modelUrl)}
                 />
