@@ -11,6 +11,8 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
   const [criticalModelsLoaded, setCriticalModelsLoaded] = useState(false);
 
   useEffect(() => {
+    let progressInterval: NodeJS.Timeout;
+    
     const loadWelcome = async () => {
       console.log('🚀 WelcomeScreen: Запуск фоновой загрузки всех моделей');
       
@@ -37,14 +39,20 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
         }
       });
       
-      // Прогресс загрузки основан на времени
-      setLoadingProgress(10);
-      setTimeout(() => setLoadingProgress(25), 1000);
-      setTimeout(() => setLoadingProgress(50), 3000);
-      setTimeout(() => setLoadingProgress(70), 6000);
-      setTimeout(() => setLoadingProgress(85), 9000);
-      setTimeout(() => setLoadingProgress(95), 12000);
-      setTimeout(() => setLoadingProgress(100), 14000);
+      // Плавный прогресс загрузки синхронизированный с временем
+      const totalDuration = 15000; // 15 секунд
+      const updateInterval = 100; // Обновление каждые 100мс
+      let currentProgress = 0;
+      
+      progressInterval = setInterval(() => {
+        currentProgress += (100 / (totalDuration / updateInterval));
+        if (currentProgress >= 100) {
+          setLoadingProgress(100);
+          clearInterval(progressInterval);
+        } else {
+          setLoadingProgress(currentProgress);
+        }
+      }, updateInterval);
       
       // Ждем загрузки критически важных моделей
       Promise.all(loadingPromises.slice(0, 2)).then(() => {
@@ -62,6 +70,12 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
     };
 
     loadWelcome();
+
+    return () => {
+      if (progressInterval) {
+        clearInterval(progressInterval);
+      }
+    };
   }, [heroData, criticalModelsLoaded]);
 
   return {
