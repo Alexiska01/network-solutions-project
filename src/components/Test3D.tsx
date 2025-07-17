@@ -1,22 +1,16 @@
 import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
 
 function ThreeTest() {
-  try {
-    const { Canvas } = require("@react-three/fiber");
-    
-    return (
-      <Canvas>
-        <ambientLight intensity={0.5} />
-        <mesh>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="hotpink" />
-        </mesh>
-      </Canvas>
-    );
-  } catch (error) {
-    console.error('Three.js error:', error);
-    return <div className="text-red-500">3D Error: {String(error)}</div>;
-  }
+  return (
+    <Canvas>
+      <ambientLight intensity={0.5} />
+      <mesh>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color="hotpink" />
+      </mesh>
+    </Canvas>
+  );
 }
 
 export default function Test3D() {
