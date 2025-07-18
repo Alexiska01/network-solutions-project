@@ -374,7 +374,7 @@ const ProductHero = () => {
               
               {/* Тестовая сетка - 3D модель + тестовый куб */}
               <div className="grid grid-cols-2 gap-2 h-full">
-                {/* Левая часть - 3D модель */}
+                {/* Левая часть - 3D модель или fallback */}
                 <motion.div
                   key={currentData.id}
                   initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
@@ -386,11 +386,80 @@ const ProductHero = () => {
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  <ModelViewer3D 
-                    src={currentData.modelUrl}
-                    alt={currentData.title}
-                    isPreloaded={isModelReady(currentData.modelUrl)}
-                  />
+                  {!isMobile ? (
+                    // Desktop: 3D модель
+                    <ModelViewer3D 
+                      src={currentData.modelUrl}
+                      alt={currentData.title}
+                      isPreloaded={isModelReady(currentData.modelUrl)}
+                    />
+                  ) : (
+                    // Mobile: красивый fallback с анимацией
+                    <div className="w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl border border-white/20 flex items-center justify-center relative overflow-hidden">
+                      {/* Анимированный фон */}
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          rotate: [0, 180, 360],
+                          opacity: [0.3, 0.1, 0.3]
+                        }}
+                        transition={{
+                          duration: 6,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-20 rounded-2xl`}
+                      />
+                      
+                      {/* Контент */}
+                      <div className="relative z-10 text-center space-y-3">
+                        <motion.div
+                          animate={{
+                            rotateY: [0, 360],
+                            scale: [1, 1.1, 1]
+                          }}
+                          transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "linear"
+                          }}
+                          className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-400 to-purple-600 rounded-xl flex items-center justify-center shadow-lg"
+                          style={{
+                            boxShadow: `0 0 20px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
+                          }}
+                        >
+                          <span className="text-2xl">📡</span>
+                        </motion.div>
+                        
+                        <div>
+                          <h3 className="text-white font-bold text-sm">{currentData.title}</h3>
+                          <p className="text-white/60 text-xs mt-1">3D модель</p>
+                        </div>
+                        
+                        {/* Пульсирующие точки */}
+                        <div className="flex justify-center space-x-1">
+                          {[0, 1, 2].map((i) => (
+                            <motion.div
+                              key={i}
+                              animate={{
+                                scale: [0.8, 1.2, 0.8],
+                                opacity: [0.5, 1, 0.5]
+                              }}
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                delay: i * 0.2
+                              }}
+                              className="w-1.5 h-1.5 rounded-full"
+                              style={{
+                                backgroundColor: currentData.glowColor.replace('[', '').replace(']', '')
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
 
                 {/* Правая часть - тестовый 3D куб */}
