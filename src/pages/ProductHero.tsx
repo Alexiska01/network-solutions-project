@@ -135,7 +135,7 @@ const ProductHero = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
-      className="relative h-screen bg-black overflow-hidden"
+      className="relative h-[70vh] bg-black overflow-hidden"
     >
       {/* Динамический фоновый градиент */}
       <div 
@@ -213,7 +213,7 @@ const ProductHero = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 1, ease: [0.23, 1, 0.320, 1] }}
-              className="space-y-8"
+              className="space-y-6"
             >
               {/* Заголовок */}
               <div className="space-y-4">
@@ -231,7 +231,7 @@ const ProductHero = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.23, 1, 0.320, 1] }}
-                  className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight"
+                  className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
                 >
                   {currentData.title}
                 </motion.h1>
@@ -241,7 +241,7 @@ const ProductHero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="text-xl text-white/70 leading-relaxed"
+                  className="text-lg text-white/70 leading-relaxed"
                 >
                   {currentData.description}
                 </motion.p>
@@ -253,7 +253,7 @@ const ProductHero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="space-y-4"
+                className="space-y-3"
               >
                 {currentData.features.map((feature, index) => (
                   <motion.div
@@ -303,7 +303,7 @@ const ProductHero = () => {
               initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ delay: 0.5, duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
-              className="relative h-[500px] lg:h-[600px]"
+              className="relative h-[350px] lg:h-[400px]"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
