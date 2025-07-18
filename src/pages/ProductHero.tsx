@@ -180,7 +180,7 @@ const ProductHero = () => {
         duration: 1.5, 
         ease: [0.25, 0.1, 0.25, 1]
       }}
-      className="py-[24px] sm:py-[32px] md:py-[48px] lg:py-[64px] xl:py-[80px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden"
+      className="py-[20px] sm:py-[27px] md:py-[41px] lg:py-[54px] xl:py-[68px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden"
     >
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
@@ -276,7 +276,7 @@ const ProductHero = () => {
               </div>
             </div>
 
-            <div className="relative h-[420px] lg:h-[500px]">
+            <div className="relative h-[510px] lg:h-[595px]">
               {/* Динамический фоновый градиент с анимацией */}
               <div className={`absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl transition-all duration-500 ${
                 isTransitioning ? 'scale-110 opacity-50' : 'scale-100 opacity-100'
