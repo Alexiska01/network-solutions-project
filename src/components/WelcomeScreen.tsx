@@ -538,7 +538,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               className="text-gray-400 text-sm font-mono"
               style={{ textShadow: '0 0 10px rgba(156, 163, 175, 0.5)' }}
             >
-              Промышленная сеть нового поколения
+              Корпоративная сеть нового поколения
             </motion.p>
           </div>
           

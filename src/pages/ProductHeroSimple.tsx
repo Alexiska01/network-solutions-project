@@ -6,7 +6,7 @@ const heroData = [
   {
     id: 'IDS3530',
     title: 'Коммутаторы серии IDS3530',
-    description: 'Промышленные управляемые коммутаторы для критически важных применений',
+    description: 'Корпоративные управляемые коммутаторы для критически важных применений',
     modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
     features: ['Уровень доступа в корпоративных ЛВС', 'Поддержка PoE/PoE+', 'Развитые возможности по управлению']
   },
@@ -84,7 +84,7 @@ const ProductHero = () => {
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 backdrop-blur-sm rounded-full text-blue-200 text-sm font-medium">
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                  Промышленные коммутаторы
+                  Корпоративные коммутаторы
                 </div>
                 
                 <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight">
@@ -95,7 +95,7 @@ const ProductHero = () => {
                 </h1>
                 
                 <p className="text-xl text-slate-300 leading-relaxed max-w-2xl">
-                  Высокопроизводительные управляемые коммутаторы для критически важных промышленных применений
+                  Высокопроизводительные управляемые коммутаторы для критически важных корпоративных применений
                 </p>
               </div>
 
