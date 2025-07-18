@@ -160,7 +160,7 @@ const Hero4530 = () => {
                   <BlurImage
                     src="/img/Иерархия_4530(1).png"
                     alt="Иерархия 4530"
-                    className="relative z-10 h-[140px] sm:h-[160px] md:h-[200px] lg:h-56 w-auto"
+                    className="relative z-10 h-[120px] sm:h-[140px] md:h-[160px] lg:h-44 w-auto"
                   />
                 </motion.div>
                 {/* Фичи-иконки справа */}
