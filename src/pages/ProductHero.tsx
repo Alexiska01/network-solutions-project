@@ -205,7 +205,7 @@ const ProductHero = () => {
               <div className="space-y-4">
 
                 
-                <h1 className="text-lg sm:text-xl md:text-xl lg:text-2xl font-bold text-white leading-tight"
+                <h1 className="text-lg sm:text-xl md:text-xl lg:text-2xl font-bold text-white leading-tight">
                   <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
                     Высококачественное оборудование
                   </span>
