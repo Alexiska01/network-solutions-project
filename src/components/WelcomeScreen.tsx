@@ -366,7 +366,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
       setIsExiting(true);
       setTimeout(() => {
         onComplete();
-      }, 1000);
+      }, 2000); // Увеличиваем время для плавного перехода
     }
   }, [isWelcomeLoadingComplete, loadingProgress, onComplete]);
 
@@ -378,8 +378,15 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
+          exit={{ 
+            opacity: 0,
+            scale: 1.1,
+            filter: "blur(10px)"
+          }}
+          transition={{ 
+            duration: 1.5,
+            ease: [0.25, 0.1, 0.25, 1] // PlayStation-style easing
+          }}
           className="fixed inset-0 z-50 flex items-center justify-center"
           style={{
             background: `
