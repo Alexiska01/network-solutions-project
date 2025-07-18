@@ -303,7 +303,7 @@ const ProductHero = () => {
               initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ delay: 0.5, duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
-              className="relative h-[350px] lg:h-[400px]"
+              className="relative h-[450px] lg:h-[500px]"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
