@@ -12,7 +12,7 @@ const heroData = [
     id: 'IDS3530',
     title: 'Коммутаторы серии IDS3530',
     description: 'Промышленные управляемые коммутаторы для критически важных применений',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
+    modelUrl: 'https://idatascan.ru/models/3530.glb',
     features: [
       'Уровень доступа в корпоративных ЛВС',
       'Два модульных блока питания',
@@ -27,7 +27,7 @@ const heroData = [
     id: 'IDS3730',
     title: 'Коммутаторы серии IDS3730',
     description: 'Высокопроизводительные коммутаторы для корпоративных сетей',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb',
+    modelUrl: 'https://idatascan.ru/models/3730.glb',
     features: [
       'Уровень доступа в корпоративных ЛВС',
       'Два модульных блока питания',
@@ -42,7 +42,7 @@ const heroData = [
     id: 'IDS4530',
     title: 'Коммутаторы серии IDS4530',
     description: 'Модульные коммутаторы с расширенными возможностями управления',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb',
+    modelUrl: 'https://idatascan.ru/models/4530.glb',
     features: [
       'Уровень доступа в корпоративных ЛВС',
       'Два модульных блока питания',
@@ -57,7 +57,7 @@ const heroData = [
     id: 'IDS6010',
     title: 'Коммутаторы серии IDS6010',
     description: 'Высокопроизводительные модульные коммутаторы для дата-центров',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb',
+    modelUrl: 'https://idatascan.ru/models/6010.glb',
     features: [
       'Высокая плотность портов',
       'Поддержка 100G интерфейсов',
@@ -122,32 +122,22 @@ const ProductHero = () => {
     allSeriesIds: heroData.map(item => item.id)
   });
 
-  // ПРИНУДИТЕЛЬНАЯ ПРОВЕРКА КАЖДОЙ МОДЕЛИ
+  // Проверка доступности моделей
   useEffect(() => {
     heroData.forEach((item, index) => {
-      console.log(`🔥 ПРОВЕРКА МОДЕЛИ ${index}: ${item.id} - ${item.modelUrl}`);
+      console.log(`🔍 Проверка модели ${index}: ${item.id} - ${item.modelUrl}`);
       
-      const resolvedUrl = item.modelUrl;
-      console.log(`🔍 RESOLVED URL для ${item.id}: ${resolvedUrl}`);
-      
-      if (item.modelUrl.includes('4530') || item.modelUrl.includes('6010')) {
-        console.log(`🚨 ПРОБЛЕМНАЯ МОДЕЛЬ: ${item.id}`);
-        console.log(`🔍 ORIGINAL URL: ${item.modelUrl}`);
-        console.log(`🔍 RESOLVED URL: ${resolvedUrl}`);
-        
-        // Проверим доступность
-        fetch(resolvedUrl, { method: 'HEAD' })
-          .then(response => {
-            if (response.ok) {
-              console.log(`✅ ${item.id} ДОСТУПНА!`);
-            } else {
-              console.error(`❌ ${item.id} НЕ ДОСТУПНА: ${response.status}`);
-            }
-          })
-          .catch(error => {
-            console.error(`❌ ${item.id} ОШИБКА:`, error);
-          });
-      }
+      fetch(item.modelUrl, { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            console.log(`✅ ${item.id} модель доступна`);
+          } else {
+            console.error(`❌ ${item.id} модель недоступна: ${response.status}`);
+          }
+        })
+        .catch(error => {
+          console.error(`❌ ${item.id} ошибка загрузки:`, error);
+        });
     });
   }, []);
 
