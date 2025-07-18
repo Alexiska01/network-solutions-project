@@ -10,63 +10,55 @@ import PlayStationTransition from '@/components/PlayStationTransition';
 const heroData = [
   {
     id: 'IDS3530',
-    title: 'Коммутаторы серии IDS3530',
-    description: 'Промышленные управляемые коммутаторы для критически важных применений',
+    title: 'Коммутаторы IDS3530',
+    description: 'Промышленные коммутаторы для критически важных применений',
     modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
     features: [
-      'Уровень доступа в корпоративных ЛВС',
-      'Два модульных блока питания',
-      'Поддержка PoE/PoE+',
-      'Статическая и динамическая маршрутизация',
-      'Развитые возможности по управлению',
-      '',
-      ''
-    ]
+      'Встроенные блоки питания',
+      'Поддержка РоЕ/РоЕ+',
+      'Статическая и динамическая маршрутизация'
+    ],
+    gradient: 'from-blue-600 via-cyan-500 to-purple-600',
+    glowColor: 'blue'
   },
   {
     id: 'IDS3730',
-    title: 'Коммутаторы серии IDS3730',
+    title: 'Коммутаторы IDS3730',
     description: 'Высокопроизводительные коммутаторы для корпоративных сетей',
     modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb',
     features: [
-      'Уровень доступа в корпоративных ЛВС',
       'Два модульных блока питания',
-      'Поддержка PoE/PoE+',
-      'Статическая и динамическая маршрутизация',
-      'Развитые возможности по управлению',
-      '',
-      ''
-    ]
+      'Поддержка РоЕ/РоЕ+',
+      'Статическая и динамическая маршрутизация'
+    ],
+    gradient: 'from-purple-600 via-pink-500 to-red-600',
+    glowColor: 'purple'
   },
   {
     id: 'IDS4530',
-    title: 'Коммутаторы серии IDS4530',
-    description: 'Модульные коммутаторы с расширенными возможностями управления',
+    title: 'Коммутаторы IDS4530',
+    description: 'Модульные коммутаторы с расширенными возможностями',
     modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb',
     features: [
-      'Уровень доступа в корпоративных ЛВС',
       'Два модульных блока питания',
-      'Поддержка PoE/PoE+',
-      'Модули расширения',
-      'Статическая и динамическая маршрутизация',
-      'Поддержка технологии VxLAN',
-      'Развитые возможности по управлению'
-    ]
+      'Поддержка РоЕ/РоЕ+',
+      'Поддержка технологии VxLAN'
+    ],
+    gradient: 'from-emerald-600 via-teal-500 to-cyan-600',
+    glowColor: 'emerald'
   },
   {
     id: 'IDS6010',
-    title: 'Коммутаторы серии IDS6010',
-    description: 'Высокопроизводительные модульные коммутаторы для дата-центров',
+    title: 'Коммутаторы IDS6010',
+    description: 'Высокопроизводительные коммутаторы для дата-центров',
     modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb',
     features: [
-      'Высокая плотность портов',
-      'Поддержка 100G интерфейсов',
-      'Расширенные функции безопасности',
-      'Отказоустойчивость',
-      'Централизованное управление',
-      'Масштабируемость',
-      'Энергоэффективность'
-    ]
+      'Два модульных блока питания',
+      'Поддержка РоЕ/РоЕ+',
+      'Поддержка технологии VxLAN'
+    ],
+    gradient: 'from-orange-600 via-red-500 to-pink-600',
+    glowColor: 'orange'
   }
 ];
 
@@ -76,84 +68,52 @@ const ProductHero = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const [showTransition, setShowTransition] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
-  // const { getModelUrl, isLoading: isModelsLoading } = useCompressedModels();
 
-  // Простая фоновая загрузка всех моделей
+  // Трекинг мыши для параллакс эффектов
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 2 - 1,
+        y: (e.clientY / window.innerHeight) * 2 - 1
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Предзагрузка моделей
   useEffect(() => {
     const allUrls = heroData.map(item => item.modelUrl);
-    console.log('🔄 Фоновая загрузка моделей:', allUrls);
     preloadModels(allUrls);
   }, [preloadModels]);
 
-  // Простая карусель - смена каждые 9 секунд
+  // Автоматическая смена слайдов
   useEffect(() => {
     if (!showWelcome) {
-      console.log('🎬 Запускаю карусель каждые 9 секунд');
-      
       const interval = setInterval(() => {
-        // Запускаем переход
         setIsTransitioning(true);
-        
-        // Через 300ms меняем контент
         setTimeout(() => {
           setCurrentIndex(prev => (prev + 1) % heroData.length);
           setIsTransitioning(false);
-        }, 300);
-      }, 9000);
+        }, 500);
+      }, 8000);
       
       intervalRef.current = interval;
-      
       return () => clearInterval(interval);
     }
   }, [showWelcome]);
 
   const currentData = heroData[currentIndex];
-  
-  // Отладочная информация
-  console.log('🔍 Debug ProductHero:', {
-    showWelcome,
-    currentIndex,
-    currentSeries: heroData[currentIndex]?.id,
-    currentModelUrl: heroData[currentIndex]?.modelUrl,
-    resolvedModelUrl: heroData[currentIndex]?.modelUrl || '',
-    totalSeries: heroData.length,
-    allSeriesIds: heroData.map(item => item.id)
-  });
-
-  // Проверка доступности моделей
-  useEffect(() => {
-    heroData.forEach((item, index) => {
-      console.log(`🔍 Проверка модели ${index}: ${item.id} - ${item.modelUrl}`);
-      
-      fetch(item.modelUrl, { method: 'HEAD' })
-        .then(response => {
-          if (response.ok) {
-            console.log(`✅ ${item.id} модель доступна`);
-          } else {
-            console.error(`❌ ${item.id} модель недоступна: ${response.status}`);
-          }
-        })
-        .catch(error => {
-          console.error(`❌ ${item.id} ошибка загрузки:`, error);
-        });
-    });
-  }, []);
-
-  // Простая автозагрузка welcome screen
-  useEffect(() => {
-    // WelcomeScreen сам управляет временем (15 секунд)
-    // Никаких дополнительных действий не требуется
-  }, []);
 
   const handleWelcomeComplete = () => {
-    console.log('✅ WelcomeScreen onComplete вызван');
     setShowTransition(true);
   };
 
   const handleTransitionComplete = () => {
-    console.log('✅ PlayStation переход завершен');
     setShowWelcome(false);
     setShowTransition(false);
   };
@@ -170,142 +130,244 @@ const ProductHero = () => {
     );
   }
 
-
-
   return (
     <motion.div 
-      initial={{ opacity: 0, scale: 1.1 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ 
-        duration: 1.5, 
-        ease: [0.25, 0.1, 0.25, 1]
-      }}
-      className="py-6 sm:py-8 md:py-12 lg:py-16 xl:py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden"
-      style={{ height: '480px' }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
+      className="relative h-screen bg-black overflow-hidden"
     >
+      {/* Динамический фоновый градиент */}
+      <div 
+        className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-20 transition-all duration-1000 ease-out`}
+        style={{
+          transform: `scale(${1 + Math.abs(mousePosition.x) * 0.05})`,
+        }}
+      />
+      
+      {/* Параллакс элементы */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-blue-400/10 via-transparent to-transparent rounded-full" />
+        {/* Основной световой эффект */}
+        <motion.div
+          animate={{
+            x: mousePosition.x * 20,
+            y: mousePosition.y * 20,
+            scale: 1 + Math.abs(mousePosition.x) * 0.1
+          }}
+          transition={{ type: "spring", stiffness: 150, damping: 15 }}
+          className={`absolute top-1/4 left-1/3 w-96 h-96 bg-${currentData.glowColor}-500/30 rounded-full blur-3xl`}
+        />
+        
+        {/* Дополнительные световые пятна */}
+        <motion.div
+          animate={{
+            x: mousePosition.x * -15,
+            y: mousePosition.y * -15,
+            rotate: mousePosition.x * 10
+          }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className={`absolute bottom-1/4 right-1/3 w-64 h-64 bg-${currentData.glowColor}-400/20 rounded-full blur-2xl`}
+        />
+        
+        {/* Геометрические элементы */}
+        <motion.div
+          animate={{
+            x: mousePosition.x * 5,
+            y: mousePosition.y * 5,
+            rotate: mousePosition.x * 5
+          }}
+          transition={{ type: "spring", stiffness: 200, damping: 25 }}
+          className="absolute top-20 right-20 w-32 h-32 border border-white/10 rounded-lg rotate-12"
+        />
+        
+        <motion.div
+          animate={{
+            x: mousePosition.x * -8,
+            y: mousePosition.y * -8,
+            rotate: mousePosition.x * -8
+          }}
+          transition={{ type: "spring", stiffness: 180, damping: 30 }}
+          className="absolute bottom-32 left-20 w-24 h-24 border border-white/5 rounded-full"
+        />
       </div>
 
-      <button
+      {/* Навигация */}
+      <motion.button
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
         onClick={() => navigate('/')}
-        className="absolute top-8 left-8 z-20 flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg text-white hover:bg-white/20 transition-all duration-300 group"
+        className="absolute top-8 left-8 z-50 flex items-center gap-3 px-6 py-3 bg-black/20 backdrop-blur-xl rounded-full text-white hover:bg-black/40 transition-all duration-300 group border border-white/10"
       >
         <Icon name="ChevronLeft" size={20} className="group-hover:-translate-x-1 transition-transform" />
-        <span>Назад</span>
-      </button>
+        <span className="font-medium">Назад</span>
+      </motion.button>
 
+      {/* Основной контент */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-start lg:items-center w-full">
+        <div className="w-full max-w-7xl mx-auto px-8 lg:px-16">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             
-            <div className="space-y-4">
+            {/* Левая колонка - контент */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 1, ease: [0.23, 1, 0.320, 1] }}
+              className="space-y-8"
+            >
+              {/* Заголовок */}
               <div className="space-y-4">
-
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/80 border border-white/20"
+                >
+                  ПРОФЕССИОНАЛЬНОЕ ОБОРУДОВАНИЕ
+                </motion.div>
                 
-                <h1 className="text-lg sm:text-xl md:text-xl lg:text-2xl font-bold text-white leading-tight">
-                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
-                    Высококачественное оборудование
-                  </span>
-                  {' '}для сетевой инфраструктуры
-                </h1>
+                <motion.h1
+                  key={currentData.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.23, 1, 0.320, 1] }}
+                  className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight"
+                >
+                  {currentData.title}
+                </motion.h1>
+                
+                <motion.p
+                  key={`${currentData.id}-desc`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                  className="text-xl text-white/70 leading-relaxed"
+                >
+                  {currentData.description}
+                </motion.p>
               </div>
 
-              <div className={`flex flex-col space-y-4 transition-all duration-700 ease-in-out ${
-                isTransitioning 
-                  ? 'opacity-0 transform translate-x-[-50px] scale-95 blur-sm' 
-                  : 'opacity-100 transform translate-x-0 scale-100 blur-0'
-              }`}>
-                <div className="space-y-4">
-                  <h2 className={`text-lg sm:text-xl md:text-xl lg:text-2xl font-bold text-white transition-all duration-700 ease-out ${
-                    isTransitioning 
-                      ? 'transform translate-y-[-20px] opacity-0' 
-                      : 'transform translate-y-0 opacity-100'
-                  }`}>
-                    {currentData.title}
-                  </h2>
-                  
-                  <p className={`text-sm sm:text-base md:text-base lg:text-lg text-slate-300 transition-all duration-700 ease-out delay-100 ${
-                    isTransitioning 
-                      ? 'transform translate-y-[-15px] opacity-0' 
-                      : 'transform translate-y-0 opacity-100'
-                  }`}>
-                    {currentData.description}
-                  </p>
-                  
-                  <div className={`space-y-3 flex-1 transition-all duration-700 ease-out delay-200 ${
-                    isTransitioning 
-                      ? 'transform translate-y-[-10px] opacity-0' 
-                      : 'transform translate-y-0 opacity-100'
-                  }`}>
-                    {currentData.features.map((feature, index) => (
-                      <div key={index} className={`flex items-center gap-3 transition-all duration-500 ease-out ${
-                        isTransitioning 
-                          ? 'transform translate-x-[-30px] opacity-0' 
-                          : 'transform translate-x-0 opacity-100'
-                      }`} style={{ transitionDelay: `${index * 20 + 100}ms` }}>
-                        {feature ? (
-                          <>
-                            <div className="w-2 h-2 bg-blue-400 rounded-full" />
-                            <span className="text-xs sm:text-sm md:text-sm lg:text-base text-slate-300">{feature}</span>
-                          </>
-                        ) : (
-                          <div className="h-6"></div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              {/* Особенности */}
+              <motion.div
+                key={`${currentData.id}-features`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="space-y-4"
+              >
+                {currentData.features.map((feature, index) => (
+                  <motion.div
+                    key={`${currentData.id}-feature-${index}`}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ 
+                      delay: 0.6 + index * 0.1, 
+                      duration: 0.6,
+                      ease: [0.23, 1, 0.320, 1]
+                    }}
+                    className="flex items-center gap-4 p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                  >
+                    <div className={`w-3 h-3 bg-${currentData.glowColor}-400 rounded-full shadow-lg shadow-${currentData.glowColor}-400/50`} />
+                    <span className="text-white font-medium">{feature}</span>
+                  </motion.div>
+                ))}
+              </motion.div>
 
-                <div className="flex items-center gap-4">
+              {/* Индикатор прогресса */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+                className="flex items-center gap-4 pt-4"
+              >
+                <div className="flex gap-2">
                   {heroData.map((_, index) => (
                     <div
                       key={index}
-                      className={`h-1 rounded-full transition-all duration-300 ${
+                      className={`h-1 rounded-full transition-all duration-500 ${
                         index === currentIndex 
-                          ? 'w-12 bg-blue-400' 
-                          : 'w-6 bg-white/20'
+                          ? `w-12 bg-${currentData.glowColor}-400 shadow-lg shadow-${currentData.glowColor}-400/50` 
+                          : 'w-4 bg-white/20'
                       }`}
                     />
                   ))}
-                  <span className="text-sm text-slate-400 ml-2">
-                    {currentIndex + 1} / {heroData.length}
-                  </span>
                 </div>
-              </div>
-            </div>
+                <span className="text-sm text-white/50 font-mono">
+                  {String(currentIndex + 1).padStart(2, '0')} / {String(heroData.length).padStart(2, '0')}
+                </span>
+              </motion.div>
+            </motion.div>
 
-            <div className="relative h-[280px] sm:h-[320px] md:h-[360px] lg:h-[400px] xl:h-[420px]">
-              {/* Динамический фоновый градиент с анимацией */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl transition-all duration-500 ${
-                isTransitioning ? 'scale-110 opacity-50' : 'scale-100 opacity-100'
-              }`} />
+            {/* Правая колонка - 3D модель */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
+              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+              transition={{ delay: 0.5, duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
+              className="relative h-[500px] lg:h-[600px]"
+            >
+              {/* 3D фоновые эффекты */}
+              <div className="absolute inset-0">
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, 0],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 rounded-3xl blur-2xl`}
+                />
+                
+                <motion.div
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.1, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                  className={`absolute inset-0 bg-${currentData.glowColor}-400/20 rounded-full blur-3xl`}
+                />
+              </div>
               
-              {/* Дополнительные световые эффекты при переходе */}
-              <div className={`absolute inset-0 bg-gradient-radial from-blue-400/30 via-transparent to-transparent rounded-3xl transition-all duration-300 ${
-                isTransitioning ? 'opacity-100 scale-150' : 'opacity-0 scale-100'
-              }`} />
-              
-              <div className={`relative w-full h-full transition-all duration-400 ease-in-out ${
-                isTransitioning 
-                  ? 'opacity-0 scale-95 transform rotate-1 blur-sm' 
-                  : 'opacity-100 scale-100 transform rotate-0 blur-0'
-              }`}>
+              {/* Контейнер модели */}
+              <motion.div
+                key={currentData.id}
+                initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
+                animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                transition={{ duration: 1, ease: [0.23, 1, 0.320, 1] }}
+                className="relative w-full h-full"
+                style={{
+                  transform: `perspective(1000px) rotateX(${mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg)`,
+                  transformStyle: 'preserve-3d'
+                }}
+              >
                 <ModelViewer3D 
                   src={currentData.modelUrl}
                   alt={currentData.title}
                   isPreloaded={isModelReady(currentData.modelUrl)}
                 />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
           </div>
         </div>
       </div>
 
-
+      {/* Переходные эффекты */}
+      {isTransitioning && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm z-40"
+        />
+      )}
     </motion.div>
   );
 };
