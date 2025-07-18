@@ -40,7 +40,7 @@ const Hero3730 = () => {
   }, []);
 
   return (
-    <section className="bg-gradient-hero text-white py-6 sm:py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden" style={{ height: '400px' }}>
+    <section className="bg-gradient-hero text-white py-6 sm:py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden" style={{ height: '480px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8 relative z-10 h-full flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-start lg:items-center w-full">
           {/* Левая часть */}
