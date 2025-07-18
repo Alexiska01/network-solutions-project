@@ -244,6 +244,7 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
                 />
               ))}
             </motion.div>
+          </div>
           </StarField3D>
         </motion.div>
       )}
