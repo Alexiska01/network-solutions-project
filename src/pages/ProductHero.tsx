@@ -3,7 +3,7 @@ import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import ModelViewer3D from '@/components/ModelViewer3D';
 import { useModelPreloader } from '@/hooks/useModelPreloader';
-import WelcomeScreenEnhanced from '@/components/WelcomeScreenEnhanced';
+import WelcomeScreen from '@/components/WelcomeScreen';
 
 const heroData = [
   {
@@ -155,7 +155,7 @@ const ProductHero = () => {
   }, []);
 
   if (showWelcome) {
-    return <WelcomeScreenEnhanced 
+    return <WelcomeScreen 
       onComplete={() => {
         console.log('✅ WelcomeScreen onComplete вызван');
         setShowWelcome(false);
