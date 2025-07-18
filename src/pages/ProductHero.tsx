@@ -73,11 +73,25 @@ const ProductHero = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [showTransition, setShowTransition] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
 
-  // Трекинг мыши для параллакс эффектов
+  // Отслеживание размера экрана
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Трекинг мыши для параллакс эффектов (только на десктопе)
+  useEffect(() => {
+    if (isMobile) return;
+    
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 2 - 1,
@@ -87,7 +101,7 @@ const ProductHero = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [isMobile]);
 
   // Предзагрузка моделей
   useEffect(() => {
@@ -139,13 +153,13 @@ const ProductHero = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
-      className="relative h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+      className="relative h-[70vh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
     >
       {/* Динамический фоновый градиент */}
       <div 
         className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 transition-all duration-1000 ease-out`}
         style={{
-          transform: `scale(${1 + Math.abs(mousePosition.x) * 0.05})`,
+          transform: !isMobile ? `scale(${1 + Math.abs(mousePosition.x) * 0.05})` : 'none',
         }}
       />
       
@@ -153,13 +167,13 @@ const ProductHero = () => {
       <div className="absolute inset-0">
         {/* Основной световой эффект */}
         <motion.div
-          animate={{
+          animate={!isMobile ? {
             x: mousePosition.x * 20,
             y: mousePosition.y * 20,
             scale: 1 + Math.abs(mousePosition.x) * 0.1
-          }}
+          } : {}}
           transition={{ type: "spring", stiffness: 150, damping: 15 }}
-          className={`absolute top-1/4 left-1/3 w-96 h-96 rounded-full blur-3xl`}
+          className={`absolute top-1/4 left-1/3 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl`}
           style={{
             backgroundColor: `${currentData.glowColor.replace('[', '').replace(']', '')}40`
           }}
@@ -167,13 +181,13 @@ const ProductHero = () => {
         
         {/* Дополнительные световые пятна */}
         <motion.div
-          animate={{
+          animate={!isMobile ? {
             x: mousePosition.x * -15,
             y: mousePosition.y * -15,
             rotate: mousePosition.x * 10
-          }}
+          } : {}}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className={`absolute bottom-1/4 right-1/3 w-64 h-64 rounded-full blur-2xl`}
+          className={`absolute bottom-1/4 right-1/3 w-48 h-48 md:w-64 md:h-64 rounded-full blur-2xl`}
           style={{
             backgroundColor: `${currentData.accentColor}33`
           }}
@@ -181,26 +195,26 @@ const ProductHero = () => {
         
         {/* Геометрические элементы */}
         <motion.div
-          animate={{
+          animate={!isMobile ? {
             x: mousePosition.x * 5,
             y: mousePosition.y * 5,
             rotate: mousePosition.x * 5
-          }}
+          } : {}}
           transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          className="absolute top-20 right-20 w-32 h-32 border border-white/20 rounded-lg rotate-12"
+          className="absolute top-16 right-8 md:top-20 md:right-20 w-20 h-20 md:w-32 md:h-32 border border-white/20 rounded-lg rotate-12"
           style={{
             borderColor: `${currentData.accentColor}40`
           }}
         />
         
         <motion.div
-          animate={{
+          animate={!isMobile ? {
             x: mousePosition.x * -8,
             y: mousePosition.y * -8,
             rotate: mousePosition.x * -8
-          }}
+          } : {}}
           transition={{ type: "spring", stiffness: 180, damping: 30 }}
-          className="absolute bottom-32 left-20 w-24 h-24 border border-white/5 rounded-full"
+          className="absolute bottom-24 left-8 md:bottom-32 md:left-20 w-16 h-16 md:w-24 md:h-24 border border-white/5 rounded-full"
         />
       </div>
 
@@ -210,31 +224,31 @@ const ProductHero = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.5, duration: 0.8 }}
         onClick={() => navigate('/')}
-        className="absolute top-8 left-8 z-50 flex items-center gap-3 px-6 py-3 bg-black/20 backdrop-blur-xl rounded-full text-white hover:bg-black/40 transition-all duration-300 group border border-white/10"
+        className="absolute top-4 left-4 md:top-8 md:left-8 z-50 flex items-center gap-2 md:gap-3 px-4 py-2 md:px-6 md:py-3 bg-black/20 backdrop-blur-xl rounded-full text-white hover:bg-black/40 transition-all duration-300 group border border-white/10"
       >
-        <Icon name="ChevronLeft" size={20} className="group-hover:-translate-x-1 transition-transform" />
-        <span className="font-medium">Назад</span>
+        <Icon name="ChevronLeft" size={18} className="md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
+        <span className="font-medium text-sm md:text-base">Назад</span>
       </motion.button>
 
       {/* Основной контент */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="w-full max-w-7xl mx-auto px-8 lg:px-16">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             
             {/* Левая колонка - контент */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 1, ease: [0.23, 1, 0.320, 1] }}
-              className="space-y-6"
+              className="space-y-4 md:space-y-6 order-2 lg:order-1"
             >
               {/* Заголовок */}
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/80 border border-white/20"
+                  className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-xs md:text-sm font-medium text-white/80 border border-white/20"
                 >
                   ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
                 </motion.div>
@@ -244,7 +258,7 @@ const ProductHero = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.23, 1, 0.320, 1] }}
-                  className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
+                  className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
                 >
                   {currentData.title}
                 </motion.h1>
@@ -254,7 +268,7 @@ const ProductHero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="text-lg text-white/70 leading-relaxed"
+                  className="text-base md:text-lg text-white/70 leading-relaxed"
                 >
                   {currentData.description}
                 </motion.p>
@@ -266,7 +280,7 @@ const ProductHero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="space-y-3"
+                className="space-y-2 md:space-y-3"
               >
                 {currentData.features.map((feature, index) => (
                   <motion.div
@@ -278,7 +292,7 @@ const ProductHero = () => {
                       duration: 0.6,
                       ease: [0.23, 1, 0.320, 1]
                     }}
-                    className="flex items-center gap-4 p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
                   >
                     <div 
                       className={`w-3 h-3 rounded-full shadow-lg`}
@@ -287,7 +301,7 @@ const ProductHero = () => {
                         boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
                       }}
                     />
-                    <span className="text-white font-medium">{feature}</span>
+                    <span className="text-white font-medium text-sm md:text-base">{feature}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -297,7 +311,7 @@ const ProductHero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="flex items-center gap-4 pt-4"
+                className="flex items-center gap-3 md:gap-4 pt-3 md:pt-4"
               >
                 <div className="flex gap-2">
                   {heroData.map((_, index) => (
@@ -326,7 +340,7 @@ const ProductHero = () => {
               initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ delay: 0.5, duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
-              className="relative h-[450px] lg:h-[500px]"
+              className="relative h-[300px] md:h-[400px] lg:h-[500px] order-1 lg:order-2"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
@@ -366,7 +380,7 @@ const ProductHero = () => {
                 transition={{ duration: 1, ease: [0.23, 1, 0.320, 1] }}
                 className="relative w-full h-full"
                 style={{
-                  transform: `perspective(1000px) rotateX(${mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg)`,
+                  transform: !isMobile ? `perspective(1000px) rotateX(${mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg)` : 'none',
                   transformStyle: 'preserve-3d'
                 }}
               >
