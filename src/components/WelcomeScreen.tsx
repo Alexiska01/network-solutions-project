@@ -89,8 +89,7 @@ const Earth: React.FC = () => {
         style={{
           overflow: 'hidden',
           background: `url('${EARTH_TEXTURE}') center/cover no-repeat`,
-          filter: 'contrast(1.1) saturate(1.15) brightness(1.05)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.15)'
+          filter: 'contrast(1.1) saturate(1.15) brightness(1.05)'
         }}
         animate={{ rotate: 360 }}
         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
