@@ -75,7 +75,7 @@ const StarField3D: React.FC = () => {
 };
 
 // 3D планеты и астероиды
-// Реалистичная вращающаяся Земля
+// Профессиональная реалистичная Земля
 const Earth: React.FC = () => {
   const EARTH_TEXTURE = 'https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg';
   const EARTH_NIGHT = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/55000/57730/earth_lights_lrg.jpg';
@@ -83,59 +83,70 @@ const Earth: React.FC = () => {
 
   return (
     <div className="absolute top-20 right-20 w-32 h-32" style={{ zIndex: 2 }}>
-      {/* Земля - дневная сторона */}
+      {/* Чистая Земля без фона */}
       <motion.div
-        className="absolute w-full h-full rounded-full shadow-2xl"
+        className="absolute w-full h-full rounded-full"
         style={{
           overflow: 'hidden',
           background: `url('${EARTH_TEXTURE}') center/cover no-repeat`,
-          boxShadow: '0 0 60px 12px #1e3a8a66, 0 0 0 6px #0ea5e944, 0 10px 40px 0 #000c',
-          border: '2px solid #1e3a8a22'
+          filter: 'contrast(1.1) saturate(1.15) brightness(1.05)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.15)'
         }}
         animate={{ rotate: 360 }}
         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       >
-        {/* Блик атмосферы по краю */}
-        <div
-          className="absolute inset-0 rounded-full pointer-events-none"
-          style={{
-            boxShadow: '0 0 28px 12px #38bdf833, 0 0 80px 0 #60a5fa44',
-            mixBlendMode: 'lighten'
-          }}
-        />
-        {/* Облака */}
+        {/* Деликатные облака */}
         <motion.div
           className="absolute inset-0 rounded-full pointer-events-none"
           style={{
             background: `url('${EARTH_CLOUDS}') center/cover no-repeat`,
-            opacity: 0.34,
-            mixBlendMode: 'lighten'
+            opacity: 0.25,
+            mixBlendMode: 'soft-light'
           }}
           animate={{ rotate: -360 }}
           transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
         />
-        {/* Ночные огни */}
+        {/* Тонкие ночные огни */}
         <div
           className="absolute inset-0 rounded-full pointer-events-none"
           style={{
             background: `url('${EARTH_NIGHT}') center/cover no-repeat`,
-            opacity: 0.16,
+            opacity: 0.08,
             mixBlendMode: 'screen',
-            filter: 'blur(1.5px) brightness(0.8)'
+            filter: 'blur(1px) brightness(0.6)'
+          }}
+        />
+        {/* Профессиональный атмосферный блик */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle at 70% 30%, rgba(135, 206, 235, 0.12) 0%, transparent 40%)',
+            mixBlendMode: 'overlay'
           }}
         />
       </motion.div>
-      {/* Светящийся ореол (атмосфера) */}
+      
+      {/* Деликатный атмосферный ореол */}
       <motion.div
         className="absolute inset-0 rounded-full pointer-events-none"
         style={{
-          boxShadow: '0 0 60px 20px #38bdf888, 0 0 90px 40px #60a5fa33'
+          background: 'radial-gradient(circle, transparent 50%, rgba(135, 206, 235, 0.08) 52%, rgba(135, 206, 235, 0.04) 60%, transparent 70%)',
+          scale: 1.2
         }}
         animate={{
-          opacity: [0.75, 1, 0.75],
-          scale: [1, 1.07, 1]
+          opacity: [0.6, 0.8, 0.6],
+          scale: [1.2, 1.25, 1.2]
         }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      
+      {/* Тонкое голубое свечение */}
+      <div
+        className="absolute inset-0 rounded-full pointer-events-none"
+        style={{
+          boxShadow: '0 0 24px 4px rgba(135, 206, 235, 0.12), 0 0 48px 8px rgba(135, 206, 235, 0.06)',
+          scale: 1.1
+        }}
       />
     </div>
   );
