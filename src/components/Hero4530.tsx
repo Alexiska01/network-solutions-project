@@ -55,7 +55,7 @@ const Hero4530 = () => {
             }}
           >
             <motion.p
-              className="text-xs sm:text-sm md:text-base lg:text-base text-blue-200 font-medium mb-2 md:mb-3 uppercase tracking-wide"
+              className="text-xs sm:text-sm md:text-sm lg:text-sm text-blue-200 font-medium mb-2 md:mb-3 uppercase tracking-wide"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -63,7 +63,7 @@ const Hero4530 = () => {
               Серия корпоративных коммутаторов
             </motion.p>
             <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-2 md:mb-3 leading-tight"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-2 md:mb-3 leading-tight"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -88,7 +88,7 @@ const Hero4530 = () => {
                   strokeWidth={1.7}
                   className="text-blue-300 flex-shrink-0"
                 />
-                <span className="text-sm sm:text-base md:text-base lg:text-lg">
+                <span className="text-xs sm:text-sm md:text-sm lg:text-base">
                   До 688 Гбит/сек производительность
                 </span>
               </div>
@@ -99,7 +99,7 @@ const Hero4530 = () => {
                   strokeWidth={1.7}
                   className="text-blue-300 flex-shrink-0"
                 />
-                <span className="text-sm sm:text-base md:text-base lg:text-lg">
+                <span className="text-xs sm:text-sm md:text-sm lg:text-base">
                   Два слота расширения
                 </span>
               </div>
@@ -110,7 +110,7 @@ const Hero4530 = () => {
                   strokeWidth={1.7}
                   className="text-blue-300 flex-shrink-0"
                 />
-                <span className="text-sm sm:text-base md:text-base lg:text-lg">
+                <span className="text-xs sm:text-sm md:text-sm lg:text-base">
                   Двойное питание и PoE+ до 1440 Вт
                 </span>
               </div>
