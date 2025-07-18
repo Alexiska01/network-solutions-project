@@ -231,16 +231,16 @@ const ProductHero = () => {
       </motion.button>
 
       {/* Основной контент */}
-      <div className="relative z-10 h-full flex items-center">
+      <div className="relative z-10 h-full flex items-center py-4 md:py-0">
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
             
             {/* Левая колонка - контент */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 1, ease: [0.23, 1, 0.320, 1] }}
-              className="space-y-4 md:space-y-6 order-2 lg:order-1"
+              className="space-y-3 md:space-y-6 order-2 lg:order-1 pb-4 md:pb-0"
             >
               {/* Заголовок */}
               <div className="space-y-2 md:space-y-4">
@@ -280,7 +280,7 @@ const ProductHero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="space-y-1.5 md:space-y-3"
+                className="space-y-1 md:space-y-3"
               >
                 {currentData.features.map((feature, index) => (
                   <motion.div
@@ -292,7 +292,7 @@ const ProductHero = () => {
                       duration: 0.6,
                       ease: [0.23, 1, 0.320, 1]
                     }}
-                    className="flex items-center gap-2.5 md:gap-4 p-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-lg md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    className="flex items-center gap-2.5 md:gap-4 p-2 md:p-4 bg-white/5 backdrop-blur-sm rounded-lg md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
                   >
                     <div 
                       className={`w-2 h-2 md:w-3 md:h-3 rounded-full shadow-lg`}
@@ -311,7 +311,7 @@ const ProductHero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="flex items-center gap-2.5 md:gap-4 pt-2.5 md:pt-4"
+                className="flex items-center gap-2.5 md:gap-4 pt-2 md:pt-4"
               >
                 <div className="flex gap-2">
                   {heroData.map((_, index) => (
