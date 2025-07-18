@@ -25,9 +25,14 @@ export const useProgressCounter = ({
     const elapsed = Date.now() - startTimeRef.current;
     const newProgress = Math.min((elapsed / duration) * 100, 100);
     
-    setProgress(newProgress);
+    // Плавное обновление для мобильных устройств
+    const smoothProgress = typeof window !== 'undefined' && window.innerWidth < 768 
+      ? Math.round(newProgress * 2) / 2 // Округляем до 0.5 на мобильных
+      : newProgress;
     
-    if (newProgress >= 100) {
+    setProgress(smoothProgress);
+    
+    if (smoothProgress >= 100) {
       setIsComplete(true);
       setIsRunning(false);
       if (onComplete) {
@@ -83,7 +88,9 @@ export const useProgressCounter = ({
   }, []);
 
   return {
-    progress: Math.round(progress * 10) / 10, // Округляем до 1 знака после запятой
+    progress: typeof window !== 'undefined' && window.innerWidth < 768 
+      ? Math.round(progress) // Целые числа на мобильных для плавности
+      : Math.round(progress * 10) / 10, // Округляем до 1 знака после запятой на десктопе
     isRunning,
     isComplete,
     start,

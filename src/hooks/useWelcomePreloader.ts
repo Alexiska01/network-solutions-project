@@ -10,10 +10,10 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
   const [isWelcomeLoadingComplete, setIsWelcomeLoadingComplete] = useState(false);
   const [criticalModelsLoaded, setCriticalModelsLoaded] = useState(false);
   
-  // Профессиональный счетчик прогресса
+  // Профессиональный счетчик прогресса с оптимизацией для мобильных
   const { progress: loadingProgress, start: startProgress, isComplete: progressComplete } = useProgressCounter({
-    duration: 15000, // 15 секунд
-    updateInterval: 50, // Обновление каждые 50мс для плавности
+    duration: typeof window !== 'undefined' && window.innerWidth < 768 ? 10000 : 15000, // Быстрее на мобильных
+    updateInterval: typeof window !== 'undefined' && window.innerWidth < 768 ? 100 : 50, // Реже обновления на мобильных
     onComplete: () => {
       console.log('✅ Progress Counter: Достигнут 100%');
     }
@@ -73,12 +73,13 @@ export const useWelcomePreloader = (heroData: any[]): WelcomePreloaderState => {
     }
   }, [progressComplete, criticalModelsLoaded]);
 
-  // Принудительное завершение через 16 секунд (safety net)
+  // Принудительное завершение с адаптацией для мобильных (safety net)
   useEffect(() => {
+    const timeout = typeof window !== 'undefined' && window.innerWidth < 768 ? 12000 : 16000; // Быстрее на мобильных
     const safetyTimeout = setTimeout(() => {
-      console.log('🚨 WelcomeScreen: Принудительное завершение через 16 секунд');
+      console.log(`🚨 WelcomeScreen: Принудительное завершение через ${timeout/1000} секунд`);
       setIsWelcomeLoadingComplete(true);
-    }, 16000);
+    }, timeout);
 
     return () => clearTimeout(safetyTimeout);
   }, []);
