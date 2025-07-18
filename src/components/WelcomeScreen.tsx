@@ -25,10 +25,10 @@ const LOADING_STAGES: LoadingStage[] = [
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   const heroData = [
-    { modelUrl: 'https://idatascan.ru/models/3530.glb' },
-    { modelUrl: 'https://idatascan.ru/models/3730.glb' },
-    { modelUrl: 'https://idatascan.ru/models/4530.glb' },
-    { modelUrl: 'https://idatascan.ru/models/6010.glb' }
+    { modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb' },
+    { modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb' },
+    { modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb' },
+    { modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb' }
   ];
 
   const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
