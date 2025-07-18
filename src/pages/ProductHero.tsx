@@ -198,8 +198,8 @@ const ProductHero = () => {
       </button>
 
       <div className="relative z-10 h-full flex items-center">
-        <div className="w-full max-w-7xl mx-auto px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-start lg:items-center w-full">
             
             <div className="space-y-4">
               <div className="space-y-4">
