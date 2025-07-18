@@ -15,7 +15,7 @@ interface LoadingStage {
 const LOADING_STAGES: LoadingStage[] = [
   { id: 'connect', text: 'Установление защищённого соединения', duration: 3000 },
   { id: 'station', text: 'Подключение к центральной станции управления', duration: 4000 },
-  { id: 'data', text: 'Получение данных о сетевом оборудовании', duration: 5000 },
+  { id: 'data', text: 'Получение данных о корпоративном оборудовании', duration: 5000 },
   { id: 'complete', text: 'Система готова к работе', duration: 2000 }
 ];
 
