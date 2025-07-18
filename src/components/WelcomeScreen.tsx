@@ -154,12 +154,12 @@ const Satellite3D: React.FC<{ progress: number }> = ({ progress }) => {
       <div className="absolute inset-0 border border-cyan-500/30 rounded-full" />
       <div className="absolute inset-1 sm:inset-2 border border-cyan-400/20 rounded-full" />
       
-      {/* Вращающийся спутник - оптимизированный */}
+      {/* Вращающийся спутник - быстрый и плавный */}
       <motion.div
         className="absolute inset-0"
         animate={{ rotate: 360 }}
         transition={{ 
-          duration: isMobile ? 10 : 6, 
+          duration: isMobile ? 4 : 3, 
           repeat: Infinity, 
           ease: "linear"
         }}
