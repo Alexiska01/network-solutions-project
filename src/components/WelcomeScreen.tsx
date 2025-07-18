@@ -22,8 +22,8 @@ const LOADING_STAGES: LoadingStage[] = [
 // Кинематографичное звездное поле с оптимизацией
 const StarField3D: React.FC = () => {
   const stars = useMemo(() => {
-    // Увеличиваем количество звезд для большей красоты
-    const starCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 50 : 400;
+    // Оптимальное количество звезд - увеличиваем только мобильную версию
+    const starCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 50 : 300;
     return Array.from({ length: starCount }, (_, i) => {
       const depth = Math.random();
       const brightness = 1 - depth * 0.4;
@@ -97,8 +97,8 @@ const CosmicObjects: React.FC = () => {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
 
-      {/* Астероидное поле - больше звезд */}
-      {Array.from({ length: typeof window !== 'undefined' && window.innerWidth < 768 ? 4 : 18 }, (_, i) => (
+      {/* Астероидное поле - больше звезд только на мобильных */}
+      {Array.from({ length: typeof window !== 'undefined' && window.innerWidth < 768 ? 4 : 12 }, (_, i) => (
         <motion.div
           key={i}
           className="absolute bg-gradient-to-br from-gray-400 to-gray-600 rounded-full"
@@ -149,8 +149,8 @@ const Satellite3D: React.FC<{ progress: number }> = ({ progress }) => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   
   return (
-    <div className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 mx-auto mb-4 sm:mb-6 md:mb-8">
-      {/* Основная орбита - увеличенная для мобильных */}
+    <div className="relative w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 mx-auto mb-4 sm:mb-6 md:mb-8">
+      {/* Основная орбита */}
       <div className="absolute inset-0 border border-cyan-500/30 rounded-full" />
       <div className="absolute inset-1 sm:inset-2 border border-cyan-400/20 rounded-full" />
       
@@ -283,10 +283,10 @@ const Satellite3D: React.FC<{ progress: number }> = ({ progress }) => {
         </motion.div>
       </div>
       
-      {/* Процент загрузки - отодвинутый от спутника */}
+      {/* Процент загрузки - уменьшенный */}
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.span
-          className="text-xs sm:text-base md:text-xl font-mono text-cyan-300 font-bold mt-16 sm:mt-20 md:mt-24"
+          className="text-xs sm:text-base md:text-xl font-mono text-cyan-300 font-bold mt-12 sm:mt-16 md:mt-20"
           style={{ textShadow: isMobile ? '0 0 5px #22d3ee' : '0 0 10px #22d3ee' }}
           key={progress}
           initial={{ scale: 0.8 }}
