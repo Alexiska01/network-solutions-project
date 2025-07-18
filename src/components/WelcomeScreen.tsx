@@ -22,7 +22,9 @@ const LOADING_STAGES: LoadingStage[] = [
 // Кинематографичное звездное поле с оптимизацией
 const StarField3D: React.FC = () => {
   const stars = useMemo(() => {
-    return Array.from({ length: 300 }, (_, i) => {
+    // Меньше звезд на мобильных для производительности
+    const starCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 150 : 300;
+    return Array.from({ length: starCount }, (_, i) => {
       const depth = Math.random();
       const brightness = 1 - depth * 0.4;
       const size = (1 - depth) * 5 + 0.5;
@@ -95,8 +97,8 @@ const CosmicObjects: React.FC = () => {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
 
-      {/* Астероидное поле */}
-      {Array.from({ length: 12 }, (_, i) => (
+      {/* Астероидное поле - меньше на мобильных */}
+      {Array.from({ length: typeof window !== 'undefined' && window.innerWidth < 768 ? 6 : 12 }, (_, i) => (
         <motion.div
           key={i}
           className="absolute bg-gradient-to-br from-gray-400 to-gray-600 rounded-full"
@@ -145,7 +147,7 @@ const CosmicObjects: React.FC = () => {
 // Детализированный 3D спутник
 const Satellite3D: React.FC<{ progress: number }> = ({ progress }) => {
   return (
-    <div className="relative w-40 h-40 mx-auto mb-8">
+    <div className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-6 sm:mb-8">
       {/* Основная орбита */}
       <div className="absolute inset-0 border border-cyan-500/30 rounded-full" />
       <div className="absolute inset-2 border border-cyan-400/20 rounded-full" />
@@ -329,10 +331,10 @@ const TypewriterText: React.FC<{ text: string; onComplete?: () => void }> = ({
   }, [currentIndex, text, onComplete]);
 
   return (
-    <span className="font-mono text-cyan-300">
+    <span className="font-mono text-cyan-300 text-center leading-relaxed">
       {displayedText}
       <motion.span
-        className="inline-block w-2 h-5 bg-cyan-400 ml-1"
+        className="inline-block w-1.5 h-4 sm:w-2 sm:h-5 bg-cyan-400 ml-1"
         animate={{ opacity: [0, 1, 0] }}
         transition={{ duration: 1, repeat: Infinity }}
       />
@@ -387,7 +389,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             duration: 1.5,
             ease: [0.25, 0.1, 0.25, 1] // PlayStation-style easing
           }}
-          className="fixed inset-0 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-8"
           style={{
             background: `
               radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
@@ -403,7 +405,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
           {/* Космические объекты */}
           <CosmicObjects />
           
-          {/* Кинематографичная сетка */}
+          {/* Кинематографичная сетка - адаптивная */}
           <motion.div 
             className="absolute inset-0 opacity-3"
             style={{
@@ -413,7 +415,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
                 linear-gradient(rgba(168, 85, 247, 0.2) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(168, 85, 247, 0.2) 1px, transparent 1px)
               `,
-              backgroundSize: '120px 120px, 120px 120px, 30px 30px, 30px 30px'
+              backgroundSize: typeof window !== 'undefined' && window.innerWidth < 768 
+                ? '60px 60px, 60px 60px, 15px 15px, 15px 15px'
+                : '120px 120px, 120px 120px, 30px 30px, 30px 30px'
             }}
             animate={{
               backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
@@ -423,22 +427,22 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
           />
           
           {/* Основной контент */}
-          <div className="relative z-10 text-center px-8 max-w-2xl">
+          <div className="relative z-10 text-center w-full max-w-sm sm:max-w-2xl">
             {/* Заголовок */}
             <motion.h1
-              initial={{ opacity: 0, y: -50 }}
+              initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="text-5xl md:text-6xl font-light text-white mb-12"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white mb-8 sm:mb-12 leading-tight"
               style={{ 
                 fontFamily: 'system-ui, -apple-system, sans-serif', 
                 letterSpacing: '0.05em',
                 textShadow: '0 0 30px rgba(34, 211, 238, 0.5)'
               }}
             >
-              Добро пожаловать в{' '}
+              <span className="block sm:inline">Добро пожаловать в{' '}</span>
               <motion.span
-                className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600"
+                className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 block sm:inline"
                 animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                   scale: [1, 1.05, 1]
@@ -466,7 +470,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.2 }}
-              className="text-lg mb-4 h-8 flex items-center justify-center"
+              className="text-sm sm:text-base md:text-lg mb-4 h-8 sm:h-10 flex items-center justify-center px-4"
             >
               <AnimatePresence mode="wait">
                 <motion.div
@@ -486,7 +490,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 1.4 }}
-              className="text-gray-400 text-sm font-mono"
+              className="text-gray-400 text-xs sm:text-sm font-mono px-4"
               style={{ textShadow: '0 0 10px rgba(156, 163, 175, 0.5)' }}
             >
               Корпоративная сеть нового поколения
@@ -500,10 +504,10 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 1 }}
           >
-            {/* Мягкие световые пятна */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/8 rounded-full blur-3xl" />
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-3xl" />
+            {/* Мягкие световые пятна - адаптивные размеры */}
+            <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-blue-500/8 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 md:w-[600px] md:h-[600px] bg-purple-500/5 rounded-full blur-3xl" />
             
             {/* Динамические лучи */}
             <motion.div
