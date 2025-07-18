@@ -90,6 +90,29 @@ const ProductHero = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Мобильная инициализация model-viewer
+  useEffect(() => {
+    if (isMobile && modelRef.current) {
+      const initMobileModel = () => {
+        const mv = modelRef.current as any;
+        if (mv && mv.cameraOrbit) {
+          // Принудительная инициализация для мобильных
+          mv.cameraOrbit = "0deg 70deg 0.8m";
+          mv.fieldOfView = "40deg";
+          mv.minCameraOrbit = "auto auto 0.4m";
+          mv.maxCameraOrbit = "auto auto 1.5m";
+          if (mv.jumpCameraToGoal) {
+            mv.jumpCameraToGoal();
+          }
+        }
+      };
+
+      // Инициализация с задержкой
+      const timer = setTimeout(initMobileModel, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile, currentData.id]);
+
   // Трекинг мыши для параллакс эффектов (только на десктопе)
   useEffect(() => {
     if (isMobile) return;
@@ -393,7 +416,7 @@ const ProductHero = () => {
                       ref={modelRef}
                       src={currentData.modelUrl}
                       alt={currentData.title}
-                      auto-rotate={!isMobile}
+                      auto-rotate
                       auto-rotate-delay="1000"
                       rotation-per-second="30deg"
                       camera-controls
@@ -415,8 +438,8 @@ const ProductHero = () => {
                         '--progress-bar-color': 'transparent',
                         '--progress-mask': 'transparent'
                       }}
-                      onLoad={() => console.log('✅ Model loaded on', isMobile ? 'mobile' : 'desktop')}
-                      onError={(e: any) => console.error('❌ Model failed to load:', e)}
+                      onLoad={() => console.log('✅ ProductHero: Model loaded on', isMobile ? 'mobile' : 'desktop')}
+                      onError={(e: any) => console.error('❌ ProductHero: Model failed to load:', e, 'URL:', currentData.modelUrl)}
                     />
                   </div>
                 </motion.div>
