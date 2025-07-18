@@ -196,7 +196,7 @@ const ProductHero = () => {
         <span>Назад</span>
       </button>
 
-      <div className="relative z-10 flex items-center">
+      <div className="relative z-10 min-h-screen flex items-center">
         <div className="w-full max-w-7xl mx-auto px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             
