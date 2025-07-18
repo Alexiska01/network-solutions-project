@@ -372,24 +372,65 @@ const ProductHero = () => {
                 />
               </div>
               
-              {/* Контейнер модели */}
-              <motion.div
-                key={currentData.id}
-                initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
-                animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-                transition={{ duration: 1, ease: [0.23, 1, 0.320, 1] }}
-                className="relative w-full h-full"
-                style={{
-                  transform: !isMobile ? `perspective(1000px) rotateX(${mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg)` : 'none',
-                  transformStyle: 'preserve-3d'
-                }}
-              >
-                <ModelViewer3D 
-                  src={currentData.modelUrl}
-                  alt={currentData.title}
-                  isPreloaded={isModelReady(currentData.modelUrl)}
-                />
-              </motion.div>
+              {/* Тестовая сетка - 3D модель + тестовый куб */}
+              <div className="grid grid-cols-2 gap-2 h-full">
+                {/* Левая часть - 3D модель */}
+                <motion.div
+                  key={currentData.id}
+                  initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
+                  animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                  transition={{ duration: 1, ease: [0.23, 1, 0.320, 1] }}
+                  className="relative w-full h-full"
+                  style={{
+                    transform: !isMobile ? `perspective(1000px) rotateX(${mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg)` : 'none',
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
+                  <ModelViewer3D 
+                    src={currentData.modelUrl}
+                    alt={currentData.title}
+                    isPreloaded={isModelReady(currentData.modelUrl)}
+                  />
+                </motion.div>
+
+                {/* Правая часть - тестовый 3D куб */}
+                <motion.div
+                  animate={{
+                    rotateX: [0, 360],
+                    rotateY: [0, 360],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  className="relative w-full h-full flex items-center justify-center"
+                  style={{ perspective: '600px' }}
+                >
+                  <div 
+                    className="w-20 h-20 md:w-32 md:h-32"
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      transform: 'rotateX(45deg) rotateY(45deg)'
+                    }}
+                  >
+                    {/* Куб из CSS */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 opacity-80" style={{transform: 'translateZ(40px)'}} />
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-600 opacity-60" style={{transform: 'rotateY(90deg) translateZ(40px)'}} />
+                    <div className="absolute inset-0 bg-gradient-to-br from-pink-400 to-red-600 opacity-60" style={{transform: 'rotateY(180deg) translateZ(40px)'}} />
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-400 to-orange-600 opacity-60" style={{transform: 'rotateY(-90deg) translateZ(40px)'}} />
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-yellow-600 opacity-60" style={{transform: 'rotateX(90deg) translateZ(40px)'}} />
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-green-600 opacity-60" style={{transform: 'rotateX(-90deg) translateZ(40px)'}} />
+                  </div>
+                  
+                  {/* Подпись */}
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-white text-xs text-center">
+                    <div className="bg-black/50 backdrop-blur px-2 py-1 rounded">
+                      CSS 3D
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </motion.div>
 
           </div>
