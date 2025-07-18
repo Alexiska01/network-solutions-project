@@ -18,8 +18,9 @@ const heroData = [
       'Поддержка РоЕ/РоЕ+',
       'Статическая и динамическая маршрутизация'
     ],
-    gradient: 'from-blue-600 via-cyan-500 to-purple-600',
-    glowColor: 'blue'
+    gradient: 'from-[#32398e] via-[#005baa] to-[#0079b6]',
+    glowColor: '[#005baa]',
+    accentColor: '#53c2a4'
   },
   {
     id: 'IDS3730',
@@ -31,8 +32,9 @@ const heroData = [
       'Поддержка РоЕ/РоЕ+',
       'Статическая и динамическая маршрутизация'
     ],
-    gradient: 'from-purple-600 via-pink-500 to-red-600',
-    glowColor: 'purple'
+    gradient: 'from-[#32398e] via-[#8338EC] to-[#B5179E]',
+    glowColor: '[#8338EC]',
+    accentColor: '#FF6B35'
   },
   {
     id: 'IDS4530',
@@ -44,8 +46,9 @@ const heroData = [
       'Поддержка РоЕ/РоЕ+',
       'Поддержка технологии VxLAN'
     ],
-    gradient: 'from-emerald-600 via-teal-500 to-cyan-600',
-    glowColor: 'emerald'
+    gradient: 'from-[#0093b6] via-[#00acad] to-[#53c2a4]',
+    glowColor: '[#00acad]',
+    accentColor: '#A0EEC0'
   },
   {
     id: 'IDS6010',
@@ -57,8 +60,9 @@ const heroData = [
       'Поддержка РоЕ/РоЕ+',
       'Поддержка технологии VxLAN'
     ],
-    gradient: 'from-orange-600 via-red-500 to-pink-600',
-    glowColor: 'orange'
+    gradient: 'from-[#FF6B35] via-[#F5B700] to-[#FF8C7A]',
+    glowColor: '[#FF6B35]',
+    accentColor: '#FFD6C2'
   }
 ];
 
@@ -135,11 +139,11 @@ const ProductHero = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
-      className="relative h-[70vh] bg-black overflow-hidden"
+      className="relative h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
     >
       {/* Динамический фоновый градиент */}
       <div 
-        className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-20 transition-all duration-1000 ease-out`}
+        className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 transition-all duration-1000 ease-out`}
         style={{
           transform: `scale(${1 + Math.abs(mousePosition.x) * 0.05})`,
         }}
@@ -155,7 +159,10 @@ const ProductHero = () => {
             scale: 1 + Math.abs(mousePosition.x) * 0.1
           }}
           transition={{ type: "spring", stiffness: 150, damping: 15 }}
-          className={`absolute top-1/4 left-1/3 w-96 h-96 bg-${currentData.glowColor}-500/30 rounded-full blur-3xl`}
+          className={`absolute top-1/4 left-1/3 w-96 h-96 rounded-full blur-3xl`}
+          style={{
+            backgroundColor: `${currentData.glowColor.replace('[', '').replace(']', '')}40`
+          }}
         />
         
         {/* Дополнительные световые пятна */}
@@ -166,7 +173,10 @@ const ProductHero = () => {
             rotate: mousePosition.x * 10
           }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className={`absolute bottom-1/4 right-1/3 w-64 h-64 bg-${currentData.glowColor}-400/20 rounded-full blur-2xl`}
+          className={`absolute bottom-1/4 right-1/3 w-64 h-64 rounded-full blur-2xl`}
+          style={{
+            backgroundColor: `${currentData.accentColor}33`
+          }}
         />
         
         {/* Геометрические элементы */}
@@ -177,7 +187,10 @@ const ProductHero = () => {
             rotate: mousePosition.x * 5
           }}
           transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          className="absolute top-20 right-20 w-32 h-32 border border-white/10 rounded-lg rotate-12"
+          className="absolute top-20 right-20 w-32 h-32 border border-white/20 rounded-lg rotate-12"
+          style={{
+            borderColor: `${currentData.accentColor}40`
+          }}
         />
         
         <motion.div
@@ -267,7 +280,13 @@ const ProductHero = () => {
                     }}
                     className="flex items-center gap-4 p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
                   >
-                    <div className={`w-3 h-3 bg-${currentData.glowColor}-400 rounded-full shadow-lg shadow-${currentData.glowColor}-400/50`} />
+                    <div 
+                      className={`w-3 h-3 rounded-full shadow-lg`}
+                      style={{
+                        backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
+                        boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
+                      }}
+                    />
                     <span className="text-white font-medium">{feature}</span>
                   </motion.div>
                 ))}
@@ -286,9 +305,13 @@ const ProductHero = () => {
                       key={index}
                       className={`h-1 rounded-full transition-all duration-500 ${
                         index === currentIndex 
-                          ? `w-12 bg-${currentData.glowColor}-400 shadow-lg shadow-${currentData.glowColor}-400/50` 
+                          ? `w-12 shadow-lg` 
                           : 'w-4 bg-white/20'
                       }`}
+                      style={index === currentIndex ? {
+                        backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
+                        boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
+                      } : {}}
                     />
                   ))}
                 </div>
