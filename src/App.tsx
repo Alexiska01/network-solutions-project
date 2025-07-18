@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import ProductHero from "./pages/ProductHero";
-import Contacts from "./pages/Contacts";
 
 // Lazy loading для второстепенных страниц
 const SeriesCatalog3730 = lazy(() => import("./pages/SeriesCatalog3730"));
@@ -161,7 +160,6 @@ const App = () => {
               />
               <Route path="/software" element={<SoftwarePage />} />
               <Route path="/product-hero" element={<ProductHero />} />
-              <Route path="/contacts" element={<Contacts />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="/switches" element={<SwitchesCatalog />} />
               <Route path="*" element={<NotFound />} />
