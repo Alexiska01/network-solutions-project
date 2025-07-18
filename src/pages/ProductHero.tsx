@@ -236,7 +236,7 @@ const ProductHero = () => {
                   transition={{ delay: 0.6, duration: 0.8 }}
                   className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/80 border border-white/20"
                 >
-                  ПРОФЕССИОНАЛЬНОЕ ОБОРУДОВАНИЕ
+                  ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
                 </motion.div>
                 
                 <motion.h1
