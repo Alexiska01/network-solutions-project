@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
-import ModelViewer3D from '@/components/ModelViewer3D';
+// Убрали импорт - используем прямое model-viewer
 import { useModelPreloader } from '@/hooks/useModelPreloader';
 import WelcomeScreen from '@/components/WelcomeScreen';
 import PlayStationTransition from '@/components/PlayStationTransition';
@@ -76,6 +76,8 @@ const ProductHero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
+  const modelRef = useRef<any>(null);
+  const [indicatorsOn, setIndicatorsOn] = useState(false);
 
   // Отслеживание размера экрана
   useEffect(() => {
@@ -372,8 +374,8 @@ const ProductHero = () => {
                 />
               </div>
               
-              {/* Тестовая сетка - 3D модель + тестовый куб */}
-              <div className="grid grid-cols-2 gap-2 h-full">
+              {/* 3D модель на полную ширину */}
+              <div className="w-full h-full">
                 {/* Левая часть - 3D модель или fallback */}
                 <motion.div
                   key={currentData.id}
@@ -386,119 +388,38 @@ const ProductHero = () => {
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  {!isMobile ? (
-                    // Desktop: 3D модель
-                    <ModelViewer3D 
+                  {/* 3D модель для всех устройств */}
+                  <div className="w-full h-full">
+                    <model-viewer
+                      ref={modelRef}
                       src={currentData.modelUrl}
                       alt={currentData.title}
-                      isPreloaded={isModelReady(currentData.modelUrl)}
+                      auto-rotate
+                      auto-rotate-delay="1000"
+                      rotation-per-second="30deg"
+                      camera-controls
+                      camera-orbit="0deg 75deg 1.2m"
+                      min-camera-orbit="auto auto 0.6m"
+                      max-camera-orbit="auto auto 2.5m"
+                      field-of-view="30deg"
+                      exposure="1.2"
+                      shadow-intensity="0.3"
+                      environment-image="neutral"
+                      interaction-prompt="none"
+                      loading="eager"
+                      reveal="auto"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'transparent',
+                        borderRadius: '1rem',
+                        '--progress-bar-color': 'transparent',
+                        '--progress-mask': 'transparent'
+                      }}
                     />
-                  ) : (
-                    // Mobile: красивый fallback с анимацией
-                    <div className="w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl border border-white/20 flex items-center justify-center relative overflow-hidden">
-                      {/* Анимированный фон */}
-                      <motion.div
-                        animate={{
-                          scale: [1, 1.2, 1],
-                          rotate: [0, 180, 360],
-                          opacity: [0.3, 0.1, 0.3]
-                        }}
-                        transition={{
-                          duration: 6,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                        className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-20 rounded-2xl`}
-                      />
-                      
-                      {/* Контент */}
-                      <div className="relative z-10 text-center space-y-3">
-                        <motion.div
-                          animate={{
-                            rotateY: [0, 360],
-                            scale: [1, 1.1, 1]
-                          }}
-                          transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            ease: "linear"
-                          }}
-                          className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-400 to-purple-600 rounded-xl flex items-center justify-center shadow-lg"
-                          style={{
-                            boxShadow: `0 0 20px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
-                          }}
-                        >
-                          <span className="text-2xl">📡</span>
-                        </motion.div>
-                        
-                        <div>
-                          <h3 className="text-white font-bold text-sm">{currentData.title}</h3>
-                          <p className="text-white/60 text-xs mt-1">3D модель</p>
-                        </div>
-                        
-                        {/* Пульсирующие точки */}
-                        <div className="flex justify-center space-x-1">
-                          {[0, 1, 2].map((i) => (
-                            <motion.div
-                              key={i}
-                              animate={{
-                                scale: [0.8, 1.2, 0.8],
-                                opacity: [0.5, 1, 0.5]
-                              }}
-                              transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                delay: i * 0.2
-                              }}
-                              className="w-1.5 h-1.5 rounded-full"
-                              style={{
-                                backgroundColor: currentData.glowColor.replace('[', '').replace(']', '')
-                              }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  </div>
                 </motion.div>
 
-                {/* Правая часть - тестовый 3D куб */}
-                <motion.div
-                  animate={{
-                    rotateX: [0, 360],
-                    rotateY: [0, 360],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  className="relative w-full h-full flex items-center justify-center"
-                  style={{ perspective: '600px' }}
-                >
-                  <div 
-                    className="w-20 h-20 md:w-32 md:h-32"
-                    style={{
-                      transformStyle: 'preserve-3d',
-                      transform: 'rotateX(45deg) rotateY(45deg)'
-                    }}
-                  >
-                    {/* Куб из CSS */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 opacity-80" style={{transform: 'translateZ(40px)'}} />
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-600 opacity-60" style={{transform: 'rotateY(90deg) translateZ(40px)'}} />
-                    <div className="absolute inset-0 bg-gradient-to-br from-pink-400 to-red-600 opacity-60" style={{transform: 'rotateY(180deg) translateZ(40px)'}} />
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-400 to-orange-600 opacity-60" style={{transform: 'rotateY(-90deg) translateZ(40px)'}} />
-                    <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-yellow-600 opacity-60" style={{transform: 'rotateX(90deg) translateZ(40px)'}} />
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-green-600 opacity-60" style={{transform: 'rotateX(-90deg) translateZ(40px)'}} />
-                  </div>
-                  
-                  {/* Подпись */}
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-white text-xs text-center">
-                    <div className="bg-black/50 backdrop-blur px-2 py-1 rounded">
-                      CSS 3D
-                    </div>
-                  </div>
-                </motion.div>
               </div>
             </motion.div>
 
