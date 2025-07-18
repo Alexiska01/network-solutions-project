@@ -384,8 +384,7 @@ const ProductHero = () => {
                   transition={{ duration: 1, ease: [0.23, 1, 0.320, 1] }}
                   className="relative w-full h-full"
                   style={{
-                    transform: !isMobile ? `perspective(1000px) rotateX(${mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg)` : 'none',
-                    transformStyle: 'preserve-3d'
+                    transform: 'none'
                   }}
                 >
                   {/* 3D модель для всех устройств */}
@@ -394,14 +393,14 @@ const ProductHero = () => {
                       ref={modelRef}
                       src={currentData.modelUrl}
                       alt={currentData.title}
-                      auto-rotate
+                      auto-rotate={!isMobile}
                       auto-rotate-delay="1000"
                       rotation-per-second="30deg"
                       camera-controls
-                      camera-orbit="0deg 75deg 1.2m"
-                      min-camera-orbit="auto auto 0.6m"
+                      camera-orbit={isMobile ? "0deg 85deg 0.8m" : "0deg 75deg 1.2m"}
+                      min-camera-orbit="auto auto 0.4m"
                       max-camera-orbit="auto auto 2.5m"
-                      field-of-view="30deg"
+                      field-of-view={isMobile ? "45deg" : "30deg"}
                       exposure="1.2"
                       shadow-intensity="0.3"
                       environment-image="neutral"
@@ -416,6 +415,8 @@ const ProductHero = () => {
                         '--progress-bar-color': 'transparent',
                         '--progress-mask': 'transparent'
                       }}
+                      onLoad={() => console.log('✅ Model loaded on', isMobile ? 'mobile' : 'desktop')}
+                      onError={(e: any) => console.error('❌ Model failed to load:', e)}
                     />
                   </div>
                 </motion.div>
