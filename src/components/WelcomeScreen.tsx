@@ -19,12 +19,12 @@ const LOADING_STAGES: LoadingStage[] = [
   { id: 'complete', text: 'Система готова к работе', duration: 2000 }
 ];
 
-// Гармоничное звездное поле под стилизованную Землю
+// Профессиональное звездное поле с 3D глубиной
 const StarField3D: React.FC = () => {
-  const stars = Array.from({ length: 120 }, (_, i) => {
-    const depth = Math.random();
-    const brightness = 1 - depth * 0.6;
-    const size = (1 - depth) * 2.5 + 0.3;
+  const stars = Array.from({ length: 150 }, (_, i) => {
+    const depth = Math.random(); // 0-1, где 0 - близко, 1 - далеко
+    const brightness = 1 - depth * 0.7; // Более дальние звезды тусклее
+    const size = (1 - depth) * 3 + 0.5; // Более близкие звезды крупнее
     
     return {
       id: i,
@@ -33,40 +33,33 @@ const StarField3D: React.FC = () => {
       depth,
       size,
       brightness,
-      twinkleSpeed: 3 + Math.random() * 3,
-      twinkleDelay: Math.random() * 4,
-      color: depth > 0.6 ? 'emerald' : depth > 0.3 ? 'teal' : 'green'
+      twinkleSpeed: 2 + Math.random() * 4,
+      twinkleDelay: Math.random() * 5,
+      color: depth > 0.7 ? 'blue' : depth > 0.4 ? 'white' : 'cyan'
     };
   });
 
   return (
     <div className="absolute inset-0 overflow-hidden">
       {stars.map((star) => {
-        const getStarColor = () => {
-          switch(star.color) {
-            case 'emerald': return '#10b981';
-            case 'teal': return '#14b8a6';
-            case 'green': return '#22c55e';
-            default: return '#ffffff';
-          }
-        };
+        const colorClass = star.color === 'blue' ? 'bg-blue-200' : 
+                          star.color === 'cyan' ? 'bg-cyan-200' : 'bg-white';
         
         return (
           <motion.div
             key={star.id}
-            className="absolute rounded-full"
+            className={`absolute ${colorClass} rounded-full`}
             style={{
               left: `${star.x}%`,
               top: `${star.y}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              background: `radial-gradient(circle, ${getStarColor()}, transparent)`,
-              filter: `blur(${star.depth * 0.3}px)`,
-              boxShadow: `0 0 ${star.size * 3}px ${getStarColor()}30`
+              filter: `blur(${star.depth * 0.5}px)`,
+              boxShadow: `0 0 ${star.size * 2}px ${star.color === 'cyan' ? '#22d3ee' : star.color === 'blue' ? '#3b82f6' : '#ffffff'}40`
             }}
             animate={{
-              opacity: [star.brightness * 0.4, star.brightness * 0.9, star.brightness * 0.4],
-              scale: [0.8, 1.1, 0.8]
+              opacity: [star.brightness * 0.3, star.brightness, star.brightness * 0.3],
+              scale: [1, 1.2, 1]
             }}
             transition={{
               duration: star.twinkleSpeed,
@@ -82,96 +75,77 @@ const StarField3D: React.FC = () => {
 };
 
 // 3D планеты и астероиды
-// Стилизованная 3D Земля в современном дизайне
+// Профессиональная реалистичная Земля
 const Earth: React.FC = () => {
+  const EARTH_TEXTURE = 'https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg';
+  const EARTH_NIGHT = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/55000/57730/earth_lights_lrg.jpg';
+  const EARTH_CLOUDS = 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Earth-clouds.jpg';
+
   return (
     <div className="absolute top-20 right-20 w-32 h-32" style={{ zIndex: 2 }}>
-      {/* Основа Земли */}
+      {/* Чистая Земля без фона */}
       <motion.div
         className="absolute w-full h-full rounded-full"
         style={{
-          background: `
-            radial-gradient(circle at 30% 30%, #4ade80 0%, #22c55e 25%, #16a34a 50%, #15803d 75%, #166534 100%)
-          `,
-          boxShadow: `
-            inset -8px -8px 16px rgba(0,0,0,0.2),
-            inset 8px 8px 16px rgba(255,255,255,0.1),
-            0 0 40px 8px rgba(34, 197, 94, 0.15)
-          `
+          overflow: 'hidden',
+          background: `url('${EARTH_TEXTURE}') center/cover no-repeat`,
+          filter: 'contrast(1.1) saturate(1.15) brightness(1.05)'
         }}
         animate={{ rotate: 360 }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       >
-        {/* Континенты */}
-        <div className="absolute inset-0 rounded-full overflow-hidden">
-          <motion.div
-            className="absolute w-8 h-12 rounded-full opacity-40"
-            style={{
-              background: '#166534',
-              top: '20%',
-              left: '25%',
-              transform: 'rotate(15deg)'
-            }}
-            animate={{ rotate: [15, 375] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div
-            className="absolute w-6 h-8 rounded-full opacity-40"
-            style={{
-              background: '#15803d',
-              top: '40%',
-              right: '20%',
-              transform: 'rotate(-20deg)'
-            }}
-            animate={{ rotate: [-20, 340] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div
-            className="absolute w-4 h-6 rounded-full opacity-40"
-            style={{
-              background: '#166534',
-              bottom: '25%',
-              left: '30%',
-              transform: 'rotate(45deg)'
-            }}
-            animate={{ rotate: [45, 405] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          />
-        </div>
-        
-        {/* Облака */}
+        {/* Деликатные облака */}
         <motion.div
-          className="absolute inset-0 rounded-full overflow-hidden"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        >
-          <div className="absolute w-6 h-3 rounded-full bg-white/20 top-1/4 left-1/3" />
-          <div className="absolute w-4 h-2 rounded-full bg-white/15 top-1/2 right-1/4" />
-          <div className="absolute w-5 h-2 rounded-full bg-white/20 bottom-1/3 left-1/4" />
-        </motion.div>
-        
-        {/* Атмосферный блик */}
-        <div
-          className="absolute inset-0 rounded-full"
+          className="absolute inset-0 rounded-full pointer-events-none"
           style={{
-            background: 'radial-gradient(circle at 70% 30%, rgba(255,255,255,0.3) 0%, transparent 40%)',
+            background: `url('${EARTH_CLOUDS}') center/cover no-repeat`,
+            opacity: 0.25,
+            mixBlendMode: 'soft-light'
+          }}
+          animate={{ rotate: -360 }}
+          transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+        />
+        {/* Тонкие ночные огни */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background: `url('${EARTH_NIGHT}') center/cover no-repeat`,
+            opacity: 0.08,
+            mixBlendMode: 'screen',
+            filter: 'blur(1px) brightness(0.6)'
+          }}
+        />
+        {/* Профессиональный атмосферный блик */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle at 70% 30%, rgba(135, 206, 235, 0.12) 0%, transparent 40%)',
             mixBlendMode: 'overlay'
           }}
         />
       </motion.div>
       
-      {/* Атмосферный ореол */}
+      {/* Деликатный атмосферный ореол */}
       <motion.div
-        className="absolute inset-0 rounded-full"
+        className="absolute inset-0 rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, transparent 50%, rgba(34, 197, 94, 0.1) 52%, rgba(34, 197, 94, 0.05) 60%, transparent 70%)',
-          scale: 1.3
+          background: 'radial-gradient(circle, transparent 50%, rgba(135, 206, 235, 0.08) 52%, rgba(135, 206, 235, 0.04) 60%, transparent 70%)',
+          scale: 1.2
         }}
         animate={{
-          opacity: [0.6, 1, 0.6],
-          scale: [1.3, 1.35, 1.3]
+          opacity: [0.6, 0.8, 0.6],
+          scale: [1.2, 1.25, 1.2]
         }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      
+      {/* Тонкое голубое свечение */}
+      <div
+        className="absolute inset-0 rounded-full pointer-events-none"
+        style={{
+          boxShadow: '0 0 24px 4px rgba(135, 206, 235, 0.12), 0 0 48px 8px rgba(135, 206, 235, 0.06)',
+          scale: 1.1
+        }}
       />
     </div>
   );
@@ -484,15 +458,15 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
           {/* Космические объекты */}
           <CosmicObjects />
           
-          {/* Профессиональная сетка в зеленых тонах */}
+          {/* Профессиональная сетка */}
           <div 
-            className="absolute inset-0 opacity-4"
+            className="absolute inset-0 opacity-5"
             style={{
               backgroundImage: `
-                linear-gradient(rgba(34, 197, 94, 0.2) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(34, 197, 94, 0.2) 1px, transparent 1px),
-                linear-gradient(rgba(34, 197, 94, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(34, 197, 94, 0.08) 1px, transparent 1px)
+                linear-gradient(rgba(34, 211, 238, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.3) 1px, transparent 1px),
+                linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px)
               `,
               backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px'
             }}
@@ -514,13 +488,13 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             >
               Добро пожаловать в{' '}
               <motion.span
-                className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-500"
+                className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500"
                 animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
                 style={{
-                  filter: 'drop-shadow(0 0 10px rgba(34, 197, 94, 0.7))'
+                  filter: 'drop-shadow(0 0 10px rgba(34, 211, 238, 0.7))'
                 }}
               >
                 iDATA
