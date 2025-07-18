@@ -19,70 +19,54 @@ const LOADING_STAGES: LoadingStage[] = [
   { id: 'complete', text: 'Система готова к работе', duration: 2000 }
 ];
 
-// Компонент профессионального звездного поля
-const StarField: React.FC = () => {
-  const stars = Array.from({ length: 40 }, (_, i) => {
-    const baseOpacity = Math.random() * 0.6 + 0.4; // 0.4-1.0
-    const animationType = Math.random();
+// Профессиональное звездное поле с 3D глубиной
+const StarField3D: React.FC = () => {
+  const stars = Array.from({ length: 150 }, (_, i) => {
+    const depth = Math.random(); // 0-1, где 0 - близко, 1 - далеко
+    const brightness = 1 - depth * 0.7; // Более дальние звезды тусклее
+    const size = (1 - depth) * 3 + 0.5; // Более близкие звезды крупнее
     
     return {
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 1.5 + 0.5, // Меньше размер
-      baseOpacity,
-      animationType,
-      animationDelay: Math.random() * 10
+      depth,
+      size,
+      brightness,
+      twinkleSpeed: 2 + Math.random() * 4,
+      twinkleDelay: Math.random() * 5,
+      color: depth > 0.7 ? 'blue' : depth > 0.4 ? 'white' : 'cyan'
     };
   });
 
   return (
     <div className="absolute inset-0 overflow-hidden">
       {stars.map((star) => {
-        // Разные типы анимации для естественности
-        let animate, transition;
+        const colorClass = star.color === 'blue' ? 'bg-blue-200' : 
+                          star.color === 'cyan' ? 'bg-cyan-200' : 'bg-white';
         
-        if (star.animationType < 0.3) {
-          // Статичные звезды (30%)
-          animate = {};
-          transition = {};
-        } else if (star.animationType < 0.7) {
-          // Медленное мерцание (40%)
-          animate = {
-            opacity: [star.baseOpacity, star.baseOpacity * 0.7, star.baseOpacity],
-          };
-          transition = {
-            duration: 4 + Math.random() * 4, // 4-8 секунд
-            repeat: Infinity,
-            delay: star.animationDelay,
-            ease: "easeInOut"
-          };
-        } else {
-          // Очень медленное мерцание (30%)
-          animate = {
-            opacity: [star.baseOpacity, star.baseOpacity * 0.85, star.baseOpacity],
-          };
-          transition = {
-            duration: 6 + Math.random() * 6, // 6-12 секунд
-            repeat: Infinity,
-            delay: star.animationDelay,
-            ease: "easeInOut"
-          };
-        }
-
         return (
           <motion.div
             key={star.id}
-            className="absolute bg-white rounded-full"
+            className={`absolute ${colorClass} rounded-full`}
             style={{
               left: `${star.x}%`,
               top: `${star.y}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              opacity: star.baseOpacity
+              filter: `blur(${star.depth * 0.5}px)`,
+              boxShadow: `0 0 ${star.size * 2}px ${star.color === 'cyan' ? '#22d3ee' : star.color === 'blue' ? '#3b82f6' : '#ffffff'}40`
             }}
-            animate={animate}
-            transition={transition}
+            animate={{
+              opacity: [star.brightness * 0.3, star.brightness, star.brightness * 0.3],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{
+              duration: star.twinkleSpeed,
+              repeat: Infinity,
+              delay: star.twinkleDelay,
+              ease: "easeInOut"
+            }}
           />
         );
       })}
@@ -90,59 +74,212 @@ const StarField: React.FC = () => {
   );
 };
 
-// Компонент спутникового загрузчика
-const SatelliteLoader: React.FC<{ progress: number }> = ({ progress }) => {
+// 3D планеты и астероиды
+const CosmicObjects: React.FC = () => {
   return (
-    <div className="relative w-32 h-32 mx-auto mb-8">
-      {/* Орбитальная траектория (тонкая) */}
-      <div className="absolute inset-0 border border-blue-500/20 rounded-full" />
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Далёкая планета */}
+      <motion.div
+        className="absolute top-20 right-20 w-32 h-32 rounded-full"
+        style={{
+          background: 'radial-gradient(circle at 30% 30%, #8b5cf6, #6366f1, #1e1b4b)',
+          boxShadow: '0 0 60px rgba(139, 92, 246, 0.3), inset -10px -10px 20px rgba(0,0,0,0.3)'
+        }}
+        animate={{
+          rotate: 360
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      >
+        {/* Кольца планеты */}
+        <div className="absolute inset-0 -m-8">
+          <div 
+            className="w-full h-full border-2 border-purple-400/30 rounded-full"
+            style={{ transform: 'rotateX(75deg)' }}
+          />
+          <div 
+            className="absolute inset-0 w-full h-full border border-purple-300/20 rounded-full"
+            style={{ transform: 'rotateX(75deg) scale(1.2)' }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Астероидное поле */}
+      {Array.from({ length: 12 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="absolute bg-gradient-to-br from-gray-400 to-gray-600 rounded-full"
+          style={{
+            left: `${10 + i * 7}%`,
+            top: `${80 + (i % 3) * 5}%`,
+            width: `${3 + Math.random() * 4}px`,
+            height: `${3 + Math.random() * 4}px`,
+            boxShadow: '0 0 10px rgba(156, 163, 175, 0.5)'
+          }}
+          animate={{
+            x: [0, 20, 0],
+            y: [0, -10, 0],
+            rotate: 360
+          }}
+          transition={{
+            duration: 8 + i * 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 0.5
+          }}
+        />
+      ))}
+
+      {/* Туманность */}
+      <motion.div
+        className="absolute bottom-0 left-0 w-96 h-96 opacity-20"
+        style={{
+          background: 'radial-gradient(ellipse, #ec4899, #8b5cf6, transparent)',
+          filter: 'blur(40px)'
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.1, 0.3, 0.1]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    </div>
+  );
+};
+
+// Детализированный 3D спутник
+const Satellite3D: React.FC<{ progress: number }> = ({ progress }) => {
+  return (
+    <div className="relative w-40 h-40 mx-auto mb-8">
+      {/* Основная орбита */}
+      <div className="absolute inset-0 border border-cyan-500/30 rounded-full" />
+      <div className="absolute inset-2 border border-cyan-400/20 rounded-full" />
       
       {/* Вращающийся спутник */}
       <motion.div
         className="absolute inset-0"
         animate={{ rotate: 360 }}
-        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
       >
-        {/* Основное тело спутника */}
-        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 flex items-center">
-          <div className="w-4 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-sm shadow-lg shadow-cyan-400/50">
-            {/* Антенна */}
-            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0.5 h-2 bg-cyan-300" />
-            {/* Солнечные панели */}
-            <div className="absolute top-0 -left-2 w-1.5 h-3 bg-blue-400/80 rounded-sm" />
-            <div className="absolute top-0 -right-2 w-1.5 h-3 bg-blue-400/80 rounded-sm" />
-            {/* Световой индикатор */}
+        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+          {/* Основной корпус */}
+          <div className="relative">
+            <div 
+              className="w-6 h-8 rounded-sm"
+              style={{
+                background: 'linear-gradient(145deg, #22d3ee, #0891b2)',
+                boxShadow: '0 4px 8px rgba(34, 211, 238, 0.4), inset 0 1px 2px rgba(255,255,255,0.3)'
+              }}
+            >
+              {/* Детали корпуса */}
+              <div className="absolute top-1 left-1 w-4 h-1 bg-cyan-300/60 rounded-sm" />
+              <div className="absolute top-3 left-1 w-4 h-1 bg-cyan-300/40 rounded-sm" />
+              <div className="absolute bottom-1 left-1 w-4 h-1 bg-cyan-300/60 rounded-sm" />
+            </div>
+            
+            {/* Антенна параболическая */}
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+              <div 
+                className="w-4 h-4 rounded-full border-2 border-cyan-300"
+                style={{
+                  background: 'radial-gradient(circle, transparent 40%, #22d3ee 41%, #22d3ee 60%, transparent 61%)'
+                }}
+              />
+              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-0.5 h-4 bg-cyan-300" />
+            </div>
+            
+            {/* Солнечные панели с 3D эффектом */}
+            <div className="absolute top-0 -left-4 w-3 h-8 transform perspective-1000">
+              <div 
+                className="w-full h-full rounded-sm"
+                style={{
+                  background: 'linear-gradient(45deg, #1e40af, #3b82f6, #1e40af)',
+                  boxShadow: '-2px 0 4px rgba(0,0,0,0.3), inset 0 0 2px rgba(59, 130, 246, 0.5)',
+                  transform: 'rotateY(-15deg)'
+                }}
+              >
+                <div className="absolute inset-1 border border-blue-300/30 rounded-sm grid grid-cols-1 gap-0.5">
+                  {Array.from({ length: 4 }, (_, i) => (
+                    <div key={i} className="bg-blue-400/20 rounded-sm" />
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <div className="absolute top-0 -right-4 w-3 h-8 transform perspective-1000">
+              <div 
+                className="w-full h-full rounded-sm"
+                style={{
+                  background: 'linear-gradient(45deg, #1e40af, #3b82f6, #1e40af)',
+                  boxShadow: '2px 0 4px rgba(0,0,0,0.3), inset 0 0 2px rgba(59, 130, 246, 0.5)',
+                  transform: 'rotateY(15deg)'
+                }}
+              >
+                <div className="absolute inset-1 border border-blue-300/30 rounded-sm grid grid-cols-1 gap-0.5">
+                  {Array.from({ length: 4 }, (_, i) => (
+                    <div key={i} className="bg-blue-400/20 rounded-sm" />
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {/* Световые индикаторы */}
             <motion.div
-              className="absolute top-1 right-0.5 w-1 h-1 bg-cyan-300 rounded-full"
+              className="absolute top-1 right-1 w-1.5 h-1.5 bg-green-400 rounded-full"
               animate={{
                 opacity: [1, 0.3, 1],
-                scale: [1, 1.2, 1]
+                boxShadow: ['0 0 4px #22c55e', '0 0 8px #22c55e', '0 0 4px #22c55e']
               }}
-              transition={{ duration: 1, repeat: Infinity }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+            
+            <motion.div
+              className="absolute bottom-1 right-1 w-1 h-1 bg-red-400 rounded-full"
+              animate={{
+                opacity: [0.3, 1, 0.3],
+                boxShadow: ['0 0 2px #ef4444', '0 0 6px #ef4444', '0 0 2px #ef4444']
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
             />
           </div>
         </div>
       </motion.div>
       
-      {/* Центральная станция */}
+      {/* Центральная станция с деталями */}
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.div
-          className="w-5 h-5 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full"
+          className="relative w-8 h-8 rounded-full"
+          style={{
+            background: 'radial-gradient(circle at 30% 30%, #22d3ee, #0891b2)',
+            boxShadow: '0 0 20px rgba(34, 211, 238, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)'
+          }}
           animate={{
             boxShadow: [
-              "0 0 10px rgba(34, 211, 238, 0.5)",
-              "0 0 20px rgba(34, 211, 238, 0.8)",
-              "0 0 10px rgba(34, 211, 238, 0.5)"
+              '0 0 20px rgba(34, 211, 238, 0.6)',
+              '0 0 40px rgba(34, 211, 238, 0.9)',
+              '0 0 20px rgba(34, 211, 238, 0.6)'
             ]
           }}
           transition={{ duration: 2, repeat: Infinity }}
-        />
+        >
+          {/* Детали станции */}
+          <div className="absolute inset-1 border border-cyan-300/50 rounded-full" />
+          <div className="absolute top-2 left-2 w-4 h-4 bg-cyan-300/30 rounded-full" />
+        </motion.div>
       </div>
       
       {/* Процент загрузки */}
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.span
-          className="text-base font-mono text-cyan-300 font-semibold mt-16"
+          className="text-xl font-mono text-cyan-300 font-bold mt-20"
+          style={{ textShadow: '0 0 10px #22d3ee' }}
           key={progress}
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
@@ -151,6 +288,34 @@ const SatelliteLoader: React.FC<{ progress: number }> = ({ progress }) => {
           {Math.round(progress)}%
         </motion.span>
       </div>
+      
+      {/* Сигнальные волны */}
+      <motion.div
+        className="absolute inset-0 border border-cyan-400/20 rounded-full"
+        animate={{
+          scale: [1, 1.5],
+          opacity: [0.5, 0]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeOut"
+        }}
+      />
+      
+      <motion.div
+        className="absolute inset-0 border border-cyan-400/20 rounded-full"
+        animate={{
+          scale: [1, 1.3],
+          opacity: [0.3, 0]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeOut",
+          delay: 0.5
+        }}
+      />
     </div>
   );
 };
@@ -230,24 +395,30 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
           className="fixed inset-0 z-50 flex items-center justify-center"
           style={{
             background: `
-              radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 70% 80%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-              linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)
+              radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(147, 51, 234, 0.12) 0%, transparent 40%),
+              radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.08) 0%, transparent 60%),
+              linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #16213e 70%, #0a0a0a 100%)
             `
           }}
         >
-          {/* Звездное поле */}
-          <StarField />
+          {/* 3D звездное поле */}
+          <StarField3D />
           
-          {/* Тонкая сетка */}
+          {/* Космические объекты */}
+          <CosmicObjects />
+          
+          {/* Профессиональная сетка */}
           <div 
-            className="absolute inset-0 opacity-10"
+            className="absolute inset-0 opacity-5"
             style={{
               backgroundImage: `
+                linear-gradient(rgba(34, 211, 238, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.3) 1px, transparent 1px),
                 linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px)
               `,
-              backgroundSize: '40px 40px'
+              backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px'
             }}
           />
           
@@ -259,7 +430,11 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
               className="text-5xl md:text-6xl font-light text-white mb-12"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '0.05em' }}
+              style={{ 
+                fontFamily: 'system-ui, -apple-system, sans-serif', 
+                letterSpacing: '0.05em',
+                textShadow: '0 0 30px rgba(34, 211, 238, 0.5)'
+              }}
             >
               Добро пожаловать в{' '}
               <motion.span
@@ -268,18 +443,21 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
+                style={{
+                  filter: 'drop-shadow(0 0 10px rgba(34, 211, 238, 0.7))'
+                }}
               >
                 iDATA
               </motion.span>
             </motion.h1>
             
-            {/* Спутниковый загрузчик */}
+            {/* 3D спутниковый загрузчик */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 1 }}
             >
-              <SatelliteLoader progress={loadingProgress} />
+              <Satellite3D progress={loadingProgress} />
             </motion.div>
             
             {/* Статус загрузки */}
@@ -308,20 +486,35 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 1.4 }}
               className="text-gray-400 text-sm font-mono"
+              style={{ textShadow: '0 0 10px rgba(156, 163, 175, 0.5)' }}
             >
               Промышленная сеть нового поколения
             </motion.p>
           </div>
           
-          {/* Дополнительные световые эффекты */}
+          {/* Продвинутые световые эффекты */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 1 }}
           >
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+            {/* Мягкие световые пятна */}
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/8 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-3xl" />
+            
+            {/* Динамические лучи */}
+            <motion.div
+              className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent"
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 4, repeat: Infinity, delay: 0 }}
+            />
+            <motion.div
+              className="absolute top-1/2 left-0 h-px w-full bg-gradient-to-r from-transparent via-blue-400/15 to-transparent"
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 4, repeat: Infinity, delay: 2 }}
+            />
           </motion.div>
         </motion.div>
       )}
