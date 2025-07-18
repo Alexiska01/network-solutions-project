@@ -243,12 +243,12 @@ const ProductHero = () => {
               className="space-y-4 md:space-y-6 order-2 lg:order-1"
             >
               {/* Заголовок */}
-              <div className="space-y-3 md:space-y-4">
+              <div className="space-y-2 md:space-y-4">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-xs md:text-sm font-medium text-white/80 border border-white/20"
+                  className="inline-block px-2.5 py-1 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[10px] md:text-sm font-medium text-white/80 border border-white/20"
                 >
                   ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
                 </motion.div>
@@ -258,7 +258,7 @@ const ProductHero = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.23, 1, 0.320, 1] }}
-                  className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
+                  className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
                 >
                   {currentData.title}
                 </motion.h1>
@@ -268,7 +268,7 @@ const ProductHero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="text-base md:text-lg text-white/70 leading-relaxed"
+                  className="text-sm md:text-lg text-white/70 leading-relaxed"
                 >
                   {currentData.description}
                 </motion.p>
@@ -280,7 +280,7 @@ const ProductHero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="space-y-2 md:space-y-3"
+                className="space-y-1.5 md:space-y-3"
               >
                 {currentData.features.map((feature, index) => (
                   <motion.div
@@ -292,16 +292,16 @@ const ProductHero = () => {
                       duration: 0.6,
                       ease: [0.23, 1, 0.320, 1]
                     }}
-                    className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    className="flex items-center gap-2.5 md:gap-4 p-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-lg md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
                   >
                     <div 
-                      className={`w-3 h-3 rounded-full shadow-lg`}
+                      className={`w-2 h-2 md:w-3 md:h-3 rounded-full shadow-lg`}
                       style={{
                         backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
                         boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
                       }}
                     />
-                    <span className="text-white font-medium text-sm md:text-base">{feature}</span>
+                    <span className="text-white font-medium text-xs md:text-base">{feature}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -311,16 +311,16 @@ const ProductHero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="flex items-center gap-3 md:gap-4 pt-3 md:pt-4"
+                className="flex items-center gap-2.5 md:gap-4 pt-2.5 md:pt-4"
               >
                 <div className="flex gap-2">
                   {heroData.map((_, index) => (
                     <div
                       key={index}
-                      className={`h-1 rounded-full transition-all duration-500 ${
+                      className={`h-0.5 md:h-1 rounded-full transition-all duration-500 ${
                         index === currentIndex 
-                          ? `w-12 shadow-lg` 
-                          : 'w-4 bg-white/20'
+                          ? `w-8 md:w-12 shadow-lg` 
+                          : 'w-2.5 md:w-4 bg-white/20'
                       }`}
                       style={index === currentIndex ? {
                         backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
@@ -329,7 +329,7 @@ const ProductHero = () => {
                     />
                   ))}
                 </div>
-                <span className="text-sm text-white/50 font-mono">
+                <span className="text-xs md:text-sm text-white/50 font-mono">
                   {String(currentIndex + 1).padStart(2, '0')} / {String(heroData.length).padStart(2, '0')}
                 </span>
               </motion.div>
