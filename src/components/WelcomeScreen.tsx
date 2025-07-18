@@ -77,7 +77,7 @@ const StarField3D: React.FC = () => {
 // 3D планеты и астероиды
 // Профессиональная реалистичная Земля
 const Earth: React.FC = () => {
-  const EARTH_TEXTURE = 'https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg';
+  const EARTH_TEXTURE = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/512px-Earth_Eastern_Hemisphere.jpg';
   const EARTH_NIGHT = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/55000/57730/earth_lights_lrg.jpg';
   const EARTH_CLOUDS = 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Earth-clouds.jpg';
 
