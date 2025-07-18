@@ -180,7 +180,7 @@ const ProductHero = () => {
         duration: 1.5, 
         ease: [0.25, 0.1, 0.25, 1]
       }}
-      className="py-[28px] sm:py-[37px] md:py-[55px] lg:py-[74px] xl:py-[92px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden"
+      className="py-[24px] sm:py-[32px] md:py-[48px] lg:py-[64px] xl:py-[80px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden"
     >
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
@@ -200,11 +200,11 @@ const ProductHero = () => {
         <div className="w-full max-w-7xl mx-auto px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             
-            <div className="space-y-6">
-              <div className="space-y-6">
+            <div className="space-y-4">
+              <div className="space-y-4">
 
                 
-                <h1 className="text-2xl lg:text-3xl font-bold text-white leading-tight">
+                <h1 className="text-xl lg:text-2xl font-bold text-white leading-tight">
                   <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
                     Высококачественное оборудование
                   </span>
@@ -212,13 +212,13 @@ const ProductHero = () => {
                 </h1>
               </div>
 
-              <div className={`h-96 flex flex-col space-y-6 transition-all duration-700 ease-in-out ${
+              <div className={`flex flex-col space-y-4 transition-all duration-700 ease-in-out ${
                 isTransitioning 
                   ? 'opacity-0 transform translate-x-[-50px] scale-95 blur-sm' 
                   : 'opacity-100 transform translate-x-0 scale-100 blur-0'
               }`}>
                 <div className="space-y-4">
-                  <h2 className={`text-2xl font-bold text-white transition-all duration-700 ease-out ${
+                  <h2 className={`text-xl font-bold text-white transition-all duration-700 ease-out ${
                     isTransitioning 
                       ? 'transform translate-y-[-20px] opacity-0' 
                       : 'transform translate-y-0 opacity-100'
@@ -276,7 +276,7 @@ const ProductHero = () => {
               </div>
             </div>
 
-            <div className="relative h-[600px] lg:h-[700px]">
+            <div className="relative h-[420px] lg:h-[500px]">
               {/* Динамический фоновый градиент с анимацией */}
               <div className={`absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent rounded-3xl blur-2xl transition-all duration-500 ${
                 isTransitioning ? 'scale-110 opacity-50' : 'scale-100 opacity-100'
