@@ -75,37 +75,77 @@ const StarField3D: React.FC = () => {
 };
 
 // 3D планеты и астероиды
+// Реалистичная вращающаяся Земля
+const Earth: React.FC = () => {
+  const EARTH_TEXTURE = 'https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg';
+  const EARTH_NIGHT = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/55000/57730/earth_lights_lrg.jpg';
+  const EARTH_CLOUDS = 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Earth-clouds.jpg';
+
+  return (
+    <div className="absolute top-20 right-20 w-32 h-32" style={{ zIndex: 2 }}>
+      {/* Земля - дневная сторона */}
+      <motion.div
+        className="absolute w-full h-full rounded-full shadow-2xl"
+        style={{
+          overflow: 'hidden',
+          background: `url('${EARTH_TEXTURE}') center/cover no-repeat`,
+          boxShadow: '0 0 60px 12px #1e3a8a66, 0 0 0 6px #0ea5e944, 0 10px 40px 0 #000c',
+          border: '2px solid #1e3a8a22'
+        }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+      >
+        {/* Блик атмосферы по краю */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            boxShadow: '0 0 28px 12px #38bdf833, 0 0 80px 0 #60a5fa44',
+            mixBlendMode: 'lighten'
+          }}
+        />
+        {/* Облака */}
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background: `url('${EARTH_CLOUDS}') center/cover no-repeat`,
+            opacity: 0.34,
+            mixBlendMode: 'lighten'
+          }}
+          animate={{ rotate: -360 }}
+          transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+        />
+        {/* Ночные огни */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background: `url('${EARTH_NIGHT}') center/cover no-repeat`,
+            opacity: 0.16,
+            mixBlendMode: 'screen',
+            filter: 'blur(1.5px) brightness(0.8)'
+          }}
+        />
+      </motion.div>
+      {/* Светящийся ореол (атмосфера) */}
+      <motion.div
+        className="absolute inset-0 rounded-full pointer-events-none"
+        style={{
+          boxShadow: '0 0 60px 20px #38bdf888, 0 0 90px 40px #60a5fa33'
+        }}
+        animate={{
+          opacity: [0.75, 1, 0.75],
+          scale: [1, 1.07, 1]
+        }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      />
+    </div>
+  );
+};
+
 const CosmicObjects: React.FC = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Далёкая планета */}
-      <motion.div
-        className="absolute top-20 right-20 w-32 h-32 rounded-full"
-        style={{
-          background: 'radial-gradient(circle at 30% 30%, #8b5cf6, #6366f1, #1e1b4b)',
-          boxShadow: '0 0 60px rgba(139, 92, 246, 0.3), inset -10px -10px 20px rgba(0,0,0,0.3)'
-        }}
-        animate={{
-          rotate: 360
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      >
-        {/* Кольца планеты */}
-        <div className="absolute inset-0 -m-8">
-          <div 
-            className="w-full h-full border-2 border-purple-400/30 rounded-full"
-            style={{ transform: 'rotateX(75deg)' }}
-          />
-          <div 
-            className="absolute inset-0 w-full h-full border border-purple-300/20 rounded-full"
-            style={{ transform: 'rotateX(75deg) scale(1.2)' }}
-          />
-        </div>
-      </motion.div>
+      {/* Реалистичная Земля */}
+      <Earth />
 
       {/* Астероидное поле */}
       {Array.from({ length: 12 }, (_, i) => (
