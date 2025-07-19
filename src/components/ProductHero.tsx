@@ -78,6 +78,7 @@ const ProductHero = () => {
   const { preloadModels, isModelReady } = useModelPreloader();
   const modelRef = useRef<any>(null);
   const [indicatorsOn, setIndicatorsOn] = useState(false);
+  const [modelLoadError, setModelLoadError] = useState(false);
 
   // Отслеживание размера экрана
   useEffect(() => {
@@ -88,6 +89,22 @@ const ProductHero = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Проверка загрузки model-viewer
+  useEffect(() => {
+    const checkModelViewer = () => {
+      const hasModelViewer = customElements.get('model-viewer');
+      console.log('🔍 ProductHero: model-viewer available:', !!hasModelViewer);
+      if (!hasModelViewer) {
+        console.error('❌ ProductHero: model-viewer not loaded!');
+      }
+    };
+    
+    // Проверяем сразу и с задержкой
+    checkModelViewer();
+    const timer = setTimeout(checkModelViewer, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   // Мобильная инициализация model-viewer
@@ -111,7 +128,7 @@ const ProductHero = () => {
       const timer = setTimeout(initMobileModel, 100);
       return () => clearTimeout(timer);
     }
-  }, [isMobile, currentData.id]);
+  }, [isMobile, currentIndex]);
 
   // Трекинг мыши для параллакс эффектов (только на десктопе)
   useEffect(() => {
@@ -142,6 +159,7 @@ const ProductHero = () => {
         setTimeout(() => {
           setCurrentIndex(prev => (prev + 1) % heroData.length);
           setIsTransitioning(false);
+          setModelLoadError(false); // Сбрасываем ошибку при смене модели
         }, 500);
       }, 8000);
       
@@ -412,35 +430,67 @@ const ProductHero = () => {
                 >
                   {/* 3D модель для всех устройств */}
                   <div className="w-full h-full">
-                    <model-viewer
-                      ref={modelRef}
-                      src={currentData.modelUrl}
-                      alt={currentData.title}
-                      auto-rotate
-                      auto-rotate-delay="1000"
-                      rotation-per-second="30deg"
-                      camera-controls
-                      camera-orbit={isMobile ? "0deg 85deg 0.8m" : "0deg 75deg 1.2m"}
-                      min-camera-orbit="auto auto 0.4m"
-                      max-camera-orbit="auto auto 2.5m"
-                      field-of-view={isMobile ? "45deg" : "30deg"}
-                      exposure="1.2"
-                      shadow-intensity="0.3"
-                      environment-image="neutral"
-                      interaction-prompt="none"
-                      loading="eager"
-                      reveal="auto"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        background: 'transparent',
-                        borderRadius: '1rem',
-                        '--progress-bar-color': 'transparent',
-                        '--progress-mask': 'transparent'
-                      }}
-                      onLoad={() => console.log('✅ ProductHero: Model loaded on', isMobile ? 'mobile' : 'desktop')}
-                      onError={(e: any) => console.error('❌ ProductHero: Model failed to load:', e, 'URL:', currentData.modelUrl)}
-                    />
+                    {modelLoadError ? (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="text-center p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
+                          <Icon name="Wifi" size={48} className="text-white/60 mx-auto mb-4" />
+                          <p className="text-white/80 text-lg font-medium mb-2">3D модель временно недоступна</p>
+                          <p className="text-white/60 text-sm">Проверьте соединение с интернетом</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <model-viewer
+                        ref={modelRef}
+                        src={currentData.modelUrl}
+                        alt={currentData.title}
+                        auto-rotate
+                        auto-rotate-delay="1000"
+                        rotation-per-second="30deg"
+                        camera-controls
+                        camera-orbit={isMobile ? "0deg 85deg 0.8m" : "0deg 75deg 1.2m"}
+                        min-camera-orbit="auto auto 0.4m"
+                        max-camera-orbit="auto auto 2.5m"
+                        field-of-view={isMobile ? "45deg" : "30deg"}
+                        exposure="1.2"
+                        shadow-intensity="0.3"
+                        environment-image="neutral"
+                        interaction-prompt="none"
+                        loading="eager"
+                        reveal="auto"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          background: 'transparent',
+                          borderRadius: '1rem',
+                          '--progress-bar-color': 'transparent',
+                          '--progress-mask': 'transparent'
+                        }}
+                        onLoad={() => {
+                          setModelLoadError(false);
+                          console.log('✅ ProductHero: Model loaded on', isMobile ? 'mobile' : 'desktop');
+                          console.log('📱 Device info:', {
+                            isMobile,
+                            width: window.innerWidth,
+                            userAgent: navigator.userAgent
+                          });
+                          if (modelRef.current) {
+                            const mv = modelRef.current as any;
+                            console.log('🎥 Camera settings:', {
+                              cameraOrbit: mv.cameraOrbit,
+                              fieldOfView: mv.fieldOfView,
+                              minCameraOrbit: mv.minCameraOrbit,
+                              maxCameraOrbit: mv.maxCameraOrbit
+                            });
+                          }
+                        }}
+                        onError={(e: any) => {
+                          setModelLoadError(true);
+                          console.error('❌ ProductHero: Model failed to load:', e);
+                          console.error('🔗 Model URL:', currentData.modelUrl);
+                          console.error('📱 Device:', isMobile ? 'mobile' : 'desktop');
+                        }}
+                      />
+                    )}
                   </div>
                 </motion.div>
 
