@@ -439,7 +439,7 @@ const ProductHero = () => {
                         </div>
                       </div>
                     ) : (
-{isMobile ? (
+                      {isMobile ? (
                         <model-viewer
                           ref={modelRef}
                           src={currentData.modelUrl}
