@@ -8,11 +8,18 @@ declare namespace JSX {
       'rotation-per-second'?: string;
       'camera-controls'?: boolean;
       'disable-zoom'?: boolean;
+      'camera-orbit'?: string;
+      'min-camera-orbit'?: string;
+      'max-camera-orbit'?: string;
+      'field-of-view'?: string;
+      'interaction-prompt'?: string;
       loading?: 'auto' | 'lazy' | 'eager';
       reveal?: 'auto' | 'interaction' | 'manual';
       exposure?: string;
       'shadow-intensity'?: string;
       'environment-image'?: string;
+      onLoad?: () => void;
+      onError?: (event: any) => void;
     };
   }
 }

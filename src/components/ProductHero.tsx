@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
-import ModelViewer3D from '@/components/ModelViewer3D';
+// Убрали импорт - используем прямое model-viewer
 import { useModelPreloader } from '@/hooks/useModelPreloader';
 import WelcomeScreen from '@/components/WelcomeScreen';
 import PlayStationTransition from '@/components/PlayStationTransition';
@@ -76,6 +76,8 @@ const ProductHero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { preloadModels, isModelReady } = useModelPreloader();
+  const modelRef = useRef<any>(null);
+  const [indicatorsOn, setIndicatorsOn] = useState(false);
 
   // Отслеживание размера экрана
   useEffect(() => {
@@ -87,6 +89,29 @@ const ProductHero = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Мобильная инициализация model-viewer
+  useEffect(() => {
+    if (isMobile && modelRef.current) {
+      const initMobileModel = () => {
+        const mv = modelRef.current as any;
+        if (mv && mv.cameraOrbit) {
+          // Принудительная инициализация для мобильных
+          mv.cameraOrbit = "0deg 70deg 0.8m";
+          mv.fieldOfView = "40deg";
+          mv.minCameraOrbit = "auto auto 0.4m";
+          mv.maxCameraOrbit = "auto auto 1.5m";
+          if (mv.jumpCameraToGoal) {
+            mv.jumpCameraToGoal();
+          }
+        }
+      };
+
+      // Инициализация с задержкой
+      const timer = setTimeout(initMobileModel, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile, currentData.id]);
 
   // Трекинг мыши для параллакс эффектов (только на десктопе)
   useEffect(() => {
@@ -372,24 +397,54 @@ const ProductHero = () => {
                 />
               </div>
               
-              {/* Контейнер модели */}
-              <motion.div
-                key={currentData.id}
-                initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
-                animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-                transition={{ duration: 1, ease: [0.23, 1, 0.320, 1] }}
-                className="relative w-full h-full"
-                style={{
-                  transform: !isMobile ? `perspective(1000px) rotateX(${mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg)` : 'none',
-                  transformStyle: 'preserve-3d'
-                }}
-              >
-                <ModelViewer3D 
-                  src={currentData.modelUrl}
-                  alt={currentData.title}
-                  isPreloaded={isModelReady(currentData.modelUrl)}
-                />
-              </motion.div>
+              {/* 3D модель на полную ширину */}
+              <div className="w-full h-full">
+                {/* Левая часть - 3D модель или fallback */}
+                <motion.div
+                  key={currentData.id}
+                  initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
+                  animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                  transition={{ duration: 1, ease: [0.23, 1, 0.320, 1] }}
+                  className="relative w-full h-full"
+                  style={{
+                    transform: 'none'
+                  }}
+                >
+                  {/* 3D модель для всех устройств */}
+                  <div className="w-full h-full">
+                    <model-viewer
+                      ref={modelRef}
+                      src={currentData.modelUrl}
+                      alt={currentData.title}
+                      auto-rotate
+                      auto-rotate-delay="1000"
+                      rotation-per-second="30deg"
+                      camera-controls
+                      camera-orbit={isMobile ? "0deg 85deg 0.8m" : "0deg 75deg 1.2m"}
+                      min-camera-orbit="auto auto 0.4m"
+                      max-camera-orbit="auto auto 2.5m"
+                      field-of-view={isMobile ? "45deg" : "30deg"}
+                      exposure="1.2"
+                      shadow-intensity="0.3"
+                      environment-image="neutral"
+                      interaction-prompt="none"
+                      loading="eager"
+                      reveal="auto"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'transparent',
+                        borderRadius: '1rem',
+                        '--progress-bar-color': 'transparent',
+                        '--progress-mask': 'transparent'
+                      }}
+                      onLoad={() => console.log('✅ ProductHero: Model loaded on', isMobile ? 'mobile' : 'desktop')}
+                      onError={(e: any) => console.error('❌ ProductHero: Model failed to load:', e, 'URL:', currentData.modelUrl)}
+                    />
+                  </div>
+                </motion.div>
+
+              </div>
             </motion.div>
 
           </div>
