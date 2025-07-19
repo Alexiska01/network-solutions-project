@@ -76,14 +76,14 @@ const ProductHero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const { preloadModels, isModelReady } = useModelPreloader();
+  const { preloadModels, isModelReady: hookModelReady } = useModelPreloader();
   const modelRef = useRef<any>(null);
   const [indicatorsOn, setIndicatorsOn] = useState(false);
   const [modelLoadError, setModelLoadError] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
-  const [isModelReady, setIsModelReady] = useState(false);
+  const [isCurrentModelReady, setIsCurrentModelReady] = useState(false);
 
   // Отслеживание размера экрана
   useEffect(() => {
@@ -191,13 +191,13 @@ const ProductHero = () => {
   useEffect(() => {
     if (!showWelcome && currentData) {
       const checkModel = modelPreloader.isLoaded(currentData.modelUrl);
-      setIsModelReady(checkModel);
+      setIsCurrentModelReady(checkModel);
       
       if (!checkModel) {
         console.log('⏳ ProductHero: Модель еще загружается:', currentData.modelUrl);
         // Пытаемся загрузить снова с высоким приоритетом
         modelPreloader.preloadModel(currentData.modelUrl, 'high').then(() => {
-          setIsModelReady(true);
+          setIsCurrentModelReady(true);
           console.log('✅ ProductHero: Модель загружена:', currentData.modelUrl);
         });
       } else {
@@ -526,7 +526,7 @@ const ProductHero = () => {
                   {/* 3D модель для всех устройств */}
                   <div className="w-full h-full relative">
                     {/* Индикатор загрузки модели */}
-                    {!isModelReady && !showWelcome && !modelLoadError && (
+                    {!isCurrentModelReady && !showWelcome && !modelLoadError && (
                       <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm rounded-2xl z-10">
                         <div className="text-center">
                           <motion.div
@@ -577,7 +577,7 @@ const ProductHero = () => {
                           }}
                           onLoad={() => {
                             setModelLoadError(false);
-                            setIsModelReady(true);
+                            setIsCurrentModelReady(true);
                             console.log('✅ ProductHero: Model loaded on mobile');
                           }}
                           onError={(e: any) => {
@@ -629,7 +629,7 @@ const ProductHero = () => {
                           }}
                           onLoad={() => {
                             setModelLoadError(false);
-                            setIsModelReady(true);
+                            setIsCurrentModelReady(true);
                             console.log('✅ ProductHero: Model loaded on desktop');
                           }}
                           onError={(e: any) => {
