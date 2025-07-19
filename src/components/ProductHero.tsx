@@ -438,8 +438,7 @@ const ProductHero = () => {
                           <p className="text-white/60 text-sm">Проверьте соединение с интернетом</p>
                         </div>
                       </div>
-                    ) : (
-                      {isMobile ? (
+                    ) : isMobile ? (
                         <model-viewer
                           ref={modelRef}
                           src={currentData.modelUrl}
@@ -512,7 +511,6 @@ const ProductHero = () => {
                           }}
                         />
                       )}
-                    )}
                   </div>
                 </motion.div>
 
