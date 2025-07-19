@@ -127,8 +127,9 @@ const ProductHero = () => {
         }
       };
 
-      // Инициализация с задержкой
-      const timer = setTimeout(initMobileModel, 100);
+      // Мгновенная инициализация
+      initMobileModel();
+      const timer = setTimeout(initMobileModel, 50);
       return () => clearTimeout(timer);
     }
   }, [isMobile, currentIndex]);
@@ -163,13 +164,13 @@ const ProductHero = () => {
           setCurrentIndex(prev => (prev + 1) % heroData.length);
           setIsTransitioning(false);
           setModelLoadError(false); // Сбрасываем ошибку при смене модели
-        }, 300);
+        }, isMobile ? 100 : 300);
       }, 8000);
       
       intervalRef.current = interval;
       return () => clearInterval(interval);
     }
-  }, [showWelcome]);
+  }, [showWelcome, isMobile]);
 
   const currentData = heroData[currentIndex];
 
@@ -222,7 +223,7 @@ const ProductHero = () => {
         }
         setIsTransitioning(false);
         setModelLoadError(false);
-      }, 300);
+      }, isMobile ? 100 : 300);
       
       // Перезапускаем автопрокрутку
       const interval = setInterval(() => {
@@ -231,7 +232,7 @@ const ProductHero = () => {
           setCurrentIndex(prev => (prev + 1) % heroData.length);
           setIsTransitioning(false);
           setModelLoadError(false);
-        }, 300);
+        }, isMobile ? 100 : 300);
       }, 8000);
       
       intervalRef.current = interval;
@@ -254,7 +255,7 @@ const ProductHero = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
+      transition={{ duration: isMobile ? 0.3 : 1.2, ease: [0.23, 1, 0.320, 1] }}
       className="relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
       onTouchStart={isMobile ? onTouchStart : undefined}
       onTouchMove={isMobile ? onTouchMove : undefined}
@@ -360,9 +361,9 @@ const ProductHero = () => {
                 
                 <motion.h1
                   key={currentData.id}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: [0.23, 1, 0.320, 1] }}
+                  transition={{ duration: isMobile ? 0.3 : 0.8, ease: [0.23, 1, 0.320, 1] }}
                   className="text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
                 >
                   {currentData.title}
@@ -370,9 +371,9 @@ const ProductHero = () => {
                 
                 <motion.p
                   key={`${currentData.id}-desc`}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.8 }}
+                  transition={{ delay: isMobile ? 0 : 0.2, duration: isMobile ? 0.3 : 0.8 }}
                   className="text-sm xs:text-base sm:text-lg md:text-lg text-white/70 leading-relaxed max-w-lg md:max-w-none"
                 >
                   {currentData.description}
@@ -382,19 +383,19 @@ const ProductHero = () => {
               {/* Особенности */}
               <motion.div
                 key={`${currentData.id}-features`}
-                initial={{ opacity: 0 }}
+                initial={{ opacity: isMobile ? 1 : 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
+                transition={{ delay: isMobile ? 0 : 0.4, duration: isMobile ? 0.3 : 0.8 }}
                 className="space-y-2 md:space-y-3"
               >
                 {currentData.features.map((feature, index) => (
                   <motion.div
                     key={`${currentData.id}-feature-${index}`}
-                    initial={{ opacity: 0, x: -30 }}
+                    initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ 
-                      delay: 0.6 + index * 0.1, 
-                      duration: 0.6,
+                      delay: isMobile ? 0 : 0.6 + index * 0.1, 
+                      duration: isMobile ? 0.2 : 0.6,
                       ease: [0.23, 1, 0.320, 1]
                     }}
                     className="flex items-center gap-3 md:gap-4 px-3 py-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
@@ -413,9 +414,9 @@ const ProductHero = () => {
 
               {/* Индикатор прогресса */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
+                transition={{ delay: isMobile ? 0 : 0.8, duration: isMobile ? 0.3 : 0.8 }}
                 className="flex items-center gap-3 md:gap-4 pt-3 md:pt-4"
               >
                 <div className="flex gap-2">
@@ -442,9 +443,9 @@ const ProductHero = () => {
 
             {/* Правая колонка - 3D модель */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
+              initial={{ opacity: isMobile ? 1 : 0, scale: isMobile ? 1 : 0.8, rotateY: isMobile ? 0 : 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ delay: 0.5, duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
+              transition={{ delay: isMobile ? 0 : 0.5, duration: isMobile ? 0.3 : 1.2, ease: [0.23, 1, 0.320, 1] }}
               className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
             >
               {/* 3D фоновые эффекты */}
@@ -482,9 +483,9 @@ const ProductHero = () => {
                 {/* Левая часть - 3D модель или fallback */}
                 <motion.div
                   key={currentData.id}
-                  initial={{ opacity: 0, scale: isMobile ? 0.9 : 0.8, rotateX: isMobile ? 0 : 20 }}
-                  animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-                  transition={{ duration: isMobile ? 0.6 : 1, ease: [0.23, 1, 0.320, 1] }}
+                  initial={{ opacity: isMobile ? 1 : 0, scale: 1, rotateX: 0 }}
+                  animate={{ opacity: isTransitioning && isMobile ? 0.5 : 1, scale: 1, rotateX: 0 }}
+                  transition={{ duration: isMobile ? 0.2 : 1, ease: [0.23, 1, 0.320, 1] }}
                   className="relative w-full h-full"
                   style={{
                     transform: 'none'
@@ -501,12 +502,13 @@ const ProductHero = () => {
                         </div>
                       </div>
                     ) : isMobile ? (
+                      <>
                         <model-viewer
                           ref={modelRef}
                           src={currentData.modelUrl}
                           alt={currentData.title}
                           auto-rotate
-                          auto-rotate-delay="1000"
+                          auto-rotate-delay="0"
                           rotation-per-second="30deg"
                           camera-orbit="0deg 75deg 1.6m"
                           min-camera-orbit="auto auto 1.6m"
@@ -536,6 +538,21 @@ const ProductHero = () => {
                             console.error('❌ ProductHero: Model failed to load on mobile:', e);
                           }}
                         />
+                        {/* Предзагрузка следующей модели */}
+                        <model-viewer
+                          src={heroData[(currentIndex + 1) % heroData.length].modelUrl}
+                          alt={heroData[(currentIndex + 1) % heroData.length].title}
+                          loading="eager"
+                          style={{
+                            position: 'absolute',
+                            width: '1px',
+                            height: '1px',
+                            opacity: 0,
+                            pointerEvents: 'none',
+                            zIndex: -1
+                          }}
+                        />
+                      </>
                       ) : (
                         <model-viewer
                           ref={modelRef}
