@@ -18,10 +18,10 @@ interface LoadingStage {
 }
 
 const LOADING_STAGES: LoadingStage[] = [
-  { id: 'connect', text: 'Установление защищённого соединения', duration: 3500 },
-  { id: 'station', text: 'Подключение к центральной станции управления', duration: 4000 },
-  { id: 'data', text: 'Получение данных о корпоративном оборудовании', duration: 5000 },
-  { id: 'complete', text: 'Система готова к работе', duration: 2500 }
+  { id: 'connect', text: 'Установление защищённого соединения', duration: 4000 },
+  { id: 'station', text: 'Подключение к центральной станции управления', duration: 4500 },
+  { id: 'data', text: 'Получение данных о корпоративном оборудовании', duration: 5500 },
+  { id: 'complete', text: 'Система готова к работе', duration: 3000 }
 ];
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
@@ -40,10 +40,30 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   useEffect(() => {
     const modelUrls = heroData.map(item => item.modelUrl);
     
-    // Приоритетная загрузка первых двух моделей (3530 и 3730)
-    modelPreloader.preloadMultiple(modelUrls, 2).then(() => {
-      console.log('✅ WelcomeScreen: Модели предзагружены');
+    console.log('🚀 WelcomeScreen: Начинаем предзагрузку моделей');
+    
+    // Загружаем первую модель с максимальным приоритетом
+    modelPreloader.preloadModel(modelUrls[0], 'high').then(() => {
+      console.log('✅ WelcomeScreen: Первая модель (3530) загружена');
     });
+    
+    // Загружаем вторую модель параллельно
+    setTimeout(() => {
+      modelPreloader.preloadModel(modelUrls[1], 'high').then(() => {
+        console.log('✅ WelcomeScreen: Вторая модель (3730) загружена');
+      });
+    }, 500);
+    
+    // Остальные модели загружаем с задержкой
+    setTimeout(() => {
+      modelUrls.slice(2).forEach((url, index) => {
+        setTimeout(() => {
+          modelPreloader.preloadModel(url, 'low').then(() => {
+            console.log(`✅ WelcomeScreen: Модель ${index + 3} загружена`);
+          });
+        }, index * 1000);
+      });
+    }, 2000);
     
     return () => {
       // Не очищаем модели при размонтировании, они понадобятся в ProductHero

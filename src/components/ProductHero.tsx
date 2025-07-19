@@ -83,6 +83,7 @@ const ProductHero = () => {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const [isModelReady, setIsModelReady] = useState(false);
 
   // Отслеживание размера экрана
   useEffect(() => {
@@ -185,6 +186,25 @@ const ProductHero = () => {
   }, [showWelcome, isMobile]);
 
   const currentData = heroData[currentIndex];
+
+  // Проверяем готовность текущей модели
+  useEffect(() => {
+    if (!showWelcome && currentData) {
+      const checkModel = modelPreloader.isLoaded(currentData.modelUrl);
+      setIsModelReady(checkModel);
+      
+      if (!checkModel) {
+        console.log('⏳ ProductHero: Модель еще загружается:', currentData.modelUrl);
+        // Пытаемся загрузить снова с высоким приоритетом
+        modelPreloader.preloadModel(currentData.modelUrl, 'high').then(() => {
+          setIsModelReady(true);
+          console.log('✅ ProductHero: Модель загружена:', currentData.modelUrl);
+        });
+      } else {
+        console.log('✅ ProductHero: Модель уже загружена:', currentData.modelUrl);
+      }
+    }
+  }, [currentData, showWelcome, currentIndex]);
 
   const handleWelcomeComplete = () => {
     setShowTransition(true);
@@ -504,7 +524,21 @@ const ProductHero = () => {
                   }}
                 >
                   {/* 3D модель для всех устройств */}
-                  <div className="w-full h-full">
+                  <div className="w-full h-full relative">
+                    {/* Индикатор загрузки модели */}
+                    {!isModelReady && !showWelcome && !modelLoadError && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm rounded-2xl z-10">
+                        <div className="text-center">
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                            className="w-16 h-16 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full mx-auto mb-4"
+                          />
+                          <p className="text-white/80 text-sm">Загрузка 3D модели...</p>
+                        </div>
+                      </div>
+                    )}
+                    
                     {modelLoadError ? (
                       <div className="w-full h-full flex items-center justify-center">
                         <div className="text-center p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
@@ -543,6 +577,7 @@ const ProductHero = () => {
                           }}
                           onLoad={() => {
                             setModelLoadError(false);
+                            setIsModelReady(true);
                             console.log('✅ ProductHero: Model loaded on mobile');
                           }}
                           onError={(e: any) => {
@@ -594,6 +629,7 @@ const ProductHero = () => {
                           }}
                           onLoad={() => {
                             setModelLoadError(false);
+                            setIsModelReady(true);
                             console.log('✅ ProductHero: Model loaded on desktop');
                           }}
                           onError={(e: any) => {

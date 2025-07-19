@@ -4,7 +4,27 @@ export class ModelPreloader {
   private loadingModels: Map<string, Promise<void>> = new Map();
   private modelElements: Map<string, HTMLElement> = new Map();
 
-  private constructor() {}
+  private constructor() {
+    // Добавляем prefetch для быстрой загрузки первых двух моделей
+    this.addPrefetchLinks();
+  }
+  
+  private addPrefetchLinks() {
+    const priorityModels = [
+      'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
+      'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb'
+    ];
+    
+    priorityModels.forEach(url => {
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = url;
+      link.as = 'fetch';
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+      console.log(`📥 ModelPreloader: Добавлен prefetch для ${url}`);
+    });
+  }
 
   static getInstance(): ModelPreloader {
     if (!ModelPreloader.instance) {
@@ -35,10 +55,23 @@ export class ModelPreloader {
       
       const modelViewer = document.createElement('model-viewer') as any;
       modelViewer.src = url;
-      modelViewer.loading = priority === 'high' ? 'eager' : 'auto';
-      modelViewer.reveal = 'auto';
+      modelViewer.loading = 'eager';
+      modelViewer.reveal = 'immediate';
       modelViewer.style.width = '100%';
       modelViewer.style.height = '100%';
+      
+      // Настройки для максимально быстрой загрузки
+      modelViewer.setAttribute('auto-rotate', '');
+      modelViewer.setAttribute('camera-controls', '');
+      modelViewer.setAttribute('shadow-intensity', '0');
+      modelViewer.setAttribute('environment-image', 'neutral');
+      modelViewer.setAttribute('exposure', '1');
+      
+      // Для высокого приоритета сразу начинаем загрузку
+      if (priority === 'high') {
+        modelViewer.setAttribute('poster', 'none');
+        modelViewer.dismissPoster();
+      }
       
       modelViewer.addEventListener('load', () => {
         console.log(`✅ Модель предзагружена: ${url}`);
