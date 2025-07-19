@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
-import ProductHero from "./pages/ProductHero";
+import ProductHero from "./components/ProductHero";
 
 // Lazy loading для второстепенных страниц
 const SeriesCatalog3730 = lazy(() => import("./pages/SeriesCatalog3730"));
