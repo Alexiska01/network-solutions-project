@@ -113,11 +113,11 @@ const ProductHero = () => {
       const initMobileModel = () => {
         const mv = modelRef.current as any;
         if (mv && mv.cameraOrbit) {
-          // Принудительная инициализация для мобильных
-          mv.cameraOrbit = "0deg 70deg 0.8m";
-          mv.fieldOfView = "40deg";
-          mv.minCameraOrbit = "auto auto 0.4m";
-          mv.maxCameraOrbit = "auto auto 1.5m";
+          // Принудительная инициализация для мобильных - отдаленная камера без взаимодействий
+          mv.cameraOrbit = "0deg 75deg 1.4m";
+          mv.fieldOfView = "35deg";
+          mv.minCameraOrbit = "auto auto 1.4m";
+          mv.maxCameraOrbit = "auto auto 1.4m";
           if (mv.jumpCameraToGoal) {
             mv.jumpCameraToGoal();
           }
@@ -439,57 +439,79 @@ const ProductHero = () => {
                         </div>
                       </div>
                     ) : (
-                      <model-viewer
-                        ref={modelRef}
-                        src={currentData.modelUrl}
-                        alt={currentData.title}
-                        auto-rotate
-                        auto-rotate-delay="1000"
-                        rotation-per-second="30deg"
-                        camera-controls
-                        camera-orbit={isMobile ? "0deg 85deg 0.8m" : "0deg 75deg 1.2m"}
-                        min-camera-orbit="auto auto 0.4m"
-                        max-camera-orbit="auto auto 2.5m"
-                        field-of-view={isMobile ? "45deg" : "30deg"}
-                        exposure="1.2"
-                        shadow-intensity="0.3"
-                        environment-image="neutral"
-                        interaction-prompt="none"
-                        loading="eager"
-                        reveal="auto"
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          background: 'transparent',
-                          borderRadius: '1rem',
-                          '--progress-bar-color': 'transparent',
-                          '--progress-mask': 'transparent'
-                        }}
-                        onLoad={() => {
-                          setModelLoadError(false);
-                          console.log('✅ ProductHero: Model loaded on', isMobile ? 'mobile' : 'desktop');
-                          console.log('📱 Device info:', {
-                            isMobile,
-                            width: window.innerWidth,
-                            userAgent: navigator.userAgent
-                          });
-                          if (modelRef.current) {
-                            const mv = modelRef.current as any;
-                            console.log('🎥 Camera settings:', {
-                              cameraOrbit: mv.cameraOrbit,
-                              fieldOfView: mv.fieldOfView,
-                              minCameraOrbit: mv.minCameraOrbit,
-                              maxCameraOrbit: mv.maxCameraOrbit
-                            });
-                          }
-                        }}
-                        onError={(e: any) => {
-                          setModelLoadError(true);
-                          console.error('❌ ProductHero: Model failed to load:', e);
-                          console.error('🔗 Model URL:', currentData.modelUrl);
-                          console.error('📱 Device:', isMobile ? 'mobile' : 'desktop');
-                        }}
-                      />
+{isMobile ? (
+                        <model-viewer
+                          ref={modelRef}
+                          src={currentData.modelUrl}
+                          alt={currentData.title}
+                          auto-rotate
+                          auto-rotate-delay="1000"
+                          rotation-per-second="30deg"
+                          camera-orbit="0deg 75deg 1.4m"
+                          min-camera-orbit="auto auto 1.4m"
+                          max-camera-orbit="auto auto 1.4m"
+                          field-of-view="35deg"
+                          exposure="1.2"
+                          shadow-intensity="0.3"
+                          environment-image="neutral"
+                          interaction-prompt="none"
+                          loading="eager"
+                          reveal="auto"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            background: 'transparent',
+                            borderRadius: '1rem',
+                            '--progress-bar-color': 'transparent',
+                            '--progress-mask': 'transparent',
+                            pointerEvents: 'none'
+                          }}
+                          onLoad={() => {
+                            setModelLoadError(false);
+                            console.log('✅ ProductHero: Model loaded on mobile');
+                          }}
+                          onError={(e: any) => {
+                            setModelLoadError(true);
+                            console.error('❌ ProductHero: Model failed to load on mobile:', e);
+                          }}
+                        />
+                      ) : (
+                        <model-viewer
+                          ref={modelRef}
+                          src={currentData.modelUrl}
+                          alt={currentData.title}
+                          auto-rotate
+                          auto-rotate-delay="1000"
+                          rotation-per-second="30deg"
+                          camera-controls
+                          camera-orbit="0deg 75deg 1.2m"
+                          min-camera-orbit="auto auto 0.4m"
+                          max-camera-orbit="auto auto 2.5m"
+                          field-of-view="30deg"
+                          exposure="1.2"
+                          shadow-intensity="0.3"
+                          environment-image="neutral"
+                          interaction-prompt="none"
+                          loading="eager"
+                          reveal="auto"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            background: 'transparent',
+                            borderRadius: '1rem',
+                            '--progress-bar-color': 'transparent',
+                            '--progress-mask': 'transparent'
+                          }}
+                          onLoad={() => {
+                            setModelLoadError(false);
+                            console.log('✅ ProductHero: Model loaded on desktop');
+                          }}
+                          onError={(e: any) => {
+                            setModelLoadError(true);
+                            console.error('❌ ProductHero: Model failed to load on desktop:', e);
+                          }}
+                        />
+                      )}
                     )}
                   </div>
                 </motion.div>
