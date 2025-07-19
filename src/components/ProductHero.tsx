@@ -4,6 +4,7 @@ import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 // Убрали импорт - используем прямое model-viewer
 import { useModelPreloader } from '@/hooks/useModelPreloader';
+import { modelPreloader } from '@/utils/modelPreloader';
 import WelcomeScreen from '@/components/WelcomeScreen';
 import PlayStationTransition from '@/components/PlayStationTransition';
 
@@ -149,11 +150,22 @@ const ProductHero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [isMobile]);
 
-  // Предзагрузка моделей
+  // Предзагрузка моделей с использованием нового менеджера
   useEffect(() => {
     const allUrls = heroData.map(item => item.modelUrl);
+    // Старый метод для совместимости
     preloadModels(allUrls);
-  }, [preloadModels]);
+    
+    // Новый менеджер для мгновенной загрузки
+    if (!showWelcome) {
+      // Если WelcomeScreen уже прошел, проверяем загруженность
+      heroData.forEach((item, index) => {
+        if (!modelPreloader.isLoaded(item.modelUrl)) {
+          modelPreloader.preloadModel(item.modelUrl, index < 2 ? 'high' : 'low');
+        }
+      });
+    }
+  }, [preloadModels, showWelcome]);
 
   // Автоматическая смена слайдов
   useEffect(() => {
@@ -519,7 +531,7 @@ const ProductHero = () => {
                           environment-image="neutral"
                           interaction-prompt="none"
                           loading="eager"
-                          reveal="auto"
+                          reveal={modelPreloader.isLoaded(currentData.modelUrl) ? "immediate" : "auto"}
                           style={{
                             width: '100%',
                             height: '100%',
@@ -559,7 +571,7 @@ const ProductHero = () => {
                           src={currentData.modelUrl}
                           alt={currentData.title}
                           auto-rotate
-                          auto-rotate-delay="1000"
+                          auto-rotate-delay="0"
                           rotation-per-second="30deg"
                           camera-controls
                           camera-orbit="0deg 75deg 1.2m"
@@ -571,7 +583,7 @@ const ProductHero = () => {
                           environment-image="neutral"
                           interaction-prompt="none"
                           loading="eager"
-                          reveal="auto"
+                          reveal={modelPreloader.isLoaded(currentData.modelUrl) ? "immediate" : "auto"}
                           style={{
                             width: '100%',
                             height: '100%',
