@@ -40,33 +40,45 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   useEffect(() => {
     const modelUrls = heroData.map(item => item.modelUrl);
     
-    console.log('🚀 WelcomeScreen: Начинаем предзагрузку моделей');
+    console.log('🚀 WelcomeScreen: Начинаем агрессивную предзагрузку моделей');
     
-    // Загружаем первую модель с максимальным приоритетом
-    modelPreloader.preloadModel(modelUrls[0], 'high').then(() => {
-      console.log('✅ WelcomeScreen: Первая модель (3530) загружена');
+    // Создаем невидимые model-viewer элементы для мгновенной загрузки
+    const preloadContainer = document.createElement('div');
+    preloadContainer.style.position = 'fixed';
+    preloadContainer.style.left = '-9999px';
+    preloadContainer.style.top = '-9999px';
+    preloadContainer.style.width = '1px';
+    preloadContainer.style.height = '1px';
+    preloadContainer.style.overflow = 'hidden';
+    document.body.appendChild(preloadContainer);
+    
+    // Загружаем первые две модели сразу
+    modelUrls.slice(0, 2).forEach((url, index) => {
+      const viewer = document.createElement('model-viewer') as any;
+      viewer.src = url;
+      viewer.loading = 'eager';
+      viewer.reveal = 'immediate';
+      viewer.style.width = '100%';
+      viewer.style.height = '100%';
+      viewer.setAttribute('cache-model', 'true');
+      
+      viewer.addEventListener('load', () => {
+        console.log(`✅ WelcomeScreen: Модель ${index + 1} загружена через direct element`);
+      });
+      
+      preloadContainer.appendChild(viewer);
     });
     
-    // Загружаем вторую модель параллельно
-    setTimeout(() => {
-      modelPreloader.preloadModel(modelUrls[1], 'high').then(() => {
-        console.log('✅ WelcomeScreen: Вторая модель (3730) загружена');
-      });
-    }, 500);
-    
-    // Остальные модели загружаем с задержкой
-    setTimeout(() => {
-      modelUrls.slice(2).forEach((url, index) => {
-        setTimeout(() => {
-          modelPreloader.preloadModel(url, 'low').then(() => {
-            console.log(`✅ WelcomeScreen: Модель ${index + 3} загружена`);
-          });
-        }, index * 1000);
-      });
-    }, 2000);
+    // Параллельно используем modelPreloader
+    modelPreloader.preloadMultiple(modelUrls, 2);
     
     return () => {
-      // Не очищаем модели при размонтировании, они понадобятся в ProductHero
+      // Оставляем контейнер для использования в ProductHero
+      setTimeout(() => {
+        if (preloadContainer.parentNode) {
+          preloadContainer.remove();
+        }
+      }, 30000); // Удаляем через 30 секунд
     };
   }, []);
 
@@ -84,7 +96,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
       setIsExiting(true);
       setTimeout(() => {
         onComplete();
-      }, 2000);
+      }, 1000); // Сократили с 2000 до 1000
     }
   }, [isWelcomeLoadingComplete, loadingProgress, onComplete]);
 

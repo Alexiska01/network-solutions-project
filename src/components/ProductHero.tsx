@@ -190,18 +190,16 @@ const ProductHero = () => {
   // Проверяем готовность текущей модели
   useEffect(() => {
     if (!showWelcome && currentData) {
-      const checkModel = modelPreloader.isLoaded(currentData.modelUrl);
-      setIsCurrentModelReady(checkModel);
+      // Сразу показываем модель, даже если она еще загружается
+      setIsCurrentModelReady(true);
       
+      const checkModel = modelPreloader.isLoaded(currentData.modelUrl);
       if (!checkModel) {
-        console.log('⏳ ProductHero: Модель еще загружается:', currentData.modelUrl);
-        // Пытаемся загрузить снова с высоким приоритетом
-        modelPreloader.preloadModel(currentData.modelUrl, 'high').then(() => {
-          setIsCurrentModelReady(true);
-          console.log('✅ ProductHero: Модель загружена:', currentData.modelUrl);
-        });
+        console.log('⏳ ProductHero: Модель загружается в фоне:', currentData.modelUrl);
+        // Загружаем в фоне
+        modelPreloader.preloadModel(currentData.modelUrl, 'high');
       } else {
-        console.log('✅ ProductHero: Модель уже загружена:', currentData.modelUrl);
+        console.log('✅ ProductHero: Модель уже в кеше:', currentData.modelUrl);
       }
     }
   }, [currentData, showWelcome, currentIndex]);
