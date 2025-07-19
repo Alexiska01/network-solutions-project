@@ -79,6 +79,9 @@ const ProductHero = () => {
   const modelRef = useRef<any>(null);
   const [indicatorsOn, setIndicatorsOn] = useState(false);
   const [modelLoadError, setModelLoadError] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
 
   // Отслеживание размера экрана
   useEffect(() => {
@@ -114,10 +117,10 @@ const ProductHero = () => {
         const mv = modelRef.current as any;
         if (mv && mv.cameraOrbit) {
           // Принудительная инициализация для мобильных - отдаленная камера без взаимодействий
-          mv.cameraOrbit = "0deg 75deg 1.4m";
-          mv.fieldOfView = "35deg";
-          mv.minCameraOrbit = "auto auto 1.4m";
-          mv.maxCameraOrbit = "auto auto 1.4m";
+          mv.cameraOrbit = "0deg 75deg 1.6m";
+          mv.fieldOfView = "40deg";
+          mv.minCameraOrbit = "auto auto 1.6m";
+          mv.maxCameraOrbit = "auto auto 1.6m";
           if (mv.jumpCameraToGoal) {
             mv.jumpCameraToGoal();
           }
@@ -160,7 +163,7 @@ const ProductHero = () => {
           setCurrentIndex(prev => (prev + 1) % heroData.length);
           setIsTransitioning(false);
           setModelLoadError(false); // Сбрасываем ошибку при смене модели
-        }, 500);
+        }, 300);
       }, 8000);
       
       intervalRef.current = interval;
@@ -177,6 +180,62 @@ const ProductHero = () => {
   const handleTransitionComplete = () => {
     setShowWelcome(false);
     setShowTransition(false);
+  };
+
+  // Свайп обработчики для мобильных
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe || isRightSwipe) {
+      // Haptic feedback для iOS
+      if ('vibrate' in navigator) {
+        navigator.vibrate(10);
+      }
+      
+      // Скрываем подсказку после первого свайпа
+      setShowSwipeHint(false);
+      
+      // Очищаем интервал автопрокрутки
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      
+      setIsTransitioning(true);
+      setTimeout(() => {
+        if (isLeftSwipe) {
+          setCurrentIndex(prev => (prev + 1) % heroData.length);
+        } else {
+          setCurrentIndex(prev => (prev - 1 + heroData.length) % heroData.length);
+        }
+        setIsTransitioning(false);
+        setModelLoadError(false);
+      }, 300);
+      
+      // Перезапускаем автопрокрутку
+      const interval = setInterval(() => {
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setCurrentIndex(prev => (prev + 1) % heroData.length);
+          setIsTransitioning(false);
+          setModelLoadError(false);
+        }, 300);
+      }, 8000);
+      
+      intervalRef.current = interval;
+    }
   };
 
   if (showWelcome) {
@@ -196,7 +255,10 @@ const ProductHero = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
-      className="relative h-[70vh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+      className="relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+      onTouchStart={isMobile ? onTouchStart : undefined}
+      onTouchMove={isMobile ? onTouchMove : undefined}
+      onTouchEnd={isMobile ? onTouchEnd : undefined}
     >
       {/* Динамический фоновый градиент */}
       <div 
@@ -267,31 +329,31 @@ const ProductHero = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.5, duration: 0.8 }}
         onClick={() => navigate('/')}
-        className="absolute top-4 left-4 md:top-8 md:left-8 z-50 flex items-center gap-2 md:gap-3 px-4 py-2 md:px-6 md:py-3 bg-black/20 backdrop-blur-xl rounded-full text-white hover:bg-black/40 transition-all duration-300 group border border-white/10"
+        className="absolute top-4 left-4 xs:top-6 xs:left-6 md:top-8 md:left-8 z-50 flex items-center gap-2 md:gap-3 px-4 py-2.5 md:px-6 md:py-3 bg-black/20 backdrop-blur-xl rounded-full text-white hover:bg-black/40 transition-all duration-300 group border border-white/10"
       >
-        <Icon name="ChevronLeft" size={18} className="md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
-        <span className="font-medium text-sm md:text-base">Назад</span>
+        <Icon name="ChevronLeft" size={20} className="w-5 h-5 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
+        <span className="font-medium text-[15px] md:text-base">Назад</span>
       </motion.button>
 
       {/* Основной контент */}
-      <div className="relative z-10 h-full flex items-center py-4 md:py-0">
-        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
+      <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16 h-full md:h-auto">
+          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto">
             
             {/* Левая колонка - контент */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 1, ease: [0.23, 1, 0.320, 1] }}
-              className="space-y-3 md:space-y-6 order-2 lg:order-1 pb-4 md:pb-0"
+              className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45vh] md:h-auto"
             >
               {/* Заголовок */}
-              <div className="space-y-2 md:space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="inline-block px-2.5 py-1 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[10px] md:text-sm font-medium text-white/80 border border-white/20"
+                  className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[11px] md:text-sm font-medium text-white/80 border border-white/20"
                 >
                   ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
                 </motion.div>
@@ -301,7 +363,7 @@ const ProductHero = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.23, 1, 0.320, 1] }}
-                  className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
+                  className="text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
                 >
                   {currentData.title}
                 </motion.h1>
@@ -311,7 +373,7 @@ const ProductHero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="text-sm md:text-lg text-white/70 leading-relaxed"
+                  className="text-sm xs:text-base sm:text-lg md:text-lg text-white/70 leading-relaxed max-w-lg md:max-w-none"
                 >
                   {currentData.description}
                 </motion.p>
@@ -323,7 +385,7 @@ const ProductHero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="space-y-1 md:space-y-3"
+                className="space-y-2 md:space-y-3"
               >
                 {currentData.features.map((feature, index) => (
                   <motion.div
@@ -335,7 +397,7 @@ const ProductHero = () => {
                       duration: 0.6,
                       ease: [0.23, 1, 0.320, 1]
                     }}
-                    className="flex items-center gap-2.5 md:gap-4 p-2 md:p-4 bg-white/5 backdrop-blur-sm rounded-lg md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    className="flex items-center gap-3 md:gap-4 px-3 py-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
                   >
                     <div 
                       className={`w-2 h-2 md:w-3 md:h-3 rounded-full shadow-lg`}
@@ -344,7 +406,7 @@ const ProductHero = () => {
                         boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
                       }}
                     />
-                    <span className="text-white font-medium text-xs md:text-base">{feature}</span>
+                    <span className="text-white font-medium text-[13px] xs:text-sm sm:text-base md:text-base leading-tight">{feature}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -354,16 +416,16 @@ const ProductHero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="flex items-center gap-2.5 md:gap-4 pt-2 md:pt-4"
+                className="flex items-center gap-3 md:gap-4 pt-3 md:pt-4"
               >
                 <div className="flex gap-2">
                   {heroData.map((_, index) => (
                     <div
                       key={index}
-                      className={`h-0.5 md:h-1 rounded-full transition-all duration-500 ${
+                      className={`h-1 md:h-1 rounded-full transition-all duration-500 ${
                         index === currentIndex 
-                          ? `w-8 md:w-12 shadow-lg` 
-                          : 'w-2.5 md:w-4 bg-white/20'
+                          ? `w-10 md:w-12 shadow-lg` 
+                          : 'w-3 md:w-4 bg-white/20'
                       }`}
                       style={index === currentIndex ? {
                         backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
@@ -372,7 +434,7 @@ const ProductHero = () => {
                     />
                   ))}
                 </div>
-                <span className="text-xs md:text-sm text-white/50 font-mono">
+                <span className="text-[13px] md:text-sm text-white/50 font-mono tabular-nums">
                   {String(currentIndex + 1).padStart(2, '0')} / {String(heroData.length).padStart(2, '0')}
                 </span>
               </motion.div>
@@ -383,7 +445,7 @@ const ProductHero = () => {
               initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ delay: 0.5, duration: 1.2, ease: [0.23, 1, 0.320, 1] }}
-              className="relative h-[300px] md:h-[400px] lg:h-[500px] order-1 lg:order-2"
+              className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
@@ -420,9 +482,9 @@ const ProductHero = () => {
                 {/* Левая часть - 3D модель или fallback */}
                 <motion.div
                   key={currentData.id}
-                  initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
+                  initial={{ opacity: 0, scale: isMobile ? 0.9 : 0.8, rotateX: isMobile ? 0 : 20 }}
                   animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-                  transition={{ duration: 1, ease: [0.23, 1, 0.320, 1] }}
+                  transition={{ duration: isMobile ? 0.6 : 1, ease: [0.23, 1, 0.320, 1] }}
                   className="relative w-full h-full"
                   style={{
                     transform: 'none'
@@ -446,10 +508,10 @@ const ProductHero = () => {
                           auto-rotate
                           auto-rotate-delay="1000"
                           rotation-per-second="30deg"
-                          camera-orbit="0deg 75deg 1.4m"
-                          min-camera-orbit="auto auto 1.4m"
-                          max-camera-orbit="auto auto 1.4m"
-                          field-of-view="35deg"
+                          camera-orbit="0deg 75deg 1.6m"
+                          min-camera-orbit="auto auto 1.6m"
+                          max-camera-orbit="auto auto 1.6m"
+                          field-of-view="40deg"
                           exposure="1.2"
                           shadow-intensity="0.3"
                           environment-image="neutral"
@@ -520,6 +582,21 @@ const ProductHero = () => {
           </div>
         </div>
       </div>
+
+      {/* Индикатор свайпа для мобильных */}
+      {isMobile && showSwipeHint && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ delay: 2, duration: 0.5 }}
+          className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 text-white/40 text-[13px] bg-white/5 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10"
+        >
+          <Icon name="ChevronLeft" size={16} />
+          <span>Свайпните для переключения</span>
+          <Icon name="ChevronRight" size={16} />
+        </motion.div>
+      )}
 
       {/* Переходные эффекты */}
       {isTransitioning && (

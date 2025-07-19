@@ -212,3 +212,78 @@ a {
   -ms-user-select: none;
   user-select: none;
 }
+
+/* Safe area для мобильных устройств */
+@supports (padding: max(0px)) {
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .pt-safe {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+}
+
+/* Breakpoints для более точной адаптации */
+@media (min-width: 375px) {
+  .xs\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  
+  .xs:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  
+  .xs:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .xs\:h-\[50vh\] {
+    height: 50vh;
+  }
+  
+  .xs\:p-8 {
+    padding: 2rem;
+  }
+  
+  .xs\:mb-4 {
+    margin-bottom: 1rem;
+  }
+  
+  .xs\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  
+  .xs\:top-6 {
+    top: 1.5rem;
+  }
+  
+  .xs\:left-6 {
+    left: 1.5rem;
+  }
+}
+
+@media (min-width: 414px) {
+  .sm\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+  
+  .sm\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  
+  .sm\:h-\[45vh\] {
+    height: 45vh;
+  }
+}
