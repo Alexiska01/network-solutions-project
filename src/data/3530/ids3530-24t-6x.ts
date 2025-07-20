@@ -5,7 +5,7 @@ export const ids353024t6xData: ProductInfo = {
   title: "IDS3530-24T-6X",
   description:
     "24×1G Base-T + 6×10G SFP+, без PoE — компактное решение для средней сети",
-  modelPath: "/models/3530all.glb",
+  modelPath: "/models/IDS3530-24T.glb",
   basicSpecs: [
     { label: "Порты:", value: "24×1000M Base-T" },
     { label: "Слоты:", value: "6×10G SFP+" },
