@@ -4,25 +4,16 @@ const fs = require('fs');
 const path = require('path');
 const { glob } = require('glob');
 
-// Маппинг старых URL на новые локальные пути
+// Маппинг старых URL на новые локальные пути (только all версии)
 const modelMapping = {
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb': '/models/compressed/S3530-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb': '/models/compressed/S4530-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb': '/models/compressed/IDS6010-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb': '/models/compressed/3730all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb': '/models/compressed/S3530-24S.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48T.glb': '/models/compressed/S3530-48T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48P.glb': '/models/compressed/S3530-48P.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24T.glb': '/models/compressed/S3530-24T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24P.glb': '/models/compressed/S3530-24P.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-48T.glb': '/models/compressed/S4530-48T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24S.glb': '/models/compressed/S4530-24S.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-48P.glb': '/models/compressed/S4530-48P.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24T.glb': '/models/compressed/S4530-24T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24P.glb': '/models/compressed/S4530-24P.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-48S.glb': '/models/compressed/S4530-48S.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3730-24T.glb': '/models/compressed/S3730-24T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3730-24P.glb': '/models/compressed/S3730-24P.glb'
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb': '/models/3530all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb': '/models/3730all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb': '/models/4530all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb': '/models/6010all.glb',
+  // Альтернативные названия
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb': '/models/3530all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb': '/models/4530all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb': '/models/6010all.glb'
 };
 
 async function updateFileContent(filePath) {

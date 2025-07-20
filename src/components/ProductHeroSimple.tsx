@@ -7,21 +7,21 @@ const heroData = [
     id: 'IDS3530',
     title: 'Коммутаторы серии IDS3530',
     description: 'Корпоративные управляемые коммутаторы для критически важных применений',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
+    modelUrl: '/models/3530all.glb',
     features: ['Уровень доступа в корпоративных ЛВС', 'Поддержка PoE/PoE+', 'Развитые возможности по управлению']
   },
   {
     id: 'IDS3730',
     title: 'Коммутаторы серии IDS3730',
     description: 'Высокопроизводительные коммутаторы для корпоративных сетей',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb',
+    modelUrl: '/models/3730all.glb',
     features: ['Статическая и динамическая маршрутизация', 'Два модульных блока питания', 'Поддержка PoE/PoE+']
   },
   {
     id: 'IDS4530',
     title: 'Коммутаторы серии IDS4530',
     description: 'Модульные коммутаторы с расширенными возможностями управления',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb',
+    modelUrl: '/models/4530all.glb',
     features: ['Модули расширения', 'Поддержка технологии VxLAN', 'Развитые возможности по управлению']
   }
 ];

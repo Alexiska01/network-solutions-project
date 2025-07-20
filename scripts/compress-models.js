@@ -7,25 +7,12 @@ const { promisify } = require('util');
 
 const execAsync = promisify(exec);
 
-// Список всех 3D моделей из проекта
+// Список только основных (all) 3D моделей коммутаторов
 const modelUrls = [
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
   'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48P.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24P.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-48T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24S.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-48P.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-24P.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-48S.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3730-24T.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3730-24P.glb'
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb',
+  'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb'
 ];
 
 // Создаем папки для моделей

@@ -26,10 +26,10 @@ const LOADING_STAGES: LoadingStage[] = [
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   const heroData = [
-    { modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb' },
-    { modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb' },
-    { modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb' },
-    { modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb' }
+    { modelUrl: '/models/3530all.glb' },
+    { modelUrl: '/models/3730all.glb' },
+    { modelUrl: '/models/4530all.glb' },
+    { modelUrl: '/models/6010all.glb' }
   ];
 
   const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);

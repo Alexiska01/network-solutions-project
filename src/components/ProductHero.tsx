@@ -2,14 +2,16 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
-// Убрали импорт - используем прямое model-viewer
+import { modelPreloader } from '@/utils/modelPreloader';
 
 import WelcomeScreen from '@/components/WelcomeScreen';
 import PlayStationTransition from '@/components/PlayStationTransition';
 
+// Конфигурация моделей коммутаторов - только "all" версии
 const heroData = [
   {
     id: 'IDS3530',
+    series: '3530',
     title: 'Коммутаторы IDS3530',
     description: 'Промышленные коммутаторы для критически важных применений',
     modelUrl: '/models/3530all.glb',
@@ -24,6 +26,7 @@ const heroData = [
   },
   {
     id: 'IDS3730',
+    series: '3730',
     title: 'Коммутаторы IDS3730',
     description: 'Высокопроизводительные коммутаторы для корпоративных сетей',
     modelUrl: '/models/3730all.glb',
@@ -38,6 +41,7 @@ const heroData = [
   },
   {
     id: 'IDS4530',
+    series: '4530',
     title: 'Коммутаторы IDS4530',
     description: 'Модульные коммутаторы с расширенными возможностями',
     modelUrl: '/models/4530all.glb',
@@ -52,6 +56,7 @@ const heroData = [
   },
   {
     id: 'IDS6010',
+    series: '6010',
     title: 'Коммутаторы IDS6010',
     description: 'Высокопроизводительные коммутаторы для дата-центров',
     modelUrl: '/models/6010all.glb',
@@ -76,10 +81,11 @@ const ProductHero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const modelRef = useRef<any>(null);
-  const [modelLoadError, setModelLoadError] = useState(false);
+  const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const preloadedViewers = useRef<Map<string, any>>(new Map());
 
   // Отслеживание размера экрана
   useEffect(() => {
@@ -92,7 +98,32 @@ const ProductHero = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-
+  // Интеллектуальная предзагрузка моделей
+  useEffect(() => {
+    if (!showWelcome) {
+      // Предзагружаем следующую модель заранее
+      const preloadNextModel = () => {
+        const nextIndex = (currentIndex + 1) % heroData.length;
+        const nextModel = heroData[nextIndex];
+        
+        if (!modelPreloader.isLoaded(nextModel.modelUrl)) {
+          modelPreloader.preloadModel(nextModel.modelUrl, 'high');
+        }
+      };
+      
+      // Предзагружаем текущую и следующую модели
+      const currentModel = heroData[currentIndex];
+      if (!modelPreloader.isLoaded(currentModel.modelUrl)) {
+        modelPreloader.preloadModel(currentModel.modelUrl, 'high').then(() => {
+          setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
+          preloadNextModel();
+        });
+      } else {
+        setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
+        preloadNextModel();
+      }
+    }
+  }, [currentIndex, showWelcome]);
 
   // Мобильная инициализация model-viewer
   useEffect(() => {
@@ -133,40 +164,31 @@ const ProductHero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [isMobile]);
 
-  // Предзагрузка моделей через link prefetch
-  useEffect(() => {
-    if (!showWelcome) {
-      // Добавляем prefetch для всех моделей
-      heroData.forEach((item, index) => {
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
-        link.href = item.modelUrl;
-        link.as = 'fetch';
-        document.head.appendChild(link);
-      });
-    }
-  }, [showWelcome]);
-
-  // Автоматическая смена слайдов
+  // Автоматическая смена слайдов с оптимизацией
   useEffect(() => {
     if (!showWelcome) {
       const interval = setInterval(() => {
         setIsTransitioning(true);
+        
+        // Предзагружаем модель за 2 слайда вперед
+        const nextNextIndex = (currentIndex + 2) % heroData.length;
+        const nextNextModel = heroData[nextNextIndex];
+        if (!modelPreloader.isLoaded(nextNextModel.modelUrl)) {
+          modelPreloader.preloadModel(nextNextModel.modelUrl, 'low');
+        }
+        
         setTimeout(() => {
           setCurrentIndex(prev => (prev + 1) % heroData.length);
           setIsTransitioning(false);
-          setModelLoadError(false); // Сбрасываем ошибку при смене модели
         }, isMobile ? 100 : 300);
       }, 8000);
       
       intervalRef.current = interval;
       return () => clearInterval(interval);
     }
-  }, [showWelcome, isMobile]);
+  }, [showWelcome, isMobile, currentIndex]);
 
   const currentData = heroData[currentIndex];
-
-
 
   const handleWelcomeComplete = () => {
     setShowTransition(true);
@@ -200,36 +222,32 @@ const ProductHero = () => {
         navigator.vibrate(10);
       }
       
-      // Скрываем подсказку после первого свайпа
       setShowSwipeHint(false);
+      setIsTransitioning(true);
       
-      // Очищаем интервал автопрокрутки
+      // Сброс автоматической смены
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
       
-      setIsTransitioning(true);
       setTimeout(() => {
         if (isLeftSwipe) {
-          setCurrentIndex(prev => (prev + 1) % heroData.length);
+          setCurrentIndex((prev) => (prev + 1) % heroData.length);
         } else {
-          setCurrentIndex(prev => (prev - 1 + heroData.length) % heroData.length);
+          setCurrentIndex((prev) => (prev - 1 + heroData.length) % heroData.length);
         }
         setIsTransitioning(false);
-        setModelLoadError(false);
-      }, isMobile ? 100 : 300);
-      
-      // Перезапускаем автопрокрутку
-      const interval = setInterval(() => {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentIndex(prev => (prev + 1) % heroData.length);
-          setIsTransitioning(false);
-          setModelLoadError(false);
-        }, isMobile ? 100 : 300);
-      }, 8000);
-      
-      intervalRef.current = interval;
+        
+        // Перезапуск автоматической смены
+        const newInterval = setInterval(() => {
+          setIsTransitioning(true);
+          setTimeout(() => {
+            setCurrentIndex(prev => (prev + 1) % heroData.length);
+            setIsTransitioning(false);
+          }, 100);
+        }, 8000);
+        intervalRef.current = newInterval;
+      }, 100);
     }
   };
 
@@ -237,16 +255,13 @@ const ProductHero = () => {
     return (
       <>
         <WelcomeScreen onComplete={handleWelcomeComplete} />
-        <PlayStationTransition 
-          isVisible={showTransition}
-          onComplete={handleTransitionComplete}
-        />
+        {showTransition && <PlayStationTransition onComplete={handleTransitionComplete} />}
       </>
     );
   }
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: isMobile ? 0.3 : 1.2, ease: [0.23, 1, 0.320, 1] }}
@@ -472,111 +487,115 @@ const ProductHero = () => {
                 />
               </div>
               
-              {/* 3D модель на полную ширину */}
+              {/* 3D модель с интеллектуальной загрузкой */}
               <div className="w-full h-full">
-                {/* Левая часть - 3D модель или fallback */}
                 <motion.div
                   key={currentData.id}
                   initial={{ opacity: isMobile ? 1 : 0, scale: 1, rotateX: 0 }}
                   animate={{ opacity: isTransitioning && isMobile ? 0.5 : 1, scale: 1, rotateX: 0 }}
                   transition={{ duration: isMobile ? 0.2 : 1, ease: [0.23, 1, 0.320, 1] }}
                   className="relative w-full h-full"
-                  style={{
-                    transform: 'none'
-                  }}
                 >
-                  {/* 3D модель для всех устройств */}
+                  {/* 3D модель для всех устройств с оптимизированными настройками */}
                   <div className="w-full h-full relative">
-
-                    
-                    {modelLoadError ? (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="text-center p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
-                          <Icon name="Wifi" size={48} className="text-white/60 mx-auto mb-4" />
-                          <p className="text-white/80 text-lg font-medium mb-2">3D модель временно недоступна</p>
-                          <p className="text-white/60 text-sm">Проверьте соединение с интернетом</p>
+                    {/* Индикатор загрузки */}
+                    {!modelLoadStatus[currentData.modelUrl] && (
+                      <div className="absolute inset-0 flex items-center justify-center z-10">
+                        <div className="flex flex-col items-center gap-4">
+                          <div className="w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full animate-spin" />
+                          <p className="text-white/60 text-sm">Загрузка модели {currentData.series}...</p>
                         </div>
                       </div>
-                    ) : isMobile ? (
-                      <>
-                        <model-viewer
-                          ref={modelRef}
-                          src={currentData.modelUrl}
-                          alt={currentData.title}
-                          auto-rotate
-                          auto-rotate-delay="0"
-                          rotation-per-second="30deg"
-                          camera-orbit="0deg 75deg 1.6m"
-                          min-camera-orbit="auto auto 1.6m"
-                          max-camera-orbit="auto auto 1.6m"
-                          field-of-view="40deg"
-                          exposure="1.2"
-                          shadow-intensity="0.3"
-                          environment-image="neutral"
-                          interaction-prompt="none"
-                          loading="eager"
-                          reveal="auto"
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            background: 'transparent',
-                            borderRadius: '1rem',
-                            '--progress-bar-color': 'transparent',
-                            '--progress-mask': 'transparent',
-                            pointerEvents: 'none'
-                          }}
-                          onLoad={() => {
-                            setModelLoadError(false);
-                          }}
-                          onError={(e: any) => {
-                            setModelLoadError(true);
-                            console.error('❌ ProductHero: Ошибка загрузки модели:', currentData.modelUrl);
-                          }}
-                        />
-
-                      </>
-                      ) : (
-                        <model-viewer
-                          ref={modelRef}
-                          src={currentData.modelUrl}
-                          alt={currentData.title}
-                          auto-rotate
-                          auto-rotate-delay="0"
-                          rotation-per-second="30deg"
-                          camera-controls
-                          camera-orbit="0deg 75deg 1.2m"
-                          min-camera-orbit="auto auto 0.4m"
-                          max-camera-orbit="auto auto 2.5m"
-                          field-of-view="30deg"
-                          exposure="1.2"
-                          shadow-intensity="0.3"
-                          environment-image="neutral"
-                          interaction-prompt="none"
-                          loading="eager"
-                          reveal="auto"
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            background: 'transparent',
-                            borderRadius: '1rem',
-                            '--progress-bar-color': 'transparent',
-                            '--progress-mask': 'transparent'
-                          }}
-                          onLoad={() => {
-                            setModelLoadError(false);
-                          }}
-                          onError={(e: any) => {
-                            setModelLoadError(true);
-                            console.error('❌ ProductHero: Ошибка загрузки модели:', currentData.modelUrl);
-                          }}
-                        />
-                      )}
+                    )}
+                    
+                    {isMobile ? (
+                      <model-viewer
+                        ref={modelRef}
+                        src={currentData.modelUrl}
+                        alt={currentData.title}
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="30deg"
+                        camera-orbit="0deg 75deg 1.6m"
+                        min-camera-orbit="auto auto 1.6m"
+                        max-camera-orbit="auto auto 1.6m"
+                        field-of-view="40deg"
+                        exposure="1.2"
+                        shadow-intensity="0.3"
+                        environment-image="neutral"
+                        interaction-prompt="none"
+                        loading="eager"
+                        reveal="auto"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          background: 'transparent',
+                          borderRadius: '1rem',
+                          '--progress-bar-color': 'transparent',
+                          '--progress-mask': 'transparent',
+                          pointerEvents: 'none'
+                        }}
+                        onLoad={() => {
+                          console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
+                          setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: true }));
+                        }}
+                        onError={(e: any) => {
+                          console.error(`❌ ProductHero: Ошибка загрузки модели ${currentData.series}:`, e);
+                          setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: false }));
+                        }}
+                      />
+                    ) : (
+                      <model-viewer
+                        ref={modelRef}
+                        src={currentData.modelUrl}
+                        alt={currentData.title}
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="30deg"
+                        camera-controls
+                        camera-orbit="0deg 75deg 1.2m"
+                        min-camera-orbit="auto auto 0.4m"
+                        max-camera-orbit="auto auto 2.5m"
+                        field-of-view="30deg"
+                        exposure="1.2"
+                        shadow-intensity="0.3"
+                        environment-image="neutral"
+                        interaction-prompt="none"
+                        loading="eager"
+                        reveal="auto"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          background: 'transparent',
+                          borderRadius: '1rem',
+                          '--progress-bar-color': 'transparent',
+                          '--progress-mask': 'transparent'
+                        }}
+                        onLoad={() => {
+                          console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
+                          setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: true }));
+                        }}
+                        onError={(e: any) => {
+                          console.error(`❌ ProductHero: Ошибка загрузки модели ${currentData.series}:`, e);
+                          setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: false }));
+                        }}
+                      />
+                    )}
+                    
+                    {/* Fallback для ошибки загрузки */}
+                    {modelLoadStatus[currentData.modelUrl] === false && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-white/5 backdrop-blur-xl rounded-2xl">
+                        <div className="text-center p-8">
+                          <Icon name="Wifi" size={48} className="text-white/60 mx-auto mb-4" />
+                          <p className="text-white/80 text-lg font-medium mb-2">Модель {currentData.series} недоступна</p>
+                          <p className="text-white/60 text-sm">Проверьте подключение к сети</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
-
               </div>
             </motion.div>
-
           </div>
         </div>
       </div>
@@ -597,12 +616,13 @@ const ProductHero = () => {
       )}
 
       {/* Переходные эффекты */}
-      {isTransitioning && (
+      {isTransitioning && !isMobile && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm z-40"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          exit={{ scaleX: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent origin-left"
         />
       )}
     </motion.div>
