@@ -1,6 +1,6 @@
 // Service Worker для агрессивного кэширования 3D моделей
-const CACHE_NAME = 'models-cache-v2'; // Обновили версию для очистки старого кеша
-const VERCEL_CDN = 'https://models-8xe5jm3g1-alexiskas-projects.vercel.app';
+const CACHE_NAME = 'models-cache-v3'; // Обновили версию для нового CDN
+const VERCEL_CDN = 'https://models-static-anummr3hg-alexiskas-projects.vercel.app';
 const MODEL_URLS = [
   `${VERCEL_CDN}/3530all.glb`,
   `${VERCEL_CDN}/3730all.glb`,

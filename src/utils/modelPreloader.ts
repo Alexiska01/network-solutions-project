@@ -11,8 +11,8 @@ export class ModelPreloader {
   
   private addPrefetchLinks() {
     const priorityModels = [
-      'https://models-8xe5jm3g1-alexiskas-projects.vercel.app/3530all.glb',
-      'https://models-8xe5jm3g1-alexiskas-projects.vercel.app/3730all.glb'
+      'https://models-static-anummr3hg-alexiskas-projects.vercel.app/3530all.glb',
+      'https://models-static-anummr3hg-alexiskas-projects.vercel.app/3730all.glb'
     ];
     
     priorityModels.forEach(url => {
