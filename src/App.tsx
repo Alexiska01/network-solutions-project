@@ -72,6 +72,7 @@ const PRELOAD_MODELS = [
   "/models/6010all.glb",
   "/models/IDS3530-24P.glb",
   "/models/IDS3530-24T.glb",
+  "/models/IDS3530-24S.glb",
 ];
 
 const App = () => {

@@ -5,7 +5,7 @@ export const ids353048t6xData: ProductInfo = {
   title: "IDS3530-48T-6X",
   description:
     "48×1G Base-T + 6×10G SFP+, без PoE — высокая производительность для больших сетей",
-  modelPath: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-48T.glb",
+  modelPath: "/models/IDS3530-48T.glb",
   basicSpecs: [
     { label: "Порты:", value: "48×1000M Base-T" },
     { label: "Слоты:", value: "6×10G SFP+" },
