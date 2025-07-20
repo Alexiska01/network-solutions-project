@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 // Убрали импорт - используем прямое model-viewer
-import { useModelPreloader } from '@/hooks/useModelPreloader';
-import { modelPreloader } from '@/utils/modelPreloader';
+
 import WelcomeScreen from '@/components/WelcomeScreen';
 import PlayStationTransition from '@/components/PlayStationTransition';
 
@@ -76,14 +75,11 @@ const ProductHero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const { preloadModels, isModelReady: hookModelReady } = useModelPreloader();
   const modelRef = useRef<any>(null);
-  const [indicatorsOn, setIndicatorsOn] = useState(false);
   const [modelLoadError, setModelLoadError] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
-  const [isCurrentModelReady, setIsCurrentModelReady] = useState(false);
 
   // Отслеживание размера экрана
   useEffect(() => {
@@ -96,21 +92,7 @@ const ProductHero = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Проверка загрузки model-viewer
-  useEffect(() => {
-    const checkModelViewer = () => {
-      const hasModelViewer = customElements.get('model-viewer');
-      console.log('🔍 ProductHero: model-viewer available:', !!hasModelViewer);
-      if (!hasModelViewer) {
-        console.error('❌ ProductHero: model-viewer not loaded!');
-      }
-    };
-    
-    // Проверяем сразу и с задержкой
-    checkModelViewer();
-    const timer = setTimeout(checkModelViewer, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+
 
   // Мобильная инициализация model-viewer
   useEffect(() => {
@@ -151,22 +133,19 @@ const ProductHero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [isMobile]);
 
-  // Предзагрузка моделей с использованием нового менеджера
+  // Предзагрузка моделей через link prefetch
   useEffect(() => {
-    const allUrls = heroData.map(item => item.modelUrl);
-    // Старый метод для совместимости
-    preloadModels(allUrls);
-    
-    // Новый менеджер для мгновенной загрузки
     if (!showWelcome) {
-      // Если WelcomeScreen уже прошел, проверяем загруженность
+      // Добавляем prefetch для всех моделей
       heroData.forEach((item, index) => {
-        if (!modelPreloader.isLoaded(item.modelUrl)) {
-          modelPreloader.preloadModel(item.modelUrl, index < 2 ? 'high' : 'low');
-        }
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = item.modelUrl;
+        link.as = 'fetch';
+        document.head.appendChild(link);
       });
     }
-  }, [preloadModels, showWelcome]);
+  }, [showWelcome]);
 
   // Автоматическая смена слайдов
   useEffect(() => {
@@ -187,22 +166,7 @@ const ProductHero = () => {
 
   const currentData = heroData[currentIndex];
 
-  // Проверяем готовность текущей модели
-  useEffect(() => {
-    if (!showWelcome && currentData) {
-      // Сразу показываем модель, даже если она еще загружается
-      setIsCurrentModelReady(true);
-      
-      const checkModel = modelPreloader.isLoaded(currentData.modelUrl);
-      if (!checkModel) {
-        console.log('⏳ ProductHero: Модель загружается в фоне:', currentData.modelUrl);
-        // Загружаем в фоне
-        modelPreloader.preloadModel(currentData.modelUrl, 'high');
-      } else {
-        console.log('✅ ProductHero: Модель уже в кеше:', currentData.modelUrl);
-      }
-    }
-  }, [currentData, showWelcome, currentIndex]);
+
 
   const handleWelcomeComplete = () => {
     setShowTransition(true);
@@ -523,19 +487,7 @@ const ProductHero = () => {
                 >
                   {/* 3D модель для всех устройств */}
                   <div className="w-full h-full relative">
-                    {/* Индикатор загрузки модели */}
-                    {!isCurrentModelReady && !showWelcome && !modelLoadError && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm rounded-2xl z-10">
-                        <div className="text-center">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                            className="w-16 h-16 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full mx-auto mb-4"
-                          />
-                          <p className="text-white/80 text-sm">Загрузка 3D модели...</p>
-                        </div>
-                      </div>
-                    )}
+
                     
                     {modelLoadError ? (
                       <div className="w-full h-full flex items-center justify-center">
@@ -563,7 +515,7 @@ const ProductHero = () => {
                           environment-image="neutral"
                           interaction-prompt="none"
                           loading="eager"
-                          reveal={modelPreloader.isLoaded(currentData.modelUrl) ? "immediate" : "auto"}
+                          reveal="auto"
                           style={{
                             width: '100%',
                             height: '100%',
@@ -575,28 +527,13 @@ const ProductHero = () => {
                           }}
                           onLoad={() => {
                             setModelLoadError(false);
-                            setIsCurrentModelReady(true);
-                            console.log('✅ ProductHero: Model loaded on mobile');
                           }}
                           onError={(e: any) => {
                             setModelLoadError(true);
-                            console.error('❌ ProductHero: Model failed to load on mobile:', e);
+                            console.error('❌ ProductHero: Ошибка загрузки модели:', currentData.modelUrl);
                           }}
                         />
-                        {/* Предзагрузка следующей модели */}
-                        <model-viewer
-                          src={heroData[(currentIndex + 1) % heroData.length].modelUrl}
-                          alt={heroData[(currentIndex + 1) % heroData.length].title}
-                          loading="eager"
-                          style={{
-                            position: 'absolute',
-                            width: '1px',
-                            height: '1px',
-                            opacity: 0,
-                            pointerEvents: 'none',
-                            zIndex: -1
-                          }}
-                        />
+
                       </>
                       ) : (
                         <model-viewer
@@ -616,7 +553,7 @@ const ProductHero = () => {
                           environment-image="neutral"
                           interaction-prompt="none"
                           loading="eager"
-                          reveal={modelPreloader.isLoaded(currentData.modelUrl) ? "immediate" : "auto"}
+                          reveal="auto"
                           style={{
                             width: '100%',
                             height: '100%',
@@ -627,12 +564,10 @@ const ProductHero = () => {
                           }}
                           onLoad={() => {
                             setModelLoadError(false);
-                            setIsCurrentModelReady(true);
-                            console.log('✅ ProductHero: Model loaded on desktop');
                           }}
                           onError={(e: any) => {
                             setModelLoadError(true);
-                            console.error('❌ ProductHero: Model failed to load on desktop:', e);
+                            console.error('❌ ProductHero: Ошибка загрузки модели:', currentData.modelUrl);
                           }}
                         />
                       )}
