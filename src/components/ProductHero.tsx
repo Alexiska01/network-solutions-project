@@ -13,7 +13,7 @@ const heroData = [
     id: 'IDS3530',
     title: 'Коммутаторы IDS3530',
     description: 'Промышленные коммутаторы для критически важных применений',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
+    modelUrl: 'https://models-42r6qezjp-alexiskas-projects.vercel.app/3530all.glb',
     features: [
       'Встроенные блоки питания',
       'Поддержка РоЕ/РоЕ+',
@@ -27,7 +27,7 @@ const heroData = [
     id: 'IDS3730',
     title: 'Коммутаторы IDS3730',
     description: 'Высокопроизводительные коммутаторы для корпоративных сетей',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb',
+    modelUrl: 'https://models-42r6qezjp-alexiskas-projects.vercel.app/3730all.glb',
     features: [
       'Два модульных блока питания',
       'Поддержка РоЕ/РоЕ+',
@@ -41,7 +41,7 @@ const heroData = [
     id: 'IDS4530',
     title: 'Коммутаторы IDS4530',
     description: 'Модульные коммутаторы с расширенными возможностями',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb',
+    modelUrl: 'https://models-42r6qezjp-alexiskas-projects.vercel.app/4530all.glb',
     features: [
       'Два модульных блока питания',
       'Поддержка РоЕ/РоЕ+',
@@ -55,7 +55,7 @@ const heroData = [
     id: 'IDS6010',
     title: 'Коммутаторы IDS6010',
     description: 'Высокопроизводительные коммутаторы для дата-центров',
-    modelUrl: 'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb',
+    modelUrl: 'https://models-42r6qezjp-alexiskas-projects.vercel.app/6010all.glb',
     features: [
       'Два модульных блока питания',
       'Поддержка РоЕ/РоЕ+',

@@ -11,8 +11,8 @@ export class ModelPreloader {
   
   private addPrefetchLinks() {
     const priorityModels = [
-      'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb',
-      'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb'
+      'https://models-42r6qezjp-alexiskas-projects.vercel.app/3530all.glb',
+      'https://models-42r6qezjp-alexiskas-projects.vercel.app/3730all.glb'
     ];
     
     priorityModels.forEach(url => {

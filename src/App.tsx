@@ -66,13 +66,28 @@ const PRELOAD_IMAGES = [
 
 // 3D модели для предварительной загрузки
 const PRELOAD_MODELS = [
-  "https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb",
-  "https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb",
+  "https://models-42r6qezjp-alexiskas-projects.vercel.app/3530all.glb",
+  "https://models-42r6qezjp-alexiskas-projects.vercel.app/3730all.glb",
+  "https://models-42r6qezjp-alexiskas-projects.vercel.app/4530all.glb",
+  "https://models-42r6qezjp-alexiskas-projects.vercel.app/6010all.glb",
 ];
 
 const App = () => {
   // Предварительная загрузка всех изображений и моделей
   useEffect(() => {
+    // Добавляем preconnect для Vercel CDN
+    const preconnectLink = document.createElement('link');
+    preconnectLink.rel = 'preconnect';
+    preconnectLink.href = 'https://models-42r6qezjp-alexiskas-projects.vercel.app';
+    preconnectLink.crossOrigin = 'anonymous';
+    document.head.appendChild(preconnectLink);
+    
+    // DNS prefetch для быстрого разрешения домена
+    const dnsPrefetchLink = document.createElement('link');
+    dnsPrefetchLink.rel = 'dns-prefetch';
+    dnsPrefetchLink.href = 'https://models-42r6qezjp-alexiskas-projects.vercel.app';
+    document.head.appendChild(dnsPrefetchLink);
+
     const preloadImages = () => {
       PRELOAD_IMAGES.forEach((imageUrl) => {
         const img = new Image();
@@ -81,13 +96,14 @@ const App = () => {
     };
 
     const preloadModels = () => {
-      // Добавляем prefetch для 3D моделей
+      // Добавляем prefetch для 3D моделей с высоким приоритетом
       PRELOAD_MODELS.forEach((modelUrl) => {
         const link = document.createElement('link');
         link.rel = 'prefetch';
         link.href = modelUrl;
         link.as = 'fetch';
         link.crossOrigin = 'anonymous';
+        // Vercel CDN автоматически обрабатывает Cache-Control
         document.head.appendChild(link);
         console.log(`📥 App: Добавлен prefetch для модели ${modelUrl}`);
       });

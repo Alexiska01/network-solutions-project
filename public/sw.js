@@ -1,9 +1,11 @@
 // Service Worker для агрессивного кэширования 3D моделей
-const CACHE_NAME = 'models-cache-v1';
+const CACHE_NAME = 'models-cache-v2'; // Обновили версию для очистки старого кеша
+const VERCEL_CDN = 'https://models-42r6qezjp-alexiskas-projects.vercel.app';
 const MODEL_URLS = [
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb'
+  `${VERCEL_CDN}/3530all.glb`,
+  `${VERCEL_CDN}/3730all.glb`,
+  `${VERCEL_CDN}/4530all.glb`,
+  `${VERCEL_CDN}/6010all.glb`
 ];
 
 // Установка - предзагружаем модели
@@ -37,8 +39,8 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = event.request.url;
   
-  // Если это запрос к нашим моделям
-  if (MODEL_URLS.includes(url)) {
+  // Если это запрос к нашим моделям или Vercel CDN
+  if (MODEL_URLS.includes(url) || url.startsWith(VERCEL_CDN)) {
     event.respondWith(
       caches.match(event.request)
         .then((response) => {
@@ -48,13 +50,21 @@ self.addEventListener('fetch', (event) => {
           }
           
           // Если нет в кэше, загружаем и кэширем
-          return fetch(event.request)
+          // Vercel CDN автоматически использует HTTP/2 и оптимизированную доставку
+          return fetch(event.request, {
+            // Используем высокий приоритет для моделей
+            priority: 'high',
+            // Vercel CDN поддерживает HTTP/2 Server Push
+            mode: 'cors',
+            credentials: 'omit'
+          })
             .then((response) => {
               if (response.ok) {
                 const responseClone = response.clone();
                 caches.open(CACHE_NAME)
                   .then((cache) => {
                     cache.put(event.request, responseClone);
+                    console.log('✅ Модель закэширована из CDN:', url);
                   });
               }
               return response;
@@ -64,8 +74,20 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-// Активация
+// Активация - удаляем старые кеши
 self.addEventListener('activate', (event) => {
   console.log('✅ Service Worker активирован');
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          // Удаляем старые версии кеша
+          if (cacheName !== CACHE_NAME && cacheName.startsWith('models-cache')) {
+            console.log('🗑️ Удаляю старый кеш:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
 });
