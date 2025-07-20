@@ -12,19 +12,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Preload 3D models from Vercel CDN for faster loading -->
-  <!-- Vercel CDN автоматически использует HTTP/2 и edge-кеширование -->
-  <link rel="preconnect" href="https://models-static-anummr3hg-alexiskas-projects.vercel.app" crossorigin>
-  <link rel="dns-prefetch" href="https://models-static-anummr3hg-alexiskas-projects.vercel.app">
-  
+  <!-- Preload 3D models from local public/models folder -->
   <!-- Prefetch с высоким приоритетом для первых двух моделей -->
-  <link rel="prefetch" href="https://models-static-anummr3hg-alexiskas-projects.vercel.app/3530all.glb" as="fetch" crossorigin="anonymous" fetchpriority="high">
-  <link rel="prefetch" href="https://models-static-anummr3hg-alexiskas-projects.vercel.app/3730all.glb" as="fetch" crossorigin="anonymous" fetchpriority="high">
-  <link rel="prefetch" href="https://models-static-anummr3hg-alexiskas-projects.vercel.app/4530all.glb" as="fetch" crossorigin="anonymous">
-  <link rel="prefetch" href="https://models-static-anummr3hg-alexiskas-projects.vercel.app/6010all.glb" as="fetch" crossorigin="anonymous">
+  <link rel="prefetch" href="/models/3530all.glb" as="fetch" fetchpriority="high">
+  <link rel="prefetch" href="/models/3730all.glb" as="fetch" fetchpriority="high">
+  <link rel="prefetch" href="/models/4530all.glb" as="fetch">
+  <link rel="prefetch" href="/models/6010all.glb" as="fetch">
   
-  <!-- HTTP/2 Server Push подсказка для Vercel -->
-  <link rel="preload" href="https://models-static-anummr3hg-alexiskas-projects.vercel.app/3530all.glb" as="fetch" crossorigin="anonymous">
+  <!-- Preload для первой модели -->
+  <link rel="preload" href="/models/3530all.glb" as="fetch">
   <meta property="og:title" content="Поехали!">
   <meta property="og:description" content="Ваш личный программист, который делает сайты в 30 раз быстрее обычного.">
   <meta property="og:image:width" content="4800">

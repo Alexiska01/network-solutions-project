@@ -66,27 +66,16 @@ const PRELOAD_IMAGES = [
 
 // 3D модели для предварительной загрузки
 const PRELOAD_MODELS = [
-  "https://models-static-anummr3hg-alexiskas-projects.vercel.app/3530all.glb",
-  "https://models-static-anummr3hg-alexiskas-projects.vercel.app/3730all.glb",
-  "https://models-static-anummr3hg-alexiskas-projects.vercel.app/4530all.glb",
-  "https://models-static-anummr3hg-alexiskas-projects.vercel.app/6010all.glb",
+  "/models/3530all.glb",
+  "/models/3730all.glb",
+  "/models/4530all.glb",
+  "/models/6010all.glb",
 ];
 
 const App = () => {
   // Предварительная загрузка всех изображений и моделей
   useEffect(() => {
-    // Добавляем preconnect для Vercel CDN
-    const preconnectLink = document.createElement('link');
-    preconnectLink.rel = 'preconnect';
-    preconnectLink.href = 'https://models-static-anummr3hg-alexiskas-projects.vercel.app';
-    preconnectLink.crossOrigin = 'anonymous';
-    document.head.appendChild(preconnectLink);
-    
-    // DNS prefetch для быстрого разрешения домена
-    const dnsPrefetchLink = document.createElement('link');
-    dnsPrefetchLink.rel = 'dns-prefetch';
-    dnsPrefetchLink.href = 'https://models-static-anummr3hg-alexiskas-projects.vercel.app';
-    document.head.appendChild(dnsPrefetchLink);
+    // Модели теперь локальные, preconnect не нужен
 
     const preloadImages = () => {
       PRELOAD_IMAGES.forEach((imageUrl) => {
