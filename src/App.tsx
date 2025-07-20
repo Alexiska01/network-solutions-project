@@ -66,10 +66,10 @@ const PRELOAD_IMAGES = [
 
 // 3D модели для предварительной загрузки
 const PRELOAD_MODELS = [
-  "https://models-42r6qezjp-alexiskas-projects.vercel.app/3530all.glb",
-  "https://models-42r6qezjp-alexiskas-projects.vercel.app/3730all.glb",
-  "https://models-42r6qezjp-alexiskas-projects.vercel.app/4530all.glb",
-  "https://models-42r6qezjp-alexiskas-projects.vercel.app/6010all.glb",
+  "https://models-8xe5jm3g1-alexiskas-projects.vercel.app/3530all.glb",
+  "https://models-8xe5jm3g1-alexiskas-projects.vercel.app/3730all.glb",
+  "https://models-8xe5jm3g1-alexiskas-projects.vercel.app/4530all.glb",
+  "https://models-8xe5jm3g1-alexiskas-projects.vercel.app/6010all.glb",
 ];
 
 const App = () => {
@@ -78,14 +78,14 @@ const App = () => {
     // Добавляем preconnect для Vercel CDN
     const preconnectLink = document.createElement('link');
     preconnectLink.rel = 'preconnect';
-    preconnectLink.href = 'https://models-42r6qezjp-alexiskas-projects.vercel.app';
+    preconnectLink.href = 'https://models-8xe5jm3g1-alexiskas-projects.vercel.app';
     preconnectLink.crossOrigin = 'anonymous';
     document.head.appendChild(preconnectLink);
     
     // DNS prefetch для быстрого разрешения домена
     const dnsPrefetchLink = document.createElement('link');
     dnsPrefetchLink.rel = 'dns-prefetch';
-    dnsPrefetchLink.href = 'https://models-42r6qezjp-alexiskas-projects.vercel.app';
+    dnsPrefetchLink.href = 'https://models-8xe5jm3g1-alexiskas-projects.vercel.app';
     document.head.appendChild(dnsPrefetchLink);
 
     const preloadImages = () => {
