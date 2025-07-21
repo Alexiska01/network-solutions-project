@@ -207,7 +207,7 @@ const ProductHero = () => {
           setCurrentIndex(nextIndex);
           setIsTransitioning(false);
         }, isMobile ? 100 : 300);
-      }, 7000);
+      }, 11000);
       
       intervalRef.current = interval;
       return () => clearInterval(interval);
