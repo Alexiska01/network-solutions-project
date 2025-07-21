@@ -19,75 +19,35 @@ export class ModelCache {
    */
   static async isCacheValid(): Promise<boolean> {
     try {
-      console.log('🔍 ModelCache: Проверяем действительность кэша...');
-      
-      // Быстрая проверка localStorage
       const expiryTime = localStorage.getItem(this.CACHE_EXPIRY_KEY);
       const cacheStatus = localStorage.getItem(this.CACHE_STATUS_KEY);
       
-      if (!expiryTime || !cacheStatus) {
-        console.log('📋 ModelCache: Метаданные кэша отсутствуют');
+      if (!expiryTime || !cacheStatus || cacheStatus !== 'complete') {
         return false;
       }
 
-      if (cacheStatus !== 'complete') {
-        console.log(`📋 ModelCache: Статус кэша: ${cacheStatus} (не завершён)`);
-        if (cacheStatus === 'loading') {
-          // Если кэш в процессе загрузки, считаем его недействительным
-          console.log('⏳ ModelCache: Кэш в процессе загрузки');
-        }
-        return false;
-      }
-
-      // Проверка истечения срока
       const now = Date.now();
       const expiry = parseInt(expiryTime);
       if (now > expiry) {
-        const daysExpired = Math.ceil((now - expiry) / (24 * 60 * 60 * 1000));
-        console.log(`⏰ ModelCache: Кэш истёк ${daysExpired} дней назад`);
         await this.clearCache();
         return false;
       }
 
-      // Проверка наличия Cache API
-      if (!('caches' in window)) {
-        console.log('❌ ModelCache: Cache API не поддерживается браузером');
-        return false;
-      }
-
-      // Быстрая проверка наличия всех моделей в кэше
+      // Быстрая проверка без подробного логирования
       const cache = await caches.open(this.CACHE_NAME);
       const cachedRequests = await cache.keys();
       
-      if (cachedRequests.length === 0) {
-        console.log('📋 ModelCache: Кэш пуст');
-        await this.clearCache();
-        return false;
-      }
-      
-      // Проверяем, что все модели закэшированы
-      const cachedUrls = cachedRequests.map(req => new URL(req.url).pathname);
-      const missingModels = this.MODEL_URLS.filter(url => 
-        !cachedUrls.some(cachedUrl => cachedUrl === url)
-      );
-
-      if (missingModels.length > 0) {
-        console.log(`📋 ModelCache: Отсутствуют модели: ${missingModels.join(', ')}`);
-        // Частично испорченный кэш - очищаем полностью
+      if (cachedRequests.length < this.MODEL_URLS.length) {
         await this.clearCache();
         return false;
       }
 
-      const daysLeft = Math.ceil((expiry - now) / (24 * 60 * 60 * 1000));
-      console.log(`✅ ModelCache: Кэш действителен (${cachedRequests.length} моделей, осталось ${daysLeft} дней)`);
       return true;
     } catch (error) {
-      console.error('❌ ModelCache: Ошибка проверки кэша:', error);
-      // При любой ошибке очищаем возможно испорченный кэш
       try {
         await this.clearCache();
       } catch (clearError) {
-        console.error('❌ ModelCache: Ошибка очистки испорченного кэша:', clearError);
+        // ignore
       }
       return false;
     }
@@ -98,9 +58,6 @@ export class ModelCache {
    */
   static async cacheModels(onProgress?: (progress: number) => void): Promise<void> {
     try {
-      console.log('🚀 ModelCache: Начинаем кэширование моделей');
-      
-      // Устанавливаем статус "загружается"
       localStorage.setItem(this.CACHE_STATUS_KEY, 'loading');
 
       if (!('caches' in window)) {
@@ -110,48 +67,31 @@ export class ModelCache {
       const cache = await caches.open(this.CACHE_NAME);
       let completedCount = 0;
 
-      // Параллельная загрузка моделей с ограничением
-      const batchSize = 2; // Загружаем по 2 модели одновременно
-      
-      for (let i = 0; i < this.MODEL_URLS.length; i += batchSize) {
-        const batch = this.MODEL_URLS.slice(i, i + batchSize);
-        
-        await Promise.all(batch.map(async (modelUrl) => {
-          try {
-            console.log(`📦 ModelCache: Загружаем ${modelUrl}`);
-            
-            // Загружаем модель
-            const response = await fetch(modelUrl, {
-              cache: 'no-cache' // Принудительная загрузка для кэширования
-            });
+      for (const modelUrl of this.MODEL_URLS) {
+        try {
+          const response = await fetch(modelUrl, {
+            cache: 'no-cache'
+          });
 
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}`);
-            }
-
-            // Кэшируем response
-            await cache.put(modelUrl, response.clone());
-            
-            completedCount++;
-            const progress = (completedCount / this.MODEL_URLS.length) * 100;
-            onProgress?.(progress);
-            
-            console.log(`✅ ModelCache: ${modelUrl} закэширован (${Math.round(progress)}%)`);
-          } catch (error) {
-            console.error(`❌ ModelCache: Ошибка кэширования ${modelUrl}:`, error);
-            throw error;
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
           }
-        }));
+
+          await cache.put(modelUrl, response.clone());
+          
+          completedCount++;
+          const progress = (completedCount / this.MODEL_URLS.length) * 100;
+          onProgress?.(progress);
+        } catch (error) {
+          throw error;
+        }
       }
 
       // Устанавливаем время истечения кэша (1 год)
       const expiryTime = Date.now() + this.ONE_YEAR_MS;
       localStorage.setItem(this.CACHE_EXPIRY_KEY, expiryTime.toString());
       localStorage.setItem(this.CACHE_STATUS_KEY, 'complete');
-      
-      console.log('🎉 ModelCache: Все модели успешно закэшированы на 1 год');
     } catch (error) {
-      console.error('❌ ModelCache: Ошибка кэширования:', error);
       localStorage.setItem(this.CACHE_STATUS_KEY, 'error');
       throw error;
     }
@@ -162,86 +102,34 @@ export class ModelCache {
    */
   static async clearCache(): Promise<void> {
     try {
-      console.log('🧹 ModelCache: Очищаем кэш');
-      
-      // Очищаем Cache API
       if ('caches' in window) {
         await caches.delete(this.CACHE_NAME);
       }
-      
-      // Очищаем localStorage
       localStorage.removeItem(this.CACHE_EXPIRY_KEY);
       localStorage.removeItem(this.CACHE_STATUS_KEY);
-      
-      console.log('✅ ModelCache: Кэш очищен');
     } catch (error) {
-      console.error('❌ ModelCache: Ошибка очистки кэша:', error);
+      // ignore
     }
   }
 
   /**
-   * Получает статус кэша
+   * Получает кэшированную модель или null если нет в кэше
    */
-  static getCacheStatus(): 'none' | 'loading' | 'complete' | 'error' {
-    const status = localStorage.getItem(this.CACHE_STATUS_KEY);
-    return (status as any) || 'none';
-  }
-
-  /**
-   * Получает URL модели из кэша или оригинальный URL
-   */
-  static async getModelUrl(originalUrl: string): Promise<string> {
+  static async getCachedModel(modelUrl: string): Promise<string | null> {
     try {
-      if ('caches' in window) {
-        const cache = await caches.open(this.CACHE_NAME);
-        const cachedResponse = await cache.match(originalUrl);
-        
-        if (cachedResponse) {
-          // Возвращаем cached blob URL для лучшей производительности
-          const blob = await cachedResponse.blob();
-          return URL.createObjectURL(blob);
-        }
+      if (!('caches' in window)) return null;
+      
+      const cache = await caches.open(this.CACHE_NAME);
+      const response = await cache.match(modelUrl);
+      
+      if (response) {
+        const blob = await response.blob();
+        return URL.createObjectURL(blob);
       }
       
-      // Если нет в кэше, возвращаем оригинальный URL
-      return originalUrl;
+      return null;
     } catch (error) {
-      console.error('❌ ModelCache: Ошибка получения модели из кэша:', error);
-      return originalUrl;
+      return null;
     }
-  }
-
-  /**
-   * Получает информацию о кэше для отладки
-   */
-  static async getCacheInfo(): Promise<{
-    isValid: boolean;
-    status: string;
-    expiryDate: string | null;
-    cachedModels: string[];
-  }> {
-    const isValid = await this.isCacheValid();
-    const status = this.getCacheStatus();
-    const expiryTime = localStorage.getItem(this.CACHE_EXPIRY_KEY);
-    const expiryDate = expiryTime ? new Date(parseInt(expiryTime)).toISOString() : null;
-    
-    let cachedModels: string[] = [];
-    
-    try {
-      if ('caches' in window) {
-        const cache = await caches.open(this.CACHE_NAME);
-        const requests = await cache.keys();
-        cachedModels = requests.map(req => new URL(req.url).pathname);
-      }
-    } catch (error) {
-      console.error('❌ ModelCache: Ошибка получения информации о кэше:', error);
-    }
-
-    return {
-      isValid,
-      status,
-      expiryDate,
-      cachedModels
-    };
   }
 }
