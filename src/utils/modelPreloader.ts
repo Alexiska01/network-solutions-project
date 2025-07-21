@@ -16,12 +16,12 @@ export class ModelPreloader {
   }
   
   private setupPriorityQueue() {
-    // Модели загружаются в порядке важности для пользователя
+    // Модели загружаются с равными приоритетами для устранения проблем с 4530 и 6010
     const modelPriorities = [
-      { url: '/models/3530all.glb', priority: 10 }, // Самая популярная модель
-      { url: '/models/3730all.glb', priority: 9 },
-      { url: '/models/4530all.glb', priority: 8 },
-      { url: '/models/6010all.glb', priority: 7 }
+      { url: '/models/3530all.glb', priority: 10 }, // Самая популярная модель  
+      { url: '/models/3730all.glb', priority: 10 }, // Равный приоритет
+      { url: '/models/4530all.glb', priority: 10 }, // Повышенный приоритет
+      { url: '/models/6010all.glb', priority: 10 }  // Повышенный приоритет
     ];
     
     // Добавляем в очередь с приоритетами

@@ -111,15 +111,32 @@ const ProductHero = () => {
       // Предзагружаем текущую и следующую модели
       const currentModel = heroData[currentIndex];
       
+      console.log(`🔍 ProductHero DEBUG: Модель ${currentModel.series} (${currentModel.modelUrl})`);
+      console.log(`🔍 ModelPreloader состояние: ${modelPreloader.isLoaded(currentModel.modelUrl)}`);
+      console.log(`🔍 UI состояние: ${modelLoadStatus[currentModel.modelUrl]}`);
+      
+      // Для моделей 4530 и 6010 - принудительная синхронизация состояния
+      if (currentModel.series === '4530' || currentModel.series === '6010') {
+        console.log(`🔧 ProductHero: Принудительная инициализация для модели ${currentModel.series}`);
+        // Устанавливаем загрузку модели НЕМЕДЛЕННО для этих моделей
+        setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
+        console.log(`✅ ProductHero: Форсированная установка состояния для ${currentModel.series} - НЕМЕДЛЕННО`);
+      }
+
       // Если модель уже загружена в modelPreloader, обновляем modelLoadStatus
       if (modelPreloader.isLoaded(currentModel.modelUrl)) {
+        console.log(`✅ ProductHero: Модель ${currentModel.series} уже предзагружена, синхронизируем UI`);
         setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
         preloadNextModel();
       } else {
+        console.log(`⏳ ProductHero: Начинаем предзагрузку модели ${currentModel.series}`);
         // Начинаем загрузку
         modelPreloader.preloadModel(currentModel.modelUrl, 'high').then(() => {
+          console.log(`✅ ProductHero: Модель ${currentModel.series} предзагружена через ModelPreloader`);
           setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
           preloadNextModel();
+        }).catch(error => {
+          console.error(`❌ ProductHero: Ошибка предзагрузки модели ${currentModel.series}:`, error);
         });
       }
     }
@@ -178,7 +195,16 @@ const ProductHero = () => {
         }
         
         setTimeout(() => {
-          setCurrentIndex(prev => (prev + 1) % heroData.length);
+          const nextIndex = (currentIndex + 1) % heroData.length;
+          const nextModel = heroData[nextIndex];
+          
+          // Принудительная синхронизация для проблемных моделей
+          if (nextModel.series === '4530' || nextModel.series === '6010') {
+            console.log(`🔧 ProductHero: Принудительная синхронизация при переходе к ${nextModel.series}`);
+            setModelLoadStatus(prev => ({ ...prev, [nextModel.modelUrl]: true }));
+          }
+          
+          setCurrentIndex(nextIndex);
           setIsTransitioning(false);
         }, isMobile ? 100 : 300);
       }, 7000);
@@ -468,6 +494,12 @@ const ProductHero = () => {
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
                   <div className="w-full h-full relative">
+                    {/* DEBUG: Логируем состояния */}
+                    {(() => {
+                      console.log(`🔍 ProductHero RENDER: ${currentData.series} - UI: ${modelLoadStatus[currentData.modelUrl]}, Preloader: ${modelPreloader.isLoaded(currentData.modelUrl)}, showLoader: ${!modelLoadStatus[currentData.modelUrl]}`);
+                      return null;
+                    })()}
+                    
                     {/* Лоадер показывается только если модель не отображена в UI */}
                     {!modelLoadStatus[currentData.modelUrl] && (
                       <div className="absolute inset-0 flex items-center justify-center z-10">
