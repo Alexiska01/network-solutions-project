@@ -181,11 +181,10 @@ const ProductHero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [isMobile]);
 
-  // Автоматическая смена слайдов каждые 11 секунд с плавными переходами
+  // Автоматическая смена слайдов каждые 7 секунд
   useEffect(() => {
     if (!showWelcome) {
       const interval = setInterval(() => {
-        // Начинаем плавный переход
         setIsTransitioning(true);
         
         // Предзагружаем модель за 2 слайда вперед
@@ -195,7 +194,6 @@ const ProductHero = () => {
           modelPreloader.preloadModel(nextNextModel.modelUrl, 'low');
         }
         
-        // Увеличиваем время для более плавного перехода
         setTimeout(() => {
           const nextIndex = (currentIndex + 1) % heroData.length;
           const nextModel = heroData[nextIndex];
@@ -207,12 +205,8 @@ const ProductHero = () => {
           }
           
           setCurrentIndex(nextIndex);
-          
-          // Завершаем переход через дополнительную задержку для плавности
-          setTimeout(() => {
-            setIsTransitioning(false);
-          }, isMobile ? 200 : 400);
-        }, isMobile ? 300 : 600);
+          setIsTransitioning(false);
+        }, isMobile ? 100 : 300);
       }, 11000);
       
       intervalRef.current = interval;
@@ -251,20 +245,12 @@ const ProductHero = () => {
         delay: 0.2
       }}
       className="relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
-      style={{
-        willChange: 'transform, opacity',
-        backfaceVisibility: 'hidden',
-        perspective: '1000px',
-        transformStyle: 'preserve-3d'
-      }}
     >
       {/* Динамический фоновый градиент */}
       <div 
         className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 transition-all duration-1000 ease-out`}
         style={{
           transform: !isMobile ? `scale(${1 + Math.abs(mousePosition.x) * 0.05})` : 'none',
-          willChange: 'transform',
-          backfaceVisibility: 'hidden'
         }}
       />
       
@@ -542,7 +528,6 @@ const ProductHero = () => {
                         interaction-prompt="none"
                         loading="eager"
                         reveal="auto"
-                        interpolation-decay="100"
                         style={{
                           width: '100%',
                           height: '100%',
@@ -550,11 +535,7 @@ const ProductHero = () => {
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
                           '--progress-mask': 'transparent',
-                          pointerEvents: 'none',
-                          willChange: 'transform',
-                          backfaceVisibility: 'hidden',
-                          perspective: '1000px',
-                          transformStyle: 'preserve-3d'
+                          pointerEvents: 'none'
                         }}
                         onLoad={() => {
                           console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
@@ -584,19 +565,13 @@ const ProductHero = () => {
                         interaction-prompt="none"
                         loading="eager"
                         reveal="auto"
-                        interpolation-decay="100"
-                        tone-mapping="commerce"
                         style={{
                           width: '100%',
                           height: '100%',
                           background: 'transparent',
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
-                          '--progress-mask': 'transparent',
-                          willChange: 'transform',
-                          backfaceVisibility: 'hidden',
-                          perspective: '1000px',
-                          transformStyle: 'preserve-3d'
+                          '--progress-mask': 'transparent'
                         }}
                         onLoad={() => {
                           console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
