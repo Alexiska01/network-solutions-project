@@ -81,9 +81,7 @@ const ProductHero = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [showSwipeHint, setShowSwipeHint] = useState(true);
+
   const preloadedViewers = useRef<Map<string, any>>(new Map());
 
   // Отслеживание размера экрана
@@ -163,7 +161,7 @@ const ProductHero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [isMobile]);
 
-  // Автоматическая смена слайдов с оптимизацией
+  // Автоматическая смена слайдов каждые 7 секунд
   useEffect(() => {
     if (!showWelcome) {
       const interval = setInterval(() => {
@@ -180,7 +178,7 @@ const ProductHero = () => {
           setCurrentIndex(prev => (prev + 1) % heroData.length);
           setIsTransitioning(false);
         }, isMobile ? 100 : 300);
-      }, 8000);
+      }, 7000);
       
       intervalRef.current = interval;
       return () => clearInterval(interval);
@@ -194,57 +192,7 @@ const ProductHero = () => {
     setShowWelcome(false);
   };
 
-  // Свайп обработчики для мобильных
-  const minSwipeDistance = 50;
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe || isRightSwipe) {
-      // Haptic feedback для iOS
-      if ('vibrate' in navigator) {
-        navigator.vibrate(10);
-      }
-      
-      setShowSwipeHint(false);
-      setIsTransitioning(true);
-      
-      // Сброс автоматической смены
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      
-      setTimeout(() => {
-        if (isLeftSwipe) {
-          setCurrentIndex((prev) => (prev + 1) % heroData.length);
-        } else {
-          setCurrentIndex((prev) => (prev - 1 + heroData.length) % heroData.length);
-        }
-        setIsTransitioning(false);
-        
-        // Перезапуск автоматической смены
-        const newInterval = setInterval(() => {
-          setIsTransitioning(true);
-          setTimeout(() => {
-            setCurrentIndex(prev => (prev + 1) % heroData.length);
-            setIsTransitioning(false);
-          }, 100);
-        }, 8000);
-        intervalRef.current = newInterval;
-      }, 100);
-    }
-  };
 
   if (showWelcome) {
     return <WelcomeScreen onComplete={handleWelcomeComplete} />;
@@ -268,9 +216,6 @@ const ProductHero = () => {
         delay: 0.2
       }}
       className="relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
-      onTouchStart={isMobile ? onTouchStart : undefined}
-      onTouchMove={isMobile ? onTouchMove : undefined}
-      onTouchEnd={isMobile ? onTouchEnd : undefined}
     >
       {/* Динамический фоновый градиент */}
       <div 
@@ -520,12 +465,12 @@ const ProductHero = () => {
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
                   <div className="w-full h-full relative">
-                    {/* Индикатор загрузки */}
-                    {!modelLoadStatus[currentData.modelUrl] && (
+                    {/* Индикатор загрузки только для незагруженных моделей */}
+                    {!modelPreloader.isLoaded(currentData.modelUrl) && !modelLoadStatus[currentData.modelUrl] && (
                       <div className="absolute inset-0 flex items-center justify-center z-10">
                         <div className="flex flex-col items-center gap-4">
                           <div className="w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full animate-spin" />
-                          <p className="text-white/60 text-sm">Загрузка модели {currentData.series}...</p>
+                          <p className="text-white/60 text-sm">Загрузка 3D модели...</p>
                         </div>
                       </div>
                     )}
@@ -622,20 +567,7 @@ const ProductHero = () => {
         </div>
       </div>
 
-      {/* Индикатор свайпа для мобильных */}
-      {isMobile && showSwipeHint && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ delay: 2, duration: 0.5 }}
-          className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 text-white/40 text-[13px] bg-white/5 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10"
-        >
-          <Icon name="ChevronLeft" size={16} />
-          <span>Свайпните для переключения</span>
-          <Icon name="ChevronRight" size={16} />
-        </motion.div>
-      )}
+
 
       {/* Переходные эффекты */}
       {isTransitioning && !isMobile && (
