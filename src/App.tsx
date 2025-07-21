@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import ProductHero from "./components/ProductHero";
+import { CacheDebug } from "./utils/cacheDebug";
 
 // Инициализируем model-viewer как можно раньше
 if (typeof window !== 'undefined' && !customElements.get('model-viewer')) {
@@ -104,6 +105,9 @@ const App = () => {
     // Запускаем загрузку сразу после монтирования компонента
     preloadImages();
     preloadModels();
+    
+    // Инициализируем отладочные функции для кэша (только в dev режиме)
+    CacheDebug.addGlobalDebugFunctions();
   }, []);
 
   return (

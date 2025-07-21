@@ -82,6 +82,7 @@ const ProductHero = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
+  const [cachedModelUrls, setCachedModelUrls] = useState<Record<string, string>>({});
 
   const preloadedViewers = useRef<Map<string, any>>(new Map());
 
@@ -99,47 +100,79 @@ const ProductHero = () => {
   // Интеллектуальная предзагрузка моделей
   useEffect(() => {
     if (!showWelcome) {
-      // Предзагружаем следующую модель заранее
-      const preloadNextModel = () => {
+      // Предзагружаем следующую модель заранее с учётом кэша
+      const preloadNextModel = async () => {
         const nextIndex = (currentIndex + 1) % heroData.length;
         const nextModel = heroData[nextIndex];
         
+        // Сначала проверяем ModelCache
+        try {
+          const cachedUrl = await ModelCache.getModelUrl(nextModel.modelUrl);
+          if (cachedUrl !== nextModel.modelUrl) {
+            console.log(`📦 ProductHero: Следующая модель ${nextModel.series} доступна из кэша`);
+            return; // Модель уже в кэше, предзагрузка не нужна
+          }
+        } catch (error) {
+          console.error(`❌ ProductHero: Ошибка получения модели из кэша:`, error);
+        }
+        
+        // Fallback к обычной предзагрузке если нет в кэше
         if (!modelPreloader.isLoaded(nextModel.modelUrl)) {
           modelPreloader.preloadModel(nextModel.modelUrl, 'high');
         }
       };
       
-      // Предзагружаем текущую и следующую модели
+      // Загружаем текущую модель с учётом кэша
       const currentModel = heroData[currentIndex];
       
       console.log(`🔍 ProductHero DEBUG: Модель ${currentModel.series} (${currentModel.modelUrl})`);
       console.log(`🔍 ModelPreloader состояние: ${modelPreloader.isLoaded(currentModel.modelUrl)}`);
       console.log(`🔍 UI состояние: ${modelLoadStatus[currentModel.modelUrl]}`);
       
-      // Для моделей 4530 и 6010 - принудительная синхронизация состояния
-      if (currentModel.series === '4530' || currentModel.series === '6010') {
-        console.log(`🔧 ProductHero: Принудительная инициализация для модели ${currentModel.series}`);
-        // Устанавливаем загрузку модели НЕМЕДЛЕННО для этих моделей
-        setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
-        console.log(`✅ ProductHero: Форсированная установка состояния для ${currentModel.series} - НЕМЕДЛЕННО`);
-      }
+      const loadCurrentModel = async () => {
+        // Проверяем, есть ли модель в кэше
+        try {
+          const cachedUrl = await ModelCache.getModelUrl(currentModel.modelUrl);
+          if (cachedUrl !== currentModel.modelUrl) {
+            console.log(`📦 ProductHero: Модель ${currentModel.series} загружена из кэша`);
+            // Сохраняем кэшированный URL для использования в model-viewer
+            setCachedModelUrls(prev => ({ ...prev, [currentModel.modelUrl]: cachedUrl }));
+            // Если модель в кэше, сразу помечаем как загруженную
+            setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
+            preloadNextModel();
+            return;
+          }
+        } catch (error) {
+          console.error(`❌ ProductHero: Ошибка получения модели из кэша:`, error);
+        }
 
-      // Если модель уже загружена в modelPreloader, обновляем modelLoadStatus
-      if (modelPreloader.isLoaded(currentModel.modelUrl)) {
-        console.log(`✅ ProductHero: Модель ${currentModel.series} уже предзагружена, синхронизируем UI`);
-        setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
-        preloadNextModel();
-      } else {
-        console.log(`⏳ ProductHero: Начинаем предзагрузку модели ${currentModel.series}`);
-        // Начинаем загрузку
-        modelPreloader.preloadModel(currentModel.modelUrl, 'high').then(() => {
-          console.log(`✅ ProductHero: Модель ${currentModel.series} предзагружена через ModelPreloader`);
+        // Для моделей 4530 и 6010 - принудительная синхронизация состояния
+        if (currentModel.series === '4530' || currentModel.series === '6010') {
+          console.log(`🔧 ProductHero: Принудительная инициализация для модели ${currentModel.series}`);
+          // Устанавливаем загрузку модели НЕМЕДЛЕННО для этих моделей
+          setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
+          console.log(`✅ ProductHero: Форсированная установка состояния для ${currentModel.series} - НЕМЕДЛЕННО`);
+        }
+
+        // Если модель уже загружена в modelPreloader, обновляем modelLoadStatus
+        if (modelPreloader.isLoaded(currentModel.modelUrl)) {
+          console.log(`✅ ProductHero: Модель ${currentModel.series} уже предзагружена, синхронизируем UI`);
           setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
           preloadNextModel();
-        }).catch(error => {
-          console.error(`❌ ProductHero: Ошибка предзагрузки модели ${currentModel.series}:`, error);
-        });
-      }
+        } else {
+          console.log(`⏳ ProductHero: Начинаем предзагрузку модели ${currentModel.series}`);
+          // Начинаем загрузку
+          modelPreloader.preloadModel(currentModel.modelUrl, 'high').then(() => {
+            console.log(`✅ ProductHero: Модель ${currentModel.series} предзагружена через ModelPreloader`);
+            setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
+            preloadNextModel();
+          }).catch(error => {
+            console.error(`❌ ProductHero: Ошибка предзагрузки модели ${currentModel.series}:`, error);
+          });
+        }
+      };
+      
+      loadCurrentModel();
     }
   }, [currentIndex, showWelcome]);
 
@@ -504,7 +537,7 @@ const ProductHero = () => {
                     {isMobile ? (
                       <model-viewer
                         ref={modelRef}
-                        src={currentData.modelUrl}
+                        src={cachedModelUrls[currentData.modelUrl] || currentData.modelUrl}
                         alt={currentData.title}
                         auto-rotate
                         auto-rotate-delay="0"
@@ -540,7 +573,7 @@ const ProductHero = () => {
                     ) : (
                       <model-viewer
                         ref={modelRef}
-                        src={currentData.modelUrl}
+                        src={cachedModelUrls[currentData.modelUrl] || currentData.modelUrl}
                         alt={currentData.title}
                         auto-rotate
                         auto-rotate-delay="0"

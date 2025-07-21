@@ -26,19 +26,34 @@ const Index = () => {
   // Проверяем кэш при загрузке страницы
   useEffect(() => {
     const checkCache = async () => {
+      const startTime = performance.now();
+      
       try {
-        console.log('🔍 Index: Проверяем кэш моделей');
+        console.log('🔍 Index: Проверяем кэш моделей при загрузке страницы');
+        
+        // Быстрая предварительная проверка localStorage
+        const cacheStatus = ModelCache.getCacheStatus();
+        if (cacheStatus === 'none' || cacheStatus === 'error') {
+          console.log(`❌ Index: Предварительная проверка - статус: ${cacheStatus}`);
+          setShowWelcomeScreen(true);
+          setIsCheckingCache(false);
+          return;
+        }
+
+        // Полная проверка кэша
         const isCacheValid = await ModelCache.isCacheValid();
+        const checkTime = Math.round(performance.now() - startTime);
         
         if (!isCacheValid) {
-          console.log('❌ Index: Кэш недействителен, показываем WelcomeScreen');
+          console.log(`❌ Index: Кэш недействителен (проверка ${checkTime}мс), показываем WelcomeScreen`);
           setShowWelcomeScreen(true);
         } else {
-          console.log('✅ Index: Кэш действителен, пропускаем WelcomeScreen');
+          console.log(`✅ Index: Кэш действителен (проверка ${checkTime}мс), пропускаем WelcomeScreen`);
           setShowWelcomeScreen(false);
         }
       } catch (error) {
-        console.error('❌ Index: Ошибка проверки кэша:', error);
+        const checkTime = Math.round(performance.now() - startTime);
+        console.error(`❌ Index: Ошибка проверки кэша (${checkTime}мс):`, error);
         // При ошибке показываем WelcomeScreen для безопасности
         setShowWelcomeScreen(true);
       } finally {
