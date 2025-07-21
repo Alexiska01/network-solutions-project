@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import { modelPreloader } from '@/utils/modelPreloader';
+import { ModelCache } from '@/utils/modelCache';
 
 import WelcomeScreen from '@/components/WelcomeScreen';
 

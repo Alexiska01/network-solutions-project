@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWelcomePreloader } from '@/hooks/useWelcomePreloader';
 import { modelPreloader } from '@/utils/modelPreloader';
+import { ModelCache } from '@/utils/modelCache';
 
 interface WelcomeScreenProps {
   onComplete: () => void;
@@ -67,36 +68,51 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   
-  const preloadModels = useCallback(() => {
+  const preloadModels = useCallback(async () => {
     const modelUrls = heroData.map(item => item.modelUrl);
-    console.log('🚀 WelcomeScreen: Начинаем оптимизированную предзагрузку моделей');
+    console.log('🚀 WelcomeScreen: Начинаем кэширование моделей через ModelCache');
     
-    const preloadContainer = document.createElement('div');
-    preloadContainer.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;';
-    document.body.appendChild(preloadContainer);
-    
-    modelUrls.slice(0, 2).forEach((url, index) => {
-      const viewer = document.createElement('model-viewer') as any;
-      viewer.src = url;
-      viewer.loading = 'eager';
-      viewer.reveal = 'immediate';
-      viewer.style.cssText = 'width:100%;height:100%;';
-      viewer.setAttribute('cache-model', 'true');
-      
-      viewer.addEventListener('load', () => {
-        console.log(`✅ WelcomeScreen: Модель ${index + 1} загружена`);
+    try {
+      // Используем ModelCache для кэширования моделей на 1 год
+      await ModelCache.cacheModels((progress) => {
+        console.log(`📦 WelcomeScreen: Прогресс кэширования: ${Math.round(progress)}%`);
+        // Обновляем прогресс через существующую систему
       });
       
-      preloadContainer.appendChild(viewer);
-    });
-    
-    modelPreloader.preloadMultiple(modelUrls, 2);
-    
-    return () => {
-      setTimeout(() => {
-        preloadContainer.remove();
-      }, 30000);
-    };
+      console.log('✅ WelcomeScreen: Все модели закэшированы через ModelCache');
+    } catch (error) {
+      console.error('❌ WelcomeScreen: Ошибка кэширования через ModelCache:', error);
+      
+      // Fallback к старому методу предзагрузки если кэширование не удалось
+      console.log('🔄 WelcomeScreen: Переключаемся на fallback предзагрузку');
+      
+      const preloadContainer = document.createElement('div');
+      preloadContainer.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;';
+      document.body.appendChild(preloadContainer);
+      
+      modelUrls.slice(0, 2).forEach((url, index) => {
+        const viewer = document.createElement('model-viewer') as any;
+        viewer.src = url;
+        viewer.loading = 'eager';
+        viewer.reveal = 'immediate';
+        viewer.style.cssText = 'width:100%;height:100%;';
+        viewer.setAttribute('cache-model', 'true');
+        
+        viewer.addEventListener('load', () => {
+          console.log(`✅ WelcomeScreen: Fallback модель ${index + 1} загружена`);
+        });
+        
+        preloadContainer.appendChild(viewer);
+      });
+      
+      modelPreloader.preloadMultiple(modelUrls, 2);
+      
+      return () => {
+        setTimeout(() => {
+          preloadContainer.remove();
+        }, 30000);
+      };
+    }
   }, [heroData]);
 
   useEffect(() => {
