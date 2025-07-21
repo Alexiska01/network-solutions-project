@@ -2,9 +2,11 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWelcomePreloader } from '@/hooks/useWelcomePreloader';
 import { modelPreloader } from '@/utils/modelPreloader';
+import { useActivityTracker } from '@/hooks/useActivityTracker';
 
 interface WelcomeScreenProps {
-  onComplete: () => void;
+  onComplete?: () => void;
+  forceShow?: boolean;
 }
 
 interface LoadingStage {
@@ -54,7 +56,15 @@ const TypewriterText = React.memo(({ text }: { text: string }) => {
 
 TypewriterText.displayName = 'TypewriterText';
 
-const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
+const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = false }) => {
+  const { shouldShowWelcome, markWelcomeAsShown } = useActivityTracker();
+  const [isVisible, setIsVisible] = useState(forceShow);
+
+  useEffect(() => {
+    if (!forceShow) {
+      setIsVisible(shouldShowWelcome);
+    }
+  }, [shouldShowWelcome, forceShow]);
   const heroData = useMemo(() => [
     { modelUrl: '/models/3530all.glb' },
     { modelUrl: '/models/3730all.glb' },
@@ -117,12 +127,19 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
       console.log('✅ WelcomeScreen: Загрузка завершена, запускаем выход');
       setIsComplete(true);
       setIsExiting(true);
+      
+      // Отмечаем что welcome screen был показан
+      if (!forceShow) {
+        markWelcomeAsShown();
+      }
+      
       setTimeout(() => {
         console.log('🚀 WelcomeScreen: Вызываем onComplete');
-        onComplete();
+        setIsVisible(false);
+        onComplete?.();
       }, 800);
     }
-  }, [isComplete, onComplete]);
+  }, [isComplete, onComplete, forceShow, markWelcomeAsShown]);
 
   useEffect(() => {
     if (isWelcomeLoadingComplete && loadingProgress >= 100) {
@@ -154,6 +171,10 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
     `,
     backgroundAttachment: 'fixed'
   }), []);
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <AnimatePresence>

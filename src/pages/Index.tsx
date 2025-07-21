@@ -5,6 +5,7 @@ import ProductHero from "@/components/ProductHero";
 import ProductsSection from "@/components/ProductsSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import Footer from "@/components/Footer";
+import WelcomeScreen from "@/components/WelcomeScreen";
 
 
 const Index = () => {
@@ -20,13 +21,16 @@ const Index = () => {
   }, [location]);
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      <ProductHero />
-      <ProductsSection />
-      <FeaturesSection />
-      <Footer />
-    </div>
+    <>
+      <WelcomeScreen />
+      <div className="min-h-screen">
+        <Header />
+        <ProductHero />
+        <ProductsSection />
+        <FeaturesSection />
+        <Footer />
+      </div>
+    </>
   );
 };
 
