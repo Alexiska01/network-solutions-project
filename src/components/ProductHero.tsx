@@ -110,14 +110,17 @@ const ProductHero = () => {
       
       // Предзагружаем текущую и следующую модели
       const currentModel = heroData[currentIndex];
-      if (!modelPreloader.isLoaded(currentModel.modelUrl)) {
+      
+      // Если модель уже загружена в modelPreloader, обновляем modelLoadStatus
+      if (modelPreloader.isLoaded(currentModel.modelUrl)) {
+        setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
+        preloadNextModel();
+      } else {
+        // Начинаем загрузку
         modelPreloader.preloadModel(currentModel.modelUrl, 'high').then(() => {
           setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
           preloadNextModel();
         });
-      } else {
-        setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
-        preloadNextModel();
       }
     }
   }, [currentIndex, showWelcome]);
@@ -465,8 +468,8 @@ const ProductHero = () => {
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
                   <div className="w-full h-full relative">
-                    {/* Индикатор загрузки только для незагруженных моделей */}
-                    {!modelPreloader.isLoaded(currentData.modelUrl) && !modelLoadStatus[currentData.modelUrl] && (
+                    {/* Лоадер показывается только если модель не отображена в UI */}
+                    {!modelLoadStatus[currentData.modelUrl] && (
                       <div className="absolute inset-0 flex items-center justify-center z-10">
                         <div className="flex flex-col items-center gap-4">
                           <div className="w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full animate-spin" />
