@@ -67,6 +67,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [preloadContainer, setPreloadContainer] = useState<HTMLElement | null>(null);
   
   const preloadModels = useCallback(async () => {
     const modelUrls = heroData.map(item => item.modelUrl);
@@ -86,9 +87,10 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
       // Fallback к старому методу предзагрузки если кэширование не удалось
       console.log('🔄 WelcomeScreen: Переключаемся на fallback предзагрузку');
       
-      const preloadContainer = document.createElement('div');
-      preloadContainer.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;';
-      document.body.appendChild(preloadContainer);
+      const container = document.createElement('div');
+      container.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;';
+      document.body.appendChild(container);
+      setPreloadContainer(container);
       
       modelUrls.slice(0, 2).forEach((url, index) => {
         const viewer = document.createElement('model-viewer') as any;
@@ -102,22 +104,30 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
           console.log(`✅ WelcomeScreen: Fallback модель ${index + 1} загружена`);
         });
         
-        preloadContainer.appendChild(viewer);
+        container.appendChild(viewer);
       });
       
       modelPreloader.preloadMultiple(modelUrls, 2);
-      
-      return () => {
-        setTimeout(() => {
-          preloadContainer.remove();
-        }, 30000);
-      };
     }
   }, [heroData]);
 
   useEffect(() => {
-    return preloadModels();
+    const runPreload = async () => {
+      await preloadModels();
+    };
+    
+    runPreload();
+    
   }, [preloadModels]);
+
+  // Cleanup для preload контейнера при размонтировании
+  useEffect(() => {
+    return () => {
+      if (preloadContainer) {
+        preloadContainer.remove();
+      }
+    };
+  }, [preloadContainer]);
 
   useEffect(() => {
     if (currentStageIndex < LOADING_STAGES.length - 1) {
