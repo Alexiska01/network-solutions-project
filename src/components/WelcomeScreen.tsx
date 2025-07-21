@@ -93,12 +93,31 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
 
   useEffect(() => {
     if (isWelcomeLoadingComplete && loadingProgress >= 100) {
+      console.log('✅ WelcomeScreen: Загрузка завершена, запускаем выход');
       setIsExiting(true);
       setTimeout(() => {
+        console.log('🚀 WelcomeScreen: Вызываем onComplete');
         onComplete();
       }, 1000); // Сократили с 2000 до 1000
     }
   }, [isWelcomeLoadingComplete, loadingProgress, onComplete]);
+
+  // Добавляем абсолютный fallback таймер на 17 секунд
+  useEffect(() => {
+    console.log('⏰ WelcomeScreen: Запускаем fallback таймер на 17 секунд');
+    const fallbackTimer = setTimeout(() => {
+      console.log('⚠️ WelcomeScreen: Fallback таймер сработал, принудительно завершаем');
+      setIsExiting(true);
+      setTimeout(() => {
+        onComplete();
+      }, 500);
+    }, 17000);
+
+    return () => {
+      console.log('🧹 WelcomeScreen: Очищаем fallback таймер');
+      clearTimeout(fallbackTimer);
+    };
+  }, [onComplete]);
 
   const currentStage = LOADING_STAGES[currentStageIndex];
 

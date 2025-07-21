@@ -14,14 +14,31 @@ const PlayStationTransition: React.FC<PlayStationTransitionProps> = ({
 
   useEffect(() => {
     if (isVisible) {
-      const timer1 = setTimeout(() => setStage('expanding'), 500);
-      const timer2 = setTimeout(() => setStage('complete'), 1200);
-      const timer3 = setTimeout(() => onComplete(), 2000);
+      console.log('🎬 PlayStationTransition: Запускаем переход');
+      const timer1 = setTimeout(() => {
+        console.log('📈 PlayStationTransition: expanding');
+        setStage('expanding');
+      }, 500);
+      const timer2 = setTimeout(() => {
+        console.log('✅ PlayStationTransition: complete');
+        setStage('complete');
+      }, 1200);
+      const timer3 = setTimeout(() => {
+        console.log('🚀 PlayStationTransition: вызываем onComplete');
+        onComplete();
+      }, 2000);
+      
+      // Добавляем абсолютный fallback на 3 секунды
+      const fallbackTimer = setTimeout(() => {
+        console.log('⚠️ PlayStationTransition: Fallback таймер сработал');
+        onComplete();
+      }, 3000);
       
       return () => {
         clearTimeout(timer1);
         clearTimeout(timer2);
         clearTimeout(timer3);
+        clearTimeout(fallbackTimer);
       };
     }
   }, [isVisible, onComplete]);

@@ -191,10 +191,19 @@ const ProductHero = () => {
   const currentData = heroData[currentIndex];
 
   const handleWelcomeComplete = () => {
+    console.log('🚀 ProductHero: WelcomeScreen завершён, запускаем переход');
     setShowTransition(true);
+    
+    // Добавляем fallback таймер на случай зависания PlayStationTransition
+    setTimeout(() => {
+      console.log('⚠️ ProductHero: Fallback таймер сработал, принудительно завершаем переход');
+      setShowWelcome(false);
+      setShowTransition(false);
+    }, 3000); // Максимум 3 секунды на переход
   };
 
   const handleTransitionComplete = () => {
+    console.log('✅ ProductHero: PlayStationTransition завершён');
     setShowWelcome(false);
     setShowTransition(false);
   };
@@ -255,7 +264,7 @@ const ProductHero = () => {
     return (
       <>
         <WelcomeScreen onComplete={handleWelcomeComplete} />
-        {showTransition && <PlayStationTransition onComplete={handleTransitionComplete} />}
+        {showTransition && <PlayStationTransition isVisible={showTransition} onComplete={handleTransitionComplete} />}
       </>
     );
   }
