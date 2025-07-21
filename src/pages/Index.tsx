@@ -27,14 +27,19 @@ const Index = () => {
   useEffect(() => {
     const checkCache = async () => {
       try {
+        console.log('🔍 Index: Проверяем кэш моделей');
         const isCacheValid = await ModelCache.isCacheValid();
         
         if (!isCacheValid) {
+          console.log('❌ Index: Кэш недействителен, показываем WelcomeScreen');
           setShowWelcomeScreen(true);
         } else {
+          console.log('✅ Index: Кэш действителен, пропускаем WelcomeScreen');
           setShowWelcomeScreen(false);
         }
       } catch (error) {
+        console.error('❌ Index: Ошибка проверки кэша:', error);
+        // При ошибке показываем WelcomeScreen для безопасности
         setShowWelcomeScreen(true);
       } finally {
         setIsCheckingCache(false);
@@ -46,6 +51,7 @@ const Index = () => {
 
   // Обработчик завершения WelcomeScreen
   const handleWelcomeComplete = async () => {
+    console.log('✅ Index: WelcomeScreen завершён');
     setShowWelcomeScreen(false);
   };
 
