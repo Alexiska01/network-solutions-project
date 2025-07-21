@@ -309,17 +309,7 @@ const ProductHero = () => {
         />
       </div>
 
-      {/* Навигация */}
-      <motion.button
-        initial={{ opacity: 0, x: -50, filter: "blur(10px)" }}
-        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-        transition={{ delay: 1.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        onClick={() => navigate('/')}
-        className="absolute top-4 left-4 xs:top-6 xs:left-6 md:top-8 md:left-8 z-50 flex items-center gap-2 md:gap-3 px-4 py-2.5 md:px-6 md:py-3 bg-black/20 backdrop-blur-xl rounded-full text-white hover:bg-black/40 transition-all duration-300 group border border-white/10"
-      >
-        <Icon name="ChevronLeft" size={20} className="w-5 h-5 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
-        <span className="font-medium text-[15px] md:text-base">Назад</span>
-      </motion.button>
+
 
       {/* Основной контент */}
       <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
