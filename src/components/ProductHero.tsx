@@ -181,10 +181,11 @@ const ProductHero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [isMobile]);
 
-  // Автоматическая смена слайдов каждые 7 секунд
+  // Автоматическая смена слайдов каждые 11 секунд с плавными переходами
   useEffect(() => {
     if (!showWelcome) {
       const interval = setInterval(() => {
+        // Начинаем плавный переход
         setIsTransitioning(true);
         
         // Предзагружаем модель за 2 слайда вперед
@@ -194,6 +195,7 @@ const ProductHero = () => {
           modelPreloader.preloadModel(nextNextModel.modelUrl, 'low');
         }
         
+        // Увеличиваем время для более плавного перехода
         setTimeout(() => {
           const nextIndex = (currentIndex + 1) % heroData.length;
           const nextModel = heroData[nextIndex];
@@ -205,8 +207,12 @@ const ProductHero = () => {
           }
           
           setCurrentIndex(nextIndex);
-          setIsTransitioning(false);
-        }, isMobile ? 100 : 300);
+          
+          // Завершаем переход через дополнительную задержку для плавности
+          setTimeout(() => {
+            setIsTransitioning(false);
+          }, isMobile ? 200 : 400);
+        }, isMobile ? 300 : 600);
       }, 11000);
       
       intervalRef.current = interval;
@@ -245,12 +251,20 @@ const ProductHero = () => {
         delay: 0.2
       }}
       className="relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+      style={{
+        willChange: 'transform, opacity',
+        backfaceVisibility: 'hidden',
+        perspective: '1000px',
+        transformStyle: 'preserve-3d'
+      }}
     >
       {/* Динамический фоновый градиент */}
       <div 
         className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 transition-all duration-1000 ease-out`}
         style={{
           transform: !isMobile ? `scale(${1 + Math.abs(mousePosition.x) * 0.05})` : 'none',
+          willChange: 'transform',
+          backfaceVisibility: 'hidden'
         }}
       />
       
@@ -517,7 +531,7 @@ const ProductHero = () => {
                         alt={currentData.title}
                         auto-rotate
                         auto-rotate-delay="0"
-                        rotation-per-second="30deg"
+                        rotation-per-second="15deg"
                         camera-orbit="0deg 75deg 1.6m"
                         min-camera-orbit="auto auto 1.6m"
                         max-camera-orbit="auto auto 1.6m"
@@ -528,6 +542,7 @@ const ProductHero = () => {
                         interaction-prompt="none"
                         loading="eager"
                         reveal="auto"
+                        interpolation-decay="100"
                         style={{
                           width: '100%',
                           height: '100%',
@@ -535,7 +550,11 @@ const ProductHero = () => {
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
                           '--progress-mask': 'transparent',
-                          pointerEvents: 'none'
+                          pointerEvents: 'none',
+                          willChange: 'transform',
+                          backfaceVisibility: 'hidden',
+                          perspective: '1000px',
+                          transformStyle: 'preserve-3d'
                         }}
                         onLoad={() => {
                           console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
@@ -553,7 +572,7 @@ const ProductHero = () => {
                         alt={currentData.title}
                         auto-rotate
                         auto-rotate-delay="0"
-                        rotation-per-second="30deg"
+                        rotation-per-second="12deg"
                         camera-controls
                         camera-orbit="0deg 75deg 1.2m"
                         min-camera-orbit="auto auto 0.4m"
@@ -565,13 +584,19 @@ const ProductHero = () => {
                         interaction-prompt="none"
                         loading="eager"
                         reveal="auto"
+                        interpolation-decay="100"
+                        tone-mapping="commerce"
                         style={{
                           width: '100%',
                           height: '100%',
                           background: 'transparent',
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
-                          '--progress-mask': 'transparent'
+                          '--progress-mask': 'transparent',
+                          willChange: 'transform',
+                          backfaceVisibility: 'hidden',
+                          perspective: '1000px',
+                          transformStyle: 'preserve-3d'
                         }}
                         onLoad={() => {
                           console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
