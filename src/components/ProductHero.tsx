@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { modelPreloader } from '@/utils/modelPreloader';
 
 import WelcomeScreen from '@/components/WelcomeScreen';
-import PlayStationTransition from '@/components/PlayStationTransition';
 
 // Конфигурация моделей коммутаторов - только "all" версии
 const heroData = [
@@ -76,7 +75,7 @@ const ProductHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
-  const [showTransition, setShowTransition] = useState(false);
+
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -191,21 +190,8 @@ const ProductHero = () => {
   const currentData = heroData[currentIndex];
 
   const handleWelcomeComplete = () => {
-    console.log('🚀 ProductHero: WelcomeScreen завершён, запускаем переход');
-    setShowTransition(true);
-    
-    // Добавляем fallback таймер на случай зависания PlayStationTransition
-    setTimeout(() => {
-      console.log('⚠️ ProductHero: Fallback таймер сработал, принудительно завершаем переход');
-      setShowWelcome(false);
-      setShowTransition(false);
-    }, 3000); // Максимум 3 секунды на переход
-  };
-
-  const handleTransitionComplete = () => {
-    console.log('✅ ProductHero: PlayStationTransition завершён');
+    console.log('🚀 ProductHero: WelcomeScreen завершён, запускаем прямой переход');
     setShowWelcome(false);
-    setShowTransition(false);
   };
 
   // Свайп обработчики для мобильных
@@ -261,19 +247,26 @@ const ProductHero = () => {
   };
 
   if (showWelcome) {
-    return (
-      <>
-        <WelcomeScreen onComplete={handleWelcomeComplete} />
-        {showTransition && <PlayStationTransition isVisible={showTransition} onComplete={handleTransitionComplete} />}
-      </>
-    );
+    return <WelcomeScreen onComplete={handleWelcomeComplete} />;
   }
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: isMobile ? 0.3 : 1.2, ease: [0.23, 1, 0.320, 1] }}
+      initial={{ 
+        opacity: 0,
+        scale: 0.98,
+        filter: "blur(20px) brightness(0.3)"
+      }}
+      animate={{ 
+        opacity: 1,
+        scale: 1,
+        filter: "blur(0px) brightness(1)"
+      }}
+      transition={{ 
+        duration: 1.5,
+        ease: [0.16, 1, 0.3, 1],
+        delay: 0.2
+      }}
       className="relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
       onTouchStart={isMobile ? onTouchStart : undefined}
       onTouchMove={isMobile ? onTouchMove : undefined}
@@ -344,9 +337,9 @@ const ProductHero = () => {
 
       {/* Навигация */}
       <motion.button
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
+        initial={{ opacity: 0, x: -50, filter: "blur(10px)" }}
+        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+        transition={{ delay: 1.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         onClick={() => navigate('/')}
         className="absolute top-4 left-4 xs:top-6 xs:left-6 md:top-8 md:left-8 z-50 flex items-center gap-2 md:gap-3 px-4 py-2.5 md:px-6 md:py-3 bg-black/20 backdrop-blur-xl rounded-full text-white hover:bg-black/40 transition-all duration-300 group border border-white/10"
       >
@@ -361,17 +354,17 @@ const ProductHero = () => {
             
             {/* Левая колонка - контент */}
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 1, ease: [0.23, 1, 0.320, 1] }}
+              initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45vh] md:h-auto"
             >
               {/* Заголовок */}
               <div className="space-y-3 md:space-y-4">
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6, duration: 0.8 }}
+                  initial={{ opacity: 0, scale: 0.5, y: 30 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ delay: 0.9, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[11px] md:text-sm font-medium text-white/80 border border-white/20"
                 >
                   ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
@@ -379,9 +372,9 @@ const ProductHero = () => {
                 
                 <motion.h1
                   key={currentData.id}
-                  initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: isMobile ? 0.3 : 0.8, ease: [0.23, 1, 0.320, 1] }}
+                  initial={{ opacity: 0, y: 60, scale: 0.9, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                  transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                   className="text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
                 >
                   {currentData.title}
@@ -461,22 +454,37 @@ const ProductHero = () => {
 
             {/* Правая колонка - 3D модель */}
             <motion.div
-              initial={{ opacity: isMobile ? 1 : 0, scale: isMobile ? 1 : 0.8, rotateY: isMobile ? 0 : 45 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ delay: isMobile ? 0 : 0.5, duration: isMobile ? 0.3 : 1.2, ease: [0.23, 1, 0.320, 1] }}
+              initial={{ 
+                opacity: 0, 
+                scale: 0.7, 
+                rotateY: 30,
+                rotateX: 15,
+                filter: "blur(20px)"
+              }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1, 
+                rotateY: 0,
+                rotateX: 0,
+                filter: "blur(0px)"
+              }}
+              transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
                 <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
                   animate={{
-                    scale: [1, 1.1, 1],
+                    opacity: [0, 0.3, 0.3],
+                    scale: [0.8, 1.1, 1],
                     rotate: [0, 5, 0],
                   }}
                   transition={{
                     duration: 4,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
+                    delay: 1.2
                   }}
                   className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 rounded-3xl blur-2xl`}
                 />
@@ -500,9 +508,14 @@ const ProductHero = () => {
               <div className="w-full h-full">
                 <motion.div
                   key={currentData.id}
-                  initial={{ opacity: isMobile ? 1 : 0, scale: 1, rotateX: 0 }}
-                  animate={{ opacity: isTransitioning && isMobile ? 0.5 : 1, scale: 1, rotateX: 0 }}
-                  transition={{ duration: isMobile ? 0.2 : 1, ease: [0.23, 1, 0.320, 1] }}
+                  initial={{ opacity: 0, scale: 0.9, y: 30, filter: "blur(10px)" }}
+                  animate={{ 
+                    opacity: isTransitioning && isMobile ? 0.5 : 1, 
+                    scale: 1, 
+                    y: 0,
+                    filter: "blur(0px)"
+                  }}
+                  transition={{ delay: 1.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                   className="relative w-full h-full"
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
