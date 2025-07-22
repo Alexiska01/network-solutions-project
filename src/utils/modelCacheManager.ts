@@ -110,10 +110,12 @@ class ModelCacheManager {
       return true;
     }
 
-    // Проверяем наличие ключевых моделей в кэше (не всех, а только критичных)
+    // Проверяем наличие ключевых моделей в кэше (все основные модели)
     const criticalModels = [
       '/models/3530all.glb',
-      '/models/3730all.glb'
+      '/models/3730all.glb',
+      '/models/4530all.glb',
+      '/models/6010all.glb'
     ];
 
     const criticalModelsCached = criticalModels.every(url => {
