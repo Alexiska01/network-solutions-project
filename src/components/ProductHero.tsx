@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import { modelPreloader } from '@/utils/modelPreloader';
-
-import WelcomeScreen from '@/components/WelcomeScreen';
+import { modelCacheManager } from '@/utils/modelCacheManager';
 
 // Конфигурация моделей коммутаторов - только "all" версии
 const heroData = [
@@ -74,8 +73,10 @@ const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(true);
-
+  
+  // Удаляем зависимость от showWelcome - теперь ProductHero полностью автономен
+  const [isInitialized, setIsInitialized] = useState(false);
+  
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -95,9 +96,35 @@ const ProductHero = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Интеллектуальная предзагрузка моделей
+  // Инициализация и мгновенная загрузка при наличии кэша
   useEffect(() => {
-    if (!showWelcome) {
+    const initializeComponent = async () => {
+      console.log('🚀 ProductHero: Инициализация компонента');
+      
+      // Проверяем кэш всех моделей
+      const allModelsInCache = heroData.every(model => 
+        modelPreloader.isLoaded(model.modelUrl)
+      );
+      
+      if (allModelsInCache) {
+        console.log('⚡ ProductHero: Все модели в кэше - мгновенная загрузка');
+        // Синхронизируем состояние UI со всеми моделями из кэша
+        const newStatus: Record<string, boolean> = {};
+        heroData.forEach(model => {
+          newStatus[model.modelUrl] = true;
+        });
+        setModelLoadStatus(newStatus);
+        setIsInitialized(true);
+      } else {
+        console.log('📦 ProductHero: Модели не в кэше, начинаем загрузку');
+        // Запускаем обычную загрузку
+        const currentModel = heroData[currentIndex];
+        if (!modelPreloader.isLoaded(currentModel.modelUrl)) {
+          modelPreloader.preloadModel(currentModel.modelUrl, 'high');
+        }
+        setIsInitialized(true);
+      }
+      
       // Предзагружаем следующую модель заранее
       const preloadNextModel = () => {
         const nextIndex = (currentIndex + 1) % heroData.length;
@@ -111,18 +138,6 @@ const ProductHero = () => {
       // Предзагружаем текущую и следующую модели
       const currentModel = heroData[currentIndex];
       
-      console.log(`🔍 ProductHero DEBUG: Модель ${currentModel.series} (${currentModel.modelUrl})`);
-      console.log(`🔍 ModelPreloader состояние: ${modelPreloader.isLoaded(currentModel.modelUrl)}`);
-      console.log(`🔍 UI состояние: ${modelLoadStatus[currentModel.modelUrl]}`);
-      
-      // Для моделей 4530 и 6010 - принудительная синхронизация состояния
-      if (currentModel.series === '4530' || currentModel.series === '6010') {
-        console.log(`🔧 ProductHero: Принудительная инициализация для модели ${currentModel.series}`);
-        // Устанавливаем загрузку модели НЕМЕДЛЕННО для этих моделей
-        setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
-        console.log(`✅ ProductHero: Форсированная установка состояния для ${currentModel.series} - НЕМЕДЛЕННО`);
-      }
-
       // Если модель уже загружена в modelPreloader, обновляем modelLoadStatus
       if (modelPreloader.isLoaded(currentModel.modelUrl)) {
         console.log(`✅ ProductHero: Модель ${currentModel.series} уже предзагружена, синхронизируем UI`);
@@ -139,8 +154,27 @@ const ProductHero = () => {
           console.error(`❌ ProductHero: Ошибка предзагрузки модели ${currentModel.series}:`, error);
         });
       }
+      
+      preloadNextModel();
+    };
+
+    // Инициализируем компонент сразу при первом рендере
+    if (!isInitialized) {
+      initializeComponent();
+    } else {
+      // При смене слайда - предзагружаем следующий
+      const preloadNextModel = () => {
+        const nextIndex = (currentIndex + 1) % heroData.length;
+        const nextModel = heroData[nextIndex];
+        
+        if (!modelPreloader.isLoaded(nextModel.modelUrl)) {
+          modelPreloader.preloadModel(nextModel.modelUrl, 'high');
+        }
+      };
+      
+      preloadNextModel();
     }
-  }, [currentIndex, showWelcome]);
+  }, [currentIndex, isInitialized]);
 
   // Мобильная инициализация model-viewer
   useEffect(() => {
@@ -183,7 +217,7 @@ const ProductHero = () => {
 
   // Автоматическая смена слайдов каждые 7 секунд
   useEffect(() => {
-    if (!showWelcome) {
+    if (isInitialized) {
       const interval = setInterval(() => {
         setIsTransitioning(true);
         
@@ -212,20 +246,12 @@ const ProductHero = () => {
       intervalRef.current = interval;
       return () => clearInterval(interval);
     }
-  }, [showWelcome, isMobile, currentIndex]);
+  }, [isInitialized, isMobile, currentIndex]);
 
   const currentData = heroData[currentIndex];
 
-  const handleWelcomeComplete = () => {
-    console.log('🚀 ProductHero: WelcomeScreen завершён, запускаем прямой переход');
-    setShowWelcome(false);
-  };
-
-
-
-  if (showWelcome) {
-    return <WelcomeScreen onComplete={handleWelcomeComplete} />;
-  }
+  // ProductHero теперь полностью автономен и не зависит от WelcomeScreen
+  // WelcomeScreen управляется в Index.tsx на уровне страницы
 
   return (
     <motion.div

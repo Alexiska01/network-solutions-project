@@ -1,45 +1,33 @@
 import { useCallback, useEffect, useState } from 'react';
-
-const WELCOME_SCREEN_KEY = 'welcomeScreen_lastShown';
-const INACTIVITY_TIMEOUT = 60 * 60 * 1000; // 1 час в миллисекундах
+import { modelCacheManager } from '@/utils/modelCacheManager';
 
 export const useActivityTracker = () => {
   const [isInactive, setIsInactive] = useState(false);
   const [shouldShowWelcome, setShouldShowWelcome] = useState(false);
 
-  const getLastWelcomeTime = useCallback(() => {
-    const stored = localStorage.getItem(WELCOME_SCREEN_KEY);
-    return stored ? parseInt(stored, 10) : 0;
-  }, []);
-
-  const setLastWelcomeTime = useCallback(() => {
-    localStorage.setItem(WELCOME_SCREEN_KEY, Date.now().toString());
-  }, []);
-
   const shouldShowWelcomeScreen = useCallback(() => {
-    const lastShown = getLastWelcomeTime();
-    const now = Date.now();
-    const timeSinceLastShown = now - lastShown;
-    
-    // Показываем если прошло больше часа или если никогда не показывали
-    return timeSinceLastShown >= INACTIVITY_TIMEOUT || lastShown === 0;
-  }, [getLastWelcomeTime]);
+    // Используем единственную логику из modelCacheManager
+    return modelCacheManager.shouldShowWelcomeScreen();
+  }, []);
 
   const markWelcomeAsShown = useCallback(() => {
-    setLastWelcomeTime();
+    // Обновляем активность через modelCacheManager
+    modelCacheManager.updateActivity();
     setShouldShowWelcome(false);
-  }, [setLastWelcomeTime]);
+  }, []);
 
   const resetInactivityTimer = useCallback(() => {
     setIsInactive(false);
     
-    // Проверяем, нужно ли показывать welcome screen
+    // Обновляем активность и проверяем, нужно ли показывать welcome screen
+    modelCacheManager.updateActivity();
     if (shouldShowWelcomeScreen()) {
       setShouldShowWelcome(true);
     }
   }, [shouldShowWelcomeScreen]);
 
   useEffect(() => {
+    const INACTIVITY_TIMEOUT = 60 * 60 * 1000; // 1 час
     let inactivityTimer: NodeJS.Timeout;
 
     const handleActivity = () => {
@@ -59,7 +47,7 @@ export const useActivityTracker = () => {
       document.addEventListener(event, handleActivity, true);
     });
 
-    // Проверяем при первой загрузке
+    // Проверяем при первой загрузке через modelCacheManager
     if (shouldShowWelcomeScreen()) {
       setShouldShowWelcome(true);
     }
