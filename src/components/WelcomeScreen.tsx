@@ -77,37 +77,67 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
   const [isExiting, setIsExiting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   
+  // Оптимизация для мобильных устройств
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const isLowPerformance = typeof window !== 'undefined' && 
+    (navigator.hardwareConcurrency <= 2 || navigator.deviceMemory <= 2);
+  
   const preloadModels = useCallback(() => {
     const modelUrls = heroData.map(item => item.modelUrl);
     console.log('🚀 WelcomeScreen: Начинаем оптимизированную предзагрузку моделей');
     
+    // Создаем невидимый контейнер для предзагрузки
     const preloadContainer = document.createElement('div');
-    preloadContainer.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;';
+    preloadContainer.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;';
     document.body.appendChild(preloadContainer);
     
-    modelUrls.slice(0, 2).forEach((url, index) => {
+    // Ограничиваем количество одновременно загружаемых моделей для мобильных
+    const maxConcurrent = isMobile || isLowPerformance ? 1 : 2;
+    const modelsToPreload = isMobile ? modelUrls.slice(0, 2) : modelUrls;
+    
+    console.log(`📱 WelcomeScreen: Мобильное устройство: ${isMobile}, Слабое устройство: ${isLowPerformance}`);
+    console.log(`🔄 WelcomeScreen: Загружаем ${modelsToPreload.length} моделей (максимум одновременно: ${maxConcurrent})`);
+    
+    modelsToPreload.slice(0, maxConcurrent).forEach((url, index) => {
       const viewer = document.createElement('model-viewer') as any;
       viewer.src = url;
       viewer.loading = 'eager';
       viewer.reveal = 'immediate';
-      viewer.style.cssText = 'width:100%;height:100%;';
+      viewer.style.cssText = 'width:100%;height:100%;max-width:1px;max-height:1px;';
+      
+      // Оптимизации для мобильных устройств
+      if (isMobile) {
+        viewer.setAttribute('camera-controls', 'false');
+        viewer.setAttribute('auto-rotate', 'false');
+        viewer.setAttribute('interaction-prompt', 'none');
+      }
+      
       viewer.setAttribute('cache-model', 'true');
       
       viewer.addEventListener('load', () => {
-        console.log(`✅ WelcomeScreen: Модель ${index + 1} загружена`);
+        console.log(`✅ WelcomeScreen: Модель ${index + 1} загружена и закэширована`);
+      });
+      
+      viewer.addEventListener('error', (error: any) => {
+        console.warn(`⚠️ WelcomeScreen: Ошибка загрузки модели ${index + 1}:`, error);
       });
       
       preloadContainer.appendChild(viewer);
     });
     
-    modelPreloader.preloadMultiple(modelUrls, 2);
+    // Дополнительная предзагрузка через modelPreloader с ограничениями
+    modelPreloader.preloadMultiple(modelsToPreload, maxConcurrent);
     
     return () => {
+      // Очистка через увеличенное время для стабильности кэша
+      const cleanupDelay = isMobile ? 60000 : 30000; // 1 минута для мобильных
       setTimeout(() => {
-        preloadContainer.remove();
-      }, 30000);
+        if (preloadContainer.parentNode) {
+          preloadContainer.remove();
+        }
+      }, cleanupDelay);
     };
-  }, [heroData]);
+  }, [heroData, isMobile, isLowPerformance]);
 
   useEffect(() => {
     return preloadModels();
@@ -148,17 +178,20 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
   }, [isWelcomeLoadingComplete, loadingProgress, handleComplete]);
 
   useEffect(() => {
-    console.log('⏰ WelcomeScreen: Запускаем fallback таймер на 12 секунд');
+    // Адаптивный таймер в зависимости от устройства
+    const fallbackTime = isMobile || isLowPerformance ? 18000 : 12000; // 18 сек для мобильных
+    
+    console.log(`⏰ WelcomeScreen: Запускаем fallback таймер на ${fallbackTime / 1000} секунд`);
     const fallbackTimer = setTimeout(() => {
       console.log('⚠️ WelcomeScreen: Fallback таймер сработал');
       handleComplete();
-    }, 12000);
+    }, fallbackTime);
 
     return () => {
       console.log('🧹 WelcomeScreen: Очищаем fallback таймер');
       clearTimeout(fallbackTimer);
     };
-  }, [handleComplete]);
+  }, [handleComplete, isMobile, isLowPerformance]);
 
   const currentStage = LOADING_STAGES[currentStageIndex];
 
@@ -184,12 +217,13 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
           animate={{ opacity: 1 }}
           exit={{ 
             opacity: 0,
-            scale: 1.02,
-            filter: "blur(8px)"
+            scale: 1.05,
+            filter: "blur(12px)",
+            y: -20
           }}
           transition={{ 
-            duration: isExiting ? 0.8 : 1.5,
-            ease: [0.43, 0.13, 0.23, 0.96]
+            duration: isExiting ? 1.0 : 1.5,
+            ease: [0.25, 0.46, 0.45, 0.94]
           }}
           className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-8"
           style={backgroundStyle}
@@ -212,9 +246,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
               }}
               animate={{
                 backgroundPosition: ['0px 0px', '80px 80px'],
-                opacity: [0.03, 0.1, 0.03]
+                opacity: [0.02, 0.08, 0.02]
               }}
-              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
             />
           </motion.div>
           
