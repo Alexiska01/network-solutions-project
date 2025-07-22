@@ -7,14 +7,7 @@ import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import ProductHero from "./components/ProductHero";
 
-// Инициализируем model-viewer как можно раньше
-if (typeof window !== 'undefined' && !customElements.get('model-viewer')) {
-  import('@google/model-viewer').then(() => {
-    console.log('✅ Model-viewer загружен в App.tsx');
-  }).catch(error => {
-    console.error('❌ Ошибка загрузки model-viewer:', error);
-  });
-}
+// Model-viewer загружается в index.html через CDN
 
 // Lazy loading для второстепенных страниц
 const SeriesCatalog3730 = lazy(() => import("./pages/SeriesCatalog3730"));

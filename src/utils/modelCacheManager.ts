@@ -33,6 +33,36 @@ class ModelCacheManager {
   private metadata: CacheMetadata | null = null;
 
   /**
+   * Синхронная инициализация метаданных
+   */
+  private initSync(): void {
+    try {
+      const stored = localStorage.getItem(this.METADATA_KEY);
+      if (stored) {
+        this.metadata = JSON.parse(stored);
+      } else {
+        this.metadata = {
+          version: '2.0',
+          lastActivity: Date.now(),
+          lastHomeVisit: 0,
+          quickReturnMode: false,
+          models: {}
+        };
+        this.saveMetadata();
+      }
+    } catch (error) {
+      console.warn('⚠️ ModelCacheManager: Ошибка синхронной инициализации', error);
+      this.metadata = {
+        version: '2.0',
+        lastActivity: Date.now(),
+        lastHomeVisit: 0,
+        quickReturnMode: false,
+        models: {}
+      };
+    }
+  }
+
+  /**
    * Инициализация кэша
    */
   async init(): Promise<void> {
@@ -92,6 +122,16 @@ class ModelCacheManager {
    * Проверка необходимости показа WelcomeScreen
    */
   shouldShowWelcomeScreen(): boolean {
+    if (!this.metadata) {
+      // Если метаданные не инициализированы, делаем это сейчас
+      try {
+        this.initSync();
+      } catch (error) {
+        console.warn('⚠️ ModelCacheManager: Ошибка синхронной инициализации', error);
+        return true;
+      }
+    }
+    
     if (!this.metadata) return true;
 
     const now = Date.now();
@@ -360,8 +400,3 @@ class ModelCacheManager {
 }
 
 export const modelCacheManager = new ModelCacheManager();
-
-// Инициализируем при загрузке модуля
-if (typeof window !== 'undefined' && 'caches' in window) {
-  modelCacheManager.init();
-}

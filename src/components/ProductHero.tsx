@@ -531,7 +531,7 @@ const ProductHero = () => {
                         ref={modelRef}
                         src={currentData.modelUrl}
                         alt={currentData.title}
-                        auto-rotate
+                        auto-rotate={true}
                         auto-rotate-delay="0"
                         rotation-per-second="30deg"
                         camera-orbit="0deg 75deg 1.6m"
@@ -567,10 +567,10 @@ const ProductHero = () => {
                         ref={modelRef}
                         src={currentData.modelUrl}
                         alt={currentData.title}
-                        auto-rotate
+                        auto-rotate={true}
                         auto-rotate-delay="0"
                         rotation-per-second="30deg"
-                        camera-controls
+                        camera-controls={true}
                         camera-orbit="0deg 75deg 1.2m"
                         min-camera-orbit="auto auto 0.4m"
                         max-camera-orbit="auto auto 2.5m"

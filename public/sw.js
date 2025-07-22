@@ -1,11 +1,10 @@
-// Service Worker для агрессивного кэширования 3D моделей
-const CACHE_NAME = 'models-cache-v3'; // Обновили версию для нового CDN
-const VERCEL_CDN = 'https://models-static-anummr3hg-alexiskas-projects.vercel.app';
+// Service Worker для агрессивного кэширования локальных 3D моделей
+const CACHE_NAME = 'models-cache-v4'; // Обновляем версию для локальных моделей
 const MODEL_URLS = [
-  `${VERCEL_CDN}/3530all.glb`,
-  `${VERCEL_CDN}/3730all.glb`,
-  `${VERCEL_CDN}/4530all.glb`,
-  `${VERCEL_CDN}/6010all.glb`
+  '/models/3530all.glb',
+  '/models/3730all.glb',
+  '/models/4530all.glb',
+  '/models/6010all.glb'
 ];
 
 // Установка - предзагружаем модели
@@ -39,8 +38,8 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = event.request.url;
   
-  // Если это запрос к нашим моделям или Vercel CDN
-  if (MODEL_URLS.includes(url) || url.startsWith(VERCEL_CDN)) {
+  // Если это запрос к нашим локальным моделям
+  if (MODEL_URLS.some(modelUrl => url.endsWith(modelUrl))) {
     event.respondWith(
       caches.match(event.request)
         .then((response) => {
