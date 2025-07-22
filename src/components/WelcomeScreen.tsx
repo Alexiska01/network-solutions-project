@@ -154,7 +154,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
 
   const handleComplete = useCallback(() => {
     if (!isComplete) {
-      console.log('✅ WelcomeScreen: Загрузка завершена, запускаем выход');
+      console.log('✅ WelcomeScreen: Загрузка завершена, запускаем мгновенный выход');
       setIsComplete(true);
       setIsExiting(true);
       
@@ -163,11 +163,10 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         markWelcomeAsShown();
       }
       
-      setTimeout(() => {
-        console.log('🚀 WelcomeScreen: Вызываем onComplete');
-        setIsVisible(false);
-        onComplete?.();
-      }, 800);
+      // Убираем задержку для мгновенного перехода
+      console.log('🚀 WelcomeScreen: Вызываем onComplete мгновенно');
+      setIsVisible(false);
+      onComplete?.();
     }
   }, [isComplete, onComplete, forceShow, markWelcomeAsShown]);
 

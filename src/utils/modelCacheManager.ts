@@ -13,6 +13,8 @@ interface CacheEntry {
 interface CacheMetadata {
   version: string;
   lastActivity: number;
+  lastHomeVisit: number; // Время последнего посещения главной страницы
+  quickReturnMode: boolean; // Режим быстрого возврата
   models: Record<string, {
     timestamp: number;
     size: number;
@@ -24,6 +26,7 @@ class ModelCacheManager {
   private readonly CACHE_NAME = 'idata-models-v2';
   private readonly CACHE_DURATION = 365 * 24 * 60 * 60 * 1000; // 1 год
   private readonly ACTIVITY_TIMEOUT = 60 * 60 * 1000; // 1 час
+  private readonly QUICK_RETURN_THRESHOLD = 10 * 60 * 1000; // 10 минут для быстрого возврата
   private readonly METADATA_KEY = 'cache-metadata';
   
   private cache: Cache | null = null;
@@ -54,6 +57,8 @@ class ModelCacheManager {
         this.metadata = {
           version: '2.0',
           lastActivity: Date.now(),
+          lastHomeVisit: 0,
+          quickReturnMode: false,
           models: {}
         };
         await this.saveMetadata();
@@ -63,6 +68,8 @@ class ModelCacheManager {
       this.metadata = {
         version: '2.0',
         lastActivity: Date.now(),
+        lastHomeVisit: 0,
+        quickReturnMode: false,
         models: {}
       };
     }
@@ -89,6 +96,13 @@ class ModelCacheManager {
 
     const now = Date.now();
     const timeSinceActivity = now - this.metadata.lastActivity;
+    const timeSinceHomeVisit = this.metadata.lastHomeVisit ? now - this.metadata.lastHomeVisit : Infinity;
+
+    // Режим быстрого возврата: если пользователь был на главной недавно (< 10 минут)
+    if (timeSinceHomeVisit < this.QUICK_RETURN_THRESHOLD) {
+      console.log('⚡ ModelCacheManager: Быстрый возврат - скрываем WelcomeScreen');
+      return false;
+    }
 
     // Если прошло больше часа с последней активности
     if (timeSinceActivity > this.ACTIVITY_TIMEOUT) {
@@ -96,15 +110,13 @@ class ModelCacheManager {
       return true;
     }
 
-    // Проверяем наличие всех моделей в кэше
-    const requiredModels = [
+    // Проверяем наличие ключевых моделей в кэше (не всех, а только критичных)
+    const criticalModels = [
       '/models/3530all.glb',
-      '/models/3730all.glb', 
-      '/models/4530all.glb',
-      '/models/6010all.glb'
+      '/models/3730all.glb'
     ];
 
-    const allModelsCached = requiredModels.every(url => {
+    const criticalModelsCached = criticalModels.every(url => {
       const modelInfo = this.metadata!.models[url];
       if (!modelInfo) return false;
 
@@ -112,13 +124,14 @@ class ModelCacheManager {
       return age < this.CACHE_DURATION;
     });
 
-    if (!allModelsCached) {
-      console.log('📦 ModelCacheManager: Показываем WelcomeScreen - не все модели в кэше');
-      return true;
+    // Если есть критичные модели, пропускаем WelcomeScreen
+    if (criticalModelsCached) {
+      console.log('⚡ ModelCacheManager: Скрываем WelcomeScreen - критичные модели в кэше');
+      return false;
     }
 
-    console.log('✅ ModelCacheManager: Скрываем WelcomeScreen - все модели актуальны');
-    return false;
+    console.log('📦 ModelCacheManager: Показываем WelcomeScreen - нет критичных моделей в кэше');
+    return true;
   }
 
   /**
@@ -128,6 +141,30 @@ class ModelCacheManager {
     if (this.metadata) {
       this.metadata.lastActivity = Date.now();
       this.saveMetadata();
+    }
+  }
+
+  /**
+   * Отметка посещения главной страницы
+   */
+  markHomeVisit(): void {
+    if (this.metadata) {
+      this.metadata.lastHomeVisit = Date.now();
+      this.metadata.quickReturnMode = true;
+      this.saveMetadata();
+      console.log('🏠 ModelCacheManager: Отмечено посещение главной страницы');
+    }
+  }
+
+  /**
+   * Принудительный показ WelcomeScreen (например, при первом посещении)
+   */
+  forceWelcomeScreen(): void {
+    if (this.metadata) {
+      this.metadata.lastHomeVisit = 0;
+      this.metadata.quickReturnMode = false;
+      this.saveMetadata();
+      console.log('🔄 ModelCacheManager: Принудительный показ WelcomeScreen');
     }
   }
 
