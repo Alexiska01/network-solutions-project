@@ -60,14 +60,23 @@ export const useWelcomePreloader = (heroData: ModelItem[]) => {
         console.log(`📊 useWelcomePreloader: Начальный прогресс ${initialProgress}%`);
       }
 
-      // Загружаем только незакэшированные модели
+      // ПОСЛЕДОВАТЕЛЬНАЯ загрузка: 3530 → 3730 → 4530 → 6010
       if (uncachedModels.length > 0) {
-        console.log(`🔄 useWelcomePreloader: Загружаем ${uncachedModels.length} новых моделей`);
+        console.log(`🔄 useWelcomePreloader: ПОСЛЕДОВАТЕЛЬНАЯ загрузка ${uncachedModels.length} новых моделей`);
         
-        const loadPromises = uncachedModels.map(async (url, index) => {
+        // Определяем правильный порядок загрузки
+        const sequenceOrder = ['/models/3530all.glb', '/models/3730all.glb', '/models/4530all.glb', '/models/6010all.glb'];
+        const sequentialModels = sequenceOrder.filter(url => uncachedModels.includes(url));
+        
+        console.log(`📝 useWelcomePreloader: Порядок загрузки:`, sequentialModels.map(url => url.match(/(\d+)all\.glb/)?.[1]).join(' → '));
+        
+        // Загружаем последовательно
+        for (let i = 0; i < sequentialModels.length; i++) {
+          const url = sequentialModels[i];
+          const modelSeries = url.match(/(\d+)all\.glb/)?.[1] || 'unknown';
+          
           try {
-            // Добавляем небольшую задержку между запросами для стабильности
-            await new Promise(resolve => setTimeout(resolve, index * 100));
+            console.log(`⏳ useWelcomePreloader: Загружаю модель ${modelSeries} (${i + 1}/${sequentialModels.length})`);
             
             const response = await modelCacheManager.loadModel(url);
             const success = response !== null;
@@ -79,22 +88,22 @@ export const useWelcomePreloader = (heroData: ModelItem[]) => {
             const progress = (completedCount / modelUrls.length) * 100;
             setLoadingProgress(progress);
             
-            console.log(`${success ? '✅' : '❌'} useWelcomePreloader: ${success ? 'Загружена' : 'Ошибка'} ${url} (${Math.round(progress)}%)`);
+            console.log(`${success ? '✅' : '❌'} useWelcomePreloader: ${success ? 'Загружена' : 'Ошибка'} модель ${modelSeries} (${Math.round(progress)}%)`);
             
-            return { url, success };
+            // Небольшая пауза между загрузками для стабильности
+            if (i < sequentialModels.length - 1) {
+              await new Promise(resolve => setTimeout(resolve, 200));
+            }
+            
           } catch (error) {
-            console.error(`❌ useWelcomePreloader: Ошибка загрузки ${url}`, error);
+            console.error(`❌ useWelcomePreloader: Ошибка загрузки модели ${modelSeries}:`, error);
             results.push({ url, success: false, cached: false });
             completedCount++;
             
             const progress = (completedCount / modelUrls.length) * 100;
             setLoadingProgress(progress);
-            
-            return { url, success: false };
           }
-        });
-
-        await Promise.allSettled(loadPromises);
+        }
       }
 
       setPreloadResults(results);

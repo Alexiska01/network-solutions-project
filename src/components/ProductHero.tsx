@@ -116,6 +116,25 @@ const ProductHero = () => {
         setModelLoadStatus(newStatus);
         setIsInitialized(true);
       } else {
+        console.log('📦 ProductHero: Проверяем доступность моделей по отдельности');
+        // Синхронизируем доступные модели перед инициализацией
+        const partialStatus: Record<string, boolean> = {};
+        
+        for (const model of heroData) {
+          const isPreloaded = modelPreloader.isLoaded(model.modelUrl);
+          const isCached = await modelCacheManager.hasModel(model.modelUrl);
+          
+          if (isPreloaded || isCached) {
+            partialStatus[model.modelUrl] = true;
+            console.log(`✅ ProductHero: Модель ${model.series} доступна (preloader: ${isPreloaded}, cache: ${isCached})`);
+          } else {
+            console.log(`⏳ ProductHero: Модель ${model.series} недоступна`);
+          }
+        }
+        
+        if (Object.keys(partialStatus).length > 0) {
+          setModelLoadStatus(partialStatus);
+        }
         console.log('📦 ProductHero: Модели не в кэше, начинаем загрузку');
         // Запускаем обычную загрузку
         const currentModel = heroData[currentIndex];
@@ -139,8 +158,11 @@ const ProductHero = () => {
       const currentModel = heroData[currentIndex];
       
       // Если модель уже загружена в modelPreloader, обновляем modelLoadStatus
-      if (modelPreloader.isLoaded(currentModel.modelUrl)) {
-        console.log(`✅ ProductHero: Модель ${currentModel.series} уже предзагружена, синхронизируем UI`);
+      const isPreloaded = modelPreloader.isLoaded(currentModel.modelUrl);
+      const isCached = await modelCacheManager.hasModel(currentModel.modelUrl);
+      
+      if (isPreloaded || isCached) {
+        console.log(`✅ ProductHero: Модель ${currentModel.series} доступна (preloader: ${isPreloaded}, cache: ${isCached}), синхронизируем UI`);
         setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
         preloadNextModel();
       } else {
@@ -228,14 +250,25 @@ const ProductHero = () => {
           modelPreloader.preloadModel(nextNextModel.modelUrl, 'low');
         }
         
-        setTimeout(() => {
+        setTimeout(async () => {
           const nextIndex = (currentIndex + 1) % heroData.length;
           const nextModel = heroData[nextIndex];
           
           // Принудительная синхронизация для проблемных моделей
-          if (nextModel.series === '4530' || nextModel.series === '6010') {
+          if (nextModel.series === '3730' || nextModel.series === '4530' || nextModel.series === '6010') {
             console.log(`🔧 ProductHero: Принудительная синхронизация при переходе к ${nextModel.series}`);
-            setModelLoadStatus(prev => ({ ...prev, [nextModel.modelUrl]: true }));
+            // Проверяем cache и preloader перед синхронизацией
+            try {
+              const hasInCache = modelCacheManager.hasModel ? await modelCacheManager.hasModel(nextModel.modelUrl) : false;
+              const hasInPreloader = modelPreloader.isLoaded(nextModel.modelUrl);
+              
+              if (hasInCache || hasInPreloader) {
+                console.log(`✅ ProductHero: Модель ${nextModel.series} найдена (cache: ${hasInCache}, preloader: ${hasInPreloader})`);
+                setModelLoadStatus(prev => ({ ...prev, [nextModel.modelUrl]: true }));
+              }
+            } catch (error) {
+              console.warn(`⚠️ ProductHero: Ошибка проверки кэша для ${nextModel.series}:`, error);
+            }
           }
           
           setCurrentIndex(nextIndex);
@@ -512,12 +545,15 @@ const ProductHero = () => {
                   <div className="w-full h-full relative">
                     {/* DEBUG: Логируем состояния */}
                     {(() => {
-                      console.log(`🔍 ProductHero RENDER: ${currentData.series} - UI: ${modelLoadStatus[currentData.modelUrl]}, Preloader: ${modelPreloader.isLoaded(currentData.modelUrl)}, showLoader: ${!modelLoadStatus[currentData.modelUrl]}`);
+                      const hasInUI = modelLoadStatus[currentData.modelUrl];
+                      const hasInPreloader = modelPreloader.isLoaded(currentData.modelUrl);
+                      const shouldShowLoader = !hasInUI && !hasInPreloader;
+                      console.log(`🔍 ProductHero RENDER: ${currentData.series} - UI: ${hasInUI}, Preloader: ${hasInPreloader}, showLoader: ${shouldShowLoader}`);
                       return null;
                     })()}
                     
-                    {/* Лоадер показывается только если модель не отображена в UI */}
-                    {!modelLoadStatus[currentData.modelUrl] && (
+                    {/* Лоадер показывается только если модель НЕ доступна ни в UI, ни в preloader */}
+                    {!modelLoadStatus[currentData.modelUrl] && !modelPreloader.isLoaded(currentData.modelUrl) && (
                       <div className="absolute inset-0 flex items-center justify-center z-10">
                         <div className="flex flex-col items-center gap-4">
                           <div className="w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full animate-spin" />
@@ -553,9 +589,15 @@ const ProductHero = () => {
                           '--progress-mask': 'transparent',
                           pointerEvents: 'none'
                         }}
-                        onLoad={() => {
+                        onLoad={(e: any) => {
                           console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
                           setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: true }));
+                          
+                          // Дополнительная синхронизация с modelPreloader
+                          if (!modelPreloader.isLoaded(currentData.modelUrl)) {
+                            console.log(`🔄 ProductHero: Синхронизируем модель ${currentData.series} с preloader`);
+                            modelPreloader.markAsLoaded && modelPreloader.markAsLoaded(currentData.modelUrl);
+                          }
                         }}
                         onError={(e: any) => {
                           console.error(`❌ ProductHero: Ошибка загрузки модели ${currentData.series}:`, e);
@@ -589,9 +631,15 @@ const ProductHero = () => {
                           '--progress-bar-color': 'transparent',
                           '--progress-mask': 'transparent'
                         }}
-                        onLoad={() => {
+                        onLoad={(e: any) => {
                           console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
                           setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: true }));
+                          
+                          // Дополнительная синхронизация с modelPreloader
+                          if (!modelPreloader.isLoaded(currentData.modelUrl)) {
+                            console.log(`🔄 ProductHero: Синхронизируем модель ${currentData.series} с preloader`);
+                            modelPreloader.markAsLoaded && modelPreloader.markAsLoaded(currentData.modelUrl);
+                          }
                         }}
                         onError={(e: any) => {
                           console.error(`❌ ProductHero: Ошибка загрузки модели ${currentData.series}:`, e);
