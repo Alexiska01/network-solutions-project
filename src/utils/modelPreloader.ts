@@ -279,6 +279,12 @@ export class ModelPreloader {
     const url = `/models/${switchSeries}all.glb`;
     await this.preloadModel(url, 'high');
   }
+
+  // Метод для принудительной отметки модели как загруженной (для синхронизации)
+  markAsLoaded(url: string): void {
+    this.loadedModels.set(url, true);
+    console.log(`🔄 ModelPreloader: Модель отмечена как загруженная: ${url}`);
+  }
 }
 
 export const modelPreloader = ModelPreloader.getInstance();

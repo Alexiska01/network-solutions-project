@@ -50,38 +50,76 @@ const cardVariants = {
 const Hero3530 = () => {
   const [isModelLoaded, setIsModelLoaded] = useState(false);
   const [isModelVisible, setIsModelVisible] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
   const modelViewerRef = useRef<any>(null);
+  const hasCheckedCacheRef = useRef(false);
 
   useEffect(() => {
-    const checkModelAvailability = async () => {
-      // Проверяем доступность модели в кэше или preloader
+    const checkModelCacheStatus = async () => {
+      if (hasCheckedCacheRef.current) return;
+      hasCheckedCacheRef.current = true;
+
+      console.log('🔍 Hero3530: Проверка доступности модели 3530');
+      
+      // Проверяем все источники кэша
       const isPreloaded = modelPreloader.isLoaded(model3530Data.modelUrl);
       const isCached = await modelCacheManager.hasModel(model3530Data.modelUrl);
       
-      console.log(`🔍 Hero3530: Модель 3530 доступна - preloader: ${isPreloaded}, cache: ${isCached}`);
+      console.log(`📊 Hero3530: Статус модели 3530 - preloader: ${isPreloaded}, cache: ${isCached}`);
       
       if (isPreloaded || isCached) {
+        console.log('⚡ Hero3530: Модель 3530 доступна в кэше - мгновенная загрузка');
         setIsModelLoaded(true);
-        // Небольшая задержка для плавного появления
-        setTimeout(() => setIsModelVisible(true), 200);
+        setIsModelVisible(true);
+        setShowLoader(false);
+      } else {
+        console.log('⏳ Hero3530: Модель 3530 не в кэше - показываем лоадер и загружаем');
+        setShowLoader(true);
+        
+        // Попытка принудительной загрузки через modelCacheManager
+        try {
+          const response = await modelCacheManager.loadModel(model3530Data.modelUrl);
+          if (response) {
+            console.log('✅ Hero3530: Модель 3530 загружена через modelCacheManager');
+            setIsModelLoaded(true);
+            setTimeout(() => {
+              setIsModelVisible(true);
+              setShowLoader(false);
+            }, 300);
+          }
+        } catch (error) {
+          console.warn('⚠️ Hero3530: Ошибка загрузки через modelCacheManager', error);
+          setShowLoader(false);
+        }
       }
     };
 
-    checkModelAvailability();
+    checkModelCacheStatus();
   }, []);
 
   useEffect(() => {
-    // Настройка автоматического вращения модели
+    // Настройка автоматического вращения и прозрачности модели
     if (modelViewerRef.current && isModelVisible) {
       const modelViewer = modelViewerRef.current;
       
       // Настройка камеры и автоматического вращения
-      modelViewer.cameraOrbit = "0deg 75deg 105%";
+      modelViewer.cameraOrbit = "0deg 75deg 110%";
       modelViewer.autoRotate = true;
       modelViewer.autoRotateDelay = 1000;
-      modelViewer.rotationPerSecond = "30deg";
+      modelViewer.rotationPerSecond = "25deg";
       
-      console.log(`🎬 Hero3530: Автоматическое вращение активировано для модели 3530`);
+      // Убираем все фоны и границы
+      modelViewer.style.background = 'transparent';
+      modelViewer.style.border = 'none';
+      modelViewer.style.outline = 'none';
+      modelViewer.style.boxShadow = 'none';
+      
+      // Настройки освещения для интеграции с фоном
+      modelViewer.setAttribute('environment-image', 'neutral');
+      modelViewer.setAttribute('shadow-intensity', '0');
+      modelViewer.setAttribute('exposure', '1.0');
+      
+      console.log(`🎬 Hero3530: Автоматическое вращение и прозрачность активированы для модели 3530`);
     }
   }, [isModelVisible]);
 
@@ -198,34 +236,21 @@ const Hero3530 = () => {
           >
             <div className="flex flex-col space-y-4 sm:space-y-5 md:space-y-6">
               
-              {/* Контейнер с 3D-моделью */}
+              {/* Контейнер с 3D-моделью - ПОЛНОСТЬЮ ПРОЗРАЧНЫЙ */}
               <motion.div
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
                 whileHover="hover"
-                className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[420px] h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] mx-auto lg:mx-0 rounded-xl overflow-hidden"
-                style={{
-                  background: `linear-gradient(135deg, ${model3530Data.gradient})`,
-                  boxShadow: `0 8px 32px rgba(0, 91, 170, 0.3), 0 4px 16px rgba(0, 0, 0, 0.1)`,
-                }}
+                className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[420px] h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] mx-auto lg:mx-0"
               >
-                {/* Фоновые эффекты */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20" />
-                <div 
-                  className="absolute inset-0 opacity-30"
-                  style={{
-                    background: `radial-gradient(circle at 30% 20%, ${model3530Data.glowColor}/40 0%, transparent 50%)`
-                  }}
-                />
-                
-                {/* 3D модель */}
+                {/* 3D модель - БЕЗ ФОНА, ГРАНИЦ И КОНТЕЙНЕРОВ */}
                 {isModelLoaded && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ 
                       opacity: isModelVisible ? 1 : 0, 
-                      scale: isModelVisible ? 1 : 0.8 
+                      scale: isModelVisible ? 1 : 0.9 
                     }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="relative z-10 w-full h-full"
@@ -237,31 +262,48 @@ const Hero3530 = () => {
                       camera-controls
                       auto-rotate
                       auto-rotate-delay="1000"
-                      rotation-per-second="30deg"
-                      camera-orbit="0deg 75deg 105%"
+                      rotation-per-second="25deg"
+                      camera-orbit="0deg 75deg 110%"
                       min-camera-orbit="auto auto 80%"
                       max-camera-orbit="auto auto 200%"
                       interaction-policy="allow-when-focused"
+                      environment-image="neutral"
+                      shadow-intensity="0"
+                      exposure="1.0"
                       style={{
                         width: '100%',
                         height: '100%',
                         background: 'transparent',
+                        border: 'none',
+                        outline: 'none',
+                        boxShadow: 'none',
                       }}
                       onLoad={() => {
                         console.log(`✅ Hero3530: 3D-модель ${model3530Data.series} загружена и отображается`);
                         setIsModelVisible(true);
+                        setShowLoader(false);
+                        
+                        // Дополнительная синхронизация с preloader
+                        if (!modelPreloader.isLoaded(model3530Data.modelUrl)) {
+                          console.log(`🔄 Hero3530: Синхронизируем модель ${model3530Data.series} с preloader`);
+                          modelPreloader.markAsLoaded && modelPreloader.markAsLoaded(model3530Data.modelUrl);
+                        }
+                      }}
+                      onError={(e) => {
+                        console.error(`❌ Hero3530: Ошибка загрузки модели ${model3530Data.series}`, e);
+                        setShowLoader(false);
                       }}
                     />
                   </motion.div>
                 )}
                 
-                {/* Лоадер для модели */}
-                {!isModelVisible && (
+                {/* Минималистичный лоадер - ТОЛЬКО при необходимости */}
+                {showLoader && !isModelVisible && (
                   <div className="absolute inset-0 flex items-center justify-center z-20">
                     <div className="flex flex-col items-center gap-3">
-                      <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span className="text-white/80 text-sm font-medium">
-                        Загрузка модели...
+                      <div className="w-6 h-6 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+                      <span className="text-white/60 text-sm font-medium">
+                        Загрузка...
                       </span>
                     </div>
                   </div>
