@@ -40,11 +40,11 @@ const cardVariants = {
     },
   },
   hover: { 
-    scale: 1.02, 
-    y: -2,
+    scale: 1.01, 
+    y: -1,
     transition: { duration: 0.3, ease: "easeOut" }
   },
-  tap: { scale: 0.98 },
+  tap: { scale: 0.99 },
 };
 
 const Hero3530 = () => {
@@ -102,24 +102,40 @@ const Hero3530 = () => {
     if (modelViewerRef.current && isModelVisible) {
       const modelViewer = modelViewerRef.current;
       
-      // Настройка камеры и автоматического вращения
-      modelViewer.cameraOrbit = "0deg 75deg 110%";
+      // Настройка камеры - приближаем для большего размера модели
+      modelViewer.cameraOrbit = "0deg 75deg 85%"; // Уменьшили с 110% до 85% для увеличения модели
       modelViewer.autoRotate = true;
       modelViewer.autoRotateDelay = 1000;
       modelViewer.rotationPerSecond = "25deg";
+      
+      // Полное отключение touch и mouse взаимодействий
+      modelViewer.disableZoom = true;
+      modelViewer.disablePan = true;
+      modelViewer.disableTap = true;
+      modelViewer.interactionPolicy = 'none';
+      modelViewer.cameraControls = false;
       
       // Убираем все фоны и границы
       modelViewer.style.background = 'transparent';
       modelViewer.style.border = 'none';
       modelViewer.style.outline = 'none';
       modelViewer.style.boxShadow = 'none';
+      modelViewer.style.pointerEvents = 'none'; // Полностью отключаем интерактивность
       
       // Настройки освещения для интеграции с фоном
       modelViewer.setAttribute('environment-image', 'neutral');
       modelViewer.setAttribute('shadow-intensity', '0');
       modelViewer.setAttribute('exposure', '1.0');
       
-      console.log(`🎬 Hero3530: Автоматическое вращение и прозрачность активированы для модели 3530`);
+      // Принудительное отключение всех touch событий
+      modelViewer.addEventListener('touchstart', (e: Event) => e.preventDefault(), { passive: false });
+      modelViewer.addEventListener('touchmove', (e: Event) => e.preventDefault(), { passive: false });
+      modelViewer.addEventListener('touchend', (e: Event) => e.preventDefault(), { passive: false });
+      modelViewer.addEventListener('gesturestart', (e: Event) => e.preventDefault(), { passive: false });
+      modelViewer.addEventListener('gesturechange', (e: Event) => e.preventDefault(), { passive: false });
+      modelViewer.addEventListener('gestureend', (e: Event) => e.preventDefault(), { passive: false });
+      
+      console.log(`🎬 Hero3530: Модель настроена - touch отключен, камера приближена (85%)`);
     }
   }, [isModelVisible]);
 
@@ -204,8 +220,8 @@ const Hero3530 = () => {
               </div>
             </motion.div>
             
+            {/* Обновленная кнопка - только одна */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.9 }}
@@ -219,10 +235,7 @@ const Hero3530 = () => {
                   )
                 }
               >
-                Посмотреть документацию
-              </button>
-              <button className="border border-white text-white px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-all duration-300 min-h-[44px] hover:bg-gradient-brand hover:border-gradient-brand hover:scale-105 hover:shadow-lg transform-gpu">
-                Получить консультацию
+                Скачать PDF
               </button>
             </motion.div>
           </motion.div>
@@ -259,14 +272,16 @@ const Hero3530 = () => {
                       ref={modelViewerRef}
                       src={model3530Data.modelUrl}
                       alt="3D модель коммутатора IDS3530"
-                      camera-controls
                       auto-rotate
                       auto-rotate-delay="1000"
                       rotation-per-second="25deg"
-                      camera-orbit="0deg 75deg 110%"
-                      min-camera-orbit="auto auto 80%"
-                      max-camera-orbit="auto auto 200%"
-                      interaction-policy="allow-when-focused"
+                      camera-orbit="0deg 75deg 85%"
+                      min-camera-orbit="auto auto 85%"
+                      max-camera-orbit="auto auto 85%"
+                      interaction-policy="none"
+                      disable-zoom
+                      disable-pan
+                      disable-tap
                       environment-image="neutral"
                       shadow-intensity="0"
                       exposure="1.0"
@@ -277,6 +292,8 @@ const Hero3530 = () => {
                         border: 'none',
                         outline: 'none',
                         boxShadow: 'none',
+                        pointerEvents: 'none',
+                        touchAction: 'none',
                       }}
                       onLoad={() => {
                         console.log(`✅ Hero3530: 3D-модель ${model3530Data.series} загружена и отображается`);
@@ -310,7 +327,7 @@ const Hero3530 = () => {
                 )}
               </motion.div>
 
-              {/* Фичи-карточки */}
+              {/* Обновленные фичи-карточки - МИНИМАЛИСТИЧНЫЕ БЕЗ ГРАНИЦ */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
                 {featuresRight.map(({ icon, label }, i) => (
                   <motion.div
@@ -322,14 +339,11 @@ const Hero3530 = () => {
                       duration: 0.5,
                       ease: "easeOut",
                     }}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: 1.01, y: -1 }}
+                    whileTap={{ scale: 0.99 }}
                     className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 transform-gpu"
                     style={{
-                      backgroundColor: "rgba(255,255,255,0.08)",
-                      borderColor: "rgba(255,255,255,0.2)",
-                      border: "1px solid",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                      backgroundColor: "rgba(255,255,255,0.06)",
                       backdropFilter: "blur(8px)",
                     }}
                   >
@@ -338,17 +352,17 @@ const Hero3530 = () => {
                         name={icon as any}
                         size={16}
                         strokeWidth={1.8}
-                        className="text-white"
+                        className="text-white/90"
                       />
                     </div>
-                    <span className="text-white font-medium text-sm sm:text-base leading-snug">
+                    <span className="text-white/90 font-medium text-sm sm:text-base leading-snug">
                       {label}
                     </span>
                   </motion.div>
                 ))}
               </div>
 
-              {/* Дополнительное описание */}
+              {/* Обновленное дополнительное описание - БЕЗ ГРАНИЦ */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -357,25 +371,22 @@ const Hero3530 = () => {
                   duration: 0.6,
                   ease: "easeOut",
                 }}
-                whileHover={{ scale: 1.01 }}
+                whileHover={{ scale: 1.005 }}
                 className="flex items-start gap-3 px-4 py-3 rounded-lg transition-all duration-300 transform-gpu"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.06)",
-                  borderColor: "rgba(255,255,255,0.15)",
-                  border: "1px solid",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                  backgroundColor: "rgba(255,255,255,0.04)",
                   backdropFilter: "blur(6px)",
                 }}
               >
-                <div className="flex items-center justify-center w-6 h-6 rounded-md bg-white/10 flex-shrink-0 mt-0.5">
+                <div className="flex items-center justify-center w-6 h-6 rounded-md bg-white/8 flex-shrink-0 mt-0.5">
                   <Icon
                     name="ServerCog"
                     size={16}
                     strokeWidth={1.8}
-                    className="text-white/90"
+                    className="text-white/80"
                   />
                 </div>
-                <span className="text-white/90 font-medium text-xs sm:text-sm leading-relaxed">
+                <span className="text-white/80 font-medium text-xs sm:text-sm leading-relaxed">
                   Лёгкая интеграция в корпоративные сети различной сложности,
                   поддержка кольцевых топологий, автоматизация и удалённое управление
                 </span>
