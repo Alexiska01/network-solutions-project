@@ -282,7 +282,10 @@ const ProductsSection = () => {
                       Беспроводные<br className="hidden sm:block lg:hidden xl:block" /> решения
                     </>
                   ) : (
-                    product.title
+                    <>
+                      {product.title}
+                      <br className="hidden sm:block lg:hidden xl:block opacity-0 h-0" aria-hidden="true" />
+                    </>
                   )}
                 </motion.h3>
               </div>
