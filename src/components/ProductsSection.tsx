@@ -292,16 +292,13 @@ const ProductsSection = () => {
 
               {/* Анимированное описание */}
               <motion.div 
-                className="mb-4"
+                className="mb-4 h-10 flex items-start"
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.5 }}
               >
                 <p className="text-sm text-gray-600 leading-relaxed">
                   {product.description}
-                  {product.title !== "Управляемые коммутаторы" && (
-                    <br className="opacity-0 h-0" aria-hidden="true" />
-                  )}
                 </p>
               </motion.div>
 
