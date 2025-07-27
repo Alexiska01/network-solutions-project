@@ -373,7 +373,7 @@ const ProductHero = () => {
       {/* Основной контент */}
       <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16 h-full md:h-auto">
-          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto">
+          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto pt-16 md:pt-0">
             
             {/* Левая колонка - контент */}
             <motion.div
