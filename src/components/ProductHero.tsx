@@ -492,7 +492,7 @@ const ProductHero = () => {
                 filter: "blur(0px)"
               }}
               transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex-1 md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center justify-center"
+              className="relative h-[60vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center justify-center"
               style={{}}
             >
               {/* 3D фоновые эффекты */}
