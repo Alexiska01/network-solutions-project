@@ -303,7 +303,7 @@ const ProductHero = () => {
         ease: [0.16, 1, 0.3, 1],
         delay: 0.2
       }}
-      className="relative h-[100dvh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+      className="relative h-[100dvh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden mb-8 md:mb-12"
     >
       {/* Динамический фоновый градиент */}
       <div 
