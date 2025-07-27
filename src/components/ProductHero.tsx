@@ -492,16 +492,8 @@ const ProductHero = () => {
                 filter: "blur(0px)"
               }}
               transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex-1 md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
-              style={isMobile ? {
-                position: 'fixed',
-                top: '50%',
-                left: '0',
-                right: '0',
-                height: '50vh',
-                transform: 'translateY(-50%)',
-                zIndex: 1
-              } : {}}
+              className="relative flex-1 md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center justify-center"
+              style={{}}
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
