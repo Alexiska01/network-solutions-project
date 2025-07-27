@@ -299,6 +299,9 @@ const ProductsSection = () => {
               >
                 <p className="text-sm text-gray-600 leading-relaxed">
                   {product.description}
+                  {product.title !== "Управляемые коммутаторы" && (
+                    <br className="opacity-0 h-0" aria-hidden="true" />
+                  )}
                 </p>
               </motion.div>
 
