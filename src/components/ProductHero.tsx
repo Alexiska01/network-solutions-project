@@ -373,14 +373,14 @@ const ProductHero = () => {
       {/* Основной контент */}
       <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16 h-full md:h-auto">
-          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto">
+          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-center h-full md:h-auto">
             
             {/* Левая колонка - контент */}
             <motion.div
               initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45dvh] md:h-auto"
+              className="flex flex-col justify-center md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 flex-1 md:h-auto"
             >
               {/* Заголовок */}
               <div className="space-y-3 md:space-y-4">
