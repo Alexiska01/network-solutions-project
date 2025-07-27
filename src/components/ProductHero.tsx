@@ -495,10 +495,11 @@ const ProductHero = () => {
               className="relative flex-1 md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
               style={isMobile ? {
                 position: 'fixed',
-                top: '0',
+                top: '50%',
                 left: '0',
                 right: '0',
                 height: '50vh',
+                transform: 'translateY(-50%)',
                 zIndex: 1
               } : {}}
             >
