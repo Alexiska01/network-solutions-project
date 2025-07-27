@@ -492,7 +492,7 @@ const ProductHero = () => {
                 filter: "blur(0px)"
               }}
               transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[55dvh] xs:h-[50dvh] sm:h-[45dvh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
+              className="relative h-[400px] xs:h-[420px] sm:h-[450px] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
@@ -542,7 +542,7 @@ const ProductHero = () => {
                   className="relative w-full h-full"
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
-                  <div className="w-full h-full relative">
+                  <div className="w-full h-full relative min-h-[400px] max-h-[500px]">
                     {/* DEBUG: Логируем состояния */}
                     {(() => {
                       const hasInUI = modelLoadStatus[currentData.modelUrl];
@@ -582,7 +582,9 @@ const ProductHero = () => {
                         reveal="auto"
                         style={{
                           width: '100%',
-                          height: '100%',
+                          height: '400px',
+                          minHeight: '400px',
+                          maxHeight: '400px',
                           background: 'transparent',
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
@@ -625,7 +627,9 @@ const ProductHero = () => {
                         reveal="auto"
                         style={{
                           width: '100%',
-                          height: '100%',
+                          height: '400px',
+                          minHeight: '400px',
+                          maxHeight: '400px',
                           background: 'transparent',
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
