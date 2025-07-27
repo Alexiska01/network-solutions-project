@@ -303,7 +303,7 @@ const ProductHero = () => {
         ease: [0.16, 1, 0.3, 1],
         delay: 0.2
       }}
-      className="relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+      className="relative h-[100dvh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
     >
       {/* Динамический фоновый градиент */}
       <div 
@@ -380,7 +380,7 @@ const ProductHero = () => {
               initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45vh] md:h-auto"
+              className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45dvh] md:h-auto"
             >
               {/* Заголовок */}
               <div className="space-y-3 md:space-y-4">
@@ -492,7 +492,7 @@ const ProductHero = () => {
                 filter: "blur(0px)"
               }}
               transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
+              className="relative h-[55dvh] xs:h-[50dvh] sm:h-[45dvh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
