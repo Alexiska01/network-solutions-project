@@ -205,10 +205,10 @@ const ProductHero = () => {
         const mv = modelRef.current as any;
         if (mv && mv.cameraOrbit) {
           // Принудительная инициализация для мобильных - отдаленная камера без взаимодействий
-          mv.cameraOrbit = "0deg 75deg 1.6m";
-          mv.fieldOfView = "40deg";
-          mv.minCameraOrbit = "auto auto 1.6m";
-          mv.maxCameraOrbit = "auto auto 1.6m";
+          mv.cameraOrbit = "0deg 75deg 1.2m";
+          mv.fieldOfView = "35deg";
+          mv.minCameraOrbit = "auto auto 1.2m";
+          mv.maxCameraOrbit = "auto auto 1.2m";
           if (mv.jumpCameraToGoal) {
             mv.jumpCameraToGoal();
           }
@@ -492,7 +492,7 @@ const ProductHero = () => {
                 filter: "blur(0px)"
               }}
               transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[300px] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center justify-center"
+              className="relative h-[350px] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center justify-center"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
@@ -570,10 +570,10 @@ const ProductHero = () => {
                         auto-rotate={true}
                         auto-rotate-delay="0"
                         rotation-per-second="30deg"
-                        camera-orbit="0deg 75deg 1.6m"
-                        min-camera-orbit="auto auto 1.6m"
-                        max-camera-orbit="auto auto 1.6m"
-                        field-of-view="40deg"
+                        camera-orbit="0deg 75deg 1.2m"
+                        min-camera-orbit="auto auto 1.2m"
+                        max-camera-orbit="auto auto 1.2m"
+                        field-of-view="35deg"
                         exposure="1.2"
                         shadow-intensity="0.3"
                         environment-image="neutral"
