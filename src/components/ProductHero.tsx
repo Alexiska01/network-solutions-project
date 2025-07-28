@@ -205,10 +205,10 @@ const ProductHero = () => {
         const mv = modelRef.current as any;
         if (mv && mv.cameraOrbit) {
           // Принудительная инициализация для мобильных - отдаленная камера без взаимодействий
-          mv.cameraOrbit = "0deg 75deg 1.2m";
-          mv.fieldOfView = "35deg";
-          mv.minCameraOrbit = "auto auto 1.2m";
-          mv.maxCameraOrbit = "auto auto 1.2m";
+          mv.cameraOrbit = "0deg 75deg 1.6m";
+          mv.fieldOfView = "40deg";
+          mv.minCameraOrbit = "auto auto 1.6m";
+          mv.maxCameraOrbit = "auto auto 1.6m";
           if (mv.jumpCameraToGoal) {
             mv.jumpCameraToGoal();
           }
@@ -303,7 +303,7 @@ const ProductHero = () => {
         ease: [0.16, 1, 0.3, 1],
         delay: 0.2
       }}
-      className="relative h-[100dvh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden mb-8 md:mb-12"
+      className="relative h-[100dvh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
     >
       {/* Динамический фоновый градиент */}
       <div 
@@ -373,14 +373,14 @@ const ProductHero = () => {
       {/* Основной контент */}
       <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16 h-full md:h-auto">
-          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-center h-full md:h-auto">
+          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto">
             
             {/* Левая колонка - контент */}
             <motion.div
               initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col justify-center md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 flex-1 md:h-auto"
+              className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45dvh] md:h-auto"
             >
               {/* Заголовок */}
               <div className="space-y-3 md:space-y-4">
@@ -492,7 +492,7 @@ const ProductHero = () => {
                 filter: "blur(0px)"
               }}
               transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[350px] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center justify-center"
+              className="relative h-[400px] xs:h-[420px] sm:h-[450px] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
             >
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
@@ -542,7 +542,7 @@ const ProductHero = () => {
                   className="relative w-full h-full"
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
-                  <div className="w-full h-full relative">
+                  <div className="w-full h-full relative min-h-[400px] max-h-[500px]">
                     {/* DEBUG: Логируем состояния */}
                     {(() => {
                       const hasInUI = modelLoadStatus[currentData.modelUrl];
@@ -570,10 +570,10 @@ const ProductHero = () => {
                         auto-rotate={true}
                         auto-rotate-delay="0"
                         rotation-per-second="30deg"
-                        camera-orbit="0deg 75deg 1.2m"
-                        min-camera-orbit="auto auto 1.2m"
-                        max-camera-orbit="auto auto 1.2m"
-                        field-of-view="35deg"
+                        camera-orbit="0deg 75deg 1.6m"
+                        min-camera-orbit="auto auto 1.6m"
+                        max-camera-orbit="auto auto 1.6m"
+                        field-of-view="40deg"
                         exposure="1.2"
                         shadow-intensity="0.3"
                         environment-image="neutral"
@@ -582,7 +582,9 @@ const ProductHero = () => {
                         reveal="auto"
                         style={{
                           width: '100%',
-                          height: '100%',
+                          height: '400px',
+                          minHeight: '400px',
+                          maxHeight: '400px',
                           background: 'transparent',
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
@@ -625,7 +627,9 @@ const ProductHero = () => {
                         reveal="auto"
                         style={{
                           width: '100%',
-                          height: '100%',
+                          height: '400px',
+                          minHeight: '400px',
+                          maxHeight: '400px',
                           background: 'transparent',
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
