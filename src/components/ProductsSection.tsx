@@ -1,10 +1,22 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import { useEffect, useState, useRef } from "react";
 
 const ProductsSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,7 +70,7 @@ const ProductsSection = () => {
       gradientPosition: "from-blue-800 to-teal-600",
     },
     {
-      title: "Системы управления",
+      title: "Системы\nуправления",
       description: "Централизованные платформы для управления инфраструктурой",
       features: [
         "Унифицированная панель",
@@ -70,119 +82,180 @@ const ProductsSection = () => {
     },
   ];
 
-  return (
-    <section ref={sectionRef} className="py-16 md:py-20 lg:py-24 bg-gradient-to-b from-gray-50/50 to-white mt-8 md:mt-12 relative overflow-hidden">
-      {/* Декоративный фон */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20 pointer-events-none"></div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className={`text-center mb-16 transition-all duration-1000 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}>
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-2xl mb-6 shadow-lg">
-            <Icon name="Package" size={28} className="text-white" />
-          </div>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
-            Наши решения
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-6 rounded-full"></div>
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto font-medium">
-            Профессиональное сетевое оборудование для бизнеса
-          </p>
-        </div>
+  // Премиум анимации для современных карточек
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: isMobile ? 30 : 60,
+      scale: isMobile ? 0.92 : 0.85,
+      rotateX: 15,
+    },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: isMobile ? 0.6 : 0.8,
+        delay: i * (isMobile ? 0.08 : 0.12),
+        ease: [0.23, 1, 0.32, 1],
+        type: "spring",
+        stiffness: 80,
+        damping: 20,
+      },
+    }),
+  };
 
+  return (
+    <section ref={sectionRef} className="py-12 md:py-16 lg:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {products.map((product, index) => (
-            <div
+            <motion.div
               key={index}
-              className={`group relative bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 h-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 overflow-hidden ${
+              custom={index}
+              variants={cardVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+              className={`group relative cursor-pointer overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-12'
+                  : 'opacity-0 translate-y-16'
               }`}
               style={{ 
-                minHeight: "480px",
-                transitionDelay: `${index * 150}ms`
+                height: "560px",
+                transitionDelay: `${index * 120}ms`
               }}
             >
-              {/* Subtle gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-              
-              {/* Content */}
-              <div className="relative z-10 flex flex-col h-full">
-                {/* Icon with enhanced styling */}
-                <div className="relative mb-6">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${product.gradientPosition} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300`}>
-                    <Icon
-                      name={product.icon as any}
-                      size={28}
-                      className="text-white"
-                    />
-                  </div>
-                  {/* Decorative ring */}
-                  <div className="absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
+              {/* Карточка в стиле FeaturesSection */}
+              <div className="relative h-full w-full bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 flex flex-col transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                {/* Subtle gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
                 
-                {/* Text content */}
-                <div className="flex-1 space-y-4 mb-6">
-                  <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight">
-                    {product.title}
-                  </h3>
-                  <div className={`w-12 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full opacity-60`}></div>
-                  <p className="text-gray-600 leading-relaxed text-[15px] font-medium">
-                    {product.description}
-                  </p>
+                <div className="relative z-10 h-full flex flex-col">
+                  {/* Премиум градиентный акцент */}
+                  <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${product.gradientPosition} rounded-t-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left shadow-md`}></div>
                   
-                  {/* Features list */}
-                  <ul className="space-y-2 mt-4">
-                    {product.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start text-gray-700">
-                        <div className={`relative w-4 h-4 rounded-full flex items-center justify-center mr-3 flex-shrink-0 bg-gradient-to-br ${product.gradientPosition} shadow-sm mt-0.5`}>
+                  {/* Элегантный индикатор статуса */}
+                  <div className="absolute top-5 right-5 flex items-center space-x-2 opacity-30 group-hover:opacity-50 transition-all duration-500">
+                    {/* Тонкие линии вместо точек */}
+                    <div className="flex space-x-1">
+                      <div className="w-3 h-0.5 bg-gray-400 rounded-full"></div>
+                      <div className={`w-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full opacity-60`}></div>
+                      <div className="w-2 h-0.5 bg-gray-300 rounded-full"></div>
+                    </div>
+                    {/* Миниатюрная иконка категории */}
+                    <div className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors duration-300">
+                      <Icon
+                        name={product.icon as any}
+                        size={12}
+                        className="text-gray-500"
+                      />
+                    </div>
+                  </div>
+                  {/* Секция 1: Чистая иконка */}
+                  <div className="relative mb-6" style={{ height: "72px" }}>
+                    <div className="relative flex items-center justify-start">
+                      {/* Градиентная иконка */}
+                      <div className={`relative p-4 rounded-2xl bg-gradient-to-br ${product.gradientPosition} group-hover:shadow-lg transition-all duration-300`}>
+                        <Icon
+                          name={product.icon as any}
+                          size={32}
+                          className="text-white group-hover:scale-105 transition-all duration-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                
+                  {/* Секция 2: Премиум заголовок */}
+                  <div className="mb-5" style={{ height: "78px" }}>
+                    <h3 className="text-2xl font-bold text-gray-900 leading-tight tracking-tight mb-4 whitespace-pre-line group-hover:text-gray-800 transition-colors duration-300">
+                      {product.title}
+                    </h3>
+                    {/* Анимированная линия */}
+                    <div className="relative h-0.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className={`absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-out`}></div>
+                    </div>
+                  </div>
+                
+                  {/* Секция 3: Элегантное описание */}
+                  <div className="mb-6 flex items-start" style={{ height: "60px" }}>
+                    <p className="text-gray-600 leading-relaxed text-base font-medium group-hover:text-gray-700 transition-colors duration-300">
+                      {product.description}
+                    </p>
+                  </div>
+                
+                  {/* Секция 4: Стильный список характеристик */}
+                  <div className="mb-8 flex-1" style={{ minHeight: "120px" }}>
+                    <ul className="space-y-3">
+                      {product.features.map((feature, idx) => (
+                        <motion.li 
+                          key={idx} 
+                          className="flex items-start text-gray-700 group-hover:text-gray-800 transition-colors duration-300"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: (index * 0.1) + (idx * 0.1) + 0.3 }}
+                        >
+                          <div className={`relative w-5 h-5 rounded-full flex items-center justify-center mr-4 flex-shrink-0 bg-gradient-to-br ${product.gradientPosition} shadow-sm group-hover:shadow-md transition-all duration-300 mt-0.5`}>
+                            <Icon
+                              name="Check"
+                              size={12}
+                              className="text-white"
+                              strokeWidth={2.5}
+                            />
+                            {/* Пульсирующий эффект */}
+                            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${product.gradientPosition} opacity-0 group-hover:opacity-30 animate-ping`}></div>
+                          </div>
+                          <span className="leading-relaxed text-sm font-medium">{feature}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </div>
+                
+                  {/* Секция 5: Современный CTA */}
+                  <div className="mt-auto pt-4">
+                    {index === 0 ? (
+                      <Link
+                        to="/switches"
+                        className="group/cta flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
+                        </div>
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${product.gradientPosition} group-hover/cta:scale-110 transition-all duration-300 group-hover/cta:shadow-lg`}>
                           <Icon
-                            name="Check"
-                            size={10}
-                            className="text-white"
-                            strokeWidth={2.5}
+                            name="ArrowRight"
+                            size={14}
+                            className="text-white group-hover/cta:translate-x-0.5 transition-transform duration-200"
                           />
                         </div>
-                        <span className="leading-relaxed text-sm font-medium">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                        {/* Анимированная линия снизу */}
+                        <div className={`absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full`}></div>
+                      </Link>
+                    ) : (
+                      <button className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50">
+                        <div className="flex items-center space-x-3">
+                          <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
+                        </div>
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${product.gradientPosition} group-hover/cta:scale-110 transition-all duration-300 group-hover/cta:shadow-lg`}>
+                          <Icon
+                            name="ArrowRight"
+                            size={14}
+                            className="text-white group-hover/cta:translate-x-0.5 transition-transform duration-200"
+                          />
+                        </div>
+                        {/* Анимированная линия снизу */}
+                        <div className={`absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full`}></div>
+                      </button>
+                    )}
+                  </div>
+                  
                 </div>
-                
-                {/* CTA Button */}
-                <div className="mt-auto">
-                  {index === 0 ? (
-                    <Link
-                      to="/switches"
-                      className="group/cta flex items-center justify-center p-3 rounded-xl bg-gradient-to-r from-blue-600 to-teal-500 text-white font-semibold text-sm hover:shadow-lg transition-all duration-300 hover:scale-105"
-                    >
-                      <span className="mr-2">Подробнее</span>
-                      <Icon
-                        name="ArrowRight"
-                        size={16}
-                        className="group-hover/cta:translate-x-0.5 transition-transform duration-200"
-                      />
-                    </Link>
-                  ) : (
-                    <button className="group/cta flex items-center justify-center w-full p-3 rounded-xl bg-gradient-to-r from-blue-600 to-teal-500 text-white font-semibold text-sm hover:shadow-lg transition-all duration-300 hover:scale-105">
-                      <span className="mr-2">Подробнее</span>
-                      <Icon
-                        name="ArrowRight"
-                        size={16}
-                        className="group-hover/cta:translate-x-0.5 transition-transform duration-200"
-                      />
-                    </button>
-                  )}
-                </div>
-              </div>
 
-              {/* Bottom accent line */}
-              <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-b-3xl`}></div>
-            </div>
+                {/* Bottom accent line */}
+                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-b-3xl`}></div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
