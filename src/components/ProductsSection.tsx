@@ -117,7 +117,7 @@ const ProductsSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
-              className={`group relative cursor-pointer overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-3 hover:rotate-1 ${
+              className={`group relative cursor-pointer overflow-hidden transition-all duration-700 ease-out hover:-translate-y-3 hover:rotate-1 ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-16'
@@ -241,10 +241,6 @@ const ProductsSection = () => {
                   
                 </div>
               </div>
-                
-              </div>
-
-
             </motion.div>
           ))}
         </div>
