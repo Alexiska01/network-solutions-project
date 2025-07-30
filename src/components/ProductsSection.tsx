@@ -151,27 +151,17 @@ const ProductsSection = () => {
                       />
                     </div>
                   </div>
-                  {/* Секция 1: Минималистичная иконка */}
+                  {/* Секция 1: Чистая иконка */}
                   <div className="relative mb-6" style={{ height: "72px" }}>
                     <div className="relative flex items-center justify-start">
-                      {/* Градиентная иконка без фона */}
-                      <div className={`relative p-3 rounded-full bg-gradient-to-br ${product.gradientPosition} bg-opacity-10 backdrop-blur-sm group-hover:bg-opacity-20 transition-all duration-500`}>
+                      {/* Простая иконка с легким фоном */}
+                      <div className="relative p-4 rounded-2xl bg-gray-50 group-hover:bg-gray-100 transition-all duration-300 border border-gray-100">
                         <Icon
                           name={product.icon as any}
-                          size={28}
-                          className={`bg-gradient-to-br ${product.gradientPosition} bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300`}
+                          size={32}
+                          className="text-gray-700 group-hover:text-gray-900 group-hover:scale-105 transition-all duration-300"
                         />
                       </div>
-                      
-                      {/* Декоративные элементы */}
-                      <div className="absolute -right-2 -top-1 flex flex-col space-y-1 opacity-20 group-hover:opacity-40 transition-opacity duration-300">
-                        <div className={`w-1 h-1 rounded-full bg-gradient-to-r ${product.gradientPosition}`}></div>
-                        <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${product.gradientPosition}`}></div>
-                        <div className={`w-1 h-1 rounded-full bg-gradient-to-r ${product.gradientPosition}`}></div>
-                      </div>
-                      
-                      {/* Пульсирующий эффект */}
-                      <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${product.gradientPosition} opacity-0 group-hover:opacity-10 animate-pulse`}></div>
                     </div>
                   </div>
                 
