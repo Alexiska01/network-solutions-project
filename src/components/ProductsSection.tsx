@@ -38,7 +38,7 @@ const ProductsSection = () => {
   const products = [
     {
       title: "Управляемые коммутаторы",
-      description: "Корпоративные L3 коммутаторы для сетей",
+      description: "Корпоративные L3 коммутаторы с расширенными функциями управления",
       features: [
         "24/48 портов Gigabit",
         "PoE+ поддержка",
