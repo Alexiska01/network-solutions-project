@@ -70,7 +70,7 @@ const ProductsSection = () => {
       gradientPosition: "from-blue-800 to-teal-600",
     },
     {
-      title: "Системы управления",
+      title: "Системы\nуправления",
       description: "Централизованные платформы для управления инфраструктурой",
       features: [
         "Унифицированная панель",
@@ -146,7 +146,7 @@ const ProductsSection = () => {
                 
                 {/* Секция 2: Заголовок - фиксированная высота */}
                 <div className="mb-4 flex flex-col justify-start" style={{ height: "72px" }}>
-                  <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight mb-3 flex-1 flex items-start">
+                  <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight mb-3 flex-1 flex items-start whitespace-pre-line">
                     {product.title}
                   </h3>
                   <div className={`w-12 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full opacity-60`}></div>
