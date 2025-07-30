@@ -115,13 +115,13 @@ const ProductsSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
-              className={`group relative bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 overflow-hidden ${
+              className={`group relative bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-10 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 overflow-hidden ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-12'
               }`}
               style={{ 
-                height: "420px",
+                height: "480px",
                 transitionDelay: `${index * 150}ms`
               }}
             >
@@ -132,7 +132,7 @@ const ProductsSection = () => {
               <div className="relative z-10 h-full flex flex-col">
                 
                 {/* Секция 1: Иконка - фиксированная высота */}
-                <div className="relative mb-6" style={{ height: "64px" }}>
+                <div className="relative mb-8" style={{ height: "64px" }}>
                   <div className={`w-16 h-16 bg-gradient-to-br ${product.gradientPosition} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300`}>
                     <Icon
                       name={product.icon as any}
@@ -145,7 +145,7 @@ const ProductsSection = () => {
                 </div>
                 
                 {/* Секция 2: Заголовок - фиксированная высота */}
-                <div className="mb-4 flex flex-col justify-start" style={{ height: "72px" }}>
+                <div className="mb-6 flex flex-col justify-start" style={{ height: "72px" }}>
                   <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight mb-3 flex-1 flex items-start whitespace-pre-line">
                     {product.title}
                   </h3>
@@ -153,14 +153,14 @@ const ProductsSection = () => {
                 </div>
                 
                 {/* Секция 3: Описание - фиксированная высота */}
-                <div className="mb-5 flex items-start" style={{ height: "60px" }}>
+                <div className="mb-6 flex items-start" style={{ height: "60px" }}>
                   <p className="text-gray-600 leading-relaxed text-[15px] font-medium">
                     {product.description}
                   </p>
                 </div>
                 
                 {/* Секция 4: Список характеристик - фиксированная высота */}
-                <div className="mb-6" style={{ height: "120px" }}>
+                <div className="mb-8" style={{ height: "120px" }}>
                   <ul className="space-y-2 h-full flex flex-col justify-start">
                     {product.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start text-sm text-gray-700" style={{ height: "28px" }}>
@@ -179,7 +179,7 @@ const ProductsSection = () => {
                 </div>
                 
                 {/* Секция 5: Кнопка - фиксированная высота в низу */}
-                <div className="mt-auto">
+                <div className="mt-auto pb-2">
                   {index === 0 ? (
                     <Link
                       to="/switches"
