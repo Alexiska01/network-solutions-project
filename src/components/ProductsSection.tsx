@@ -123,7 +123,7 @@ const ProductsSection = () => {
                   : 'opacity-0 translate-y-16'
               }`}
               style={{ 
-                height: "480px",
+                height: "520px",
                 transitionDelay: `${index * 120}ms`
               }}
             >
