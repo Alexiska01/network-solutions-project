@@ -115,23 +115,24 @@ const ProductsSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
-              className={`group relative bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 h-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 overflow-hidden ${
+              className={`group relative bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 overflow-hidden ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-12'
               }`}
               style={{ 
-                minHeight: "340px",
+                height: "400px",
                 transitionDelay: `${index * 150}ms`
               }}
             >
               {/* Декоративный градиент при hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
               
-              {/* Контент */}
-              <div className="relative z-10 flex flex-col h-full">
-                {/* Иконка с улучшенным стилем */}
-                <div className="relative mb-8">
+              {/* Контент с строгой структурой */}
+              <div className="relative z-10 h-full flex flex-col">
+                
+                {/* Секция 1: Иконка - фиксированная высота */}
+                <div className="relative mb-6" style={{ height: "64px" }}>
                   <div className={`w-16 h-16 bg-gradient-to-br ${product.gradientPosition} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300`}>
                     <Icon
                       name={product.icon as any}
@@ -143,52 +144,58 @@ const ProductsSection = () => {
                   <div className="absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 
-                {/* Текстовый контент */}
-                <div className="flex-1 space-y-4">
-                  <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight">
+                {/* Секция 2: Заголовок - фиксированная высота */}
+                <div className="mb-4" style={{ height: "56px" }}>
+                  <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight mb-3">
                     {product.title}
                   </h3>
                   <div className={`w-12 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full opacity-60`}></div>
-                  
-                  <p className="text-gray-600 leading-relaxed text-[15px] font-medium mb-4">
+                </div>
+                
+                {/* Секция 3: Описание - фиксированная высота */}
+                <div className="mb-4" style={{ height: "48px" }}>
+                  <p className="text-gray-600 leading-relaxed text-[15px] font-medium">
                     {product.description}
                   </p>
-                  
-                  {/* Список характеристик */}
-                  <div className="mb-6">
-                    <ul className="space-y-2">
-                      {product.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center text-sm text-gray-700">
-                          <div className={`w-4 h-4 rounded-full flex items-center justify-center mr-3 flex-shrink-0 bg-gradient-to-r ${product.gradientPosition}`}>
-                            <Icon
-                              name="Check"
-                              size={10}
-                              className="text-white"
-                              strokeWidth={2.5}
-                            />
-                          </div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  {/* Кнопка */}
+                </div>
+                
+                {/* Секция 4: Список характеристик - растягивается */}
+                <div className="flex-1 mb-6">
+                  <ul className="space-y-2">
+                    {product.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start text-sm text-gray-700" style={{ minHeight: "24px" }}>
+                        <div className={`w-4 h-4 rounded-full flex items-center justify-center mr-3 flex-shrink-0 bg-gradient-to-r ${product.gradientPosition} mt-0.5`}>
+                          <Icon
+                            name="Check"
+                            size={10}
+                            className="text-white"
+                            strokeWidth={2.5}
+                          />
+                        </div>
+                        <span className="leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                {/* Секция 5: Кнопка - фиксированная высота в низу */}
+                <div className="mt-auto">
                   {index === 0 ? (
                     <Link
                       to="/switches"
-                      className={`block w-full text-white py-3 px-4 rounded-lg font-medium text-sm text-center transition-all duration-300 bg-gradient-to-r ${product.gradientPosition} hover:shadow-lg mt-auto`}
+                      className={`block w-full text-white py-3 px-4 rounded-lg font-medium text-sm text-center transition-all duration-300 bg-gradient-to-r ${product.gradientPosition} hover:shadow-lg`}
                     >
                       Подробнее
                     </Link>
                   ) : (
                     <button 
-                      className={`w-full text-white py-3 px-4 rounded-lg font-medium text-sm transition-all duration-300 bg-gradient-to-r ${product.gradientPosition} hover:shadow-lg mt-auto`}
+                      className={`w-full text-white py-3 px-4 rounded-lg font-medium text-sm transition-all duration-300 bg-gradient-to-r ${product.gradientPosition} hover:shadow-lg`}
                     >
                       Подробнее
                     </button>
                   )}
                 </div>
+                
               </div>
 
               {/* Нижняя акцентная линия */}
