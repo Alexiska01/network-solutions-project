@@ -117,7 +117,7 @@ const ProductsSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
-              className={`group relative cursor-pointer overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 ${
+              className={`group relative cursor-pointer overflow-hidden transition-all duration-700 ease-out hover:-translate-y-4 hover:rotate-1 hover:scale-[1.02] ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-16'
@@ -127,14 +127,14 @@ const ProductsSection = () => {
                 transitionDelay: `${index * 120}ms`
               }}
             >
-              {/* Карточка в стиле FeaturesSection */}
-              <div className="relative h-full w-full bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 flex flex-col transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
-                {/* Subtle gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-                
-                <div className="relative z-10 h-full flex flex-col">
+              {/* Премиум карточка с улучшенными тенями */}
+              <div className="relative h-full w-full rounded-3xl bg-gradient-to-br from-white via-gray-50/20 to-white p-[1px] shadow-[0_8px_25px_rgba(0,0,0,0.04),0_15px_35px_rgba(0,0,0,0.03),0_3px_8px_rgba(0,0,0,0.02)] group-hover:shadow-[0_20px_45px_rgba(0,0,0,0.08),0_10px_25px_rgba(0,0,0,0.05),0_5px_15px_rgba(0,0,0,0.04)] transition-all duration-700 border border-gray-100/60 group-hover:border-gray-200/80">
+                <div className="relative h-full w-full rounded-3xl bg-white/98 backdrop-blur-sm p-8 flex flex-col">
+                  
                   {/* Премиум градиентный акцент */}
                   <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${product.gradientPosition} rounded-t-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left shadow-md`}></div>
+                  
+
                   
                   {/* Элегантный индикатор статуса */}
                   <div className="absolute top-5 right-5 flex items-center space-x-2 opacity-30 group-hover:opacity-50 transition-all duration-500">
@@ -251,9 +251,6 @@ const ProductsSection = () => {
                   </div>
                   
                 </div>
-
-                {/* Bottom accent line */}
-                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-b-3xl`}></div>
               </div>
             </motion.div>
           ))}
