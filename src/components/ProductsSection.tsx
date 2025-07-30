@@ -117,7 +117,7 @@ const ProductsSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
-              className={`group relative cursor-pointer overflow-hidden transition-all duration-700 ease-out hover:-translate-y-4 hover:rotate-1 hover:scale-[1.02] ${
+              className={`group relative cursor-pointer overflow-hidden transition-all duration-700 ease-out hover:-translate-y-3 hover:rotate-1 ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-16'
@@ -127,9 +127,9 @@ const ProductsSection = () => {
                 transitionDelay: `${index * 120}ms`
               }}
             >
-              {/* Премиум карточка с профессиональными тенями */}
-              <div className={`relative h-full w-full rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-[2px] shadow-[0_10px_40px_rgba(0,0,0,0.25),0_4px_12px_rgba(0,0,0,0.15)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.35),0_8px_25px_rgba(0,0,0,0.2)] transition-all duration-700 border border-gray-700/30 group-hover:border-gray-600/50`}>
-                <div className="relative h-full w-full rounded-3xl bg-gradient-to-br from-gray-900 via-gray-850 to-black p-8 flex flex-col border border-gray-700/30 shadow-inner">
+              {/* Основная карточка с градиентным бордером */}
+              <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-white via-gray-50/30 to-white p-[1px] shadow-[0_8px_32px_rgba(0,0,0,0.08)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
+                <div className="relative h-full w-full rounded-2xl bg-white/95 backdrop-blur-sm p-8 flex flex-col">
                   
                   {/* Градиентный акцент сверху */}
                   <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} rounded-t-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
