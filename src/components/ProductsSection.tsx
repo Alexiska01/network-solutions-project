@@ -134,11 +134,22 @@ const ProductsSection = () => {
                   {/* Градиентный акцент сверху */}
                   <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} rounded-t-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
                   
-                  {/* Декоративные точки */}
-                  <div className="absolute top-4 right-4 flex space-x-1 opacity-40 group-hover:opacity-60 transition-opacity duration-300">
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-500 rounded-full"></div>
+                  {/* Элегантный индикатор статуса */}
+                  <div className="absolute top-5 right-5 flex items-center space-x-2 opacity-30 group-hover:opacity-50 transition-all duration-500">
+                    {/* Тонкие линии вместо точек */}
+                    <div className="flex space-x-1">
+                      <div className="w-3 h-0.5 bg-gray-400 rounded-full"></div>
+                      <div className={`w-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full opacity-60`}></div>
+                      <div className="w-2 h-0.5 bg-gray-300 rounded-full"></div>
+                    </div>
+                    {/* Миниатюрная иконка категории */}
+                    <div className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors duration-300">
+                      <Icon
+                        name={product.icon as any}
+                        size={12}
+                        className="text-gray-500"
+                      />
+                    </div>
                   </div>
                   {/* Секция 1: Современная иконка */}
                   <div className="relative mb-6" style={{ height: "72px" }}>
