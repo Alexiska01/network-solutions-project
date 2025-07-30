@@ -82,24 +82,26 @@ const ProductsSection = () => {
     },
   ];
 
-  // Профессиональные анимации с оптимизацией для мобильных
+  // Премиум анимации для современных карточек
   const cardVariants = {
     hidden: { 
       opacity: 0, 
-      y: isMobile ? 20 : 40,
-      scale: isMobile ? 0.95 : 0.9,
+      y: isMobile ? 30 : 60,
+      scale: isMobile ? 0.92 : 0.85,
+      rotateX: 15,
     },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       scale: 1,
+      rotateX: 0,
       transition: {
-        duration: isMobile ? 0.5 : 0.7,
-        delay: i * (isMobile ? 0.1 : 0.15),
-        ease: [0.25, 0.46, 0.45, 0.94],
+        duration: isMobile ? 0.6 : 0.8,
+        delay: i * (isMobile ? 0.08 : 0.12),
+        ease: [0.23, 1, 0.32, 1],
         type: "spring",
-        stiffness: isMobile ? 120 : 100,
-        damping: isMobile ? 20 : 18,
+        stiffness: 80,
+        damping: 20,
       },
     }),
   };
@@ -115,91 +117,134 @@ const ProductsSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
-              className={`group relative bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-10 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 overflow-hidden ${
+              className={`group relative cursor-pointer overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-3 hover:rotate-1 ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-12'
+                  : 'opacity-0 translate-y-16'
               }`}
               style={{ 
                 height: "480px",
-                transitionDelay: `${index * 150}ms`
+                transitionDelay: `${index * 120}ms`
               }}
             >
-              {/* Декоративный градиент при hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-              
-              {/* Контент с строгой структурой */}
-              <div className="relative z-10 h-full flex flex-col">
-                
-                {/* Секция 1: Иконка - фиксированная высота */}
-                <div className="relative mb-8" style={{ height: "64px" }}>
-                  <div className={`w-16 h-16 bg-gradient-to-br ${product.gradientPosition} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300`}>
-                    <Icon
-                      name={product.icon as any}
-                      size={28}
-                      className="text-white"
-                    />
+              {/* Основная карточка с градиентным бордером */}
+              <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-white via-gray-50/30 to-white p-[1px] shadow-[0_8px_32px_rgba(0,0,0,0.08)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
+                <div className="relative h-full w-full rounded-2xl bg-white/95 backdrop-blur-sm p-8 flex flex-col">
+                  
+                  {/* Градиентный акцент сверху */}
+                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} rounded-t-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
+                  
+                  {/* Декоративные точки */}
+                  <div className="absolute top-4 right-4 flex space-x-1 opacity-40 group-hover:opacity-60 transition-opacity duration-300">
+                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 bg-gray-500 rounded-full"></div>
                   </div>
-                  {/* Декоративное кольцо */}
-                  <div className="absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
+                  {/* Секция 1: Современная иконка */}
+                  <div className="relative mb-6" style={{ height: "72px" }}>
+                    <div className={`relative w-18 h-18 bg-gradient-to-br ${product.gradientPosition} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}>
+                      <Icon
+                        name={product.icon as any}
+                        size={32}
+                        className="text-white group-hover:scale-110 transition-transform duration-300"
+                      />
+                      {/* Световой эффект */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${product.gradientPosition} rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500`}></div>
+                    </div>
+                    {/* Орбитальные кольца */}
+                    <div className="absolute -inset-3 rounded-2xl border border-gray-200/30 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></div>
+                    <div className="absolute -inset-6 rounded-2xl border border-gray-100/20 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-700 delay-100"></div>
+                  </div>
                 
-                {/* Секция 2: Заголовок - фиксированная высота */}
-                <div className="mb-6 flex flex-col justify-start" style={{ height: "72px" }}>
-                  <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight mb-3 flex-1 flex items-start whitespace-pre-line">
-                    {product.title}
-                  </h3>
-                  <div className={`w-12 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full opacity-60`}></div>
-                </div>
+                  {/* Секция 2: Премиум заголовок */}
+                  <div className="mb-5" style={{ height: "78px" }}>
+                    <h3 className="text-2xl font-bold text-gray-900 leading-tight tracking-tight mb-4 whitespace-pre-line group-hover:text-gray-800 transition-colors duration-300">
+                      {product.title}
+                    </h3>
+                    {/* Анимированная линия */}
+                    <div className="relative h-0.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className={`absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-out`}></div>
+                    </div>
+                  </div>
                 
-                {/* Секция 3: Описание - фиксированная высота */}
-                <div className="mb-6 flex items-start" style={{ height: "60px" }}>
-                  <p className="text-gray-600 leading-relaxed text-[15px] font-medium">
-                    {product.description}
-                  </p>
-                </div>
+                  {/* Секция 3: Элегантное описание */}
+                  <div className="mb-6 flex items-start" style={{ height: "60px" }}>
+                    <p className="text-gray-600 leading-relaxed text-base font-medium group-hover:text-gray-700 transition-colors duration-300">
+                      {product.description}
+                    </p>
+                  </div>
                 
-                {/* Секция 4: Список характеристик - фиксированная высота */}
-                <div className="mb-8" style={{ height: "120px" }}>
-                  <ul className="space-y-2 h-full flex flex-col justify-start">
-                    {product.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start text-sm text-gray-700" style={{ height: "28px" }}>
-                        <div className={`w-4 h-4 rounded-full flex items-center justify-center mr-3 flex-shrink-0 bg-gradient-to-r ${product.gradientPosition} mt-1`}>
+                  {/* Секция 4: Стильный список характеристик */}
+                  <div className="mb-8 flex-1" style={{ minHeight: "120px" }}>
+                    <ul className="space-y-3">
+                      {product.features.map((feature, idx) => (
+                        <motion.li 
+                          key={idx} 
+                          className="flex items-start text-gray-700 group-hover:text-gray-800 transition-colors duration-300"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: (index * 0.1) + (idx * 0.1) + 0.3 }}
+                        >
+                          <div className={`relative w-5 h-5 rounded-full flex items-center justify-center mr-4 flex-shrink-0 bg-gradient-to-br ${product.gradientPosition} shadow-sm group-hover:shadow-md transition-all duration-300 mt-0.5`}>
+                            <Icon
+                              name="Check"
+                              size={12}
+                              className="text-white"
+                              strokeWidth={2.5}
+                            />
+                            {/* Пульсирующий эффект */}
+                            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${product.gradientPosition} opacity-0 group-hover:opacity-30 animate-ping`}></div>
+                          </div>
+                          <span className="leading-relaxed text-sm font-medium">{feature}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </div>
+                
+                  {/* Секция 5: Современный CTA */}
+                  <div className="mt-auto pt-4">
+                    {index === 0 ? (
+                      <Link
+                        to="/switches"
+                        className="group/cta flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
+                        </div>
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${product.gradientPosition} group-hover/cta:scale-110 transition-all duration-300 group-hover/cta:shadow-lg`}>
                           <Icon
-                            name="Check"
-                            size={10}
-                            className="text-white"
-                            strokeWidth={2.5}
+                            name="ArrowRight"
+                            size={14}
+                            className="text-white group-hover/cta:translate-x-0.5 transition-transform duration-200"
                           />
                         </div>
-                        <span className="leading-tight text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                        {/* Анимированная линия снизу */}
+                        <div className={`absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full`}></div>
+                      </Link>
+                    ) : (
+                      <button className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50">
+                        <div className="flex items-center space-x-3">
+                          <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
+                        </div>
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${product.gradientPosition} group-hover/cta:scale-110 transition-all duration-300 group-hover/cta:shadow-lg`}>
+                          <Icon
+                            name="ArrowRight"
+                            size={14}
+                            className="text-white group-hover/cta:translate-x-0.5 transition-transform duration-200"
+                          />
+                        </div>
+                        {/* Анимированная линия снизу */}
+                        <div className={`absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full`}></div>
+                      </button>
+                    )}
+                  </div>
+                  
                 </div>
-                
-                {/* Секция 5: Кнопка - фиксированная высота в низу */}
-                <div className="mt-auto pb-2">
-                  {index === 0 ? (
-                    <Link
-                      to="/switches"
-                      className={`block w-full text-white py-3 px-4 rounded-lg font-medium text-sm text-center transition-all duration-300 bg-gradient-to-r ${product.gradientPosition} hover:shadow-lg`}
-                    >
-                      Подробнее
-                    </Link>
-                  ) : (
-                    <button 
-                      className={`w-full text-white py-3 px-4 rounded-lg font-medium text-sm transition-all duration-300 bg-gradient-to-r ${product.gradientPosition} hover:shadow-lg`}
-                    >
-                      Подробнее
-                    </button>
-                  )}
-                </div>
+              </div>
                 
               </div>
 
-              {/* Нижняя акцентная линия */}
-              <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-b-3xl`}></div>
+
             </motion.div>
           ))}
         </div>
