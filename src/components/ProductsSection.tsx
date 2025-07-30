@@ -26,7 +26,7 @@ const ProductsSection = () => {
         "SNMP мониторинг",
       ],
       icon: "Network",
-      gradientPosition: "from-[#32398e] to-[#005baa]",
+      gradientPosition: "from-blue-600 to-blue-700",
     },
     {
       title: "Корпоративные маршрутизаторы", 
@@ -37,7 +37,7 @@ const ProductsSection = () => {
         "Load balancing",
       ],
       icon: "Router",
-      gradientPosition: "from-[#005baa] to-[#0079b6]",
+      gradientPosition: "from-blue-700 to-blue-800",
     },
     {
       title: "Беспроводные решения",
@@ -48,7 +48,7 @@ const ProductsSection = () => {
         "Централизованное управление",
       ],
       icon: "Wifi",
-      gradientPosition: "from-[#0079b6] to-[#0093b6]",
+      gradientPosition: "from-blue-800 to-teal-600",
     },
     {
       title: "Системы управления",
@@ -59,7 +59,7 @@ const ProductsSection = () => {
         "Автоматизация процессов",
       ],
       icon: "Settings",
-      gradientPosition: "from-[#0093b6] to-[#00acad]",
+      gradientPosition: "from-teal-600 to-teal-500",
     },
   ];
 
@@ -201,16 +201,24 @@ const ProductsSection = () => {
   };
 
   return (
-    <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
-      {/* Минимальный фоновый градиент */}
-      <div 
-        className="absolute inset-0 opacity-[0.015]"
-        style={{
-          background: `linear-gradient(135deg, #32398e, #005baa, #0079b6, #0093b6, #00acad, #53c2a4)`,
-        }}
-      />
+    <section className="py-16 md:py-20 lg:py-24 relative overflow-hidden bg-white">
+      {/* Декоративный фон */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-transparent to-teal-50/10 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        {/* Заголовок секции */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-2xl mb-6 shadow-lg">
+            <Icon name="Package" size={28} className="text-white" />
+          </div>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
+            Наши решения
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-6 rounded-full"></div>
+          <p className="text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto font-medium">
+            Полный спектр сетевого оборудования для вашего бизнеса
+          </p>
+        </div>
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -225,13 +233,13 @@ const ProductsSection = () => {
               whileHover="hover"
               whileTap="tap"
               className={`
-                group relative bg-white rounded-xl
-                p-5 md:p-6 flex flex-col
+                group relative bg-white rounded-3xl
+                p-6 md:p-8 flex flex-col
                 border border-gray-100
-                shadow-md hover:shadow-lg
-                transition-all duration-300 ease-out
-                transform-gpu
-                min-h-[280px] md:min-h-[300px]
+                shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]
+                transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+                transform-gpu overflow-hidden
+                min-h-[320px] md:min-h-[340px]
               `}
             >
               {/* Заголовок с анимированной иконкой */}

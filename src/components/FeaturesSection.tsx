@@ -49,24 +49,24 @@ const FeaturesSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-12 md:py-16 lg:py-20 bg-white mt-8 md:mt-12">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+    <section ref={sectionRef} className="py-16 md:py-20 lg:py-24 bg-gradient-to-b from-gray-50/50 to-white mt-8 md:mt-12 relative overflow-hidden">
+      {/* Декоративный фон */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20 pointer-events-none"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className={`text-center mb-16 transition-all duration-1000 ease-out ${
           isVisible 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
         }`}>
-          <h2
-            className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-4 font-sans leading-tight"
-            style={{ lineHeight: "1.2" }}
-          >
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-2xl mb-6 shadow-lg">
+            <Icon name="Award" size={28} className="text-white" />
+          </div>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
             Почему выбирают iDATA
           </h2>
-          <div className="w-20 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-4"></div>
-          <p
-            className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 font-sans leading-relaxed"
-            style={{ lineHeight: "1.4" }}
-          >
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-6 rounded-full"></div>
+          <p className="text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto font-medium">
             Преимущества, которые получают наши клиенты
           </p>
         </div>
