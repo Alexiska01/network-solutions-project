@@ -151,20 +151,28 @@ const ProductsSection = () => {
                       />
                     </div>
                   </div>
-                  {/* Секция 1: Современная иконка */}
+                  {/* Секция 1: Минималистичная иконка */}
                   <div className="relative mb-6" style={{ height: "72px" }}>
-                    <div className={`relative w-18 h-18 bg-gradient-to-br ${product.gradientPosition} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}>
-                      <Icon
-                        name={product.icon as any}
-                        size={32}
-                        className="text-white group-hover:scale-110 transition-transform duration-300"
-                      />
-                      {/* Световой эффект */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${product.gradientPosition} rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500`}></div>
+                    <div className="relative flex items-center justify-start">
+                      {/* Градиентная иконка без фона */}
+                      <div className={`relative p-3 rounded-full bg-gradient-to-br ${product.gradientPosition} bg-opacity-10 backdrop-blur-sm group-hover:bg-opacity-20 transition-all duration-500`}>
+                        <Icon
+                          name={product.icon as any}
+                          size={28}
+                          className={`bg-gradient-to-br ${product.gradientPosition} bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300`}
+                        />
+                      </div>
+                      
+                      {/* Декоративные элементы */}
+                      <div className="absolute -right-2 -top-1 flex flex-col space-y-1 opacity-20 group-hover:opacity-40 transition-opacity duration-300">
+                        <div className={`w-1 h-1 rounded-full bg-gradient-to-r ${product.gradientPosition}`}></div>
+                        <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${product.gradientPosition}`}></div>
+                        <div className={`w-1 h-1 rounded-full bg-gradient-to-r ${product.gradientPosition}`}></div>
+                      </div>
+                      
+                      {/* Пульсирующий эффект */}
+                      <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${product.gradientPosition} opacity-0 group-hover:opacity-10 animate-pulse`}></div>
                     </div>
-                    {/* Орбитальные кольца */}
-                    <div className="absolute -inset-3 rounded-2xl border border-gray-200/30 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></div>
-                    <div className="absolute -inset-6 rounded-2xl border border-gray-100/20 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-700 delay-100"></div>
                   </div>
                 
                   {/* Секция 2: Премиум заголовок */}
