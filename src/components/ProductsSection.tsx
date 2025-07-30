@@ -121,7 +121,7 @@ const ProductsSection = () => {
                   : 'opacity-0 translate-y-12'
               }`}
               style={{ 
-                height: "400px",
+                height: "420px",
                 transitionDelay: `${index * 150}ms`
               }}
             >
@@ -145,26 +145,26 @@ const ProductsSection = () => {
                 </div>
                 
                 {/* Секция 2: Заголовок - фиксированная высота */}
-                <div className="mb-4" style={{ height: "56px" }}>
-                  <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight mb-3">
+                <div className="mb-4 flex flex-col justify-start" style={{ height: "72px" }}>
+                  <h3 className="text-xl font-bold text-gray-900 leading-tight tracking-tight mb-3 flex-1 flex items-start">
                     {product.title}
                   </h3>
                   <div className={`w-12 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full opacity-60`}></div>
                 </div>
                 
                 {/* Секция 3: Описание - фиксированная высота */}
-                <div className="mb-4" style={{ height: "48px" }}>
+                <div className="mb-5 flex items-start" style={{ height: "60px" }}>
                   <p className="text-gray-600 leading-relaxed text-[15px] font-medium">
                     {product.description}
                   </p>
                 </div>
                 
-                {/* Секция 4: Список характеристик - растягивается */}
-                <div className="flex-1 mb-6">
-                  <ul className="space-y-2">
+                {/* Секция 4: Список характеристик - фиксированная высота */}
+                <div className="mb-6" style={{ height: "120px" }}>
+                  <ul className="space-y-2 h-full flex flex-col justify-start">
                     {product.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start text-sm text-gray-700" style={{ minHeight: "24px" }}>
-                        <div className={`w-4 h-4 rounded-full flex items-center justify-center mr-3 flex-shrink-0 bg-gradient-to-r ${product.gradientPosition} mt-0.5`}>
+                      <li key={idx} className="flex items-start text-sm text-gray-700" style={{ height: "28px" }}>
+                        <div className={`w-4 h-4 rounded-full flex items-center justify-center mr-3 flex-shrink-0 bg-gradient-to-r ${product.gradientPosition} mt-1`}>
                           <Icon
                             name="Check"
                             size={10}
@@ -172,7 +172,7 @@ const ProductsSection = () => {
                             strokeWidth={2.5}
                           />
                         </div>
-                        <span className="leading-relaxed">{feature}</span>
+                        <span className="leading-tight text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
