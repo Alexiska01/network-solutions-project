@@ -75,7 +75,7 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`flex flex-col items-center text-center bg-white rounded-xl p-6 lg:p-8 shadow-lg border border-gray-100 h-full transition-all duration-700 ease-out hover:transform hover:-translate-y-2 hover:shadow-2xl hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 hover:border-blue-200 ${
+              className={`flex flex-col items-start text-left bg-white rounded-xl p-6 lg:p-8 shadow-lg border border-gray-100 h-full transition-all duration-700 ease-out hover:transform hover:-translate-y-2 hover:shadow-2xl hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 hover:border-blue-200 ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-12'
@@ -85,7 +85,7 @@ const FeaturesSection = () => {
                 transitionDelay: `${index * 150}ms`
               }}
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl flex items-center justify-center mb-6 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl">
                 <Icon
                   name={feature.icon as any}
                   size={32}
