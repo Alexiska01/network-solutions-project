@@ -71,34 +71,39 @@ const FeaturesSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`flex flex-col items-center bg-white rounded-xl p-6 lg:p-8 shadow-lg border border-gray-100 h-full transition-all duration-700 ease-out hover:transform hover:-translate-y-2 hover:shadow-2xl hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 hover:border-blue-200 ${
+              className={`group relative bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-2xl p-8 h-full transition-all duration-700 ease-out hover:bg-white hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.07)] hover:border-blue-200/30 hover:-translate-y-1 ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-12'
               }`}
               style={{ 
-                minHeight: "280px",
+                minHeight: "320px",
                 transitionDelay: `${index * 150}ms`
               }}
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl">
-                <Icon
-                  name={feature.icon as any}
-                  size={32}
-                  className="text-white"
-                />
-              </div>
-              <div className="flex-1 flex flex-col">
-                <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3 font-sans text-center">
-                  {feature.title}
-                </h3>
-                <p className="text-sm lg:text-base text-gray-600 font-sans leading-relaxed flex-1 text-left">
-                  {feature.description}
-                </p>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:shadow-lg transition-all duration-300">
+                  <Icon
+                    name={feature.icon as any}
+                    size={24}
+                    className="text-white"
+                  />
+                </div>
+                
+                <div className="flex-1 space-y-4">
+                  <h3 className="text-xl font-semibold text-gray-900 leading-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed text-sm">
+                    {feature.description}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
