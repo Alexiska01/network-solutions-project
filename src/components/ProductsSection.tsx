@@ -117,7 +117,7 @@ const ProductsSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
-              className={`group relative cursor-pointer overflow-hidden transition-all duration-700 ease-out hover:-translate-y-3 hover:rotate-1 ${
+              className={`group relative cursor-pointer overflow-hidden transition-all duration-700 ease-out hover:-translate-y-4 hover:rotate-1 hover:scale-[1.02] ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-16'
@@ -127,12 +127,15 @@ const ProductsSection = () => {
                 transitionDelay: `${index * 120}ms`
               }}
             >
-              {/* Основная карточка с градиентным бордером */}
-              <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-white via-gray-50/30 to-white p-[1px] shadow-[0_8px_32px_rgba(0,0,0,0.08)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
-                <div className="relative h-full w-full rounded-2xl bg-white/95 backdrop-blur-sm p-8 flex flex-col">
+              {/* Премиум карточка с профессиональными тенями */}
+              <div className="relative h-full w-full rounded-3xl bg-gradient-to-br from-white via-gray-50/20 to-white p-[1px] shadow-[0_10px_30px_rgba(0,0,0,0.05),0_4px_12px_rgba(0,0,0,0.03)] group-hover:shadow-[0_15px_40px_rgba(0,0,0,0.1),0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-700 border border-gray-100/50 group-hover:border-gray-200/70">
+                <div className="relative h-full w-full rounded-3xl bg-white/98 backdrop-blur-sm p-8 flex flex-col shadow-inner">
                   
-                  {/* Градиентный акцент сверху */}
-                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} rounded-t-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
+                  {/* Премиум градиентный акцент */}
+                  <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${product.gradientPosition} rounded-t-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left shadow-md`}></div>
+                  
+                  {/* Мягкое свечение по краям */}
+                  <div className={`absolute -inset-px bg-gradient-to-r ${product.gradientPosition} rounded-3xl opacity-0 group-hover:opacity-10 blur-sm transition-all duration-700`}></div>
                   
                   {/* Элегантный индикатор статуса */}
                   <div className="absolute top-5 right-5 flex items-center space-x-2 opacity-30 group-hover:opacity-50 transition-all duration-500">
