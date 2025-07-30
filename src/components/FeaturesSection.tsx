@@ -75,7 +75,7 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`flex flex-col items-start text-left bg-white rounded-xl p-6 lg:p-8 shadow-lg border border-gray-100 h-full transition-all duration-700 ease-out hover:transform hover:-translate-y-2 hover:shadow-2xl hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 hover:border-blue-200 ${
+              className={`flex flex-col items-center bg-white rounded-xl p-6 lg:p-8 shadow-lg border border-gray-100 h-full transition-all duration-700 ease-out hover:transform hover:-translate-y-2 hover:shadow-2xl hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 hover:border-blue-200 ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-12'
@@ -93,10 +93,10 @@ const FeaturesSection = () => {
                 />
               </div>
               <div className="flex-1 flex flex-col">
-                <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3 font-sans">
+                <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3 font-sans text-center">
                   {feature.title}
                 </h3>
-                <p className="text-sm lg:text-base text-gray-600 font-sans leading-relaxed flex-1">
+                <p className="text-sm lg:text-base text-gray-600 font-sans leading-relaxed flex-1 text-left">
                   {feature.description}
                 </p>
               </div>
