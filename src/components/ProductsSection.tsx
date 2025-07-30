@@ -123,7 +123,7 @@ const ProductsSection = () => {
                   : 'opacity-0 translate-y-16'
               }`}
               style={{ 
-                height: "520px",
+                height: "560px",
                 transitionDelay: `${index * 120}ms`
               }}
             >
@@ -154,12 +154,12 @@ const ProductsSection = () => {
                   {/* Секция 1: Чистая иконка */}
                   <div className="relative mb-6" style={{ height: "72px" }}>
                     <div className="relative flex items-center justify-start">
-                      {/* Простая иконка с легким фоном */}
-                      <div className="relative p-4 rounded-2xl bg-gray-50 group-hover:bg-gray-100 transition-all duration-300 border border-gray-100">
+                      {/* Градиентная иконка */}
+                      <div className={`relative p-4 rounded-2xl bg-gradient-to-br ${product.gradientPosition} group-hover:shadow-lg transition-all duration-300`}>
                         <Icon
                           name={product.icon as any}
                           size={32}
-                          className="text-gray-700 group-hover:text-gray-900 group-hover:scale-105 transition-all duration-300"
+                          className="text-white group-hover:scale-105 transition-all duration-300"
                         />
                       </div>
                     </div>
