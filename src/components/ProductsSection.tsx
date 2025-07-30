@@ -127,30 +127,27 @@ const ProductsSection = () => {
                 transitionDelay: `${index * 120}ms`
               }}
             >
-              {/* Премиум карточка с тёмным фоном */}
-              <div className={`relative h-full w-full rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-[2px] shadow-[0_8px_32px_rgba(0,0,0,0.3)] group-hover:shadow-[0_32px_80px_rgba(0,0,0,0.4)] transition-all duration-700 ${product.gradientPosition.includes('blue') ? 'shadow-blue-500/10 group-hover:shadow-blue-500/20' : product.gradientPosition.includes('teal') ? 'shadow-teal-500/10 group-hover:shadow-teal-500/20' : 'shadow-purple-500/10 group-hover:shadow-purple-500/20'}`}>
-                <div className="relative h-full w-full rounded-3xl bg-gradient-to-br from-gray-900 via-gray-850 to-black p-8 flex flex-col border border-gray-700/50">
+              {/* Основная карточка с градиентным бордером */}
+              <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-white via-gray-50/30 to-white p-[1px] shadow-[0_8px_32px_rgba(0,0,0,0.08)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-all duration-700">
+                <div className="relative h-full w-full rounded-2xl bg-white/95 backdrop-blur-sm p-8 flex flex-col">
                   
-                  {/* Премиум градиентный акцент */}
-                  <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${product.gradientPosition} rounded-t-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left shadow-lg`}></div>
+                  {/* Градиентный акцент сверху */}
+                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${product.gradientPosition} rounded-t-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
                   
-                  {/* Световой ореол */}
-                  <div className={`absolute -inset-1 bg-gradient-to-r ${product.gradientPosition} rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-700`}></div>
-                  
-                  {/* Тёмный индикатор статуса */}
-                  <div className="absolute top-5 right-5 flex items-center space-x-2 opacity-40 group-hover:opacity-70 transition-all duration-500">
-                    {/* Неоновые линии */}
+                  {/* Элегантный индикатор статуса */}
+                  <div className="absolute top-5 right-5 flex items-center space-x-2 opacity-30 group-hover:opacity-50 transition-all duration-500">
+                    {/* Тонкие линии вместо точек */}
                     <div className="flex space-x-1">
-                      <div className="w-3 h-0.5 bg-gray-500 rounded-full"></div>
-                      <div className={`w-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full shadow-sm`}></div>
-                      <div className="w-2 h-0.5 bg-gray-600 rounded-full"></div>
+                      <div className="w-3 h-0.5 bg-gray-400 rounded-full"></div>
+                      <div className={`w-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} rounded-full opacity-60`}></div>
+                      <div className="w-2 h-0.5 bg-gray-300 rounded-full"></div>
                     </div>
-                    {/* Тёмная мини-иконка */}
-                    <div className="w-6 h-6 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center group-hover:bg-gray-750 transition-colors duration-300">
+                    {/* Миниатюрная иконка категории */}
+                    <div className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors duration-300">
                       <Icon
                         name={product.icon as any}
                         size={12}
-                        className="text-gray-400 group-hover:text-gray-300"
+                        className="text-gray-500"
                       />
                     </div>
                   </div>
@@ -170,18 +167,18 @@ const ProductsSection = () => {
                 
                   {/* Секция 2: Премиум заголовок */}
                   <div className="mb-5" style={{ height: "78px" }}>
-                    <h3 className="text-2xl font-bold text-white leading-tight tracking-tight mb-4 whitespace-pre-line group-hover:text-gray-100 transition-colors duration-300">
+                    <h3 className="text-2xl font-bold text-gray-900 leading-tight tracking-tight mb-4 whitespace-pre-line group-hover:text-gray-800 transition-colors duration-300">
                       {product.title}
                     </h3>
-                    {/* Неоновая линия */}
-                    <div className="relative h-0.5 bg-gray-700 rounded-full overflow-hidden">
-                      <div className={`absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-out shadow-lg`}></div>
+                    {/* Анимированная линия */}
+                    <div className="relative h-0.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className={`absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-out`}></div>
                     </div>
                   </div>
                 
-                  {/* Секция 3: Премиум описание */}
+                  {/* Секция 3: Элегантное описание */}
                   <div className="mb-6 flex items-start" style={{ height: "60px" }}>
-                    <p className="text-gray-300 leading-relaxed text-base font-medium group-hover:text-gray-200 transition-colors duration-300">
+                    <p className="text-gray-600 leading-relaxed text-base font-medium group-hover:text-gray-700 transition-colors duration-300">
                       {product.description}
                     </p>
                   </div>
@@ -192,20 +189,20 @@ const ProductsSection = () => {
                       {product.features.map((feature, idx) => (
                         <motion.li 
                           key={idx} 
-                          className="flex items-start text-gray-300 group-hover:text-gray-200 transition-colors duration-300"
+                          className="flex items-start text-gray-700 group-hover:text-gray-800 transition-colors duration-300"
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: (index * 0.1) + (idx * 0.1) + 0.3 }}
                         >
-                          <div className={`relative w-5 h-5 rounded-full flex items-center justify-center mr-4 flex-shrink-0 bg-gradient-to-br ${product.gradientPosition} shadow-lg group-hover:shadow-xl transition-all duration-300 mt-0.5`}>
+                          <div className={`relative w-5 h-5 rounded-full flex items-center justify-center mr-4 flex-shrink-0 bg-gradient-to-br ${product.gradientPosition} shadow-sm group-hover:shadow-md transition-all duration-300 mt-0.5`}>
                             <Icon
                               name="Check"
                               size={12}
                               className="text-white"
                               strokeWidth={2.5}
                             />
-                            {/* Неоновое свечение */}
-                            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${product.gradientPosition} opacity-0 group-hover:opacity-50 blur-sm transition-all duration-500`}></div>
+                            {/* Пульсирующий эффект */}
+                            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${product.gradientPosition} opacity-0 group-hover:opacity-30 animate-ping`}></div>
                           </div>
                           <span className="leading-relaxed text-sm font-medium">{feature}</span>
                         </motion.li>
@@ -218,10 +215,10 @@ const ProductsSection = () => {
                     {index === 0 ? (
                       <Link
                         to="/switches"
-                        className="group/cta flex items-center justify-between p-4 rounded-xl border border-gray-600 hover:border-gray-500 transition-all duration-300 hover:shadow-lg hover:bg-gray-800/50 backdrop-blur-sm"
+                        className="group/cta flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50"
                       >
                         <div className="flex items-center space-x-3">
-                          <span className="text-white font-semibold text-sm group-hover/cta:text-gray-100 transition-colors duration-200">Подробнее</span>
+                          <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
                         </div>
                         <div className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${product.gradientPosition} group-hover/cta:scale-110 transition-all duration-300 group-hover/cta:shadow-lg`}>
                           <Icon
@@ -234,9 +231,9 @@ const ProductsSection = () => {
                         <div className={`absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full`}></div>
                       </Link>
                     ) : (
-                      <button className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-600 hover:border-gray-500 transition-all duration-300 hover:shadow-lg hover:bg-gray-800/50 backdrop-blur-sm">
+                      <button className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50">
                         <div className="flex items-center space-x-3">
-                          <span className="text-white font-semibold text-sm group-hover/cta:text-gray-100 transition-colors duration-200">Подробнее</span>
+                          <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
                         </div>
                         <div className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${product.gradientPosition} group-hover/cta:scale-110 transition-all duration-300 group-hover/cta:shadow-lg`}>
                           <Icon
