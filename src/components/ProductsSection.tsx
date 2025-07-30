@@ -127,11 +127,12 @@ const ProductsSection = () => {
                 transitionDelay: `${index * 120}ms`
               }}
             >
-              {/* Карточка с четкими тенями и границами */}
-              <div className="relative h-full w-full rounded-3xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.1)] group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.15)] transition-all duration-700 border border-gray-200 group-hover:border-gray-300 p-8 flex flex-col">
+              {/* Премиум карточка с улучшенными тенями */}
+              <div className="relative h-full w-full rounded-3xl bg-gradient-to-br from-white via-gray-50/20 to-white p-[1px] shadow-[0_8px_25px_rgba(0,0,0,0.04),0_15px_35px_rgba(0,0,0,0.03),0_3px_8px_rgba(0,0,0,0.02)] group-hover:shadow-[0_20px_45px_rgba(0,0,0,0.08),0_10px_25px_rgba(0,0,0,0.05),0_5px_15px_rgba(0,0,0,0.04)] transition-all duration-700 border border-gray-100/60 group-hover:border-gray-200/80">
+                <div className="relative h-full w-full rounded-3xl bg-white/98 backdrop-blur-sm p-8 flex flex-col">
                   
-                {/* Премиум градиентный акцент */}
-                <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${product.gradientPosition} rounded-t-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left shadow-md`}></div>
+                  {/* Премиум градиентный акцент */}
+                  <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${product.gradientPosition} rounded-t-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left shadow-md`}></div>
                   
 
                   
@@ -248,6 +249,8 @@ const ProductsSection = () => {
                       </button>
                     )}
                   </div>
+                  
+                </div>
               </div>
             </motion.div>
           ))}
