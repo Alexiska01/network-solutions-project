@@ -128,7 +128,7 @@ const ProductsSection = () => {
               }}
             >
               {/* Премиум карточка с улучшенными тенями */}
-              <div className="relative h-full w-full bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 flex flex-col transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+              <div className="relative h-full w-full bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 flex flex-col transition-all duration-300 ease-out">
                 <div className="relative z-10 h-full flex flex-col">
                   
                   {/* Subtle gradient overlay on hover */}
@@ -229,6 +229,7 @@ const ProductsSection = () => {
                   </div>
                   
                 </div>
+              </div>
             </motion.div>
           ))}
         </div>
