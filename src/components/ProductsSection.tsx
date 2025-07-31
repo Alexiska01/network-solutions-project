@@ -107,8 +107,11 @@ const ProductsSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-12 md:py-16 lg:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={sectionRef} className="relative py-12 md:py-16 lg:py-20 bg-gradient-to-b from-gray-50/50 to-white overflow-hidden">
+      {/* Декоративный слой позади карточек */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20"></div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {products.map((product, index) => (
             <motion.div
@@ -117,7 +120,7 @@ const ProductsSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
-              className={`group relative cursor-pointer overflow-hidden transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.015] ${
+              className={`group relative cursor-pointer overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-16'
@@ -128,16 +131,19 @@ const ProductsSection = () => {
               }}
             >
               {/* Премиум карточка с улучшенными тенями */}
-              <div className="relative h-full w-full bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 flex flex-col transition-all duration-300 ease-out">
+              <div className="relative h-full w-full bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 flex flex-col transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
                 <div className="relative z-10 h-full flex flex-col">
                   
-                  {/* Subtle gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
-                  {/* Секция 1: Чистая иконка */}
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                  {/* Секция 1: Иконка с центровкой и кольцом */}
                   <div className="relative mb-6" style={{ height: "72px" }}>
-                    <div className="relative flex items-center justify-start">
+                    <div className="relative flex justify-center items-center">
+                      {/* Кольцо вокруг иконки */}
+                      <div className="absolute inset-0 w-16 h-16 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      
                       {/* Градиентная иконка */}
-                      <div className={`relative p-4 rounded-2xl bg-gradient-to-br ${product.gradientPosition} transition-all duration-300`}>
+                      <div className={`relative w-16 h-16 flex justify-center items-center rounded-2xl bg-gradient-to-br ${product.gradientPosition} transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl shadow-lg`}>
                         <Icon
                           name={product.icon as any}
                           size={32}
