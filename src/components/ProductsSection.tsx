@@ -212,11 +212,11 @@ const ProductsSection = () => {
                           }`}>
                             <Icon
                               name="Check"
-                              size={isMobile ? 8 : 12}
+                              size={isMobile ? 10 : 12}
                               className={`text-white transition-transform ${
                                 isMobile ? 'duration-150' : 'duration-200 group-hover:scale-105'
                               }`}
-                              strokeWidth={2.5}
+                              strokeWidth={isMobile ? 2 : 2.5}
                             />
                           </div>
                           <span className={`leading-snug font-medium ${
