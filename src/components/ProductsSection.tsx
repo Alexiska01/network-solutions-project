@@ -161,11 +161,17 @@ const ProductsSection = () => {
                   <div className={`${isMobile ? 'mb-4' : 'mb-6'}`} style={{ height: isMobile ? "48px" : "72px" }}>
                     <h3 className={`font-bold text-gray-900 leading-tight tracking-tight whitespace-pre-line group-hover:text-gray-800 transition-colors ${
                       isMobile 
-                        ? 'text-lg duration-150'
-                        : 'text-2xl duration-300'
+                        ? 'text-lg mb-2 duration-150'
+                        : 'text-2xl mb-4 duration-300'
                     }`}>
                       {product.title}
                     </h3>
+                    {/* Анимированная градиентная линия */}
+                    <div className="relative h-0.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className={`absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full transform -translate-x-full group-hover:translate-x-0 transition-transform ease-out ${
+                        isMobile ? 'duration-200' : 'duration-400'
+                      }`}></div>
+                    </div>
                   </div>
                 
                   {/* Описание - фиксированная высота */}
@@ -212,7 +218,7 @@ const ProductsSection = () => {
                     {index === 0 ? (
                       <Link
                         to="/switches"
-                        className={`group/cta flex items-center justify-between w-full border border-gray-200 transition-all ${
+                        className={`group/cta relative flex items-center justify-between w-full border border-gray-200 transition-all ${
                           isMobile 
                             ? 'p-3 rounded-lg duration-150 active:bg-gray-50/30 active:border-gray-300'
                             : 'p-4 rounded-xl duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-0.5 hover:scale-105 hover:bg-gray-50/50'
@@ -236,9 +242,15 @@ const ProductsSection = () => {
                             }`}
                           />
                         </div>
+                        {/* Анимированная линия в кнопке */}
+                        <div className={`absolute bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover/cta:scale-x-100 transition-transform origin-left rounded-full ${
+                          isMobile 
+                            ? 'left-3 right-3 duration-200'
+                            : 'left-4 right-4 duration-300'
+                        }`}></div>
                       </Link>
                     ) : (
-                      <button className={`group/cta flex items-center justify-between w-full border border-gray-200 transition-all ${
+                      <button className={`group/cta relative flex items-center justify-between w-full border border-gray-200 transition-all ${
                         isMobile 
                           ? 'p-3 rounded-lg duration-150 active:bg-gray-50/30 active:border-gray-300'
                           : 'p-4 rounded-xl duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-0.5 hover:scale-105 hover:bg-gray-50/50'
@@ -261,6 +273,12 @@ const ProductsSection = () => {
                             }`}
                           />
                         </div>
+                        {/* Анимированная линия в кнопке */}
+                        <div className={`absolute bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover/cta:scale-x-100 transition-transform origin-left rounded-full ${
+                          isMobile 
+                            ? 'left-3 right-3 duration-200'
+                            : 'left-4 right-4 duration-300'
+                        }`}></div>
                       </button>
                     )}
                   </div>
