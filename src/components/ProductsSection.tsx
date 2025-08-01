@@ -92,26 +92,34 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className={`transition-all ease-out ${
-                isMobile ? 'duration-300' : 'duration-1000'
-              } ${
+              className={`transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                 isVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : `opacity-0 ${isMobile ? 'translate-y-3' : 'translate-y-12'}`
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-8 scale-95'
               }`}
               style={{ 
                 height: isMobile ? "auto" : "560px",
                 minHeight: isMobile ? "280px" : "560px",
-                transitionDelay: `${index * (isMobile ? 30 : 120)}ms`
+                transitionDelay: `${index * 150}ms`
               }}
             >
-              <div className={`group relative bg-white border border-gray-100 h-full overflow-hidden transition-all ease-out ${
+              <div className={`group relative bg-white border border-gray-100 h-full overflow-hidden transition-all ${
                 isMobile 
-                  ? 'rounded-xl shadow-[0_1px_6px_rgba(0,0,0,0.04)] active:shadow-[0_2px_8px_rgba(0,0,0,0.06)] duration-200'
-                  : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] duration-500 ease-out hover:-translate-y-2'
+                  ? 'rounded-xl shadow-[0_1px_6px_rgba(0,0,0,0.04)] active:shadow-[0_2px_8px_rgba(0,0,0,0.06)] duration-200 ease-out'
+                  : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2'
               }`}>
+                {/* Премиальный градиентный overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20 transition-opacity ${
+                  isMobile 
+                    ? 'opacity-0 group-active:opacity-100 duration-200'
+                    : 'opacity-0 group-hover:opacity-100 duration-500 rounded-3xl'
+                }`}></div>
+                
+                {/* Анимированная рамка для премиальности */}
                 {!isMobile && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                  <div className={`absolute inset-0 rounded-3xl border border-blue-100/0 group-hover:border-blue-100/50 transition-all duration-500 ${
+                    isVisible ? 'opacity-100' : 'opacity-0'
+                  }`}></div>
                 )}
                 
                 <div className={`relative z-10 h-full flex flex-col ${isMobile ? 'p-6' : 'p-8'}`}>
