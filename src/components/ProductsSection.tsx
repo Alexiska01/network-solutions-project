@@ -178,11 +178,11 @@ const ProductsSection = () => {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: (index * 0.1) + (idx * 0.1) + 0.3 }}
                         >
-                          <div className={`relative w-5 h-5 rounded-full flex items-center justify-center mr-4 flex-shrink-0 bg-gradient-to-br ${product.gradientPosition} shadow-sm transition-all duration-300 mt-0.5`}>
+                          <div className="relative w-5 h-5 rounded-full flex items-center justify-center mr-4 flex-shrink-0 bg-gradient-to-br from-blue-600 to-teal-500 shadow-sm transition-all duration-300 mt-0.5 group-hover:scale-110 group-hover:shadow-md">
                             <Icon
                               name="Check"
                               size={12}
-                              className="text-white"
+                              className="text-white group-hover:scale-105 transition-transform duration-200"
                               strokeWidth={2.5}
                             />
                           </div>
