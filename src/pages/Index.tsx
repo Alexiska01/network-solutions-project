@@ -64,20 +64,20 @@ const Index = () => {
           ></div>
           
           {/* Корпоративные сетевые линии */}
-          <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 opacity-25">
             {/* Горизонтальные линии как у коммутаторов */}
-            <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-600/30 to-transparent"></div>
-            <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-400/40 to-transparent"></div>
-            <div className="absolute top-3/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-600/30 to-transparent"></div>
+            <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/60 to-transparent"></div>
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-300/70 to-transparent"></div>
+            <div className="absolute top-3/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-500/60 to-transparent"></div>
             
             {/* Вертикальные соединительные элементы */}
-            <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-blue-500/20 to-transparent"></div>
-            <div className="absolute top-0 bottom-0 right-1/4 w-px bg-gradient-to-b from-transparent via-teal-500/20 to-transparent"></div>
+            <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-blue-400/50 to-transparent"></div>
+            <div className="absolute top-0 bottom-0 right-1/4 w-px bg-gradient-to-b from-transparent via-teal-400/50 to-transparent"></div>
           </div>
           
-          {/* Тонкие корпоративные акценты */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-blue-200/30 rounded-sm rotate-45"></div>
+          {/* Корпоративные акценты */}
+          <div className="absolute inset-0 opacity-15">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-blue-300/50 rounded-sm rotate-45"></div>
           </div>
         </div>
         
