@@ -145,8 +145,10 @@ const ProductsSection = () => {
 
   return (
     <section ref={sectionRef} className="pt-40 pb-16 sm:pt-48 sm:pb-20 md:pt-56 md:pb-24 lg:pt-64 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden">
-      {/* Плавный переходный градиент от ProductHero */}
-      <div className="absolute top-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-b from-[#4C1D95] via-[#6366F1] via-[#94A3B8] to-transparent pointer-events-none"></div>
+      {/* Профессиональный переходный слой сверху от ProductHero */}
+      <div className="absolute top-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-b from-[#0B3C49] via-[#1A237E]/60 to-transparent pointer-events-none z-10"></div>
+      <div className="absolute top-0 left-0 right-0 h-24 md:h-36 bg-gradient-to-b from-[#2E2E2E]/80 via-gray-700/40 to-gray-200/20 pointer-events-none z-20"></div>
+      <div className="absolute top-0 left-0 right-0 h-16 md:h-24 backdrop-blur-sm bg-gradient-to-b from-slate-800/30 via-gray-500/20 to-transparent pointer-events-none z-30"></div>
       
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none"></div>
       
