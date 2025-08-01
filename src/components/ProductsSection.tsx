@@ -144,9 +144,9 @@ const ProductsSection = () => {
 
 
   return (
-    <section ref={sectionRef} className="pt-40 pb-16 sm:pt-48 sm:pb-20 md:pt-56 md:pb-24 lg:pt-64 lg:pb-28 bg-gradient-to-b from-purple-900/20 via-slate-600/30 to-gray-100/90 relative overflow-hidden">
+    <section ref={sectionRef} className="pt-40 pb-16 sm:pt-48 sm:pb-20 md:pt-56 md:pb-24 lg:pt-64 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden">
       {/* Плавный переходный градиент от ProductHero */}
-      <div className="absolute top-0 left-0 right-0 h-40 md:h-56 bg-gradient-to-b from-purple-900/80 via-indigo-800/60 via-slate-700/40 to-transparent pointer-events-none"></div>
+      <div className="absolute top-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-b from-[#4C1D95] via-[#6366F1] via-[#94A3B8] to-transparent pointer-events-none"></div>
       
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none"></div>
       
