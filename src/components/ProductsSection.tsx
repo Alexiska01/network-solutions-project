@@ -104,7 +104,7 @@ const ProductsSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-3 sm:py-4 md:py-8 lg:py-10 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-gray-50/70 relative overflow-hidden flex items-center">
+    <section ref={sectionRef} className="pt-3 pb-16 sm:pt-4 sm:pb-20 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden flex items-center">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">

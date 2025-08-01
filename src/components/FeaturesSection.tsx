@@ -49,7 +49,7 @@ const FeaturesSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-20 lg:py-24 bg-gradient-to-b from-gray-50/70 via-gray-50/50 to-white relative overflow-hidden">
+    <section ref={sectionRef} className="pt-16 pb-16 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden">
       {/* Декоративный фон */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 via-transparent to-teal-50/20 pointer-events-none"></div>
       
