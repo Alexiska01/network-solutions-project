@@ -2,8 +2,11 @@ import Icon from "@/components/ui/icon";
 import { useEffect, useRef, useState } from "react";
 
 const FeaturesSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const features = [
     {
@@ -32,21 +35,67 @@ const FeaturesSection = () => {
   ];
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  useEffect(() => {
+    // Инициализируем массив видимости карточек
+    setVisibleCards(new Array(features.length).fill(false));
+    cardRefs.current = new Array(features.length).fill(null);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      // Для десктопа - старая логика (все сразу)
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    } else {
+      // Для мобильных - индивидуальное появление карточек
+      const observers: IntersectionObserver[] = [];
+      
+      cardRefs.current.forEach((cardRef, index) => {
+        if (cardRef) {
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                setVisibleCards(prev => {
+                  const newVisible = [...prev];
+                  newVisible[index] = true;
+                  return newVisible;
+                });
+              }
+            },
+            { threshold: 0.2 }
+          );
+          
+          observer.observe(cardRef);
+          observers.push(observer);
+        }
+      });
+
+      return () => {
+        observers.forEach(observer => observer.disconnect());
+      };
+    }
+  }, [isMobile]);
 
   return (
     <section ref={sectionRef} className="pt-12 pb-12 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden">
@@ -73,14 +122,25 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 md:hover:-translate-y-2 overflow-hidden ${
-                isVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8 md:translate-y-12'
+              ref={(el) => {
+                if (cardRefs.current) {
+                  cardRefs.current[index] = el;
+                }
+              }}
+              className={`group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 md:hover:-translate-y-2 overflow-hidden ${
+                isMobile 
+                  ? (visibleCards[index] 
+                      ? 'opacity-100 translate-y-0 scale-100' 
+                      : 'opacity-0 translate-y-8 scale-95'
+                    )
+                  : (isVisible 
+                      ? 'opacity-100 translate-y-0 scale-100' 
+                      : 'opacity-0 translate-y-12 scale-95'
+                    )
               }`}
               style={{ 
                 minHeight: "240px",
-                transitionDelay: `${index * 150}ms`
+                transitionDelay: isMobile ? '0ms' : `${index * 150}ms`
               }}
             >
               {/* Subtle gradient overlay on hover */}
