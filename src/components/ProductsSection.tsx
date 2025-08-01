@@ -5,7 +5,9 @@ import { useEffect, useState, useRef } from "react";
 const ProductsSection = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -18,21 +20,57 @@ const ProductsSection = () => {
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
+    // Инициализируем массив видимости карточек
+    setVisibleCards(new Array(products.length).fill(false));
+    cardRefs.current = new Array(products.length).fill(null);
   }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      // Для десктопа - старая логика (все сразу)
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    } else {
+      // Для мобильных - индивидуальное появление карточек
+      const observers: IntersectionObserver[] = [];
+      
+      cardRefs.current.forEach((cardRef, index) => {
+        if (cardRef) {
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                setVisibleCards(prev => {
+                  const newVisible = [...prev];
+                  newVisible[index] = true;
+                  return newVisible;
+                });
+              }
+            },
+            { threshold: 0.2 }
+          );
+          
+          observer.observe(cardRef);
+          observers.push(observer);
+        }
+      });
+
+      return () => {
+        observers.forEach(observer => observer.disconnect());
+      };
+    }
+  }, [isMobile]);
 
   const products = [
     {
@@ -92,15 +130,26 @@ const ProductsSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
+              ref={(el) => {
+                if (cardRefs.current) {
+                  cardRefs.current[index] = el;
+                }
+              }}
               className={`transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-                isVisible 
-                  ? 'opacity-100 translate-y-0 scale-100' 
-                  : 'opacity-0 translate-y-8 scale-95'
+                isMobile 
+                  ? (visibleCards[index] 
+                      ? 'opacity-100 translate-y-0 scale-100' 
+                      : 'opacity-0 translate-y-8 scale-95'
+                    )
+                  : (isVisible 
+                      ? 'opacity-100 translate-y-0 scale-100' 
+                      : 'opacity-0 translate-y-8 scale-95'
+                    )
               }`}
               style={{ 
                 height: isMobile ? "auto" : "560px",
                 minHeight: isMobile ? "280px" : "560px",
-                transitionDelay: `${index * 150}ms`
+                transitionDelay: isMobile ? '0ms' : `${index * 150}ms`
               }}
             >
               <div className={`group relative bg-white border border-gray-100 h-full overflow-hidden transition-all ${
