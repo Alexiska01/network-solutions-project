@@ -348,6 +348,9 @@ const ProductsSection = () => {
           ))}
         </div>
       </div>
+      
+      {/* Переходный слой снизу к FeaturesSection */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-b from-transparent via-blue-50/30 to-blue-100/60 pointer-events-none"></div>
     </section>
   );
 };
