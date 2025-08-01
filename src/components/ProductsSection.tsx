@@ -120,7 +120,7 @@ const ProductsSection = () => {
               animate={isMobile ? {} : (isVisible ? "visible" : "hidden")}
               className={`${
                 isMobile 
-                  ? '' 
+                  ? 'opacity-100' 
                   : `transition-all duration-1000 ease-out ${
                       isVisible 
                         ? 'opacity-100 translate-y-0' 
