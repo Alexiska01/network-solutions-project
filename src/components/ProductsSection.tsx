@@ -349,8 +349,10 @@ const ProductsSection = () => {
         </div>
       </div>
       
-      {/* Переходный слой снизу к FeaturesSection */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-b from-transparent via-blue-50/30 to-blue-100/60 pointer-events-none"></div>
+      {/* Профессиональный переходный слой снизу к FeaturesSection */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 md:h-40 bg-gradient-to-b from-transparent via-gray-50/40 via-blue-50/60 to-blue-100/80 pointer-events-none z-10"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-20 md:h-28 bg-gradient-to-b from-transparent via-slate-100/30 to-blue-200/50 pointer-events-none z-20"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-12 md:h-16 backdrop-blur-[0.5px] bg-gradient-to-b from-transparent to-blue-300/30 pointer-events-none z-30"></div>
     </section>
   );
 };
