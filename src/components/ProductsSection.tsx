@@ -163,7 +163,7 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* Адаптивный заголовок */}
-                  <div className={`${isMobile ? 'mb-3' : 'mb-5'}`} style={{ height: isMobile ? "auto" : "78px" }}>
+                  <div className={`${isMobile ? 'mb-3' : 'mb-5'}`} style={{ height: isMobile ? "52px" : "78px" }}>
                     <h3 className={`font-bold text-gray-900 leading-tight tracking-tight whitespace-pre-line group-hover:text-gray-800 transition-colors ${
                       isMobile 
                         ? 'text-lg mb-2 duration-150'
@@ -180,18 +180,18 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* Адаптивное описание */}
-                  <div className={`flex items-start ${isMobile ? 'mb-3' : 'mb-6'}`} style={{ height: isMobile ? "auto" : "60px" }}>
-                    <p className={`text-gray-600 leading-relaxed font-medium group-hover:text-gray-700 transition-colors ${
+                  <div className={`flex items-start ${isMobile ? 'mb-3' : 'mb-6'}`} style={{ height: isMobile ? "48px" : "60px" }}>
+                    <p className={`text-gray-600 font-medium group-hover:text-gray-700 transition-colors ${
                       isMobile 
-                        ? 'text-sm duration-200'
-                        : 'text-base duration-300'
+                        ? 'text-sm leading-tight duration-200'
+                        : 'text-base leading-relaxed duration-300'
                     }`}>
                       {product.description}
                     </p>
                   </div>
                 
                   {/* Оптимизированный список характеристик */}
-                  <div className={`flex-1 ${isMobile ? 'mb-4' : 'mb-8'}`} style={{ minHeight: isMobile ? "auto" : "120px" }}>
+                  <div className={`flex-1 ${isMobile ? 'mb-4' : 'mb-8'}`} style={{ minHeight: isMobile ? "72px" : "120px" }}>
                     <ul className={isMobile ? 'space-y-1.5' : 'space-y-3'}>
                       {product.features.map((feature, idx) => (
                         <motion.li 
