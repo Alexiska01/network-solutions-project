@@ -63,20 +63,21 @@ const Index = () => {
             style={{ opacity: transitionOpacity * 0.7 }}
           ></div>
           
-          {/* Декоративные элементы для премиальности */}
-          <div className="absolute inset-0 opacity-20">
-            <div 
-              className="absolute top-1/2 left-1/4 w-2 h-2 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full animate-pulse"
-              style={{ transform: `scale(${transitionOpacity})` }}
-            ></div>
-            <div 
-              className="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-gradient-to-r from-teal-400 to-teal-500 rounded-full animate-pulse delay-1000"
-              style={{ transform: `scale(${transitionOpacity * 0.8})` }}
-            ></div>
-            <div 
-              className="absolute bottom-1/3 left-1/2 w-1 h-1 bg-gradient-to-r from-blue-300 to-blue-400 rounded-full animate-pulse delay-500"
-              style={{ transform: `scale(${transitionOpacity * 1.2})` }}
-            ></div>
+          {/* Корпоративные сетевые линии */}
+          <div className="absolute inset-0 opacity-10">
+            {/* Горизонтальные линии как у коммутаторов */}
+            <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-600/30 to-transparent"></div>
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-400/40 to-transparent"></div>
+            <div className="absolute top-3/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-600/30 to-transparent"></div>
+            
+            {/* Вертикальные соединительные элементы */}
+            <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-blue-500/20 to-transparent"></div>
+            <div className="absolute top-0 bottom-0 right-1/4 w-px bg-gradient-to-b from-transparent via-teal-500/20 to-transparent"></div>
+          </div>
+          
+          {/* Тонкие корпоративные акценты */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-blue-200/30 rounded-sm rotate-45"></div>
           </div>
         </div>
         
