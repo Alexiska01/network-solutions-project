@@ -196,17 +196,17 @@ const ProductsSection = () => {
                       {product.features.map((feature, idx) => (
                         <motion.li 
                           key={idx} 
-                          className={`flex items-start text-gray-700 group-hover:text-gray-800 transition-colors ${
-                            isMobile ? 'duration-200' : 'duration-300'
+                          className={`flex items-center text-gray-700 group-hover:text-gray-800 transition-colors ${
+                            isMobile ? 'duration-200 h-6' : 'duration-300'
                           }`}
-                          initial={isMobile ? { opacity: 0 } : { opacity: 0, x: -10 }}
-                          animate={isMobile ? { opacity: 1 } : { opacity: 1, x: 0 }}
-                          transition={{ delay: isMobile ? 0 : (index * 0.1) + (idx * 0.1) + 0.3 }}
+                          initial={isMobile ? {} : { opacity: 0, x: -10 }}
+                          animate={isMobile ? {} : { opacity: 1, x: 0 }}
+                          transition={isMobile ? {} : { delay: (index * 0.1) + (idx * 0.1) + 0.3 }}
                         >
-                          <div className={`relative rounded-full flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-blue-600 to-teal-500 shadow-sm transition-all mt-0.5 ${
+                          <div className={`relative rounded-full flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-blue-600 to-teal-500 shadow-sm transition-all ${
                             isMobile 
-                              ? 'w-3.5 h-3.5 mr-2.5 duration-150'
-                              : 'w-5 h-5 mr-4 duration-300 group-hover:scale-110 group-hover:shadow-md'
+                              ? 'w-4 h-4 mr-3 duration-150'
+                              : 'w-5 h-5 mr-4 mt-0.5 duration-300 group-hover:scale-110 group-hover:shadow-md'
                           }`}>
                             <Icon
                               name="Check"
