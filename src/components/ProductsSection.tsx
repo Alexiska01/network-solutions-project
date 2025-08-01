@@ -6,6 +6,7 @@ const ProductsSection = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
+  const [transitionIntensity, setTransitionIntensity] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -23,6 +24,27 @@ const ProductsSection = () => {
     // Инициализируем массив видимости карточек
     setVisibleCards(new Array(products.length).fill(false));
     cardRefs.current = new Array(products.length).fill(null);
+  }, []);
+
+  // Scroll-based переходный эффект
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const handleScroll = () => {
+      const rect = sectionRef.current?.getBoundingClientRect();
+      if (!rect) return;
+
+      const scrollProgress = Math.max(0, Math.min(1, 
+        (window.innerHeight - rect.top) / (window.innerHeight * 0.5)
+      ));
+      
+      setTransitionIntensity(scrollProgress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -123,6 +145,16 @@ const ProductsSection = () => {
 
   return (
     <section ref={sectionRef} className="pt-3 pb-16 sm:pt-4 sm:pb-20 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden flex items-center">
+      {/* Профессиональный переходный слой сверху от ProductHero */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-20 md:h-32 bg-gradient-to-b from-[#2E2E2E]/60 via-gray-600/30 to-transparent pointer-events-none transition-opacity duration-500"
+        style={{ opacity: Math.max(0, 1 - transitionIntensity * 1.5) }}
+      ></div>
+      <div 
+        className="absolute top-0 left-0 right-0 h-12 md:h-20 backdrop-blur-[1px] bg-gradient-to-b from-gray-800/20 via-gray-400/15 to-transparent pointer-events-none transition-opacity duration-700"
+        style={{ opacity: Math.max(0, 1 - transitionIntensity * 2) }}
+      ></div>
+      
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">

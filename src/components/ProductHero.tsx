@@ -678,6 +678,12 @@ const ProductHero = () => {
           className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent origin-left"
         />
       )}
+
+      {/* Профессиональная нижняя маска для плавного перехода к ProductsSection */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-b from-transparent via-[#2E2E2E]/50 to-[#2E2E2E] pointer-events-none"></div>
+      
+      {/* Дополнительный слой перехода с размытием */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 md:h-24 backdrop-blur-[1px] bg-gradient-to-b from-transparent to-gray-800/20 pointer-events-none"></div>
     </motion.div>
   );
 };
