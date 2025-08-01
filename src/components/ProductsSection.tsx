@@ -197,12 +197,12 @@ const ProductsSection = () => {
                     {index === 0 ? (
                       <Link
                         to="/switches"
-                        className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50"
+                        className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-lg hover:bg-gray-50/50 hover:-translate-y-0.5 hover:scale-[1.02]"
                       >
                         <div className="flex items-center space-x-3">
                           <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
                         </div>
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${product.gradientPosition} transition-all duration-300`}>
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 transition-all duration-300 group-hover/cta:scale-110 group-hover/cta:shadow-lg group-hover/cta:rotate-6">
                           <Icon
                             name="ArrowRight"
                             size={14}
@@ -210,14 +210,14 @@ const ProductsSection = () => {
                           />
                         </div>
                         {/* Анимированная линия в кнопке */}
-                        <div className={`absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full`}></div>
+                        <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full"></div>
                       </Link>
                     ) : (
-                      <button className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50">
+                      <button className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-lg hover:bg-gray-50/50 hover:-translate-y-0.5 hover:scale-[1.02]">
                         <div className="flex items-center space-x-3">
                           <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
                         </div>
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r ${product.gradientPosition} transition-all duration-300`}>
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 transition-all duration-300 group-hover/cta:scale-110 group-hover/cta:shadow-lg group-hover/cta:rotate-6">
                           <Icon
                             name="ArrowRight"
                             size={14}
@@ -225,7 +225,7 @@ const ProductsSection = () => {
                           />
                         </div>
                         {/* Анимированная линия в кнопке */}
-                        <div className={`absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r ${product.gradientPosition} transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full`}></div>
+                        <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover/cta:scale-x-100 transition-transform duration-300 origin-left rounded-full"></div>
                       </button>
                     )}
                   </div>
