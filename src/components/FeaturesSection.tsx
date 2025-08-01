@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 const FeaturesSection = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const features = [
@@ -68,8 +70,23 @@ const FeaturesSection = () => {
 
       return () => observer.disconnect();
     } else {
-      // Для мобильных - индивидуальное появление карточек
+      // Для мобильных - индивидуальное появление карточек + заголовок
       const observers: IntersectionObserver[] = [];
+      
+      // Observer для заголовка на мобильных
+      if (headerRef.current) {
+        const headerObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setHeaderVisible(true);
+            }
+          },
+          { threshold: 0.1 }
+        );
+        
+        headerObserver.observe(headerRef.current);
+        observers.push(headerObserver);
+      }
       
       cardRefs.current.forEach((cardRef, index) => {
         if (cardRef) {
@@ -103,11 +120,14 @@ const FeaturesSection = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 via-transparent to-teal-50/20 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}>
+        <div 
+          ref={headerRef}
+          className={`text-center mb-8 md:mb-16 transition-all duration-1000 ease-out ${
+            (isMobile ? headerVisible : isVisible)
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}
+        >
 
           <h2 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight tracking-tight">
             Почему выбирают iDATA
