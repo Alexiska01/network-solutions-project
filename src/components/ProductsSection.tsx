@@ -144,7 +144,7 @@ const ProductsSection = () => {
 
 
   return (
-    <section ref={sectionRef} className="pt-3 pb-16 sm:pt-4 sm:pb-20 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden flex items-center">
+    <section ref={sectionRef} className="pt-40 pb-16 sm:pt-48 sm:pb-20 md:pt-56 md:pb-24 lg:pt-64 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden">
       {/* Профессиональный переходный слой сверху от ProductHero */}
       <div className="absolute top-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-b from-[#0B3C49] via-[#1A237E]/60 to-transparent pointer-events-none z-10"></div>
       <div className="absolute top-0 left-0 right-0 h-24 md:h-36 bg-gradient-to-b from-[#2E2E2E]/80 via-gray-700/40 to-gray-200/20 pointer-events-none z-20"></div>
@@ -153,7 +153,17 @@ const ProductsSection = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+        {/* Заголовок секции */}
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            Наши продукты
+          </h2>
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+            Откройте для себя инновационные решения, созданные с заботой о качестве
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {products.map((product, index) => (
             <div
               key={index}
