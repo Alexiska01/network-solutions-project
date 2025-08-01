@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import { useEffect, useState, useRef } from "react";
 
@@ -82,26 +81,7 @@ const ProductsSection = () => {
     },
   ];
 
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: isMobile ? 8 : 60,
-      scale: isMobile ? 0.98 : 0.85,
-      rotateX: isMobile ? 0 : 15,
-    },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      rotateX: 0,
-      transition: {
-        duration: isMobile ? 0.3 : 0.8,
-        delay: i * (isMobile ? 0.03 : 0.12),
-        ease: isMobile ? "easeOut" : [0.23, 1, 0.32, 1],
-        type: "tween",
-      },
-    }),
-  };
+
 
   return (
     <section ref={sectionRef} className="pt-3 pb-16 sm:pt-4 sm:pb-20 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden flex items-center">
@@ -110,12 +90,8 @@ const ProductsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
           {products.map((product, index) => (
-            <motion.div
+            <div
               key={index}
-              custom={index}
-              variants={cardVariants}
-              initial="hidden"
-              animate={isVisible ? "visible" : "hidden"}
               className={`transition-all ease-out ${
                 isMobile ? 'duration-300' : 'duration-1000'
               } ${
@@ -284,7 +260,7 @@ const ProductsSection = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
