@@ -107,7 +107,7 @@ const ProductsSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-20 lg:py-24 bg-gradient-to-b from-gray-50/50 to-white relative overflow-hidden">
+    <section ref={sectionRef} className="py-6 md:py-8 lg:py-10 bg-gradient-to-b from-gray-50/50 to-white relative overflow-hidden">
       {/* Декоративный фон */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20 pointer-events-none"></div>
       
