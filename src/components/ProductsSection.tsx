@@ -196,17 +196,17 @@ const ProductsSection = () => {
                       {product.features.map((feature, idx) => (
                         <motion.li 
                           key={idx} 
-                          className={`flex items-center text-gray-700 group-hover:text-gray-800 transition-colors ${
-                            isMobile ? 'duration-200' : 'duration-300'
+                          className={`relative text-gray-700 group-hover:text-gray-800 transition-colors ${
+                            isMobile ? 'duration-200 pl-7' : 'duration-300 pl-9'
                           }`}
                           initial={isMobile ? { opacity: 0 } : { opacity: 0, x: -10 }}
                           animate={isMobile ? { opacity: 1 } : { opacity: 1, x: 0 }}
                           transition={{ delay: isMobile ? 0 : (index * 0.1) + (idx * 0.1) + 0.3 }}
                         >
-                          <div className={`relative rounded-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-teal-500 shadow-sm transition-all flex-shrink-0 ${
+                          <div className={`absolute left-0 top-1/2 -translate-y-1/2 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-teal-500 shadow-sm transition-all ${
                             isMobile 
-                              ? 'w-4 h-4 mr-3 duration-150'
-                              : 'w-5 h-5 mr-4 mt-0.5 duration-300 group-hover:scale-110 group-hover:shadow-md'
+                              ? 'w-4 h-4 duration-150'
+                              : 'w-5 h-5 duration-300 group-hover:scale-110 group-hover:shadow-md'
                           }`}>
                             <Icon
                               name="Check"
