@@ -132,7 +132,7 @@ const ProductsSection = () => {
               <div className={`group relative bg-white border border-gray-100 h-full overflow-hidden transition-all ease-out ${
                 isMobile 
                   ? 'rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] p-6 duration-300 hover:-translate-y-1'
-                  : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2'
+                  : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 duration-500 ease-out hover:-translate-y-2'
               }`}>
                 {/* Оптимизированный gradient overlay */}
                 {!isMobile && (
@@ -231,8 +231,8 @@ const ProductsSection = () => {
                         className={`group/cta relative flex items-center justify-between w-full border border-gray-200 hover:border-gray-300 transition-all hover:bg-gray-50/50 ${
                           isMobile 
                             ? 'p-3 rounded-lg duration-200 hover:shadow-md'
-                            : 'p-4 rounded-xl duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:scale-[1.02]'
-                        }`
+                            : 'p-4 rounded-xl duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
+                        }`}
                       >
                         <div className="flex items-center space-x-3">
                           <span className={`text-gray-900 font-semibold group-hover/cta:text-gray-800 transition-colors ${
@@ -263,7 +263,7 @@ const ProductsSection = () => {
                       <button className={`group/cta relative flex items-center justify-between w-full border border-gray-200 hover:border-gray-300 transition-all hover:bg-gray-50/50 ${
                         isMobile 
                           ? 'p-3 rounded-lg duration-200 hover:shadow-md'
-                          : 'p-4 rounded-xl duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:scale-[1.02]'
+                          : 'p-4 rounded-xl duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
                       }`}>
                         <div className="flex items-center space-x-3">
                           <span className={`text-gray-900 font-semibold group-hover/cta:text-gray-800 transition-colors ${
