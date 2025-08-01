@@ -82,7 +82,6 @@ const ProductsSection = () => {
     },
   ];
 
-  // Профессиональная мобильная оптимизация без мигания
   const cardVariants = {
     hidden: { 
       opacity: 0, 
@@ -106,7 +105,6 @@ const ProductsSection = () => {
 
   return (
     <section ref={sectionRef} className="py-3 sm:py-4 md:py-8 lg:py-10 bg-gradient-to-b from-gray-50/50 to-white relative overflow-hidden flex items-center">
-      {/* Декоративный фон */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
@@ -133,18 +131,16 @@ const ProductsSection = () => {
             >
               <div className={`group relative bg-white border border-gray-100 h-full overflow-hidden transition-all ease-out ${
                 isMobile 
-                  ? 'rounded-xl shadow-[0_1px_6px_rgba(0,0,0,0.04)] active:shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-4 duration-200'
-                  : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 duration-500 ease-out hover:-translate-y-2'
+                  ? 'rounded-xl shadow-[0_1px_6px_rgba(0,0,0,0.04)] active:shadow-[0_2px_8px_rgba(0,0,0,0.06)] duration-200'
+                  : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] duration-500 ease-out hover:-translate-y-2'
               }`}>
-                {/* Оптимизированный gradient overlay */}
                 {!isMobile && (
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
                 )}
                 
-                {/* Content */}
-                <div className="relative z-10 h-full flex flex-col">
-                  {/* Оптимизированная иконка */}
-                  <div className={`relative ${isMobile ? 'mb-4' : 'mb-8'}`}>
+                <div className={`relative z-10 h-full flex flex-col ${isMobile ? 'p-6' : 'p-8'}`}>
+                  {/* Иконка - фиксированная позиция */}
+                  <div className={`${isMobile ? 'mb-6' : 'mb-8'}`}>
                     <div className={`bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center transition-all ${
                       isMobile 
                         ? 'w-12 h-12 shadow-sm duration-150'
@@ -156,145 +152,118 @@ const ProductsSection = () => {
                         className="text-white"
                       />
                     </div>
-                    {/* Декоративное кольцо только для десктопа */}
                     {!isMobile && (
                       <div className="absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     )}
                   </div>
                 
-                  {/* Адаптивный заголовок */}
-                  <div className={`${isMobile ? 'mb-3' : 'mb-5'}`} style={{ height: isMobile ? "52px" : "78px" }}>
+                  {/* Заголовок - фиксированная высота */}
+                  <div className={`${isMobile ? 'mb-4' : 'mb-6'}`} style={{ height: isMobile ? "48px" : "72px" }}>
                     <h3 className={`font-bold text-gray-900 leading-tight tracking-tight whitespace-pre-line group-hover:text-gray-800 transition-colors ${
                       isMobile 
-                        ? 'text-lg mb-2 duration-150'
-                        : 'text-2xl mb-4 duration-300'
+                        ? 'text-lg duration-150'
+                        : 'text-2xl duration-300'
                     }`}>
                       {product.title}
                     </h3>
-                    {/* Анимированная линия - упрощенная для мобильных */}
-                    <div className="relative h-0.5 bg-gray-100 rounded-full overflow-hidden">
-                      <div className={`absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full transform -translate-x-full group-hover:translate-x-0 transition-transform ease-out ${
-                        isMobile ? 'duration-200' : 'duration-400'
-                      }`}></div>
-                    </div>
                   </div>
                 
-                  {/* Адаптивное описание */}
-                  <div className={`flex items-start ${isMobile ? 'mb-3' : 'mb-6'}`} style={{ height: isMobile ? "48px" : "60px" }}>
-                    <p className={`text-gray-600 font-medium group-hover:text-gray-700 transition-colors ${
+                  {/* Описание - фиксированная высота */}
+                  <div className={`${isMobile ? 'mb-6' : 'mb-8'}`} style={{ height: isMobile ? "36px" : "48px" }}>
+                    <p className={`text-gray-600 font-medium leading-tight group-hover:text-gray-700 transition-colors ${
                       isMobile 
-                        ? 'text-sm leading-tight duration-200'
-                        : 'text-base leading-relaxed duration-300'
+                        ? 'text-sm duration-200'
+                        : 'text-base duration-300'
                     }`}>
                       {product.description}
                     </p>
                   </div>
                 
-                  {/* Оптимизированный список характеристик */}
-                  <div className={`flex-1 ${isMobile ? 'mb-4' : 'mb-8'}`} style={{ minHeight: isMobile ? "72px" : "120px" }}>
-                    <ul className={isMobile ? 'space-y-1.5' : 'space-y-3'}>
+                  {/* Характеристики - абсолютное выравнивание */}
+                  <div className={`flex-1 ${isMobile ? 'mb-6' : 'mb-8'}`}>
+                    <div className="space-y-3">
                       {product.features.map((feature, idx) => (
-                        <motion.li 
+                        <div 
                           key={idx} 
-                          className={`relative text-gray-700 group-hover:text-gray-800 transition-colors ${
-                            isMobile ? 'duration-200 pl-7' : 'duration-300 pl-9'
-                          }`}
-                          initial={isMobile ? { opacity: 0 } : { opacity: 0, x: -10 }}
-                          animate={isMobile ? { opacity: 1 } : { opacity: 1, x: 0 }}
-                          transition={{ delay: isMobile ? 0 : (index * 0.1) + (idx * 0.1) + 0.3 }}
+                          className="grid grid-cols-[auto_1fr] gap-3 items-center"
                         >
-                          <div className={`absolute left-0 top-1/2 -translate-y-1/2 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-teal-500 shadow-sm transition-all ${
-                            isMobile 
-                              ? 'w-4 h-4 duration-150'
-                              : 'w-5 h-5 duration-300 group-hover:scale-110 group-hover:shadow-md'
+                          <div className={`rounded-full bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center ${
+                            isMobile ? 'w-4 h-4' : 'w-5 h-5'
                           }`}>
                             <Icon
                               name="Check"
                               size={isMobile ? 10 : 12}
-                              className={`text-white transition-transform ${
-                                isMobile ? 'duration-150' : 'duration-200 group-hover:scale-105'
-                              }`}
-                              strokeWidth={isMobile ? 2 : 2.5}
+                              className="text-white"
+                              strokeWidth={2}
                             />
                           </div>
-                          <span className={`leading-snug font-medium ${
-                            isMobile ? 'text-xs' : 'text-sm'
-                          }`}>{feature}</span>
-                        </motion.li>
+                          <span className={`font-medium text-gray-700 leading-tight ${
+                            isMobile ? 'text-sm' : 'text-sm'
+                          }`}>
+                            {feature}
+                          </span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 
-                  {/* Оптимизированная CTA кнопка */}
-                  <div className={`mt-auto ${isMobile ? 'pt-2' : 'pt-4'}`}>
+                  {/* CTA кнопка */}
+                  <div className="mt-auto">
                     {index === 0 ? (
                       <Link
                         to="/switches"
-                        className={`group/cta relative flex items-center justify-between w-full border border-gray-200 transition-all ${
+                        className={`group/cta flex items-center justify-between w-full border border-gray-200 transition-all ${
                           isMobile 
-                            ? 'p-2.5 rounded-lg duration-150 active:bg-gray-50/30 active:border-gray-300'
+                            ? 'p-3 rounded-lg duration-150 active:bg-gray-50/30 active:border-gray-300'
                             : 'p-4 rounded-xl duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-0.5 hover:scale-105 hover:bg-gray-50/50'
                         }`}
                       >
-                        <div className="flex items-center space-x-3">
-                          <span className={`text-gray-900 font-semibold transition-colors ${
-                            isMobile ? 'text-xs duration-100 group-active/cta:text-gray-700' : 'text-sm duration-200 group-hover/cta:text-gray-800'
-                          }`}>Подробнее</span>
-                        </div>
+                        <span className={`text-gray-900 font-semibold transition-colors ${
+                          isMobile ? 'text-sm duration-100 group-active/cta:text-gray-700' : 'text-sm duration-200 group-hover/cta:text-gray-800'
+                        }`}>
+                          Подробнее
+                        </span>
                         <div className={`flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-teal-500 transition-all ${
                           isMobile 
-                            ? 'w-6 h-6 duration-100'
-                            : 'w-8 h-8 duration-300 group-hover/cta:scale-110 group-hover/cta:shadow-lg group-hover/cta:rotate-6'
+                            ? 'w-7 h-7 duration-100'
+                            : 'w-8 h-8 duration-300 group-hover/cta:scale-110 group-hover/cta:shadow-lg'
                         }`}>
                           <Icon
                             name="ArrowRight"
-                            size={isMobile ? 10 : 14}
+                            size={isMobile ? 12 : 14}
                             className={`text-white transition-transform ${
                               isMobile ? 'duration-100' : 'duration-200 group-hover/cta:translate-x-0.5'
                             }`}
                           />
                         </div>
-                        {/* Анимированная линия в кнопке - упрощенная для мобильных */}
-                        <div className={`absolute bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover/cta:scale-x-100 transition-transform origin-left rounded-full ${
-                          isMobile 
-                            ? 'left-3 right-3 duration-200'
-                            : 'left-4 right-4 duration-300'
-                        }`}></div>
                       </Link>
                     ) : (
-                      <button className={`group/cta relative flex items-center justify-between w-full border border-gray-200 transition-all ${
+                      <button className={`group/cta flex items-center justify-between w-full border border-gray-200 transition-all ${
                         isMobile 
-                          ? 'p-2.5 rounded-lg duration-150 active:bg-gray-50/30 active:border-gray-300'
+                          ? 'p-3 rounded-lg duration-150 active:bg-gray-50/30 active:border-gray-300'
                           : 'p-4 rounded-xl duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-0.5 hover:scale-105 hover:bg-gray-50/50'
                       }`}>
-                        <div className="flex items-center space-x-3">
-                          <span className={`text-gray-900 font-semibold transition-colors ${
-                            isMobile ? 'text-xs duration-100 group-active/cta:text-gray-700' : 'text-sm duration-200 group-hover/cta:text-gray-800'
-                          }`}>Подробнее</span>
-                        </div>
+                        <span className={`text-gray-900 font-semibold transition-colors ${
+                          isMobile ? 'text-sm duration-100 group-active/cta:text-gray-700' : 'text-sm duration-200 group-hover/cta:text-gray-800'
+                        }`}>
+                          Подробнее
+                        </span>
                         <div className={`flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-teal-500 transition-all ${
                           isMobile 
-                            ? 'w-6 h-6 duration-100'
-                            : 'w-8 h-8 duration-300 group-hover/cta:scale-110 group-hover/cta:shadow-lg group-hover/cta:rotate-6'
+                            ? 'w-7 h-7 duration-100'
+                            : 'w-8 h-8 duration-300 group-hover/cta:scale-110 group-hover/cta:shadow-lg'
                         }`}>
                           <Icon
                             name="ArrowRight"
-                            size={isMobile ? 10 : 14}
+                            size={isMobile ? 12 : 14}
                             className={`text-white transition-transform ${
                               isMobile ? 'duration-100' : 'duration-200 group-hover/cta:translate-x-0.5'
                             }`}
                           />
                         </div>
-                        {/* Анимированная линия в кнопке - упрощенная для мобильных */}
-                        <div className={`absolute bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover/cta:scale-x-100 transition-transform origin-left rounded-full ${
-                          isMobile 
-                            ? 'left-3 right-3 duration-200'
-                            : 'left-4 right-4 duration-300'
-                        }`}></div>
                       </button>
                     )}
                   </div>
-                  
                 </div>
               </div>
             </motion.div>
