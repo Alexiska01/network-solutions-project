@@ -197,7 +197,7 @@ const ProductsSection = () => {
                     {index === 0 ? (
                       <Link
                         to="/switches"
-                        className="group/cta flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50"
+                        className="group/cta relative flex items-center justify-between w-full p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md hover:bg-gray-50/50"
                       >
                         <div className="flex items-center space-x-3">
                           <span className="text-gray-900 font-semibold text-sm group-hover/cta:text-gray-800 transition-colors duration-200">Подробнее</span>
