@@ -133,7 +133,7 @@ const ProductsSection = () => {
                 isMobile 
                   ? 'rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] p-6 duration-300 hover:-translate-y-1'
                   : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-8 duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2'
-              }`}
+              }`}>
                 {/* Оптимизированный gradient overlay */}
                 {!isMobile && (
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
