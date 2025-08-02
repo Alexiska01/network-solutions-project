@@ -78,19 +78,64 @@ const ProductHero = () => {
   
 
   const [isMobile, setIsMobile] = useState(false);
+  const [isHighRefreshRate, setIsHighRefreshRate] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
 
   const preloadedViewers = useRef<Map<string, any>>(new Map());
 
-  // Отслеживание размера экрана
+  // Отслеживание размера экрана и частоты обновления
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
     
+    const detectHighRefreshRate = () => {
+      // Детекция 120Hz+ дисплеев
+      const checkRefreshRate = () => {
+        let refreshRate = 60; // Дефолт
+        
+        // Проверка через matchMedia для поддерживаемых браузеров
+        if (window.matchMedia) {
+          if (window.matchMedia('(min-refresh-rate: 120hz)').matches) {
+            refreshRate = 120;
+          } else if (window.matchMedia('(min-refresh-rate: 90hz)').matches) {
+            refreshRate = 90;
+          }
+        }
+        
+        // Детекция через requestAnimationFrame (backup метод)
+        if (refreshRate === 60) {
+          const times: number[] = [];
+          const measureRefreshRate = (timestamp: number) => {
+            times.push(timestamp);
+            if (times.length >= 10) {
+              const avgInterval = (times[times.length - 1] - times[0]) / (times.length - 1);
+              const estimatedRefreshRate = 1000 / avgInterval;
+              
+              if (estimatedRefreshRate > 100) {
+                setIsHighRefreshRate(true);
+                console.log(`🚀 Обнаружен высокочастотный дисплей: ~${Math.round(estimatedRefreshRate)} FPS`);
+              }
+            } else {
+              requestAnimationFrame(measureRefreshRate);
+            }
+          };
+          requestAnimationFrame(measureRefreshRate);
+        } else {
+          setIsHighRefreshRate(refreshRate >= 90);
+          console.log(`🚀 Детекция через CSS: ${refreshRate}Hz дисплей`);
+        }
+      };
+      
+      // Запускаем детекцию после полной загрузки
+      setTimeout(checkRefreshRate, 100);
+    };
+    
     checkMobile();
+    detectHighRefreshRate();
+    
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
@@ -273,7 +318,7 @@ const ProductHero = () => {
   // WelcomeScreen управляется в Index.tsx на уровне страницы
 
   return (
-    <div className="relative h-[100vh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden hero-container">
+    <div className={`relative h-[100vh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden hero-container ${isHighRefreshRate ? 'hero-120fps' : ''}`}>
       {/* Динамический фоновый градиент */}
       <div 
         className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 transition-all duration-1000 ease-out`}

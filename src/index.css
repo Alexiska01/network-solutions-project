@@ -438,6 +438,201 @@ a {
   will-change: opacity, transform;
 }
 
+/* ОПТИМИЗАЦИЯ ДЛЯ 120 FPS - высокочастотные дисплеи */
+@media (min-resolution: 120dpi) and (min-refresh-rate: 120hz) {
+  .hero-container,
+  .hero-text-container,
+  .hero-model-container,
+  .hero-parallax-light1,
+  .hero-parallax-light2,
+  .hero-parallax-geo1,
+  .hero-parallax-geo2 {
+    /* Принудительная активация высокопроизводительного режима */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    /* Максимальная производительность GPU */
+    will-change: transform, opacity, filter;
+    /* Оптимизация для высоких частот */
+    animation-timing-function: linear;
+    /* Субпиксельная точность */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+    /* Принудительная активация hardware layer */
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+}
+
+/* Детекция и оптимизация для 120Hz+ дисплеев */
+@supports (refresh-rate: 120Hz) {
+  .hero-container * {
+    /* Максимальная плавность анимаций */
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Принудительная активация GPU слоя */
+    transform: translateZ(0);
+    /* Устранение sub-pixel rendering */
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: optimizeSpeed;
+  }
+
+  /* Оптимизация keyframes для 120 FPS */
+  .hero-parallax-light1 {
+    animation-duration: 4s; /* Сокращено для плавности */
+  }
+
+  .hero-parallax-light2 {
+    animation-duration: 3s;
+  }
+
+  .hero-parallax-geo1 {
+    animation-duration: 5s;
+  }
+
+  .hero-parallax-geo2 {
+    animation-duration: 6s;
+  }
+}
+
+/* Специальная оптимизация для ProMotion (iPhone/iPad Pro) */
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-refresh-rate: 120hz) {
+  .hero-container {
+    /* iOS ProMotion оптимизация */
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-overflow-scrolling: touch;
+    /* Максимальная производительность */
+    will-change: transform, opacity;
+  }
+
+  /* Оптимизация model-viewer для ProMotion */
+  model-viewer {
+    /* Высокопроизводительный режим для 3D */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    /* GPU композиция */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Высокопроизводительный режим для настольных 120Hz+ мониторов */
+@media screen and (min-width: 1024px) and (min-refresh-rate: 120hz) {
+  .hero-container {
+    /* Принудительная активация hardware acceleration */
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+    /* Оптимизация композиции */
+    contain: layout style paint size;
+    /* Изоляция слоя */
+    isolation: isolate;
+  }
+
+  /* Ультра-плавные переходы для desktop 120Hz */
+  .hero-content-transition {
+    transition-duration: 0.25s; /* Быстрее для 120Hz */
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+/* ДИНАМИЧЕСКИЙ КЛАСС ДЛЯ 120 FPS - JavaScript детекция */
+.hero-120fps {
+  /* Максимальная производительность для 120+ FPS */
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateZ(0deg);
+  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateZ(0deg);
+  /* Принудительная активация GPU слоя */
+  will-change: transform, opacity, filter;
+  /* Оптимизация для ultra-high refresh rates */
+  contain: strict;
+  isolation: isolate;
+  /* Устранение любых микро-лагов */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+.hero-120fps * {
+  /* Все дочерние элементы получают максимальную оптимизацию */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  /* Субпиксельная точность */
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+  text-rendering: optimizeSpeed;
+}
+
+.hero-120fps .hero-parallax-light1,
+.hero-120fps .hero-parallax-light2,
+.hero-120fps .hero-parallax-geo1,
+.hero-120fps .hero-parallax-geo2 {
+  /* Ускоренные анимации для 120+ FPS */
+  animation-duration: calc(var(--animation-duration, 8s) * 0.75);
+  animation-timing-function: linear;
+  /* Принудительная GPU композиция */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.hero-120fps .hero-content-transition {
+  /* Мгновенные переходы для 120 FPS */
+  transition-duration: 0.15s;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.hero-120fps model-viewer {
+  /* Максимальная производительность 3D модели */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  /* Принудительная активация hardware layer */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  will-change: transform, opacity;
+}
+
+/* ЭКСТРЕМАЛЬНАЯ ОПТИМИЗАЦИЯ ДЛЯ 120+ FPS */
+.hero-120fps {
+  /* Принудительная активация всех возможных GPU оптимизаций */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-perspective-origin: center center;
+  perspective-origin: center center;
+  /* Устранение sub-frame delays */
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Максимальная композитная производительность */
+  -webkit-layer-composite: multiply;
+}
+
+.hero-120fps::before {
+  /* Виртуальный layer для принудительной GPU активации */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Оптимизация для переходов текста в 120 FPS режиме */
+.hero-120fps .hero-title,
+.hero-120fps .hero-description,
+.hero-120fps .hero-features {
+  /* Мгновенные переходы содержимого */
+  transition-duration: 0.1s;
+  transition-timing-function: steps(1, end);
+}
+
+/* CSS переменные для динамической настройки */
+.hero-120fps {
+  --hero-animation-speed: 0.75;
+  --hero-transition-speed: 0.15s;
+  --hero-easing: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
 /* АНИМАЦИИ ДЛЯ HERO ТЕКСТА - профессиональные CSS анимации */
 @keyframes heroFadeInUp {
   from {
