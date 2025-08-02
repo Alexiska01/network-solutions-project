@@ -6,6 +6,7 @@ const FeaturesSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
+  const [is120fps, setIs120fps] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -44,6 +45,32 @@ const FeaturesSection = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Обнаружение 120 FPS дисплеев
+  useEffect(() => {
+    let frameCount = 0;
+    let startTime = performance.now();
+    
+    const detectFrameRate = () => {
+      frameCount++;
+      if (frameCount < 60) {
+        requestAnimationFrame(detectFrameRate);
+      } else {
+        const endTime = performance.now();
+        const fps = Math.round(60000 / (endTime - startTime));
+        
+        if (fps >= 115) {
+          setIs120fps(true);
+          console.log(`🚀 FeaturesSection: Обнаружен ${fps} FPS дисплей - активирован режим 120 FPS!`);
+        } else {
+          setIs120fps(false);
+          console.log(`📺 FeaturesSection: Стандартный ${fps} FPS дисплей`);
+        }
+      }
+    };
+    
+    requestAnimationFrame(detectFrameRate);
   }, []);
 
   useEffect(() => {
@@ -122,10 +149,10 @@ const FeaturesSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div 
           ref={headerRef}
-          className={`text-center mb-8 md:mb-16 transition-all duration-1000 ease-out ${
+          className={`text-center mb-8 md:mb-16 feature-header ${
             (isMobile ? headerVisible : isVisible)
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-8'
+              ? 'feature-header-visible' 
+              : 'feature-header-hidden'
           }`}
         >
 
@@ -147,30 +174,47 @@ const FeaturesSection = () => {
                   cardRefs.current[index] = el;
                 }
               }}
-              className={`group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 md:hover:-translate-y-2 overflow-hidden ${
+              className={`group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full overflow-hidden feature-card feature-card-height ${
+                // Основная анимация карточки
+                isMobile 
+                  ? (is120fps ? 'feature-card-120fps-mobile' : 'feature-card-mobile')
+                  : (is120fps ? 'feature-card-120fps-desktop' : 'feature-card-desktop')
+              } ${
+                // Hover анимация
+                is120fps ? 'feature-card-hover-120fps' : 'feature-card-hover'
+              } ${
+                // Состояние видимости
                 isMobile 
                   ? (visibleCards[index] 
-                      ? 'opacity-100 translate-y-0 scale-100' 
-                      : 'opacity-0 translate-y-8 scale-95'
+                      ? 'feature-card-visible' 
+                      : 'feature-card-hidden-mobile'
                     )
                   : (isVisible 
-                      ? 'opacity-100 translate-y-0 scale-100' 
-                      : 'opacity-0 translate-y-12 scale-95'
+                      ? 'feature-card-visible' 
+                      : 'feature-card-hidden'
                     )
-              }`}
-              style={{ 
-                minHeight: "240px",
-                transitionDelay: isMobile ? '0ms' : `${index * 150}ms`
-              }}
+              } ${
+                // Задержка появления только для десктопа
+                !isMobile 
+                  ? (is120fps 
+                      ? `feature-card-delay-120fps-${index}` 
+                      : `feature-card-delay-${index}`
+                    )
+                  : ''
+              } hover:-translate-y-1 md:hover:-translate-y-2`}
             >
               {/* Subtle gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:duration-500 rounded-xl md:rounded-3xl"></div>
+              <div className={`absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl ${
+                is120fps ? 'transition-opacity duration-200' : 'transition-opacity duration-300 md:duration-500'
+              }`}></div>
               
               {/* Content */}
               <div className="relative z-10 flex flex-col h-full">
                 {/* Icon with enhanced styling */}
                 <div className="relative mb-5 md:mb-8">
-                  <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                  <div className={`w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl group-hover:scale-105 ${
+                    is120fps ? 'transition-all duration-200' : 'transition-all duration-300'
+                  }`}>
                     <Icon
                       name={feature.icon as any}
                       size={20}
@@ -183,7 +227,9 @@ const FeaturesSection = () => {
                     />
                   </div>
                   {/* Decorative ring - только на десктопе */}
-                  <div className="hidden md:block absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className={`hidden md:block absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 ${
+                    is120fps ? 'transition-opacity duration-200' : 'transition-opacity duration-300'
+                  }`}></div>
                 </div>
                 
                 {/* Text content */}
@@ -199,7 +245,9 @@ const FeaturesSection = () => {
               </div>
 
               {/* Bottom accent line */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 md:duration-500 origin-left rounded-b-xl md:rounded-b-3xl"></div>
+              <div className={`absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl ${
+                is120fps ? 'transition-transform duration-200' : 'transition-transform duration-300 md:duration-500'
+              }`}></div>
             </div>
           ))}
         </div>
