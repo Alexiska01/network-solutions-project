@@ -3,7 +3,7 @@
 /* Главный контейнер с абсолютным позиционированием */
 .revolutionary-hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 70vh;
   overflow: hidden;
   background: linear-gradient(
     135deg,
@@ -447,7 +447,7 @@
     grid-template-columns: 1fr;
     gap: 2rem;
     padding: 1.5rem;
-    min-height: 90vh;
+    min-height: 60vh;
     align-items: center;
   }
 
@@ -478,13 +478,13 @@
 
 @media (max-width: 768px) {
   .revolutionary-hero {
-    min-height: 80vh;
+    min-height: 60vh;
     padding: 2rem 0;
   }
 
   .revolutionary-content {
     padding: 1rem;
-    min-height: 80vh;
+    min-height: 50vh;
     grid-template-columns: 1fr;
     justify-content: center;
   }
