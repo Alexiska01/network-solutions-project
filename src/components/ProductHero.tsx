@@ -494,38 +494,7 @@ const ProductHero = () => {
               transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center hero-model-container"
             >
-              {/* 3D фоновые эффекты */}
-              <div className="absolute inset-0">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{
-                    opacity: [0, 0.3, 0.3],
-                    scale: [0.8, 1.1, 1],
-                    rotate: [0, 5, 0],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1.2
-                  }}
-                  className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 rounded-3xl blur-2xl`}
-                />
-                
-                <motion.div
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.1, 0.3],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1
-                  }}
-                  className={`absolute inset-0 bg-${currentData.glowColor}-400/20 rounded-full blur-3xl`}
-                />
-              </div>
+
               
               {/* 3D модель с интеллектуальной загрузкой */}
               <div className="w-full h-full">
