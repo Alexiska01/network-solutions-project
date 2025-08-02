@@ -244,11 +244,7 @@ const ProductHero = () => {
 
             {/* Правая колонка - 3D модель */}
             <div className={`hero-model ${isTransitioning ? 'transitioning' : ''}`}>
-              {/* 3D фоновые эффекты */}
-              <div className="model-background">
-                <div className={`model-glow bg-gradient-to-br ${currentData.gradient}`} />
-                <div className="model-pulse" style={{ backgroundColor: `${currentData.glowColor}20` }} />
-              </div>
+              {/* 3D фоновые эффекты отключены для слияния с основным фоном */}
               
               {/* 3D модель */}
               <div className="model-container">
@@ -268,10 +264,10 @@ const ProductHero = () => {
                     auto-rotate={true}
                     auto-rotate-delay="0"
                     rotation-per-second="30deg"
-                    camera-orbit="0deg 75deg 1.6m"
-                    min-camera-orbit="auto auto 1.6m"
-                    max-camera-orbit="auto auto 1.6m"
-                    field-of-view="40deg"
+                    camera-orbit="0deg 75deg 1.2m"
+                    min-camera-orbit="auto auto 1.2m"
+                    max-camera-orbit="auto auto 1.2m"
+                    field-of-view="35deg"
                     exposure="1.2"
                     shadow-intensity="0.3"
                     environment-image="neutral"
@@ -297,10 +293,10 @@ const ProductHero = () => {
                     auto-rotate-delay="0"
                     rotation-per-second="30deg"
                     camera-controls={true}
-                    camera-orbit="0deg 75deg 1.2m"
-                    min-camera-orbit="auto auto 0.4m"
-                    max-camera-orbit="auto auto 2.5m"
-                    field-of-view="30deg"
+                    camera-orbit="0deg 75deg 1.0m"
+                    min-camera-orbit="auto auto 0.6m"
+                    max-camera-orbit="auto auto 1.8m"
+                    field-of-view="35deg"
                     exposure="1.2"
                     shadow-intensity="0.3"
                     environment-image="neutral"
