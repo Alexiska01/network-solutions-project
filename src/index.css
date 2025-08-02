@@ -177,7 +177,7 @@
     flex-direction: column;
     justify-content: flex-end;
     padding: 1rem 0 2rem;
-    height: 45vh;
+    height: 40vh;
     order: 2;
     opacity: 1;
     transform: translateY(0);
@@ -440,6 +440,7 @@
     order: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
     opacity: 1;
     transform: scale(1);
     transition:
@@ -458,15 +459,15 @@
 
   @media (min-width: 375px) {
     .hero-model {
-      height: 55vh;
-      max-height: 55vh;
+      height: 58vh;
+      max-height: 58vh;
     }
   }
 
   @media (min-width: 414px) {
     .hero-model {
-      height: 50vh;
-      max-height: 50vh;
+      height: 55vh;
+      max-height: 55vh;
     }
   }
 
@@ -521,6 +522,9 @@
     max-height: 100%;
     overflow: hidden;
     contain: layout size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .model-loader {
@@ -565,10 +569,14 @@
     display: block;
     /* Полная прозрачность для слияния с фоном */
     mix-blend-mode: normal;
+    /* Увеличиваем размер модели */
+    transform: scale(1.3);
   }
 
   .model-viewer-mobile {
     pointer-events: none;
+    /* Дополнительное увеличение для мобильных */
+    transform: scale(1.5);
   }
 
   .model-error {
