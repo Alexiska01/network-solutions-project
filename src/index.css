@@ -495,6 +495,110 @@ a {
   }
 }
 
+/* АНИМАЦИИ ДЛЯ 3D МОДЕЛИ - оптимизированные CSS анимации */
+@keyframes modelFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7) rotateY(30deg) rotateX(15deg);
+    filter: blur(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg) rotateX(0deg);
+    filter: blur(0px);
+  }
+}
+
+@keyframes modelContentFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+  }
+}
+
+/* Основной контейнер модели */
+.hero-model-container {
+  animation: modelFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+  /* Оптимизация производительности */
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Контент модели */
+.hero-model-content {
+  animation: modelContentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both;
+  /* Плавные переходы при смене */
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    filter 0.5s ease;
+}
+
+/* Состояния переходов модели */
+.hero-model-content[data-transitioning="true"] {
+  opacity: 0.5;
+  transform: scale(0.95) translateY(10px);
+  filter: blur(2px);
+}
+
+.hero-model-content[data-transitioning="false"] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: blur(0px);
+}
+
+/* GPU ускорение для model-viewer */
+.hero-model-container model-viewer {
+  /* Принудительная активация аппаратного ускорения */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  /* Оптимизация отрисовки */
+  contain: layout style paint;
+  /* Плавность при изменениях */
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* Оптимизация для мобильных */
+@media (max-width: 768px) {
+  .hero-model-container {
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    /* Дополнительная оптимизация для мобильных */
+    transform: translateZ(0);
+    contain: layout style;
+  }
+
+  .hero-model-content {
+    animation-duration: 0.8s;
+    animation-delay: 0.8s;
+    transition-duration: 0.3s;
+  }
+
+  .hero-model-content[data-transitioning="true"] {
+    opacity: 0.5;
+    transition-duration: 0.2s;
+  }
+
+  /* Оптимизация model-viewer на мобильных */
+  .hero-model-container model-viewer {
+    /* Уменьшаем детализацию для производительности */
+    image-rendering: optimizeSpeed;
+    image-rendering: -webkit-optimize-contrast;
+    /* Быстрая обработка жестов */
+    touch-action: pan-y;
+  }
+}
+
 /* КРИТИЧНО: Стили для предотвращения растяжения 3D моделей при скролле */
 model-viewer {
   width: 100%;
@@ -515,6 +619,13 @@ model-viewer {
   position: relative;
   flex-shrink: 0;
   aspect-ratio: 1 / 1;
+  /* ОПТИМИЗАЦИЯ: Аппаратное ускорение для всех model-viewer */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  /* Улучшение рендеринга */
+  contain: layout style paint;
+  isolation: isolate;
 }
 
 /* Дополнительные стили для мобильных устройств */

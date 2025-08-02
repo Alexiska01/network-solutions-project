@@ -448,39 +448,15 @@ const ProductHero = () => {
             </div>
 
             {/* Правая колонка - 3D модель */}
-            <motion.div
-              initial={{ 
-                opacity: 0, 
-                scale: 0.7, 
-                rotateY: 30,
-                rotateX: 15,
-                filter: "blur(20px)"
-              }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1, 
-                rotateY: 0,
-                rotateX: 0,
-                filter: "blur(0px)"
-              }}
-              transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center hero-model-container"
-            >
+            <div className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center hero-model-container">
 
               
               {/* 3D модель с интеллектуальной загрузкой */}
               <div className="w-full h-full">
-                <motion.div
+                <div
                   key={currentData.id}
-                  initial={{ opacity: 0, scale: 0.9, y: 30, filter: "blur(10px)" }}
-                  animate={{ 
-                    opacity: isTransitioning && isMobile ? 0.5 : 1, 
-                    scale: 1, 
-                    y: 0,
-                    filter: "blur(0px)"
-                  }}
-                  transition={{ delay: 1.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative w-full h-full"
+                  className="relative w-full h-full hero-model-content"
+                  data-transitioning={isTransitioning && isMobile}
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
                   <div className="w-full h-full relative">
@@ -604,9 +580,9 @@ const ProductHero = () => {
                       </div>
                     )}
                   </div>
-                </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
