@@ -36,18 +36,6 @@ const WarrantyPage: React.FC = () => {
               Оборудование iDATA всегда под поддержкой: чёткие условия, прозрачный сервис, быстрое реагирование.
             </p>
             
-            {/* Статистика с анимированными числами */}
-            <div className="revolutionary-stats">
-              <div className="revolutionary-stat">
-                <span className="revolutionary-stat-number">12</span>
-                <span className="revolutionary-stat-label">месяцев гарантии</span>
-              </div>
-              <div className="revolutionary-stat">
-                <span className="revolutionary-stat-number">9-18</span>
-                <span className="revolutionary-stat-label">рабочие часы</span>
-              </div>
-            </div>
-            
             {/* CTA кнопка */}
             <div className="revolutionary-cta-group">
               <button className="revolutionary-cta">
