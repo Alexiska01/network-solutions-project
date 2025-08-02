@@ -433,7 +433,11 @@ const ProductHero = () => {
             </div>
 
             {/* Правая колонка - 3D модель */}
-            <div className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center hero-model-container">
+            <div className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center hero-model-container" style={{
+              contain: 'layout style paint',
+              overflow: 'hidden',
+              transform: 'translateZ(0)'
+            }}>
 
               
               {/* 3D модель с интеллектуальной загрузкой */}
@@ -473,8 +477,8 @@ const ProductHero = () => {
                         auto-rotate-delay="0"
                         rotation-per-second="30deg"
                         camera-orbit="0deg 75deg 1.6m"
-                        min-camera-orbit="auto auto 1.6m"
-                        max-camera-orbit="auto auto 1.6m"
+                        min-camera-orbit="0deg 75deg 1.6m"
+                        max-camera-orbit="0deg 75deg 1.6m"
                         field-of-view="40deg"
                         exposure="1.2"
                         shadow-intensity="0.3"
@@ -482,6 +486,8 @@ const ProductHero = () => {
                         interaction-prompt="none"
                         loading="eager"
                         reveal="auto"
+                        disable-zoom={true}
+                        disable-pan={true}
                         style={{
                           width: '100%',
                           height: '100%',
@@ -492,8 +498,9 @@ const ProductHero = () => {
                           pointerEvents: 'none',
                           minHeight: '300px',
                           maxHeight: '400px',
-                          flexShrink: 0,
-                          aspectRatio: '1 / 1'
+                          objectFit: 'contain',
+                          transform: 'translateZ(0)',
+                          contain: 'layout style paint'
                         }}
                         onLoad={(e: any) => {
                           console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);

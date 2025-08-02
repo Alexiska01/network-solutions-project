@@ -1427,6 +1427,106 @@ a {
   contain: strict;
 }
 
+/* ===== ФИКСЫ ДЛЯ 3D МОДЕЛИ В CHROME MOBILE ===== */
+
+/* Общие фиксы для model-viewer */
+model-viewer {
+  /* Фиксируем размеры для Chrome Mobile */
+  width: 100% !important;
+  height: 100% !important;
+
+  /* Предотвращаем деформацию при скролле */
+  transform: translate3d(0, 0, 0) !important;
+  backface-visibility: hidden;
+  perspective: 1000px;
+
+  /* Стабилизируем рендеринг */
+  contain: layout style paint size;
+  overflow: hidden;
+
+  /* Фиксируем aspect-ratio */
+  aspect-ratio: unset !important;
+  object-fit: contain;
+
+  /* Изоляция от DOM изменений */
+  isolation: isolate;
+  position: relative;
+}
+
+/* Специальные фиксы для Chrome на Android */
+@supports (-webkit-touch-callout: none) {
+  /* Safari фиксы */
+  model-viewer {
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Фиксы для Chrome на Android */
+@supports not (-webkit-touch-callout: none) {
+  model-viewer {
+    /* Принудительная GPU активация для Chrome */
+    will-change: contents, transform;
+    transform-style: preserve-3d;
+
+    /* Фиксируем viewport для Chrome Mobile */
+    min-height: 0 !important;
+    max-height: none !important;
+    flex-shrink: 0;
+
+    /* Стабилизируем размеры */
+    box-sizing: border-box;
+    display: block;
+  }
+
+  /* Фиксы для контейнера модели в мобильном Chrome */
+  .hero-model-container model-viewer {
+    /* Фиксированные размеры для предотвращения растяжения */
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    /* Отключаем всякие flex эффекты */
+    flex: none !important;
+    align-self: stretch !important;
+  }
+}
+
+/* Дополнительная стабилизация при скролле */
+@media (hover: none) and (pointer: coarse) {
+  /* Мобильные устройства */
+  model-viewer {
+    /* Фиксируем position при скролле */
+    position: relative !important;
+    overflow: visible;
+
+    /* Отключаем все трансформации при скролле */
+    transform: none !important;
+    -webkit-transform: none !important;
+
+    /* Стабилизируем размеры */
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  /* Контейнер модели */
+  .hero-model-container {
+    /* Фиксируем overflow для предотвращения растяжения */
+    overflow: hidden !important;
+    position: relative;
+
+    /* Создаем изолированный контекст */
+    contain: layout style paint;
+    transform: translateZ(0);
+  }
+}
+
 /* Оптимизация сетки карточек в 120 FPS */
 .products-120fps .products-grid {
   /* GPU ускорение для grid layout */
