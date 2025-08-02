@@ -28,7 +28,7 @@ export const navigationItems: NavItem[] = [
     hasSubmenu: true,
     icon: "Network",
   },
-  { name: "Гарантия и сервис", path: "/warranty-service", icon: "ShieldCheck" },
+  { name: "Гарантия и сервис", path: "/warranty", icon: "ShieldCheck" },
   { name: "Программное обеспечение", path: "/software", icon: "Code" },
   { name: "Документация", path: "/documentation", icon: "FileText" },
   { name: "Партнеры", path: "/partners", icon: "Users" },

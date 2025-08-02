@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   const quickLinks = [
     { name: "Оборудование iDATA", path: "/products" },
-    { name: "Гарантия и сервис", path: "/warranty-service" },
+    { name: "Гарантия и сервис", path: "/warranty" },
     { name: "Программное обеспечение", path: "/software" },
     { name: "Документация", path: "/documentation" },
   ];

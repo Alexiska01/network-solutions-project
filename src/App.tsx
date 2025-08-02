@@ -33,6 +33,7 @@ const Partners = lazy(() => import("./pages/Partners"));
 // const ProductHero = lazy(() => import("./pages/ProductHero")); // Заменён на прямой импорт
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ContactsPage = lazy(() => import("./pages/Contacts"));
+const WarrantyPage = lazy(() => import("./pages/WarrantyPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -192,6 +193,7 @@ const App = () => {
               <Route path="/software" element={<SoftwarePage />} />
               <Route path="/product-hero" element={<ProductHero />} />
               <Route path="/contacts" element={<ContactsPage />} />
+              <Route path="/warranty" element={<WarrantyPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="/switches" element={<SwitchesCatalog />} />
               <Route path="*" element={<NotFound />} />
