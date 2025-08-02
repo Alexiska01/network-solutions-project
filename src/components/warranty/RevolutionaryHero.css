@@ -437,67 +437,173 @@
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
 }
 
-/* Адаптивный дизайн */
+/* ПРОФЕССИОНАЛЬНАЯ МОБИЛЬНАЯ ОПТИМИЗАЦИЯ */
 @media (max-width: 1024px) {
+  .revolutionary-hero {
+    min-height: 90vh;
+  }
+
   .revolutionary-content {
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding: 1rem;
+    padding: 1.5rem;
+    min-height: 90vh;
+    align-items: center;
   }
 
   .revolutionary-text-panel {
     padding: 2rem;
+    text-align: center;
   }
 
   .revolutionary-stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .revolutionary-mega-card-expanded {
+    display: none;
+  }
+
+  .revolutionary-interactive-panel {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .revolutionary-cta-group {
+    justify-content: center;
   }
 }
 
 @media (max-width: 768px) {
   .revolutionary-hero {
-    min-height: 100vh;
+    min-height: 80vh;
+    padding: 2rem 0;
   }
 
   .revolutionary-content {
     padding: 1rem;
+    min-height: 80vh;
+    grid-template-columns: 1fr;
+    justify-content: center;
   }
 
   .revolutionary-text-panel {
     padding: 1.5rem;
     border-radius: 1.5rem;
+    text-align: center;
+    max-width: 100%;
   }
 
-  .revolutionary-mega-card {
-    padding: 1.5rem;
+  .revolutionary-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 1rem;
+  }
+
+  .revolutionary-subtitle {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .revolutionary-description {
+    font-size: clamp(0.875rem, 3vw, 1rem);
+    margin-bottom: 2rem;
   }
 
   .revolutionary-stats {
     grid-template-columns: 1fr;
     gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .revolutionary-stat {
+    padding: 1rem;
+  }
+
+  .revolutionary-stat-number {
+    font-size: 2rem;
+  }
+
+  .revolutionary-stat-label {
+    font-size: 0.75rem;
   }
 
   .revolutionary-cta-group {
-    flex-direction: column;
+    justify-content: center;
+  }
+
+  .revolutionary-cta {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+    width: 100%;
+    max-width: 280px;
   }
 
   .revolutionary-shapes .revolutionary-shape {
-    opacity: 0.3;
+    opacity: 0.2;
+  }
+
+  .revolutionary-interactive-panel {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
+  .revolutionary-hero {
+    min-height: 70vh;
+    padding: 1rem 0;
+  }
+
+  .revolutionary-content {
+    padding: 0.5rem;
+    min-height: 70vh;
+  }
+
   .revolutionary-text-panel {
     padding: 1rem;
+    border-radius: 1rem;
   }
 
-  .revolutionary-mega-card {
-    padding: 1rem;
+  .revolutionary-title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    line-height: 1.2;
   }
 
-  .revolutionary-card-icon {
-    width: 3rem;
-    height: 3rem;
+  .revolutionary-subtitle {
+    font-size: clamp(0.875rem, 4vw, 1.25rem);
+  }
+
+  .revolutionary-description {
+    font-size: clamp(0.75rem, 3vw, 0.875rem);
+    line-height: 1.5;
+  }
+
+  .revolutionary-stats {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .revolutionary-stat {
+    padding: 0.75rem;
+  }
+
+  .revolutionary-stat-number {
+    font-size: 1.5rem;
+  }
+
+  .revolutionary-stat-label {
+    font-size: 0.625rem;
+  }
+
+  .revolutionary-cta {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.75rem;
+    max-width: 240px;
+  }
+
+  .revolutionary-shapes .revolutionary-shape {
+    opacity: 0.1;
   }
 }
 

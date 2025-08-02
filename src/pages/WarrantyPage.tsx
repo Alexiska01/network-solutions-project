@@ -52,50 +52,72 @@ const WarrantyPage: React.FC = () => {
               </div>
             </div>
             
-            {/* CTA кнопки нового поколения */}
+            {/* CTA кнопка */}
             <div className="revolutionary-cta-group">
               <button className="revolutionary-cta">
                 Получить консультацию
               </button>
-              <button className="revolutionary-cta revolutionary-cta-secondary">
-                Узнать больше
-              </button>
             </div>
           </div>
           
-          {/* Правая панель с интерактивными элементами */}
+          {/* Правая панель теперь содержит только базовую гарантию */}
           <div className="revolutionary-interactive-panel">
-            {/* Мега карточка 1: Базовая гарантия */}
-            <div className="revolutionary-mega-card">
-              <div className="revolutionary-card-icon">
-                <Icon name="Shield" size={24} className="text-white" />
-              </div>
-              <h3 className="revolutionary-card-title">Базовая гарантия</h3>
-              <p className="revolutionary-card-description">
-                12 месяцев полной защиты с обновлениями ПО и технической поддержкой
-              </p>
-            </div>
-            
-            {/* Мега карточка 2: Премиум сервис */}
-            <div className="revolutionary-mega-card">
-              <div className="revolutionary-card-icon">
-                <Icon name="Zap" size={24} className="text-white" />
-              </div>
-              <h3 className="revolutionary-card-title">Премиум сервис</h3>
-              <p className="revolutionary-card-description">
-                24/7 мониторинг, выезд инженера за 4 часа и авансовая замена оборудования
-              </p>
-            </div>
-            
-            {/* Мега карточка 3: Профессиональная поддержка */}
-            <div className="revolutionary-mega-card">
-              <div className="revolutionary-card-icon">
-                <Icon name="Users" size={24} className="text-white" />
-              </div>
-              <h3 className="revolutionary-card-title">Профессиональная поддержка</h3>
-              <p className="revolutionary-card-description">
-                Команда экспертов с 10+ летним опытом, консультации по настройке и оптимизации
-              </p>
+            {/* Мега карточка: Базовая гарантия с полным контентом */}
+            <div className="revolutionary-mega-card-expanded">
+              <h3 className="revolutionary-expanded-title">
+                <Icon name="Shield" size={32} className="text-white" />
+                Гарантия на оборудование
+              </h3>
+              <ul className="revolutionary-list">
+                <li className="revolutionary-list-item">
+                  <div className="revolutionary-list-icon">
+                    <Icon name="Check" size={16} className="text-white" />
+                  </div>
+                  <span className="revolutionary-list-text">
+                    Всё оборудование поставляется с базовой гарантийной поддержкой
+                  </span>
+                </li>
+                <li className="revolutionary-list-item">
+                  <div className="revolutionary-list-icon">
+                    <Icon name="Check" size={16} className="text-white" />
+                  </div>
+                  <span className="revolutionary-list-text">
+                    Гарантия действует в течение 12 месяцев с даты продажи
+                  </span>
+                </li>
+                <li className="revolutionary-list-item">
+                  <div className="revolutionary-list-icon">
+                    <Icon name="Check" size={16} className="text-white" />
+                  </div>
+                  <span className="revolutionary-list-text">
+                    Приём заявок в рабочие дни с 9:00 до 18:00 по московскому времени
+                  </span>
+                </li>
+                <li className="revolutionary-list-item">
+                  <div className="revolutionary-list-icon">
+                    <Icon name="Check" size={16} className="text-white" />
+                  </div>
+                  <span className="revolutionary-list-text">
+                    Обновления программного обеспечения
+                  </span>
+                </li>
+                <li className="revolutionary-list-item">
+                  <div className="revolutionary-list-icon">
+                    <Icon name="Check" size={16} className="text-white" />
+                  </div>
+                  <span className="revolutionary-list-text">
+                    Ремонт либо замена вышедшего из строя оборудования в течение 60 рабочих дней
+                  </span>
+                </li>
+                <li className="revolutionary-list-item">
+                  <div className="revolutionary-list-icon">
+                    <Icon name="Check" size={16} className="text-white" />
+                  </div>
+                  <span className="revolutionary-list-text">
+                    Доставка в сервисный центр и возврат осуществляется за счёт заказчика
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
