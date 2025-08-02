@@ -6,7 +6,6 @@ const ProductsSection = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
-  const [transitionIntensity, setTransitionIntensity] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -24,27 +23,6 @@ const ProductsSection = () => {
     // Инициализируем массив видимости карточек
     setVisibleCards(new Array(products.length).fill(false));
     cardRefs.current = new Array(products.length).fill(null);
-  }, []);
-
-  // Scroll-based переходный эффект
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const handleScroll = () => {
-      const rect = sectionRef.current?.getBoundingClientRect();
-      if (!rect) return;
-
-      const scrollProgress = Math.max(0, Math.min(1, 
-        (window.innerHeight - rect.top) / (window.innerHeight * 0.5)
-      ));
-      
-      setTransitionIntensity(scrollProgress);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -144,16 +122,11 @@ const ProductsSection = () => {
 
 
   return (
-    <section ref={sectionRef} className="pt-40 pb-16 sm:pt-48 sm:pb-20 md:pt-56 md:pb-24 lg:pt-64 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden">
-      {/* Профессиональный переходный слой сверху от ProductHero */}
-      <div className="absolute top-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-b from-[#0B3C49] via-[#1A237E]/60 to-transparent pointer-events-none z-10"></div>
-      <div className="absolute top-0 left-0 right-0 h-24 md:h-36 bg-gradient-to-b from-[#2E2E2E]/80 via-gray-700/40 to-gray-200/20 pointer-events-none z-20"></div>
-      <div className="absolute top-0 left-0 right-0 h-16 md:h-24 backdrop-blur-sm bg-gradient-to-b from-slate-800/30 via-gray-500/20 to-transparent pointer-events-none z-30"></div>
-      
+    <section ref={sectionRef} className="pt-3 pb-16 sm:pt-4 sm:pb-20 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden flex items-center">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
           {products.map((product, index) => (
             <div
               key={index}
@@ -348,11 +321,6 @@ const ProductsSection = () => {
           ))}
         </div>
       </div>
-      
-      {/* Профессиональный переходный слой снизу к FeaturesSection */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 md:h-40 bg-gradient-to-b from-transparent via-gray-50/40 via-blue-50/60 to-blue-100/80 pointer-events-none z-10"></div>
-      <div className="absolute bottom-0 left-0 right-0 h-20 md:h-28 bg-gradient-to-b from-transparent via-slate-100/30 to-blue-200/50 pointer-events-none z-20"></div>
-      <div className="absolute bottom-0 left-0 right-0 h-12 md:h-16 backdrop-blur-[0.5px] bg-gradient-to-b from-transparent to-blue-300/30 pointer-events-none z-30"></div>
     </section>
   );
 };
