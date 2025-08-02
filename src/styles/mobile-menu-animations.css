@@ -1,0 +1,575 @@
+/* 🚀 Оптимизированные CSS анимации мобильного меню 
+   GPU-ускоренные, поддержка всех частот обновления экрана */
+
+/* GPU композитный слой для всех анимированных элементов */
+.mobile-menu-gpu-layer {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+/* === АНИМАЦИИ ВХОДА/ВЫХОДА МЕНЮ === */
+
+/* Основной слайд меню */
+@keyframes mobileMenuSlideIn {
+  0% {
+    transform: translate3d(100%, 0, 0) scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mobileMenuSlideOut {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(100%, 0, 0) scale(0.95);
+    opacity: 0;
+  }
+}
+
+/* Оверлей с blur эффектом */
+@keyframes overlayFadeIn {
+  0% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+  }
+}
+
+@keyframes overlayFadeOut {
+  0% {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+  }
+  100% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Градиентный фон оверлея */
+@keyframes overlayGradientIn {
+  0% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* === АНИМАЦИИ КОНТЕНТА === */
+
+/* Контент меню с blur fade */
+@keyframes menuContentFadeIn {
+  0% {
+    transform: translate3d(20px, 0, 0);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes menuContentFadeOut {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    transform: translate3d(-20px, 0, 0);
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+/* === АНИМАЦИИ ПУНКТОВ МЕНЮ === */
+
+/* Появление пунктов меню */
+@keyframes menuItemSlideIn {
+  0% {
+    transform: translate3d(-15px, 0, 0);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* Hover эффект для пунктов */
+@keyframes menuItemHover {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(0, -1px, 0) scale(1.015);
+  }
+}
+
+/* Tap эффект */
+@keyframes menuItemTap {
+  0% {
+    transform: translate3d(0, -1px, 0) scale(1.015);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.985);
+  }
+}
+
+/* === АНИМАЦИИ ИКОНОК === */
+
+/* Вращение иконок */
+@keyframes iconHover {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    transform: scale(1.15) rotate(8deg) translateY(-1px);
+  }
+}
+
+@keyframes iconTap {
+  0% {
+    transform: scale(1.15) rotate(8deg) translateY(-1px);
+  }
+  100% {
+    transform: scale(0.85) rotate(0deg);
+  }
+}
+
+/* Стрелка для подменю */
+@keyframes arrowRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(90deg) scale(1.1);
+  }
+}
+
+@keyframes arrowHover {
+  0% {
+    transform: rotate(90deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(135deg) scale(1.2);
+  }
+}
+
+/* === ГАМБУРГЕР КНОПКА === */
+
+/* Анимация превращения в X */
+@keyframes hamburgerLineTop {
+  0% {
+    transform: rotate(0deg) translateY(0px) scale(1);
+  }
+  100% {
+    transform: rotate(45deg) translateY(6px) scale(1.1);
+  }
+}
+
+@keyframes hamburgerLineMiddle {
+  0% {
+    opacity: 1;
+    transform: translateX(0px) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(15px) scale(0.6) rotate(180deg);
+  }
+}
+
+@keyframes hamburgerLineBottom {
+  0% {
+    transform: rotate(0deg) translateY(0px) scale(1);
+  }
+  100% {
+    transform: rotate(-45deg) translateY(-6px) scale(1.1);
+  }
+}
+
+/* Кнопка hover */
+@keyframes hamburgerButtonHover {
+  0% {
+    transform: scale(1) translateY(0px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+  }
+  100% {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.25);
+  }
+}
+
+@keyframes hamburgerButtonTap {
+  0% {
+    transform: scale(1.08) translateY(-2px);
+  }
+  100% {
+    transform: scale(0.92) translateY(0px);
+  }
+}
+
+/* === ACCORDION АНИМАЦИИ === */
+
+/* Раскрытие аккордеона */
+@keyframes accordionExpand {
+  0% {
+    height: 0;
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    height: auto;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes accordionCollapse {
+  0% {
+    height: auto;
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* Декоративная линия аккордеона */
+@keyframes accordionLineGrow {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* === RIPPLE ЭФФЕКТ === */
+
+@keyframes rippleEffect {
+  0% {
+    transform: scale(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* === ДЕКОРАТИВНЫЕ АНИМАЦИИ === */
+
+/* Прогресс бар внизу */
+@keyframes progressBarSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* Блик на прогресс баре */
+@keyframes progressBarShine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* Градиент фейд внизу */
+@keyframes gradientFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Появление индикатора активного пункта */
+@keyframes activeIndicatorIn {
+  0% {
+    transform: scaleY(0) translateX(-4px);
+  }
+  100% {
+    transform: scaleY(1) translateX(0px);
+  }
+}
+
+@keyframes activeIndicatorOut {
+  0% {
+    transform: scaleY(1) translateX(0px);
+  }
+  100% {
+    transform: scaleY(0) translateX(-4px);
+  }
+}
+
+/* === КЛАССЫ ДЛЯ ПРИМЕНЕНИЯ === */
+
+/* Основные контейнеры */
+.mobile-menu-overlay {
+  animation: overlayFadeIn 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.mobile-menu-overlay.closing {
+  animation: overlayFadeOut 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.mobile-menu-overlay-gradient {
+  animation: overlayGradientIn 0.4s ease-out forwards;
+}
+
+.mobile-menu-panel {
+  animation: mobileMenuSlideIn 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    forwards;
+}
+
+.mobile-menu-panel.closing {
+  animation: mobileMenuSlideOut 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    forwards;
+}
+
+.mobile-menu-content {
+  animation: menuContentFadeIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.mobile-menu-content.transitioning {
+  animation: menuContentFadeOut 0.2s ease-in forwards;
+}
+
+/* Пункты меню */
+.mobile-menu-item {
+  animation: menuItemSlideIn 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation-fill-mode: both;
+}
+
+.mobile-menu-item:hover {
+  animation: menuItemHover 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.mobile-menu-item:active {
+  animation: menuItemTap 0.1s ease-out forwards;
+}
+
+/* Иконки */
+.mobile-menu-icon:hover {
+  animation: iconHover 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.mobile-menu-icon:active {
+  animation: iconTap 0.1s ease-out forwards;
+}
+
+/* Гамбургер */
+.hamburger-button:hover {
+  animation: hamburgerButtonHover 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    forwards;
+}
+
+.hamburger-button:active {
+  animation: hamburgerButtonTap 0.1s ease-out forwards;
+}
+
+.hamburger-line-top.active {
+  animation: hamburgerLineTop 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.hamburger-line-middle.active {
+  animation: hamburgerLineMiddle 0.25s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.hamburger-line-bottom.active {
+  animation: hamburgerLineBottom 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* Аккордеон */
+.accordion-expand {
+  animation: accordionExpand 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.accordion-collapse {
+  animation: accordionCollapse 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.accordion-line {
+  animation: accordionLineGrow 0.3s ease-out forwards;
+  transform-origin: top;
+}
+
+/* Ripple */
+.ripple-effect {
+  animation: rippleEffect 0.6s ease-out forwards;
+}
+
+/* Прогресс бар */
+.progress-bar {
+  animation: progressBarSlide 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s
+    forwards;
+}
+
+.progress-bar-shine {
+  animation: progressBarShine 1.5s ease-in-out 1.1s infinite;
+  animation-delay: 3s;
+}
+
+/* Активный индикатор */
+.active-indicator {
+  animation: activeIndicatorIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    forwards;
+  transform-origin: center;
+}
+
+.active-indicator.removing {
+  animation: activeIndicatorOut 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    forwards;
+}
+
+/* === АДАПТАЦИЯ ПОД ЧАСТОТЫ ОБНОВЛЕНИЯ === */
+
+/* 60Hz стандарт */
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu-gpu-layer {
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+  }
+}
+
+/* 90Hz экраны (некоторые Android) */
+@media (prefers-reduced-motion: no-preference) and (min-resolution: 90dpi) {
+  .mobile-menu-panel {
+    animation-duration: 0.22s;
+  }
+
+  .mobile-menu-content {
+    animation-duration: 0.36s;
+  }
+
+  .mobile-menu-item {
+    animation-duration: 0.32s;
+  }
+}
+
+/* 120Hz экраны (iPad Pro, флагманы Android) */
+@media (prefers-reduced-motion: no-preference) and (min-resolution: 120dpi) {
+  .mobile-menu-panel {
+    animation-duration: 0.21s;
+  }
+
+  .mobile-menu-content {
+    animation-duration: 0.34s;
+  }
+
+  .mobile-menu-item {
+    animation-duration: 0.3s;
+  }
+
+  .hamburger-line-top.active,
+  .hamburger-line-bottom.active {
+    animation-duration: 0.25s;
+  }
+}
+
+/* 144Hz+ экраны (игровые телефоны) */
+@media (prefers-reduced-motion: no-preference) and (min-resolution: 144dpi) {
+  .mobile-menu-panel {
+    animation-duration: 0.18s;
+  }
+
+  .mobile-menu-content {
+    animation-duration: 0.3s;
+  }
+
+  .mobile-menu-item {
+    animation-duration: 0.26s;
+  }
+
+  .accordion-expand {
+    animation-duration: 0.32s;
+  }
+
+  .accordion-collapse {
+    animation-duration: 0.24s;
+  }
+}
+
+/* Пониженная анимация для экономии батареи */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .mobile-menu-overlay,
+  .mobile-menu-panel,
+  .mobile-menu-content {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* === ОПТИМИЗАЦИЯ РЕНДЕРИНГА === */
+
+/* Предотвращение layout thrashing */
+.mobile-menu-item,
+.mobile-menu-icon,
+.hamburger-button {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* GPU композитинг для всех анимированных элементов */
+.mobile-menu-overlay,
+.mobile-menu-panel,
+.mobile-menu-content,
+.mobile-menu-item,
+.mobile-menu-icon,
+.hamburger-button,
+.accordion-line,
+.active-indicator,
+.progress-bar {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Оптимизация для старых устройств */
+@media (max-width: 480px) and (max-height: 640px) {
+  .mobile-menu-overlay {
+    backdrop-filter: blur(8px); /* Меньше blur для слабых GPU */
+  }
+
+  .mobile-menu-item {
+    animation-duration: 0.25s; /* Быстрее на слабых устройствах */
+  }
+}
