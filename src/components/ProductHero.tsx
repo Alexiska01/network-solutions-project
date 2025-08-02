@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import { modelPreloader } from '@/utils/modelPreloader';
@@ -77,7 +76,7 @@ const ProductHero = () => {
   // Удаляем зависимость от showWelcome - теперь ProductHero полностью автономен
   const [isInitialized, setIsInitialized] = useState(false);
   
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const modelRef = useRef<any>(null);
@@ -222,20 +221,7 @@ const ProductHero = () => {
     }
   }, [isMobile, currentIndex]);
 
-  // Трекинг мыши для параллакс эффектов (только на десктопе)
-  useEffect(() => {
-    if (isMobile) return;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: (e.clientY / window.innerHeight) * 2 - 1
-      });
-    };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [isMobile]);
 
   // Автоматическая смена слайдов каждые 7 секунд
   useEffect(() => {
@@ -287,85 +273,39 @@ const ProductHero = () => {
   // WelcomeScreen управляется в Index.tsx на уровне страницы
 
   return (
-    <motion.div
-      initial={{ 
-        opacity: 0,
-        scale: 0.98,
-        filter: "blur(20px) brightness(0.3)"
-      }}
-      animate={{ 
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px) brightness(1)"
-      }}
-      transition={{ 
-        duration: 1.5,
-        ease: [0.16, 1, 0.3, 1],
-        delay: 0.2
-      }}
-      className="relative h-[100vh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
-    >
+    <div className="relative h-[100vh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden hero-container">
       {/* Динамический фоновый градиент */}
       <div 
         className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 transition-all duration-1000 ease-out`}
-        style={{
-          transform: !isMobile ? `scale(${1 + Math.abs(mousePosition.x) * 0.05})` : 'none',
-        }}
       />
       
       {/* Параллакс элементы */}
       <div className="absolute inset-0">
         {/* Основной световой эффект */}
-        <motion.div
-          animate={!isMobile ? {
-            x: mousePosition.x * 20,
-            y: mousePosition.y * 20,
-            scale: 1 + Math.abs(mousePosition.x) * 0.1
-          } : {}}
-          transition={{ type: "spring", stiffness: 150, damping: 15 }}
-          className={`absolute top-1/4 left-1/3 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl`}
+        <div
+          className={`absolute top-1/4 left-1/3 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl hero-parallax-light1`}
           style={{
             backgroundColor: `${currentData.glowColor.replace('[', '').replace(']', '')}40`
           }}
         />
         
         {/* Дополнительные световые пятна */}
-        <motion.div
-          animate={!isMobile ? {
-            x: mousePosition.x * -15,
-            y: mousePosition.y * -15,
-            rotate: mousePosition.x * 10
-          } : {}}
-          transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className={`absolute bottom-1/4 right-1/3 w-48 h-48 md:w-64 md:h-64 rounded-full blur-2xl`}
+        <div
+          className={`absolute bottom-1/4 right-1/3 w-48 h-48 md:w-64 md:h-64 rounded-full blur-2xl hero-parallax-light2`}
           style={{
             backgroundColor: `${currentData.accentColor}33`
           }}
         />
         
         {/* Геометрические элементы */}
-        <motion.div
-          animate={!isMobile ? {
-            x: mousePosition.x * 5,
-            y: mousePosition.y * 5,
-            rotate: mousePosition.x * 5
-          } : {}}
-          transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          className="absolute top-16 right-8 md:top-20 md:right-20 w-20 h-20 md:w-32 md:h-32 border border-white/20 rounded-lg rotate-12"
+        <div
+          className="absolute top-16 right-8 md:top-20 md:right-20 w-20 h-20 md:w-32 md:h-32 border border-white/20 rounded-lg rotate-12 hero-parallax-geo1"
           style={{
             borderColor: `${currentData.accentColor}40`
           }}
         />
         
-        <motion.div
-          animate={!isMobile ? {
-            x: mousePosition.x * -8,
-            y: mousePosition.y * -8,
-            rotate: mousePosition.x * -8
-          } : {}}
-          transition={{ type: "spring", stiffness: 180, damping: 30 }}
-          className="absolute bottom-24 left-8 md:bottom-32 md:left-20 w-16 h-16 md:w-24 md:h-24 border border-white/5 rounded-full"
-        />
+        <div className="absolute bottom-24 left-8 md:bottom-32 md:left-20 w-16 h-16 md:w-24 md:h-24 border border-white/5 rounded-full hero-parallax-geo2" />
       </div>
 
 
@@ -591,15 +531,9 @@ const ProductHero = () => {
 
       {/* Переходные эффекты */}
       {isTransitioning && !isMobile && (
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          exit={{ scaleX: 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent origin-left"
-        />
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent origin-left hero-transition-line" />
       )}
-    </motion.div>
+    </div>
   );
 };
 

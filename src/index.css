@@ -292,6 +292,152 @@ a {
   }
 }
 
+/* АНИМАЦИИ ДЛЯ HERO КОНТЕЙНЕРА - главная анимация */
+@keyframes heroContainerFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+    filter: blur(20px) brightness(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px) brightness(1);
+  }
+}
+
+/* Параллакс элементы */
+@keyframes heroParallaxFloat1 {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  50% {
+    transform: translateX(10px) translateY(-5px) scale(1.05);
+  }
+}
+
+@keyframes heroParallaxFloat2 {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-8px) translateY(8px) rotate(2deg);
+  }
+}
+
+@keyframes heroParallaxFloat3 {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) rotate(12deg);
+  }
+  50% {
+    transform: translateX(5px) translateY(-3px) rotate(15deg);
+  }
+}
+
+@keyframes heroParallaxFloat4 {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-5px) translateY(5px);
+  }
+}
+
+/* Переходная линия */
+@keyframes heroTransitionLine {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Основные классы */
+.hero-container {
+  animation: heroContainerFadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.hero-parallax-light1 {
+  animation: heroParallaxFloat1 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.hero-parallax-light2 {
+  animation: heroParallaxFloat2 6s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.hero-parallax-geo1 {
+  animation: heroParallaxFloat3 10s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+.hero-parallax-geo2 {
+  animation: heroParallaxFloat4 12s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+.hero-transition-line {
+  animation: heroTransitionLine 0.3s ease-in-out both;
+}
+
+/* Оптимизация для параллакс элементов */
+.hero-parallax-light1,
+.hero-parallax-light2,
+.hero-parallax-geo1,
+.hero-parallax-geo2 {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Отключение параллакс анимаций на мобильных для производительности */
+@media (max-width: 768px) {
+  .hero-parallax-light1,
+  .hero-parallax-light2,
+  .hero-parallax-geo1,
+  .hero-parallax-geo2 {
+    animation: none;
+    /* Статические позиции на мобильных */
+    transform: none !important;
+  }
+}
+
+/* Дополнительная оптимизация производительности */
+.hero-container {
+  /* GPU слой для главного контейнера */
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  /* Изоляция для предотвращения paint conflicts */
+  contain: layout style paint;
+}
+
+/* Оптимизация градиентного фона */
+.hero-container > div[class*="bg-gradient-to-br"] {
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+/* Глобальная оптимизация для всех анимируемых элементов в hero */
+.hero-container * {
+  /* Улучшение анимаций через GPU */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Принудительная активация композитного слоя для критичных элементов */
+.hero-text-container,
+.hero-model-container {
+  transform: translateZ(0);
+  will-change: opacity, transform;
+}
+
 /* АНИМАЦИИ ДЛЯ HERO ТЕКСТА - профессиональные CSS анимации */
 @keyframes heroFadeInUp {
   from {
