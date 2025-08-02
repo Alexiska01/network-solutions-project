@@ -1910,12 +1910,20 @@ model-viewer {
   /* Стабилизация контейнера модели */
   .hero-model-container {
     position: relative;
-    height: 50vh !important;
-    min-height: 350px !important;
-    max-height: 450px !important;
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
     overflow: hidden;
     /* Предотвращение flex-изменений */
     flex-shrink: 0 !important;
     flex-grow: 0 !important;
+  }
+
+  /* Дополнительная стабилизация основного hero контейнера */
+  .hero-container {
+    min-height: 100vh !important;
+    height: auto !important;
+    /* Предотвращение viewport растяжения */
+    overflow-x: hidden;
   }
 }

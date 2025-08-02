@@ -318,7 +318,7 @@ const ProductHero = () => {
   // WelcomeScreen управляется в Index.tsx на уровне страницы
 
   return (
-    <div className={`relative h-[100vh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden hero-container ${isHighRefreshRate ? 'hero-120fps' : ''}`}>
+    <div className={`relative min-h-[100vh] md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden hero-container ${isHighRefreshRate ? 'hero-120fps' : ''}`}>
       {/* Динамический фоновый градиент */}
       <div 
         className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 transition-all duration-1000 ease-out`}
@@ -356,12 +356,12 @@ const ProductHero = () => {
 
 
       {/* Основной контент */}
-      <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
-        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16 h-full md:h-auto">
-          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-center h-full md:h-auto">
+      <div className="relative z-10 min-h-[100vh] md:h-auto flex flex-col md:flex-row md:items-center">
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16 min-h-[100vh] md:h-auto">
+          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-center min-h-[100vh] md:h-auto">
             
             {/* Левая колонка - контент */}
-            <div className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[40vh] md:h-auto hero-text-container">
+            <div className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 min-h-[40vh] md:h-auto hero-text-container">
               {/* Заголовок */}
               <div className="space-y-3 md:space-y-4">
                 <div className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[11px] md:text-sm font-medium text-white/80 border border-white/20 hero-badge">
