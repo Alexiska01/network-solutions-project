@@ -1016,16 +1016,16 @@ a {
   .feature-card-mobile {
     transition-duration: 700ms; /* Увеличено для мобильных */
   }
-  
+
   .feature-card-120fps-mobile {
     transition-duration: 450ms;
   }
-  
+
   /* Убираем задержки на мобильных */
   .feature-card {
     transition-delay: 0ms !important;
   }
-  
+
   .feature-card-height {
     min-height: 220px; /* Уменьшено для мобильных */
   }
@@ -1043,15 +1043,11 @@ a {
     .feature-card-120fps-mobile {
       transition-duration: 400ms;
     }
-    
+
     .feature-card-120fps-desktop {
       transition-duration: 350ms;
     }
   }
-}
-  image-rendering: crisp-edges;
-  /* Композитная изоляция */
-  contain: layout style paint;
 }
 
 /* CTA кнопки в 120 FPS режиме */
