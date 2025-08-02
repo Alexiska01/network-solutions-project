@@ -376,63 +376,40 @@ const ProductHero = () => {
           <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto">
             
             {/* Левая колонка - контент */}
-            <motion.div
-              initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[40vh] md:h-auto"
-            >
+            <div className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[40vh] md:h-auto hero-text-container">
               {/* Заголовок */}
               <div className="space-y-3 md:space-y-4">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5, y: 30 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: 0.9, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[11px] md:text-sm font-medium text-white/80 border border-white/20"
-                >
+                <div className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[11px] md:text-sm font-medium text-white/80 border border-white/20 hero-badge">
                   ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
-                </motion.div>
+                </div>
                 
-                <motion.h1
+                <h1
                   key={currentData.id}
-                  initial={{ opacity: 0, y: 60, scale: 0.9, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                  transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
+                  className="text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight hero-title hero-content-transition"
+                  data-changing={isTransitioning}
                 >
                   {currentData.title}
-                </motion.h1>
+                </h1>
                 
-                <motion.p
+                <p
                   key={`${currentData.id}-desc`}
-                  initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: isMobile ? 0 : 0.2, duration: isMobile ? 0.3 : 0.8 }}
-                  className="text-sm xs:text-base sm:text-lg md:text-lg text-white/70 leading-relaxed max-w-lg md:max-w-none"
+                  className="text-sm xs:text-base sm:text-lg md:text-lg text-white/70 leading-relaxed max-w-lg md:max-w-none hero-description hero-content-transition"
+                  data-changing={isTransitioning}
                 >
                   {currentData.description}
-                </motion.p>
+                </p>
               </div>
 
               {/* Особенности */}
-              <motion.div
+              <div
                 key={`${currentData.id}-features`}
-                initial={{ opacity: isMobile ? 1 : 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: isMobile ? 0 : 0.4, duration: isMobile ? 0.3 : 0.8 }}
-                className="space-y-2 md:space-y-3"
+                className="space-y-2 md:space-y-3 hero-features hero-content-transition"
+                data-changing={isTransitioning}
               >
                 {currentData.features.map((feature, index) => (
-                  <motion.div
+                  <div
                     key={`${currentData.id}-feature-${index}`}
-                    initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ 
-                      delay: isMobile ? 0 : 0.6 + index * 0.1, 
-                      duration: isMobile ? 0.2 : 0.6,
-                      ease: [0.23, 1, 0.320, 1]
-                    }}
-                    className="flex items-center gap-3 md:gap-4 px-3 py-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    className="flex items-center gap-3 md:gap-4 px-3 py-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl md:rounded-xl border border-white/10 hover:bg-white/10 hero-feature-item"
                   >
                     <div 
                       className={`w-2 h-2 md:w-3 md:h-3 rounded-full shadow-lg`}
@@ -442,17 +419,12 @@ const ProductHero = () => {
                       }}
                     />
                     <span className="text-white font-medium text-[13px] xs:text-sm sm:text-base md:text-base leading-tight">{feature}</span>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
 
               {/* Индикатор прогресса */}
-              <motion.div
-                initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: isMobile ? 0 : 0.8, duration: isMobile ? 0.3 : 0.8 }}
-                className="flex items-center gap-3 md:gap-4 pt-3 md:pt-4"
-              >
+              <div className="flex items-center gap-3 md:gap-4 pt-3 md:pt-4 hero-progress hero-content-transition">
                 <div className="flex gap-2">
                   {heroData.map((_, index) => (
                     <div
@@ -472,8 +444,8 @@ const ProductHero = () => {
                 <span className="text-[13px] md:text-sm text-white/50 font-mono tabular-nums">
                   {String(currentIndex + 1).padStart(2, '0')} / {String(heroData.length).padStart(2, '0')}
                 </span>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             {/* Правая колонка - 3D модель */}
             <motion.div
