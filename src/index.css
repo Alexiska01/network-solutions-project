@@ -781,9 +781,66 @@ a {
   transform: translateY(0) scale(1);
 }
 
-/* Длительности анимаций в зависимости от устройства */
+/* ===== PRODUCTS SECTION - АДАПТИВНЫЕ АНИМАЦИИ ПО ЧАСТОТЕ ОБНОВЛЕНИЯ ===== */
+
+/* 60 FPS - Стандартные дисплеи */
+.product-card-60fps-desktop {
+  transition-duration: 700ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card-60fps-mobile {
+  transition-duration: 600ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 90 FPS - Средние игровые дисплеи */
+.product-card-90fps-desktop {
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card-90fps-mobile {
+  transition-duration: 450ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 120 FPS - Высокочастотные дисплеи */
+.product-card-120fps-desktop {
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card-120fps-mobile {
+  transition-duration: 400ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 144 FPS - Игровые мониторы */
+.product-card-144fps-desktop {
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.product-card-144fps-mobile {
+  transition-duration: 320ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 165 FPS - Премиум игровые мониторы */
+.product-card-165fps-desktop {
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.product-card-165fps-mobile {
+  transition-duration: 280ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Для обратной совместимости */
 .product-card-mobile {
-  transition-duration: 600ms; /* Увеличиваем для мобильных */
+  transition-duration: 600ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -792,30 +849,37 @@ a {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.product-card-120fps-mobile {
-  transition-duration: 400ms; /* Быстрее, но не слишком для мобильных */
-  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+/* ===== PRODUCTS SECTION - ЗАДЕРЖКИ ПОЯВЛЕНИЯ ПО ЧАСТОТЕ ОБНОВЛЕНИЯ ===== */
 
-.product-card-120fps-desktop {
-  transition-duration: 300ms; /* Быстро для десктопа 120 FPS */
-  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* Задержки появления через CSS */
-.product-card-delay-0 {
+/* 60 FPS - Стандартные задержки */
+.product-card-delay-60fps-0 {
   transition-delay: 0ms;
 }
-.product-card-delay-1 {
+.product-card-delay-60fps-1 {
   transition-delay: 150ms;
 }
-.product-card-delay-2 {
+.product-card-delay-60fps-2 {
   transition-delay: 300ms;
 }
-.product-card-delay-3 {
+.product-card-delay-60fps-3 {
   transition-delay: 450ms;
 }
 
+/* 90 FPS - Средние задержки */
+.product-card-delay-90fps-0 {
+  transition-delay: 0ms;
+}
+.product-card-delay-90fps-1 {
+  transition-delay: 120ms;
+}
+.product-card-delay-90fps-2 {
+  transition-delay: 240ms;
+}
+.product-card-delay-90fps-3 {
+  transition-delay: 360ms;
+}
+
+/* 120 FPS - Быстрые задержки */
 .product-card-delay-120fps-0 {
   transition-delay: 0ms;
 }
@@ -827,6 +891,48 @@ a {
 }
 .product-card-delay-120fps-3 {
   transition-delay: 225ms;
+}
+
+/* 144 FPS - Очень быстрые задержки */
+.product-card-delay-144fps-0 {
+  transition-delay: 0ms;
+}
+.product-card-delay-144fps-1 {
+  transition-delay: 60ms;
+}
+.product-card-delay-144fps-2 {
+  transition-delay: 120ms;
+}
+.product-card-delay-144fps-3 {
+  transition-delay: 180ms;
+}
+
+/* 165 FPS - Максимально быстрые задержки */
+.product-card-delay-165fps-0 {
+  transition-delay: 0ms;
+}
+.product-card-delay-165fps-1 {
+  transition-delay: 50ms;
+}
+.product-card-delay-165fps-2 {
+  transition-delay: 100ms;
+}
+.product-card-delay-165fps-3 {
+  transition-delay: 150ms;
+}
+
+/* Для обратной совместимости */
+.product-card-delay-0 {
+  transition-delay: 0ms;
+}
+.product-card-delay-1 {
+  transition-delay: 150ms;
+}
+.product-card-delay-2 {
+  transition-delay: 300ms;
+}
+.product-card-delay-3 {
+  transition-delay: 450ms;
 }
 
 /* Высоты карточек через CSS */
@@ -925,18 +1031,31 @@ a {
   transform: translateY(0) scale(1);
 }
 
-/* Анимации для обычных дисплеев */
-.feature-card-desktop {
+/* ===== АДАПТИВНЫЕ АНИМАЦИИ ПО ЧАСТОТЕ ОБНОВЛЕНИЯ ===== */
+
+/* 60 FPS - Стандартные дисплеи */
+.feature-card-60fps-desktop {
   transition-duration: 700ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.feature-card-mobile {
+.feature-card-60fps-mobile {
   transition-duration: 600ms;
   transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Анимации для 120 FPS дисплеев */
+/* 90 FPS - Средние игровые дисплеи */
+.feature-card-90fps-desktop {
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.feature-card-90fps-mobile {
+  transition-duration: 450ms;
+  transition-timing-function: cubic-bezier(0.28, 0, 0.63, 1);
+}
+
+/* 120 FPS - Высокочастотные дисплеи (iPhone Pro, iPad Pro) */
 .feature-card-120fps-desktop {
   transition-duration: 400ms;
   transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -947,33 +1066,114 @@ a {
   transition-timing-function: cubic-bezier(0.28, 0, 0.63, 1);
 }
 
-/* Hover анимации */
+/* 144 FPS - Игровые мониторы */
+.feature-card-144fps-desktop {
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.feature-card-144fps-mobile {
+  transition-duration: 280ms;
+  transition-timing-function: cubic-bezier(0.28, 0, 0.63, 1);
+}
+
+/* 165 FPS - Премиум игровые мониторы */
+.feature-card-165fps-desktop {
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.feature-card-165fps-mobile {
+  transition-duration: 240ms;
+  transition-timing-function: cubic-bezier(0.28, 0, 0.63, 1);
+}
+
+/* Для обратной совместимости */
+.feature-card-desktop {
+  transition-duration: 700ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card-mobile {
+  transition-duration: 600ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ===== HOVER АНИМАЦИИ ПО ЧАСТОТЕ ОБНОВЛЕНИЯ ===== */
+
+/* 60 FPS Hover */
+.feature-card-hover-60fps {
+  transition-property: transform, box-shadow;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 90 FPS Hover */
+.feature-card-hover-90fps {
+  transition-property: transform, box-shadow;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 120 FPS Hover */
+.feature-card-hover-120fps {
+  transition-property: transform, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 144 FPS Hover */
+.feature-card-hover-144fps {
+  transition-property: transform, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* 165 FPS Hover */
+.feature-card-hover-165fps {
+  transition-property: transform, box-shadow;
+  transition-duration: 120ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Для обратной совместимости */
 .feature-card-hover {
   transition-property: transform, box-shadow;
   transition-duration: 300ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.feature-card-hover-120fps {
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+/* ===== ЗАДЕРЖКИ ПОЯВЛЕНИЯ ПО ЧАСТОТЕ ОБНОВЛЕНИЯ ===== */
 
-/* Задержки появления для десктопа */
-.feature-card-delay-0 {
+/* 60 FPS - Стандартные задержки */
+.feature-card-delay-60fps-0 {
   transition-delay: 0ms;
 }
-.feature-card-delay-1 {
+.feature-card-delay-60fps-1 {
   transition-delay: 150ms;
 }
-.feature-card-delay-2 {
+.feature-card-delay-60fps-2 {
   transition-delay: 300ms;
 }
-.feature-card-delay-3 {
+.feature-card-delay-60fps-3 {
   transition-delay: 450ms;
 }
 
-/* Задержки для 120 FPS десктопа */
+/* 90 FPS - Средние задержки */
+.feature-card-delay-90fps-0 {
+  transition-delay: 0ms;
+}
+.feature-card-delay-90fps-1 {
+  transition-delay: 120ms;
+}
+.feature-card-delay-90fps-2 {
+  transition-delay: 240ms;
+}
+.feature-card-delay-90fps-3 {
+  transition-delay: 360ms;
+}
+
+/* 120 FPS - Быстрые задержки */
 .feature-card-delay-120fps-0 {
   transition-delay: 0ms;
 }
@@ -985,6 +1185,48 @@ a {
 }
 .feature-card-delay-120fps-3 {
   transition-delay: 300ms;
+}
+
+/* 144 FPS - Очень быстрые задержки */
+.feature-card-delay-144fps-0 {
+  transition-delay: 0ms;
+}
+.feature-card-delay-144fps-1 {
+  transition-delay: 80ms;
+}
+.feature-card-delay-144fps-2 {
+  transition-delay: 160ms;
+}
+.feature-card-delay-144fps-3 {
+  transition-delay: 240ms;
+}
+
+/* 165 FPS - Максимально быстрые задержки */
+.feature-card-delay-165fps-0 {
+  transition-delay: 0ms;
+}
+.feature-card-delay-165fps-1 {
+  transition-delay: 70ms;
+}
+.feature-card-delay-165fps-2 {
+  transition-delay: 140ms;
+}
+.feature-card-delay-165fps-3 {
+  transition-delay: 210ms;
+}
+
+/* Для обратной совместимости */
+.feature-card-delay-0 {
+  transition-delay: 0ms;
+}
+.feature-card-delay-1 {
+  transition-delay: 150ms;
+}
+.feature-card-delay-2 {
+  transition-delay: 300ms;
+}
+.feature-card-delay-3 {
+  transition-delay: 450ms;
 }
 
 /* Заголовок секции */
@@ -1037,15 +1279,65 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ProMotion оптимизация для Features */
+/* ===== АВТОМАТИЧЕСКОЕ ОПРЕДЕЛЕНИЕ ЧАСТОТЫ ОБНОВЛЕНИЯ ===== */
+
+/* 90 FPS и выше */
+@media (min-refresh-rate: 90hz) {
+  .auto-fps-card {
+    transition-duration: 450ms;
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
+
+/* 120 FPS и выше */
+@media (min-refresh-rate: 120hz) {
+  .auto-fps-card {
+    transition-duration: 350ms;
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .auto-fps-hover {
+    transition-duration: 200ms;
+  }
+}
+
+/* 144 FPS и выше */
+@media (min-refresh-rate: 144hz) {
+  .auto-fps-card {
+    transition-duration: 280ms;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .auto-fps-hover {
+    transition-duration: 150ms;
+  }
+}
+
+/* 165 FPS и выше */
+@media (min-refresh-rate: 165hz) {
+  .auto-fps-card {
+    transition-duration: 220ms;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .auto-fps-hover {
+    transition-duration: 120ms;
+  }
+}
+
+/* ProMotion Safari оптимизация */
 @supports (-webkit-appearance: none) {
   @media (min-refresh-rate: 120hz) {
-    .feature-card-120fps-mobile {
+    .feature-card-120fps-mobile,
+    .product-card-120fps-mobile {
       transition-duration: 400ms;
+      transition-timing-function: cubic-bezier(0.28, 0, 0.63, 1);
     }
 
-    .feature-card-120fps-desktop {
+    .feature-card-120fps-desktop,
+    .product-card-120fps-desktop {
       transition-duration: 350ms;
+      transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
   }
 }
