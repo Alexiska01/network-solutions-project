@@ -358,7 +358,7 @@ const ProductHero = () => {
       {/* Основной контент */}
       <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16 h-full md:h-auto">
-          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto">
+          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-center h-full md:h-auto">
             
             {/* Левая колонка - контент */}
             <div className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[40vh] md:h-auto hero-text-container">
@@ -433,10 +433,14 @@ const ProductHero = () => {
             </div>
 
             {/* Правая колонка - 3D модель */}
-            <div className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center hero-model-container" style={{
+            <div className="relative h-[400px] order-1 lg:order-2 flex items-center justify-center hero-model-container" style={{
               contain: 'layout style paint',
               overflow: 'hidden',
-              transform: 'translateZ(0)'
+              transform: 'translateZ(0)',
+              minHeight: '400px',
+              maxHeight: '400px',
+              flexShrink: 0,
+              flexGrow: 0
             }}>
 
               
@@ -490,17 +494,19 @@ const ProductHero = () => {
                         disable-pan={true}
                         style={{
                           width: '100%',
-                          height: '100%',
+                          height: '400px',
                           background: 'transparent',
                           borderRadius: '1rem',
                           '--progress-bar-color': 'transparent',
                           '--progress-mask': 'transparent',
                           pointerEvents: 'none',
-                          minHeight: '300px',
+                          minHeight: '400px',
                           maxHeight: '400px',
                           objectFit: 'contain',
                           transform: 'translateZ(0)',
-                          contain: 'layout style paint'
+                          contain: 'layout style paint',
+                          flexShrink: 0,
+                          flexGrow: 0
                         }}
                         onLoad={(e: any) => {
                           console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
