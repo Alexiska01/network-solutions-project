@@ -633,6 +633,276 @@ a {
   --hero-easing: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+/* ==============================================
+   PRODUCTS SECTION - ЭКСТРЕМАЛЬНАЯ 120 FPS ОПТИМИЗАЦИЯ
+   ============================================== */
+
+/* Базовая производительность для Products Section */
+.products-section {
+  /* Принудительная активация hardware acceleration */
+  transform: translate3d(0, 0, 0);
+  /* Оптимизация рендеринга */
+  contain: layout style paint;
+  /* Изоляция композиции */
+  isolation: isolate;
+  /* Предварительная подготовка GPU */
+  will-change: scroll-position;
+}
+
+/* Карточки продуктов - базовая оптимизация */
+.product-card {
+  /* GPU слой для каждой карточки */
+  transform: translate3d(0, 0, 0) rotateZ(0deg);
+  -webkit-transform: translate3d(0, 0, 0) rotateZ(0deg);
+  /* Подготовка к анимациям */
+  will-change: transform, opacity, filter;
+  /* Оптимизация композиции */
+  contain: layout style paint;
+  /* Устранение микро-лагов */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Интерактивные элементы карточек */
+.product-card-interactive {
+  /* Принудительная GPU активация */
+  transform: translateZ(0);
+  /* Субпиксельная точность */
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+  text-rendering: optimizeSpeed;
+}
+
+/* Градиенты и overlays */
+.product-gradient-overlay {
+  /* Оптимизация градиентных переходов */
+  transform: translate3d(0, 0, 0);
+  will-change: opacity, transform;
+  /* Композитная изоляция */
+  contain: paint;
+}
+
+/* Media Query для 120Hz+ дисплеев */
+@media screen and (min-width: 768px) and (min-refresh-rate: 120hz) {
+  .products-section {
+    /* Принудительная активация 3D context */
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    /* Максимальная производительность */
+    contain: strict;
+  }
+
+  .product-card {
+    /* Ультра-плавные переходы для 120Hz */
+    transition-duration: 0.2s; /* Быстрее для 120Hz */
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .product-card-hover {
+    /* Мгновенные hover эффекты */
+    transition-duration: 0.15s;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+}
+
+/* ДИНАМИЧЕСКИЙ КЛАСС ДЛЯ 120 FPS - Products Section */
+.products-120fps {
+  /* Максимальная производительность для 120+ FPS */
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateZ(0deg);
+  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateZ(0deg);
+  /* Принудительная активация GPU слоя */
+  will-change: transform, opacity, filter, scroll-position;
+  /* Оптимизация для ultra-high refresh rates */
+  contain: strict;
+  isolation: isolate;
+  /* Устранение любых микро-лагов */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+.products-120fps * {
+  /* Все дочерние элементы получают максимальную оптимизацию */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  /* Субпиксельная точность */
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+  text-rendering: optimizeSpeed;
+}
+
+/* Карточки в 120 FPS режиме */
+.products-120fps .product-card {
+  /* Экстремальная GPU оптимизация */
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)
+    rotateZ(0deg);
+  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg);
+  /* Принудительная активация hardware layer */
+  will-change: transform, opacity, filter, box-shadow;
+  /* Максимальная изоляция */
+  contain: strict;
+  isolation: isolate;
+}
+
+/* Анимации входа в 120 FPS режиме */
+.products-120fps .product-card-enter {
+  /* Мгновенные появления для 120+ FPS */
+  transition-duration: 0.1s;
+  transition-timing-function: steps(2, jump-end);
+}
+
+/* Hover эффекты в 120 FPS режиме */
+.products-120fps .product-card:hover {
+  /* Мгновенные hover переходы */
+  transition-duration: 0.08s;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* CSS переменные для динамической настройки Products */
+.products-120fps {
+  --products-animation-speed: 0.1s;
+  --products-hover-speed: 0.08s;
+  --products-easing: cubic-bezier(0.19, 1, 0.22, 1);
+  --products-step-easing: steps(2, jump-end);
+}
+
+/* ДОПОЛНИТЕЛЬНЫЕ ЭКСТРЕМАЛЬНЫЕ ОПТИМИЗАЦИИ ДЛЯ 120 FPS */
+
+/* Градиенты в 120 FPS режиме */
+.products-120fps .product-gradient-overlay {
+  /* Ускоренные градиентные переходы */
+  transition-duration: 0.05s;
+  transition-timing-function: linear;
+  /* Принудительная GPU композиция */
+  transform: translate3d(0, 0, 0);
+  will-change: opacity;
+  /* Устранение reflow */
+  contain: paint;
+}
+
+/* Иконки в 120 FPS режиме */
+.products-120fps .product-icon {
+  /* Максимальная производительность иконок */
+  transform: translate3d(0, 0, 0) rotateZ(0deg) scale3d(1, 1, 1);
+  will-change: transform, filter, box-shadow;
+  /* Устранение alias эффектов */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  /* Композитная изоляция */
+  contain: layout style paint;
+}
+
+/* CTA кнопки в 120 FPS режиме */
+.products-120fps .product-cta {
+  /* Мгновенные переходы кнопок */
+  transition-duration: 0.03s;
+  transition-timing-function: steps(1, end);
+  /* GPU оптимизация */
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  will-change: transform, opacity, box-shadow, border-color;
+  /* Изоляция слоя */
+  contain: layout style paint;
+}
+
+/* Текст в 120 FPS режиме */
+.products-120fps .product-text {
+  /* Оптимизация рендеринга текста */
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+  /* Принудительная GPU активация */
+  transform: translateZ(0);
+  /* Переходы цвета */
+  transition-duration: 0.05s;
+  transition-timing-function: linear;
+  transition-property: color;
+}
+
+/* Интерактивные элементы в 120 FPS */
+.products-120fps .product-card-interactive {
+  /* Максимальная отзывчивость */
+  pointer-events: auto;
+  touch-action: manipulation;
+  /* Принудительная GPU активация */
+  transform: translateZ(0) scale3d(1, 1, 1);
+  will-change: transform, opacity;
+}
+
+/* Экстремальная оптимизация для hover состояний */
+.products-120fps .product-card:hover {
+  /* Мгновенные hover переходы */
+  transition-duration: 0.02s;
+  transition-timing-function: linear;
+  transition-property: transform, box-shadow, border-color;
+}
+
+/* Специальные оптимизации для анимаций появления */
+.products-120fps .product-card-enter {
+  /* Мгновенные появления для 120+ FPS */
+  transition-duration: 0.05s;
+  transition-timing-function: steps(1, jump-start);
+  transition-property: opacity, transform;
+}
+
+/* Экстремальная производительность для Products в 120 FPS */
+.products-120fps {
+  /* Принудительная активация всех возможных GPU оптимизаций */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-perspective-origin: center center;
+  perspective-origin: center center;
+  /* Устранение sub-frame delays */
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Максимальная композитная производительность */
+  -webkit-layer-composite: multiply;
+  /* Принудительная изоляция слоев */
+  -webkit-isolation: isolate;
+}
+
+.products-120fps::before {
+  /* Виртуальный layer для принудительной GPU активации */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateZ(0deg);
+  will-change: transform;
+  opacity: 0;
+  pointer-events: none;
+  /* Дополнительная изоляция */
+  contain: strict;
+}
+
+/* Оптимизация сетки карточек в 120 FPS */
+.products-120fps .products-grid {
+  /* GPU ускорение для grid layout */
+  transform: translate3d(0, 0, 0);
+  will-change: contents;
+  /* Изоляция layout */
+  contain: layout;
+}
+
+/* Специальные оптимизации для мобильных 120Hz дисплеев */
+@media screen and (max-width: 767px) and (min-refresh-rate: 120hz) {
+  .products-120fps .product-card {
+    /* Мобильные оптимизации для 120Hz */
+    transition-duration: 0.1s;
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .products-120fps .product-cta {
+    /* Оптимизация touch взаимодействий */
+    transition-duration: 0.05s;
+    transition-timing-function: ease-out;
+  }
+}
+
 /* АНИМАЦИИ ДЛЯ HERO ТЕКСТА - профессиональные CSS анимации */
 @keyframes heroFadeInUp {
   from {
