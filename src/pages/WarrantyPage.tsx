@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
+import '@/components/warranty/WarrantyHero.css';
 
 const WarrantyPage: React.FC = () => {
   return (
@@ -10,34 +11,47 @@ const WarrantyPage: React.FC = () => {
       <Header />
       
       {/* Hero блок */}
-      <section className="relative bg-gradient-to-r from-[#32398e] via-[#005baa] via-[#0079b6] via-[#0093b6] via-[#00acad] to-[#53c2a4] py-20 lg:py-32">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.6, 0.05, 0.01, 0.99] }}
-            className="text-center text-white max-w-4xl mx-auto"
-          >
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6">
+      <section className="warranty-hero-section warranty-hero-gradient relative py-20 lg:py-32 overflow-hidden">
+        {/* Плавающие частицы */}
+        <div className="warranty-hero-particles">
+          <div className="warranty-particle"></div>
+          <div className="warranty-particle"></div>
+          <div className="warranty-particle"></div>
+          <div className="warranty-particle"></div>
+          <div className="warranty-particle"></div>
+        </div>
+        
+        {/* Декоративный элемент */}
+        <div className="warranty-hero-decoration"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center text-white max-w-5xl mx-auto">
+            <h1 className="warranty-hero-title warranty-hero-glow-text text-4xl lg:text-7xl xl:text-8xl font-black mb-8 tracking-tight">
               Гарантия и Сервис
             </h1>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.6, 0.05, 0.01, 0.99] }}
-              className="text-xl lg:text-2xl mb-6 opacity-90"
-            >
+            <h2 className="warranty-hero-subtitle text-xl lg:text-3xl xl:text-4xl mb-8 font-light tracking-wide">
               Ваш бизнес под надёжной защитой
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.6, 0.05, 0.01, 0.99] }}
-              className="text-lg lg:text-xl opacity-80 leading-relaxed"
-            >
+            </h2>
+            <p className="warranty-hero-description text-lg lg:text-2xl xl:text-3xl leading-relaxed font-light max-w-4xl mx-auto">
               Оборудование iDATA всегда под поддержкой: чёткие условия, прозрачный сервис, быстрое реагирование.
-            </motion.p>
-          </motion.div>
+            </p>
+            
+            {/* Дополнительные элементы премиум дизайна */}
+            <div className="mt-12 lg:mt-16 flex flex-wrap justify-center gap-8 lg:gap-12">
+              <div className="warranty-hero-interactive flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
+                <Icon name="Shield" size={24} className="text-white" />
+                <span className="text-white font-medium">12 месяцев гарантии</span>
+              </div>
+              <div className="warranty-hero-interactive flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
+                <Icon name="Clock" size={24} className="text-white" />
+                <span className="text-white font-medium">24/7 поддержка</span>
+              </div>
+              <div className="warranty-hero-interactive flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
+                <Icon name="Zap" size={24} className="text-white" />
+                <span className="text-white font-medium">Быстрое реагирование</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
