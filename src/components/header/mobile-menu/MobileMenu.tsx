@@ -85,6 +85,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onClick={(e) => e.stopPropagation()}
           className="lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-screen bg-white/95 backdrop-blur-xl z-50 shadow-2xl flex flex-col border-l border-gray-100 mobile-menu-panel mobile-menu-gpu-layer"
         >
             {/* Премиальная шапка */}

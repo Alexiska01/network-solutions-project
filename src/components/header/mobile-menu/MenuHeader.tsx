@@ -19,10 +19,7 @@ const MenuHeader: React.FC<MenuHeaderProps> = memo(
             {canGoBack && (
               <button
                 onClick={(e) => {
-                  e.stopPropagation();
-                  onNavigateBack();
-                }}
-                onTouchEnd={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
                   onNavigateBack();
                 }}
@@ -47,10 +44,7 @@ const MenuHeader: React.FC<MenuHeaderProps> = memo(
 
           <button
             onClick={(e) => {
-              e.stopPropagation();
-              onClose();
-            }}
-            onTouchEnd={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               onClose();
             }}

@@ -7,7 +7,11 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
 }) => {
   return (
     <button
-      onClick={onToggle}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onToggle();
+      }}
       className="lg:hidden relative w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-xl border border-gray-100 shadow-lg hover:shadow-xl focus:outline-none overflow-hidden group hamburger-button mobile-menu-gpu-layer"
       aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
     >

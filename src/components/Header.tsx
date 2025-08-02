@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDropdownMenu } from "@/hooks/useDropdownMenu";
 import DesktopNavigation from "./header/DesktopNavigation";
-import MobileMenu from "./header/MobileMenu";
+import MobileMenu from "./header/mobile-menu/MobileMenu";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
