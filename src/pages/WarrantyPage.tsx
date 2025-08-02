@@ -3,53 +3,99 @@ import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
-import '@/components/warranty/WarrantyHero.css';
+import '@/components/warranty/RevolutionaryHero.css';
 
 const WarrantyPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
       
-      {/* Hero блок */}
-      <section className="warranty-hero-section warranty-hero-gradient relative py-12 sm:py-16 lg:py-24 xl:py-32 overflow-hidden">
-        {/* Плавающие частицы */}
-        <div className="warranty-hero-particles">
-          <div className="warranty-particle"></div>
-          <div className="warranty-particle"></div>
-          <div className="warranty-particle"></div>
-          <div className="warranty-particle"></div>
-          <div className="warranty-particle"></div>
+      {/* РЕВОЛЮЦИОННЫЙ HERO-БЛОК МИРОВОГО УРОВНЯ */}
+      <section className="revolutionary-hero">
+        {/* Динамическая сетка */}
+        <div className="revolutionary-grid"></div>
+        
+        {/* 3D геометрические формы */}
+        <div className="revolutionary-shapes">
+          <div className="revolutionary-shape"></div>
+          <div className="revolutionary-shape"></div>
+          <div className="revolutionary-shape"></div>
         </div>
         
-        {/* Декоративный элемент */}
-        <div className="warranty-hero-decoration"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center text-white max-w-4xl mx-auto">
-            <h1 className="warranty-hero-title warranty-hero-glow-text text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold sm:font-black mb-4 sm:mb-6 lg:mb-8 tracking-tight leading-tight">
+        {/* Основной контент с асимметричным layout */}
+        <div className="revolutionary-content">
+          {/* Левая панель с текстом */}
+          <div className="revolutionary-text-panel">
+            <h1 className="revolutionary-title">
               Гарантия и Сервис
             </h1>
-            <h2 className="warranty-hero-subtitle text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-4 sm:mb-6 lg:mb-8 font-normal lg:font-light tracking-normal sm:tracking-wide">
+            <h2 className="revolutionary-subtitle">
               Ваш бизнес под надёжной защитой
             </h2>
-            <p className="warranty-hero-description text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed font-normal lg:font-light max-w-3xl mx-auto px-2 sm:px-0">
+            <p className="revolutionary-description">
               Оборудование iDATA всегда под поддержкой: чёткие условия, прозрачный сервис, быстрое реагирование.
             </p>
             
-            {/* Дополнительные элементы премиум дизайна */}
-            <div className="mt-6 sm:mt-8 lg:mt-12 xl:mt-16 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6 xl:gap-8 px-4 sm:px-0">
-              <div className="warranty-hero-interactive flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 sm:px-5 lg:px-6 py-2 sm:py-3 border border-white/20 text-center">
-                <Icon name="Shield" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                <span className="text-white font-medium text-xs sm:text-sm lg:text-base">12 месяцев гарантии</span>
+            {/* Статистика с анимированными числами */}
+            <div className="revolutionary-stats">
+              <div className="revolutionary-stat">
+                <span className="revolutionary-stat-number">12</span>
+                <span className="revolutionary-stat-label">месяцев гарантии</span>
               </div>
-              <div className="warranty-hero-interactive flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 sm:px-5 lg:px-6 py-2 sm:py-3 border border-white/20 text-center">
-                <Icon name="Clock" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                <span className="text-white font-medium text-xs sm:text-sm lg:text-base">24/7 поддержка</span>
+              <div className="revolutionary-stat">
+                <span className="revolutionary-stat-number">24/7</span>
+                <span className="revolutionary-stat-label">поддержка</span>
               </div>
-              <div className="warranty-hero-interactive flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 sm:px-5 lg:px-6 py-2 sm:py-3 border border-white/20 text-center">
-                <Icon name="Zap" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                <span className="text-white font-medium text-xs sm:text-sm lg:text-base">Быстрое реагирование</span>
+              <div className="revolutionary-stat">
+                <span className="revolutionary-stat-number">4ч</span>
+                <span className="revolutionary-stat-label">время отклика</span>
               </div>
+            </div>
+            
+            {/* CTA кнопки нового поколения */}
+            <div className="revolutionary-cta-group">
+              <button className="revolutionary-cta">
+                Получить консультацию
+              </button>
+              <button className="revolutionary-cta revolutionary-cta-secondary">
+                Узнать больше
+              </button>
+            </div>
+          </div>
+          
+          {/* Правая панель с интерактивными элементами */}
+          <div className="revolutionary-interactive-panel">
+            {/* Мега карточка 1: Базовая гарантия */}
+            <div className="revolutionary-mega-card">
+              <div className="revolutionary-card-icon">
+                <Icon name="Shield" size={24} className="text-white" />
+              </div>
+              <h3 className="revolutionary-card-title">Базовая гарантия</h3>
+              <p className="revolutionary-card-description">
+                12 месяцев полной защиты с обновлениями ПО и технической поддержкой
+              </p>
+            </div>
+            
+            {/* Мега карточка 2: Премиум сервис */}
+            <div className="revolutionary-mega-card">
+              <div className="revolutionary-card-icon">
+                <Icon name="Zap" size={24} className="text-white" />
+              </div>
+              <h3 className="revolutionary-card-title">Премиум сервис</h3>
+              <p className="revolutionary-card-description">
+                24/7 мониторинг, выезд инженера за 4 часа и авансовая замена оборудования
+              </p>
+            </div>
+            
+            {/* Мега карточка 3: Профессиональная поддержка */}
+            <div className="revolutionary-mega-card">
+              <div className="revolutionary-card-icon">
+                <Icon name="Users" size={24} className="text-white" />
+              </div>
+              <h3 className="revolutionary-card-title">Профессиональная поддержка</h3>
+              <p className="revolutionary-card-description">
+                Команда экспертов с 10+ летним опытом, консультации по настройке и оптимизации
+              </p>
             </div>
           </div>
         </div>
