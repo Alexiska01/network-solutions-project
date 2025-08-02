@@ -43,12 +43,8 @@ const WarrantyPage: React.FC = () => {
                 <span className="revolutionary-stat-label">месяцев гарантии</span>
               </div>
               <div className="revolutionary-stat">
-                <span className="revolutionary-stat-number">24/7</span>
-                <span className="revolutionary-stat-label">поддержка</span>
-              </div>
-              <div className="revolutionary-stat">
-                <span className="revolutionary-stat-number">4ч</span>
-                <span className="revolutionary-stat-label">время отклика</span>
+                <span className="revolutionary-stat-number">9-18</span>
+                <span className="revolutionary-stat-label">рабочие часы</span>
               </div>
             </div>
             
