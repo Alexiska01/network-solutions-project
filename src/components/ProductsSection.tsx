@@ -189,26 +189,31 @@ const ProductsSection = () => {
                   cardRefs.current[index] = el;
                 }
               }}
-              className={`product-card ${
-                is120fps ? 'products-120fps' : ''
-              } transition-all ${
-                is120fps ? 'duration-150' : 'duration-700'
-              } ease-out ${
+              className={`product-card transition-all ${
+                // Высота карточки
+                isMobile ? 'product-card-height-mobile' : 'product-card-height-desktop'
+              } ${
+                // Состояние видимости
                 isMobile 
-                  ? (visibleCards[index] 
-                      ? 'opacity-100 translate-y-0 scale-100' 
-                      : 'opacity-0 translate-y-8 scale-95'
+                  ? (visibleCards[index] ? 'product-card-visible' : 'product-card-hidden')
+                  : (isVisible ? 'product-card-visible' : 'product-card-hidden')
+              } ${
+                // Длительность анимации в зависимости от устройства и FPS
+                isMobile 
+                  ? (is120fps ? 'product-card-120fps-mobile' : 'product-card-mobile')
+                  : (is120fps ? 'product-card-120fps-desktop' : 'product-card-desktop')
+              } ${
+                // Задержка появления только для десктопа
+                !isMobile 
+                  ? (is120fps 
+                      ? `product-card-delay-120fps-${index}` 
+                      : `product-card-delay-${index}`
                     )
-                  : (isVisible 
-                      ? 'opacity-100 translate-y-0 scale-100' 
-                      : 'opacity-0 translate-y-8 scale-95'
-                    )
+                  : ''
+              } ${
+                // GPU оптимизация
+                is120fps ? 'products-120fps' : ''
               }`}
-              style={{ 
-                height: isMobile ? "auto" : "560px",
-                minHeight: isMobile ? "280px" : "560px",
-                transitionDelay: isMobile ? '0ms' : (is120fps ? `${index * 75}ms` : `${index * 150}ms`)
-              }}
             >
               <div className={`group relative bg-white border border-gray-100 h-full overflow-hidden transition-all product-card-interactive ${
                 is120fps ? 'products-120fps product-card-hover' : ''
