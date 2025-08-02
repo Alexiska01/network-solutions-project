@@ -746,17 +746,17 @@ a {
   isolation: isolate;
 }
 
-/* Анимации входа в 120 FPS режиме */
+/* Анимации входа в 120 FPS режиме - НЕ ПЕРЕЗАПИСЫВАЕМ transition-duration */
 .products-120fps .product-card-enter {
-  /* Мгновенные появления для 120+ FPS */
-  transition-duration: 0.1s;
-  transition-timing-function: steps(2, jump-end);
+  /* Ускоренные появления для 120+ FPS, но сохраняем плавность */
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Hover эффекты в 120 FPS режиме */
+/* Hover эффекты в 120 FPS режиме - только для трансформаций */
 .products-120fps .product-card:hover {
-  /* Мгновенные hover переходы */
-  transition-duration: 0.08s;
+  /* Ускоренные hover переходы только для transform и box-shadow */
+  transition-property: transform, box-shadow, border-color;
+  transition-duration: 0.15s;
   transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 }
 

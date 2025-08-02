@@ -190,8 +190,10 @@ const ProductsSection = () => {
                 }
               }}
               className={`product-card ${
-                is120fps ? 'products-120fps product-card-enter' : ''
-              } transition-all duration-700 ease-out ${
+                is120fps ? 'products-120fps' : ''
+              } transition-all ${
+                is120fps ? 'duration-150' : 'duration-700'
+              } ease-out ${
                 isMobile 
                   ? (visibleCards[index] 
                       ? 'opacity-100 translate-y-0 scale-100' 
@@ -205,7 +207,7 @@ const ProductsSection = () => {
               style={{ 
                 height: isMobile ? "auto" : "560px",
                 minHeight: isMobile ? "280px" : "560px",
-                transitionDelay: isMobile ? '0ms' : `${index * 150}ms`
+                transitionDelay: isMobile ? '0ms' : (is120fps ? `${index * 75}ms` : `${index * 150}ms`)
               }}
             >
               <div className={`group relative bg-white border border-gray-100 h-full overflow-hidden transition-all product-card-interactive ${
