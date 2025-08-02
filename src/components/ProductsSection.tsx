@@ -174,6 +174,7 @@ const ProductsSection = () => {
       className={`pt-3 pb-16 sm:pt-4 sm:pb-20 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28 bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent relative overflow-hidden flex items-center products-section ${
         is120fps ? 'products-120fps' : ''
       }`}
+    >
       <div className={`absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none product-gradient-overlay ${
         is120fps ? 'products-120fps' : ''
       }`}></div>
@@ -190,7 +191,7 @@ const ProductsSection = () => {
               }}
               className={`product-card ${
                 is120fps ? 'products-120fps product-card-enter' : ''
-              } transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+              } transition-all duration-700 ease-out ${
                 isMobile 
                   ? (visibleCards[index] 
                       ? 'opacity-100 translate-y-0 scale-100' 
@@ -212,7 +213,7 @@ const ProductsSection = () => {
               } ${
                 isMobile 
                   ? 'rounded-xl shadow-[0_1px_6px_rgba(0,0,0,0.04)] active:shadow-[0_2px_8px_rgba(0,0,0,0.06)] duration-200 ease-out'
-                  : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2'
+                  : 'rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] duration-500 ease-out hover:-translate-y-2'
               }`}>
                 {/* Премиальный градиентный overlay */}
                 <div className={`absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20 transition-opacity product-gradient-overlay ${
