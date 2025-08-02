@@ -524,6 +524,372 @@
   }
 }
 
+/* РАСШИРЕННАЯ ВЕРСИЯ ДЛЯ ПОЛНОЙ СТРАНИЦЫ */
+.revolutionary-full-page {
+  background: linear-gradient(
+    135deg,
+    #0f0b2e 0%,
+    #1a1147 15%,
+    #2d1b69 30%,
+    #32398e 45%,
+    #005baa 60%,
+    #0079b6 75%,
+    #00acad 90%,
+    #53c2a4 100%
+  );
+  background-size: 400% 400%;
+  animation: revolutionary-gradient-mega 20s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Глобальная динамическая сетка для всей страницы */
+.revolutionary-full-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: revolutionary-grid-shift 30s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Контейнер для всех секций */
+.revolutionary-sections-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Революционная секция с полным охватом */
+.revolutionary-section {
+  position: relative;
+  padding: 4rem 0;
+  border: none;
+  background: none;
+}
+
+/* Адаптивная сетка для контента секций */
+.revolutionary-section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (min-width: 1024px) {
+  .revolutionary-section-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .revolutionary-section-grid.single-column {
+    grid-template-columns: 1fr;
+    max-width: 1000px;
+  }
+}
+
+/* Расширенные мега-карточки для полного контента */
+.revolutionary-mega-card-expanded {
+  position: relative;
+  padding: 3rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(30px);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+  animation: revolutionary-card-enter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) rotateX(10deg);
+}
+
+@keyframes revolutionary-card-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0) rotateX(10deg) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0deg) scale(1);
+  }
+}
+
+.revolutionary-mega-card-expanded:hover {
+  transform: translate3d(0, -15px, 30px) rotateX(3deg) rotateY(-3deg)
+    scale(1.02);
+  box-shadow:
+    0 50px 100px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+}
+
+/* Заголовки для расширенных карточек */
+.revolutionary-expanded-title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Списки с революционным стилем */
+.revolutionary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.revolutionary-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.revolutionary-list-item:last-child {
+  border-bottom: none;
+}
+
+.revolutionary-list-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.revolutionary-list-icon {
+  width: 2rem;
+  height: 2rem;
+  background: linear-gradient(135deg, #00acad, #53c2a4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(0, 172, 173, 0.3);
+  animation: revolutionary-icon-pulse 2s ease-in-out infinite alternate;
+}
+
+.revolutionary-list-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Сервисные пакеты в революционном стиле */
+.revolutionary-service-package {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 121, 182, 0.9) 0%,
+    rgba(50, 57, 142, 0.9) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.revolutionary-service-package.premium {
+  background: linear-gradient(
+    135deg,
+    rgba(50, 57, 142, 0.9) 0%,
+    rgba(0, 91, 170, 0.9) 100%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.3),
+    0 0 50px rgba(83, 194, 164, 0.2);
+}
+
+/* Временная шкала в революционном стиле */
+.revolutionary-timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.revolutionary-timeline-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #32398e 0%,
+    #005baa 25%,
+    #0079b6 50%,
+    #00acad 75%,
+    #53c2a4 100%
+  );
+  border-radius: 2px;
+  transform: translateY(-50%);
+  box-shadow: 0 0 20px rgba(0, 172, 173, 0.3);
+  animation: revolutionary-timeline-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes revolutionary-timeline-glow {
+  0% {
+    box-shadow: 0 0 20px rgba(0, 172, 173, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(0, 172, 173, 0.6);
+  }
+}
+
+.revolutionary-timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.revolutionary-timeline-step {
+  text-align: center;
+  animation: revolutionary-step-enter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+}
+
+.revolutionary-timeline-step:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.revolutionary-timeline-step:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.revolutionary-timeline-step:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.revolutionary-timeline-step:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+@keyframes revolutionary-step-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.revolutionary-timeline-icon {
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+  border: 3px solid #00acad;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow:
+    0 10px 30px rgba(0, 172, 173, 0.3),
+    0 0 0 8px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.revolutionary-timeline-icon:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow:
+    0 15px 40px rgba(0, 172, 173, 0.5),
+    0 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+.revolutionary-timeline-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.revolutionary-timeline-description {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+/* Адаптивность для расширенных элементов */
+@media (max-width: 1024px) {
+  .revolutionary-section-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .revolutionary-mega-card-expanded {
+    padding: 2rem;
+  }
+
+  .revolutionary-timeline-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .revolutionary-timeline-line {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .revolutionary-mega-card-expanded {
+    padding: 1.5rem;
+  }
+
+  .revolutionary-timeline-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .revolutionary-timeline-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .revolutionary-mega-card-expanded {
+    padding: 1rem;
+  }
+
+  .revolutionary-section {
+    padding: 2rem 0;
+  }
+}
+
 /* Поддержка reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * {
