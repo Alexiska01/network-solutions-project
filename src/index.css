@@ -10,7 +10,9 @@
 
   /* Кинематографические эффекты для профессионального перехода */
   .text-shadow-lg {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), 0 6px 20px rgba(59, 130, 246, 0.3);
+    text-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.5),
+      0 6px 20px rgba(59, 130, 246, 0.3);
   }
 
   /* Keyframes для профессиональных анимаций */
@@ -56,7 +58,9 @@
       box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
     }
     50% {
-      box-shadow: 0 0 60px rgba(59, 130, 246, 0.8), 0 0 100px rgba(147, 51, 234, 0.4);
+      box-shadow:
+        0 0 60px rgba(59, 130, 246, 0.8),
+        0 0 100px rgba(147, 51, 234, 0.4);
     }
     100% {
       box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
@@ -218,7 +222,7 @@ a {
   .pb-safe {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
-  
+
   .pt-safe {
     padding-top: max(1rem, env(safe-area-inset-top));
   }
@@ -230,38 +234,38 @@ a {
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
-  
+
   .xs:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
   }
-  
+
   .xs:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
-  
+
   .xs\:h-\[50vh\] {
     height: 50vh;
   }
-  
+
   .xs\:p-8 {
     padding: 2rem;
   }
-  
+
   .xs\:mb-4 {
     margin-bottom: 1rem;
   }
-  
+
   .xs\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
-  
+
   .xs\:top-6 {
     top: 1.5rem;
   }
-  
+
   .xs\:left-6 {
     left: 1.5rem;
   }
@@ -272,18 +276,67 @@ a {
     font-size: 2.25rem;
     line-height: 2.5rem;
   }
-  
+
   .sm\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
-  
+
   .sm\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
   }
-  
+
   .sm\:h-\[45vh\] {
     height: 45vh;
+  }
+}
+
+/* КРИТИЧНО: Стили для предотвращения растяжения 3D моделей при скролле */
+model-viewer {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 0;
+  --progress-bar-color: transparent;
+  --progress-mask: transparent;
+  /* Предотвращение растяжения модели */
+  object-fit: contain;
+  object-position: center;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  display: block;
+  mix-blend-mode: normal;
+  /* КРИТИЧНО: Фиксированные размеры для предотвращения растяжения при скролле */
+  position: relative;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+}
+
+/* Дополнительные стили для мобильных устройств */
+@media (max-width: 768px) {
+  model-viewer {
+    /* Фиксированная высота на мобильных */
+    min-height: 300px;
+    max-height: 400px;
+    /* Предотвращение изменения размера при скролле */
+    transform: scale(1.2);
+    transform-origin: center;
+    /* Блокировка изменения размера */
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  /* Стабилизация контейнера модели */
+  .hero-model-container {
+    position: relative;
+    height: 50vh !important;
+    min-height: 350px !important;
+    max-height: 450px !important;
+    overflow: hidden;
+    /* Предотвращение flex-изменений */
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
   }
 }
