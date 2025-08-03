@@ -105,6 +105,27 @@
   backface-visibility: hidden;
 }
 
+/* Mobile card content optimization */
+@media (max-width: 768px) {
+  .product-card-inner .absolute.top-4.left-4 > div {
+    @apply px-2 py-1 text-xs;
+  }
+
+  .product-card-inner .absolute.top-4.left-4 .h-4 {
+    @apply h-3 w-3;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card-inner .absolute.top-4.left-4 > div {
+    @apply px-1.5 py-0.5 text-xs;
+  }
+
+  .product-card-inner .absolute.top-4.left-4 {
+    @apply top-2 left-2;
+  }
+}
+
 /* Desktop hover effects */
 @media (hover: hover) and (pointer: fine) {
   .product-card:hover .product-card-inner {
@@ -268,12 +289,41 @@
     @apply w-full py-3.5 text-base min-w-0 px-6;
   }
 
+  /* Mobile card optimizations */
   .product-card-inner {
-    @apply mx-2;
+    @apply mx-2 rounded-xl;
+  }
+
+  .product-card-inner img {
+    height: 180px !important;
+  }
+
+  .product-card-inner .p-8 {
+    @apply p-4;
+  }
+
+  .product-card-inner h3 {
+    @apply text-lg mb-2;
+  }
+
+  .product-card-inner p {
+    @apply text-sm mb-4 leading-snug;
   }
 
   .spec-item {
-    @apply p-2 text-sm;
+    @apply p-2 text-xs;
+  }
+
+  .product-card-inner .grid {
+    @apply gap-2 mb-4;
+  }
+
+  .product-card-inner .mb-8 {
+    @apply mb-4;
+  }
+
+  .product-card-inner .py-3 {
+    @apply py-2.5 text-sm;
   }
 }
 
@@ -301,7 +351,51 @@
     @apply px-0;
   }
 
+  /* Ultra-compact mobile cards */
   .product-card-inner {
-    @apply mx-0 rounded-xl;
+    @apply mx-0 rounded-lg;
+  }
+
+  .product-card-inner img {
+    height: 160px !important;
+  }
+
+  .product-card-inner .p-8,
+  .product-card-inner .p-4 {
+    @apply p-3;
+  }
+
+  .product-card-inner h3 {
+    @apply text-base mb-2 font-semibold;
+  }
+
+  .product-card-inner p {
+    @apply text-xs mb-3 leading-snug;
+  }
+
+  .spec-item {
+    @apply p-1.5 text-xs;
+  }
+
+  .product-card-inner .grid {
+    @apply gap-1.5 mb-3 grid-cols-2;
+  }
+
+  .product-card-inner .mb-8,
+  .product-card-inner .mb-4 {
+    @apply mb-3;
+  }
+
+  .product-card-inner .py-3,
+  .product-card-inner .py-2.5 {
+    @apply py-2 text-xs;
+  }
+
+  .product-card-inner .flex-wrap {
+    @apply gap-1;
+  }
+
+  .product-card-inner .px-2\.5 {
+    @apply px-2 py-0.5 text-xs;
   }
 }
