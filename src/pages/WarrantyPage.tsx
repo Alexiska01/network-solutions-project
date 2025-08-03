@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
-import { initSimpleCardAnimations } from '@/components/warranty/SimpleCardAnimations';
+import { initWarrantyAnimations } from '@/components/warranty/WarrantyAnimations';
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
-    const cleanup = initSimpleCardAnimations();
+    const cleanup = initWarrantyAnimations();
     return cleanup;
   }, []);
 

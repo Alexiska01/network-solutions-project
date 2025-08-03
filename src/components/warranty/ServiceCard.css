@@ -1,51 +1,34 @@
-/* === SERVICE CARDS - Оптимизированные GPU анимации для всех частот обновления === */
+/* УПРОЩЕННЫЕ АНИМАЦИИ СЕРВИСНЫХ КАРТОЧЕК */
 
-/* === ГЛОБАЛЬНЫЕ ОПТИМИЗАЦИИ === */
+/* === БАЗОВЫЕ НАСТРОЙКИ === */
 .service-card,
 .service-header,
 .service-icon,
 .service-title,
 .service-feature-item {
-  /* GPU оптимизация */
   will-change: transform, opacity;
+  transform: translateZ(0);
   backface-visibility: hidden;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-
-  /* Сглаживание для всех частот обновления */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* === ОСНОВНАЯ КАРТОЧКА === */
 .service-card {
-  /* Оптимизированная кривая для 60/90/120/144Hz */
-  transition:
-    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 
-  /* Начальное состояние - GPU слой */
+  /* Начальное состояние */
   opacity: 0;
-  transform: translate3d(0, 32px, 0) scale3d(0.94, 0.94, 1);
-
-  /* Принудительное создание композитного слоя */
-  transform-origin: center center;
-  isolation: isolate;
+  transform: translate3d(0, 32px, 0) scale(0.96);
 }
 
 .service-card.visible,
 .service-card.animate-visible {
-  /* Видимое состояние */
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 /* === ЗАГОЛОВОЧНАЯ СЕКЦИЯ === */
 .service-header {
-  transition:
-    transform 0.35s cubic-bezier(0.23, 1, 0.32, 1) 0.08s,
-    opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1) 0.08s;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1) 0.08s;
 
   /* Начальное состояние */
   opacity: 0;
@@ -53,33 +36,27 @@
 }
 
 .service-header.visible {
-  /* Видимое состояние */
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
 /* === ИКОНКИ === */
 .service-icon {
-  transition:
-    transform 0.32s cubic-bezier(0.23, 1, 0.32, 1) 0.12s,
-    opacity 0.32s cubic-bezier(0.23, 1, 0.32, 1) 0.12s;
+  transition: all 0.32s cubic-bezier(0.23, 1, 0.32, 1) 0.12s;
 
   /* Начальное состояние */
   opacity: 0;
-  transform: translate3d(-16px, 0, 0) scale3d(0.85, 0.85, 1);
+  transform: translate3d(-16px, 0, 0) scale(0.85);
 }
 
 .service-icon.visible {
-  /* Видимое состояние */
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 /* === ЗАГОЛОВОК === */
 .service-title {
-  transition:
-    transform 0.32s cubic-bezier(0.23, 1, 0.32, 1) 0.16s,
-    opacity 0.32s cubic-bezier(0.23, 1, 0.32, 1) 0.16s;
+  transition: all 0.32s cubic-bezier(0.23, 1, 0.32, 1) 0.16s;
 
   /* Начальное состояние */
   opacity: 0;
@@ -87,16 +64,13 @@
 }
 
 .service-title.visible {
-  /* Видимое состояние */
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
 /* === ЭЛЕМЕНТЫ СПИСКА === */
 .service-feature-item {
-  transition:
-    transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
   /* Начальное состояние */
   opacity: 0;
@@ -104,12 +78,11 @@
 }
 
 .service-feature-item.visible {
-  /* Видимое состояние */
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
-/* === ОПТИМИЗИРОВАННЫЕ ЗАДЕРЖКИ ДЛЯ ВСЕХ ЧАСТОТ === */
+/* Задержки для поэтапного появления */
 .service-feature-item:nth-child(1) {
   transition-delay: 0.24s;
 }
@@ -138,86 +111,41 @@
   transition-delay: 0.56s;
 }
 
-/* === ИНТЕРАКТИВНЫЕ ЭФФЕКТЫ ТОЛЬКО ДЛЯ ДЕСКТОПА === */
-@media (hover: hover) and (pointer: fine) {
+/* === HOVER ЭФФЕКТЫ === */
+@media (hover: hover) {
   .service-card:hover {
-    transform: translate3d(0, -12px, 0) scale3d(1.02, 1.02, 1);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
-  }
-
-  .service-card:hover::before {
-    opacity: 1;
+    transform: translate3d(0, -8px, 0) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   }
 }
 
-/* === ВЫСОКОЧАСТОТНАЯ ОПТИМИЗАЦИЯ === */
-@media (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+/* === МОБИЛЬНАЯ ОПТИМИЗАЦИЯ === */
+@media (max-width: 768px) {
+  .service-card:hover {
+    transform: none;
+  }
+
   .service-card,
   .service-header,
   .service-icon,
   .service-title,
   .service-feature-item {
-    /* Ускоренные анимации для высоких частот */
     transition-duration: 0.25s;
   }
-
-  .service-card {
-    transition-duration: 0.3s;
-  }
 }
 
-/* === АНИМАЦИЯ ПОЯВЛЕНИЯ ГРАДИЕНТНОЙ РАМКИ === */
-.service-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.4) 0%,
-    rgba(255, 255, 255, 0.9) 50%,
-    rgba(255, 255, 255, 0.4) 100%
-  );
-  opacity: 0;
-  transform: translate3d(0, 0, 0);
-  transition: opacity 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-  border-radius: inherit;
-}
-
-/* === ПРИНУДИТЕЛЬНАЯ GPU АКТИВАЦИЯ === */
-.service-card {
-  transform: translateZ(0);
-}
-
-/* === ЗАЩИТА ОТ CONFLICTS === */
-.service-card * {
-  /* Предотвращаем конфликты с другими анимациями */
-  animation-fill-mode: both;
-}
-
-/* === ОТКЛЮЧЕНИЕ HOVER НА МОБИЛЬНЫХ === */
-@media (hover: none) and (pointer: coarse) {
-  .service-card:hover {
-    transform: none;
-    box-shadow: inherit;
-  }
-}
-
-/* === РЕДУКЦИЯ ДВИЖЕНИЯ ДЛЯ ДОСТУПНОСТИ === */
+/* === ДОСТУПНОСТЬ === */
 @media (prefers-reduced-motion: reduce) {
   .service-card,
   .service-header,
   .service-icon,
   .service-title,
   .service-feature-item {
-    transition-duration: 0.1s;
+    transition-duration: 0.1s !important;
     transform: none !important;
   }
 
   .service-card:hover {
-    transform: none;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: none !important;
   }
 }
