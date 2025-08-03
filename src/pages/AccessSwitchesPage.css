@@ -3,7 +3,7 @@
 /* Main Title */
 .hero-main-title {
   @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-[0.9] tracking-[-0.02em];
-  animation: heroSlideUp 0.8s ease-out 0.2s both;
+  animation: heroSlideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
   background: linear-gradient(
     135deg,
     #ffffff 0%,
@@ -17,39 +17,49 @@
   text-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   font-weight: 900;
   letter-spacing: -0.03em;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 /* Subtitle */
 .hero-subtitle {
   @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-light leading-[1.4];
-  animation: heroSlideUp 0.8s ease-out 0.4s both;
+  animation: heroSlideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s both;
   color: rgba(255, 255, 255, 0.85);
   max-width: 600px;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   font-weight: 300;
   letter-spacing: -0.01em;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 /* CTA Buttons Container */
 .hero-cta-buttons {
   @apply flex flex-col sm:flex-row items-start gap-4 sm:gap-6;
-  animation: heroSlideUp 0.8s ease-out 0.6s both;
+  animation: heroSlideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 /* Primary Button */
 .hero-btn-primary {
   @apply px-10 py-5 bg-white text-blue-900 font-bold text-lg rounded-2xl shadow-2xl;
-  @apply hover:bg-blue-50 hover:text-blue-950 hover:shadow-2xl;
-  @apply transition-all duration-300 ease-out;
-  @apply border border-white/20 hover:border-blue-200;
-  @apply w-auto min-w-[200px];
+  @apply border border-white/20 w-auto min-w-[200px];
   text-shadow: none;
   font-weight: 700;
   letter-spacing: -0.01em;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow, background-color, border-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .hero-btn-primary:hover {
-  transform: translateY(-3px) scale(1.02);
+  background-color: rgb(239 246 255);
+  color: rgb(30 58 138);
+  border-color: rgb(191 219 254);
+  transform: translateY(-3px) scale(1.02) translateZ(0);
   box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.2),
     0 8px 16px rgba(59, 130, 246, 0.3);
@@ -58,127 +68,187 @@
 /* Secondary Button */
 .hero-btn-secondary {
   @apply px-10 py-5 bg-transparent text-white font-bold text-lg rounded-2xl;
-  @apply border-2 border-white/40 hover:border-white hover:bg-white/15;
-  @apply transition-all duration-300 ease-out;
-  @apply w-auto min-w-[200px];
+  @apply border-2 border-white/40 w-auto min-w-[200px];
   backdrop-filter: blur(20px);
   font-weight: 700;
   letter-spacing: -0.01em;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow, background-color, border-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .hero-btn-secondary:hover {
-  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px) scale(1.02) translateZ(0);
   box-shadow:
     0 16px 32px rgba(255, 255, 255, 0.15),
     0 8px 16px rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.2);
 }
+
+/* ===== PRODUCT CARDS STYLES ===== */
 
 /* Product Cards */
 .product-card {
-  animation: slideInUp 0.6s ease-out both;
+  animation: productSlideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .product-card-inner {
   @apply bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, box-shadow;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow, border-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-.product-card:hover .product-card-inner {
-  transform: translateY(-8px);
-  box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.1),
-    0 20px 25px -5px rgba(0, 0, 0, 0.04);
-  border-color: #3b82f6;
+/* Desktop hover effects */
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .product-card-inner {
+    transform: translateY(-8px) translateZ(0);
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.1),
+      0 20px 25px -5px rgba(0, 0, 0, 0.04);
+    border-color: #3b82f6;
+  }
+
+  .product-card:hover .spec-item {
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateY(-1px) translateZ(0);
+  }
 }
 
 /* Spec Items */
 .spec-item {
   @apply p-3 bg-gray-50 rounded-lg;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, background-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-.product-card:hover .spec-item {
-  background: rgba(59, 130, 246, 0.05);
-  transform: translateY(-1px);
-}
-
-/* Base Animations */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* ===== KEYFRAME ANIMATIONS ===== */
 
 @keyframes heroSlideUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(30px) translateZ(0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
   }
 }
 
-@keyframes slideInUp {
-  0% {
+@keyframes productSlideUp {
+  from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(40px) translateZ(0);
   }
-  100% {
+  to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
   }
 }
 
-/* Performance Optimizations */
-.product-card,
-.hero-button-primary,
-.hero-button-secondary,
-.product-card-inner {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-}
+/* ===== HIGH REFRESH RATE SUPPORT ===== */
 
-/* High refresh rate support */
-@media (prefers-reduced-motion: no-preference) {
+/* 60Hz+ displays optimization */
+@media (min-resolution: 60dpi) {
   .product-card-inner,
-  .hero-button-primary,
-  .hero-button-secondary {
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  .hero-btn-primary,
+  .hero-btn-secondary,
+  .spec-item {
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 }
+
+/* 120Hz+ displays optimization */
+@media (min-resolution: 120dpi) {
+  .product-card-inner {
+    transition-duration: 0.3s;
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    transition-duration: 0.25s;
+  }
+
+  .spec-item {
+    transition-duration: 0.2s;
+  }
+}
+
+/* 144Hz+ displays optimization */
+@media (min-resolution: 144dpi) {
+  .product-card-inner {
+    transition-duration: 0.25s;
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    transition-duration: 0.2s;
+  }
+
+  .spec-item {
+    transition-duration: 0.15s;
+  }
+}
+
+/* ===== ACCESSIBILITY & PERFORMANCE ===== */
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .hero-float,
+  .hero-main-title,
+  .hero-subtitle,
+  .hero-cta-buttons,
   .product-card {
     animation: none;
   }
 
   .product-card-inner,
-  .hero-button-primary,
-  .hero-button-secondary,
+  .hero-btn-primary,
+  .hero-btn-secondary,
   .spec-item {
     transition: none;
   }
 }
 
-/* Mobile optimizations */
-@media (max-width: 768px) {
-  .product-card:hover .product-card-inner {
-    transform: translateY(-4px);
-  }
+/* Force GPU acceleration for all animated elements */
+.product-card,
+.product-card-inner,
+.hero-btn-primary,
+.hero-btn-secondary,
+.spec-item,
+.hero-main-title,
+.hero-subtitle,
+.hero-cta-buttons {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
+/* ===== MOBILE RESPONSIVE ===== */
+
+/* Remove all hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .product-card:hover .product-card-inner,
+  .product-card:hover .spec-item {
+    transform: none;
+    box-shadow: inherit;
+    background: inherit;
+    border-color: inherit;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
   .hero-main-title {
     @apply text-xl sm:text-2xl md:text-3xl leading-[0.95];
     letter-spacing: -0.02em;
@@ -207,7 +277,7 @@
   }
 }
 
-/* Extra small screens */
+/* Mobile */
 @media (max-width: 480px) {
   .hero-main-title {
     @apply text-lg sm:text-xl leading-tight;
