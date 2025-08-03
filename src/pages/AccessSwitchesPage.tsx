@@ -21,56 +21,18 @@ const AccessSwitchesPage = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/95 via-indigo-600/90 to-purple-600/95" />
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.05%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%224%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40" />
-        </div>
-        
-        <div className="relative max-w-6xl mx-auto px-4 py-20 lg:py-32">
+      <section className="relative bg-gradient-hero text-white overflow-hidden min-h-[50vh]">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="text-center">
-            <div className="hero-badge mb-8">
-              <Icon name="Wifi" className="h-5 w-5 text-blue-400" />
-              <span className="text-blue-100 font-medium">Сетевое оборудование</span>
-            </div>
-            
-            <h1 className="hero-title mb-6">
+            <h1 className="hero-title mb-4">
               Коммутаторы уровня доступа
             </h1>
             
-            <p className="hero-description mb-12 max-w-3xl mx-auto">
-              Надежные и производительные коммутаторы для подключения конечных устройств. 
-              Поддержка PoE+, расширенные L2/L3 функции, энергоэффективность и простота управления 
-              для корпоративных сетей любого масштаба.
+            <p className="hero-subtitle">
+              Для корпоративных ЛВС
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="hero-button-primary group"
-                onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                <span>Смотреть каталог</span>
-                <Icon name="ChevronDown" className="ml-2 h-5 w-5 transition-transform group-hover:translate-y-1" />
-              </Button>
-              
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="hero-button-secondary group"
-                onClick={() => navigate('/contacts')}
-              >
-                <Icon name="MessageCircle" className="mr-2 h-5 w-5 transition-transform group-hover:scale-110" />
-                <span>Получить консультацию</span>
-              </Button>
-            </div>
           </div>
         </div>
-        
-        {/* Floating elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full hero-float" style={{ animationDelay: '0s' }} />
-        <div className="absolute top-40 right-16 w-16 h-16 bg-white/10 rounded-full hero-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-20 left-20 w-24 h-24 bg-white/10 rounded-full hero-float" style={{ animationDelay: '4s' }} />
       </section>
 
       {/* Products Section */}
