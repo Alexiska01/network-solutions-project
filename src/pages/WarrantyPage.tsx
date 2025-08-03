@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
-import { initWarrantyCardAnimations } from '@/components/warranty/WarrantyCardAnimations';
-import { initServiceCardAnimations } from '@/components/warranty/ServiceCardAnimations';
+import { initSimpleCardAnimations } from '@/components/warranty/SimpleCardAnimations';
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
@@ -11,12 +10,8 @@ import '@/components/journey/JourneyStep.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
-    const warrantyCleanup = initWarrantyCardAnimations();
-    const serviceCleanup = initServiceCardAnimations();
-    return () => {
-      warrantyCleanup();
-      serviceCleanup();
-    };
+    const cleanup = initSimpleCardAnimations();
+    return cleanup;
   }, []);
 
   return (
