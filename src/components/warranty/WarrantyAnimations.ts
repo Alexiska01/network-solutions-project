@@ -33,9 +33,15 @@ export const initWarrantyAnimations = () => {
           animateCardElements(element);
         }
         
-        // Анимируем элементы пути клиента (упрощенно)
+        // Анимируем элементы пути клиента
         if (element.classList.contains('journey-section')) {
+          // Основные элементы
           element.querySelectorAll('.journey-title, .journey-timeline, .journey-step, .journey-line').forEach(el => {
+            el.classList.add('visible');
+          });
+          
+          // Внутренние элементы шагов
+          element.querySelectorAll('.journey-step-icon, .journey-step-title, .journey-step-description').forEach(el => {
             el.classList.add('visible');
           });
         }

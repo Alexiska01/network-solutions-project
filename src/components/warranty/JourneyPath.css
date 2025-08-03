@@ -89,12 +89,12 @@
 
   /* Начальное СКРЫТОЕ состояние */
   opacity: 0;
-  transform: translate3d(0, 0, 0) scale(0.3) rotate(-90deg);
+  transform: translate3d(0, 20px, 0) scale(0.8);
 }
 
 .journey-step-icon.visible {
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 /* === ЗАГОЛОВКИ ШАГОВ === */
