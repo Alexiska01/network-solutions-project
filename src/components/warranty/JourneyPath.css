@@ -18,9 +18,9 @@
 .journey-title {
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Начальное состояние - ВИДИМ ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
+  /* Начальное СКРЫТОЕ состояние */
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) scale(0.95);
 }
 
 .journey-title.visible {
@@ -32,9 +32,9 @@
 .journey-timeline {
   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.3s;
 
-  /* Начальное состояние - ВИДИМ ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+  /* Начальное СКРЫТОЕ состояние */
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
 }
 
 .journey-timeline.visible {
@@ -46,8 +46,8 @@
 .journey-line {
   transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.6s;
 
-  /* Начальное состояние - ВИДИМА ПО УМОЛЧАНИЮ */
-  transform: scaleX(1);
+  /* Начальное СКРЫТОЕ состояние */
+  transform: scaleX(0);
   transform-origin: left center;
 }
 
@@ -59,9 +59,9 @@
 .journey-step {
   transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
+  /* Начальное СКРЫТОЕ состояние */
+  opacity: 0;
+  transform: translate3d(0, 50px, 0) scale(0.8);
 }
 
 .journey-step.visible {
@@ -87,9 +87,9 @@
 .journey-step-icon {
   transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s;
 
-  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  /* Начальное СКРЫТОЕ состояние */
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(0.3) rotate(-90deg);
 }
 
 .journey-step-icon.visible {

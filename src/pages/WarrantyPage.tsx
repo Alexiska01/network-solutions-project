@@ -14,6 +14,17 @@ const WarrantyPage: React.FC = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     
     const cleanup = initWarrantyAnimations();
+    
+    // Показываем блок "Путь клиента" сразу после загрузки
+    setTimeout(() => {
+      const journeySection = document.querySelector('.journey-section');
+      if (journeySection) {
+        journeySection.querySelectorAll('.journey-title, .journey-timeline, .journey-step, .journey-line').forEach(el => {
+          el.classList.add('visible');
+        });
+      }
+    }, 500);
+    
     return cleanup;
   }, []);
 
