@@ -65,12 +65,14 @@ export const initSimpleCardAnimations = () => {
                     }, elIndex * 100);
                   });
                   
-                  // Анимируем линию для пути клиента
-                  const journeyLine = document.querySelector('.journey-line');
-                  if (journeyLine) {
-                    setTimeout(() => {
-                      journeyLine.classList.add('visible');
-                    }, 500);
+                  // Анимируем линию для пути клиента (только для journey-step элементов)
+                  if (card.classList.contains('journey-step')) {
+                    const journeyLine = document.querySelector('.journey-line');
+                    if (journeyLine && index === 0) { // Запускаем анимацию линии только для первого элемента
+                      setTimeout(() => {
+                        journeyLine.classList.add('visible');
+                      }, 800);
+                    }
                   }
                 }, index * 150);
               });

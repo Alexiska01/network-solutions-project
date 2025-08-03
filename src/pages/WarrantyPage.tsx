@@ -260,7 +260,7 @@ const WarrantyPage: React.FC = () => {
       </section>
 
       {/* Путь клиента */}
-      <section className="py-8 sm:py-12 lg:py-16 xl:py-24">
+      <section className="journey-section py-8 sm:py-12 lg:py-16 xl:py-24">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold text-center text-gray-900 mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
             Путь клиента
