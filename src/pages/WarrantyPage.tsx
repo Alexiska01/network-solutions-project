@@ -57,59 +57,99 @@ const WarrantyPage: React.FC = () => {
 
       {/* Секция Гарантия */}
       <section className="py-8 sm:py-12 lg:py-16 xl:py-24">
-        <div className="container mx-auto px-4 sm:px-6">
+        <div className="container mx-auto px-4 sm:px-6 flex justify-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, ease: [0.6, 0.05, 0.01, 0.99] }}
-            whileHover={{ backgroundColor: "#f3f7fa" }}
-            className="bg-white border border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-12 shadow-lg hover:shadow-xl transition-all duration-500 relative overflow-hidden group"
+            transition={{ duration: 0.6, ease: [0.6, 0.05, 0.01, 0.99] }}
+            whileHover={{ 
+              y: -4,
+              transition: { duration: 0.3 }
+            }}
+            className="warranty-card bg-white rounded-2xl p-8 lg:p-10 max-w-2xl w-full shadow-[0_10px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] transition-all duration-300 relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(145deg, #ffffff 0%, #fafbfc 100%)'
+            }}
           >
-            {/* Цветная полоса */}
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#00acad] group-hover:w-2 transition-all duration-500"></div>
+            {/* Градиентная обводка */}
+            <div className="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-r from-[#32398e] via-[#005baa] to-[#00acad] -z-10">
+              <div className="h-full w-full rounded-2xl bg-white"></div>
+            </div>
             
-            <div className="flex flex-col lg:flex-row lg:items-start gap-4 sm:gap-6 lg:gap-8">
-              <motion.div
-                whileHover={{ scale: 1.1, color: "#00acad" }}
-                transition={{ duration: 0.3 }}
-                className="flex-shrink-0 self-center lg:self-start"
-              >
-                <Icon name="Shield" size={48} className="text-[#00acad] sm:w-14 sm:h-14 lg:w-16 lg:h-16" />
-              </motion.div>
-              
-              <div className="flex-1">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-8 text-center lg:text-left">
-                  Гарантия на оборудование
-                </h3>
-                
-                <ul className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-700">
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <Icon name="Check" size={16} className="text-[#00acad] flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                    <span>Всё оборудование поставляется с базовой гарантийной поддержкой</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <Icon name="Check" size={16} className="text-[#00acad] flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                    <span>Гарантия действует в течение 12 месяцев с даты продажи</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <Icon name="Check" size={16} className="text-[#00acad] flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                    <span>Приём заявок в рабочие дни с 9:00 до 18:00 по московскому времени</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <Icon name="Check" size={16} className="text-[#00acad] flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                    <span>Обновления программного обеспечения</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <Icon name="Check" size={16} className="text-[#00acad] flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                    <span>Ремонт либо замена вышедшего из строя оборудования в течение 60 рабочих дней</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <Icon name="Check" size={16} className="text-[#00acad] flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                    <span>Доставка в сервисный центр и возврат осуществляется за счёт заказчика</span>
-                  </li>
-                </ul>
+            {/* Иконка */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="flex justify-center mb-6"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#005baa] to-[#00acad] flex items-center justify-center shadow-lg">
+                <Icon name="Shield" size={32} className="text-white" />
               </div>
+            </motion.div>
+              
+            {/* Заголовок */}
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="text-2xl lg:text-3xl font-bold text-gray-900 text-center mb-8"
+            >
+              Гарантия на оборудование
+            </motion.h3>
+                
+            {/* Список функций */}
+            <div className="space-y-5">
+              {[
+                {
+                  title: "12 месяцев гарантии",
+                  desc: "Гарантия действует с момента продажи оборудования"
+                },
+                {
+                  title: "Базовая поддержка",
+                  desc: "Всё оборудование поставляется с гарантийной поддержкой"
+                },
+                {
+                  title: "Рабочие часы",
+                  desc: "Приём заявок с 9:00 до 18:00 по московскому времени"
+                },
+                {
+                  title: "Обновления ПО",
+                  desc: "Регулярные обновления программного обеспечения"
+                },
+                {
+                  title: "Ремонт/замена",
+                  desc: "Восстановление в течение 60 рабочих дней"
+                },
+                {
+                  title: "Условия доставки",
+                  desc: "Доставка в сервисный центр за счёт заказчика"
+                }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    delay: 0.4 + index * 0.1, 
+                    duration: 0.5,
+                    ease: [0.6, 0.05, 0.01, 0.99]
+                  }}
+                  className="flex gap-4 items-start"
+                >
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#0093b6] to-[#00acad] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Icon name="Check" size={14} className="text-white" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-900 mb-1">{item.title}</div>
+                    <div className="text-sm text-gray-600 leading-relaxed">{item.desc}</div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
