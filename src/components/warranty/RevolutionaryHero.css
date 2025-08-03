@@ -1,0 +1,646 @@
+/* РЕВОЛЮЦИОННЫЙ HERO-БЛОК МИРОВОГО УРОВНЯ */
+
+/* Главный контейнер с абсолютным позиционированием */
+.revolutionary-hero {
+  position: relative;
+  min-height: 70vh;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #0f0b2e 0%,
+    #1a1147 15%,
+    #2d1b69 30%,
+    #32398e 45%,
+    #005baa 60%,
+    #0079b6 75%,
+    #00acad 90%,
+    #53c2a4 100%
+  );
+  background-size: 400% 400%;
+  animation: revolutionary-gradient-mega 20s ease-in-out infinite;
+  will-change: background-position;
+  transform: translateZ(0);
+}
+
+@keyframes revolutionary-gradient-mega {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  75% {
+    background-position: 50% 0%;
+  }
+}
+
+/* Динамическая сетка на фоне */
+.revolutionary-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: revolutionary-grid-shift 30s linear infinite;
+  transform: translateZ(0);
+}
+
+@keyframes revolutionary-grid-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(60px, 60px);
+  }
+}
+
+/* 3D геометрические формы */
+.revolutionary-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.revolutionary-shape {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.02)
+  );
+  backdrop-filter: blur(1px);
+  will-change: transform;
+}
+
+.revolutionary-shape:nth-child(1) {
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  right: 10%;
+  animation: revolutionary-float-1 25s ease-in-out infinite;
+}
+
+.revolutionary-shape:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  bottom: 20%;
+  left: 15%;
+  animation: revolutionary-float-2 20s ease-in-out infinite reverse;
+}
+
+.revolutionary-shape:nth-child(3) {
+  width: 150px;
+  height: 150px;
+  top: 30%;
+  left: 5%;
+  animation: revolutionary-float-3 18s ease-in-out infinite;
+}
+
+@keyframes revolutionary-float-1 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translate3d(-30px, -40px, 0) rotate(120deg) scale(1.1);
+  }
+  66% {
+    transform: translate3d(20px, 30px, 0) rotate(240deg) scale(0.9);
+  }
+}
+
+@keyframes revolutionary-float-2 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(40px, -20px, 0) rotate(180deg) scale(1.2);
+  }
+}
+
+@keyframes revolutionary-float-3 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate3d(15px, 25px, 0) rotate(90deg) scale(1.15);
+  }
+  75% {
+    transform: translate3d(-25px, -15px, 0) rotate(270deg) scale(0.85);
+  }
+}
+
+/* Основной контент с асимметричным layout */
+.revolutionary-content {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 4rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Левая панель с текстом */
+.revolutionary-text-panel {
+  position: relative;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: revolutionary-panel-enter 1.5s cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+  opacity: 0;
+  transform: translate3d(-60px, 40px, 0) rotateY(-15deg);
+}
+
+@keyframes revolutionary-panel-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(-60px, 40px, 0) rotateY(-15deg) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
+  }
+}
+
+.revolutionary-title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f0f9ff 30%,
+    #e0f2fe 70%,
+    #b3e5fc 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+  animation: revolutionary-title-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes revolutionary-title-glow {
+  0% {
+    filter: brightness(1) drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+  }
+  100% {
+    filter: brightness(1.1) drop-shadow(0 0 40px rgba(255, 255, 255, 0.2));
+  }
+}
+
+.revolutionary-subtitle {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+  line-height: 1.4;
+  animation: revolutionary-subtitle-slide 1.8s cubic-bezier(0.16, 1, 0.3, 1)
+    0.3s forwards;
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+}
+
+@keyframes revolutionary-subtitle-slide {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.revolutionary-description {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  animation: revolutionary-description-fade 2s cubic-bezier(0.16, 1, 0.3, 1)
+    0.6s forwards;
+  opacity: 0;
+}
+
+@keyframes revolutionary-description-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+/* Правая панель с интерактивными элементами */
+.revolutionary-interactive-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: revolutionary-panel-slide 2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s
+    forwards;
+  opacity: 0;
+  transform: translate3d(60px, 0, 0);
+}
+
+@keyframes revolutionary-panel-slide {
+  0% {
+    opacity: 0;
+    transform: translate3d(60px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Мега карточки с 3D эффектами */
+.revolutionary-mega-card {
+  position: relative;
+  padding: 2.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  backdrop-filter: blur(25px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.revolutionary-mega-card:hover {
+  transform: translate3d(0, -10px, 20px) rotateX(5deg) rotateY(-5deg);
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+}
+
+.revolutionary-card-icon {
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(135deg, #00acad, #53c2a4);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0, 172, 173, 0.3);
+  animation: revolutionary-icon-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes revolutionary-icon-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 10px 20px rgba(0, 172, 173, 0.3);
+  }
+  100% {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 172, 173, 0.5);
+  }
+}
+
+.revolutionary-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.revolutionary-card-description {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+/* Статистика с анимированными числами */
+.revolutionary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.revolutionary-stat {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.revolutionary-stat-number {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #00acad;
+  display: block;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #00acad, #53c2a4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.revolutionary-stat-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+/* CTA кнопки нового поколения */
+.revolutionary-cta-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.revolutionary-cta {
+  position: relative;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #00acad, #53c2a4);
+  border: none;
+  border-radius: 3rem;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 172, 173, 0.4);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.revolutionary-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.revolutionary-cta:hover::before {
+  left: 100%;
+}
+
+.revolutionary-cta:hover {
+  transform: translate3d(0, -3px, 0) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 172, 173, 0.6);
+}
+
+.revolutionary-cta-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* ПРОФЕССИОНАЛЬНАЯ МОБИЛЬНАЯ ОПТИМИЗАЦИЯ */
+@media (max-width: 1024px) {
+  .revolutionary-hero {
+    min-height: 90vh;
+  }
+
+  .revolutionary-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+    min-height: 60vh;
+    align-items: center;
+  }
+
+  .revolutionary-text-panel {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .revolutionary-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .revolutionary-mega-card-expanded {
+    display: none;
+  }
+
+  .revolutionary-interactive-panel {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .revolutionary-cta-group {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .revolutionary-hero {
+    min-height: 50vh;
+    padding: 1rem 0;
+  }
+
+  .revolutionary-content {
+    padding: 1rem;
+    min-height: auto;
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+
+  .revolutionary-text-panel {
+    padding: 2rem 1.5rem;
+    border-radius: 1.5rem;
+    text-align: center;
+    max-width: 100%;
+    min-height: auto;
+  }
+
+  .revolutionary-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 1rem;
+  }
+
+  .revolutionary-subtitle {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .revolutionary-description {
+    font-size: clamp(0.875rem, 3vw, 1rem);
+    margin-bottom: 2rem;
+  }
+
+  .revolutionary-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .revolutionary-stat {
+    padding: 1rem;
+  }
+
+  .revolutionary-stat-number {
+    font-size: 2rem;
+  }
+
+  .revolutionary-stat-label {
+    font-size: 0.75rem;
+  }
+
+  .revolutionary-cta-group {
+    justify-content: center;
+  }
+
+  .revolutionary-cta {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .revolutionary-shapes .revolutionary-shape {
+    opacity: 0.2;
+  }
+
+  .revolutionary-interactive-panel {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .revolutionary-hero {
+    min-height: 70vh;
+    padding: 1rem 0;
+  }
+
+  .revolutionary-content {
+    padding: 0.5rem;
+    min-height: 70vh;
+  }
+
+  .revolutionary-text-panel {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .revolutionary-title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    line-height: 1.2;
+  }
+
+  .revolutionary-subtitle {
+    font-size: clamp(0.875rem, 4vw, 1.25rem);
+  }
+
+  .revolutionary-description {
+    font-size: clamp(0.75rem, 3vw, 0.875rem);
+    line-height: 1.5;
+  }
+
+  .revolutionary-stats {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .revolutionary-stat {
+    padding: 0.75rem;
+  }
+
+  .revolutionary-stat-number {
+    font-size: 1.5rem;
+  }
+
+  .revolutionary-stat-label {
+    font-size: 0.625rem;
+  }
+
+  .revolutionary-cta {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.75rem;
+    max-width: 240px;
+  }
+
+  .revolutionary-shapes .revolutionary-shape {
+    opacity: 0.1;
+  }
+}
+
+/* Высокие частоты обновления */
+@media (min-resolution: 120dpi) and (prefers-reduced-motion: no-preference) {
+  .revolutionary-gradient-mega {
+    animation-duration: 15s;
+  }
+
+  .revolutionary-grid-shift {
+    animation-duration: 20s;
+  }
+}
+
+@media (min-resolution: 240dpi) and (prefers-reduced-motion: no-preference) {
+  .revolutionary-gradient-mega {
+    animation-duration: 10s;
+  }
+
+  .revolutionary-float-1,
+  .revolutionary-float-2,
+  .revolutionary-float-3 {
+    animation-duration: 12s;
+  }
+}
+
+/* Поддержка reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .revolutionary-text-panel,
+  .revolutionary-interactive-panel {
+    opacity: 1;
+    transform: none;
+  }
+}
