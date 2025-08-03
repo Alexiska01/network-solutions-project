@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
-import { initSimpleCardAnimations } from '@/components/warranty/SimpleCardAnimations';
+import { initWarrantyCardAnimations } from '@/components/warranty/WarrantyCardAnimations';
+import { initServiceCardAnimations } from '@/components/warranty/ServiceCardAnimations';
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
@@ -10,8 +11,12 @@ import '@/components/journey/JourneyStep.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
-    const cleanup = initSimpleCardAnimations();
-    return cleanup;
+    const warrantyCleanup = initWarrantyCardAnimations();
+    const serviceCleanup = initServiceCardAnimations();
+    return () => {
+      warrantyCleanup();
+      serviceCleanup();
+    };
   }, []);
 
   return (
@@ -255,7 +260,7 @@ const WarrantyPage: React.FC = () => {
       </section>
 
       {/* Путь клиента */}
-      <section className="journey-section py-8 sm:py-12 lg:py-16 xl:py-24">
+      <section className="py-8 sm:py-12 lg:py-16 xl:py-24">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold text-center text-gray-900 mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
             Путь клиента

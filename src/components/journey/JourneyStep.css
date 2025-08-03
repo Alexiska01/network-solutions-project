@@ -1,53 +1,31 @@
-/* ====================================================== */
-/* ПРОФЕССИОНАЛЬНЫЕ GPU-АНИМАЦИИ ПУТИ КЛИЕНТА */
-/* Поддержка 60Hz, 90Hz, 120Hz, 144Hz, 165Hz, 240Hz, 360Hz */
-/* ====================================================== */
+/* GPU-ОПТИМИЗИРОВАННЫЕ АНИМАЦИИ ПУТИ КЛИЕНТА */
+/* Современные анимации с уникальными цветами */
 
-/* === ГЛОБАЛЬНЫЕ GPU НАСТРОЙКИ === */
+/* === БАЗОВЫЕ НАСТРОЙКИ GPU === */
 .journey-step,
 .journey-icon,
 .journey-title,
 .journey-description,
-.journey-line,
-.journey-section {
-  /* Принудительное создание GPU слоя */
+.journey-line {
+  /* GPU-композитный слой для ускорения */
   will-change: transform, opacity;
   contain: layout style paint;
   transform: translateZ(0);
   backface-visibility: hidden;
 
-  /* Сглаживание шрифтов */
+  /* Предотвращение мерцания */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* Устранение мерцания */
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
 }
 
-/* === СЕКЦИЯ ПУТИ КЛИЕНТА === */
-.journey-section {
-  position: relative;
-  isolation: isolate;
-}
-
-/* === ШАГ ПУТИ (БАЗОВЫЕ СТИЛИ) === */
+/* === ШАГ ПУТИ === */
 .journey-step {
-  /* Высокопроизводительные переходы */
-  transition:
-    transform 0.8s cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
-    box-shadow 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  /* Базовые стили */
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-
-  /* Дополнительная оптимизация */
-  perspective: 1000px;
-  transform-style: preserve-3d;
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) scale(0.95);
 }
 
 .journey-step.visible,
@@ -58,17 +36,11 @@
 
 /* === ИКОНКА ШАГА === */
 .journey-icon {
-  transition:
-    transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s,
-    opacity 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s,
-    box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
 
-  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-
-  /* Дополнительная стабилизация */
-  transform-origin: center center;
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, -20px, 0) scale(0.8) rotate(-10deg);
 }
 
 .journey-icon.visible {
@@ -78,13 +50,11 @@
 
 /* === ЗАГОЛОВОК === */
 .journey-title {
-  transition:
-    transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s,
-    opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
 
-  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(-20px, 0, 0);
 }
 
 .journey-title.visible {
@@ -94,13 +64,11 @@
 
 /* === ОПИСАНИЕ === */
 .journey-description {
-  transition:
-    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.35s,
-    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.35s;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
 
-  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 15px, 0);
 }
 
 .journey-description.visible {
@@ -110,13 +78,11 @@
 
 /* === СОЕДИНИТЕЛЬНАЯ ЛИНИЯ === */
 .journey-line {
-  transition:
-    transform 1.4s cubic-bezier(0.23, 1, 0.32, 1) 0.4s,
-    opacity 1.4s cubic-bezier(0.23, 1, 0.32, 1) 0.4s;
+  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
 
-  /* Начальное состояние - ВИДИМА ПО УМОЛЧАНИЮ */
-  opacity: 1;
-  transform: scaleX(1);
+  /* Начальное состояние */
+  opacity: 0;
+  transform: scaleX(0);
   transform-origin: left center;
 }
 
@@ -125,313 +91,78 @@
   transform: scaleX(1);
 }
 
-/* ====================================================== */
-/* УНИКАЛЬНЫЕ ЦВЕТОВЫЕ СХЕМЫ С ГРАДИЕНТАМИ */
-/* ====================================================== */
-
-/* Шаг 1: Заявка - Космический фиолетовый */
-.journey-step:nth-child(1) .journey-icon {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
-  box-shadow:
-    0 8px 32px rgba(102, 126, 234, 0.25),
-    0 0 0 0 rgba(102, 126, 234, 0.1);
-}
-
-/* Шаг 2: Консультация - Изумрудный океан */
-.journey-step:nth-child(2) .journey-icon {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 50%, #11998e 100%);
-  box-shadow:
-    0 8px 32px rgba(17, 153, 142, 0.25),
-    0 0 0 0 rgba(17, 153, 142, 0.1);
-}
-
-/* Шаг 3: Диагностика - Огненный закат */
-.journey-step:nth-child(3) .journey-icon {
-  background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 50%, #fc4a1a 100%);
-  box-shadow:
-    0 8px 32px rgba(252, 74, 26, 0.25),
-    0 0 0 0 rgba(252, 74, 26, 0.1);
-}
-
-/* Шаг 4: Доставка - Небесная лазурь */
-.journey-step:nth-child(4) .journey-icon {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #4facfe 100%);
-  box-shadow:
-    0 8px 32px rgba(79, 172, 254, 0.25),
-    0 0 0 0 rgba(79, 172, 254, 0.1);
-}
-
-/* ====================================================== */
-/* ИНТЕРАКТИВНЫЕ HOVER ЭФФЕКТЫ */
-/* ====================================================== */
-
+/* === HOVER ЭФФЕКТЫ === */
 .journey-step:hover {
-  transform: translate3d(0, -12px, 0) scale(1.03);
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translate3d(0, -8px, 0) scale(1.02);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .journey-step:hover .journey-icon {
-  transform: translate3d(0, -4px, 0) scale(1.15) rotate(8deg);
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translate3d(0, -2px, 0) scale(1.1) rotate(5deg);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Усиленные hover эффекты для иконок */
+/* === УНИКАЛЬНАЯ ЦВЕТОВАЯ СХЕМА === */
+
+/* Шаг 1: Заявка - Фиолетово-синий */
+.journey-step:nth-child(1) .journey-icon {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
 .journey-step:nth-child(1):hover .journey-icon {
-  box-shadow:
-    0 16px 48px rgba(102, 126, 234, 0.4),
-    0 0 24px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+}
+
+/* Шаг 2: Консультация - Изумрудно-зеленый */
+.journey-step:nth-child(2) .journey-icon {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  box-shadow: 0 8px 32px rgba(17, 153, 142, 0.3);
 }
 
 .journey-step:nth-child(2):hover .journey-icon {
-  box-shadow:
-    0 16px 48px rgba(17, 153, 142, 0.4),
-    0 0 24px rgba(17, 153, 142, 0.2);
+  box-shadow: 0 12px 40px rgba(17, 153, 142, 0.4);
+}
+
+/* Шаг 3: Диагностика - Оранжево-красный */
+.journey-step:nth-child(3) .journey-icon {
+  background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+  box-shadow: 0 8px 32px rgba(252, 74, 26, 0.3);
 }
 
 .journey-step:nth-child(3):hover .journey-icon {
-  box-shadow:
-    0 16px 48px rgba(252, 74, 26, 0.4),
-    0 0 24px rgba(252, 74, 26, 0.2);
+  box-shadow: 0 12px 40px rgba(252, 74, 26, 0.4);
+}
+
+/* Шаг 4: Доставка - Голубо-фиолетовый */
+.journey-step:nth-child(4) .journey-icon {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  box-shadow: 0 8px 32px rgba(79, 172, 254, 0.3);
 }
 
 .journey-step:nth-child(4):hover .journey-icon {
-  box-shadow:
-    0 16px 48px rgba(79, 172, 254, 0.4),
-    0 0 24px rgba(79, 172, 254, 0.2);
+  box-shadow: 0 12px 40px rgba(79, 172, 254, 0.4);
 }
 
-/* ====================================================== */
-/* ПУЛЬСИРУЮЩИЕ АНИМАЦИИ */
-/* ====================================================== */
-
-@keyframes journey-pulse-soft {
+/* === ПУЛЬСИРУЮЩИЙ ЭФФЕКТ ДЛЯ ИКОНОК === */
+@keyframes journey-pulse {
   0%,
   100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-  25% {
-    transform: scale(1.02) rotate(1deg);
-    opacity: 0.95;
+    transform: scale(1);
   }
   50% {
-    transform: scale(1.05) rotate(0deg);
-    opacity: 0.9;
-  }
-  75% {
-    transform: scale(1.02) rotate(-1deg);
-    opacity: 0.95;
+    transform: scale(1.05);
   }
 }
 
 .journey-icon.visible {
-  animation: journey-pulse-soft 4s ease-in-out infinite;
+  animation: journey-pulse 3s ease-in-out infinite;
 }
 
-/* ====================================================== */
-/* АДАПТАЦИЯ ПОД ЧАСТОТЫ ОБНОВЛЕНИЯ ЭКРАНА */
-/* ====================================================== */
-
-/* 60Hz - Стандартные мониторы */
-@media (min-resolution: 60dpi) and (max-resolution: 89dpi) {
-  .journey-step {
-    transition-duration: 0.8s;
-    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .journey-icon {
-    transition-duration: 0.9s;
-    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .journey-icon.visible {
-    animation-duration: 4s;
-  }
-}
-
-/* 90Hz - Некоторые смартфоны */
-@media (min-resolution: 90dpi) and (max-resolution: 119dpi) {
-  .journey-step {
-    transition-duration: 0.7s;
-    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .journey-icon {
-    transition-duration: 0.75s;
-    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .journey-icon.visible {
-    animation-duration: 3.5s;
-  }
-}
-
-/* 120Hz - Современные устройства */
-@media (min-resolution: 120dpi) and (max-resolution: 143dpi) {
-  .journey-step {
-    transition-duration: 0.6s;
-    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
-  .journey-icon {
-    transition-duration: 0.65s;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  .journey-title {
-    transition-duration: 0.5s;
-  }
-
-  .journey-description {
-    transition-duration: 0.45s;
-  }
-
-  .journey-line {
-    transition-duration: 1.2s;
-  }
-
-  .journey-icon.visible {
-    animation-duration: 3s;
-  }
-}
-
-/* 144Hz - Игровые мониторы */
-@media (min-resolution: 144dpi) and (max-resolution: 164dpi) {
-  .journey-step {
-    transition-duration: 0.5s;
-    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-
-  .journey-icon {
-    transition-duration: 0.55s;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  .journey-title {
-    transition-duration: 0.4s;
-    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-
-  .journey-description {
-    transition-duration: 0.35s;
-    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-
-  .journey-line {
-    transition-duration: 1s;
-    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-
-  .journey-icon.visible {
-    animation-duration: 2.5s;
-  }
-
-  @keyframes journey-pulse-soft {
-    0%,
-    100% {
-      transform: scale(1) rotate(0deg);
-    }
-    33% {
-      transform: scale(1.03) rotate(1.5deg);
-    }
-    66% {
-      transform: scale(1.06) rotate(-1.5deg);
-    }
-  }
-}
-
-/* 165Hz - Продвинутые игровые мониторы */
-@media (min-resolution: 165dpi) and (max-resolution: 239dpi) {
-  .journey-step {
-    transition-duration: 0.45s;
-    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .journey-icon {
-    transition-duration: 0.5s;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  .journey-title {
-    transition-duration: 0.35s;
-    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .journey-description {
-    transition-duration: 0.3s;
-    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .journey-line {
-    transition-duration: 0.9s;
-    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .journey-icon.visible {
-    animation-duration: 2s;
-  }
-}
-
-/* 240Hz+ - Профессиональные мониторы */
-@media (min-resolution: 240dpi) {
-  .journey-step {
-    transition-duration: 0.35s;
-    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
-  .journey-icon {
-    transition-duration: 0.4s;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  .journey-title {
-    transition-duration: 0.25s;
-    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
-  .journey-description {
-    transition-duration: 0.2s;
-    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
-  .journey-line {
-    transition-duration: 0.7s;
-    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
-  .journey-icon.visible {
-    animation-duration: 1.5s;
-  }
-
-  /* Ультра-плавная анимация для высоких частот */
-  @keyframes journey-pulse-soft {
-    0%,
-    100% {
-      transform: scale(1) rotate(0deg);
-    }
-    20% {
-      transform: scale(1.01) rotate(0.5deg);
-    }
-    40% {
-      transform: scale(1.03) rotate(-0.5deg);
-    }
-    60% {
-      transform: scale(1.05) rotate(0.5deg);
-    }
-    80% {
-      transform: scale(1.03) rotate(-0.5deg);
-    }
-  }
-}
-
-/* ====================================================== */
-/* МОБИЛЬНЫЕ ОПТИМИЗАЦИИ */
-/* ====================================================== */
-
+/* === МОБИЛЬНЫЕ АДАПТАЦИИ === */
 @media (max-width: 1023px) {
   .journey-step {
-    transform: translate3d(-32px, 0, 0) scale(0.93);
-    transition-duration: 0.6s;
+    transform: translate3d(-30px, 0, 0) scale(0.95);
   }
 
   .journey-step.visible {
@@ -439,48 +170,26 @@
   }
 
   .journey-step:hover {
-    transform: translate3d(0, -6px, 0) scale(1.01);
-  }
-
-  .journey-step:hover .journey-icon {
-    transform: translate3d(0, -2px, 0) scale(1.08) rotate(4deg);
-  }
-
-  .journey-icon.visible {
-    animation-duration: 5s;
+    transform: translate3d(0, -4px, 0) scale(1.01);
   }
 }
 
-@media (max-width: 640px) {
-  .journey-step {
-    transition-duration: 0.5s;
-  }
-
+/* === АДАПТИВНЫЕ РАЗМЕРЫ ИКОНОК === */
+@media (min-width: 640px) {
   .journey-icon {
-    transition-duration: 0.55s;
-  }
-
-  .journey-title {
-    transition-duration: 0.4s;
-  }
-
-  .journey-description {
-    transition-duration: 0.35s;
-  }
-
-  .journey-step:hover {
-    transform: translate3d(0, -4px, 0) scale(1.005);
-  }
-
-  .journey-step:hover .journey-icon {
-    transform: translate3d(0, -1px, 0) scale(1.05) rotate(2deg);
+    width: 3.5rem;
+    height: 3.5rem;
   }
 }
 
-/* ====================================================== */
-/* ACCESSIBILITY И REDUCED MOTION */
-/* ====================================================== */
+@media (min-width: 1024px) {
+  .journey-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+}
 
+/* === РЕСПЕКТ К ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
   .journey-step,
   .journey-icon,
@@ -495,17 +204,9 @@
   .journey-step:hover .journey-icon {
     transform: none !important;
   }
-
-  .journey-icon.visible {
-    animation: none !important;
-  }
 }
 
-/* ====================================================== */
-/* ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ */
-/* ====================================================== */
-
-/* Тонкий border эффект при hover */
+/* === ГРАДИЕНТНАЯ АНИМАЦИЯ ФОНА === */
 .journey-step::before {
   content: "";
   position: absolute;
@@ -522,31 +223,10 @@
   );
   border-radius: inherit;
   opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.journey-step:hover::before {
-  opacity: 1;
-}
-
-/* Глубина для иконок */
-.journey-icon::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  width: 80%;
-  height: 20%;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  transform: translateX(-50%) scaleY(0.3);
-  opacity: 0;
   transition: opacity 0.3s ease;
   z-index: -1;
 }
 
-.journey-step:hover .journey-icon::after {
+.journey-step:hover::before {
   opacity: 1;
 }
