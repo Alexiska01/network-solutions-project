@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -9,12 +9,127 @@ import "./AccessSwitchesPage.css";
 
 const AccessSwitchesPage = () => {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
+  const [is120fps, setIs120fps] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Детекция 120 FPS дисплеев
+  useEffect(() => {
+    let frameCount = 0;
+    let startTime = 0;
+    let animationId: number;
+
+    const measureFPS = () => {
+      if (frameCount === 0) {
+        startTime = performance.now();
+      }
+      frameCount++;
+      
+      if (frameCount === 60) {
+        const endTime = performance.now();
+        const fps = Math.round(60000 / (endTime - startTime));
+        
+        if (fps >= 115) {
+          setIs120fps(true);
+          console.log(`🚀 AccessSwitches: Обнаружен ${fps} FPS дисплей - активирован режим 120 FPS!`);
+        } else {
+          setIs120fps(false);
+          console.log(`📺 AccessSwitches: Стандартный ${fps} FPS дисплей`);
+        }
+        return;
+      }
+      
+      animationId = requestAnimationFrame(measureFPS);
+    };
+
+    // Проверка поддержки высокой частоты через media query
+    const highRefreshSupported = window.matchMedia('(min-refresh-rate: 120hz)').matches;
+    if (highRefreshSupported) {
+      setIs120fps(true);
+      console.log('🚀 AccessSwitches: 120Hz+ дисплей определен через CSS media query');
+    } else {
+      // Измерение FPS через requestAnimationFrame
+      animationId = requestAnimationFrame(measureFPS);
+    }
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, []);
+
   const accessSwitches = switchesData.filter((s) => s.category === "access");
+
+  useEffect(() => {
+    // Инициализируем массив видимости карточек
+    setVisibleCards(new Array(accessSwitches.length).fill(false));
+    cardRefs.current = new Array(accessSwitches.length).fill(null);
+  }, [accessSwitches.length]);
+
+  useEffect(() => {
+    if (!isMobile) {
+      // Для десктопа - все сразу
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    } else {
+      // Для мобильных - индивидуальное появление карточек
+      const observers: IntersectionObserver[] = [];
+      
+      cardRefs.current.forEach((cardRef, index) => {
+        if (cardRef) {
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                setVisibleCards(prev => {
+                  const newVisible = [...prev];
+                  newVisible[index] = true;
+                  return newVisible;
+                });
+              }
+            },
+            { threshold: 0.2 }
+          );
+          
+          observer.observe(cardRef);
+          observers.push(observer);
+        }
+      });
+
+      return () => {
+        observers.forEach(observer => observer.disconnect());
+      };
+    }
+  }, [isMobile, accessSwitches.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
@@ -54,14 +169,43 @@ const AccessSwitchesPage = () => {
       </section>
 
       {/* Products Section */}
-      <section id="products" className="py-8 sm:py-12 lg:py-16">
+      <section 
+        ref={sectionRef}
+        id="products" 
+        className={`py-8 sm:py-12 lg:py-16 products-section ${is120fps ? 'products-120fps' : ''}`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {accessSwitches.map((switchData, index) => (
               <div
                 key={switchData.id}
-                className="product-card group"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                ref={(el) => {
+                  if (cardRefs.current) {
+                    cardRefs.current[index] = el;
+                  }
+                }}
+                className={`product-card group transition-all ${
+                  // Состояние видимости
+                  isMobile 
+                    ? (visibleCards[index] ? 'product-card-visible' : 'product-card-hidden')
+                    : (isVisible ? 'product-card-visible' : 'product-card-hidden')
+                } ${
+                  // Длительность анимации в зависимости от устройства и FPS
+                  isMobile 
+                    ? (is120fps ? 'product-card-120fps-mobile' : 'product-card-mobile')
+                    : (is120fps ? 'product-card-120fps-desktop' : 'product-card-desktop')
+                } ${
+                  // Задержка появления только для десктопа
+                  !isMobile 
+                    ? (is120fps 
+                        ? `product-card-delay-120fps-${index}` 
+                        : `product-card-delay-${index}`
+                      )
+                    : ''
+                } ${
+                  // GPU оптимизация
+                  is120fps ? 'products-120fps' : ''
+                }`}
               >
                 <div className="product-card-inner">
                   {/* Image Section */}
