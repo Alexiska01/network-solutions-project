@@ -2,15 +2,20 @@ import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
-import { initSimpleCardAnimations } from '@/components/warranty/SimpleCardAnimations';
+import { initWarrantyCardAnimations } from '@/components/warranty/WarrantyCardAnimations';
+import { initServiceCardAnimations } from '@/components/warranty/ServiceCardAnimations';
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
-    const cleanup = initSimpleCardAnimations();
-    return cleanup;
+    const warrantyCleanup = initWarrantyCardAnimations();
+    const serviceCleanup = initServiceCardAnimations();
+    return () => {
+      warrantyCleanup();
+      serviceCleanup();
+    };
   }, []);
 
   return (
@@ -153,6 +158,7 @@ const WarrantyPage: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Пакет 8x5xNBD */}
             <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100">
+              
               {/* Градиентная обводка */}
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#FF6B35] via-[#F7931E] to-[#FF8C00] -z-10">
                 <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
@@ -199,6 +205,7 @@ const WarrantyPage: React.FC = () => {
 
             {/* Пакет 24x7x4 */}
             <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100">
+              
               {/* Градиентная обводка */}
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#8e44ad] -z-10">
                 <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
