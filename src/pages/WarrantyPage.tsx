@@ -9,8 +9,8 @@ import '@/components/warranty/ServiceCard.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
-    // Скролл к началу страницы при загрузке
-    window.scrollTo(0, 0);
+    // Мгновенно устанавливаем позицию в начало страницы
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     
     const cleanup = initWarrantyAnimations();
     return cleanup;
