@@ -12,7 +12,7 @@ export const initSimpleCardAnimations = () => {
 
   if (isMobile) {
     // МОБИЛЬНАЯ ЛОГИКА: индивидуальные наблюдатели
-    const cards = document.querySelectorAll('.warranty-card, .service-card, .journey-step');
+    const cards = document.querySelectorAll('.warranty-card, .service-card');
     
     cards.forEach((card) => {
       const observer = new IntersectionObserver(
@@ -22,7 +22,7 @@ export const initSimpleCardAnimations = () => {
               entry.target.classList.add('animate-visible', 'visible');
               
               // Анимируем внутренние элементы
-              const elements = entry.target.querySelectorAll('.warranty-header, .warranty-icon, .warranty-title, .warranty-feature-item, .journey-icon, .journey-title, .journey-description');
+              const elements = entry.target.querySelectorAll('.warranty-header, .warranty-icon, .warranty-title, .warranty-feature-item');
               elements.forEach((el, index) => {
                 setTimeout(() => {
                   el.classList.add('visible');
@@ -44,7 +44,7 @@ export const initSimpleCardAnimations = () => {
     });
   } else {
     // ДЕСКТОПНАЯ ЛОГИКА: каскадное появление
-    const cards = document.querySelectorAll('.warranty-card, .service-card, .journey-step');
+    const cards = document.querySelectorAll('.warranty-card, .service-card');
     const firstCard = cards[0];
     
     if (firstCard) {
@@ -58,20 +58,12 @@ export const initSimpleCardAnimations = () => {
                   card.classList.add('animate-visible', 'visible');
                   
                   // Анимируем внутренние элементы
-                  const elements = card.querySelectorAll('.warranty-header, .warranty-icon, .warranty-title, .warranty-feature-item, .journey-icon, .journey-title, .journey-description');
+                  const elements = card.querySelectorAll('.warranty-header, .warranty-icon, .warranty-title, .warranty-feature-item');
                   elements.forEach((el, elIndex) => {
                     setTimeout(() => {
                       el.classList.add('visible');
                     }, elIndex * 100);
                   });
-                  
-                  // Анимируем линию для пути клиента
-                  const journeyLine = document.querySelector('.journey-line');
-                  if (journeyLine) {
-                    setTimeout(() => {
-                      journeyLine.classList.add('visible');
-                    }, 500);
-                  }
                 }, index * 150);
               });
               observer.unobserve(entry.target);

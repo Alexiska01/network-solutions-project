@@ -2,21 +2,15 @@ import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
-import { initWarrantyCardAnimations } from '@/components/warranty/WarrantyCardAnimations';
-import { initServiceCardAnimations } from '@/components/warranty/ServiceCardAnimations';
+import { initSimpleCardAnimations } from '@/components/warranty/SimpleCardAnimations';
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
-import '@/components/journey/JourneyStep.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
-    const warrantyCleanup = initWarrantyCardAnimations();
-    const serviceCleanup = initServiceCardAnimations();
-    return () => {
-      warrantyCleanup();
-      serviceCleanup();
-    };
+    const cleanup = initSimpleCardAnimations();
+    return cleanup;
   }, []);
 
   return (
@@ -159,7 +153,6 @@ const WarrantyPage: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Пакет 8x5xNBD */}
             <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100">
-              
               {/* Градиентная обводка */}
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#FF6B35] via-[#F7931E] to-[#FF8C00] -z-10">
                 <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
@@ -206,7 +199,6 @@ const WarrantyPage: React.FC = () => {
 
             {/* Пакет 24x7x4 */}
             <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100">
-              
               {/* Градиентная обводка */}
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#8e44ad] -z-10">
                 <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
@@ -270,7 +262,7 @@ const WarrantyPage: React.FC = () => {
           <div className="hidden lg:block">
             <div className="relative">
               {/* Линия соединения */}
-              <div className="journey-line absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#667eea] via-[#11998e] via-[#fc4a1a] to-[#4facfe] transform -translate-y-1/2 rounded-full shadow-lg"></div>
+              <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#32398e] to-[#53c2a4] transform -translate-y-1/2"></div>
               
               <div className="grid grid-cols-4 gap-8 relative z-10">
                 {[
@@ -281,13 +273,13 @@ const WarrantyPage: React.FC = () => {
                 ].map((step, index) => (
                   <div
                     key={index}
-                    className="journey-step text-center relative"
+                    className="text-center"
                   >
-                    <div className="journey-icon inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full mb-3 sm:mb-4 lg:mb-6 shadow-lg">
-                      <Icon name={step.icon as any} size={20} className="text-white sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
+                    <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-white border-3 sm:border-4 border-[#00acad] rounded-full mb-3 sm:mb-4 lg:mb-6 shadow-lg">
+                      <Icon name={step.icon as any} size={20} className="text-[#00acad] sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
                     </div>
-                    <h4 className="journey-title text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
-                    <p className="journey-description text-sm sm:text-base text-gray-600">{step.description}</p>
+                    <h4 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
+                    <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
                   </div>
                 ))}
               </div>
@@ -304,14 +296,14 @@ const WarrantyPage: React.FC = () => {
             ].map((step, index) => (
               <div
                 key={index}
-                className="journey-step flex items-start gap-6"
+                className="flex items-start gap-6"
               >
-                <div className="journey-icon flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center shadow-lg">
+                <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-[#00acad] rounded-full flex items-center justify-center shadow-lg">
                   <Icon name={step.icon as any} size={20} className="text-white sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
                 </div>
                 <div className="flex-1 pt-1 sm:pt-2">
-                  <h4 className="journey-title text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
-                  <p className="journey-description text-sm sm:text-base text-gray-600">{step.description}</p>
+                  <h4 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
+                  <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
                 </div>
               </div>
             ))}
