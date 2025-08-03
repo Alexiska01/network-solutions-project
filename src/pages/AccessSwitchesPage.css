@@ -180,22 +180,22 @@
   }
 
   .hero-main-title {
-    @apply text-2xl sm:text-3xl md:text-4xl leading-[0.95];
+    @apply text-xl sm:text-2xl md:text-3xl leading-[0.95];
     letter-spacing: -0.02em;
   }
 
   .hero-subtitle {
-    @apply text-base sm:text-lg md:text-xl;
+    @apply text-sm sm:text-base md:text-lg;
     max-width: 100%;
   }
 
   .hero-cta-buttons {
-    @apply flex-col gap-4;
+    @apply flex-col gap-3;
   }
 
   .hero-btn-primary,
   .hero-btn-secondary {
-    @apply w-full py-4 text-base min-w-0 px-8;
+    @apply w-full py-3.5 text-base min-w-0 px-6;
   }
 
   .product-card-inner {
@@ -210,12 +210,12 @@
 /* Extra small screens */
 @media (max-width: 480px) {
   .hero-main-title {
-    @apply text-xl sm:text-2xl leading-tight;
+    @apply text-lg sm:text-xl leading-tight;
     letter-spacing: -0.015em;
   }
 
   .hero-subtitle {
-    @apply text-sm sm:text-base leading-relaxed;
+    @apply text-sm leading-relaxed;
   }
 
   .hero-cta-buttons {
@@ -224,7 +224,7 @@
 
   .hero-btn-primary,
   .hero-btn-secondary {
-    @apply py-4 text-sm px-6;
+    @apply py-3 text-sm px-5;
   }
 
   .product-card {
