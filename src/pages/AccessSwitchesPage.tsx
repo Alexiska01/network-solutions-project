@@ -21,12 +21,34 @@ const AccessSwitchesPage = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-hero text-white overflow-hidden">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <section className="relative bg-gradient-hero text-white overflow-hidden min-h-[70vh] flex items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 w-full">
           <div className="text-center">
-            <h1 className="hero-title">
-              Коммутаторы уровня доступа для корпоративных ЛВС
+            {/* Main Heading */}
+            <h1 className="hero-main-title mb-6">
+              Управляемые коммутаторы доступа — надёжность и масштабируемость вашей ЛВС
             </h1>
+
+            {/* Subtitle */}
+            <p className="hero-subtitle mb-8">
+              Гарантированная производительность, поддержка PoE и высокая отказоустойчивость — всё, что нужно вашей IT-инфраструктуре.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="hero-cta-buttons">
+              <button 
+                className="hero-btn-primary"
+                onClick={() => {
+                  const element = document.querySelector('#products');
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Подробнее
+              </button>
+              <button className="hero-btn-secondary">
+                Скачать PDF
+              </button>
+            </div>
           </div>
         </div>
       </section>
