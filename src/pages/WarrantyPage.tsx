@@ -6,6 +6,7 @@ import { initWarrantyAnimations } from '@/components/warranty/WarrantyAnimations
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
+import '@/components/warranty/JourneyPath.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
@@ -255,17 +256,17 @@ const WarrantyPage: React.FC = () => {
       </section>
 
       {/* Путь клиента */}
-      <section className="py-8 sm:py-12 lg:py-16 xl:py-24">
+      <section className="journey-section py-8 sm:py-12 lg:py-16 xl:py-24">
         <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold text-center text-gray-900 mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
+          <h2 className="journey-title text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold text-center text-gray-900 mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
             Путь клиента
           </h2>
           
           {/* Горизонтальный таймлайн для десктопа */}
-          <div className="hidden lg:block">
+          <div className="journey-timeline hidden lg:block">
             <div className="relative">
               {/* Линия соединения */}
-              <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#32398e] to-[#53c2a4] transform -translate-y-1/2"></div>
+              <div className="journey-line absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#32398e] to-[#53c2a4] transform -translate-y-1/2"></div>
               
               <div className="grid grid-cols-4 gap-8 relative z-10">
                 {[
@@ -276,13 +277,13 @@ const WarrantyPage: React.FC = () => {
                 ].map((step, index) => (
                   <div
                     key={index}
-                    className="text-center"
+                    className="journey-step text-center"
                   >
-                    <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-white border-3 sm:border-4 border-[#00acad] rounded-full mb-3 sm:mb-4 lg:mb-6 shadow-lg">
+                    <div className="journey-step-icon inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-white border-3 sm:border-4 border-[#00acad] rounded-full mb-3 sm:mb-4 lg:mb-6 shadow-lg">
                       <Icon name={step.icon as any} size={20} className="text-[#00acad] sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
                     </div>
-                    <h4 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
-                    <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
+                    <h4 className="journey-step-title text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
+                    <p className="journey-step-description text-sm sm:text-base text-gray-600">{step.description}</p>
                   </div>
                 ))}
               </div>
@@ -290,7 +291,7 @@ const WarrantyPage: React.FC = () => {
           </div>
 
           {/* Вертикальный таймлайн для мобильных */}
-          <div className="lg:hidden space-y-8">
+          <div className="journey-timeline lg:hidden space-y-8">
             {[
               { icon: "MessageCircle", title: "Заявка", description: "Обратитесь к нам любым удобным способом" },
               { icon: "Headphones", title: "Консультация", description: "Наши специалисты проконсультируют по решению" },
@@ -299,14 +300,14 @@ const WarrantyPage: React.FC = () => {
             ].map((step, index) => (
               <div
                 key={index}
-                className="flex items-start gap-6"
+                className="journey-step flex items-start gap-6"
               >
-                <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-[#00acad] rounded-full flex items-center justify-center shadow-lg">
+                <div className="journey-step-icon flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-[#00acad] rounded-full flex items-center justify-center shadow-lg">
                   <Icon name={step.icon as any} size={20} className="text-white sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
                 </div>
                 <div className="flex-1 pt-1 sm:pt-2">
-                  <h4 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
-                  <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
+                  <h4 className="journey-step-title text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
+                  <p className="journey-step-description text-sm sm:text-base text-gray-600">{step.description}</p>
                 </div>
               </div>
             ))}

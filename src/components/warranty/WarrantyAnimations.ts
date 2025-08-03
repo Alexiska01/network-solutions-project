@@ -33,6 +33,11 @@ export const initWarrantyAnimations = () => {
           animateCardElements(element);
         }
         
+        // Анимируем элементы пути клиента
+        if (element.classList.contains('journey-section')) {
+          animateJourneyElements(element);
+        }
+        
         // Прекращаем наблюдение за элементом
         observer.unobserve(element);
       }
@@ -54,9 +59,47 @@ export const initWarrantyAnimations = () => {
     });
   };
 
+  // Функция анимации элементов пути клиента
+  const animateJourneyElements = (section: Element) => {
+    // Анимируем заголовок
+    const title = section.querySelector('.journey-title');
+    if (title) {
+      setTimeout(() => title.classList.add('visible'), 100);
+    }
+    
+    // Анимируем таймлайн
+    const timeline = section.querySelector('.journey-timeline');
+    if (timeline) {
+      setTimeout(() => timeline.classList.add('visible'), 300);
+    }
+    
+    // Анимируем линию
+    const line = section.querySelector('.journey-line');
+    if (line) {
+      setTimeout(() => line.classList.add('visible'), 500);
+    }
+    
+    // Анимируем шаги
+    const steps = section.querySelectorAll('.journey-step');
+    steps.forEach((step, index) => {
+      setTimeout(() => {
+        step.classList.add('visible');
+        
+        // Анимируем внутренние элементы шага
+        const icon = step.querySelector('.journey-step-icon');
+        const title = step.querySelector('.journey-step-title');
+        const description = step.querySelector('.journey-step-description');
+        
+        if (icon) setTimeout(() => icon.classList.add('visible'), 200);
+        if (title) setTimeout(() => title.classList.add('visible'), 400);
+        if (description) setTimeout(() => description.classList.add('visible'), 500);
+      }, 700 + (index * 200));
+    });
+  };
+
   // Находим все элементы для анимации
   const elementsToAnimate = document.querySelectorAll(
-    '.warranty-card, .service-card'
+    '.warranty-card, .service-card, .journey-section'
   );
 
   // Запускаем наблюдение
