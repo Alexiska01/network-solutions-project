@@ -2,66 +2,76 @@
 
 /* Main Title */
 .hero-main-title {
-  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.1] tracking-tight;
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-[0.9] tracking-[-0.02em];
   animation: heroSlideUp 0.8s ease-out 0.2s both;
   background: linear-gradient(
     135deg,
     #ffffff 0%,
-    #f8fafc 30%,
-    #e2e8f0 70%,
+    #f1f5f9 20%,
+    #e2e8f0 60%,
     #cbd5e1 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 1000px;
-  margin: 0 auto;
+  text-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  font-weight: 900;
+  letter-spacing: -0.03em;
 }
 
 /* Subtitle */
 .hero-subtitle {
-  @apply text-base sm:text-lg md:text-xl lg:text-2xl font-normal leading-relaxed;
+  @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-light leading-[1.4];
   animation: heroSlideUp 0.8s ease-out 0.4s both;
-  color: rgba(255, 255, 255, 0.9);
-  max-width: 720px;
-  margin: 0 auto;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 600px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  font-weight: 300;
+  letter-spacing: -0.01em;
 }
 
 /* CTA Buttons Container */
 .hero-cta-buttons {
-  @apply flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6;
+  @apply flex flex-col sm:flex-row items-start gap-4 sm:gap-6;
   animation: heroSlideUp 0.8s ease-out 0.6s both;
 }
 
 /* Primary Button */
 .hero-btn-primary {
-  @apply px-8 py-4 bg-white text-blue-700 font-semibold text-lg rounded-xl shadow-lg;
-  @apply hover:bg-blue-50 hover:text-blue-800 hover:shadow-xl;
+  @apply px-10 py-5 bg-white text-blue-900 font-bold text-lg rounded-2xl shadow-2xl;
+  @apply hover:bg-blue-50 hover:text-blue-950 hover:shadow-2xl;
   @apply transition-all duration-300 ease-out;
-  @apply border-2 border-transparent hover:border-blue-200;
-  @apply w-full sm:w-auto min-w-[180px];
+  @apply border border-white/20 hover:border-blue-200;
+  @apply w-auto min-w-[200px];
   text-shadow: none;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .hero-btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(59, 130, 246, 0.3);
 }
 
 /* Secondary Button */
 .hero-btn-secondary {
-  @apply px-8 py-4 bg-transparent text-white font-semibold text-lg rounded-xl;
-  @apply border-2 border-white/30 hover:border-white hover:bg-white/10;
+  @apply px-10 py-5 bg-transparent text-white font-bold text-lg rounded-2xl;
+  @apply border-2 border-white/40 hover:border-white hover:bg-white/15;
   @apply transition-all duration-300 ease-out;
-  @apply w-full sm:w-auto min-w-[180px];
-  backdrop-filter: blur(10px);
+  @apply w-auto min-w-[200px];
+  backdrop-filter: blur(20px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .hero-btn-secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 16px 32px rgba(255, 255, 255, 0.15),
+    0 8px 16px rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Product Cards */
@@ -170,22 +180,22 @@
   }
 
   .hero-main-title {
-    @apply text-xl sm:text-2xl md:text-3xl leading-tight px-2;
-    max-width: 90%;
+    @apply text-2xl sm:text-3xl md:text-4xl leading-[0.95];
+    letter-spacing: -0.02em;
   }
 
   .hero-subtitle {
-    @apply text-sm sm:text-base md:text-lg px-4;
-    max-width: 95%;
+    @apply text-base sm:text-lg md:text-xl;
+    max-width: 100%;
   }
 
   .hero-cta-buttons {
-    @apply flex-col gap-3 px-4;
+    @apply flex-col gap-4;
   }
 
   .hero-btn-primary,
   .hero-btn-secondary {
-    @apply w-full py-3.5 text-base min-w-0;
+    @apply w-full py-4 text-base min-w-0 px-8;
   }
 
   .product-card-inner {
@@ -200,21 +210,21 @@
 /* Extra small screens */
 @media (max-width: 480px) {
   .hero-main-title {
-    @apply text-lg sm:text-xl leading-tight px-4;
-    letter-spacing: -0.01em;
+    @apply text-xl sm:text-2xl leading-tight;
+    letter-spacing: -0.015em;
   }
 
   .hero-subtitle {
-    @apply text-sm leading-relaxed px-6;
+    @apply text-sm sm:text-base leading-relaxed;
   }
 
   .hero-cta-buttons {
-    @apply px-6 gap-3;
+    @apply gap-3;
   }
 
   .hero-btn-primary,
   .hero-btn-secondary {
-    @apply py-3 text-sm;
+    @apply py-4 text-sm px-6;
   }
 
   .product-card {

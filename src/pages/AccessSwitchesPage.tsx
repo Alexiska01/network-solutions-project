@@ -21,16 +21,16 @@ const AccessSwitchesPage = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-hero text-white overflow-hidden min-h-[70vh] flex items-center">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 w-full">
-          <div className="text-center">
+      <section className="relative bg-gradient-hero text-white overflow-hidden min-h-[80vh] flex items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24 w-full">
+          <div className="max-w-4xl">
             {/* Main Heading */}
-            <h1 className="hero-main-title mb-6">
+            <h1 className="hero-main-title mb-8">
               Управляемые коммутаторы доступа — надёжность и масштабируемость вашей ЛВС
             </h1>
 
             {/* Subtitle */}
-            <p className="hero-subtitle mb-8">
+            <p className="hero-subtitle mb-12">
               Гарантированная производительность, поддержка PoE и высокая отказоустойчивость — всё, что нужно вашей IT-инфраструктуре.
             </p>
 
