@@ -1,22 +1,63 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
-import { initWarrantyCardAnimations } from '@/components/warranty/WarrantyCardAnimations';
-import { initServiceCardAnimations } from '@/components/warranty/ServiceCardAnimations';
+import ResponsiveWarrantyCard from '@/components/warranty/ResponsiveWarrantyCard';
+import { useResponsiveCardAnimations, getDeviceType } from '@/components/warranty/ResponsiveCardAnimations';
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
 
 const WarrantyPage: React.FC = () => {
+  const warrantyCardRef = useRef<HTMLDivElement>(null);
+  const serviceCard1Ref = useRef<HTMLDivElement>(null);
+  const serviceCard2Ref = useRef<HTMLDivElement>(null);
+  
+  const [isMobile, setIsMobile] = useState(false);
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([false, false, false]);
+  const [allCardsVisible, setAllCardsVisible] = useState(false);
+  
+  const { initAnimations } = useResponsiveCardAnimations();
+
+  // Определение типа устройства
   useEffect(() => {
-    const warrantyCleanup = initWarrantyCardAnimations();
-    const serviceCleanup = initServiceCardAnimations();
-    return () => {
-      warrantyCleanup();
-      serviceCleanup();
+    const updateDeviceType = () => {
+      const device = getDeviceType();
+      setIsMobile(device.isMobile);
     };
+
+    updateDeviceType();
+    window.addEventListener('resize', updateDeviceType);
+    return () => window.removeEventListener('resize', updateDeviceType);
   }, []);
+
+  // Инициализация анимаций для всех карточек
+  useEffect(() => {
+    const cardRefs = [warrantyCardRef.current, serviceCard1Ref.current, serviceCard2Ref.current].filter(Boolean) as HTMLElement[];
+    
+    if (cardRefs.length === 0) return;
+
+    const cleanup = initAnimations({
+      isMobile,
+      cardRefs,
+      onVisibilityChange: (index, isVisible) => {
+        if (isMobile) {
+          setVisibleCards(prev => {
+            const newVisible = [...prev];
+            newVisible[index] = isVisible;
+            return newVisible;
+          });
+        }
+      },
+      onDesktopVisibilityChange: (allVisible) => {
+        if (!isMobile) {
+          setAllCardsVisible(allVisible);
+        }
+      }
+    });
+
+    return cleanup;
+  }, [isMobile, initAnimations]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -70,36 +111,10 @@ const WarrantyPage: React.FC = () => {
       {/* Секция Гарантия */}
       <section className="py-8 sm:py-12 lg:py-16 xl:py-24">
         <div className="container mx-auto px-4 sm:px-6 flex justify-center">
-          <div
-            className="warranty-card bg-white rounded-2xl p-8 lg:p-10 max-w-2xl w-full relative overflow-hidden"
-            style={{
-              background: 'linear-gradient(145deg, #ffffff 0%, #fafbfc 100%)',
-              boxShadow: '0 10px 24px rgba(0,0,0,0.06)'
-            }}
-          >
-            {/* Градиентная обводка */}
-            <div className="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-r from-[#32398e] via-[#005baa] to-[#00acad] -z-10">
-              <div className="h-full w-full rounded-2xl bg-white"></div>
-            </div>
-            
-            {/* Заголовок с иконкой */}
-            <div className="warranty-header flex items-center justify-center lg:justify-center gap-4 mb-8">
-              {/* Иконка */}
-              <div className="warranty-icon flex-shrink-0">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-[#005baa] to-[#00acad] flex items-center justify-center shadow-lg">
-                  <Icon name="Shield" size={24} className="text-white sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
-                </div>
-              </div>
-              
-              {/* Заголовок */}
-              <h3 className="warranty-title text-lg sm:text-xl lg:text-3xl font-bold text-gray-900 text-left lg:text-center flex-1 lg:flex-none">
-                Гарантия на оборудование
-              </h3>
-            </div>
-                
-            {/* Список функций */}
-            <div className="space-y-5">
-              {[
+          <div ref={warrantyCardRef} className="max-w-2xl w-full">
+            <ResponsiveWarrantyCard
+              title="Гарантия на оборудование"
+              features={[
                 {
                   title: "12 месяцев гарантии",
                   desc: "Гарантия действует с момента продажи оборудования"
@@ -124,21 +139,12 @@ const WarrantyPage: React.FC = () => {
                   title: "Условия доставки",
                   desc: "Доставка в сервисный центр за счёт заказчика"
                 }
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  className="warranty-feature-item flex gap-4 items-start"
-                >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#0093b6] to-[#00acad] flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Icon name="Check" size={14} className="text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900 mb-1">{item.title}</div>
-                    <div className="text-sm text-gray-600 leading-relaxed">{item.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+              ]}
+              gradientFrom="#32398e"
+              gradientTo="#00acad"
+              iconName="Shield"
+              index={0}
+            />
           </div>
         </div>
       </section>
@@ -157,101 +163,131 @@ const WarrantyPage: React.FC = () => {
           
           <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Пакет 8x5xNBD */}
-            <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100">
-              
-              {/* Градиентная обводка */}
-              <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#FF6B35] via-[#F7931E] to-[#FF8C00] -z-10">
-                <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
-              </div>
-              
-              {/* Заголовочная секция */}
-              <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
-                {/* Иконки */}
-                <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-[#FF6B35] to-[#F7931E] flex items-center justify-center shadow-lg">
-                    <Icon name="Clock" size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
-                  </div>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-[#F7931E] to-[#FF8C00] flex items-center justify-center shadow-lg">
-                    <Icon name="Settings" size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
-                  </div>
+            <div ref={serviceCard1Ref}>
+              <div 
+                className={`service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100 transition-all duration-500 ease-out ${
+                  isMobile 
+                    ? (visibleCards[1] ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95')
+                    : (allCardsVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95')
+                }`}
+                style={{
+                  transitionDelay: isMobile ? '0ms' : '150ms'
+                }}
+              >
+                {/* Градиентная обводка */}
+                <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#FF6B35] via-[#F7931E] to-[#FF8C00] -z-10">
+                  <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
                 </div>
                 
-                {/* Заголовок */}
-                <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 text-left flex-1">
-                  8x5xNBD
-                </h3>
-              </div>
-              
-              {/* Список функций */}
-              <div className="space-y-3 sm:space-y-4">
-                {[
-                  "Действует в течение 12/36/60 месяцев с даты продажи",
-                  "Приём заявок в рабочие дни с 9:00 до 18:00 по московскому времени",
-                  "Обновления программного обеспечения",
-                  "Консультации по вопросам функционирования и настройки",
-                  "Авансовая замена вышедшего из строя оборудования",
-                  "Отгрузка со склада сервисного центра на следующий рабочий день",
-                  "Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра"
-                ].map((feature, index) => (
-                  <div key={index} className="service-feature-item flex items-start gap-3">
-                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#F7931E] flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Icon name="Check" size={12} className="text-white sm:w-4 sm:h-4" />
+                {/* Заголовочная секция */}
+                <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
+                  {/* Иконки */}
+                  <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-[#FF6B35] to-[#F7931E] flex items-center justify-center shadow-lg">
+                      <Icon name="Clock" size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
                     </div>
-                    <span className="text-sm sm:text-base text-gray-700 leading-relaxed">{feature}</span>
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-[#F7931E] to-[#FF8C00] flex items-center justify-center shadow-lg">
+                      <Icon name="Settings" size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
+                    </div>
                   </div>
-                ))}
+                  
+                  {/* Заголовок */}
+                  <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 text-left flex-1">
+                    8x5xNBD
+                  </h3>
+                </div>
+                
+                {/* Список функций */}
+                <div className="space-y-3 sm:space-y-4">
+                  {[
+                    "Действует в течение 12/36/60 месяцев с даты продажи",
+                    "Приём заявок в рабочие дни с 9:00 до 18:00 по московскому времени",
+                    "Обновления программного обеспечения",
+                    "Консультации по вопросам функционирования и настройки",
+                    "Авансовая замена вышедшего из строя оборудования",
+                    "Отгрузка со склада сервисного центра на следующий рабочий день",
+                    "Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра"
+                  ].map((feature, index) => (
+                    <div key={index} className={`service-feature-item flex items-start gap-3 transition-all duration-300 ${
+                      (isMobile ? visibleCards[1] : allCardsVisible) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    }`}
+                    style={{
+                      transitionDelay: isMobile ? '0ms' : `${150 + (index * 50)}ms`
+                    }}>
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#F7931E] flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Icon name="Check" size={12} className="text-white sm:w-4 sm:h-4" />
+                      </div>
+                      <span className="text-sm sm:text-base text-gray-700 leading-relaxed">{feature}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Пакет 24x7x4 */}
-            <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100">
-              
-              {/* Градиентная обводка */}
-              <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#8e44ad] -z-10">
-                <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
-              </div>
-              
-              {/* Заголовочная секция */}
-              <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
-                {/* Иконки */}
-                <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center shadow-lg">
-                    <Icon name="Clock" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                  </div>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#764ba2] to-[#8e44ad] flex items-center justify-center shadow-lg">
-                    <Icon name="Users" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                  </div>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#8e44ad] to-[#667eea] flex items-center justify-center shadow-lg">
-                    <Icon name="Zap" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                  </div>
+            <div ref={serviceCard2Ref}>
+              <div 
+                className={`service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100 transition-all duration-500 ease-out ${
+                  isMobile 
+                    ? (visibleCards[2] ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95')
+                    : (allCardsVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95')
+                }`}
+                style={{
+                  transitionDelay: isMobile ? '0ms' : '300ms'
+                }}
+              >
+                {/* Градиентная обводка */}
+                <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#8e44ad] -z-10">
+                  <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
                 </div>
                 
-                {/* Заголовок */}
-                <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 text-left flex-1">
-                  24x7x4
-                </h3>
-              </div>
-              
-              {/* Список функций */}
-              <div className="space-y-3 sm:space-y-4">
-                {[
-                  "Действует в течение 12/36/60 месяцев с даты продажи",
-                  "Круглосуточный приём заявок",
-                  "Обновления программного обеспечения",
-                  "Консультации по вопросам функционирования и настройки",
-                  "Авансовая замена вышедшего из строя оборудования",
-                  "Отгрузка со склада сервисного центра на следующий рабочий день",
-                  "Выезд инженера в течение 4 часов на территории г. Москва и Московской области",
-                  "Отгрузка замены в течение 24 часов для других регионов РФ",
-                  "Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра"
-                ].map((feature, index) => (
-                  <div key={index} className="service-feature-item flex items-start gap-3">
-                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-[#667eea] to-[#764ba2] flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Icon name="Check" size={12} className="text-white sm:w-4 sm:h-4" />
+                {/* Заголовочная секция */}
+                <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
+                  {/* Иконки */}
+                  <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center shadow-lg">
+                      <Icon name="Clock" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                     </div>
-                    <span className="text-sm sm:text-base text-gray-700 leading-relaxed">{feature}</span>
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#764ba2] to-[#8e44ad] flex items-center justify-center shadow-lg">
+                      <Icon name="Users" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                    </div>
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#8e44ad] to-[#667eea] flex items-center justify-center shadow-lg">
+                      <Icon name="Zap" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                    </div>
                   </div>
-                ))}
+                  
+                  {/* Заголовок */}
+                  <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 text-left flex-1">
+                    24x7x4
+                  </h3>
+                </div>
+                
+                {/* Список функций */}
+                <div className="space-y-3 sm:space-y-4">
+                  {[
+                    "Действует в течение 12/36/60 месяцев с даты продажи",
+                    "Круглосуточный приём заявок",
+                    "Обновления программного обеспечения",
+                    "Консультации по вопросам функционирования и настройки",
+                    "Авансовая замена вышедшего из строя оборудования",
+                    "Отгрузка со склада сервисного центра на следующий рабочий день",
+                    "Выезд инженера в течение 4 часов на территории г. Москва и Московской области",
+                    "Отгрузка замены в течение 24 часов для других регионов РФ",
+                    "Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра"
+                  ].map((feature, index) => (
+                    <div key={index} className={`service-feature-item flex items-start gap-3 transition-all duration-300 ${
+                      (isMobile ? visibleCards[2] : allCardsVisible) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    }`}
+                    style={{
+                      transitionDelay: isMobile ? '0ms' : `${300 + (index * 50)}ms`
+                    }}>
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-[#667eea] to-[#764ba2] flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Icon name="Check" size={12} className="text-white sm:w-4 sm:h-4" />
+                      </div>
+                      <span className="text-sm sm:text-base text-gray-700 leading-relaxed">{feature}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
