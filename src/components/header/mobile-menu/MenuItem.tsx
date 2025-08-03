@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import type { MenuItemProps } from "./types";
 
@@ -14,8 +14,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   onNavigateToLevel,
   onClose,
   setActiveItem,
+  navigate,
 }) => {
-  const navigate = useNavigate();
 
   const hasChildren =
     item.hasSubmenu ||
@@ -32,15 +32,28 @@ const MenuItem: React.FC<MenuItemProps> = ({
     onItemClick(item, e as React.MouseEvent);
   };
 
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.stopPropagation();
+    if (!hasChildren) {
+      navigate(item.path);
+      onClose();
+    } else {
+      onItemClick(item, e as any);
+    }
+  };
+
   const menuItemProps = hasChildren
     ? {
         onClick: handleClick,
-        onTouchEnd: handleClick,
+        onTouchEnd: handleTouchEnd,
       }
     : {
         to: item.path,
-        onClick: handleClick,
-        onTouchEnd: handleClick,
+        onClick: (e: React.MouseEvent) => {
+          e.stopPropagation();
+          onClose();
+        },
+        onTouchEnd: handleTouchEnd,
       };
 
   return (

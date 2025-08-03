@@ -1,3 +1,4 @@
+import { NavigateFunction } from "react-router-dom";
 import type { NavItem, MenuLevel } from "../types";
 
 export const handleMenuItemClick = (
@@ -8,9 +9,10 @@ export const handleMenuItemClick = (
     onClose: () => void;
     navigateToLevel: (level: MenuLevel) => void;
     toggleExpanded: (path: string) => void;
+    navigate?: NavigateFunction;
   },
 ) => {
-  const { setActiveItem, onClose, navigateToLevel, toggleExpanded } = callbacks;
+  const { setActiveItem, onClose, navigateToLevel, toggleExpanded, navigate } = callbacks;
 
   setActiveItem(item.path);
 
@@ -57,6 +59,12 @@ export const handleMenuItemClick = (
     e.preventDefault();
     toggleExpanded(item.path);
   } else if (!item.hasSubmenu && !item.submenuItems && !item.items) {
+    // Простой переход по ссылке
     onClose();
+    if (navigate) {
+      setTimeout(() => {
+        navigate(item.path);
+      }, 100);
+    }
   }
 };

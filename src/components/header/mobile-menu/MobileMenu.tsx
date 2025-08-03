@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { productSubmenuItems } from "../navigationData";
 import HamburgerButton from "./HamburgerButton";
 import MenuHeader from "./MenuHeader";
@@ -13,6 +14,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   onToggle,
   onClose,
 }) => {
+  const navigate = useNavigate();
   const {
     menuStack,
     expandedItems,
@@ -59,6 +61,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       onClose,
       navigateToLevel,
       toggleExpanded,
+      navigate,
     });
   };
 
@@ -118,6 +121,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                         onNavigateToLevel={navigateToLevel}
                         onClose={onClose}
                         setActiveItem={setActiveItem}
+                        navigate={navigate}
                       />
                     ))}
                   </div>

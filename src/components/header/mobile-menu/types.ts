@@ -1,3 +1,4 @@
+import type { NavigateFunction } from "react-router-dom";
 import type { NavItem } from "../navigationData";
 
 export interface MobileMenuProps {
@@ -23,6 +24,7 @@ export interface MenuItemProps {
   onNavigateToLevel: (newLevel: MenuLevel) => void;
   onClose: () => void;
   setActiveItem: (path: string | null) => void;
+  navigate: NavigateFunction;
 }
 
 export interface MenuHeaderProps {
