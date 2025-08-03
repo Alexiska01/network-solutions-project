@@ -3,13 +3,19 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
 import { initWarrantyCardAnimations } from '@/components/warranty/WarrantyCardAnimations';
+import { initServiceCardAnimations } from '@/components/warranty/ServiceCardAnimations';
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
+import '@/components/warranty/ServiceCard.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
-    const cleanup = initWarrantyCardAnimations();
-    return cleanup;
+    const warrantyCleanup = initWarrantyCardAnimations();
+    const serviceCleanup = initServiceCardAnimations();
+    return () => {
+      warrantyCleanup();
+      serviceCleanup();
+    };
   }, []);
 
   return (
@@ -140,104 +146,109 @@ const WarrantyPage: React.FC = () => {
       {/* Секция Сервисные пакеты */}
       <section className="py-8 sm:py-12 lg:py-16 xl:py-24 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold text-center text-gray-900 mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
-            Сервисные пакеты
-          </h2>
+          <div className="text-center mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
+            <h2 className="service-section-title text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold text-gray-900 mb-2 sm:mb-4">
+              Сервисные пакеты
+            </h2>
+            <p className="service-section-subtitle text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">
+              Выберите подходящий уровень поддержки для вашего оборудования
+            </p>
+          </div>
           
           <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Пакет 8x5xNBD */}
-            <div className="bg-gradient-to-br from-[#0079b6] to-[#0093b6] rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 text-white shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-              <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
-                <Icon name="Clock" size={32} className="text-white sm:w-10 sm:h-10 lg:w-12 lg:h-12" />
-                <Icon name="Settings" size={32} className="text-white sm:w-10 sm:h-10 lg:w-12 lg:h-12" />
+            <div className="service-card relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 text-white shadow-xl"
+                 style={{
+                   background: 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FF8C00 100%)'
+                 }}>
+              
+              {/* Заголовочная секция */}
+              <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
+                {/* Иконки */}
+                <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Icon name="Clock" size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
+                  </div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Icon name="Settings" size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
+                  </div>
+                </div>
+                
+                {/* Заголовок */}
+                <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-left flex-1">
+                  8x5xNBD
+                </h3>
               </div>
               
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 lg:mb-8 text-center lg:text-left">
-                8x5xNBD
-              </h3>
-              
-              <ul className="space-y-2 sm:space-y-3 lg:space-y-4 text-sm sm:text-base lg:text-lg">
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Действует в течение 12/36/60 месяцев с даты продажи</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Приём заявок в рабочие дни с 9:00 до 18:00 по московскому времени</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Обновления программного обеспечения</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Консультации по вопросам функционирования и настройки</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Авансовая замена вышедшего из строя оборудования</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Отгрузка со склада сервисного центра на следующий рабочий день</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра</span>
-                </li>
-              </ul>
+              {/* Список функций */}
+              <div className="space-y-3 sm:space-y-4">
+                {[
+                  "Действует в течение 12/36/60 месяцев с даты продажи",
+                  "Приём заявок в рабочие дни с 9:00 до 18:00 по московскому времени",
+                  "Обновления программного обеспечения",
+                  "Консультации по вопросам функционирования и настройки",
+                  "Авансовая замена вышедшего из строя оборудования",
+                  "Отгрузка со склада сервисного центра на следующий рабочий день",
+                  "Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра"
+                ].map((feature, index) => (
+                  <div key={index} className="service-feature-item flex items-start gap-3">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Icon name="Check" size={12} className="text-white sm:w-4 sm:h-4" />
+                    </div>
+                    <span className="text-sm sm:text-base text-white/95 leading-relaxed">{feature}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Пакет 24x7x4 */}
-            <div className="bg-gradient-to-br from-[#32398e] to-[#005baa] rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 text-white shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-              <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 lg:gap-4 mb-4 sm:mb-6 lg:mb-8">
-                <Icon name="Clock" size={28} className="text-white sm:w-8 sm:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
-                <Icon name="Users" size={28} className="text-white sm:w-8 sm:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
-                <Icon name="Zap" size={28} className="text-white sm:w-8 sm:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
+            <div className="service-card relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 text-white shadow-xl"
+                 style={{
+                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8e44ad 100%)'
+                 }}>
+              
+              {/* Заголовочная секция */}
+              <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
+                {/* Иконки */}
+                <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Icon name="Clock" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                  </div>
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Icon name="Users" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                  </div>
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Icon name="Zap" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                  </div>
+                </div>
+                
+                {/* Заголовок */}
+                <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-left flex-1">
+                  24x7x4
+                </h3>
               </div>
               
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 lg:mb-8 text-center lg:text-left">
-                24x7x4
-              </h3>
-              
-              <ul className="space-y-2 sm:space-y-3 lg:space-y-4 text-sm sm:text-base lg:text-lg">
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Действует в течение 12/36/60 месяцев с даты продажи</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Круглосуточный приём заявок</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Обновления программного обеспечения</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Консультации по вопросам функционирования и настройки</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Авансовая замена вышедшего из строя оборудования</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Отгрузка со склада сервисного центра на следующий рабочий день</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Выезд инженера в течение 4 часов на территории г. Москва и Московской области</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Отгрузка замены в течение 24 часов для других регионов РФ</span>
-                </li>
-                <li className="flex items-start gap-2 sm:gap-3">
-                  <Icon name="Check" size={16} className="text-white flex-shrink-0 mt-0.5 sm:mt-1 sm:w-5 sm:h-5" />
-                  <span>Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра</span>
-                </li>
-              </ul>
+              {/* Список функций */}
+              <div className="space-y-3 sm:space-y-4">
+                {[
+                  "Действует в течение 12/36/60 месяцев с даты продажи",
+                  "Круглосуточный приём заявок",
+                  "Обновления программного обеспечения",
+                  "Консультации по вопросам функционирования и настройки",
+                  "Авансовая замена вышедшего из строя оборудования",
+                  "Отгрузка со склада сервисного центра на следующий рабочий день",
+                  "Выезд инженера в течение 4 часов на территории г. Москва и Московской области",
+                  "Отгрузка замены в течение 24 часов для других регионов РФ",
+                  "Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра"
+                ].map((feature, index) => (
+                  <div key={index} className="service-feature-item flex items-start gap-3">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Icon name="Check" size={12} className="text-white sm:w-4 sm:h-4" />
+                    </div>
+                    <span className="text-sm sm:text-base text-white/95 leading-relaxed">{feature}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
