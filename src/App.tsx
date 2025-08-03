@@ -34,6 +34,7 @@ const Partners = lazy(() => import("./pages/Partners"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ContactsPage = lazy(() => import("./pages/Contacts"));
 const WarrantyPage = lazy(() => import("./pages/WarrantyPage"));
+const AccessSwitchesPage = lazy(() => import("./pages/AccessSwitchesPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -196,6 +197,7 @@ const App = () => {
               <Route path="/warranty" element={<WarrantyPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="/switches" element={<SwitchesCatalog />} />
+              <Route path="/switches/access" element={<AccessSwitchesPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
