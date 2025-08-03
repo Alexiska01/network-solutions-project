@@ -1,0 +1,232 @@
+/* GPU-ОПТИМИЗИРОВАННЫЕ АНИМАЦИИ ПУТИ КЛИЕНТА */
+/* Современные анимации с уникальными цветами */
+
+/* === БАЗОВЫЕ НАСТРОЙКИ GPU === */
+.journey-step,
+.journey-icon,
+.journey-title,
+.journey-description,
+.journey-line {
+  /* GPU-композитный слой для ускорения */
+  will-change: transform, opacity;
+  contain: layout style paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+
+  /* Предотвращение мерцания */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === ШАГ ПУТИ === */
+.journey-step {
+  /* Базовые стили */
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) scale(0.95);
+}
+
+.journey-step.visible,
+.journey-step.animate-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* === ИКОНКА ШАГА === */
+.journey-icon {
+  transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, -20px, 0) scale(0.8) rotate(-10deg);
+}
+
+.journey-icon.visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+}
+
+/* === ЗАГОЛОВОК === */
+.journey-title {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(-20px, 0, 0);
+}
+
+.journey-title.visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* === ОПИСАНИЕ === */
+.journey-description {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 15px, 0);
+}
+
+.journey-description.visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* === СОЕДИНИТЕЛЬНАЯ ЛИНИЯ === */
+.journey-line {
+  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.journey-line.visible {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* === HOVER ЭФФЕКТЫ === */
+.journey-step:hover {
+  transform: translate3d(0, -8px, 0) scale(1.02);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.journey-step:hover .journey-icon {
+  transform: translate3d(0, -2px, 0) scale(1.1) rotate(5deg);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* === УНИКАЛЬНАЯ ЦВЕТОВАЯ СХЕМА === */
+
+/* Шаг 1: Заявка - Фиолетово-синий */
+.journey-step:nth-child(1) .journey-icon {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+.journey-step:nth-child(1):hover .journey-icon {
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+}
+
+/* Шаг 2: Консультация - Изумрудно-зеленый */
+.journey-step:nth-child(2) .journey-icon {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  box-shadow: 0 8px 32px rgba(17, 153, 142, 0.3);
+}
+
+.journey-step:nth-child(2):hover .journey-icon {
+  box-shadow: 0 12px 40px rgba(17, 153, 142, 0.4);
+}
+
+/* Шаг 3: Диагностика - Оранжево-красный */
+.journey-step:nth-child(3) .journey-icon {
+  background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+  box-shadow: 0 8px 32px rgba(252, 74, 26, 0.3);
+}
+
+.journey-step:nth-child(3):hover .journey-icon {
+  box-shadow: 0 12px 40px rgba(252, 74, 26, 0.4);
+}
+
+/* Шаг 4: Доставка - Голубо-фиолетовый */
+.journey-step:nth-child(4) .journey-icon {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  box-shadow: 0 8px 32px rgba(79, 172, 254, 0.3);
+}
+
+.journey-step:nth-child(4):hover .journey-icon {
+  box-shadow: 0 12px 40px rgba(79, 172, 254, 0.4);
+}
+
+/* === ПУЛЬСИРУЮЩИЙ ЭФФЕКТ ДЛЯ ИКОНОК === */
+@keyframes journey-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.journey-icon.visible {
+  animation: journey-pulse 3s ease-in-out infinite;
+}
+
+/* === МОБИЛЬНЫЕ АДАПТАЦИИ === */
+@media (max-width: 1023px) {
+  .journey-step {
+    transform: translate3d(-30px, 0, 0) scale(0.95);
+  }
+
+  .journey-step.visible {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .journey-step:hover {
+    transform: translate3d(0, -4px, 0) scale(1.01);
+  }
+}
+
+/* === АДАПТИВНЫЕ РАЗМЕРЫ ИКОНОК === */
+@media (min-width: 640px) {
+  .journey-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .journey-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+/* === РЕСПЕКТ К ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+  .journey-step,
+  .journey-icon,
+  .journey-title,
+  .journey-description,
+  .journey-line {
+    transition: opacity 0.3s ease !important;
+    animation: none !important;
+  }
+
+  .journey-step:hover,
+  .journey-step:hover .journey-icon {
+    transform: none !important;
+  }
+}
+
+/* === ГРАДИЕНТНАЯ АНИМАЦИЯ ФОНА === */
+.journey-step::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    rgba(102, 126, 234, 0.1),
+    rgba(17, 153, 142, 0.1),
+    rgba(252, 74, 26, 0.1),
+    rgba(79, 172, 254, 0.1)
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.journey-step:hover::before {
+  opacity: 1;
+}

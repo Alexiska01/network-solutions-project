@@ -7,6 +7,7 @@ import { initServiceCardAnimations } from '@/components/warranty/ServiceCardAnim
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
+import '@/components/journey/JourneyStep.css';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
@@ -269,7 +270,7 @@ const WarrantyPage: React.FC = () => {
           <div className="hidden lg:block">
             <div className="relative">
               {/* Линия соединения */}
-              <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#32398e] to-[#53c2a4] transform -translate-y-1/2"></div>
+              <div className="journey-line absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#667eea] via-[#11998e] via-[#fc4a1a] to-[#4facfe] transform -translate-y-1/2 rounded-full shadow-lg"></div>
               
               <div className="grid grid-cols-4 gap-8 relative z-10">
                 {[
@@ -280,13 +281,13 @@ const WarrantyPage: React.FC = () => {
                 ].map((step, index) => (
                   <div
                     key={index}
-                    className="text-center"
+                    className="journey-step text-center relative"
                   >
-                    <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-white border-3 sm:border-4 border-[#00acad] rounded-full mb-3 sm:mb-4 lg:mb-6 shadow-lg">
-                      <Icon name={step.icon as any} size={20} className="text-[#00acad] sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
+                    <div className="journey-icon inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full mb-3 sm:mb-4 lg:mb-6 shadow-lg">
+                      <Icon name={step.icon as any} size={20} className="text-white sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
                     </div>
-                    <h4 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
-                    <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
+                    <h4 className="journey-title text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
+                    <p className="journey-description text-sm sm:text-base text-gray-600">{step.description}</p>
                   </div>
                 ))}
               </div>
@@ -303,14 +304,14 @@ const WarrantyPage: React.FC = () => {
             ].map((step, index) => (
               <div
                 key={index}
-                className="flex items-start gap-6"
+                className="journey-step flex items-start gap-6"
               >
-                <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-[#00acad] rounded-full flex items-center justify-center shadow-lg">
+                <div className="journey-icon flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center shadow-lg">
                   <Icon name={step.icon as any} size={20} className="text-white sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
                 </div>
                 <div className="flex-1 pt-1 sm:pt-2">
-                  <h4 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
-                  <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
+                  <h4 className="journey-title text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h4>
+                  <p className="journey-description text-sm sm:text-base text-gray-600">{step.description}</p>
                 </div>
               </div>
             ))}
