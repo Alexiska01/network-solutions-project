@@ -21,16 +21,12 @@ const AccessSwitchesPage = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-hero text-white overflow-hidden min-h-[50vh]">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <section className="relative bg-gradient-hero text-white overflow-hidden">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           <div className="text-center">
-            <h1 className="hero-title mb-4">
-              Коммутаторы уровня доступа
+            <h1 className="hero-title">
+              Коммутаторы уровня доступа для корпоративных ЛВС
             </h1>
-            
-            <p className="hero-subtitle">
-              Для корпоративных ЛВС
-            </p>
           </div>
         </div>
       </section>

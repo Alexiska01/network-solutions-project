@@ -1,16 +1,13 @@
 /* Hero Section Styles */
 .hero-title {
-  @apply text-4xl md:text-5xl lg:text-6xl font-black leading-tight;
-  animation: fadeInUp 0.8s ease-out 0.2s both;
-  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-w-4xl mx-auto;
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.hero-subtitle {
-  @apply text-xl md:text-2xl lg:text-3xl font-light text-blue-100/90 leading-relaxed;
-  animation: fadeInUp 0.8s ease-out 0.4s both;
+  letter-spacing: -0.025em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Product Cards */
@@ -108,11 +105,8 @@
   }
 
   .hero-title {
-    @apply text-3xl;
-  }
-
-  .hero-subtitle {
-    @apply text-lg;
+    @apply text-xl sm:text-2xl leading-tight px-2;
+    letter-spacing: -0.015em;
   }
 
   .product-card-inner {
@@ -127,7 +121,8 @@
 /* Extra small screens */
 @media (max-width: 480px) {
   .hero-title {
-    @apply text-2xl leading-tight;
+    @apply text-lg sm:text-xl leading-tight px-4;
+    letter-spacing: -0.01em;
   }
 
   .product-card {
