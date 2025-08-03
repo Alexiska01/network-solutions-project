@@ -157,25 +157,27 @@ const WarrantyPage: React.FC = () => {
           
           <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Пакет 8x5xNBD */}
-            <div className="service-card relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 text-white shadow-xl"
-                 style={{
-                   background: 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FF8C00 100%)'
-                 }}>
+            <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 shadow-xl border border-gray-100">
+              
+              {/* Градиентная обводка */}
+              <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#FF6B35] via-[#F7931E] to-[#FF8C00] -z-10">
+                <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
+              </div>
               
               {/* Заголовочная секция */}
               <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
                 {/* Иконки */}
                 <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-[#FF6B35] to-[#F7931E] flex items-center justify-center shadow-lg">
                     <Icon name="Clock" size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
                   </div>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-[#F7931E] to-[#FF8C00] flex items-center justify-center shadow-lg">
                     <Icon name="Settings" size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
                   </div>
                 </div>
                 
                 {/* Заголовок */}
-                <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-left flex-1">
+                <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 text-left flex-1">
                   8x5xNBD
                 </h3>
               </div>
@@ -192,38 +194,40 @@ const WarrantyPage: React.FC = () => {
                   "Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра"
                 ].map((feature, index) => (
                   <div key={index} className="service-feature-item flex items-start gap-3">
-                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#F7931E] flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Icon name="Check" size={12} className="text-white sm:w-4 sm:h-4" />
                     </div>
-                    <span className="text-sm sm:text-base text-white/95 leading-relaxed">{feature}</span>
+                    <span className="text-sm sm:text-base text-gray-700 leading-relaxed">{feature}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Пакет 24x7x4 */}
-            <div className="service-card relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 text-white shadow-xl"
-                 style={{
-                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8e44ad 100%)'
-                 }}>
+            <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 shadow-xl border border-gray-100">
+              
+              {/* Градиентная обводка */}
+              <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#8e44ad] -z-10">
+                <div className="h-full w-full rounded-xl sm:rounded-2xl bg-white"></div>
+              </div>
               
               {/* Заголовочная секция */}
               <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
                 {/* Иконки */}
                 <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center shadow-lg">
                     <Icon name="Clock" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                   </div>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#764ba2] to-[#8e44ad] flex items-center justify-center shadow-lg">
                     <Icon name="Users" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                   </div>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#8e44ad] to-[#667eea] flex items-center justify-center shadow-lg">
                     <Icon name="Zap" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                   </div>
                 </div>
                 
                 {/* Заголовок */}
-                <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-left flex-1">
+                <h3 className="service-title text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 text-left flex-1">
                   24x7x4
                 </h3>
               </div>
@@ -242,10 +246,10 @@ const WarrantyPage: React.FC = () => {
                   "Доставка в сервисный центр и возврат осуществляется за счёт сервисного центра"
                 ].map((feature, index) => (
                   <div key={index} className="service-feature-item flex items-start gap-3">
-                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-[#667eea] to-[#764ba2] flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Icon name="Check" size={12} className="text-white sm:w-4 sm:h-4" />
                     </div>
-                    <span className="text-sm sm:text-base text-white/95 leading-relaxed">{feature}</span>
+                    <span className="text-sm sm:text-base text-gray-700 leading-relaxed">{feature}</span>
                   </div>
                 ))}
               </div>
