@@ -144,7 +144,7 @@ const WarrantyPage: React.FC = () => {
       </section>
 
       {/* Секция Сервисные пакеты */}
-      <section className="py-8 sm:py-12 lg:py-16 xl:py-24 bg-gray-50">
+      <section className="py-12 sm:py-16 lg:py-20 xl:py-28 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
             <h2 className="service-section-title text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold text-gray-900 mb-2 sm:mb-4">
@@ -157,7 +157,7 @@ const WarrantyPage: React.FC = () => {
           
           <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Пакет 8x5xNBD */}
-            <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 shadow-xl border border-gray-100">
+            <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100">
               
               {/* Градиентная обводка */}
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#FF6B35] via-[#F7931E] to-[#FF8C00] -z-10">
@@ -204,7 +204,7 @@ const WarrantyPage: React.FC = () => {
             </div>
 
             {/* Пакет 24x7x4 */}
-            <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 shadow-xl border border-gray-100">
+            <div className="service-card bg-white relative overflow-hidden rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 xl:p-12 shadow-xl border border-gray-100">
               
               {/* Градиентная обводка */}
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#8e44ad] -z-10">
