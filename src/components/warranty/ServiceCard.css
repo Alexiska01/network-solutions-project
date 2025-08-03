@@ -137,10 +137,16 @@
   transition-delay: 0.56s;
 }
 
-/* === ИНТЕРАКТИВНЫЕ ЭФФЕКТЫ === */
-.service-card:hover {
-  transform: translate3d(0, -12px, 0) scale3d(1.02, 1.02, 1);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+/* === ИНТЕРАКТИВНЫЕ ЭФФЕКТЫ ТОЛЬКО ДЛЯ ДЕСКТОПА === */
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover {
+    transform: translate3d(0, -12px, 0) scale3d(1.02, 1.02, 1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+  }
+
+  .service-card:hover::before {
+    opacity: 1;
+  }
 }
 
 /* === ВЫСОКОЧАСТОТНАЯ ОПТИМИЗАЦИЯ === */
@@ -179,10 +185,6 @@
   border-radius: inherit;
 }
 
-.service-card:hover::before {
-  opacity: 1;
-}
-
 /* === ПРИНУДИТЕЛЬНАЯ GPU АКТИВАЦИЯ === */
 .service-card {
   transform: translateZ(0);
@@ -194,10 +196,11 @@
   animation-fill-mode: both;
 }
 
-/* === ОПТИМИЗАЦИЯ ДЛЯ TOUCH УСТРОЙСТВ === */
+/* === ОТКЛЮЧЕНИЕ HOVER НА МОБИЛЬНЫХ === */
 @media (hover: none) and (pointer: coarse) {
   .service-card:hover {
-    transform: translate3d(0, -6px, 0) scale3d(1.01, 1.01, 1);
+    transform: none;
+    box-shadow: inherit;
   }
 }
 
