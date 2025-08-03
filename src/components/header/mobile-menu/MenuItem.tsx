@@ -161,16 +161,31 @@ const MenuItem: React.FC<MenuItemProps> = ({
                     {subItem.items && subItem.items.length > 0 ? (
                       <div className="space-y-2">
                         {/* Главная ссылка на уровень */}
-                        <Link
-                          to={subItem.path}
-                          className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-all duration-300 border border-blue-200 hover:border-blue-300 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none no-underline"
-                          onClick={() => {
-                            setActiveItem(subItem.path);
-                            onClose();
+                        <button
+                          className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-all duration-300 border border-blue-200 hover:border-blue-300 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('Button clicked! Navigating to:', subItem.path);
+                            try {
+                              navigate(subItem.path);
+                              onClose();
+                              console.log('Navigation successful');
+                            } catch (error) {
+                              console.error('Navigation error:', error);
+                            }
                           }}
-                          onTouchEnd={() => {
-                            setActiveItem(subItem.path);
-                            onClose();
+                          onTouchEnd={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('Touch event! Navigating to:', subItem.path);
+                            try {
+                              navigate(subItem.path);
+                              onClose();
+                              console.log('Touch navigation successful');
+                            } catch (error) {
+                              console.error('Touch navigation error:', error);
+                            }
                           }}
                         >
                           {/* Специальная иконка для главной ссылки */}
@@ -188,7 +203,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                               className="text-blue-500"
                             />
                           </div>
-                        </Link>
+                        </button>
 
                         {/* Кнопка для подменю серий */}
                         <button
