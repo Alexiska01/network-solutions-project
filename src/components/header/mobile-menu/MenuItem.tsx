@@ -159,57 +159,81 @@ const MenuItem: React.FC<MenuItemProps> = ({
                     }}
                   >
                     {subItem.items && subItem.items.length > 0 ? (
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setActiveItem(subItem.path);
-                          onNavigateToLevel({
-                            title: subItem.name,
-                            items: subItem.items,
-                            parentPath: subItem.path,
-                          });
-                        }}
-                        onTouchStart={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onTouchEnd={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setActiveItem(subItem.path);
-                          onNavigateToLevel({
-                            title: subItem.name,
-                            items: subItem.items,
-                            parentPath: subItem.path,
-                          });
-                        }}
-                        onMouseDown={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onPointerDown={(e) => {
-                          e.stopPropagation();
-                        }}
-                        className="group relative flex items-center text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 focus:bg-blue-100/80 transition-all duration-300 border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none"
-                      >
-                        {/* Декоративная точка */}
-                        <div className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-emerald-400 transition-all duration-300 mr-3 flex-shrink-0 pointer-events-none group-hover:shadow-lg group-hover:shadow-blue-400/50 group-hover:scale-120" />
+                      <div className="space-y-2">
+                        {/* Главная ссылка на уровень */}
+                        <Link
+                          to={subItem.path}
+                          className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-all duration-300 border border-blue-200 hover:border-blue-300 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none no-underline"
+                          onClick={() => {
+                            setActiveItem(subItem.path);
+                            onClose();
+                          }}
+                          onTouchEnd={() => {
+                            setActiveItem(subItem.path);
+                            onClose();
+                          }}
+                        >
+                          {/* Специальная иконка для главной ссылки */}
+                          <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 mr-3 flex-shrink-0 shadow-md" />
+                          
+                          <span className="font-semibold group-hover:translate-x-1 transition-transform duration-300">
+                            {subItem.name}
+                          </span>
 
-                        <span className="font-medium group-hover:translate-x-1 transition-transform duration-300">
-                          {subItem.name}
-                        </span>
+                          {/* Иконка внешней ссылки */}
+                          <div className="ml-auto">
+                            <Icon
+                              name="ExternalLink"
+                              size={14}
+                              className="text-blue-500"
+                            />
+                          </div>
+                        </Link>
 
-                        {/* Стрелка при ховере */}
-                        <div className="ml-auto pointer-events-none opacity-0 -translate-x-2.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                          <Icon
-                            name="ArrowRight"
-                            size={14}
-                            className="text-blue-400"
-                          />
-                        </div>
+                        {/* Кнопка для подменю серий */}
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setActiveItem(subItem.path);
+                            onNavigateToLevel({
+                              title: `Серии ${subItem.name.toLowerCase()}`,
+                              items: subItem.items,
+                              parentPath: subItem.path,
+                            });
+                          }}
+                          onTouchStart={(e) => {
+                            e.stopPropagation();
+                          }}
+                          onTouchEnd={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setActiveItem(subItem.path);
+                            onNavigateToLevel({
+                              title: `Серии ${subItem.name.toLowerCase()}`,
+                              items: subItem.items,
+                              parentPath: subItem.path,
+                            });
+                          }}
+                          className="group relative flex items-center text-left py-3 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 active:bg-gray-100 transition-all duration-300 border border-gray-200 hover:border-gray-300 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none"
+                        >
+                          {/* Декоративная точка */}
+                          <div className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-gray-400 transition-all duration-300 mr-3 flex-shrink-0" />
 
-                        {/* Gradient hover effect */}
-                        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-50/0 to-emerald-50/0 group-hover:from-blue-50/50 group-hover:to-emerald-50/30 transition-all duration-300 -z-10 pointer-events-none opacity-0 group-hover:opacity-100" />
-                      </button>
+                          <span className="font-medium group-hover:translate-x-1 transition-transform duration-300">
+                            Смотреть серии
+                          </span>
+
+                          {/* Стрелка при ховере */}
+                          <div className="ml-auto">
+                            <Icon
+                              name="ArrowRight"
+                              size={14}
+                              className="text-gray-400 group-hover:text-gray-600"
+                            />
+                          </div>
+                        </button>
+                      </div>
                     ) : (
                       <Link
                         to={subItem.path}
