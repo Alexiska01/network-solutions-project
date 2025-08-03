@@ -107,22 +107,65 @@
 
 /* Mobile card content optimization */
 @media (max-width: 768px) {
+  .product-card-inner img {
+    height: 180px;
+  }
+
+  .product-card-inner > div:last-child {
+    padding: 1rem;
+  }
+
+  .product-card-inner h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-card-inner p {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    line-height: 1.375;
+  }
+
   .product-card-inner .absolute.top-4.left-4 > div {
-    @apply px-2 py-1 text-xs;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
   }
 
   .product-card-inner .absolute.top-4.left-4 .h-4 {
-    @apply h-3 w-3;
+    height: 0.75rem;
+    width: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
+  .product-card-inner img {
+    height: 160px;
+  }
+
+  .product-card-inner > div:last-child {
+    padding: 0.75rem;
+  }
+
+  .product-card-inner h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .product-card-inner p {
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.375;
+  }
+
   .product-card-inner .absolute.top-4.left-4 > div {
-    @apply px-1.5 py-0.5 text-xs;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.75rem;
   }
 
   .product-card-inner .absolute.top-4.left-4 {
-    @apply top-2 left-2;
+    top: 0.5rem;
+    left: 0.5rem;
   }
 }
 
@@ -294,36 +337,8 @@
     @apply mx-2 rounded-xl;
   }
 
-  .product-card-inner img {
-    height: 180px !important;
-  }
-
-  .product-card-inner .p-8 {
-    @apply p-4;
-  }
-
-  .product-card-inner h3 {
-    @apply text-lg mb-2;
-  }
-
-  .product-card-inner p {
-    @apply text-sm mb-4 leading-snug;
-  }
-
   .spec-item {
     @apply p-2 text-xs;
-  }
-
-  .product-card-inner .grid {
-    @apply gap-2 mb-4;
-  }
-
-  .product-card-inner .mb-8 {
-    @apply mb-4;
-  }
-
-  .product-card-inner .py-3 {
-    @apply py-2.5 text-sm;
   }
 }
 
@@ -356,46 +371,7 @@
     @apply mx-0 rounded-lg;
   }
 
-  .product-card-inner img {
-    height: 160px !important;
-  }
-
-  .product-card-inner .p-8,
-  .product-card-inner .p-4 {
-    @apply p-3;
-  }
-
-  .product-card-inner h3 {
-    @apply text-base mb-2 font-semibold;
-  }
-
-  .product-card-inner p {
-    @apply text-xs mb-3 leading-snug;
-  }
-
   .spec-item {
     @apply p-1.5 text-xs;
-  }
-
-  .product-card-inner .grid {
-    @apply gap-1.5 mb-3 grid-cols-2;
-  }
-
-  .product-card-inner .mb-8,
-  .product-card-inner .mb-4 {
-    @apply mb-3;
-  }
-
-  .product-card-inner .py-3,
-  .product-card-inner .py-2.5 {
-    @apply py-2 text-xs;
-  }
-
-  .product-card-inner .flex-wrap {
-    @apply gap-1;
-  }
-
-  .product-card-inner .px-2\.5 {
-    @apply px-2 py-0.5 text-xs;
   }
 }
