@@ -1,112 +1,340 @@
-/* АНИМАЦИИ КАРТОЧКИ ГАРАНТИИ - CSS + IntersectionObserver */
+/* GPU-ОПТИМИЗИРОВАННЫЕ АНИМАЦИИ КАРТОЧКИ ГАРАНТИИ */
+/* Поддержка всех популярных частот обновления: 60Hz, 120Hz, 144Hz, 240Hz */
 
-/* Базовые состояния */
-.warranty-card {
+/* === БАЗОВЫЕ НАСТРОЙКИ GPU === */
+.warranty-card,
+.warranty-icon,
+.warranty-title,
+.warranty-feature-item {
+  /* GPU-композитный слой для ускорения */
   will-change: transform, opacity;
-  transition: all 0.6s cubic-bezier(0.6, 0.05, 0.01, 0.99);
+  contain: layout style paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+
+  /* Предотвращение мерцания */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.warranty-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+/* === КАРТОЧКА ГАРАНТИИ === */
+.warranty-card {
+  /* Базовые стили */
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
 }
 
-/* Анимация появления карточки */
 .warranty-card.visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
-/* Анимация иконки */
+/* Hover эффект карточки */
+.warranty-card:hover {
+  transform: translate3d(0, -6px, 0);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* === ИКОНКА === */
 .warranty-icon {
-  transition: all 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99) 0.2s;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(0.8);
 }
 
 .warranty-icon.visible {
-  opacity: 1 !important;
-  transform: scale(1) !important;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
-/* Анимация заголовка */
+/* === ЗАГОЛОВОК === */
 .warranty-title {
-  transition: all 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99) 0.3s;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
 }
 
 .warranty-title.visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
-/* Анимация элементов списка */
+/* === ЭЛЕМЕНТЫ СПИСКА === */
 .warranty-feature-item {
-  transition: all 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   animation-fill-mode: forwards;
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
 }
 
 .warranty-feature-item.visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  animation: warranty-feature-appear 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    forwards;
 }
 
-/* Поэтапные анимации элементов */
+/* Поэтапная анимация элементов с динамическими задержками */
 .warranty-feature-item:nth-child(1).visible {
-  animation: fadeInUp 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99) 0.4s forwards;
+  animation-delay: 0.4s;
 }
 
 .warranty-feature-item:nth-child(2).visible {
-  animation: fadeInUp 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99) 0.5s forwards;
+  animation-delay: 0.5s;
 }
 
 .warranty-feature-item:nth-child(3).visible {
-  animation: fadeInUp 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99) 0.6s forwards;
+  animation-delay: 0.6s;
 }
 
 .warranty-feature-item:nth-child(4).visible {
-  animation: fadeInUp 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99) 0.7s forwards;
+  animation-delay: 0.7s;
 }
 
 .warranty-feature-item:nth-child(5).visible {
-  animation: fadeInUp 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99) 0.8s forwards;
+  animation-delay: 0.8s;
 }
 
 .warranty-feature-item:nth-child(6).visible {
-  animation: fadeInUp 0.5s cubic-bezier(0.6, 0.05, 0.01, 0.99) 0.9s forwards;
+  animation-delay: 0.9s;
 }
 
-/* Keyframes */
-@keyframes fadeInUp {
-  from {
+/* === KEYFRAMES === */
+@keyframes warranty-feature-appear {
+  0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 20px, 0);
   }
-  to {
+  60% {
+    opacity: 0.8;
+    transform: translate3d(0, -2px, 0);
+  }
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
-/* Респект к пользователям с motion sensitivity */
+/* === ОПТИМИЗАЦИЯ ДЛЯ РАЗНЫХ ЧАСТОТ ОБНОВЛЕНИЯ === */
+
+/* 60Hz - стандартные экраны */
+@media (min-resolution: 60dpi) and (max-resolution: 119dpi) {
+  .warranty-card,
+  .warranty-icon,
+  .warranty-title,
+  .warranty-feature-item {
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  @keyframes warranty-feature-appear {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+
+/* 120Hz - большинство современных устройств */
+@media (min-resolution: 120dpi) and (max-resolution: 143dpi) {
+  .warranty-card {
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .warranty-icon {
+    transition-duration: 0.4s;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .warranty-title {
+    transition-duration: 0.4s;
+  }
+
+  .warranty-feature-item.visible {
+    animation-duration: 0.4s;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+/* 144Hz - игровые и профессиональные мониторы */
+@media (min-resolution: 144dpi) and (max-resolution: 239dpi) {
+  .warranty-card {
+    transition-duration: 0.42s;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .warranty-icon {
+    transition-duration: 0.35s;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .warranty-title {
+    transition-duration: 0.35s;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .warranty-feature-item.visible {
+    animation-duration: 0.35s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  /* Более плавная анимация для 144Hz */
+  @keyframes warranty-feature-appear {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 16px, 0) scale(0.98);
+    }
+    50% {
+      opacity: 0.7;
+      transform: translate3d(0, -1px, 0) scale(1.01);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+/* 240Hz+ - высокочастотные экраны */
+@media (min-resolution: 240dpi) {
+  .warranty-card {
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .warranty-icon {
+    transition-duration: 0.25s;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .warranty-title {
+    transition-duration: 0.25s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .warranty-feature-item.visible {
+    animation-duration: 0.25s;
+    animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  /* Максимально плавная анимация для 240Hz+ */
+  @keyframes warranty-feature-appear {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 12px, 0) scale(0.99);
+    }
+    40% {
+      opacity: 0.6;
+      transform: translate3d(0, -0.5px, 0) scale(1.005);
+    }
+    70% {
+      opacity: 0.9;
+      transform: translate3d(0, 0.5px, 0) scale(0.998);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+/* === РЕСПЕКТ К ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
   .warranty-card,
   .warranty-icon,
   .warranty-title,
   .warranty-feature-item {
     transition: opacity 0.3s ease !important;
-    animation: none !important;
+    animation: warranty-simple-fade 0.3s ease forwards !important;
   }
 
   .warranty-card:hover {
-    transform: none;
+    transform: none !important;
+  }
+
+  @keyframes warranty-simple-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
-/* Мобильная оптимизация */
+/* === МОБИЛЬНАЯ ОПТИМИЗАЦИЯ === */
 @media (max-width: 768px) {
   .warranty-card:hover {
     transform: none;
   }
 
-  .warranty-feature-item:nth-child(n).visible {
-    animation-duration: 0.4s;
+  .warranty-card,
+  .warranty-icon,
+  .warranty-title {
+    transition-duration: 0.4s;
   }
+
+  .warranty-feature-item.visible {
+    animation-duration: 0.3s;
+  }
+
+  /* Упрощенная анимация для мобильных */
+  @keyframes warranty-feature-appear {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 15px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+
+/* === ДОПОЛНИТЕЛЬНЫЕ HOVER ЭФФЕКТЫ === */
+.warranty-feature-item:hover {
+  transform: translate3d(2px, 0, 0);
+  transition: transform 0.2s ease;
+}
+
+/* Градиентная анимация иконки */
+.warranty-icon > div {
+  position: relative;
+  overflow: hidden;
+}
+
+.warranty-icon > div::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  transition: transform 0.6s ease;
+  opacity: 0;
+}
+
+.warranty-icon:hover > div::before {
+  opacity: 1;
+  transform: translate(100%, 100%) rotate(45deg);
 }

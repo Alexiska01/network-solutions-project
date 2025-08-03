@@ -65,9 +65,10 @@ const WarrantyPage: React.FC = () => {
       <section className="py-8 sm:py-12 lg:py-16 xl:py-24">
         <div className="container mx-auto px-4 sm:px-6 flex justify-center">
           <div
-            className="warranty-card bg-white rounded-2xl p-8 lg:p-10 max-w-2xl w-full shadow-[0_10px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] transition-all duration-300 relative overflow-hidden opacity-0 translate-y-8"
+            className="warranty-card bg-white rounded-2xl p-8 lg:p-10 max-w-2xl w-full relative overflow-hidden"
             style={{
-              background: 'linear-gradient(145deg, #ffffff 0%, #fafbfc 100%)'
+              background: 'linear-gradient(145deg, #ffffff 0%, #fafbfc 100%)',
+              boxShadow: '0 10px 24px rgba(0,0,0,0.06)'
             }}
           >
             {/* Градиентная обводка */}
@@ -76,14 +77,14 @@ const WarrantyPage: React.FC = () => {
             </div>
             
             {/* Иконка */}
-            <div className="warranty-icon flex justify-center mb-6 opacity-0 scale-75">
+            <div className="warranty-icon flex justify-center mb-6">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#005baa] to-[#00acad] flex items-center justify-center shadow-lg">
                 <Icon name="Shield" size={32} className="text-white" />
               </div>
             </div>
               
             {/* Заголовок */}
-            <h3 className="warranty-title text-2xl lg:text-3xl font-bold text-gray-900 text-center mb-8 opacity-0 translate-y-5">
+            <h3 className="warranty-title text-2xl lg:text-3xl font-bold text-gray-900 text-center mb-8">
               Гарантия на оборудование
             </h3>
                 
@@ -117,8 +118,7 @@ const WarrantyPage: React.FC = () => {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className={`warranty-feature-item flex gap-4 items-start opacity-0 translate-y-5`}
-                  style={{ animationDelay: `${0.4 + index * 0.1}s` }}
+                  className="warranty-feature-item flex gap-4 items-start"
                 >
                   <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#0093b6] to-[#00acad] flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Icon name="Check" size={14} className="text-white" />
