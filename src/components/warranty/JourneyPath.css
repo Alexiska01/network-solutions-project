@@ -18,9 +18,9 @@
 .journey-title {
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Начальное СКРЫТОЕ состояние */
-  opacity: 0;
-  transform: translate3d(0, 40px, 0) scale(0.95);
+  /* Начальное состояние - ВИДИМ ПО УМОЛЧАНИЮ */
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .journey-title.visible {
@@ -32,9 +32,9 @@
 .journey-timeline {
   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.3s;
 
-  /* Начальное СКРЫТОЕ состояние */
-  opacity: 0;
-  transform: translate3d(0, 30px, 0);
+  /* Начальное состояние - ВИДИМ ПО УМОЛЧАНИЮ */
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .journey-timeline.visible {
@@ -46,8 +46,8 @@
 .journey-line {
   transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.6s;
 
-  /* Начальное СКРЫТОЕ состояние */
-  transform: scaleX(0);
+  /* Начальное состояние - ВИДИМА ПО УМОЛЧАНИЮ */
+  transform: scaleX(1);
   transform-origin: left center;
 }
 
@@ -59,9 +59,9 @@
 .journey-step {
   transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Начальное СКРЫТОЕ состояние */
-  opacity: 0;
-  transform: translate3d(0, 50px, 0) scale(0.8);
+  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .journey-step.visible {
@@ -87,9 +87,9 @@
 .journey-step-icon {
   transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s;
 
-  /* Начальное СКРЫТОЕ состояние */
-  opacity: 0;
-  transform: translate3d(0, 0, 0) scale(0.3) rotate(-90deg);
+  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
 }
 
 .journey-step-icon.visible {
@@ -101,9 +101,9 @@
 .journey-step-title {
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
 
-  /* Начальное СКРЫТОЕ состояние */
-  opacity: 0;
-  transform: translate3d(0, 20px, 0);
+  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .journey-step-title.visible {
@@ -115,9 +115,9 @@
 .journey-step-description {
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s;
 
-  /* Начальное СКРЫТОЕ состояние */
-  opacity: 0;
-  transform: translate3d(0, 15px, 0);
+  /* Начальное состояние - ВИДИМЫ ПО УМОЛЧАНИЮ */
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .journey-step-description.visible {

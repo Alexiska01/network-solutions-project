@@ -33,40 +33,11 @@ export const initWarrantyAnimations = () => {
           animateCardElements(element);
         }
         
-        // Анимируем элементы пути клиента
+        // Анимируем элементы пути клиента (упрощенно)
         if (element.classList.contains('journey-section')) {
-          // Запускаем каскадную анимацию
-          setTimeout(() => {
-            const title = element.querySelector('.journey-title');
-            if (title) title.classList.add('visible');
-          }, 100);
-          
-          setTimeout(() => {
-            const timeline = element.querySelector('.journey-timeline');
-            if (timeline) timeline.classList.add('visible');
-          }, 300);
-          
-          setTimeout(() => {
-            const line = element.querySelector('.journey-line');
-            if (line) line.classList.add('visible');
-          }, 600);
-          
-          setTimeout(() => {
-            const steps = element.querySelectorAll('.journey-step');
-            steps.forEach((step, index) => {
-              setTimeout(() => {
-                step.classList.add('visible');
-                // Анимируем внутренние элементы
-                const icon = step.querySelector('.journey-step-icon');
-                const title = step.querySelector('.journey-step-title');
-                const description = step.querySelector('.journey-step-description');
-                
-                if (icon) icon.classList.add('visible');
-                if (title) title.classList.add('visible');
-                if (description) description.classList.add('visible');
-              }, index * 200);
-            });
-          }, 900);
+          element.querySelectorAll('.journey-title, .journey-timeline, .journey-step, .journey-line').forEach(el => {
+            el.classList.add('visible');
+          });
         }
         
         // Прекращаем наблюдение за элементом
