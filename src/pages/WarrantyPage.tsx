@@ -36,30 +36,36 @@ const WarrantyPage: React.FC = () => {
         <div className="warranty-hero-decoration"></div>
         
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center text-white max-w-4xl mx-auto">
-            <h1 className="warranty-hero-title warranty-hero-glow-text text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold sm:font-black mb-4 sm:mb-6 lg:mb-8 tracking-tight leading-tight">
+          <div className="text-center text-white max-w-5xl mx-auto">
+            {/* Небольшой надзаголовок */}
+            <div className="warranty-hero-badge inline-flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-full px-4 py-2 mb-6 border border-white/30">
+              <Icon name="Shield" size={16} className="text-white" />
+              <span className="text-white text-sm font-medium">Профессиональная поддержка</span>
+            </div>
+            
+            <h1 className="warranty-hero-title warranty-hero-glow-text text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 lg:mb-10 tracking-tight leading-none">
               Гарантия и Сервис
             </h1>
-            <h2 className="warranty-hero-subtitle text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-4 sm:mb-6 lg:mb-8 font-normal lg:font-light tracking-normal sm:tracking-wide">
+            <h2 className="warranty-hero-subtitle text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-6 sm:mb-8 lg:mb-10 font-light tracking-wide text-white/90">
               Ваш бизнес под надёжной защитой
             </h2>
-            <p className="warranty-hero-description text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed font-normal lg:font-light max-w-3xl mx-auto px-2 sm:px-0">
+            <p className="warranty-hero-description text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-light max-w-4xl mx-auto text-white/80 mb-8 lg:mb-12">
               Оборудование iDATA всегда под поддержкой: чёткие условия, прозрачный сервис, быстрое реагирование.
             </p>
             
-            {/* Дополнительные элементы премиум дизайна */}
-            <div className="mt-6 sm:mt-8 lg:mt-12 xl:mt-16 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6 xl:gap-8 px-4 sm:px-0">
-              <div className="warranty-hero-interactive flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 sm:px-5 lg:px-6 py-2 sm:py-3 border border-white/20 text-center">
-                <Icon name="Shield" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                <span className="text-white font-medium text-xs sm:text-sm lg:text-base">12 месяцев гарантии</span>
+            {/* Статистика или ключевые цифры */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 max-w-3xl mx-auto">
+              <div className="warranty-hero-stat text-center">
+                <div className="text-3xl lg:text-4xl xl:text-5xl font-black text-white mb-2">12+</div>
+                <div className="text-sm lg:text-base text-white/70 font-medium">месяцев гарантии</div>
               </div>
-              <div className="warranty-hero-interactive flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 sm:px-5 lg:px-6 py-2 sm:py-3 border border-white/20 text-center">
-                <Icon name="Clock" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                <span className="text-white font-medium text-xs sm:text-sm lg:text-base">24/7 поддержка</span>
+              <div className="warranty-hero-stat text-center">
+                <div className="text-3xl lg:text-4xl xl:text-5xl font-black text-white mb-2">24/7</div>
+                <div className="text-sm lg:text-base text-white/70 font-medium">техподдержка</div>
               </div>
-              <div className="warranty-hero-interactive flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 sm:px-5 lg:px-6 py-2 sm:py-3 border border-white/20 text-center">
-                <Icon name="Zap" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                <span className="text-white font-medium text-xs sm:text-sm lg:text-base">Быстрое реагирование</span>
+              <div className="warranty-hero-stat text-center">
+                <div className="text-3xl lg:text-4xl xl:text-5xl font-black text-white mb-2">NBD</div>
+                <div className="text-sm lg:text-base text-white/70 font-medium">доставка замены</div>
               </div>
             </div>
           </div>

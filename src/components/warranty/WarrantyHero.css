@@ -153,11 +153,41 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* === ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ === */
+/* === НОВЫЕ ЭЛЕМЕНТЫ ДИЗАЙНА === */
+.warranty-hero-badge {
+  animation: warranty-fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: all 0.3s ease;
+}
+
+.warranty-hero-stat {
+  animation: warranty-fade-up 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+}
+
+.warranty-hero-stat:nth-child(1) {
+  animation-delay: 0.6s;
+}
+
+.warranty-hero-stat:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+.warranty-hero-stat:nth-child(3) {
+  animation-delay: 1s;
+}
+
+/* === HOVER ЭФФЕКТЫ === */
 @media (hover: hover) {
-  .warranty-hero-interactive:hover {
-    transform: translate3d(0, -2px, 0);
-    transition: transform 0.3s ease;
+  .warranty-hero-badge:hover {
+    transform: translate3d(0, -2px, 0) scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .warranty-hero-stat:hover {
+    transform: translate3d(0, -5px, 0) scale(1.05);
   }
 }
 
@@ -165,7 +195,9 @@
 @media (max-width: 768px) {
   .warranty-hero-title,
   .warranty-hero-subtitle,
-  .warranty-hero-description {
+  .warranty-hero-description,
+  .warranty-hero-badge,
+  .warranty-hero-stat {
     animation-duration: 0.8s;
   }
 
@@ -177,7 +209,8 @@
     display: none;
   }
 
-  .warranty-hero-interactive {
+  .warranty-hero-badge:hover,
+  .warranty-hero-stat:hover {
     transform: none !important;
   }
 }
@@ -192,7 +225,9 @@
 
   .warranty-hero-title,
   .warranty-hero-subtitle,
-  .warranty-hero-description {
+  .warranty-hero-description,
+  .warranty-hero-badge,
+  .warranty-hero-stat {
     animation: warranty-simple-fade 0.6s ease forwards;
   }
 }
