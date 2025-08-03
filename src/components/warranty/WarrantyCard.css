@@ -27,7 +27,8 @@
   transform: translate3d(0, 32px, 0);
 }
 
-.warranty-card.visible {
+.warranty-card.visible,
+.warranty-card.animate-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }

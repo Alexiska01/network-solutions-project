@@ -1,0 +1,86 @@
+// УПРОЩЕННАЯ СИСТЕМА АНИМАЦИИ БЕЗ КОНФЛИКТОВ
+
+export const initSimpleCardAnimations = () => {
+  // Проверяем поддержку Intersection Observer
+  if (!window.IntersectionObserver) {
+    console.warn('Intersection Observer не поддерживается');
+    return () => {};
+  }
+
+  const isMobile = window.innerWidth < 1024;
+  const observers: IntersectionObserver[] = [];
+
+  if (isMobile) {
+    // МОБИЛЬНАЯ ЛОГИКА: индивидуальные наблюдатели
+    const cards = document.querySelectorAll('.warranty-card, .service-card');
+    
+    cards.forEach((card) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.2,
+          rootMargin: '-50px'
+        }
+      );
+
+      observer.observe(card);
+      observers.push(observer);
+    });
+  } else {
+    // ДЕСКТОПНАЯ ЛОГИКА: каскадное появление
+    const cards = document.querySelectorAll('.warranty-card, .service-card');
+    const firstCard = cards[0];
+    
+    if (firstCard) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Показываем все карточки с задержками
+              cards.forEach((card, index) => {
+                setTimeout(() => {
+                  card.classList.add('animate-visible');
+                }, index * 150);
+              });
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '-100px'
+        }
+      );
+
+      observer.observe(firstCard);
+      observers.push(observer);
+    }
+  }
+
+  // Функция очистки
+  return () => {
+    observers.forEach(observer => observer.disconnect());
+  };
+};
+
+// Автоматический запуск
+if (typeof window !== 'undefined') {
+  const initWhenReady = () => {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initSimpleCardAnimations, 100);
+      });
+    } else {
+      setTimeout(initSimpleCardAnimations, 100);
+    }
+  };
+
+  initWhenReady();
+}
