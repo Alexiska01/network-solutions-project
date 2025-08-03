@@ -40,13 +40,27 @@
     0 8px 16px rgba(0, 0, 0, 0.04);
 }
 
+/* === ЗАГОЛОВОК С ИКОНКОЙ === */
+.warranty-header {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+
+  /* Начальное состояние */
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+.warranty-header.visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 /* === ИКОНКА === */
 .warranty-icon {
   transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
 
   /* Начальное состояние */
   opacity: 0;
-  transform: translate3d(0, 0, 0) scale(0.8);
+  transform: translate3d(-10px, 0, 0) scale(0.9);
 }
 
 .warranty-icon.visible {

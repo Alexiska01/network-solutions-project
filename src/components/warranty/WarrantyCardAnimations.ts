@@ -35,6 +35,7 @@ export const initWarrantyCardAnimations = () => {
 
   // Находим элементы для анимации
   const warrantyCard = document.querySelector('.warranty-card');
+  const warrantyHeader = document.querySelector('.warranty-header');
   const warrantyIcon = document.querySelector('.warranty-icon');
   const warrantyTitle = document.querySelector('.warranty-title');
   const warrantyFeatures = document.querySelectorAll('.warranty-feature-item');
@@ -45,6 +46,10 @@ export const initWarrantyCardAnimations = () => {
   }
 
   // Запускаем наблюдение за внутренними элементами
+  if (warrantyHeader) {
+    elementsObserver.observe(warrantyHeader);
+  }
+  
   if (warrantyIcon) {
     elementsObserver.observe(warrantyIcon);
   }

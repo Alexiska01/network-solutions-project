@@ -76,17 +76,20 @@ const WarrantyPage: React.FC = () => {
               <div className="h-full w-full rounded-2xl bg-white"></div>
             </div>
             
-            {/* Иконка */}
-            <div className="warranty-icon flex justify-center mb-6">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#005baa] to-[#00acad] flex items-center justify-center shadow-lg">
-                <Icon name="Shield" size={32} className="text-white" />
+            {/* Заголовок с иконкой */}
+            <div className="warranty-header flex items-center justify-center lg:justify-center gap-4 mb-8">
+              {/* Иконка */}
+              <div className="warranty-icon flex-shrink-0">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-[#005baa] to-[#00acad] flex items-center justify-center shadow-lg">
+                  <Icon name="Shield" size={24} className="text-white sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
+                </div>
               </div>
-            </div>
               
-            {/* Заголовок */}
-            <h3 className="warranty-title text-2xl lg:text-3xl font-bold text-gray-900 text-center mb-8">
-              Гарантия на оборудование
-            </h3>
+              {/* Заголовок */}
+              <h3 className="warranty-title text-lg sm:text-xl lg:text-3xl font-bold text-gray-900 text-left lg:text-center flex-1 lg:flex-none">
+                Гарантия на оборудование
+              </h3>
+            </div>
                 
             {/* Список функций */}
             <div className="space-y-5">
