@@ -19,7 +19,16 @@ export const initSimpleCardAnimations = () => {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              entry.target.classList.add('animate-visible');
+              entry.target.classList.add('animate-visible', 'visible');
+              
+              // Анимируем внутренние элементы
+              const elements = entry.target.querySelectorAll('.warranty-header, .warranty-icon, .warranty-title, .warranty-feature-item');
+              elements.forEach((el, index) => {
+                setTimeout(() => {
+                  el.classList.add('visible');
+                }, index * 100);
+              });
+              
               observer.unobserve(entry.target);
             }
           });
@@ -46,7 +55,15 @@ export const initSimpleCardAnimations = () => {
               // Показываем все карточки с задержками
               cards.forEach((card, index) => {
                 setTimeout(() => {
-                  card.classList.add('animate-visible');
+                  card.classList.add('animate-visible', 'visible');
+                  
+                  // Анимируем внутренние элементы
+                  const elements = card.querySelectorAll('.warranty-header, .warranty-icon, .warranty-title, .warranty-feature-item');
+                  elements.forEach((el, elIndex) => {
+                    setTimeout(() => {
+                      el.classList.add('visible');
+                    }, elIndex * 100);
+                  });
                 }, index * 150);
               });
               observer.unobserve(entry.target);
