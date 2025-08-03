@@ -37,12 +37,9 @@ const WarrantyPage: React.FC = () => {
         
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center text-white max-w-4xl mx-auto">
-            <h1 className="warranty-hero-title warranty-hero-glow-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold sm:font-black mb-6 sm:mb-8 lg:mb-10 tracking-tight leading-tight">
+            <h1 className="warranty-hero-title warranty-hero-glow-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold sm:font-black mb-8 sm:mb-10 lg:mb-12 tracking-tight leading-tight">
               Гарантия и Сервис
             </h1>
-            <h2 className="warranty-hero-subtitle text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-6 sm:mb-8 lg:mb-10 font-light tracking-wide">
-              Профессиональная поддержка оборудования iDATA
-            </h2>
             <p className="warranty-hero-description text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-light max-w-3xl mx-auto">
               Расширенная гарантия, быстрый сервис и техническая поддержка для непрерывной работы вашего бизнеса.
             </p>
