@@ -236,43 +236,89 @@ const AccessSwitchesPage = () => {
                       {switchData.description}
                     </p>
 
-                    {/* Specs Grid */}
-                    <div className="grid grid-cols-2 gap-4 mb-8">
-                      <div className="spec-item">
-                        <Icon name="Plug" className="h-4 w-4 text-blue-600 mb-1" />
-                        <div className="text-sm text-gray-500">Порты</div>
-                        <div className="font-semibold text-gray-900">{switchData.specs.ports}</div>
-                      </div>
-                      
-                      <div className="spec-item">
-                        <Icon name="Zap" className="h-4 w-4 text-blue-600 mb-1" />
-                        <div className="text-sm text-gray-500">Питание</div>
-                        <div className="font-semibold text-gray-900">{switchData.specs.power}</div>
-                      </div>
-                      
-                      <div className="spec-item">
-                        <Icon name="Activity" className="h-4 w-4 text-blue-600 mb-1" />
-                        <div className="text-sm text-gray-500">Пропускная способность</div>
-                        <div className="font-semibold text-gray-900">{switchData.specs.throughput}</div>
-                      </div>
-                      
-                      <div className="spec-item">
-                        <Icon name="Settings" className="h-4 w-4 text-blue-600 mb-1" />
-                        <div className="text-sm text-gray-500">Функции</div>
-                        <div className="font-semibold text-gray-900">{switchData.specs.features.length} шт</div>
+                    {/* Professional Specs Grid */}
+                    <div className="spec-grid-container mb-8">
+                      <div className="spec-grid">
+                        <div className="spec-card spec-card-primary group/spec">
+                          <div className="spec-icon-wrapper">
+                            <Icon name="Plug" className="spec-icon" />
+                            <div className="spec-icon-glow"></div>
+                          </div>
+                          <div className="spec-content">
+                            <div className="spec-label">Порты</div>
+                            <div className="spec-value">{switchData.specs.ports}</div>
+                          </div>
+                          <div className="spec-decoration"></div>
+                        </div>
+
+                        <div className="spec-card spec-card-secondary group/spec">
+                          <div className="spec-icon-wrapper">
+                            <Icon name="Zap" className="spec-icon" />
+                            <div className="spec-icon-glow"></div>
+                          </div>
+                          <div className="spec-content">
+                            <div className="spec-label">Питание</div>
+                            <div className="spec-value">{switchData.specs.power}</div>
+                          </div>
+                          <div className="spec-decoration"></div>
+                        </div>
+
+                        <div className="spec-card spec-card-accent group/spec">
+                          <div className="spec-icon-wrapper">
+                            <Icon name="Activity" className="spec-icon" />
+                            <div className="spec-icon-glow"></div>
+                          </div>
+                          <div className="spec-content">
+                            <div className="spec-label">Пропускная способность</div>
+                            <div className="spec-value">{switchData.specs.throughput}</div>
+                          </div>
+                          <div className="spec-decoration"></div>
+                        </div>
+
+                        <div className="spec-card spec-card-neutral group/spec">
+                          <div className="spec-icon-wrapper">
+                            <Icon name="Settings" className="spec-icon" />
+                            <div className="spec-icon-glow"></div>
+                          </div>
+                          <div className="spec-content">
+                            <div className="spec-label">Функции</div>
+                            <div className="spec-value">{switchData.specs.features.length} шт</div>
+                          </div>
+                          <div className="spec-decoration"></div>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Features List */}
-                    <div className="mb-8">
-                      <div className="flex flex-wrap gap-2">
-                        {switchData.specs.features.slice(0, 4).map((feature, idx) => (
-                          <span
+                    {/* Professional Features Badges */}
+                    <div className="features-section mb-8">
+                      <div className="features-label mb-4">
+                        <Icon name="Star" className="features-label-icon" />
+                        <span>Ключевые возможности</span>
+                      </div>
+                      <div className="features-grid">
+                        {switchData.specs.features.slice(0, 6).map((feature, idx) => (
+                          <div
                             key={idx}
-                            className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded-full"
+                            className={`feature-badge feature-badge-${idx % 3} group/feature`}
+                            style={{
+                              animationDelay: `${idx * 100}ms`
+                            }}
                           >
-                            {feature}
-                          </span>
+                            <div className="feature-badge-inner">
+                              <div className="feature-badge-glow"></div>
+                              <div className="feature-badge-content">
+                                <Icon 
+                                  name={[
+                                    'Shield', 'Wifi', 'Zap', 
+                                    'Network', 'Settings', 'Activity'
+                                  ][idx] || 'CheckCircle'} 
+                                  className="feature-badge-icon" 
+                                />
+                                <span className="feature-badge-text">{feature}</span>
+                              </div>
+                              <div className="feature-badge-shimmer"></div>
+                            </div>
+                          </div>
                         ))}
                       </div>
                     </div>
