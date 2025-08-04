@@ -299,7 +299,7 @@ const AccessSwitchesPage = () => {
                         {switchData.specs.features.slice(0, 6).map((feature, idx) => (
                           <div
                             key={idx}
-                            className={`feature-badge feature-badge-${idx % 3} group/feature`}
+                            className={`feature-badge feature-badge-${idx % 3}`}
                             style={{
                               animationDelay: `${idx * 100}ms`
                             }}

@@ -625,22 +625,22 @@
     opacity: 0.2;
   }
 
-  .group/feature:hover .feature-badge-inner {
+  .feature-badge:hover .feature-badge-inner {
     transform: translateY(-1px) scale(1.02);
     box-shadow:
       0 10px 20px -8px rgba(0, 0, 0, 0.15),
       0 4px 8px -2px rgba(0, 0, 0, 0.1);
   }
 
-  .group/feature:hover .feature-badge-glow {
+  .feature-badge:hover .feature-badge-glow {
     opacity: 1;
   }
 
-  .group/feature:hover .feature-badge-icon {
+  .feature-badge:hover .feature-badge-icon {
     transform: scale(1.1);
   }
 
-  .group/feature:hover .feature-badge-shimmer {
+  .feature-badge:hover .feature-badge-shimmer {
     left: 100%;
   }
 }
