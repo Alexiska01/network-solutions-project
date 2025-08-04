@@ -219,7 +219,7 @@ const AccessSwitchesPage = () => {
                     
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
-                      <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-full">
+                      <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#32398e] to-[#005baa] text-white text-sm font-medium rounded-full shadow-lg">
                         <Icon name="Wifi" className="h-4 w-4" />
                         <span>Доступ</span>
                       </div>
@@ -228,11 +228,11 @@ const AccessSwitchesPage = () => {
 
                   {/* Content Section */}
                   <div className="p-8">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-xl font-bold text-[#2E2E2E] mb-3 group-hover:text-[#32398e] transition-colors">
                       {switchData.title}
                     </h3>
                     
-                    <p className="text-gray-600 mb-6 leading-relaxed">
+                    <p className="text-[#7D8BAA] mb-6 leading-relaxed">
                       {switchData.description}
                     </p>
 
@@ -325,7 +325,7 @@ const AccessSwitchesPage = () => {
 
                     {/* Button */}
                     <Button
-                      className="w-full group/btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25"
+                      className="w-full group/btn bg-gradient-to-r from-[#32398e] to-[#005baa] hover:from-[#0079b6] hover:to-[#0093b6] text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#32398e]/25"
                       onClick={() => navigate(switchData.link)}
                     >
                       <span>Подробнее</span>

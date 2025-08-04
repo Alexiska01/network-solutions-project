@@ -97,7 +97,7 @@
 }
 
 .product-card-inner {
-  @apply bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden;
+  @apply bg-white rounded-2xl shadow-lg border border-[#F2F4F8] overflow-hidden;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform, box-shadow, border-color;
   transform: translateZ(0);
@@ -175,11 +175,11 @@
     box-shadow:
       0 25px 50px -12px rgba(0, 0, 0, 0.1),
       0 20px 25px -5px rgba(0, 0, 0, 0.04);
-    border-color: #3b82f6;
+    border-color: #32398e;
   }
 
   .product-card:hover .spec-item {
-    background: rgba(59, 130, 246, 0.05);
+    background: rgba(50, 57, 142, 0.05);
     transform: translateY(-1px) translateZ(0);
   }
 }
@@ -378,7 +378,7 @@
 .spec-label {
   font-size: 0.75rem;
   font-weight: 500;
-  color: rgb(107, 114, 128);
+  color: rgb(125, 139, 170);
   margin-bottom: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 0.025em;
@@ -387,7 +387,7 @@
 .spec-value {
   font-size: 0.875rem;
   font-weight: 700;
-  color: rgb(17, 24, 39);
+  color: rgb(46, 46, 46);
   line-height: 1.2;
 }
 
@@ -448,14 +448,14 @@
   gap: 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: rgb(75, 85, 99);
+  color: rgb(46, 46, 46);
   margin-bottom: 1rem;
 }
 
 .features-label-icon {
   width: 1rem;
   height: 1rem;
-  color: rgb(251, 191, 36);
+  color: rgb(245, 183, 0);
 }
 
 /* Features Grid */
@@ -574,13 +574,13 @@
 }
 
 .feature-badge-2 .feature-badge-icon {
-  color: rgb(160, 238, 192);
+  color: rgb(83, 194, 164);
 }
 
 .feature-badge-text {
   font-size: 0.75rem;
   font-weight: 600;
-  color: rgb(55, 65, 81);
+  color: rgb(46, 46, 46);
   line-height: 1.2;
   text-align: left;
 }
