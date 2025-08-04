@@ -225,6 +225,7 @@ const Hero3530 = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.9 }}
+              className="mb-4 lg:mb-0"
             >
               <button
                 className="bg-white text-[#0065B3] px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 min-h-[44px] hover:scale-105 hover:shadow-lg transform-gpu"
@@ -238,6 +239,66 @@ const Hero3530 = () => {
                 Скачать PDF
               </button>
             </motion.div>
+            
+            {/* 3D модель на мобильных - между кнопкой и бейджами */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+              className="block lg:hidden w-full max-w-[240px] h-[160px] mx-auto my-3"
+            >
+              {isModelLoaded && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ 
+                    opacity: isModelVisible ? 1 : 0, 
+                    scale: isModelVisible ? 1 : 0.9 
+                  }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  className="w-full h-full"
+                >
+                  <model-viewer
+                    ref={modelViewerRef}
+                    src={model3530Data.modelUrl}
+                    alt="3D модель коммутатора IDS3530"
+                    auto-rotate
+                    auto-rotate-delay="1000"
+                    rotation-per-second="25deg"
+                    camera-orbit="0deg 75deg 85%"
+                    min-camera-orbit="auto auto 85%"
+                    max-camera-orbit="auto auto 85%"
+                    interaction-policy="none"
+                    disable-zoom
+                    disable-pan
+                    disable-tap
+                    environment-image="neutral"
+                    shadow-intensity="0"
+                    exposure="1.0"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      background: 'transparent',
+                      border: 'none',
+                      outline: 'none',
+                      boxShadow: 'none',
+                      pointerEvents: 'none',
+                      touchAction: 'none',
+                    }}
+                  />
+                </motion.div>
+              )}
+              
+              {showLoader && !isModelVisible && (
+                <div className="flex items-center justify-center w-full h-full">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+                    <span className="text-white/60 text-xs font-medium">
+                      Загрузка...
+                    </span>
+                  </div>
+                </div>
+              )}
+            </motion.div>
           </motion.div>
 
           {/* Правая часть - 3D модель и фичи */}
@@ -249,13 +310,13 @@ const Hero3530 = () => {
           >
             <div className="flex flex-col space-y-4 sm:space-y-5 md:space-y-6">
               
-              {/* Контейнер с 3D-моделью - ПОЛНОСТЬЮ ПРОЗРАЧНЫЙ */}
+              {/* Контейнер с 3D-моделью - ТОЛЬКО НА ДЕСКТОПЕ */}
               <motion.div
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
                 whileHover="hover"
-                className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[420px] h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] mx-auto lg:mx-0"
+                className="hidden lg:block relative w-full max-w-[420px] h-[320px] mx-auto lg:mx-0"
               >
                 {/* 3D модель - БЕЗ ФОНА, ГРАНИЦ И КОНТЕЙНЕРОВ */}
                 {isModelLoaded && (
