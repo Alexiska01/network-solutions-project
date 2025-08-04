@@ -1,0 +1,291 @@
+/* === ПРОФЕССИОНАЛЬНЫЕ CSS АНИМАЦИИ ДЛЯ МОБИЛЬНОГО МЕНЮ === */
+
+/* Базовые перемены для анимаций */
+:root {
+  --menu-timing-fast: 0.2s;
+  --menu-timing-medium: 0.3s;
+  --menu-timing-slow: 0.4s;
+  --menu-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --menu-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --menu-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --menu-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* === АНИМАЦИИ СТРЕЛОК === */
+.mobile-menu-arrow {
+  transition:
+    transform var(--menu-timing-medium) var(--menu-easing-spring),
+    color var(--menu-timing-fast) var(--menu-easing-standard),
+    background-color var(--menu-timing-fast) var(--menu-easing-standard),
+    box-shadow var(--menu-timing-fast) var(--menu-easing-standard);
+  will-change: transform;
+}
+
+.mobile-menu-arrow.expanded {
+  transform: rotate(180deg);
+}
+
+.mobile-menu-arrow.navigation {
+  transform: rotate(0deg);
+}
+
+.mobile-menu-arrow:hover {
+  transform: scale(1.1) rotate(var(--rotation, 0deg));
+}
+
+.mobile-menu-arrow:active {
+  transform: scale(0.95) rotate(var(--rotation, 0deg));
+  transition-duration: var(--menu-timing-fast);
+}
+
+/* === АНИМАЦИИ ПОДМЕНЮ (АККОРДЕОН) === */
+.mobile-submenu {
+  overflow: hidden;
+  transition:
+    max-height var(--menu-timing-slow) var(--menu-easing-standard),
+    opacity var(--menu-timing-medium) var(--menu-easing-decelerate);
+  will-change: max-height, opacity;
+}
+
+.mobile-submenu.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.mobile-submenu.expanded {
+  max-height: 800px;
+  opacity: 1;
+}
+
+/* === АНИМАЦИИ ЭЛЕМЕНТОВ МЕНЮ === */
+.mobile-menu-item {
+  transition: all var(--menu-timing-medium) var(--menu-easing-standard);
+  will-change: transform, background-color, box-shadow;
+}
+
+.mobile-menu-item:hover {
+  transform: translateY(-1px);
+}
+
+.mobile-menu-item:active {
+  transform: translateY(0px) scale(0.98);
+  transition-duration: var(--menu-timing-fast);
+}
+
+/* === RIPPLE ЭФФЕКТ === */
+.mobile-menu-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.2) 0%,
+    rgba(16, 185, 129, 0.1) 50%,
+    transparent 70%
+  );
+  transform: scale(0);
+  opacity: 0;
+  transition:
+    transform 0.6s var(--menu-easing-decelerate),
+    opacity 0.6s var(--menu-easing-decelerate);
+}
+
+.mobile-menu-ripple.active {
+  transform: scale(4);
+  opacity: 1;
+}
+
+/* === ПОЯВЛЕНИЕ ЭЛЕМЕНТОВ (STAGGER) === */
+.mobile-menu-item-container {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: menuItemSlideIn var(--menu-timing-slow)
+    var(--menu-easing-decelerate) forwards;
+}
+
+@keyframes menuItemSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === АНИМАЦИИ ДЛЯ ПОДЭЛЕМЕНТОВ === */
+.mobile-submenu-item {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: submenuItemSlideIn var(--menu-timing-medium)
+    var(--menu-easing-decelerate) forwards;
+}
+
+@keyframes submenuItemSlideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* === ФОКУС И ДОСТУПНОСТЬ === */
+.mobile-menu-item:focus-visible,
+.mobile-menu-arrow:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.6);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* === TOUCH FEEDBACK === */
+.mobile-menu-item:active,
+.mobile-menu-arrow:active {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* === ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ === */
+.mobile-menu-line {
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 130, 246, 0.3) 0%,
+    rgba(16, 185, 129, 0.3) 50%,
+    transparent 100%
+  );
+  transition: opacity var(--menu-timing-medium) var(--menu-easing-standard);
+}
+
+.mobile-menu-active-indicator {
+  animation: activeIndicatorPulse 2s ease-in-out infinite;
+}
+
+@keyframes activeIndicatorPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* === ОПТИМИЗАЦИЯ ПРОИЗВОДИТЕЛЬНОСТИ === */
+.mobile-menu-gpu-acceleration {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.mobile-menu-item,
+.mobile-menu-arrow,
+.mobile-submenu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* === АДАПТИВНОСТЬ === */
+@media (max-width: 480px) {
+  .mobile-menu-item {
+    min-height: 48px;
+  }
+
+  .mobile-menu-arrow {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-height: 640px) {
+  .mobile-submenu.expanded {
+    max-height: 400px;
+  }
+}
+
+/* === СКРОЛЛБАР === */
+.mobile-menu-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-menu-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-menu-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.mobile-menu-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* === АНИМАЦИЯ ПОЯВЛЕНИЯ FADEUP === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s var(--menu-easing-decelerate) forwards;
+}
+
+/* === СПЕЦИАЛЬНЫЕ HOVER ЭФФЕКТЫ === */
+.mobile-menu-item:hover .mobile-menu-text {
+  transform: translateX(2px);
+}
+
+.mobile-menu-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* === СОСТОЯНИЕ LOADING === */
+.mobile-menu-loading .mobile-menu-item {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* === ТЕМНАЯ ТЕМА (ОПЦИОНАЛЬНО) === */
+@media (prefers-color-scheme: dark) {
+  .mobile-menu-ripple {
+    background: radial-gradient(
+      circle,
+      rgba(147, 197, 253, 0.2) 0%,
+      rgba(52, 211, 153, 0.1) 50%,
+      transparent 70%
+    );
+  }
+}
+
+/* === ВЫСОКАЯ ЧАСТОТА ОБНОВЛЕНИЯ === */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: auto) {
+    .mobile-menu-item {
+      animation-timeline: auto;
+    }
+  }
+}
+
+/* === УМЕНЬШЕННАЯ АНИМАЦИЯ === */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-item,
+  .mobile-menu-arrow,
+  .mobile-submenu,
+  .mobile-menu-ripple {
+    transition-duration: 0.1s;
+    animation-duration: 0.1s;
+  }
+
+  .mobile-menu-item-container {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .mobile-submenu-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
