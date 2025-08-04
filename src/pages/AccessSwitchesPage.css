@@ -192,11 +192,11 @@
   padding: 0.5rem;
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.03) 0%,
-    rgba(16, 185, 129, 0.03) 100%
+    rgba(50, 57, 142, 0.03) 0%,
+    rgba(83, 194, 164, 0.03) 100%
   );
   border-radius: 1rem;
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(50, 57, 142, 0.1);
 }
 
 .spec-grid {
@@ -225,37 +225,37 @@
 .spec-card-primary {
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.08) 0%,
-    rgba(59, 130, 246, 0.04) 100%
+    rgba(50, 57, 142, 0.08) 0%,
+    rgba(0, 91, 170, 0.04) 100%
   );
-  border-color: rgba(59, 130, 246, 0.2);
+  border-color: rgba(50, 57, 142, 0.2);
 }
 
 .spec-card-secondary {
   background: linear-gradient(
     135deg,
-    rgba(168, 85, 247, 0.08) 0%,
-    rgba(168, 85, 247, 0.04) 100%
+    rgba(0, 121, 182, 0.08) 0%,
+    rgba(0, 147, 182, 0.04) 100%
   );
-  border-color: rgba(168, 85, 247, 0.2);
+  border-color: rgba(0, 121, 182, 0.2);
 }
 
 .spec-card-accent {
   background: linear-gradient(
     135deg,
-    rgba(16, 185, 129, 0.08) 0%,
-    rgba(16, 185, 129, 0.04) 100%
+    rgba(0, 172, 173, 0.08) 0%,
+    rgba(83, 194, 164, 0.04) 100%
   );
-  border-color: rgba(16, 185, 129, 0.2);
+  border-color: rgba(0, 172, 173, 0.2);
 }
 
 .spec-card-neutral {
   background: linear-gradient(
     135deg,
-    rgba(107, 114, 128, 0.08) 0%,
-    rgba(107, 114, 128, 0.04) 100%
+    rgba(125, 139, 170, 0.08) 0%,
+    rgba(193, 201, 214, 0.04) 100%
   );
-  border-color: rgba(107, 114, 128, 0.2);
+  border-color: rgba(125, 139, 170, 0.2);
 }
 
 /* Icon Wrapper */
@@ -274,32 +274,32 @@
 .spec-card-primary .spec-icon-wrapper {
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.15) 0%,
-    rgba(59, 130, 246, 0.1) 100%
+    rgba(50, 57, 142, 0.15) 0%,
+    rgba(0, 91, 170, 0.1) 100%
   );
 }
 
 .spec-card-secondary .spec-icon-wrapper {
   background: linear-gradient(
     135deg,
-    rgba(168, 85, 247, 0.15) 0%,
-    rgba(168, 85, 247, 0.1) 100%
+    rgba(0, 121, 182, 0.15) 0%,
+    rgba(0, 147, 182, 0.1) 100%
   );
 }
 
 .spec-card-accent .spec-icon-wrapper {
   background: linear-gradient(
     135deg,
-    rgba(16, 185, 129, 0.15) 0%,
-    rgba(16, 185, 129, 0.1) 100%
+    rgba(0, 172, 173, 0.15) 0%,
+    rgba(83, 194, 164, 0.1) 100%
   );
 }
 
 .spec-card-neutral .spec-icon-wrapper {
   background: linear-gradient(
     135deg,
-    rgba(107, 114, 128, 0.15) 0%,
-    rgba(107, 114, 128, 0.1) 100%
+    rgba(125, 139, 170, 0.15) 0%,
+    rgba(193, 201, 214, 0.1) 100%
   );
 }
 
@@ -313,19 +313,19 @@
 }
 
 .spec-card-primary .spec-icon {
-  color: rgb(59, 130, 246);
+  color: rgb(50, 57, 142);
 }
 
 .spec-card-secondary .spec-icon {
-  color: rgb(168, 85, 247);
+  color: rgb(0, 121, 182);
 }
 
 .spec-card-accent .spec-icon {
-  color: rgb(16, 185, 129);
+  color: rgb(0, 172, 173);
 }
 
 .spec-card-neutral .spec-icon {
-  color: rgb(107, 114, 128);
+  color: rgb(125, 139, 170);
 }
 
 /* Icon Glow Effect */
@@ -341,7 +341,7 @@
 .spec-card-primary .spec-icon-glow {
   background: radial-gradient(
     circle,
-    rgba(59, 130, 246, 0.3) 0%,
+    rgba(50, 57, 142, 0.3) 0%,
     transparent 70%
   );
 }
@@ -349,7 +349,7 @@
 .spec-card-secondary .spec-icon-glow {
   background: radial-gradient(
     circle,
-    rgba(168, 85, 247, 0.3) 0%,
+    rgba(0, 121, 182, 0.3) 0%,
     transparent 70%
   );
 }
@@ -357,7 +357,7 @@
 .spec-card-accent .spec-icon-glow {
   background: radial-gradient(
     circle,
-    rgba(16, 185, 129, 0.3) 0%,
+    rgba(0, 172, 173, 0.3) 0%,
     transparent 70%
   );
 }
@@ -365,7 +365,7 @@
 .spec-card-neutral .spec-icon-glow {
   background: radial-gradient(
     circle,
-    rgba(107, 114, 128, 0.3) 0%,
+    rgba(125, 139, 170, 0.3) 0%,
     transparent 70%
   );
 }
@@ -406,7 +406,7 @@
 .spec-card-primary .spec-decoration {
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.3) 0%,
+    rgba(50, 57, 142, 0.3) 0%,
     transparent 100%
   );
 }
@@ -414,7 +414,7 @@
 .spec-card-secondary .spec-decoration {
   background: linear-gradient(
     135deg,
-    rgba(168, 85, 247, 0.3) 0%,
+    rgba(0, 121, 182, 0.3) 0%,
     transparent 100%
   );
 }
@@ -422,7 +422,7 @@
 .spec-card-accent .spec-decoration {
   background: linear-gradient(
     135deg,
-    rgba(16, 185, 129, 0.3) 0%,
+    rgba(0, 172, 173, 0.3) 0%,
     transparent 100%
   );
 }
@@ -430,7 +430,7 @@
 .spec-card-neutral .spec-decoration {
   background: linear-gradient(
     135deg,
-    rgba(107, 114, 128, 0.3) 0%,
+    rgba(125, 139, 170, 0.3) 0%,
     transparent 100%
   );
 }
@@ -491,28 +491,28 @@
 .feature-badge-0 .feature-badge-inner {
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.05) 0%,
-    rgba(59, 130, 246, 0.02) 100%
+    rgba(255, 107, 53, 0.05) 0%,
+    rgba(245, 183, 0, 0.02) 100%
   );
-  border-color: rgba(59, 130, 246, 0.15);
+  border-color: rgba(255, 107, 53, 0.15);
 }
 
 .feature-badge-1 .feature-badge-inner {
   background: linear-gradient(
     135deg,
-    rgba(168, 85, 247, 0.05) 0%,
-    rgba(168, 85, 247, 0.02) 100%
+    rgba(131, 56, 236, 0.05) 0%,
+    rgba(181, 23, 158, 0.02) 100%
   );
-  border-color: rgba(168, 85, 247, 0.15);
+  border-color: rgba(131, 56, 236, 0.15);
 }
 
 .feature-badge-2 .feature-badge-inner {
   background: linear-gradient(
     135deg,
-    rgba(16, 185, 129, 0.05) 0%,
-    rgba(16, 185, 129, 0.02) 100%
+    rgba(160, 238, 192, 0.05) 0%,
+    rgba(83, 194, 164, 0.02) 100%
   );
-  border-color: rgba(16, 185, 129, 0.15);
+  border-color: rgba(160, 238, 192, 0.15);
 }
 
 /* Feature Badge Glow */
@@ -528,7 +528,7 @@
 .feature-badge-0 .feature-badge-glow {
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.1) 0%,
+    rgba(255, 107, 53, 0.1) 0%,
     transparent 100%
   );
 }
@@ -536,7 +536,7 @@
 .feature-badge-1 .feature-badge-glow {
   background: linear-gradient(
     135deg,
-    rgba(168, 85, 247, 0.1) 0%,
+    rgba(131, 56, 236, 0.1) 0%,
     transparent 100%
   );
 }
@@ -544,7 +544,7 @@
 .feature-badge-2 .feature-badge-glow {
   background: linear-gradient(
     135deg,
-    rgba(16, 185, 129, 0.1) 0%,
+    rgba(160, 238, 192, 0.1) 0%,
     transparent 100%
   );
 }
@@ -566,15 +566,15 @@
 }
 
 .feature-badge-0 .feature-badge-icon {
-  color: rgb(59, 130, 246);
+  color: rgb(255, 107, 53);
 }
 
 .feature-badge-1 .feature-badge-icon {
-  color: rgb(168, 85, 247);
+  color: rgb(131, 56, 236);
 }
 
 .feature-badge-2 .feature-badge-icon {
-  color: rgb(16, 185, 129);
+  color: rgb(160, 238, 192);
 }
 
 .feature-badge-text {
