@@ -141,14 +141,14 @@ const MenuItem: React.FC<MenuItemProps> = ({
                   } as React.CSSProperties}
                 >
                   {subItem.items && subItem.items.length > 0 ? (
-                    <div className="group relative flex items-center rounded-xl text-sm hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-200 ease-gpu border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full">
+                    <div className="group relative flex items-center rounded-xl text-sm border border-gray-100 hover:border-blue-200/60 transition-all duration-300 ease-gpu w-full overflow-hidden bg-white hover:bg-gradient-to-r hover:from-blue-50/30 hover:via-blue-50/20 hover:to-emerald-50/20 hover:shadow-lg hover:shadow-blue-200/25">
                       {/* Decorative Dot */}
                       <div className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-emerald-400 transition-all duration-200 ml-4 mr-3 flex-shrink-0 pointer-events-none group-hover:shadow-lg group-hover:shadow-blue-400/50 dot-indicator" />
                       
                       {/* Clickable text area - goes to page */}
                       <Link
                         to={subItem.path}
-                        className="flex-1 py-4 font-medium text-gray-800 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-200 ease-gpu no-underline"
+                        className="flex-1 py-4 font-medium text-gray-800 hover:text-blue-600 transition-all duration-200 ease-gpu no-underline relative overflow-hidden link-area"
                         onClick={() => {
                           setActiveItem(subItem.path);
                           onClose();
@@ -158,8 +158,21 @@ const MenuItem: React.FC<MenuItemProps> = ({
                           onClose();
                         }}
                       >
-                        {subItem.name}
+                        <span className="relative z-10 group-hover:translate-x-1 transition-transform duration-200 ease-gpu">
+                          {subItem.name}
+                        </span>
+                        
+                        {/* Page icon indicator */}
+                        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-60 transition-all duration-200 ease-gpu translate-x-2 group-hover:translate-x-0">
+                          <Icon name="ExternalLink" size={12} className="text-blue-500" />
+                        </div>
+                        
+                        {/* Subtle underline animation */}
+                        <div className="absolute bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-emerald-400 group-hover:w-full transition-all duration-300 ease-gpu" />
                       </Link>
+
+                      {/* Visual separator */}
+                      <div className="w-px h-6 bg-gradient-to-b from-transparent via-gray-200 to-transparent opacity-60" />
 
                       {/* Arrow button - shows series */}
                       <button
@@ -186,13 +199,27 @@ const MenuItem: React.FC<MenuItemProps> = ({
                             parentPath: subItem.path,
                           });
                         }}
-                        className="py-4 pr-4 pl-2 text-blue-400 hover:text-blue-600 transition-colors duration-200 touch-manipulation"
+                        className="py-4 px-4 text-blue-400 hover:text-white hover:bg-blue-500 active:bg-blue-600 transition-all duration-200 touch-manipulation relative overflow-hidden group/btn series-button"
                       >
-                        <Icon
-                          name="ArrowRight"
-                          size={14}
-                        />
+                        {/* Button background animation */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 rounded-r-xl" />
+                        
+                        {/* Icon with rotation effect */}
+                        <div className="relative z-10 transform group-hover/btn:rotate-90 group-hover/btn:scale-110 transition-transform duration-200 ease-gpu">
+                          <Icon name="ChevronRight" size={14} />
+                        </div>
+                        
+                        {/* Tooltip hint */}
+                        <div className="absolute -top-8 right-0 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover/btn:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none z-20">
+                          Показать серии
+                          <div className="absolute top-full right-2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900" />
+                        </div>
                       </button>
+                      
+                      {/* Hover ripple effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-transparent to-emerald-400/10 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-gpu" />
+                      </div>
                     </div>
                   ) : (
                     <Link
@@ -374,6 +401,34 @@ const MenuItem: React.FC<MenuItemProps> = ({
           opacity: 1 !important;
           display: block !important;
           visibility: visible !important;
+        }
+
+        /* Professional hover effects for dual-action items */
+        .link-area:hover {
+          background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, transparent 80%);
+        }
+
+        .series-button:hover {
+          background: linear-gradient(90deg, transparent 20%, rgba(59, 130, 246, 1) 100%);
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Smooth border radius for split zones */
+        .link-area {
+          border-radius: 0.75rem 0 0 0.75rem;
+        }
+
+        .series-button {
+          border-radius: 0 0.75rem 0.75rem 0;
+        }
+
+        /* Advanced tooltip positioning */
+        @media (max-width: 768px) {
+          .series-button .absolute.-top-8 {
+            top: -2.5rem;
+            right: 0.25rem;
+            font-size: 0.625rem;
+          }
         }
 
         /* Dot Indicator GPU Animation */
