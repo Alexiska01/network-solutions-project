@@ -165,7 +165,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                           parentPath: subItem.path,
                         });
                       }}
-                      className="group relative flex items-center text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-200 ease-gpu border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none"
+                      className="group relative flex items-center text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-800 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-200 ease-gpu border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none"
                     >
                       {/* Decorative Dot */}
                       <div className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-emerald-400 transition-all duration-200 mr-3 flex-shrink-0 pointer-events-none group-hover:shadow-lg group-hover:shadow-blue-400/50 dot-indicator" />
@@ -186,7 +186,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                   ) : (
                     <Link
                       to={subItem.path}
-                      className="w-full text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 transition-colors duration-200 flex items-center gap-3 min-h-[48px] no-underline block"
+                      className="w-full text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-800 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 transition-colors duration-200 flex items-center gap-3 min-h-[48px] no-underline block"
                       onClick={() => {
                         setActiveItem(subItem.path);
                         onClose();
