@@ -887,6 +887,197 @@ a {
   --feature-index: 3;
 }
 
+/* =================================== */
+/* ProductHero GPU-First Оптимизации */
+/* =================================== */
+
+/* Переменные для адаптации под различные частоты */
+:root {
+  /* ProductHero специфичные переменные */
+  --ph-entry-duration: 320ms;
+  --ph-content-delay: 600ms;
+  --ph-model-delay: 800ms;
+  --ph-scale-hover: 1.015;
+  --ph-translate-hover: 4px;
+}
+
+@media (min-refresh-rate: 90hz) {
+  :root {
+    --ph-entry-duration: 280ms;
+    --ph-content-delay: 520ms;
+    --ph-model-delay: 720ms;
+    --ph-scale-hover: 1.012;
+    --ph-translate-hover: 3px;
+  }
+}
+
+@media (min-refresh-rate: 120hz) {
+  :root {
+    --ph-entry-duration: 250ms;
+    --ph-content-delay: 460ms;
+    --ph-model-delay: 640ms;
+    --ph-scale-hover: 1.01;
+    --ph-translate-hover: 3px;
+  }
+}
+
+@media (min-refresh-rate: 240hz) {
+  :root {
+    --ph-entry-duration: 220ms;
+    --ph-content-delay: 400ms;
+    --ph-model-delay: 560ms;
+    --ph-scale-hover: 1.008;
+    --ph-translate-hover: 2px;
+  }
+}
+
+/* Критические GPU оптимизации для ProductHero */
+.hero-container {
+  /* Максимальная GPU активация */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  isolation: isolate;
+  /* Критическая стабилизация текста */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  /* Композитный слой */
+  contain: layout style paint;
+}
+
+/* Оптимизация всех анимируемых элементов */
+.hero-bg,
+.hero-glow-main,
+.hero-glow-secondary,
+.hero-geo-1,
+.hero-geo-2,
+.hero-content,
+.hero-model-container,
+.hero-model {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+/* Специальная оптимизация для 3D model-viewer */
+model-viewer {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  isolation: isolate;
+  /* Критические свойства для производительности */
+  contain: strict;
+  will-change: auto;
+}
+
+/* GPU-оптимизация текстовых элементов */
+.hero-title,
+.hero-description,
+.hero-feature-text {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
+}
+
+/* Оптимизация лоадера */
+.hero-loader {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.loader {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  /* Оптимизированная анимация вращения */
+  animation: loaderSpin 1s linear infinite;
+  will-change: transform;
+}
+
+/* Оптимизация progress элементов */
+.hero-progress-dot {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Оптимизация параллакс элементов */
+.hero-model-bg,
+.hero-model-glow {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  isolation: isolate;
+}
+
+/* will-change управление для анимаций */
+.hero-container:not([data-loaded]) {
+  will-change: opacity, transform, filter;
+}
+
+.hero-container[data-loaded] {
+  will-change: auto;
+}
+
+/* Премиальные hover эффекты */
+@media (hover: hover) and (pointer: fine) {
+  .hero-feature {
+    transition:
+      background-color var(--fs-duration-hover) var(--ps-easing-hover),
+      transform var(--fs-duration-hover) var(--ps-easing-hover);
+  }
+
+  .hero-feature:hover {
+    transform: translate3d(var(--ph-translate-hover), 0, 0)
+      scale(var(--ph-scale-hover));
+    will-change: background-color, transform;
+  }
+
+  .hero-feature:not(:hover) {
+    will-change: auto;
+  }
+}
+
+/* Мобильные active эффекты */
+@media (hover: none) {
+  .hero-feature:active {
+    transform: translate3d(0, 0, 0) scale(0.98);
+    transition: transform 120ms var(--ps-easing-active);
+  }
+}
+
+/* Оптимизация параллакс эффектов на высоких частотах */
+@media (min-refresh-rate: 120hz) {
+  .hero-glow-main,
+  .hero-glow-secondary {
+    animation-duration: 3s;
+  }
+
+  .hero-model-bg {
+    animation-duration: 3.5s;
+  }
+
+  .hero-model-glow {
+    animation-duration: 2.5s;
+  }
+}
+
+@media (min-refresh-rate: 240hz) {
+  .hero-glow-main,
+  .hero-glow-secondary {
+    animation-duration: 2.5s;
+  }
+
+  .hero-model-bg {
+    animation-duration: 3s;
+  }
+
+  .hero-model-glow {
+    animation-duration: 2s;
+  }
+}
+
 /* Отключение анимаций для пользователей с настройкой prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .ps-card,

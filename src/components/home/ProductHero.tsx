@@ -75,6 +75,7 @@ const ProductHero = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [refreshRate, setRefreshRate] = useState<'60hz' | '90hz' | '120hz' | '144hz' | '240hz'>('60hz');
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
@@ -89,6 +90,56 @@ const ProductHero = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Детекция частоты обновления экрана
+  useEffect(() => {
+    let frameCount = 0;
+    let startTime = 0;
+    let animationId: number;
+
+    const measureRefreshRate = () => {
+      if (frameCount === 0) {
+        startTime = performance.now();
+      }
+      frameCount++;
+      
+      if (frameCount === 120) {
+        const endTime = performance.now();
+        const fps = Math.round(120000 / (endTime - startTime));
+        
+        let detectedRate: typeof refreshRate = '60hz';
+        if (fps >= 230) detectedRate = '240hz';
+        else if (fps >= 140) detectedRate = '144hz';
+        else if (fps >= 115) detectedRate = '120hz';
+        else if (fps >= 85) detectedRate = '90hz';
+        
+        setRefreshRate(detectedRate);
+        
+        // Добавляем класс на body для CSS переменных
+        document.body.className = document.body.className
+          .replace(/refresh-\d+hz/g, '')
+          + ` refresh-${detectedRate}`;
+        
+        console.log(`🚀 ProductHero: ${fps} FPS (${detectedRate}) - GPU анимации активны`);
+        return;
+      }
+      
+      animationId = requestAnimationFrame(measureRefreshRate);
+    };
+
+    if (window.matchMedia('(min-refresh-rate: 120hz)').matches) {
+      setRefreshRate('120hz');
+      document.body.className = document.body.className.replace(/refresh-\d+hz/g, '') + ' refresh-120hz';
+    } else {
+      animationId = requestAnimationFrame(measureRefreshRate);
+    }
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
   }, []);
 
   // Инициализация и мгновенная загрузка при наличии кэша
@@ -280,7 +331,8 @@ const ProductHero = () => {
 
   return (
     <div 
-      className="hero-container"
+      className={`hero-container refresh-${refreshRate}`}
+      data-loaded={isInitialized}
       style={{
         '--current-glow-color': currentData.glowColor.replace('[', '').replace(']', ''),
         '--current-accent-color': currentData.accentColor,
@@ -548,9 +600,9 @@ const ProductHero = () => {
           background: linear-gradient(135deg, #0B3C49, #1A237E, #2E2E2E);
           overflow: hidden;
           opacity: 0;
-          transform: scale(0.98) translateY(40px);
+          transform: scale(0.98) translate3d(0, 40px, 0);
           filter: blur(20px) brightness(0.3);
-          animation: heroEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+          animation: heroEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
         }
 
         @media (min-width: 768px) {
@@ -562,7 +614,7 @@ const ProductHero = () => {
         @keyframes heroEntry {
           to {
             opacity: 1;
-            transform: scale(1) translateY(0);
+            transform: scale(1) translate3d(0, 0, 0);
             filter: blur(0) brightness(1);
           }
         }
@@ -735,9 +787,9 @@ const ProductHero = () => {
           padding-top: 1rem;
           height: 45vh;
           opacity: 0;
-          transform: translateY(60px);
+          transform: translate3d(0, 60px, 0);
           filter: blur(10px);
-          animation: contentEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 600ms forwards;
+          animation: contentEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) var(--ph-content-delay) forwards;
         }
 
         @media (min-width: 768px) {
@@ -759,7 +811,7 @@ const ProductHero = () => {
         @keyframes contentEntry {
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
             filter: blur(0);
           }
         }
@@ -787,8 +839,8 @@ const ProductHero = () => {
           color: rgba(255, 255, 255, 0.8);
           border: 1px solid rgba(255, 255, 255, 0.2);
           opacity: 0;
-          transform: scale(0.5) translateY(20px);
-          animation: badgeEntry 240ms cubic-bezier(0.68, -0.55, 0.265, 1.55) 900ms forwards;
+          transform: scale(0.5) translate3d(0, 20px, 0);
+          animation: badgeEntry 240ms cubic-bezier(0.68, -0.55, 0.265, 1.55) calc(var(--ph-content-delay) + 300ms) forwards;
         }
 
         @media (min-width: 768px) {
@@ -801,7 +853,7 @@ const ProductHero = () => {
         @keyframes badgeEntry {
           to {
             opacity: 1;
-            transform: scale(1) translateY(0);
+            transform: scale(1) translate3d(0, 0, 0);
           }
         }
 
@@ -811,9 +863,9 @@ const ProductHero = () => {
           color: white;
           line-height: 1.25;
           opacity: 0;
-          transform: translateY(60px) scale(0.9);
+          transform: translate3d(0, 60px, 0) scale(0.9);
           filter: blur(8px);
-          animation: titleEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 1100ms forwards;
+          animation: titleEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 500ms) forwards;
         }
 
         @media (min-width: 375px) {
@@ -849,7 +901,7 @@ const ProductHero = () => {
         @keyframes titleEntry {
           to {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translate3d(0, 0, 0) scale(1);
             filter: blur(0);
           }
         }
@@ -860,8 +912,8 @@ const ProductHero = () => {
           line-height: 1.625;
           max-width: 32rem;
           opacity: 0;
-          transform: translateY(20px);
-          animation: descEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) 1300ms forwards;
+          transform: translate3d(0, 20px, 0);
+          animation: descEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 700ms) forwards;
         }
 
         @media (min-width: 375px) {
@@ -886,7 +938,7 @@ const ProductHero = () => {
         @keyframes descEntry {
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
           }
         }
 
@@ -895,7 +947,7 @@ const ProductHero = () => {
           flex-direction: column;
           gap: 0.5rem;
           opacity: 0;
-          animation: featuresEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) 1500ms forwards;
+          animation: featuresEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 900ms) forwards;
         }
 
         @media (min-width: 768px) {
@@ -921,8 +973,8 @@ const ProductHero = () => {
           border: 1px solid rgba(255, 255, 255, 0.1);
           transition: background 300ms;
           opacity: 0;
-          transform: translateX(-20px);
-          animation: featureEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(1600ms + var(--feature-index, 0) * 100ms) forwards;
+          transform: translate3d(-20px, 0, 0);
+          animation: featureEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 1000ms + var(--feature-index, 0) * 100ms) forwards;
         }
 
         @media (min-width: 768px) {
@@ -940,7 +992,7 @@ const ProductHero = () => {
         @keyframes featureEntry {
           to {
             opacity: 1;
-            transform: translateX(0);
+            transform: translate3d(0, 0, 0);
           }
         }
 
@@ -988,8 +1040,8 @@ const ProductHero = () => {
           gap: 0.75rem;
           padding-top: 0.75rem;
           opacity: 0;
-          transform: translateY(20px);
-          animation: progressEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) 1800ms forwards;
+          transform: translate3d(0, 20px, 0);
+          animation: progressEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 1200ms) forwards;
         }
 
         @media (min-width: 768px) {
@@ -1002,7 +1054,7 @@ const ProductHero = () => {
         @keyframes progressEntry {
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
           }
         }
 
@@ -1056,7 +1108,7 @@ const ProductHero = () => {
           opacity: 0;
           transform: scale(0.7) rotateY(30deg) rotateX(15deg);
           filter: blur(20px);
-          animation: modelContainerEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 800ms forwards;
+          animation: modelContainerEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) var(--ph-model-delay) forwards;
         }
 
         @media (min-width: 375px) {
@@ -1147,15 +1199,15 @@ const ProductHero = () => {
           width: 100%;
           height: 100%;
           opacity: 0;
-          transform: scale(0.9) translateY(20px);
+          transform: scale(0.9) translate3d(0, 20px, 0);
           filter: blur(10px);
-          animation: modelEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 1400ms forwards;
+          animation: modelEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-model-delay) + 600ms) forwards;
         }
 
         @keyframes modelEntry {
           to {
             opacity: 1;
-            transform: scale(1) translateY(0);
+            transform: scale(1) translate3d(0, 0, 0);
             filter: blur(0);
           }
         }
