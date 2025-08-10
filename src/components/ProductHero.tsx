@@ -280,7 +280,7 @@ const ProductHero = () => {
 
   return (
     <div 
-      className="hero-container relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+      className="hero-container"
       style={{
         '--current-glow-color': currentData.glowColor.replace('[', '').replace(']', ''),
         '--current-accent-color': currentData.accentColor,
@@ -290,14 +290,17 @@ const ProductHero = () => {
     >
       {/* Динамический фоновый градиент */}
       <div 
-        className={`hero-bg absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30`}
+        className="hero-bg"
+        style={{
+          background: `linear-gradient(135deg, ${currentData.gradient.replace('from-[', '').replace('] via-[', ', ').replace('] to-[', ', ').replace(']', '')})`
+        }}
       />
       
       {/* Параллакс элементы */}
-      <div className="absolute inset-0">
+      <div className="hero-parallax">
         {/* Основной световой эффект */}
         <div
-          className="hero-glow-main absolute top-1/4 left-1/3 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl"
+          className="hero-glow-main"
           style={{
             backgroundColor: `${currentData.glowColor.replace('[', '').replace(']', '')}40`
           }}
@@ -305,7 +308,7 @@ const ProductHero = () => {
         
         {/* Дополнительные световые пятна */}
         <div
-          className="hero-glow-secondary absolute bottom-1/4 right-1/3 w-48 h-48 md:w-64 md:h-64 rounded-full blur-2xl"
+          className="hero-glow-secondary"
           style={{
             backgroundColor: `${currentData.accentColor}33`
           }}
@@ -313,40 +316,38 @@ const ProductHero = () => {
         
         {/* Геометрические элементы */}
         <div
-          className="hero-geo-1 absolute top-16 right-8 md:top-20 md:right-20 w-20 h-20 md:w-32 md:h-32 border rounded-lg rotate-12"
+          className="hero-geo-1"
           style={{
             borderColor: `${currentData.accentColor}40`
           }}
         />
         
-        <div
-          className="hero-geo-2 absolute bottom-24 left-8 md:bottom-32 md:left-20 w-16 h-16 md:w-24 md:h-24 border border-white/5 rounded-full"
-        />
+        <div className="hero-geo-2" />
       </div>
 
       {/* Основной контент */}
-      <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
-        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-16 h-full md:h-auto">
-          <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto">
+      <div className="hero-main">
+        <div className="hero-wrapper">
+          <div className="hero-grid">
             
             {/* Левая колонка - контент */}
-            <div className="hero-content flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45vh] md:h-auto">
+            <div className="hero-content">
               {/* Заголовок */}
-              <div className="space-y-3 md:space-y-4">
-                <div className="hero-badge inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[11px] md:text-sm font-medium text-white/80 border border-white/20">
+              <div className="hero-header">
+                <div className="hero-badge">
                   ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
                 </div>
                 
                 <h1
                   key={currentData.id}
-                  className="hero-title text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
+                  className="hero-title"
                 >
                   {currentData.title}
                 </h1>
                 
                 <p
                   key={`${currentData.id}-desc`}
-                  className="hero-description text-sm xs:text-base sm:text-lg md:text-lg text-white/70 leading-relaxed max-w-lg md:max-w-none"
+                  className="hero-description"
                 >
                   {currentData.description}
                 </p>
@@ -355,37 +356,33 @@ const ProductHero = () => {
               {/* Особенности */}
               <div
                 key={`${currentData.id}-features`}
-                className="hero-features space-y-2 md:space-y-3"
+                className="hero-features"
               >
                 {currentData.features.map((feature, index) => (
                   <div
                     key={`${currentData.id}-feature-${index}`}
-                    className="hero-feature flex items-center gap-3 md:gap-4 px-3 py-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    className="hero-feature"
                     style={{ '--feature-index': index } as React.CSSProperties}
                   >
                     <div 
-                      className="w-2 h-2 md:w-3 md:h-3 rounded-full shadow-lg"
+                      className="hero-feature-dot"
                       style={{
                         backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
                         boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
                       }}
                     />
-                    <span className="text-white font-medium text-[13px] xs:text-sm sm:text-base md:text-base leading-tight">{feature}</span>
+                    <span className="hero-feature-text">{feature}</span>
                   </div>
                 ))}
               </div>
 
               {/* Индикатор прогресса */}
-              <div className="hero-progress flex items-center gap-3 md:gap-4 pt-3 md:pt-4">
-                <div className="flex gap-2">
+              <div className="hero-progress">
+                <div className="hero-progress-dots">
                   {heroData.map((_, index) => (
                     <div
                       key={index}
-                      className={`h-1 md:h-1 rounded-full transition-all duration-500 ${
-                        index === currentIndex 
-                          ? `w-10 md:w-12 shadow-lg` 
-                          : 'w-3 md:w-4 bg-white/20'
-                      }`}
+                      className={`hero-progress-dot ${index === currentIndex ? 'active' : ''}`}
                       style={index === currentIndex ? {
                         backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
                         boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
@@ -393,34 +390,44 @@ const ProductHero = () => {
                     />
                   ))}
                 </div>
-                <span className="text-[13px] md:text-sm text-white/50 font-mono tabular-nums">
+                <span className="hero-progress-counter">
                   {String(currentIndex + 1).padStart(2, '0')} / {String(heroData.length).padStart(2, '0')}
                 </span>
               </div>
             </div>
 
             {/* Правая колонка - 3D модель */}
-            <div className="hero-model-container relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center">
+            <div className="hero-model-container">
               {/* 3D фоновые эффекты */}
-              <div className="absolute inset-0">
-                <div className={`hero-model-bg absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 rounded-3xl blur-2xl`} />
-                <div className={`hero-model-glow absolute inset-0 bg-${currentData.glowColor}-400/20 rounded-full blur-3xl`} />
+              <div className="hero-model-effects">
+                <div 
+                  className="hero-model-bg" 
+                  style={{
+                    background: `linear-gradient(135deg, ${currentData.gradient.replace('from-[', '').replace('] via-[', ', ').replace('] to-[', ', ').replace(']', '')})`
+                  }}
+                />
+                <div 
+                  className="hero-model-glow"
+                  style={{
+                    backgroundColor: `${currentData.glowColor.replace('[', '').replace(']', '')}20`
+                  }}
+                />
               </div>
               
               {/* 3D модель с интеллектуальной загрузкой */}
-              <div className="w-full h-full">
+              <div className="hero-model-wrapper">
                 <div
                   key={currentData.id}
-                  className="hero-model relative w-full h-full"
+                  className="hero-model"
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
-                  <div className="w-full h-full relative">
+                  <div className="hero-model-inner">
                     {/* Лоадер показывается только если модель НЕ доступна */}
                     {!modelLoadStatus[currentData.modelUrl] && !modelPreloader.isLoaded(currentData.modelUrl) && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10">
-                        <div className="flex flex-col items-center gap-4">
-                          <div className="loader w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full" />
-                          <p className="text-white/60 text-sm">Загрузка 3D модели...</p>
+                      <div className="hero-loader">
+                        <div className="hero-loader-inner">
+                          <div className="loader" />
+                          <p className="hero-loader-text">Загрузка 3D модели...</p>
                         </div>
                       </div>
                     )}
@@ -513,11 +520,11 @@ const ProductHero = () => {
                     
                     {/* Fallback для ошибки загрузки */}
                     {modelLoadStatus[currentData.modelUrl] === false && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-white/5 backdrop-blur-xl rounded-2xl">
-                        <div className="text-center p-8">
-                          <Icon name="Wifi" size={48} className="text-white/60 mx-auto mb-4" />
-                          <p className="text-white/80 text-lg font-medium mb-2">Модель {currentData.series} недоступна</p>
-                          <p className="text-white/60 text-sm">Проверьте подключение к сети</p>
+                      <div className="hero-model-error">
+                        <div className="hero-model-error-content">
+                          <Icon name="Wifi" size={48} className="hero-model-error-icon" />
+                          <p className="hero-model-error-title">Модель {currentData.series} недоступна</p>
+                          <p className="hero-model-error-text">Проверьте подключение к сети</p>
                         </div>
                       </div>
                     )}
@@ -531,63 +538,25 @@ const ProductHero = () => {
 
       {/* Переходные эффекты */}
       {isTransitioning && !isMobile && (
-        <div className="hero-transition absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+        <div className="hero-transition" />
       )}
 
-      {/* CSS Стили */}
       <style jsx>{`
-        /* CSS Variables для адаптивности под разные герцовки */
-        :root {
-          --dur-fast: 160ms;
-          --dur-normal: 240ms; 
-          --dur-slow: 320ms;
-          --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-          --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-          --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-          --dist-small: 20px;
-          --dist-medium: 40px;
-          --dist-large: 60px;
-        }
-
-        /* Адаптация под высокие частоты обновления */
-        @media (min-resolution: 90dpi) {
-          :root {
-            --dur-fast: 140ms;
-            --dur-normal: 220ms;
-            --dur-slow: 280ms;
-          }
-        }
-
-        @media (min-resolution: 120dpi) {
-          :root {
-            --dur-fast: 120ms;
-            --dur-normal: 200ms;
-            --dur-slow: 260ms;
-            --dist-small: 18px;
-            --dist-medium: 36px;
-            --dist-large: 54px;
-          }
-        }
-
-        @media (min-resolution: 144dpi) {
-          :root {
-            --dur-fast: 110ms;
-            --dur-normal: 180ms;
-            --dur-slow: 240ms;
-            --dist-small: 16px;
-            --dist-medium: 32px;
-            --dist-large: 48px;
-          }
-        }
-
-        /* Основная анимация появления Hero */
         .hero-container {
-          will-change: transform, opacity;
-          animation: heroEntry var(--dur-slow) var(--ease-out) forwards;
-          animation-delay: 200ms;
+          position: relative;
+          height: 100vh;
+          background: linear-gradient(135deg, #0B3C49, #1A237E, #2E2E2E);
+          overflow: hidden;
           opacity: 0;
-          transform: scale(0.98) translateY(var(--dist-medium));
+          transform: scale(0.98) translateY(40px);
           filter: blur(20px) brightness(0.3);
+          animation: heroEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @media (min-width: 768px) {
+          .hero-container {
+            height: 70vh;
+          }
         }
 
         @keyframes heroEntry {
@@ -598,66 +567,193 @@ const ProductHero = () => {
           }
         }
 
-        /* Параллакс эффекты - только transform и opacity */
         .hero-bg {
-          will-change: transform;
-          transition: all 1000ms var(--ease-out);
-          transform: scale(calc(1 + abs(var(--mouse-x, 0)) * 0.05));
+          position: absolute;
+          inset: 0;
+          opacity: 0.3;
+          transition: transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-parallax {
+          position: absolute;
+          inset: 0;
         }
 
         .hero-glow-main {
-          will-change: transform;
+          position: absolute;
+          top: 25%;
+          left: 33.333%;
+          width: 16rem;
+          height: 16rem;
+          border-radius: 50%;
+          filter: blur(3rem);
           animation: glowFloat 4s ease-in-out infinite;
-          transform: translate(
-            calc(var(--mouse-x, 0) * 20px),
-            calc(var(--mouse-y, 0) * 20px)
-          );
+        }
+
+        @media (min-width: 768px) {
+          .hero-glow-main {
+            width: 24rem;
+            height: 24rem;
+          }
         }
 
         .hero-glow-secondary {
-          will-change: transform;
+          position: absolute;
+          bottom: 25%;
+          right: 33.333%;
+          width: 12rem;
+          height: 12rem;
+          border-radius: 50%;
+          filter: blur(2rem);
           animation: glowFloat 3s ease-in-out infinite reverse;
-          transform: translate(
-            calc(var(--mouse-x, 0) * -15px),
-            calc(var(--mouse-y, 0) * -15px)
-          ) rotate(calc(var(--mouse-x, 0) * 10deg));
+        }
+
+        @media (min-width: 768px) {
+          .hero-glow-secondary {
+            width: 16rem;
+            height: 16rem;
+          }
         }
 
         .hero-geo-1 {
-          will-change: transform;
-          transform: translate(
-            calc(var(--mouse-x, 0) * 5px),
-            calc(var(--mouse-y, 0) * 5px)
-          ) rotate(calc(12deg + var(--mouse-x, 0) * 5deg));
+          position: absolute;
+          top: 4rem;
+          right: 2rem;
+          width: 5rem;
+          height: 5rem;
+          border-width: 1px;
+          border-style: solid;
+          border-radius: 0.5rem;
+          transform: rotate(12deg);
+        }
+
+        @media (min-width: 768px) {
+          .hero-geo-1 {
+            top: 5rem;
+            right: 5rem;
+            width: 8rem;
+            height: 8rem;
+          }
         }
 
         .hero-geo-2 {
-          will-change: transform;
-          transform: translate(
-            calc(var(--mouse-x, 0) * -8px),
-            calc(var(--mouse-y, 0) * -8px)
-          ) rotate(calc(var(--mouse-x, 0) * -8deg));
+          position: absolute;
+          bottom: 6rem;
+          left: 2rem;
+          width: 4rem;
+          height: 4rem;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 50%;
+        }
+
+        @media (min-width: 768px) {
+          .hero-geo-2 {
+            bottom: 8rem;
+            left: 5rem;
+            width: 6rem;
+            height: 6rem;
+          }
         }
 
         @keyframes glowFloat {
           0%, 100% {
             opacity: 0.3;
-            transform: scale(0.8) translate(var(--x, 0), var(--y, 0));
+            transform: scale(0.8);
           }
           50% {
             opacity: 0.1;
-            transform: scale(1.2) translate(var(--x, 0), var(--y, 0));
+            transform: scale(1.2);
           }
         }
 
-        /* Контент анимации - stagger эффект */
+        .hero-main {
+          position: relative;
+          z-index: 10;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+          .hero-main {
+            flex-direction: row;
+            align-items: center;
+            height: auto;
+          }
+        }
+
+        .hero-wrapper {
+          width: 100%;
+          max-width: 80rem;
+          margin: 0 auto;
+          padding: 0 1rem;
+          height: 100%;
+        }
+
+        @media (min-width: 768px) {
+          .hero-wrapper {
+            padding: 0 2rem;
+            height: auto;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .hero-wrapper {
+            padding: 0 4rem;
+          }
+        }
+
+        .hero-grid {
+          display: grid;
+          gap: 0;
+          align-items: stretch;
+          height: 100%;
+        }
+
+        @media (min-width: 768px) {
+          .hero-grid {
+            gap: 1.5rem;
+            align-items: center;
+            height: auto;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .hero-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+          }
+        }
+
         .hero-content {
-          will-change: transform, opacity;
-          animation: contentEntry var(--dur-slow) var(--ease-out) forwards;
-          animation-delay: 600ms;
+          display: flex;
+          flex-direction: column;
+          justify-content: end;
+          gap: 1rem;
+          order: 2;
+          padding-bottom: max(1rem, env(safe-area-inset-bottom));
+          padding-top: 1rem;
+          height: 45vh;
           opacity: 0;
-          transform: translateY(var(--dist-large));
+          transform: translateY(60px);
           filter: blur(10px);
+          animation: contentEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 600ms forwards;
+        }
+
+        @media (min-width: 768px) {
+          .hero-content {
+            justify-content: center;
+            gap: 1.5rem;
+            order: 1;
+            padding: 0;
+            height: auto;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .hero-content {
+            order: 1;
+          }
         }
 
         @keyframes contentEntry {
@@ -668,12 +764,38 @@ const ProductHero = () => {
           }
         }
 
+        .hero-header {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+          .hero-header {
+            gap: 1rem;
+          }
+        }
+
         .hero-badge {
-          will-change: transform, opacity;
-          animation: badgeEntry var(--dur-normal) var(--ease-bounce) forwards;
-          animation-delay: 900ms;
+          display: inline-block;
+          padding: 0.375rem 0.75rem;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(0.5rem);
+          border-radius: 9999px;
+          font-size: 0.6875rem;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.2);
           opacity: 0;
-          transform: scale(0.5) translateY(var(--dist-small));
+          transform: scale(0.5) translateY(20px);
+          animation: badgeEntry 240ms cubic-bezier(0.68, -0.55, 0.265, 1.55) 900ms forwards;
+        }
+
+        @media (min-width: 768px) {
+          .hero-badge {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+          }
         }
 
         @keyframes badgeEntry {
@@ -684,12 +806,44 @@ const ProductHero = () => {
         }
 
         .hero-title {
-          will-change: transform, opacity;
-          animation: titleEntry var(--dur-slow) var(--ease-out) forwards;
-          animation-delay: 1100ms;
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: white;
+          line-height: 1.25;
           opacity: 0;
-          transform: translateY(var(--dist-large)) scale(0.9);
+          transform: translateY(60px) scale(0.9);
           filter: blur(8px);
+          animation: titleEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 1100ms forwards;
+        }
+
+        @media (min-width: 375px) {
+          .hero-title {
+            font-size: 1.875rem;
+          }
+        }
+
+        @media (min-width: 414px) {
+          .hero-title {
+            font-size: 2.25rem;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .hero-title {
+            font-size: 1.875rem;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .hero-title {
+            font-size: 2.25rem;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .hero-title {
+            font-size: 3rem;
+          }
         }
 
         @keyframes titleEntry {
@@ -701,11 +855,32 @@ const ProductHero = () => {
         }
 
         .hero-description {
-          will-change: opacity, transform;
-          animation: descEntry var(--dur-normal) var(--ease-out) forwards;
-          animation-delay: 1300ms;
+          font-size: 0.875rem;
+          color: rgba(255, 255, 255, 0.7);
+          line-height: 1.625;
+          max-width: 32rem;
           opacity: 0;
-          transform: translateY(var(--dist-small));
+          transform: translateY(20px);
+          animation: descEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) 1300ms forwards;
+        }
+
+        @media (min-width: 375px) {
+          .hero-description {
+            font-size: 1rem;
+          }
+        }
+
+        @media (min-width: 414px) {
+          .hero-description {
+            font-size: 1.125rem;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .hero-description {
+            font-size: 1.125rem;
+            max-width: none;
+          }
         }
 
         @keyframes descEntry {
@@ -715,24 +890,51 @@ const ProductHero = () => {
           }
         }
 
-        /* Stagger анимация для фич */
         .hero-features {
-          will-change: opacity;
-          animation: featuresEntry var(--dur-normal) var(--ease-out) forwards;
-          animation-delay: 1500ms;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
           opacity: 0;
+          animation: featuresEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) 1500ms forwards;
         }
 
-        .hero-feature {
-          will-change: transform, opacity;
-          animation: featureEntry var(--dur-normal) var(--ease-out) forwards;
-          animation-delay: calc(1600ms + var(--feature-index, 0) * 100ms);
-          opacity: 0;
-          transform: translateX(calc(var(--dist-small) * -1));
+        @media (min-width: 768px) {
+          .hero-features {
+            gap: 0.75rem;
+          }
         }
 
         @keyframes featuresEntry {
-          to { opacity: 1; }
+          to {
+            opacity: 1;
+          }
+        }
+
+        .hero-feature {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.75rem 0.75rem;
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(0.5rem);
+          border-radius: 0.75rem;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: background 300ms;
+          opacity: 0;
+          transform: translateX(-20px);
+          animation: featureEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(1600ms + var(--feature-index, 0) * 100ms) forwards;
+        }
+
+        @media (min-width: 768px) {
+          .hero-feature {
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+          }
+        }
+
+        .hero-feature:hover {
+          background: rgba(255, 255, 255, 0.1);
         }
 
         @keyframes featureEntry {
@@ -742,12 +944,59 @@ const ProductHero = () => {
           }
         }
 
+        .hero-feature-dot {
+          width: 0.5rem;
+          height: 0.5rem;
+          border-radius: 50%;
+        }
+
+        @media (min-width: 768px) {
+          .hero-feature-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+          }
+        }
+
+        .hero-feature-text {
+          color: white;
+          font-weight: 500;
+          font-size: 0.8125rem;
+          line-height: 1.25;
+        }
+
+        @media (min-width: 375px) {
+          .hero-feature-text {
+            font-size: 0.875rem;
+          }
+        }
+
+        @media (min-width: 414px) {
+          .hero-feature-text {
+            font-size: 1rem;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .hero-feature-text {
+            font-size: 1rem;
+          }
+        }
+
         .hero-progress {
-          will-change: opacity, transform;
-          animation: progressEntry var(--dur-normal) var(--ease-out) forwards;
-          animation-delay: 1800ms;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding-top: 0.75rem;
           opacity: 0;
-          transform: translateY(var(--dist-small));
+          transform: translateY(20px);
+          animation: progressEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) 1800ms forwards;
+        }
+
+        @media (min-width: 768px) {
+          .hero-progress {
+            gap: 1rem;
+            padding-top: 1rem;
+          }
         }
 
         @keyframes progressEntry {
@@ -757,14 +1006,83 @@ const ProductHero = () => {
           }
         }
 
-        /* 3D модель анимации */
+        .hero-progress-dots {
+          display: flex;
+          gap: 0.5rem;
+        }
+
+        .hero-progress-dot {
+          height: 0.25rem;
+          border-radius: 9999px;
+          transition: all 500ms;
+          width: 0.75rem;
+          background: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-progress-dot.active {
+          width: 2.5rem;
+        }
+
+        @media (min-width: 768px) {
+          .hero-progress-dot {
+            height: 0.25rem;
+            width: 1rem;
+          }
+
+          .hero-progress-dot.active {
+            width: 3rem;
+          }
+        }
+
+        .hero-progress-counter {
+          font-size: 0.8125rem;
+          color: rgba(255, 255, 255, 0.5);
+          font-family: ui-monospace, SFMono-Regular, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+          font-variant-numeric: tabular-nums;
+        }
+
+        @media (min-width: 768px) {
+          .hero-progress-counter {
+            font-size: 0.875rem;
+          }
+        }
+
         .hero-model-container {
-          will-change: transform, opacity;
-          animation: modelContainerEntry var(--dur-slow) var(--ease-out) forwards;
-          animation-delay: 800ms;
+          position: relative;
+          height: 55vh;
+          order: 1;
+          display: flex;
+          align-items: center;
           opacity: 0;
           transform: scale(0.7) rotateY(30deg) rotateX(15deg);
           filter: blur(20px);
+          animation: modelContainerEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 800ms forwards;
+        }
+
+        @media (min-width: 375px) {
+          .hero-model-container {
+            height: 50vh;
+          }
+        }
+
+        @media (min-width: 414px) {
+          .hero-model-container {
+            height: 45vh;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .hero-model-container {
+            height: 25rem;
+            order: 2;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .hero-model-container {
+            height: 31.25rem;
+            order: 2;
+          }
         }
 
         @keyframes modelContainerEntry {
@@ -775,13 +1093,25 @@ const ProductHero = () => {
           }
         }
 
+        .hero-model-effects {
+          position: absolute;
+          inset: 0;
+        }
+
         .hero-model-bg {
-          will-change: transform, opacity;
+          position: absolute;
+          inset: 0;
+          opacity: 0.3;
+          border-radius: 1.5rem;
+          filter: blur(2rem);
           animation: modelBgPulse 4s ease-in-out infinite;
         }
 
         .hero-model-glow {
-          will-change: transform, opacity;
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          filter: blur(3rem);
           animation: modelGlowPulse 3s ease-in-out infinite;
         }
 
@@ -807,13 +1137,19 @@ const ProductHero = () => {
           }
         }
 
+        .hero-model-wrapper {
+          width: 100%;
+          height: 100%;
+        }
+
         .hero-model {
-          will-change: transform, opacity;
-          animation: modelEntry var(--dur-slow) var(--ease-out) forwards;
-          animation-delay: 1400ms;
+          position: relative;
+          width: 100%;
+          height: 100%;
           opacity: 0;
-          transform: scale(0.9) translateY(var(--dist-small));
+          transform: scale(0.9) translateY(20px);
           filter: blur(10px);
+          animation: modelEntry 320ms cubic-bezier(0.16, 1, 0.3, 1) 1400ms forwards;
         }
 
         @keyframes modelEntry {
@@ -824,9 +1160,34 @@ const ProductHero = () => {
           }
         }
 
-        /* Лоадер анимация */
+        .hero-model-inner {
+          width: 100%;
+          height: 100%;
+          position: relative;
+        }
+
+        .hero-loader {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10;
+        }
+
+        .hero-loader-inner {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+        }
+
         .loader {
-          will-change: transform;
+          width: 4rem;
+          height: 4rem;
+          border: 4px solid rgba(255, 255, 255, 0.2);
+          border-top: 4px solid rgba(255, 255, 255, 0.8);
+          border-radius: 50%;
           animation: loaderSpin 1s linear infinite;
         }
 
@@ -835,12 +1196,54 @@ const ProductHero = () => {
           to { transform: rotate(360deg); }
         }
 
-        /* Переходные эффекты */
+        .hero-loader-text {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 0.875rem;
+        }
+
+        .hero-model-error {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(1rem);
+          border-radius: 1rem;
+        }
+
+        .hero-model-error-content {
+          text-align: center;
+          padding: 2rem;
+        }
+
+        .hero-model-error-icon {
+          color: rgba(255, 255, 255, 0.6);
+          margin: 0 auto 1rem;
+        }
+
+        .hero-model-error-title {
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 1.125rem;
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+        }
+
+        .hero-model-error-text {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 0.875rem;
+        }
+
         .hero-transition {
-          will-change: transform;
-          animation: transitionSlide var(--dur-fast) var(--ease-in-out);
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 0.25rem;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
           transform: scaleX(0);
           transform-origin: left;
+          animation: transitionSlide 160ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes transitionSlide {
@@ -851,33 +1254,19 @@ const ProductHero = () => {
 
         /* Мобильные оптимизации */
         @media (max-width: 768px) {
-          :root {
-            --dur-fast: 100ms;
-            --dur-normal: 200ms;
-            --dur-slow: 280ms;
-            --dist-small: 16px;
-            --dist-medium: 32px;
-            --dist-large: 48px;
-          }
-
           /* Отключаем параллакс и сложные эффекты на мобильных */
           .hero-glow-main,
           .hero-glow-secondary,
           .hero-geo-1,
           .hero-geo-2 {
-            transform: none !important;
             animation-duration: 2s;
-          }
-
-          .hero-bg {
-            transform: none !important;
           }
 
           /* Ускоренные анимации для мобильных */
           .hero-content,
           .hero-model-container {
             animation-delay: 300ms;
-            animation-duration: var(--dur-normal);
+            animation-duration: 200ms;
           }
 
           .hero-badge { animation-delay: 400ms; }
@@ -886,12 +1275,6 @@ const ProductHero = () => {
           .hero-features { animation-delay: 700ms; }
           .hero-feature { animation-delay: calc(750ms + var(--feature-index, 0) * 50ms); }
           .hero-progress { animation-delay: 900ms; }
-        }
-
-        /* Убираем will-change после завершения анимаций */
-        .hero-container.loaded,
-        .hero-container.loaded * {
-          will-change: auto;
         }
       `}</style>
     </div>
