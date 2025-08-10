@@ -10,7 +10,9 @@
 
   /* Кинематографические эффекты для профессионального перехода */
   .text-shadow-lg {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), 0 6px 20px rgba(59, 130, 246, 0.3);
+    text-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.5),
+      0 6px 20px rgba(59, 130, 246, 0.3);
   }
 
   /* Keyframes для профессиональных анимаций */
@@ -56,7 +58,9 @@
       box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
     }
     50% {
-      box-shadow: 0 0 60px rgba(59, 130, 246, 0.8), 0 0 100px rgba(147, 51, 234, 0.4);
+      box-shadow:
+        0 0 60px rgba(59, 130, 246, 0.8),
+        0 0 100px rgba(147, 51, 234, 0.4);
     }
     100% {
       box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
@@ -213,12 +217,456 @@ a {
   user-select: none;
 }
 
+/* =================================== */
+/* ProductsSection GPU-First Анимации */
+/* =================================== */
+
+/* Адаптивные CSS переменные под герцовку экрана */
+:root {
+  /* 60Hz базовые значения */
+  --ps-duration-enter: 420ms;
+  --ps-duration-hover: 280ms;
+  --ps-cascade-delay: 80ms;
+  --ps-scale-hover: 1.025;
+  --ps-translate-y: 24px;
+  --ps-opacity-start: 0;
+  --ps-blur-start: 2px;
+}
+
+/* Адаптация под высокие частоты обновления */
+@media (min-refresh-rate: 90hz) {
+  :root {
+    --ps-duration-enter: 380ms;
+    --ps-duration-hover: 250ms;
+    --ps-cascade-delay: 70ms;
+    --ps-scale-hover: 1.02;
+    --ps-translate-y: 22px;
+  }
+}
+
+@media (min-refresh-rate: 120hz) {
+  :root {
+    --ps-duration-enter: 340ms;
+    --ps-duration-hover: 220ms;
+    --ps-cascade-delay: 60ms;
+    --ps-scale-hover: 1.018;
+    --ps-translate-y: 20px;
+  }
+}
+
+@media (min-refresh-rate: 144hz) {
+  :root {
+    --ps-duration-enter: 320ms;
+    --ps-duration-hover: 200ms;
+    --ps-cascade-delay: 55ms;
+    --ps-scale-hover: 1.016;
+    --ps-translate-y: 19px;
+  }
+}
+
+@media (min-refresh-rate: 240hz) {
+  :root {
+    --ps-duration-enter: 280ms;
+    --ps-duration-hover: 180ms;
+    --ps-cascade-delay: 45ms;
+    --ps-scale-hover: 1.014;
+    --ps-translate-y: 17px;
+  }
+}
+
+/* Адаптация для больших экранов */
+@media (min-width: 1920px) {
+  :root {
+    --ps-translate-y: calc(var(--ps-translate-y) * 1.12);
+    --ps-scale-hover: calc(var(--ps-scale-hover) + 0.002);
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --ps-translate-y: calc(var(--ps-translate-y) * 1.18);
+    --ps-scale-hover: calc(var(--ps-scale-hover) + 0.003);
+  }
+}
+
+/* Премиальный easing для «дорогих» анимаций */
+:root {
+  --ps-easing-premium: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ps-easing-hover: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ps-easing-active: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+/* GPU-композитинг для всей секции */
+.products-section {
+  isolation: isolate;
+  contain: paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.ps-bg-overlay {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Базовые стили карточек с GPU-оптимизацией */
+.ps-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  isolation: isolate;
+}
+
+.ps-card-inner {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  border-radius: 24px;
+  transition: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Состояния появления */
+.ps-hidden {
+  opacity: var(--ps-opacity-start);
+  transform: translateY(var(--ps-translate-y)) translateZ(0);
+  filter: blur(var(--ps-blur-start));
+}
+
+.ps-visible {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+  filter: blur(0);
+}
+
+/* Десктопные каскадные анимации */
+.ps-desktop.ps-visible {
+  transition:
+    opacity var(--ps-duration-enter) var(--ps-easing-premium),
+    transform var(--ps-duration-enter) var(--ps-easing-premium),
+    filter var(--ps-duration-enter) var(--ps-easing-premium);
+  transition-delay: calc(var(--ps-index) * var(--ps-cascade-delay));
+}
+
+/* Мобильные индивидуальные анимации */
+.ps-mobile.ps-visible {
+  transition:
+    opacity calc(var(--ps-duration-enter) * 0.85) var(--ps-easing-premium),
+    transform calc(var(--ps-duration-enter) * 0.85) var(--ps-easing-premium),
+    filter calc(var(--ps-duration-enter) * 0.85) var(--ps-easing-premium);
+  transition-delay: 0ms;
+}
+
+/* will-change управление для performance */
+.ps-desktop.ps-enter:not(.ps-visible) {
+  will-change: opacity, transform, filter;
+}
+
+.ps-mobile.ps-enter:not(.ps-visible) {
+  will-change: opacity, transform, filter;
+}
+
+.ps-visible {
+  will-change: auto;
+}
+
+/* Hover эффекты только для десктопа */
+@media (hover: hover) and (pointer: fine) {
+  .ps-hover {
+    transition: transform var(--ps-duration-hover) var(--ps-easing-hover);
+  }
+
+  .ps-hover:hover {
+    transform: translateY(-3px) scale(var(--ps-scale-hover)) translateZ(0);
+    will-change: transform;
+  }
+
+  .ps-hover:not(:hover) {
+    will-change: auto;
+  }
+
+  /* Премиальная граница при hover */
+  .ps-border-glow {
+    opacity: 0;
+    background: linear-gradient(
+      135deg,
+      transparent,
+      rgba(59, 130, 246, 0.1),
+      transparent
+    );
+    transition: opacity var(--ps-duration-hover) var(--ps-easing-hover);
+    pointer-events: none;
+  }
+
+  .ps-hover:hover .ps-border-glow {
+    opacity: 1;
+  }
+}
+
+/* Touch/Active эффекты для мобильных */
+@media (hover: none) {
+  .ps-hover:active {
+    transform: scale(0.98) translateZ(0);
+    transition: transform 120ms var(--ps-easing-active);
+  }
+}
+
+/* Градиентные overlay с GPU-оптимизацией */
+.ps-gradient-overlay {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+/* Иконки и их анимации */
+.ps-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+@media (max-width: 767px) {
+  .ps-icon-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.ps-icon {
+  transform: translateZ(0);
+  transition: transform var(--ps-duration-hover) var(--ps-easing-hover);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ps-hover:hover .ps-icon {
+    transform: scale(1.08) translateZ(0);
+  }
+}
+
+/* Заголовки */
+.ps-title {
+  font-size: 18px;
+  line-height: 1.33;
+}
+
+@media (max-width: 767px) {
+  .ps-title {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}
+
+/* Анимированная подчеркивающая линия */
+.ps-underline {
+  margin-top: 8px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.ps-underline-fill {
+  transform: translateX(-100%) translateZ(0);
+  transition: transform var(--ps-duration-enter) var(--ps-easing-premium);
+  transition-delay: calc(var(--ps-index) * var(--ps-cascade-delay) + 200ms);
+}
+
+.ps-visible .ps-underline-fill {
+  transform: translateX(0) translateZ(0);
+}
+
+/* Описания */
+.ps-description {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+@media (max-width: 767px) {
+  .ps-description {
+    font-size: 13px;
+    line-height: 1.38;
+  }
+}
+
+/* Характеристики */
+.ps-feature {
+  opacity: 0;
+  transform: translateX(-8px) translateZ(0);
+  transition:
+    opacity calc(var(--ps-duration-enter) * 0.8) var(--ps-easing-premium),
+    transform calc(var(--ps-duration-enter) * 0.8) var(--ps-easing-premium);
+  transition-delay: calc(
+    var(--ps-index) * var(--ps-cascade-delay) + 300ms +
+      var(--feature-index, 0) * 60ms
+  );
+}
+
+.ps-visible .ps-feature {
+  opacity: 1;
+  transform: translateX(0) translateZ(0);
+}
+
+.ps-feature:nth-child(1) {
+  --feature-index: 0;
+}
+
+.ps-feature:nth-child(2) {
+  --feature-index: 1;
+}
+
+.ps-feature:nth-child(3) {
+  --feature-index: 2;
+}
+
+.ps-feature-icon {
+  width: 20px;
+  height: 20px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+@media (max-width: 767px) {
+  .ps-feature-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.ps-feature-text {
+  font-size: 13px;
+  line-height: 1.46;
+}
+
+@media (max-width: 767px) {
+  .ps-feature-text {
+    font-size: 12px;
+    line-height: 1.42;
+  }
+}
+
+/* CTA кнопки с премиальными анимациями */
+.ps-cta {
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color var(--ps-duration-hover) var(--ps-easing-hover),
+    backdrop-filter var(--ps-duration-hover) var(--ps-easing-hover),
+    transform var(--ps-duration-hover) var(--ps-easing-hover);
+}
+
+@media (max-width: 767px) {
+  .ps-cta {
+    padding: 14px 18px;
+    border-radius: 14px;
+  }
+}
+
+.ps-cta-text {
+  font-size: 14px;
+  line-height: 1;
+  transform: translateZ(0);
+}
+
+@media (max-width: 767px) {
+  .ps-cta-text {
+    font-size: 13px;
+  }
+}
+
+.ps-cta-icon {
+  width: 32px;
+  height: 32px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: transform var(--ps-duration-hover) var(--ps-easing-hover);
+}
+
+@media (max-width: 767px) {
+  .ps-cta-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.ps-cta-arrow {
+  transform: translateZ(0);
+  transition: transform var(--ps-duration-hover) var(--ps-easing-hover);
+}
+
+/* Hover/Active эффекты для CTA */
+@media (hover: hover) and (pointer: fine) {
+  .ps-cta:hover {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    transform: translateY(-1px) translateZ(0);
+  }
+
+  .ps-cta:hover .ps-cta-arrow {
+    transform: translateX(2px) translateZ(0);
+  }
+
+  .ps-cta:hover .ps-cta-icon {
+    transform: scale(1.05) translateZ(0);
+  }
+}
+
+@media (hover: none) {
+  .ps-cta:active {
+    transform: scale(0.98) translateZ(0);
+    transition: transform 120ms var(--ps-easing-active);
+  }
+}
+
+/* Анимированная линия в CTA */
+.ps-cta-line {
+  left: 0;
+  width: 0;
+  transform: translateZ(0);
+  transition: width var(--ps-duration-hover) var(--ps-easing-hover);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ps-cta:hover .ps-cta-line {
+    width: 100%;
+  }
+}
+
+/* Отключение анимаций для пользователей с настройкой prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .ps-card,
+  .ps-card-inner,
+  .ps-icon,
+  .ps-underline-fill,
+  .ps-feature,
+  .ps-cta,
+  .ps-cta-icon,
+  .ps-cta-arrow,
+  .ps-cta-line {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .ps-hidden {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .ps-feature {
+    opacity: 1 !important;
+  }
+}
+
 /* Safe area для мобильных устройств */
 @supports (padding: max(0px)) {
   .pb-safe {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
-  
+
   .pt-safe {
     padding-top: max(1rem, env(safe-area-inset-top));
   }
@@ -230,38 +678,38 @@ a {
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
-  
+
   .xs:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
   }
-  
+
   .xs:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
-  
+
   .xs\:h-\[50vh\] {
     height: 50vh;
   }
-  
+
   .xs\:p-8 {
     padding: 2rem;
   }
-  
+
   .xs\:mb-4 {
     margin-bottom: 1rem;
   }
-  
+
   .xs\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
-  
+
   .xs\:top-6 {
     top: 1.5rem;
   }
-  
+
   .xs\:left-6 {
     left: 1.5rem;
   }
@@ -272,17 +720,17 @@ a {
     font-size: 2.25rem;
     line-height: 2.5rem;
   }
-  
+
   .sm\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
-  
+
   .sm\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
   }
-  
+
   .sm\:h-\[45vh\] {
     height: 45vh;
   }
