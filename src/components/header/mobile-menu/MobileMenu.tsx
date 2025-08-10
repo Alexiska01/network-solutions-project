@@ -1,5 +1,5 @@
 import React from "react";
-import { productSubmenuItems } from "../navigationData";
+import { productSubmenuItems, switchesSubmenuItems, corporateLanItems } from "../navigationData";
 import HamburgerButton from "./HamburgerButton";
 import MenuHeader from "./MenuHeader";
 import MenuItem from "./MenuItem";
@@ -50,6 +50,28 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       navigateToLevel({
         title: "Оборудование",
         items: productSubmenuItems,
+      });
+      return;
+    }
+
+    // Специальная обработка для коммутаторов  
+    if (item.path === "/switches" && item.hasNestedSubmenu) {
+      setActiveItem(item.path);
+      e.preventDefault();
+      navigateToLevel({
+        title: "Коммутаторы",
+        items: switchesSubmenuItems,
+      });
+      return;
+    }
+
+    // Специальная обработка для корпоративных ЛВС
+    if (item.path === "/products/switches/corporate-lan" && item.hasThirdLevel) {
+      setActiveItem(item.path);
+      e.preventDefault();
+      navigateToLevel({
+        title: "Корпоративные ЛВС",
+        items: corporateLanItems,
       });
       return;
     }
