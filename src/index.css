@@ -311,30 +311,38 @@ a {
 
 /* Базовые стили карточек с GPU-оптимизацией */
 .ps-card {
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   isolation: isolate;
+  /* Критическая фиксация текста при hover */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .ps-card-inner {
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   border-radius: 24px;
   transition: none;
   position: relative;
   overflow: hidden;
+  /* Стабилизация рендеринга текста */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* Состояния появления */
 .ps-hidden {
   opacity: var(--ps-opacity-start);
-  transform: translateY(var(--ps-translate-y)) translateZ(0);
+  transform: translate3d(0, var(--ps-translate-y), 0);
   filter: blur(var(--ps-blur-start));
 }
 
 .ps-visible {
   opacity: 1;
-  transform: translateY(0) translateZ(0);
+  transform: translate3d(0, 0, 0);
   filter: blur(0);
 }
 
@@ -376,7 +384,7 @@ a {
   }
 
   .ps-hover:hover {
-    transform: translateY(-3px) scale(var(--ps-scale-hover)) translateZ(0);
+    transform: translate3d(0, -3px, 0) scale(var(--ps-scale-hover));
     will-change: transform;
   }
 
@@ -443,10 +451,17 @@ a {
   }
 }
 
-/* Заголовки */
+/* Заголовки с анти-размытием */
 .ps-title {
   font-size: 18px;
   line-height: 1.33;
+  /* Профессиональная стабилизация текста */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Анти-дрожание при трансформациях */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 @media (max-width: 767px) {
@@ -459,24 +474,31 @@ a {
 /* Анимированная подчеркивающая линия */
 .ps-underline {
   margin-top: 8px;
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
 }
 
 .ps-underline-fill {
-  transform: translateX(-100%) translateZ(0);
+  transform: translate3d(-100%, 0, 0);
   transition: transform var(--ps-duration-enter) var(--ps-easing-premium);
   transition-delay: calc(var(--ps-index) * var(--ps-cascade-delay) + 200ms);
+  backface-visibility: hidden;
 }
 
 .ps-visible .ps-underline-fill {
-  transform: translateX(0) translateZ(0);
+  transform: translate3d(0, 0, 0);
 }
 
-/* Описания */
+/* Описания с стабилизацией */
 .ps-description {
   font-size: 14px;
   line-height: 1.4;
+  /* Профессиональное сглаживание */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 @media (max-width: 767px) {
@@ -486,10 +508,10 @@ a {
   }
 }
 
-/* Характеристики */
+/* Характеристики с анти-размытием */
 .ps-feature {
   opacity: 0;
-  transform: translateX(-8px) translateZ(0);
+  transform: translate3d(-8px, 0, 0);
   transition:
     opacity calc(var(--ps-duration-enter) * 0.8) var(--ps-easing-premium),
     transform calc(var(--ps-duration-enter) * 0.8) var(--ps-easing-premium);
@@ -497,11 +519,15 @@ a {
     var(--ps-index) * var(--ps-cascade-delay) + 300ms +
       var(--feature-index, 0) * 60ms
   );
+  /* Критическая стабилизация */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .ps-visible .ps-feature {
   opacity: 1;
-  transform: translateX(0) translateZ(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .ps-feature:nth-child(1) {
@@ -533,6 +559,12 @@ a {
 .ps-feature-text {
   font-size: 13px;
   line-height: 1.46;
+  /* Стабилизация мелкого текста */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 @media (max-width: 767px) {
@@ -568,7 +600,12 @@ a {
 .ps-cta-text {
   font-size: 14px;
   line-height: 1;
-  transform: translateZ(0);
+  /* Максимальная стабильность для CTA текста */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 @media (max-width: 767px) {
@@ -593,30 +630,31 @@ a {
 }
 
 .ps-cta-arrow {
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   transition: transform var(--ps-duration-hover) var(--ps-easing-hover);
+  backface-visibility: hidden;
 }
 
-/* Hover/Active эффекты для CTA */
+/* Hover/Active эффекты для CTA с максимальной стабильностью */
 @media (hover: hover) and (pointer: fine) {
   .ps-cta:hover {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(12px);
-    transform: translateY(-1px) translateZ(0);
+    transform: translate3d(0, -1px, 0);
   }
 
   .ps-cta:hover .ps-cta-arrow {
-    transform: translateX(2px) translateZ(0);
+    transform: translate3d(2px, 0, 0);
   }
 
   .ps-cta:hover .ps-cta-icon {
-    transform: scale(1.05) translateZ(0);
+    transform: translate3d(0, 0, 0) scale(1.05);
   }
 }
 
 @media (hover: none) {
   .ps-cta:active {
-    transform: scale(0.98) translateZ(0);
+    transform: translate3d(0, 0, 0) scale(0.98);
     transition: transform 120ms var(--ps-easing-active);
   }
 }
@@ -625,8 +663,9 @@ a {
 .ps-cta-line {
   left: 0;
   width: 0;
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   transition: width var(--ps-duration-hover) var(--ps-easing-hover);
+  backface-visibility: hidden;
 }
 
 @media (hover: hover) and (pointer: fine) {
