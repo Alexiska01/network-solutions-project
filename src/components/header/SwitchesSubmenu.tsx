@@ -110,7 +110,7 @@ const SwitchesSubmenu = ({
                       className="flex items-center justify-between px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200 group"
                     >
                       <span>{subItem.name}</span>
-                      {subItem.hasThirdLevel && (
+                      {(subItem.hasThirdLevel || (subItem.items && subItem.items.length > 0)) && (
                         <Icon
                           name="ChevronRight"
                           size={16}
@@ -124,6 +124,9 @@ const SwitchesSubmenu = ({
                     {/* Уровень распределения */}
                     {isDistributionLevel(subItem) && dropdownState.isDistributionLevelSubmenuOpen &&
                       renderFourthLevel(distributionLevelSeries)}
+                    {/* Уровень ядра */}
+                    {subItem.path.includes("/core-level") && subItem.items &&
+                      renderFourthLevel(subItem.items)}
                   </div>
                 ))}
               </div>
@@ -150,7 +153,7 @@ const SwitchesSubmenu = ({
                       className="flex items-center justify-between px-6 py-3 text-sm text-gray-600 hover:bg-[#F0F3F5] transition-all duration-200 group"
                     >
                       <span>{subItem.name}</span>
-                      {subItem.hasThirdLevel && (
+                      {(subItem.hasThirdLevel || (subItem.items && subItem.items.length > 0)) && (
                         <Icon
                           name="ChevronRight"
                           size={16}
