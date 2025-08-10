@@ -170,7 +170,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                       {/* Decorative Dot */}
                       <div className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-emerald-400 transition-all duration-200 mr-3 flex-shrink-0 pointer-events-none group-hover:shadow-lg group-hover:shadow-blue-400/50 dot-indicator" />
 
-                      <span className="font-medium group-hover:translate-x-1 transition-transform duration-200 ease-gpu">
+                      <span className="font-medium group-hover:translate-x-1 transition-transform duration-200 ease-gpu text-gray-800 group-hover:text-blue-600">
                         {subItem.name}
                       </span>
 
@@ -197,7 +197,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                       }}
                     >
                       <div className="w-2 h-2 rounded-full bg-gray-400 flex-shrink-0" />
-                      <span className="font-medium flex-1">
+                      <span className="font-medium flex-1 text-gray-800">
                         {subItem.name}
                       </span>
                       <Icon
@@ -327,6 +327,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
           transform: scaleY(1);
           transform-origin: top;
           animation: lineEntry 320ms cubic-bezier(0.25, 0.1, 0.25, 1) 120ms both;
+          z-index: 0;
         }
 
         @keyframes lineEntry {
@@ -345,6 +346,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
           opacity: 0;
           transform: translateX(-6px);
           animation: subItemEntry 200ms ease-gpu calc(var(--sub-index) * 60ms + 150ms) both;
+          position: relative;
+          z-index: 1;
         }
 
         @keyframes subItemEntry {
@@ -352,6 +355,14 @@ const MenuItem: React.FC<MenuItemProps> = ({
             opacity: 1;
             transform: translateX(0);
           }
+        }
+
+        /* Принудительная видимость текста */
+        .sub-item span {
+          color: inherit !important;
+          opacity: 1 !important;
+          display: block !important;
+          visibility: visible !important;
         }
 
         /* Dot Indicator GPU Animation */
@@ -376,6 +387,12 @@ const MenuItem: React.FC<MenuItemProps> = ({
           
           .accordion-content {
             transition-duration: 240ms;
+          }
+
+          /* Fallback для мобильных устройств - принудительная видимость */
+          .sub-item {
+            opacity: 1 !important;
+            transform: none !important;
           }
         }
 
