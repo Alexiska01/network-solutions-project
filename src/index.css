@@ -227,10 +227,14 @@ a {
   --ps-duration-enter: 420ms;
   --ps-duration-hover: 280ms;
   --ps-cascade-delay: 80ms;
-  --ps-scale-hover: 1.025;
+  --ps-scale-hover: 1.02; /* Уменьшен для минимального размытия */
   --ps-translate-y: 24px;
   --ps-opacity-start: 0;
   --ps-blur-start: 2px;
+
+  /* Критическая стабилизация текста */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 /* Адаптация под высокие частоты обновления */
@@ -239,7 +243,7 @@ a {
     --ps-duration-enter: 380ms;
     --ps-duration-hover: 250ms;
     --ps-cascade-delay: 70ms;
-    --ps-scale-hover: 1.02;
+    --ps-scale-hover: 1.018;
     --ps-translate-y: 22px;
   }
 }
@@ -249,7 +253,7 @@ a {
     --ps-duration-enter: 340ms;
     --ps-duration-hover: 220ms;
     --ps-cascade-delay: 60ms;
-    --ps-scale-hover: 1.018;
+    --ps-scale-hover: 1.015;
     --ps-translate-y: 20px;
   }
 }
@@ -259,7 +263,7 @@ a {
     --ps-duration-enter: 320ms;
     --ps-duration-hover: 200ms;
     --ps-cascade-delay: 55ms;
-    --ps-scale-hover: 1.016;
+    --ps-scale-hover: 1.012;
     --ps-translate-y: 19px;
   }
 }
@@ -269,7 +273,7 @@ a {
     --ps-duration-enter: 280ms;
     --ps-duration-hover: 180ms;
     --ps-cascade-delay: 45ms;
-    --ps-scale-hover: 1.014;
+    --ps-scale-hover: 1.01;
     --ps-translate-y: 17px;
   }
 }
@@ -296,12 +300,20 @@ a {
   --ps-easing-active: cubic-bezier(0.55, 0.085, 0.68, 0.53);
 }
 
-/* GPU-композитинг для всей секции */
+/* GPU-композитинг для всей секции + МАКСИМАЛЬНАЯ СТАБИЛИЗАЦИЯ */
 .products-section {
   isolation: isolate;
   contain: paint;
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
+  /* Критические свойства для стабильности */
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .ps-bg-overlay {
@@ -309,45 +321,62 @@ a {
   backface-visibility: hidden;
 }
 
-/* Базовые стили карточек с GPU-оптимизацией */
+/* ПРОФЕССИОНАЛЬНАЯ ДВУХСЛОЙНАЯ АРХИТЕКТУРА БЕЗ КОНФЛИКТОВ */
+/* Внешний контейнер - только для появления */
 .ps-card {
+  /* Стабильная GPU активация */
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   isolation: isolate;
-  /* Критическая фиксация текста при hover */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  /* МАКСИМАЛЬНАЯ стабилизация текста на всех браузерах */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
+  /* Критические свойства для резкости */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  /* Фиксация субпиксельного рендеринга */
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
 }
 
+/* Внутренний контейнер - только для hover */
 .ps-card-inner {
+  /* Отдельная GPU активация для hover слоя */
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   border-radius: 24px;
-  transition: none;
   position: relative;
   overflow: hidden;
-  /* Стабилизация рендеринга текста */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  /* МАКСИМАЛЬНО стабильное наследование + собственные свойства */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
+  /* Критическая стабилизация при трансформациях */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  /* Фиксация композитного слоя */
+  isolation: isolate;
+  contain: layout style paint;
 }
 
-/* Состояния появления */
-.ps-hidden {
+/* ИЗОЛИРОВАННЫЕ СОСТОЯНИЯ ПОЯВЛЕНИЯ - только внешний контейнер */
+.ps-card.ps-hidden {
   opacity: var(--ps-opacity-start);
   transform: translate3d(0, var(--ps-translate-y), 0);
   filter: blur(var(--ps-blur-start));
 }
 
-.ps-visible {
+.ps-card.ps-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   filter: blur(0);
 }
 
-/* Десктопные каскадные анимации */
-.ps-desktop.ps-visible {
+/* ИЗОЛИРОВАННЫЕ АНИМАЦИИ ПОЯВЛЕНИЯ */
+.ps-card.ps-desktop.ps-visible {
   transition:
     opacity var(--ps-duration-enter) var(--ps-easing-premium),
     transform var(--ps-duration-enter) var(--ps-easing-premium),
@@ -355,8 +384,7 @@ a {
   transition-delay: calc(var(--ps-index) * var(--ps-cascade-delay));
 }
 
-/* Мобильные индивидуальные анимации */
-.ps-mobile.ps-visible {
+.ps-card.ps-mobile.ps-visible {
   transition:
     opacity calc(var(--ps-duration-enter) * 0.85) var(--ps-easing-premium),
     transform calc(var(--ps-duration-enter) * 0.85) var(--ps-easing-premium),
@@ -364,31 +392,27 @@ a {
   transition-delay: 0ms;
 }
 
-/* will-change управление для performance */
-.ps-desktop.ps-enter:not(.ps-visible) {
+/* will-change только для анимации появления */
+.ps-card.ps-enter:not(.ps-visible) {
   will-change: opacity, transform, filter;
 }
 
-.ps-mobile.ps-enter:not(.ps-visible) {
-  will-change: opacity, transform, filter;
-}
-
-.ps-visible {
+.ps-card.ps-visible {
   will-change: auto;
 }
 
-/* Hover эффекты только для десктопа */
+/* ИЗОЛИРОВАННЫЕ HOVER ЭФФЕКТЫ - только внутренний контейнер */
 @media (hover: hover) and (pointer: fine) {
-  .ps-hover {
+  .ps-card-inner {
     transition: transform var(--ps-duration-hover) var(--ps-easing-hover);
   }
 
-  .ps-hover:hover {
+  .ps-hover:hover .ps-card-inner {
     transform: translate3d(0, -3px, 0) scale(var(--ps-scale-hover));
     will-change: transform;
   }
 
-  .ps-hover:not(:hover) {
+  .ps-hover:not(:hover) .ps-card-inner {
     will-change: auto;
   }
 
@@ -410,10 +434,10 @@ a {
   }
 }
 
-/* Touch/Active эффекты для мобильных */
+/* ИЗОЛИРОВАННЫЕ TOUCH/ACTIVE ЭФФЕКТЫ */
 @media (hover: none) {
-  .ps-hover:active {
-    transform: scale(0.98) translateZ(0);
+  .ps-hover:active .ps-card-inner {
+    transform: translate3d(0, 0, 0) scale(0.98);
     transition: transform 120ms var(--ps-easing-active);
   }
 }
