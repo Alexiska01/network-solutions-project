@@ -141,48 +141,59 @@ const MenuItem: React.FC<MenuItemProps> = ({
                   } as React.CSSProperties}
                 >
                   {subItem.items && subItem.items.length > 0 ? (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setActiveItem(subItem.path);
-                        onNavigateToLevel({
-                          title: subItem.name,
-                          items: subItem.items,
-                          parentPath: subItem.path,
-                        });
-                      }}
-                      onTouchStart={(e) => {
-                        e.stopPropagation();
-                      }}
-                      onTouchEnd={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setActiveItem(subItem.path);
-                        onNavigateToLevel({
-                          title: subItem.name,
-                          items: subItem.items,
-                          parentPath: subItem.path,
-                        });
-                      }}
-                      className="group relative flex items-center text-left py-4 pl-4 pr-4 rounded-xl text-sm text-gray-800 hover:text-blue-600 hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-200 ease-gpu border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full touch-manipulation cursor-pointer select-none"
-                    >
+                    <div className="group relative flex items-center rounded-xl text-sm hover:bg-blue-50/80 active:bg-blue-100/80 transition-all duration-200 ease-gpu border border-transparent hover:border-blue-100/50 hover:shadow-sm w-full">
                       {/* Decorative Dot */}
-                      <div className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-emerald-400 transition-all duration-200 mr-3 flex-shrink-0 pointer-events-none group-hover:shadow-lg group-hover:shadow-blue-400/50 dot-indicator" />
-
-                      <span className="font-medium group-hover:translate-x-1 transition-transform duration-200 ease-gpu text-gray-800 group-hover:text-blue-600">
+                      <div className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-emerald-400 transition-all duration-200 ml-4 mr-3 flex-shrink-0 pointer-events-none group-hover:shadow-lg group-hover:shadow-blue-400/50 dot-indicator" />
+                      
+                      {/* Clickable text area - goes to page */}
+                      <Link
+                        to={subItem.path}
+                        className="flex-1 py-4 font-medium text-gray-800 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-200 ease-gpu no-underline"
+                        onClick={() => {
+                          setActiveItem(subItem.path);
+                          onClose();
+                        }}
+                        onTouchEnd={() => {
+                          setActiveItem(subItem.path);
+                          onClose();
+                        }}
+                      >
                         {subItem.name}
-                      </span>
+                      </Link>
 
-                      {/* Arrow on Hover */}
-                      <div className="ml-auto pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-gpu">
+                      {/* Arrow button - shows series */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setActiveItem(subItem.path);
+                          onNavigateToLevel({
+                            title: subItem.name,
+                            items: subItem.items,
+                            parentPath: subItem.path,
+                          });
+                        }}
+                        onTouchStart={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onTouchEnd={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setActiveItem(subItem.path);
+                          onNavigateToLevel({
+                            title: subItem.name,
+                            items: subItem.items,
+                            parentPath: subItem.path,
+                          });
+                        }}
+                        className="py-4 pr-4 pl-2 text-blue-400 hover:text-blue-600 transition-colors duration-200 touch-manipulation"
+                      >
                         <Icon
                           name="ArrowRight"
                           size={14}
-                          className="text-blue-400"
                         />
-                      </div>
-                    </button>
+                      </button>
+                    </div>
                   ) : (
                     <Link
                       to={subItem.path}
