@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { useNavigate } from 'react-router-dom';
 import { modelPreloader } from '@/utils/modelPreloader';
@@ -73,16 +72,12 @@ const ProductHero = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  
-  // Удаляем зависимость от showWelcome - теперь ProductHero полностью автономен
   const [isInitialized, setIsInitialized] = useState(false);
-  
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
-
   const preloadedViewers = useRef<Map<string, any>>(new Map());
 
   // Отслеживание размера экрана
@@ -237,7 +232,7 @@ const ProductHero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [isMobile]);
 
-  // Автоматическая смена слайдов каждые 7 секунд
+  // Автоматическая смена слайдов каждые 11 секунд
   useEffect(() => {
     if (isInitialized) {
       const interval = setInterval(() => {
@@ -283,92 +278,51 @@ const ProductHero = () => {
 
   const currentData = heroData[currentIndex];
 
-  // ProductHero теперь полностью автономен и не зависит от WelcomeScreen
-  // WelcomeScreen управляется в Index.tsx на уровне страницы
-
   return (
-    <motion.div
-      initial={{ 
-        opacity: 0,
-        scale: 0.98,
-        filter: "blur(20px) brightness(0.3)"
-      }}
-      animate={{ 
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px) brightness(1)"
-      }}
-      transition={{ 
-        duration: 1.5,
-        ease: [0.16, 1, 0.3, 1],
-        delay: 0.2
-      }}
-      className="relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+    <div 
+      className="hero-container relative h-screen md:h-[70vh] bg-gradient-to-br from-[#0B3C49] via-[#1A237E] to-[#2E2E2E] overflow-hidden"
+      style={{
+        '--current-glow-color': currentData.glowColor.replace('[', '').replace(']', ''),
+        '--current-accent-color': currentData.accentColor,
+        '--mouse-x': mousePosition.x,
+        '--mouse-y': mousePosition.y
+      } as React.CSSProperties}
     >
       {/* Динамический фоновый градиент */}
       <div 
-        className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 transition-all duration-1000 ease-out`}
-        style={{
-          transform: !isMobile ? `scale(${1 + Math.abs(mousePosition.x) * 0.05})` : 'none',
-        }}
+        className={`hero-bg absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30`}
       />
       
       {/* Параллакс элементы */}
       <div className="absolute inset-0">
         {/* Основной световой эффект */}
-        <motion.div
-          animate={!isMobile ? {
-            x: mousePosition.x * 20,
-            y: mousePosition.y * 20,
-            scale: 1 + Math.abs(mousePosition.x) * 0.1
-          } : {}}
-          transition={{ type: "spring", stiffness: 150, damping: 15 }}
-          className={`absolute top-1/4 left-1/3 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl`}
+        <div
+          className="hero-glow-main absolute top-1/4 left-1/3 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl"
           style={{
             backgroundColor: `${currentData.glowColor.replace('[', '').replace(']', '')}40`
           }}
         />
         
         {/* Дополнительные световые пятна */}
-        <motion.div
-          animate={!isMobile ? {
-            x: mousePosition.x * -15,
-            y: mousePosition.y * -15,
-            rotate: mousePosition.x * 10
-          } : {}}
-          transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className={`absolute bottom-1/4 right-1/3 w-48 h-48 md:w-64 md:h-64 rounded-full blur-2xl`}
+        <div
+          className="hero-glow-secondary absolute bottom-1/4 right-1/3 w-48 h-48 md:w-64 md:h-64 rounded-full blur-2xl"
           style={{
             backgroundColor: `${currentData.accentColor}33`
           }}
         />
         
         {/* Геометрические элементы */}
-        <motion.div
-          animate={!isMobile ? {
-            x: mousePosition.x * 5,
-            y: mousePosition.y * 5,
-            rotate: mousePosition.x * 5
-          } : {}}
-          transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          className="absolute top-16 right-8 md:top-20 md:right-20 w-20 h-20 md:w-32 md:h-32 border border-white/20 rounded-lg rotate-12"
+        <div
+          className="hero-geo-1 absolute top-16 right-8 md:top-20 md:right-20 w-20 h-20 md:w-32 md:h-32 border rounded-lg rotate-12"
           style={{
             borderColor: `${currentData.accentColor}40`
           }}
         />
         
-        <motion.div
-          animate={!isMobile ? {
-            x: mousePosition.x * -8,
-            y: mousePosition.y * -8,
-            rotate: mousePosition.x * -8
-          } : {}}
-          transition={{ type: "spring", stiffness: 180, damping: 30 }}
-          className="absolute bottom-24 left-8 md:bottom-32 md:left-20 w-16 h-16 md:w-24 md:h-24 border border-white/5 rounded-full"
+        <div
+          className="hero-geo-2 absolute bottom-24 left-8 md:bottom-32 md:left-20 w-16 h-16 md:w-24 md:h-24 border border-white/5 rounded-full"
         />
       </div>
-
-
 
       {/* Основной контент */}
       <div className="relative z-10 h-full flex flex-col md:flex-row md:items-center">
@@ -376,83 +330,53 @@ const ProductHero = () => {
           <div className="grid lg:grid-cols-2 gap-0 md:gap-6 lg:gap-16 items-stretch md:items-center h-full md:h-auto">
             
             {/* Левая колонка - контент */}
-            <motion.div
-              initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45vh] md:h-auto"
-            >
+            <div className="hero-content flex flex-col justify-end md:justify-center space-y-4 md:space-y-6 order-2 lg:order-1 pb-safe pt-4 md:pt-0 md:pb-0 h-[45vh] md:h-auto">
               {/* Заголовок */}
               <div className="space-y-3 md:space-y-4">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5, y: 30 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: 0.9, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[11px] md:text-sm font-medium text-white/80 border border-white/20"
-                >
+                <div className="hero-badge inline-block px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-[11px] md:text-sm font-medium text-white/80 border border-white/20">
                   ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
-                </motion.div>
+                </div>
                 
-                <motion.h1
+                <h1
                   key={currentData.id}
-                  initial={{ opacity: 0, y: 60, scale: 0.9, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                  transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
+                  className="hero-title text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight"
                 >
                   {currentData.title}
-                </motion.h1>
+                </h1>
                 
-                <motion.p
+                <p
                   key={`${currentData.id}-desc`}
-                  initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: isMobile ? 0 : 0.2, duration: isMobile ? 0.3 : 0.8 }}
-                  className="text-sm xs:text-base sm:text-lg md:text-lg text-white/70 leading-relaxed max-w-lg md:max-w-none"
+                  className="hero-description text-sm xs:text-base sm:text-lg md:text-lg text-white/70 leading-relaxed max-w-lg md:max-w-none"
                 >
                   {currentData.description}
-                </motion.p>
+                </p>
               </div>
 
               {/* Особенности */}
-              <motion.div
+              <div
                 key={`${currentData.id}-features`}
-                initial={{ opacity: isMobile ? 1 : 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: isMobile ? 0 : 0.4, duration: isMobile ? 0.3 : 0.8 }}
-                className="space-y-2 md:space-y-3"
+                className="hero-features space-y-2 md:space-y-3"
               >
                 {currentData.features.map((feature, index) => (
-                  <motion.div
+                  <div
                     key={`${currentData.id}-feature-${index}`}
-                    initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ 
-                      delay: isMobile ? 0 : 0.6 + index * 0.1, 
-                      duration: isMobile ? 0.2 : 0.6,
-                      ease: [0.23, 1, 0.320, 1]
-                    }}
-                    className="flex items-center gap-3 md:gap-4 px-3 py-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    className="hero-feature flex items-center gap-3 md:gap-4 px-3 py-2.5 md:p-4 bg-white/5 backdrop-blur-sm rounded-xl md:rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                    style={{ '--feature-index': index } as React.CSSProperties}
                   >
                     <div 
-                      className={`w-2 h-2 md:w-3 md:h-3 rounded-full shadow-lg`}
+                      className="w-2 h-2 md:w-3 md:h-3 rounded-full shadow-lg"
                       style={{
                         backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
                         boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
                       }}
                     />
                     <span className="text-white font-medium text-[13px] xs:text-sm sm:text-base md:text-base leading-tight">{feature}</span>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
 
               {/* Индикатор прогресса */}
-              <motion.div
-                initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: isMobile ? 0 : 0.8, duration: isMobile ? 0.3 : 0.8 }}
-                className="flex items-center gap-3 md:gap-4 pt-3 md:pt-4"
-              >
+              <div className="hero-progress flex items-center gap-3 md:gap-4 pt-3 md:pt-4">
                 <div className="flex gap-2">
                   {heroData.map((_, index) => (
                     <div
@@ -472,91 +396,30 @@ const ProductHero = () => {
                 <span className="text-[13px] md:text-sm text-white/50 font-mono tabular-nums">
                   {String(currentIndex + 1).padStart(2, '0')} / {String(heroData.length).padStart(2, '0')}
                 </span>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             {/* Правая колонка - 3D модель */}
-            <motion.div
-              initial={{ 
-                opacity: 0, 
-                scale: 0.7, 
-                rotateY: 30,
-                rotateX: 15,
-                filter: "blur(20px)"
-              }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1, 
-                rotateY: 0,
-                rotateX: 0,
-                filter: "blur(0px)"
-              }}
-              transition={{ delay: 0.8, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center"
-            >
+            <div className="hero-model-container relative h-[55vh] xs:h-[50vh] sm:h-[45vh] md:h-[400px] lg:h-[500px] order-1 lg:order-2 flex items-center">
               {/* 3D фоновые эффекты */}
               <div className="absolute inset-0">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{
-                    opacity: [0, 0.3, 0.3],
-                    scale: [0.8, 1.1, 1],
-                    rotate: [0, 5, 0],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1.2
-                  }}
-                  className={`absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 rounded-3xl blur-2xl`}
-                />
-                
-                <motion.div
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.1, 0.3],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1
-                  }}
-                  className={`absolute inset-0 bg-${currentData.glowColor}-400/20 rounded-full blur-3xl`}
-                />
+                <div className={`hero-model-bg absolute inset-0 bg-gradient-to-br ${currentData.gradient} opacity-30 rounded-3xl blur-2xl`} />
+                <div className={`hero-model-glow absolute inset-0 bg-${currentData.glowColor}-400/20 rounded-full blur-3xl`} />
               </div>
               
               {/* 3D модель с интеллектуальной загрузкой */}
               <div className="w-full h-full">
-                <motion.div
+                <div
                   key={currentData.id}
-                  initial={{ opacity: 0, scale: 0.9, y: 30, filter: "blur(10px)" }}
-                  animate={{ 
-                    opacity: isTransitioning && isMobile ? 0.5 : 1, 
-                    scale: 1, 
-                    y: 0,
-                    filter: "blur(0px)"
-                  }}
-                  transition={{ delay: 1.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative w-full h-full"
+                  className="hero-model relative w-full h-full"
                 >
                   {/* 3D модель для всех устройств с оптимизированными настройками */}
                   <div className="w-full h-full relative">
-                    {/* DEBUG: Логируем состояния */}
-                    {(() => {
-                      const hasInUI = modelLoadStatus[currentData.modelUrl];
-                      const hasInPreloader = modelPreloader.isLoaded(currentData.modelUrl);
-                      const shouldShowLoader = !hasInUI && !hasInPreloader;
-                      console.log(`🔍 ProductHero RENDER: ${currentData.series} - UI: ${hasInUI}, Preloader: ${hasInPreloader}, showLoader: ${shouldShowLoader}`);
-                      return null;
-                    })()}
-                    
-                    {/* Лоадер показывается только если модель НЕ доступна ни в UI, ни в preloader */}
+                    {/* Лоадер показывается только если модель НЕ доступна */}
                     {!modelLoadStatus[currentData.modelUrl] && !modelPreloader.isLoaded(currentData.modelUrl) && (
                       <div className="absolute inset-0 flex items-center justify-center z-10">
                         <div className="flex flex-col items-center gap-4">
-                          <div className="w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full animate-spin" />
+                          <div className="loader w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full" />
                           <p className="text-white/60 text-sm">Загрузка 3D модели...</p>
                         </div>
                       </div>
@@ -659,26 +522,379 @@ const ProductHero = () => {
                       </div>
                     )}
                   </div>
-                </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
 
-
-
       {/* Переходные эффекты */}
       {isTransitioning && !isMobile && (
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          exit={{ scaleX: 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent origin-left"
-        />
+        <div className="hero-transition absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
       )}
-    </motion.div>
+
+      {/* CSS Стили */}
+      <style jsx>{`
+        /* CSS Variables для адаптивности под разные герцовки */
+        :root {
+          --dur-fast: 160ms;
+          --dur-normal: 240ms; 
+          --dur-slow: 320ms;
+          --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+          --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+          --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          --dist-small: 20px;
+          --dist-medium: 40px;
+          --dist-large: 60px;
+        }
+
+        /* Адаптация под высокие частоты обновления */
+        @media (min-resolution: 90dpi) {
+          :root {
+            --dur-fast: 140ms;
+            --dur-normal: 220ms;
+            --dur-slow: 280ms;
+          }
+        }
+
+        @media (min-resolution: 120dpi) {
+          :root {
+            --dur-fast: 120ms;
+            --dur-normal: 200ms;
+            --dur-slow: 260ms;
+            --dist-small: 18px;
+            --dist-medium: 36px;
+            --dist-large: 54px;
+          }
+        }
+
+        @media (min-resolution: 144dpi) {
+          :root {
+            --dur-fast: 110ms;
+            --dur-normal: 180ms;
+            --dur-slow: 240ms;
+            --dist-small: 16px;
+            --dist-medium: 32px;
+            --dist-large: 48px;
+          }
+        }
+
+        /* Основная анимация появления Hero */
+        .hero-container {
+          will-change: transform, opacity;
+          animation: heroEntry var(--dur-slow) var(--ease-out) forwards;
+          animation-delay: 200ms;
+          opacity: 0;
+          transform: scale(0.98) translateY(var(--dist-medium));
+          filter: blur(20px) brightness(0.3);
+        }
+
+        @keyframes heroEntry {
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0) brightness(1);
+          }
+        }
+
+        /* Параллакс эффекты - только transform и opacity */
+        .hero-bg {
+          will-change: transform;
+          transition: all 1000ms var(--ease-out);
+          transform: scale(calc(1 + abs(var(--mouse-x, 0)) * 0.05));
+        }
+
+        .hero-glow-main {
+          will-change: transform;
+          animation: glowFloat 4s ease-in-out infinite;
+          transform: translate(
+            calc(var(--mouse-x, 0) * 20px),
+            calc(var(--mouse-y, 0) * 20px)
+          );
+        }
+
+        .hero-glow-secondary {
+          will-change: transform;
+          animation: glowFloat 3s ease-in-out infinite reverse;
+          transform: translate(
+            calc(var(--mouse-x, 0) * -15px),
+            calc(var(--mouse-y, 0) * -15px)
+          ) rotate(calc(var(--mouse-x, 0) * 10deg));
+        }
+
+        .hero-geo-1 {
+          will-change: transform;
+          transform: translate(
+            calc(var(--mouse-x, 0) * 5px),
+            calc(var(--mouse-y, 0) * 5px)
+          ) rotate(calc(12deg + var(--mouse-x, 0) * 5deg));
+        }
+
+        .hero-geo-2 {
+          will-change: transform;
+          transform: translate(
+            calc(var(--mouse-x, 0) * -8px),
+            calc(var(--mouse-y, 0) * -8px)
+          ) rotate(calc(var(--mouse-x, 0) * -8deg));
+        }
+
+        @keyframes glowFloat {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8) translate(var(--x, 0), var(--y, 0));
+          }
+          50% {
+            opacity: 0.1;
+            transform: scale(1.2) translate(var(--x, 0), var(--y, 0));
+          }
+        }
+
+        /* Контент анимации - stagger эффект */
+        .hero-content {
+          will-change: transform, opacity;
+          animation: contentEntry var(--dur-slow) var(--ease-out) forwards;
+          animation-delay: 600ms;
+          opacity: 0;
+          transform: translateY(var(--dist-large));
+          filter: blur(10px);
+        }
+
+        @keyframes contentEntry {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+          }
+        }
+
+        .hero-badge {
+          will-change: transform, opacity;
+          animation: badgeEntry var(--dur-normal) var(--ease-bounce) forwards;
+          animation-delay: 900ms;
+          opacity: 0;
+          transform: scale(0.5) translateY(var(--dist-small));
+        }
+
+        @keyframes badgeEntry {
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .hero-title {
+          will-change: transform, opacity;
+          animation: titleEntry var(--dur-slow) var(--ease-out) forwards;
+          animation-delay: 1100ms;
+          opacity: 0;
+          transform: translateY(var(--dist-large)) scale(0.9);
+          filter: blur(8px);
+        }
+
+        @keyframes titleEntry {
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+          }
+        }
+
+        .hero-description {
+          will-change: opacity, transform;
+          animation: descEntry var(--dur-normal) var(--ease-out) forwards;
+          animation-delay: 1300ms;
+          opacity: 0;
+          transform: translateY(var(--dist-small));
+        }
+
+        @keyframes descEntry {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Stagger анимация для фич */
+        .hero-features {
+          will-change: opacity;
+          animation: featuresEntry var(--dur-normal) var(--ease-out) forwards;
+          animation-delay: 1500ms;
+          opacity: 0;
+        }
+
+        .hero-feature {
+          will-change: transform, opacity;
+          animation: featureEntry var(--dur-normal) var(--ease-out) forwards;
+          animation-delay: calc(1600ms + var(--feature-index, 0) * 100ms);
+          opacity: 0;
+          transform: translateX(calc(var(--dist-small) * -1));
+        }
+
+        @keyframes featuresEntry {
+          to { opacity: 1; }
+        }
+
+        @keyframes featureEntry {
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .hero-progress {
+          will-change: opacity, transform;
+          animation: progressEntry var(--dur-normal) var(--ease-out) forwards;
+          animation-delay: 1800ms;
+          opacity: 0;
+          transform: translateY(var(--dist-small));
+        }
+
+        @keyframes progressEntry {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* 3D модель анимации */
+        .hero-model-container {
+          will-change: transform, opacity;
+          animation: modelContainerEntry var(--dur-slow) var(--ease-out) forwards;
+          animation-delay: 800ms;
+          opacity: 0;
+          transform: scale(0.7) rotateY(30deg) rotateX(15deg);
+          filter: blur(20px);
+        }
+
+        @keyframes modelContainerEntry {
+          to {
+            opacity: 1;
+            transform: scale(1) rotateY(0) rotateX(0);
+            filter: blur(0);
+          }
+        }
+
+        .hero-model-bg {
+          will-change: transform, opacity;
+          animation: modelBgPulse 4s ease-in-out infinite;
+        }
+
+        .hero-model-glow {
+          will-change: transform, opacity;
+          animation: modelGlowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes modelBgPulse {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8) rotate(0deg);
+          }
+          50% {
+            opacity: 0.1;
+            transform: scale(1.1) rotate(5deg);
+          }
+        }
+
+        @keyframes modelGlowPulse {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.1;
+            transform: scale(1.2);
+          }
+        }
+
+        .hero-model {
+          will-change: transform, opacity;
+          animation: modelEntry var(--dur-slow) var(--ease-out) forwards;
+          animation-delay: 1400ms;
+          opacity: 0;
+          transform: scale(0.9) translateY(var(--dist-small));
+          filter: blur(10px);
+        }
+
+        @keyframes modelEntry {
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+          }
+        }
+
+        /* Лоадер анимация */
+        .loader {
+          will-change: transform;
+          animation: loaderSpin 1s linear infinite;
+        }
+
+        @keyframes loaderSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        /* Переходные эффекты */
+        .hero-transition {
+          will-change: transform;
+          animation: transitionSlide var(--dur-fast) var(--ease-in-out);
+          transform: scaleX(0);
+          transform-origin: left;
+        }
+
+        @keyframes transitionSlide {
+          0% { transform: scaleX(0); }
+          50% { transform: scaleX(1); }
+          100% { transform: scaleX(0); }
+        }
+
+        /* Мобильные оптимизации */
+        @media (max-width: 768px) {
+          :root {
+            --dur-fast: 100ms;
+            --dur-normal: 200ms;
+            --dur-slow: 280ms;
+            --dist-small: 16px;
+            --dist-medium: 32px;
+            --dist-large: 48px;
+          }
+
+          /* Отключаем параллакс и сложные эффекты на мобильных */
+          .hero-glow-main,
+          .hero-glow-secondary,
+          .hero-geo-1,
+          .hero-geo-2 {
+            transform: none !important;
+            animation-duration: 2s;
+          }
+
+          .hero-bg {
+            transform: none !important;
+          }
+
+          /* Ускоренные анимации для мобильных */
+          .hero-content,
+          .hero-model-container {
+            animation-delay: 300ms;
+            animation-duration: var(--dur-normal);
+          }
+
+          .hero-badge { animation-delay: 400ms; }
+          .hero-title { animation-delay: 500ms; }
+          .hero-description { animation-delay: 600ms; }
+          .hero-features { animation-delay: 700ms; }
+          .hero-feature { animation-delay: calc(750ms + var(--feature-index, 0) * 50ms); }
+          .hero-progress { animation-delay: 900ms; }
+        }
+
+        /* Убираем will-change после завершения анимаций */
+        .hero-container.loaded,
+        .hero-container.loaded * {
+          will-change: auto;
+        }
+      `}</style>
+    </div>
   );
 };
 
