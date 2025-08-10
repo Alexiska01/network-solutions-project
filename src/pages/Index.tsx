@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
-import ProductHero from "@/components/ProductHero";
-import ProductsSection from "@/components/ProductsSection";
-import FeaturesSection from "@/components/FeaturesSection";
+import ProductHero from "@/components/home/ProductHero";
+import ProductsSection from "@/components/home/ProductsSection";
+import FeaturesSection from "@/components/home/FeaturesSection";
 import Footer from "@/components/Footer";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import { modelCacheManager } from "@/utils/modelCacheManager";

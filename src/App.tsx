@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
-import ProductHero from "./components/ProductHero";
+import ProductHero from "./components/home/ProductHero";
 
 // Model-viewer загружается в index.html через CDN
 
