@@ -698,6 +698,195 @@ a {
   }
 }
 
+/* =================================== */
+/* FeaturesSection GPU-First Анимации */
+/* =================================== */
+
+/* Базовые переменные для FeaturesSection */
+:root {
+  /* Базовые значения для 60Hz */
+  --fs-duration-enter: 450ms;
+  --fs-duration-hover: 300ms;
+  --fs-cascade-delay: 90ms;
+  --fs-scale-hover: 1.018;
+  --fs-translate-y: 28px;
+  --fs-blur-start: 2px;
+}
+
+/* Адаптация под высокие частоты */
+@media (min-refresh-rate: 90hz) {
+  :root {
+    --fs-duration-enter: 400ms;
+    --fs-duration-hover: 260ms;
+    --fs-cascade-delay: 75ms;
+    --fs-scale-hover: 1.016;
+    --fs-translate-y: 26px;
+  }
+}
+
+@media (min-refresh-rate: 120hz) {
+  :root {
+    --fs-duration-enter: 360ms;
+    --fs-duration-hover: 240ms;
+    --fs-cascade-delay: 65ms;
+    --fs-scale-hover: 1.014;
+    --fs-translate-y: 24px;
+  }
+}
+
+@media (min-refresh-rate: 144hz) {
+  :root {
+    --fs-duration-enter: 340ms;
+    --fs-duration-hover: 220ms;
+    --fs-cascade-delay: 60ms;
+    --fs-scale-hover: 1.012;
+    --fs-translate-y: 22px;
+  }
+}
+
+@media (min-refresh-rate: 240hz) {
+  :root {
+    --fs-duration-enter: 300ms;
+    --fs-duration-hover: 200ms;
+    --fs-cascade-delay: 50ms;
+    --fs-scale-hover: 1.01;
+    --fs-translate-y: 20px;
+  }
+}
+
+/* ПРОФЕССИОНАЛЬНАЯ ДВУХСЛОЙНАЯ АРХИТЕКТУРА для FeaturesSection */
+/* Внешний контейнер карточки - только для появления */
+.feature-card {
+  /* Стабильная GPU активация */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  isolation: isolate;
+  /* Максимальная стабилизация текста */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
+  /* Критические свойства для резкости */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+/* Изолированные состояния появления для карточек */
+.feature-card.feature-card-hidden {
+  opacity: 0;
+  transform: translate3d(0, var(--fs-translate-y), 0);
+  filter: blur(var(--fs-blur-start));
+}
+
+.feature-card.feature-card-hidden-mobile {
+  opacity: 0;
+  transform: translate3d(0, calc(var(--fs-translate-y) * 0.8), 0);
+  filter: blur(calc(var(--fs-blur-start) * 0.8));
+}
+
+.feature-card.feature-card-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+/* Каскадные анимации появления для десктопа */
+.feature-card.feature-card-visible {
+  transition:
+    opacity var(--fs-duration-enter) var(--ps-easing-premium),
+    transform var(--fs-duration-enter) var(--ps-easing-premium),
+    filter var(--fs-duration-enter) var(--ps-easing-premium);
+  transition-delay: calc(var(--feature-index, 0) * var(--fs-cascade-delay));
+}
+
+/* Мобильные анимации */
+.feature-card-mobile.feature-card-visible {
+  transition:
+    opacity calc(var(--fs-duration-enter) * 0.85) var(--ps-easing-premium),
+    transform calc(var(--fs-duration-enter) * 0.85) var(--ps-easing-premium),
+    filter calc(var(--fs-duration-enter) * 0.85) var(--ps-easing-premium);
+  transition-delay: 0ms;
+}
+
+/* will-change управление для FeaturesSection */
+.feature-card:not(.feature-card-visible) {
+  will-change: opacity, transform, filter;
+}
+
+.feature-card.feature-card-visible {
+  will-change: auto;
+}
+
+/* ИЗОЛИРОВАННЫЕ HOVER эффекты - работают независимо от появления */
+@media (hover: hover) and (pointer: fine) {
+  .feature-card {
+    /* Transition только для внутренних элементов при hover */
+    transition:
+      transform var(--fs-duration-hover) var(--ps-easing-hover),
+      box-shadow var(--fs-duration-hover) var(--ps-easing-hover);
+  }
+
+  .feature-card:hover {
+    transform: translate3d(0, -4px, 0) scale(var(--fs-scale-hover));
+    will-change: transform, box-shadow;
+  }
+
+  .feature-card:not(:hover) {
+    will-change: auto;
+  }
+}
+
+/* Touch/Active эффекты для мобильных */
+@media (hover: none) {
+  .feature-card:active {
+    transform: translate3d(0, 0, 0) scale(0.98);
+    transition: transform 140ms var(--ps-easing-active);
+  }
+}
+
+/* Заголовок секции */
+.feature-header {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
+}
+
+.feature-header.feature-header-hidden {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  filter: blur(1px);
+}
+
+.feature-header.feature-header-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+  transition:
+    opacity calc(var(--fs-duration-enter) * 1.1) var(--ps-easing-premium),
+    transform calc(var(--fs-duration-enter) * 1.1) var(--ps-easing-premium),
+    filter calc(var(--fs-duration-enter) * 1.1) var(--ps-easing-premium);
+}
+
+/* CSS переменные для каскадных задержек */
+.feature-card:nth-child(1) {
+  --feature-index: 0;
+}
+
+.feature-card:nth-child(2) {
+  --feature-index: 1;
+}
+
+.feature-card:nth-child(3) {
+  --feature-index: 2;
+}
+
+.feature-card:nth-child(4) {
+  --feature-index: 3;
+}
+
 /* Отключение анимаций для пользователей с настройкой prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .ps-card,
@@ -708,13 +897,18 @@ a {
   .ps-cta,
   .ps-cta-icon,
   .ps-cta-arrow,
-  .ps-cta-line {
+  .ps-cta-line,
+  .feature-card,
+  .feature-header {
     transition: none !important;
     animation: none !important;
     transform: none !important;
   }
 
-  .ps-hidden {
+  .ps-hidden,
+  .feature-card-hidden,
+  .feature-card-hidden-mobile,
+  .feature-header-hidden {
     opacity: 1 !important;
     filter: none !important;
   }

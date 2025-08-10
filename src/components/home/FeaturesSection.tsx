@@ -6,7 +6,7 @@ const FeaturesSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
-  const [is120fps, setIs120fps] = useState(false);
+  const [refreshRate, setRefreshRate] = useState<'60hz' | '90hz' | '120hz' | '144hz' | '240hz'>('60hz');
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -47,48 +47,78 @@ const FeaturesSection = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Обнаружение 120 FPS дисплеев
+  // Детекция частоты обновления экрана
   useEffect(() => {
     let frameCount = 0;
-    let startTime = performance.now();
-    
-    const detectFrameRate = () => {
+    let startTime = 0;
+    let animationId: number;
+
+    const measureRefreshRate = () => {
+      if (frameCount === 0) {
+        startTime = performance.now();
+      }
       frameCount++;
-      if (frameCount < 60) {
-        requestAnimationFrame(detectFrameRate);
-      } else {
+      
+      if (frameCount === 120) {
         const endTime = performance.now();
-        const fps = Math.round(60000 / (endTime - startTime));
+        const fps = Math.round(120000 / (endTime - startTime));
         
-        if (fps >= 115) {
-          setIs120fps(true);
-          console.log(`🚀 FeaturesSection: Обнаружен ${fps} FPS дисплей - активирован режим 120 FPS!`);
-        } else {
-          setIs120fps(false);
-          console.log(`📺 FeaturesSection: Стандартный ${fps} FPS дисплей`);
-        }
+        let detectedRate: typeof refreshRate = '60hz';
+        if (fps >= 230) detectedRate = '240hz';
+        else if (fps >= 140) detectedRate = '144hz';
+        else if (fps >= 115) detectedRate = '120hz';
+        else if (fps >= 85) detectedRate = '90hz';
+        
+        setRefreshRate(detectedRate);
+        
+        // Добавляем класс на body для CSS переменных
+        document.body.className = document.body.className
+          .replace(/refresh-\d+hz/g, '')
+          + ` refresh-${detectedRate}`;
+        
+        console.log(`🚀 FeaturesSection: ${fps} FPS (${detectedRate}) - GPU анимации активны`);
+        return;
+      }
+      
+      animationId = requestAnimationFrame(measureRefreshRate);
+    };
+
+    if (window.matchMedia('(min-refresh-rate: 120hz)').matches) {
+      setRefreshRate('120hz');
+      document.body.className = document.body.className.replace(/refresh-\d+hz/g, '') + ' refresh-120hz';
+    } else {
+      animationId = requestAnimationFrame(measureRefreshRate);
+    }
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
       }
     };
-    
-    requestAnimationFrame(detectFrameRate);
   }, []);
 
+  // Инициализация массивов состояния
   useEffect(() => {
-    // Инициализируем массив видимости карточек
     setVisibleCards(new Array(features.length).fill(false));
     cardRefs.current = new Array(features.length).fill(null);
   }, []);
 
+  // IntersectionObserver для анимаций появления
   useEffect(() => {
     if (!isMobile) {
-      // Для десктопа - старая логика (все сразу)
+      // ДЕСКТОП - каскадное появление всей секции
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
+            setHeaderVisible(true);
+            console.log('🎬 FeaturesSection: Каскадная анимация запущена (десктоп)');
           }
         },
-        { threshold: 0.1 }
+        { 
+          threshold: 0.2,
+          rootMargin: '-50px 0px -50px 0px'
+        }
       );
 
       if (sectionRef.current) {
@@ -97,7 +127,7 @@ const FeaturesSection = () => {
 
       return () => observer.disconnect();
     } else {
-      // Для мобильных - индивидуальное появление карточек + заголовок
+      // МОБИЛЬНЫЙ - индивидуальное появление заголовка и карточек
       const observers: IntersectionObserver[] = [];
       
       // Observer для заголовка на мобильных
@@ -106,9 +136,13 @@ const FeaturesSection = () => {
           ([entry]) => {
             if (entry.isIntersecting) {
               setHeaderVisible(true);
+              console.log('🎬 FeaturesSection: Заголовок появился (мобильный)');
             }
           },
-          { threshold: 0.1 }
+          { 
+            threshold: 0.3,
+            rootMargin: '-20px 0px -20px 0px'
+          }
         );
         
         headerObserver.observe(headerRef.current);
@@ -123,11 +157,15 @@ const FeaturesSection = () => {
                 setVisibleCards(prev => {
                   const newVisible = [...prev];
                   newVisible[index] = true;
+                  console.log(`🎬 FeaturesSection: Карточка ${index + 1} появилась (мобильный)`);
                   return newVisible;
                 });
               }
             },
-            { threshold: 0.2 }
+            { 
+              threshold: 0.3,
+              rootMargin: '-20px 0px -20px 0px'
+            }
           );
           
           observer.observe(cardRef);
@@ -139,10 +177,13 @@ const FeaturesSection = () => {
         observers.forEach(observer => observer.disconnect());
       };
     }
-  }, [isMobile]);
+  }, [isMobile, cardRefs.current.length]);
 
   return (
-    <section ref={sectionRef} className="pt-12 pb-12 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden">
+    <section 
+      ref={sectionRef} 
+      className={`pt-12 pb-12 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
+    >
       {/* Декоративный фон */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 via-transparent to-teal-50/20 pointer-events-none"></div>
       
@@ -150,12 +191,9 @@ const FeaturesSection = () => {
         <div 
           ref={headerRef}
           className={`text-center mb-8 md:mb-16 feature-header ${
-            (isMobile ? headerVisible : isVisible)
-              ? 'feature-header-visible' 
-              : 'feature-header-hidden'
+            headerVisible ? 'feature-header-visible' : 'feature-header-hidden'
           }`}
         >
-
           <h2 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight tracking-tight">
             Почему выбирают iDATA
           </h2>
@@ -174,62 +212,31 @@ const FeaturesSection = () => {
                   cardRefs.current[index] = el;
                 }
               }}
-              className={`group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full overflow-hidden feature-card feature-card-height ${
-                // Основная анимация карточки
+              className={`feature-card group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full overflow-hidden ${
                 isMobile 
-                  ? (is120fps ? 'feature-card-120fps-mobile' : 'feature-card-mobile')
-                  : (is120fps ? 'feature-card-120fps-desktop' : 'feature-card-desktop')
-              } ${
-                // Hover анимация
-                is120fps ? 'feature-card-hover-120fps' : 'feature-card-hover'
-              } ${
-                // Состояние видимости
-                isMobile 
-                  ? (visibleCards[index] 
-                      ? 'feature-card-visible' 
-                      : 'feature-card-hidden-mobile'
-                    )
-                  : (isVisible 
-                      ? 'feature-card-visible' 
-                      : 'feature-card-hidden'
-                    )
-              } ${
-                // Задержка появления только для десктопа
-                !isMobile 
-                  ? (is120fps 
-                      ? `feature-card-delay-120fps-${index}` 
-                      : `feature-card-delay-${index}`
-                    )
-                  : ''
-              } hover:-translate-y-1 md:hover:-translate-y-2`}
+                  ? (visibleCards[index] ? 'feature-card-visible' : 'feature-card-hidden-mobile')
+                  : (isVisible ? 'feature-card-visible' : 'feature-card-hidden')
+              }`}
+              style={{
+                '--feature-index': index,
+              } as React.CSSProperties}
             >
               {/* Subtle gradient overlay on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl ${
-                is120fps ? 'transition-opacity duration-200' : 'transition-opacity duration-300 md:duration-500'
-              }`}></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl transition-opacity duration-300 md:duration-500 pointer-events-none"></div>
               
               {/* Content */}
               <div className="relative z-10 flex flex-col h-full">
                 {/* Icon with enhanced styling */}
                 <div className="relative mb-5 md:mb-8">
-                  <div className={`w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl group-hover:scale-105 ${
-                    is120fps ? 'transition-all duration-200' : 'transition-all duration-300'
-                  }`}>
+                  <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl group-hover:scale-105 transition-all duration-300 transform translate3d(0, 0, 0) backface-visibility-hidden">
                     <Icon
                       name={feature.icon as any}
-                      size={20}
-                      className="text-white md:hidden"
-                    />
-                    <Icon
-                      name={feature.icon as any}
-                      size={28}
-                      className="text-white hidden md:block"
+                      size={isMobile ? 20 : 28}
+                      className="text-white transform translate3d(0, 0, 0)"
                     />
                   </div>
                   {/* Decorative ring - только на десктопе */}
-                  <div className={`hidden md:block absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 ${
-                    is120fps ? 'transition-opacity duration-200' : 'transition-opacity duration-300'
-                  }`}></div>
+                  <div className="hidden md:block absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
                 
                 {/* Text content */}
@@ -245,9 +252,7 @@ const FeaturesSection = () => {
               </div>
 
               {/* Bottom accent line */}
-              <div className={`absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl ${
-                is120fps ? 'transition-transform duration-200' : 'transition-transform duration-300 md:duration-500'
-              }`}></div>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl transition-transform duration-300 md:duration-500 pointer-events-none"></div>
             </div>
           ))}
         </div>
