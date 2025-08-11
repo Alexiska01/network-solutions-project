@@ -27,7 +27,7 @@ const products = [
     gradientPosition: "from-blue-700 to-blue-800",
   },
   {
-    title: "Беспроводные решения",
+    title: "Беспроводные\nрешения", 
     description: "Enterprise-класс точки доступа и контроллеры Wi-Fi 6",
     features: [
       "Wi-Fi 6E поддержка",
@@ -38,7 +38,7 @@ const products = [
     gradientPosition: "from-blue-800 to-teal-600",
   },
   {
-    title: "Системы управления",
+    title: "Системы\nуправления",
     description: "Централизованные платформы для управления инфраструктурой",
     features: [
       "Унифицированная панель",
@@ -232,7 +232,7 @@ const ProductsSection = () => {
                 
                   {/* Заголовок */}
                   <div className={`${isMobile ? 'mb-4' : 'mb-6'}`} style={{ height: isMobile ? "48px" : "72px" }}>
-                    <h3 className="ps-title font-bold text-gray-900 leading-tight tracking-tight whitespace-pre-line">
+                    <h3 className="ps-title font-bold text-gray-900 leading-tight tracking-tight whitespace-normal lg:whitespace-pre-line">
                       {product.title}
                     </h3>
                     {/* GPU-анимированная подчеркивающая линия */}
