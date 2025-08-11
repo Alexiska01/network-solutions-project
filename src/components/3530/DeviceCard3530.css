@@ -1,15 +1,60 @@
-/* DeviceCard3530 - FORCE VISIBILITY */
+/* DeviceCard3530 - Simple Premium Animations */
 
+/* Base - Always Visible */
 .device-card-premium {
   opacity: 1 !important;
   visibility: visible !important;
   display: flex !important;
-  transform: none !important;
-  animation: none !important;
+
+  /* GPU optimization */
+  backface-visibility: hidden;
+  transform: translateZ(0);
+
+  /* Smooth transitions */
+  transition:
+    transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
+/* Simple entrance animation - only if motion allowed */
+@media (prefers-reduced-motion: no-preference) {
+  .device-card-premium {
+    animation: card-enter 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    animation-delay: var(--stagger-delay, 0ms);
+  }
+
+  @keyframes card-enter {
+    from {
+      opacity: 0;
+      transform: translateZ(0) translateY(8px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateZ(0) translateY(0) scale(1);
+    }
+  }
+}
+
+/* Hover effects */
 .device-card-premium:hover {
+  transform: translateZ(0) translateY(-2px) scale(1.01);
   border-color: #93c5fd;
-  transform: translateY(-2px);
-  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.device-card-premium:active {
+  transform: translateZ(0) translateY(-1px) scale(0.99);
+}
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .device-card-premium {
+    animation: none !important;
+  }
+
+  .device-card-premium:hover {
+    transform: translateZ(0) translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
 }
