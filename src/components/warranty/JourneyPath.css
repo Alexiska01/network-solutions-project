@@ -218,7 +218,13 @@
 
 /* Mobile Timeline - Vertical Layout */
 @media (max-width: 1023px) {
-  /* Mobile Steps Container */
+  /* Show mobile timeline */
+  .journey-timeline.lg\\:hidden {
+    display: block !important;
+    opacity: 1 !important;
+  }
+
+  /* Mobile Steps Animation */
   .journey-timeline.lg\\:hidden .journey-step {
     opacity: 0;
     transform: translate3d(-40px, 30px, 0) scale(0.9);
@@ -230,11 +236,19 @@
     transform: translate3d(0, 0, 0) scale(1);
   }
 
-  /* Mobile Icon Styling */
-  .journey-timeline.lg\\:hidden .journey-step-icon > div {
-    background: #00acad;
-    border: none;
-    box-shadow: 0 4px 15px rgba(0, 172, 173, 0.3);
+  /* Mobile Icon Background Override */
+  .journey-timeline.lg\\:hidden .journey-step-icon {
+    background: #00acad !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(0, 172, 173, 0.3) !important;
+    opacity: 1 !important;
+  }
+
+  /* Mobile Step Internal Elements */
+  .journey-timeline.lg\\:hidden .journey-step-title,
+  .journey-timeline.lg\\:hidden .journey-step-description {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   /* Disable hover effects on mobile */

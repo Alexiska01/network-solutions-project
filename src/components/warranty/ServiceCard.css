@@ -253,30 +253,19 @@
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Feature Check Icons */
+/* Feature Check Icons - Default Orange */
 .service-feature-item .w-5,
 .service-feature-item .w-6 {
-  background: linear-gradient(
-    135deg,
-    var(--check-start, #ff6b35) 0%,
-    var(--check-end, #f7931e) 100%
-  );
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
   animation: featureCheckPulse 2.5s ease-in-out infinite;
   animation-delay: var(--pulse-delay, 2s);
 }
 
-/* First Card - Orange Theme */
-.service-card:nth-child(1) .service-feature-item .w-5,
-.service-card:nth-child(1) .service-feature-item .w-6 {
-  --check-start: #ff6b35;
-  --check-end: #f7931e;
-}
-
-/* Second Card - Purple Theme */
+/* Purple Theme for Second Card (24x7x4) */
 .service-card:nth-child(2) .service-feature-item .w-5,
 .service-card:nth-child(2) .service-feature-item .w-6 {
-  --check-start: #667eea;
-  --check-end: #764ba2;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  animation: featureCheckPulsePurple 2.5s ease-in-out infinite !important;
 }
 
 @keyframes featureCheckPulse {
@@ -287,6 +276,18 @@
   }
   50% {
     box-shadow: 0 0 0 8px rgba(255, 107, 53, 0);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes featureCheckPulsePurple {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(102, 126, 234, 0);
     transform: scale(1.1);
   }
 }
