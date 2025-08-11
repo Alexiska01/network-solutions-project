@@ -1,101 +1,441 @@
-/* ===== HERO3530 PURE CSS ANIMATIONS & GPU OPTIMIZATIONS ===== */
+/* ===== HERO3530 PREMIUM SMOOTH CSS ANIMATIONS & GPU OPTIMIZATIONS ===== */
+
+/* ===== PREMIUM TIMING VARIABLES ===== */
+
+/* Base 60Hz timings - premium smooth feel */
+:root {
+  /* Mobile-optimized timings (200-280ms) */
+  --hero-mobile-fast: 240ms;
+  --hero-mobile-medium: 260ms;
+  --hero-mobile-slow: 280ms;
+
+  /* Desktop timings (240-320ms) */
+  --hero-desktop-fast: 280ms;
+  --hero-desktop-medium: 300ms;
+  --hero-desktop-slow: 320ms;
+
+  /* Interaction timings */
+  --hero-hover-duration: 300ms;
+  --hero-focus-duration: 250ms;
+  --hero-active-duration: 150ms;
+
+  /* Premium easing curves */
+  --hero-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --hero-ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --hero-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Animation delays for stagger effects */
+  --hero-delay-1: 100ms;
+  --hero-delay-2: 200ms;
+  --hero-delay-3: 300ms;
+  --hero-delay-4: 400ms;
+  --hero-delay-5: 500ms;
+  --hero-delay-6: 600ms;
+  --hero-delay-7: 700ms;
+
+  /* Transform values */
+  --hero-translate-y: 30px;
+  --hero-translate-x: 30px;
+  --hero-scale-hover: 1.01;
+  --hero-scale-active: 0.99;
+  --hero-translate-hover: -2px;
+}
+
+/* 120Hz optimizations - faster timings */
+@media (min-refresh-rate: 120hz) {
+  :root {
+    /* Mobile 120Hz (160-240ms) */
+    --hero-mobile-fast: 200ms;
+    --hero-mobile-medium: 220ms;
+    --hero-mobile-slow: 240ms;
+
+    /* Desktop 120Hz (200-280ms) */
+    --hero-desktop-fast: 240ms;
+    --hero-desktop-medium: 260ms;
+    --hero-desktop-slow: 280ms;
+
+    /* Faster interactions */
+    --hero-hover-duration: 250ms;
+    --hero-focus-duration: 200ms;
+    --hero-active-duration: 120ms;
+
+    /* Reduced transform values for smoother feel */
+    --hero-translate-y: 25px;
+    --hero-translate-x: 25px;
+  }
+}
+
+/* 144Hz+ optimizations - ultra smooth */
+@media (min-refresh-rate: 144hz) {
+  :root {
+    /* Mobile 144Hz+ (140-200ms) */
+    --hero-mobile-fast: 180ms;
+    --hero-mobile-medium: 190ms;
+    --hero-mobile-slow: 200ms;
+
+    /* Desktop 144Hz+ (180-240ms) */
+    --hero-desktop-fast: 220ms;
+    --hero-desktop-medium: 230ms;
+    --hero-desktop-slow: 240ms;
+
+    /* Ultra-responsive interactions */
+    --hero-hover-duration: 200ms;
+    --hero-focus-duration: 180ms;
+    --hero-active-duration: 100ms;
+
+    /* Subtle transforms for high refresh displays */
+    --hero-translate-y: 20px;
+    --hero-translate-x: 20px;
+    --hero-translate-hover: -1px;
+  }
+}
 
 /* ===== SCROLL REVEAL ANIMATIONS ===== */
 
-/* Initial hidden state for all animated elements */
-.hero-subtitle,
-.hero-title,
-.hero-features,
-.hero-button,
-.hero-model-section,
-.hero-model-container,
-.hero-model,
-.hero-feature-card,
-.hero-description {
+/* Premium initial hidden state - mobile-first approach */
+.hero-text-content {
   opacity: 0;
-  transform: translate3d(0, 30px, 0);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(0, var(--hero-translate-y), 0);
+  transition:
+    transform var(--hero-mobile-medium) var(--hero-ease-out),
+    opacity var(--hero-mobile-medium) var(--hero-ease-out);
   will-change: transform, opacity;
 }
 
-/* Visible state when hero is in view */
+.hero-subtitle {
+  opacity: 0;
+  transform: translate3d(0, var(--hero-translate-y), 0);
+  transition:
+    transform var(--hero-mobile-fast) var(--hero-ease-out),
+    opacity var(--hero-mobile-fast) var(--hero-ease-out);
+  will-change: transform, opacity;
+}
+
+.hero-title {
+  opacity: 0;
+  transform: translate3d(0, var(--hero-translate-y), 0);
+  transition:
+    transform var(--hero-mobile-medium) var(--hero-ease-smooth),
+    opacity var(--hero-mobile-medium) var(--hero-ease-smooth);
+  will-change: transform, opacity;
+}
+
+.hero-features {
+  opacity: 0;
+  transform: translate3d(0, var(--hero-translate-y), 0);
+  transition:
+    transform var(--hero-mobile-medium) var(--hero-ease-out),
+    opacity var(--hero-mobile-medium) var(--hero-ease-out);
+  will-change: transform, opacity;
+}
+
+.hero-button {
+  opacity: 0;
+  transform: translate3d(0, var(--hero-translate-y), 0);
+  transition:
+    transform var(--hero-mobile-slow) var(--hero-ease-bounce),
+    opacity var(--hero-mobile-slow) var(--hero-ease-bounce);
+  will-change: transform, opacity;
+}
+
+.hero-model-section {
+  opacity: 0;
+  transform: translate3d(var(--hero-translate-x), 0, 0);
+  transition:
+    transform var(--hero-mobile-medium) var(--hero-ease-out),
+    opacity var(--hero-mobile-medium) var(--hero-ease-out);
+  will-change: transform, opacity;
+}
+
+.hero-model-container {
+  opacity: 0;
+  transform: translate3d(0, var(--hero-translate-y), 0) scale(0.95);
+  transition:
+    transform var(--hero-mobile-slow) var(--hero-ease-smooth),
+    opacity var(--hero-mobile-slow) var(--hero-ease-smooth);
+  will-change: transform, opacity;
+}
+
+.hero-model {
+  opacity: 0;
+  transform: translate3d(0, calc(var(--hero-translate-y) * 0.7), 0) scale(0.95);
+  transition:
+    transform var(--hero-mobile-slow) var(--hero-ease-smooth),
+    opacity var(--hero-mobile-slow) var(--hero-ease-smooth);
+  will-change: transform, opacity;
+}
+
+.hero-feature-card {
+  opacity: 0;
+  transform: translate3d(0, var(--hero-translate-y), 0);
+  transition:
+    transform var(--hero-mobile-medium) var(--hero-ease-out),
+    opacity var(--hero-mobile-medium) var(--hero-ease-out);
+  will-change: transform, opacity;
+}
+
+.hero-description {
+  opacity: 0;
+  transform: translate3d(0, var(--hero-translate-y), 0);
+  transition:
+    transform var(--hero-mobile-slow) var(--hero-ease-out),
+    opacity var(--hero-mobile-slow) var(--hero-ease-out);
+  will-change: transform, opacity;
+}
+
+/* Desktop timing optimizations */
+@media (min-width: 768px) {
+  .hero-text-content {
+    transition-duration: var(--hero-desktop-medium);
+  }
+
+  .hero-subtitle {
+    transition-duration: var(--hero-desktop-fast);
+  }
+
+  .hero-title {
+    transition-duration: var(--hero-desktop-medium);
+  }
+
+  .hero-features {
+    transition-duration: var(--hero-desktop-medium);
+  }
+
+  .hero-button {
+    transition-duration: var(--hero-desktop-slow);
+  }
+
+  .hero-model-section {
+    transition-duration: var(--hero-desktop-medium);
+  }
+
+  .hero-model-container {
+    transition-duration: var(--hero-desktop-slow);
+  }
+
+  .hero-model {
+    transition-duration: var(--hero-desktop-slow);
+  }
+
+  .hero-feature-card {
+    transition-duration: var(--hero-desktop-medium);
+  }
+
+  .hero-description {
+    transition-duration: var(--hero-desktop-slow);
+  }
+}
+
+/* Premium visible state - smooth staggered reveal */
+.hero-visible .hero-text-content {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: var(--hero-delay-1);
+}
+
 .hero-visible .hero-subtitle {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 0.1s;
+  transition-delay: var(--hero-delay-2);
 }
 
 .hero-visible .hero-title {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 0.2s;
+  transition-delay: var(--hero-delay-3);
 }
 
 .hero-visible .hero-features {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 0.4s;
+  transition-delay: var(--hero-delay-4);
 }
 
 .hero-visible .hero-button {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 0.6s;
+  transition-delay: var(--hero-delay-6);
 }
 
 .hero-visible .hero-model-section {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 0.3s;
+  transition-delay: var(--hero-delay-3);
 }
 
 .hero-visible .hero-model-container {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: 0.5s;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition-delay: var(--hero-delay-5);
+}
+
+.hero-visible .hero-model {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition-delay: var(--hero-delay-7);
 }
 
 .hero-visible .hero-model.model-loaded {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
-  transition-delay: 0.7s;
+  transition-delay: var(--hero-delay-7);
 }
 
-/* Feature cards staggered animation */
+/* Premium feature cards staggered animation */
+.hero-visible .hero-feature-card:nth-child(1) {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: calc(var(--hero-delay-7) + 100ms);
+}
+
+.hero-visible .hero-feature-card:nth-child(2) {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: calc(var(--hero-delay-7) + 200ms);
+}
+
+.hero-visible .hero-feature-card:nth-child(3) {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: calc(var(--hero-delay-7) + 300ms);
+}
+
+/* Legacy support for numbered feature classes */
 .hero-visible .hero-feature-1 {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 0.8s;
+  transition-delay: calc(var(--hero-delay-7) + 100ms);
 }
 
 .hero-visible .hero-feature-2 {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 0.9s;
+  transition-delay: calc(var(--hero-delay-7) + 200ms);
 }
 
 .hero-visible .hero-feature-3 {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 1s;
+  transition-delay: calc(var(--hero-delay-7) + 300ms);
 }
 
 .hero-visible .hero-description {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 1.1s;
+  transition-delay: calc(var(--hero-delay-7) + 400ms);
 }
 
-/* Model special animation */
-.hero-model {
-  opacity: 0;
-  transform: translate3d(0, 20px, 0) scale(0.9);
-  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+/* ===== PREMIUM INTERACTIVE EFFECTS ===== */
+
+/* Premium button interactions */
+.hero-button {
+  cursor: pointer;
+  transition:
+    transform var(--hero-hover-duration) var(--hero-ease-out),
+    opacity var(--hero-hover-duration) var(--hero-ease-out),
+    box-shadow var(--hero-hover-duration) var(--hero-ease-out),
+    background-color var(--hero-hover-duration) var(--hero-ease-out),
+    color var(--hero-hover-duration) var(--hero-ease-out);
+  will-change: transform, opacity, box-shadow;
 }
 
-.hero-model.model-loaded {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
+/* Desktop hover effects - only on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .hero-button:hover {
+    transform: translate3d(0, var(--hero-translate-hover), 0)
+      scale(var(--hero-scale-hover));
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .hero-feature-card:hover {
+    transform: translate3d(0, var(--hero-translate-hover), 0)
+      scale(var(--hero-scale-hover));
+    backdrop-filter: blur(12px);
+    background-color: rgba(255, 255, 255, 0.08);
+    transition:
+      transform var(--hero-hover-duration) var(--hero-ease-out),
+      backdrop-filter var(--hero-hover-duration) var(--hero-ease-out),
+      background-color var(--hero-hover-duration) var(--hero-ease-out);
+  }
+
+  .hero-model-container:hover {
+    transform: translate3d(0, calc(var(--hero-translate-hover) * 0.5), 0)
+      scale(1.005);
+    transition: transform var(--hero-hover-duration) var(--hero-ease-out);
+  }
+}
+
+/* Touch/mobile active states - only on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .hero-button:active {
+    transform: translate3d(0, 1px, 0) scale(var(--hero-scale-active));
+    transition-duration: var(--hero-active-duration);
+  }
+
+  .hero-feature-card:active {
+    transform: translate3d(0, 1px, 0) scale(var(--hero-scale-active));
+    transition-duration: var(--hero-active-duration);
+  }
+}
+
+/* Premium focus-visible styles for accessibility */
+.hero-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+  transform: translate3d(0, var(--hero-translate-hover), 0)
+    scale(var(--hero-scale-hover));
+  transition:
+    transform var(--hero-focus-duration) var(--hero-ease-out),
+    outline var(--hero-focus-duration) var(--hero-ease-out);
+}
+
+.hero-feature-card:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+  transform: translate3d(0, var(--hero-translate-hover), 0)
+    scale(var(--hero-scale-hover));
+  transition:
+    transform var(--hero-focus-duration) var(--hero-ease-out),
+    outline var(--hero-focus-duration) var(--hero-ease-out);
+}
+
+/* Smooth transitions for all interactive elements */
+.hero-feature-card {
+  cursor: pointer;
+  transition:
+    transform var(--hero-hover-duration) var(--hero-ease-out),
+    backdrop-filter var(--hero-hover-duration) var(--hero-ease-out),
+    background-color var(--hero-hover-duration) var(--hero-ease-out);
+  will-change: transform;
+}
+
+.hero-model-container {
+  transition: transform var(--hero-hover-duration) var(--hero-ease-out);
+  will-change: transform;
+}
+
+/* Disable will-change after animations complete to save memory */
+.hero-visible .hero-subtitle,
+.hero-visible .hero-title,
+.hero-visible .hero-features,
+.hero-visible .hero-button,
+.hero-visible .hero-model-section,
+.hero-visible .hero-model-container,
+.hero-visible .hero-feature-card,
+.hero-visible .hero-description {
+  will-change: auto;
+  animation-fill-mode: forwards;
+}
+
+/* Re-enable will-change only during interactions */
+.hero-button:hover,
+.hero-button:focus-visible,
+.hero-button:active,
+.hero-feature-card:hover,
+.hero-feature-card:focus-visible,
+.hero-feature-card:active,
+.hero-model-container:hover {
+  will-change: transform, opacity, box-shadow;
 }
 
 /* Core GPU acceleration for all devices */
@@ -358,8 +698,25 @@
 
 /* ===== ACCESSIBILITY & PERFORMANCE ===== */
 
-/* Reduced motion support */
+/* Premium reduced motion support - respect user preferences */
 @media (prefers-reduced-motion: reduce) {
+  .hero-subtitle,
+  .hero-title,
+  .hero-features,
+  .hero-button,
+  .hero-model-section,
+  .hero-model-container,
+  .hero-model,
+  .hero-feature-card,
+  .hero-description,
+  .hero-text-content {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  /* Legacy GPU classes support */
   .hero-gpu *,
   .text-content-gpu *,
   .model-section-gpu *,

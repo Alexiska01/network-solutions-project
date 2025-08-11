@@ -1,8 +1,9 @@
-import { motion } from "framer-motion";
+// Pure CSS animations - no external animation libraries needed
 import Icon from "@/components/ui/icon";
 import { useEffect, useState, useRef } from "react";
 import { modelPreloader } from '@/utils/modelPreloader';
 import { modelCacheManager } from '@/utils/modelCacheManager';
+import './Hero3530.css';
 
 // Фичи для правого блока IDS3530
 const featuresRight = [
@@ -29,29 +30,15 @@ const model3530Data = {
   accentColor: '#53c2a4'
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
-    },
-  },
-  hover: { 
-    scale: 1.01, 
-    y: -1,
-    transition: { duration: 0.3, ease: "easeOut" }
-  },
-  tap: { scale: 0.99 },
-};
+// Premium CSS animations handle all interactions via classes
 
 const Hero3530 = () => {
   const [isModelLoaded, setIsModelLoaded] = useState(false);
   const [isModelVisible, setIsModelVisible] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [isInView, setIsInView] = useState(false);
   const modelViewerRef = useRef<any>(null);
+  const heroSectionRef = useRef<HTMLDivElement>(null);
   const hasCheckedCacheRef = useRef(false);
 
   useEffect(() => {
@@ -97,6 +84,32 @@ const Hero3530 = () => {
     checkModelCacheStatus();
   }, []);
 
+  // Premium Intersection Observer for scroll reveal animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          console.log('🎬 Hero3530: Секция появилась в зоне видимости - запускаю CSS анимации');
+        }
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px'
+      }
+    );
+
+    if (heroSectionRef.current) {
+      observer.observe(heroSectionRef.current);
+    }
+
+    return () => {
+      if (heroSectionRef.current) {
+        observer.unobserve(heroSectionRef.current);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     // Настройка автоматического вращения и прозрачности модели
     if (modelViewerRef.current && isModelVisible) {
@@ -140,51 +153,24 @@ const Hero3530 = () => {
   }, [isModelVisible]);
 
   return (
-    <section className="bg-gradient-hero text-white py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden min-h-[420px] md:min-h-[480px]">
+    <section 
+      ref={heroSectionRef}
+      className={`bg-gradient-hero text-white py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden min-h-[420px] md:min-h-[480px] ${isInView ? 'hero-visible' : ''}`}
+    >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-start lg:items-center w-full">
           
           {/* Левая часть - Текстовый контент */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.7,
-              delay: 0.1,
-              type: "spring",
-              stiffness: 120,
-            }}
-            className="lg:pr-4 xl:pr-8"
-          >
-            <motion.p
-              className="text-xs sm:text-sm text-blue-200 font-medium mb-1 sm:mb-2 md:mb-3 uppercase tracking-wide"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
+          <div className="hero-text-content lg:pr-4 xl:pr-8">
+            <p className="hero-subtitle text-xs sm:text-sm text-blue-200 font-medium mb-1 sm:mb-2 md:mb-3 uppercase tracking-wide">
               Серия корпоративных коммутаторов
-            </motion.p>
+            </p>
             
-            <motion.h1
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: 0.3,
-                type: "spring",
-                stiffness: 140,
-              }}
-            >
+            <h1 className="hero-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 leading-tight">
               IDS3530
-            </motion.h1>
+            </h1>
             
-            <motion.div
-              className="mb-4 sm:mb-5 md:mb-6 lg:mb-8 space-y-2 sm:space-y-3"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
+            <div className="hero-features mb-4 sm:mb-5 md:mb-6 lg:mb-8 space-y-2 sm:space-y-3">
               <div className="flex items-center gap-2 sm:gap-3 text-blue-100">
                 <Icon
                   name="Server"
@@ -220,14 +206,10 @@ const Hero3530 = () => {
               </div>
             </motion.div>
             
-            {/* Обновленная кнопка - только одна */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.9 }}
-            >
+            {/* Premium CSS-анимированная кнопка */}
+            <div className="hero-button">
               <button
-                className="bg-white text-[#0065B3] px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 min-h-[44px] hover:scale-105 hover:shadow-lg transform-gpu"
+                className="bg-white text-[#0065B3] px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white min-h-[44px] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
                 onClick={() =>
                   window.open(
                     "https://drive.google.com/file/d/1-4xHlvPUr7kUBCQBzgh7Lz2FGC1COfwe/view?usp=drive_link",
@@ -237,37 +219,18 @@ const Hero3530 = () => {
               >
                 Скачать PDF
               </button>
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* Правая часть - 3D модель и фичи */}
-          <motion.div
-            className="relative mt-4 sm:mt-6 lg:mt-0"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-          >
+          <div className="hero-model-section relative mt-4 sm:mt-6 lg:mt-0">
             <div className="flex flex-col space-y-4 sm:space-y-5 md:space-y-6">
               
-              {/* Контейнер с 3D-моделью - ПОЛНОСТЬЮ ПРОЗРАЧНЫЙ */}
-              <motion.div
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                whileHover="hover"
-                className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[420px] h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] mx-auto lg:mx-0"
-              >
-                {/* 3D модель - БЕЗ ФОНА, ГРАНИЦ И КОНТЕЙНЕРОВ */}
+              {/* Контейнер с 3D-моделью - Premium CSS анимации */}
+              <div className="hero-model-container relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[420px] h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] mx-auto lg:mx-0 cursor-pointer">
+                {/* 3D модель - Premium CSS анимации, прозрачная интеграция */}
                 {isModelLoaded && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ 
-                      opacity: isModelVisible ? 1 : 0, 
-                      scale: isModelVisible ? 1 : 0.9 
-                    }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="relative z-10 w-full h-full"
-                  >
+                  <div className={`hero-model relative z-10 w-full h-full ${isModelVisible ? 'model-loaded' : ''}`}>
                     <model-viewer
                       ref={modelViewerRef}
                       src={model3530Data.modelUrl}
@@ -311,7 +274,7 @@ const Hero3530 = () => {
                         setShowLoader(false);
                       }}
                     />
-                  </motion.div>
+                  </div>
                 )}
                 
                 {/* Минималистичный лоадер - ТОЛЬКО при необходимости */}
@@ -327,25 +290,17 @@ const Hero3530 = () => {
                 )}
               </motion.div>
 
-              {/* Обновленные фичи-карточки - МИНИМАЛИСТИЧНЫЕ БЕЗ ГРАНИЦ */}
+              {/* Premium feature карточки - плавные CSS анимации */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
                 {featuresRight.map(({ icon, label }, i) => (
-                  <motion.div
+                  <div
                     key={label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: 0.7 + i * 0.1,
-                      duration: 0.5,
-                      ease: "easeOut",
-                    }}
-                    whileHover={{ scale: 1.01, y: -1 }}
-                    whileTap={{ scale: 0.99 }}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 transform-gpu"
+                    className={`hero-feature-card hero-feature-${i + 1} flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer focus-visible:outline-1 focus-visible:outline-white focus-visible:outline-offset-1`}
                     style={{
                       backgroundColor: "rgba(255,255,255,0.06)",
                       backdropFilter: "blur(8px)",
                     }}
+                    tabIndex={0}
                   >
                     <div className="flex items-center justify-center w-6 h-6 rounded-md bg-white/10 flex-shrink-0">
                       <Icon
@@ -362,21 +317,14 @@ const Hero3530 = () => {
                 ))}
               </div>
 
-              {/* Обновленное дополнительное описание - БЕЗ ГРАНИЦ */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: 1.0,
-                  duration: 0.6,
-                  ease: "easeOut",
-                }}
-                whileHover={{ scale: 1.005 }}
-                className="flex items-start gap-3 px-4 py-3 rounded-lg transition-all duration-300 transform-gpu"
+              {/* Premium дополнительное описание - плавные CSS переходы */}
+              <div
+                className="hero-description flex items-start gap-3 px-4 py-3 rounded-lg cursor-pointer focus-visible:outline-1 focus-visible:outline-white focus-visible:outline-offset-1"
                 style={{
                   backgroundColor: "rgba(255,255,255,0.04)",
                   backdropFilter: "blur(6px)",
                 }}
+                tabIndex={0}
               >
                 <div className="flex items-center justify-center w-6 h-6 rounded-md bg-white/8 flex-shrink-0 mt-0.5">
                   <Icon
@@ -390,9 +338,9 @@ const Hero3530 = () => {
                   Лёгкая интеграция в корпоративные сети различной сложности,
                   поддержка кольцевых топологий, автоматизация и удалённое управление
                 </span>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
