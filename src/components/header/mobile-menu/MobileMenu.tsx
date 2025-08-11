@@ -70,9 +70,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       {/* GPU-OPTIMIZED Overlay */}
       <div 
         className={`lg:hidden fixed inset-0 z-40 transition-opacity duration-300 ease-out ${
-          isOpen ? 'overlay-open' : 'overlay-closed pointer-events-none'
+          isOpen ? '' : 'pointer-events-none'
         }`}
         onClick={onClose}
+        style={{
+          opacity: isOpen ? 1 : 0
+        }}
       >
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-emerald-900/10" />
@@ -81,15 +84,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       {/* GPU-FIRST Mobile Menu */}
       <div
         ref={menuRef}
-        className={`lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-screen z-50 shadow-2xl flex flex-col border-l border-gray-100 transition-transform duration-240 ease-gpu ${
-          isOpen ? 'menu-open' : 'menu-closed'
-        }`}
+        className={`lg:hidden fixed top-0 right-0 w-full max-w-xs sm:max-w-sm h-screen z-50 shadow-2xl flex flex-col border-l border-gray-100 transition-transform duration-300 ease-out`}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         style={{
-          transform: isDragging ? `translateX(${dragX.get()}px)` : undefined,
-          opacity: isDragging ? dragOpacity.get() : undefined,
+          transform: isDragging 
+            ? `translateX(${dragX.get()}px)` 
+            : isOpen 
+            ? 'translateX(0)' 
+            : 'translateX(100%)',
+          opacity: isDragging ? dragOpacity.get() : (isOpen ? 1 : 0),
         }}
       >
         {/* Background with GPU layer */}
@@ -159,26 +164,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           --dist-lg: 24px;
         }
 
-        /* GPU-Only Animations */
-        .overlay-open {
-          opacity: 1;
-          will-change: opacity;
-        }
-        .overlay-closed {
-          opacity: 0;
-          will-change: auto;
-        }
+        /* Удалены конфликтующие классы overlay-open/overlay-closed */
 
-        .menu-open {
-          transform: translateX(0);
-          opacity: 1;
-          will-change: transform, opacity;
-        }
-        .menu-closed {
-          transform: translateX(100%);
-          opacity: 0;
-          will-change: auto;
-        }
+        /* Удалены конфликтующие классы menu-open/menu-closed */
 
         .menu-content-transition {
           transform: translateX(0);
