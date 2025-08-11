@@ -10,32 +10,47 @@
   --stagger-step: 28ms;
 }
 
-/* Container Layer Optimization */
+/* Container Base State - Always Visible */
 .device-card-premium {
+  /* Base Layout */
+  position: relative;
+  z-index: 1;
+
   /* GPU Compositing Setup */
   backface-visibility: hidden;
   contain: paint;
   isolation: isolate;
 
-  /* Initial State for Entrance */
-  opacity: 0;
-  transform: translate3d(0, var(--amp), 0) scale(0.985);
-
-  /* Entrance Animation with Stagger */
-  animation: premium-card-enter var(--dur-in) var(--ease-premium) forwards;
-  animation-delay: calc(var(--card-index, 0) * var(--stagger-step));
+  /* Default State - Always Visible */
+  opacity: 1;
+  transform: none;
+  will-change: auto;
 
   /* Interactive Preparation */
   transition:
-    transform var(--dur-hover) var(--ease-hover),
-    border-color var(--dur-hover) var(--ease-hover);
+    transform var(--dur-hover, 160ms) var(--ease-hover, ease-out),
+    border-color var(--dur-hover, 160ms) var(--ease-hover, ease-out);
 }
 
-/* Entrance Animation Keyframes */
-@keyframes premium-card-enter {
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+/* Entrance Animation - Only for Motion Preference */
+@media (prefers-reduced-motion: no-preference) {
+  .device-card-premium {
+    /* Initial State for Entrance */
+    opacity: 0;
+    transform: translate3d(0, var(--amp, 8px), 0) scale(0.985);
+
+    /* Entrance Animation with Custom Stagger */
+    animation: premium-card-enter var(--dur-in, 400ms)
+      var(--ease-premium, ease-out) forwards;
+    animation-delay: var(--stagger-delay, 0ms);
+  }
+
+  /* Entrance Animation Keyframes */
+  @keyframes premium-card-enter {
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
   }
 }
 
@@ -58,7 +73,7 @@
   will-change: auto;
 }
 
-/* Shadow Enhancement via Transform (No box-shadow) */
+/* Shadow Enhancement via Pseudo Element */
 .device-card-premium::before {
   content: "";
   position: absolute;
@@ -70,10 +85,10 @@
   );
   border-radius: inherit;
   opacity: 0;
-  transform: translate3d(0, 8px, 0) scale(1.02);
-  transition: opacity var(--dur-hover) var(--ease-hover);
+  transform: translateZ(0) translate3d(0, 8px, 0) scale(1.02);
+  transition: opacity var(--dur-hover, 160ms) var(--ease-hover, ease-out);
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
 }
 
 .device-card-premium:hover::before {
@@ -88,8 +103,10 @@
     --amp: clamp(3px, 0.5vw, 10px);
   }
 
-  .device-card-premium {
-    transform: translate3d(0, var(--amp), 0) scale(0.988);
+  @media (prefers-reduced-motion: no-preference) {
+    .device-card-premium {
+      transform: translate3d(0, var(--amp, 6px), 0) scale(0.988);
+    }
   }
 
   .device-card-premium:hover,
@@ -110,7 +127,7 @@
   }
 }
 
-/* Reduced Motion Accessibility */
+/* Reduced Motion - Minimal Animation */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-in: 80ms;
@@ -120,14 +137,10 @@
   }
 
   .device-card-premium {
-    transform: translate3d(0, var(--amp), 0) scale(0.999);
-  }
-
-  @keyframes premium-card-enter {
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
+    /* Always visible, no entrance animation */
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 
   .device-card-premium:hover,
@@ -142,12 +155,6 @@
   .device-card-premium::before {
     display: none;
   }
-}
-
-/* Force Compositing Layer for Stable Performance */
-.device-card-premium,
-.device-card-premium::before {
-  transform: translateZ(0);
 }
 
 /* 240Hz+ Optimization */

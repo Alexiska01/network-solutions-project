@@ -76,7 +76,7 @@ export default function DeviceCard3530({
   return (
     <div
       className="device-card-premium bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-md h-full flex flex-col w-full max-w-full"
-      style={{ '--card-index': index } as React.CSSProperties}
+      style={{ '--stagger-delay': `${index * 28}ms` } as React.CSSProperties}
     >
       {/* Top */}
       <div className="p-3 sm:p-4 pb-2">
