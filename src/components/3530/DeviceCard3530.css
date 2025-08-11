@@ -1,60 +1,204 @@
-/* DeviceCard3530 - Simple Premium Animations */
+/* DeviceCard3530 - World-Class Airiness Animations */
 
-/* Base - Always Visible */
+/* Premium Animation Tokens */
+:root {
+  --card-ease-ethereal: cubic-bezier(0.16, 1, 0.3, 1);
+  --card-ease-float: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --card-ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+  --card-duration-breathe: clamp(800ms, 1200ms + 0.3vw, 1800ms);
+  --card-duration-float: clamp(600ms, 800ms + 0.2vw, 1200ms);
+  --card-amplitude-rise: clamp(24px, 3vw, 48px);
+  --card-amplitude-float: clamp(16px, 2vw, 32px);
+}
+
+/* Base State - Always Visible Foundation */
 .device-card-premium {
+  /* Guaranteed visibility */
   opacity: 1 !important;
   visibility: visible !important;
   display: flex !important;
 
-  /* GPU optimization */
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  /* Positioning for stacking context */
+  position: relative;
+  z-index: 1;
 
-  /* Smooth transitions */
+  /* Premium GPU compositing */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+
+  /* Base transform for animations */
+  transform: translate3d(0, 0, 0) scale(1);
+
+  /* Smooth interactive transitions */
   transition:
-    transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1),
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    transform var(--card-duration-float) var(--card-ease-float),
+    border-color 400ms var(--card-ease-gentle),
+    box-shadow 500ms var(--card-ease-gentle);
 }
 
-/* Simple entrance animation - only if motion allowed */
+/* Hidden State - Before Intersection */
+.device-card-premium.is-hidden {
+  opacity: 0 !important;
+  transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.92)
+    rotateX(8deg);
+  filter: blur(1px);
+}
+
+/* Visible State Trigger - Intersection Observer */
 @media (prefers-reduced-motion: no-preference) {
-  .device-card-premium {
-    animation: card-enter 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  .device-card-premium.is-visible {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
+    filter: blur(0px);
+
+    /* Ethereal entrance animation */
+    animation: card-breathe-in var(--card-duration-breathe)
+      var(--card-ease-ethereal) both;
     animation-delay: var(--stagger-delay, 0ms);
   }
+}
 
-  @keyframes card-enter {
+/* World-Class Entrance Animation */
+@keyframes card-breathe-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.88)
+      rotateX(12deg) rotateY(-2deg);
+    filter: blur(2px) brightness(0.8);
+  }
+
+  20% {
+    opacity: 0.3;
+    transform: translate3d(0, calc(var(--card-amplitude-rise) * 0.6), 0)
+      scale(0.94) rotateX(8deg) rotateY(-1deg);
+    filter: blur(1px) brightness(0.9);
+  }
+
+  60% {
+    opacity: 0.8;
+    transform: translate3d(0, calc(var(--card-amplitude-rise) * 0.15), 0)
+      scale(0.99) rotateX(2deg) rotateY(0deg);
+    filter: blur(0.5px) brightness(0.98);
+  }
+
+  80% {
+    opacity: 0.95;
+    transform: translate3d(0, calc(var(--card-amplitude-rise) * -0.05), 0)
+      scale(1.01) rotateX(-1deg);
+    filter: blur(0px) brightness(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg);
+    filter: blur(0px) brightness(1);
+  }
+}
+
+/* Ethereal Hover - Floating Effect */
+.device-card-premium.is-visible:hover {
+  transform: translate3d(0, calc(var(--card-amplitude-float) * -0.3), 8px)
+    scale(1.02) rotateX(-2deg);
+  border-color: #93c5fd;
+  box-shadow:
+    0 8px 32px rgba(56, 110, 170, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(147, 197, 253, 0.1);
+}
+
+/* Gentle Press */
+.device-card-premium.is-visible:active {
+  transform: translate3d(0, calc(var(--card-amplitude-float) * -0.1), 2px)
+    scale(0.98) rotateX(1deg);
+  transition-duration: 150ms;
+}
+
+/* Subtle Glow Enhancement */
+.device-card-premium.is-visible::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: radial-gradient(
+    800px circle at 50% 50%,
+    rgba(147, 197, 253, 0.03) 0%,
+    rgba(56, 110, 170, 0.02) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 600ms var(--card-ease-gentle);
+}
+
+.device-card-premium.is-visible:hover::before {
+  opacity: 1;
+}
+
+/* High DPI Refinements */
+@media (min-resolution: 3dppx) {
+  :root {
+    --card-duration-breathe: clamp(600ms, 900ms + 0.2vw, 1400ms);
+    --card-amplitude-rise: clamp(18px, 2.5vw, 36px);
+    --card-amplitude-float: clamp(12px, 1.5vw, 24px);
+  }
+
+  .device-card-premium.is-hidden {
+    transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.94)
+      rotateX(6deg);
+  }
+}
+
+/* Large Display Enhancement */
+@media (min-width: 1600px) {
+  :root {
+    --card-amplitude-rise: clamp(32px, 4vw, 64px);
+    --card-amplitude-float: clamp(20px, 2.5vw, 40px);
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --card-duration-breathe: 200ms;
+    --card-duration-float: 150ms;
+    --card-amplitude-rise: 4px;
+    --card-amplitude-float: 2px;
+  }
+
+  .device-card-premium.is-hidden {
+    opacity: 0 !important;
+    transform: translate3d(0, 4px, 0) scale(0.98);
+    filter: none;
+  }
+
+  .device-card-premium.is-visible {
+    animation: card-simple-in 200ms ease-out both;
+    animation-delay: calc(var(--stagger-delay, 0ms) * 0.3);
+  }
+
+  @keyframes card-simple-in {
     from {
       opacity: 0;
-      transform: translateZ(0) translateY(8px) scale(0.98);
+      transform: translate3d(0, 4px, 0) scale(0.98);
     }
     to {
       opacity: 1;
-      transform: translateZ(0) translateY(0) scale(1);
+      transform: translate3d(0, 0, 0) scale(1);
     }
   }
-}
 
-/* Hover effects */
-.device-card-premium:hover {
-  transform: translateZ(0) translateY(-2px) scale(1.01);
-  border-color: #93c5fd;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-.device-card-premium:active {
-  transform: translateZ(0) translateY(-1px) scale(0.99);
-}
-
-/* Reduced motion fallback */
-@media (prefers-reduced-motion: reduce) {
-  .device-card-premium {
-    animation: none !important;
+  .device-card-premium.is-visible:hover {
+    transform: translate3d(0, -2px, 0) scale(1.01);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
-  .device-card-premium:hover {
-    transform: translateZ(0) translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  .device-card-premium::before {
+    display: none;
   }
+}
+
+/* Performance Optimization */
+.device-card-premium * {
+  backface-visibility: hidden;
 }

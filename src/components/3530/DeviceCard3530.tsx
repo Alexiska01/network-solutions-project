@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useEffect, useRef, useState } from "react";
 import './DeviceCard3530.css';
 
 // По спецификации (см. таблицу)
@@ -72,12 +73,37 @@ export default function DeviceCard3530({
 }: DeviceCard3530Props) {
   const specs = getSpecs(model);
   const isMobile = useIsMobile();
+  const cardRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '50px 0px -50px 0px'
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <article
-      className="device-card-premium bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-md h-full flex flex-col w-full max-w-full"
+      ref={cardRef}
+      className={`device-card-premium ${isVisible ? 'is-visible' : 'is-hidden'} bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-md h-full flex flex-col w-full max-w-full`}
       style={{ 
-        '--stagger-delay': `${index * 28}ms`,
+        '--stagger-delay': `${index * 80}ms`,
+        '--card-index': index,
         opacity: 1,
         visibility: 'visible'
       } as React.CSSProperties}
