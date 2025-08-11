@@ -38,7 +38,7 @@ const products = [
     gradientPosition: "from-blue-800 to-teal-600",
   },
   {
-    title: "Системы\nуправления",
+    title: "Системы управления",
     description: "Централизованные платформы для управления инфраструктурой",
     features: [
       "Унифицированная панель",
