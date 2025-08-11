@@ -1,0 +1,112 @@
+/* WarrantyCard.css - Анимации для карточки гарантии */
+
+.warranty-card {
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.warranty-card.animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Анимация для заголовка */
+.warranty-header {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.2s;
+}
+
+.warranty-card.animate .warranty-header {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Анимация для иконки */
+.warranty-icon {
+  opacity: 0;
+  transform: scale(0.8) rotate(-10deg);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.3s;
+}
+
+.warranty-card.animate .warranty-icon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* Анимация для заголовка */
+.warranty-title {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.4s;
+}
+
+.warranty-card.animate .warranty-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Анимация для элементов списка */
+.warranty-feature-item {
+  opacity: 0;
+  transform: translateX(-15px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.warranty-card.animate .warranty-feature-item:nth-child(1) {
+  transition-delay: 0.5s;
+}
+
+.warranty-card.animate .warranty-feature-item:nth-child(2) {
+  transition-delay: 0.6s;
+}
+
+.warranty-card.animate .warranty-feature-item:nth-child(3) {
+  transition-delay: 0.7s;
+}
+
+.warranty-card.animate .warranty-feature-item:nth-child(4) {
+  transition-delay: 0.8s;
+}
+
+.warranty-card.animate .warranty-feature-item:nth-child(5) {
+  transition-delay: 0.9s;
+}
+
+.warranty-card.animate .warranty-feature-item:nth-child(6) {
+  transition-delay: 1s;
+}
+
+.warranty-card.animate .warranty-feature-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Hover эффекты */
+.warranty-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+.warranty-feature-item:hover {
+  transform: translateX(5px);
+}
+
+/* Адаптивность */
+@media (max-width: 640px) {
+  .warranty-card {
+    transform: translateY(20px) scale(0.99);
+  }
+
+  .warranty-header {
+    transform: translateY(-10px);
+  }
+
+  .warranty-feature-item {
+    transform: translateX(-10px);
+  }
+}
