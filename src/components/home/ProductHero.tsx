@@ -207,10 +207,10 @@ const ProductHero = () => {
     if (!isMobile || !modelRef.current) return;
     const mv = modelRef.current as any;
     const init = () => {
-      mv.cameraOrbit = "0deg 78deg 1.0m";
-      mv.fieldOfView = "35deg";
-      mv.minCameraOrbit = "auto auto 1.0m";
-      mv.maxCameraOrbit = "auto auto 1.0m";
+      mv.cameraOrbit = "0deg 80deg 1.1m";
+      mv.fieldOfView = "40deg";
+      mv.minCameraOrbit = "auto auto 1.1m";
+      mv.maxCameraOrbit = "auto auto 1.1m";
       mv.jumpCameraToGoal?.();
     };
     init();
@@ -369,9 +369,9 @@ const ProductHero = () => {
                         auto-rotate
                         auto-rotate-delay="0"
                         rotation-per-second="32deg"
-                        camera-orbit="0deg 75deg 1.2m"
-                        min-camera-orbit="auto auto 1.2m"
-                        max-camera-orbit="auto auto 1.2m"
+                        camera-orbit="0deg 80deg 1.1m"
+                        min-camera-orbit="auto auto 1.1m"
+                        max-camera-orbit="auto auto 1.1m"
                         field-of-view="40deg"
                         exposure="1.2"
                         shadow-intensity="0.3"
