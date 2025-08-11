@@ -3,6 +3,7 @@ import Icon from "@/components/ui/icon";
 import { useEffect, useState, useRef } from "react";
 import { modelPreloader } from '@/utils/modelPreloader';
 import { modelCacheManager } from '@/utils/modelCacheManager';
+import "./Hero3530.css";
 
 // Фичи для правого блока IDS3530
 const featuresRight = [
@@ -51,8 +52,90 @@ const Hero3530 = () => {
   const [isModelLoaded, setIsModelLoaded] = useState(false);
   const [isModelVisible, setIsModelVisible] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [is120fps, setIs120fps] = useState(false);
   const modelViewerRef = useRef<any>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const hasCheckedCacheRef = useRef(false);
+
+  // Определение мобильного устройства и FPS
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Детекция высокой частоты обновления
+  useEffect(() => {
+    let frameCount = 0;
+    let startTime = 0;
+    let animationId: number;
+
+    const measureFPS = () => {
+      if (frameCount === 0) {
+        startTime = performance.now();
+      }
+      frameCount++;
+      
+      if (frameCount === 60) {
+        const endTime = performance.now();
+        const fps = Math.round(60000 / (endTime - startTime));
+        
+        if (fps >= 115) {
+          setIs120fps(true);
+          console.log(`🚀 Hero3530: Обнаружен ${fps} FPS дисплей - активирован режим 120 FPS!`);
+        } else {
+          setIs120fps(false);
+          console.log(`📺 Hero3530: Стандартный ${fps} FPS дисплей`);
+        }
+        return;
+      }
+      
+      animationId = requestAnimationFrame(measureFPS);
+    };
+
+    // Проверка поддержки высокой частоты через media query
+    const highRefreshSupported = window.matchMedia('(min-refresh-rate: 120hz)').matches;
+    if (highRefreshSupported) {
+      setIs120fps(true);
+      console.log('🚀 Hero3530: 120Hz+ дисплей определен через CSS media query');
+    } else {
+      animationId = requestAnimationFrame(measureFPS);
+    }
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, []);
+
+  // Intersection Observer для анимации появления при скролле
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          console.log('👁️ Hero3530: Секция попала в зону видимости - запуск анимаций');
+        }
+      },
+      { 
+        threshold: isMobile ? 0.2 : 0.3,
+        rootMargin: isMobile ? '-20px' : '-50px'
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isMobile]);
 
   useEffect(() => {
     const checkModelCacheStatus = async () => {
@@ -139,38 +222,51 @@ const Hero3530 = () => {
     }
   }, [isModelVisible]);
 
+  // Адаптивные длительности анимаций
+  const getAnimationDuration = (baseDuration: number) => {
+    if (is120fps) {
+      return isMobile ? baseDuration * 0.8 : baseDuration * 0.75;
+    }
+    return isMobile ? baseDuration * 0.9 : baseDuration;
+  };
+
   return (
-    <section className="bg-gradient-hero text-white py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden min-h-[420px] md:min-h-[480px]">
+    <section 
+      ref={sectionRef}
+      className={`bg-gradient-hero text-white py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden min-h-[420px] md:min-h-[480px] hero-gpu ${
+        is120fps ? 'hero-120fps' : ''
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-start lg:items-center w-full">
           
           {/* Левая часть - Текстовый контент */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{
-              duration: 0.7,
+              duration: getAnimationDuration(0.7),
               delay: 0.1,
               type: "spring",
               stiffness: 120,
             }}
-            className="lg:pr-4 xl:pr-8"
+            className="lg:pr-4 xl:pr-8 text-content-gpu"
           >
             <motion.p
-              className="text-xs sm:text-sm text-blue-200 font-medium mb-1 sm:mb-2 md:mb-3 uppercase tracking-wide"
+              className="text-xs sm:text-sm text-blue-200 font-medium mb-1 sm:mb-2 md:mb-3 uppercase tracking-wide text-gpu"
               initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: getAnimationDuration(0.5), delay: 0.2 }}
             >
               Серия корпоративных коммутаторов
             </motion.p>
             
             <motion.h1
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 leading-tight"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 leading-tight title-gpu"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{
-                duration: 0.6,
+                duration: getAnimationDuration(0.6),
                 delay: 0.3,
                 type: "spring",
                 stiffness: 140,
@@ -180,17 +276,17 @@ const Hero3530 = () => {
             </motion.h1>
             
             <motion.div
-              className="mb-4 sm:mb-5 md:mb-6 lg:mb-8 space-y-2 sm:space-y-3"
+              className="mb-4 sm:mb-5 md:mb-6 lg:mb-8 space-y-2 sm:space-y-3 features-list-gpu"
               initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: getAnimationDuration(0.5), delay: 0.6 }}
             >
               <div className="flex items-center gap-2 sm:gap-3 text-blue-100">
                 <Icon
                   name="Server"
                   size={18}
                   strokeWidth={1.8}
-                  className="text-blue-300 flex-shrink-0"
+                  className="text-blue-300 flex-shrink-0 icon-gpu"
                 />
                 <span className="text-xs sm:text-sm md:text-base">
                   До 760 Вт PoE+, 10G uplink, модульные БП
@@ -201,7 +297,7 @@ const Hero3530 = () => {
                   name="Layers3"
                   size={18}
                   strokeWidth={1.8}
-                  className="text-blue-300 flex-shrink-0"
+                  className="text-blue-300 flex-shrink-0 icon-gpu"
                 />
                 <span className="text-xs sm:text-sm md:text-base">
                   Стек до 8 устройств, кольцевые топологии
@@ -212,7 +308,7 @@ const Hero3530 = () => {
                   name="Settings"
                   size={18}
                   strokeWidth={1.8}
-                  className="text-blue-300 flex-shrink-0"
+                  className="text-blue-300 flex-shrink-0 icon-gpu"
                 />
                 <span className="text-xs sm:text-sm md:text-base">
                   QoS, SNMP, автоматизация (ZTP), удалённое управление
@@ -223,11 +319,12 @@ const Hero3530 = () => {
             {/* Обновленная кнопка - только одна */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.9 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: getAnimationDuration(0.5), delay: 0.9 }}
+              className="button-container-gpu"
             >
               <button
-                className="bg-white text-[#0065B3] px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 min-h-[44px] hover:scale-105 hover:shadow-lg transform-gpu"
+                className="bg-white text-[#0065B3] px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white transition-all duration-300 min-h-[44px] hover:scale-105 hover:shadow-lg transform-gpu cta-button-gpu"
                 onClick={() =>
                   window.open(
                     "https://drive.google.com/file/d/1-4xHlvPUr7kUBCQBzgh7Lz2FGC1COfwe/view?usp=drive_link",
@@ -242,10 +339,10 @@ const Hero3530 = () => {
 
           {/* Правая часть - 3D модель и фичи */}
           <motion.div
-            className="relative mt-4 sm:mt-6 lg:mt-0"
+            className="relative mt-4 sm:mt-6 lg:mt-0 model-section-gpu"
             initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            transition={{ duration: getAnimationDuration(0.7), delay: 0.4 }}
           >
             <div className="flex flex-col space-y-4 sm:space-y-5 md:space-y-6">
               
@@ -253,9 +350,9 @@ const Hero3530 = () => {
               <motion.div
                 variants={cardVariants}
                 initial="hidden"
-                animate="visible"
+                animate={isInView ? "visible" : "hidden"}
                 whileHover="hover"
-                className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[420px] h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] mx-auto lg:mx-0"
+                className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[420px] h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] mx-auto lg:mx-0 model-container-gpu"
               >
                 {/* 3D модель - БЕЗ ФОНА, ГРАНИЦ И КОНТЕЙНЕРОВ */}
                 {isModelLoaded && (
@@ -333,15 +430,15 @@ const Hero3530 = () => {
                   <motion.div
                     key={label}
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{
                       delay: 0.7 + i * 0.1,
-                      duration: 0.5,
+                      duration: getAnimationDuration(0.5),
                       ease: "easeOut",
                     }}
                     whileHover={{ scale: 1.01, y: -1 }}
                     whileTap={{ scale: 0.99 }}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 transform-gpu"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 transform-gpu feature-card-gpu"
                     style={{
                       backgroundColor: "rgba(255,255,255,0.06)",
                       backdropFilter: "blur(8px)",
@@ -352,7 +449,7 @@ const Hero3530 = () => {
                         name={icon as any}
                         size={16}
                         strokeWidth={1.8}
-                        className="text-white/90"
+                        className="text-white/90 icon-gpu"
                       />
                     </div>
                     <span className="text-white/90 font-medium text-sm sm:text-base leading-snug">
@@ -365,14 +462,14 @@ const Hero3530 = () => {
               {/* Обновленное дополнительное описание - БЕЗ ГРАНИЦ */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{
                   delay: 1.0,
-                  duration: 0.6,
+                  duration: getAnimationDuration(0.6),
                   ease: "easeOut",
                 }}
                 whileHover={{ scale: 1.005 }}
-                className="flex items-start gap-3 px-4 py-3 rounded-lg transition-all duration-300 transform-gpu"
+                className="flex items-start gap-3 px-4 py-3 rounded-lg transition-all duration-300 transform-gpu description-card-gpu"
                 style={{
                   backgroundColor: "rgba(255,255,255,0.04)",
                   backdropFilter: "blur(6px)",
@@ -383,7 +480,7 @@ const Hero3530 = () => {
                     name="ServerCog"
                     size={16}
                     strokeWidth={1.8}
-                    className="text-white/80"
+                    className="text-white/80 icon-gpu"
                   />
                 </div>
                 <span className="text-white/80 font-medium text-xs sm:text-sm leading-relaxed">

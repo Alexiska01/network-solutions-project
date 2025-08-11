@@ -1,0 +1,319 @@
+/* ===== HERO3530 GPU OPTIMIZATIONS ===== */
+
+/* Core GPU acceleration for all devices */
+.hero-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  isolation: isolate;
+  contain: layout style;
+  will-change: transform, opacity;
+}
+
+/* Text content GPU optimization */
+.text-content-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.text-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
+}
+
+.title-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  will-change: transform, opacity;
+}
+
+/* Features list optimization */
+.features-list-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Button container GPU optimization */
+.button-container-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.cta-button-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, box-shadow, background-color;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Desktop button hover effects */
+@media (hover: hover) and (pointer: fine) {
+  .cta-button-gpu:hover {
+    transform: translate3d(0, -3px, 0) scale(1.05);
+    box-shadow:
+      0 20px 40px -12px rgba(0, 101, 179, 0.4),
+      0 8px 16px -4px rgba(0, 101, 179, 0.3);
+  }
+}
+
+/* Mobile button touch effects */
+@media (hover: none) and (pointer: coarse) {
+  .cta-button-gpu:active {
+    transform: translate3d(0, -1px, 0) scale(1.02);
+    box-shadow:
+      0 12px 24px -8px rgba(0, 101, 179, 0.3),
+      0 4px 8px -2px rgba(0, 101, 179, 0.2);
+  }
+}
+
+/* Model section GPU optimization */
+.model-section-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+.model-container-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Feature cards GPU optimization */
+.feature-card-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, box-shadow;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Desktop feature card hover */
+@media (hover: hover) and (pointer: fine) {
+  .feature-card-gpu:hover {
+    transform: translate3d(2px, -4px, 0) scale(1.02);
+    box-shadow:
+      0 16px 32px -8px rgba(255, 255, 255, 0.1),
+      0 8px 16px -4px rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Mobile feature card touch */
+@media (hover: none) and (pointer: coarse) {
+  .feature-card-gpu:active {
+    transform: translate3d(1px, -2px, 0) scale(1.01);
+    box-shadow:
+      0 8px 16px -4px rgba(255, 255, 255, 0.08),
+      0 4px 8px -2px rgba(255, 255, 255, 0.04);
+  }
+}
+
+/* Description card GPU optimization */
+.description-card-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, box-shadow;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Desktop description card hover */
+@media (hover: hover) and (pointer: fine) {
+  .description-card-gpu:hover {
+    transform: translate3d(1px, -2px, 0) scale(1.005);
+    box-shadow:
+      0 12px 24px -6px rgba(255, 255, 255, 0.08),
+      0 6px 12px -3px rgba(255, 255, 255, 0.04);
+  }
+}
+
+/* Mobile description card touch */
+@media (hover: none) and (pointer: coarse) {
+  .description-card-gpu:active {
+    transform: translate3d(0.5px, -1px, 0) scale(1.002);
+    box-shadow:
+      0 8px 16px -4px rgba(255, 255, 255, 0.06),
+      0 4px 8px -2px rgba(255, 255, 255, 0.03);
+  }
+}
+
+/* Icons GPU optimization */
+.icon-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Desktop icon hover */
+@media (hover: hover) and (pointer: fine) {
+  .feature-card-gpu:hover .icon-gpu {
+    transform: translate3d(0, 0, 0) scale(1.1) rotate(5deg);
+  }
+
+  .description-card-gpu:hover .icon-gpu {
+    transform: translate3d(0, 0, 0) scale(1.05) rotate(3deg);
+  }
+
+  .cta-button-gpu:hover .icon-gpu {
+    transform: translate3d(2px, 0, 0) scale(1.1);
+  }
+}
+
+/* Mobile icon touch */
+@media (hover: none) and (pointer: coarse) {
+  .feature-card-gpu:active .icon-gpu {
+    transform: translate3d(0, 0, 0) scale(1.05) rotate(2deg);
+  }
+
+  .description-card-gpu:active .icon-gpu {
+    transform: translate3d(0, 0, 0) scale(1.02) rotate(1deg);
+  }
+
+  .cta-button-gpu:active .icon-gpu {
+    transform: translate3d(1px, 0, 0) scale(1.05);
+  }
+}
+
+/* ===== HIGH REFRESH RATE SUPPORT ===== */
+
+/* 60Hz базовая частота */
+:root {
+  --hero-text-duration: 700ms;
+  --hero-model-duration: 800ms;
+  --hero-feature-duration: 500ms;
+  --hero-button-duration: 300ms;
+}
+
+/* 120Hz ускоренные анимации */
+@media (min-refresh-rate: 120hz) {
+  :root {
+    --hero-text-duration: 560ms;
+    --hero-model-duration: 640ms;
+    --hero-feature-duration: 400ms;
+    --hero-button-duration: 240ms;
+  }
+}
+
+/* 240Hz максимальная производительность */
+@media (min-refresh-rate: 240hz) {
+  :root {
+    --hero-text-duration: 420ms;
+    --hero-model-duration: 480ms;
+    --hero-feature-duration: 300ms;
+    --hero-button-duration: 180ms;
+  }
+}
+
+/* 120fps optimization class */
+.hero-120fps .text-content-gpu {
+  animation-duration: var(--hero-text-duration);
+}
+
+.hero-120fps .model-container-gpu {
+  transition-duration: var(--hero-model-duration);
+}
+
+.hero-120fps .feature-card-gpu {
+  transition-duration: var(--hero-feature-duration);
+}
+
+.hero-120fps .cta-button-gpu {
+  transition-duration: var(--hero-button-duration);
+}
+
+/* Автоматическая очистка will-change для всех устройств */
+.hero-gpu:not(:hover):not(:focus-within) {
+  will-change: auto;
+}
+
+.text-content-gpu:not(:hover):not(:active) {
+  will-change: auto;
+}
+
+.model-section-gpu:not(:hover):not(:active) {
+  will-change: auto;
+}
+
+.feature-card-gpu:not(:hover):not(:active) {
+  will-change: auto;
+}
+
+.cta-button-gpu:not(:hover):not(:active) {
+  will-change: auto;
+}
+
+/* ===== ACCESSIBILITY & PERFORMANCE ===== */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .hero-gpu *,
+  .text-content-gpu *,
+  .model-section-gpu *,
+  .feature-card-gpu,
+  .cta-button-gpu {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .icon-gpu {
+    transform: none !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .feature-card-gpu,
+  .description-card-gpu,
+  .cta-button-gpu {
+    transition-duration: 200ms;
+  }
+
+  .icon-gpu {
+    transition-duration: 150ms;
+  }
+}
+
+/* Force GPU acceleration for all animated elements */
+.hero-gpu,
+.text-content-gpu,
+.text-gpu,
+.title-gpu,
+.features-list-gpu,
+.button-container-gpu,
+.cta-button-gpu,
+.model-section-gpu,
+.model-container-gpu,
+.feature-card-gpu,
+.description-card-gpu,
+.icon-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile specific optimizations */
+@media (max-width: 768px) {
+  .feature-card-gpu {
+    will-change: transform;
+  }
+
+  .cta-button-gpu {
+    will-change: transform, background-color;
+  }
+
+  .icon-gpu {
+    will-change: transform;
+  }
+}
