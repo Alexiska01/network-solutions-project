@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
+import { useInViewAnimate } from "@/hooks/useInViewAnimate";
 import './3530/DeviceCard3530.css';
 
 type Feature = {
@@ -72,8 +73,6 @@ const FEATURES: Feature[] = [
   },
 ];
 
-
-
 function FeatureCard({
   feature,
   index,
@@ -81,37 +80,23 @@ function FeatureCard({
   feature: Feature;
   index: number;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { 
-        threshold: 0.1,
-        rootMargin: '50px 0px -50px 0px'
-      }
-    );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, index * 80);
+    
+    return () => clearTimeout(timer);
+  }, [index]);
 
   return (
     <div
-      ref={cardRef}
-      className={`device-card-premium ${isVisible ? 'is-visible' : 'is-hidden'} backdrop-blur-md bg-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40`}
-      style={{ 
-        '--stagger-delay': `${index * 80}ms`,
-        '--card-index': index
+      className={`device-card-premium backdrop-blur-md bg-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 transform-gpu ${
+        isVisible ? 'is-visible' : 'is-hidden'
+      }`}
+      style={{
+        '--delay': `${index * 80}ms`
       } as React.CSSProperties}
     >
       <div className="flex items-start gap-3 sm:gap-4">
@@ -136,35 +121,19 @@ function FeatureCard({
 }
 
 const KeyFeatures3530 = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isSectionVisible, setIsSectionVisible] = useState(false);
+  const { ref, inView } = useInViewAnimate(0.1);
+  const [hasTriggered, setHasTriggered] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsSectionVisible(true);
-          observer.disconnect();
-        }
-      },
-      { 
-        threshold: 0.1,
-        rootMargin: '100px 0px -50px 0px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+    if (inView && !hasTriggered) setHasTriggered(true);
+  }, [inView, hasTriggered]);
 
   return (
     <section
-      ref={sectionRef}
-      className={`device-card-premium ${isSectionVisible ? 'is-visible' : 'is-hidden'} py-8 sm:py-10 md:py-12 px-3 sm:px-4 md:px-10 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl`}
-      style={{ '--stagger-delay': '0ms' } as React.CSSProperties}
+      ref={ref}
+      className={`device-card-premium py-8 sm:py-10 md:py-12 px-3 sm:px-4 md:px-10 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl ${
+        hasTriggered ? 'is-visible' : 'is-hidden'
+      }`}
     >
       <div className="text-center mb-6 sm:mb-8 pt-1 sm:pt-2">
         <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-3 sm:mb-4 md:mb-5 tracking-wide drop-shadow-sm">
