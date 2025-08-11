@@ -262,9 +262,6 @@ const WarrantyPage: React.FC = () => {
           {/* Горизонтальный таймлайн для десктопа */}
           <div className="journey-timeline hidden lg:block">
             <div className="relative">
-              {/* Линия соединения */}
-              <div className="journey-line absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#32398e] to-[#53c2a4] transform -translate-y-1/2"></div>
-              
               <div className="grid grid-cols-4 gap-8 relative z-10">
                 {[
                   { icon: "MessageCircle", title: "Заявка", description: "Обратитесь к нам любым удобным способом" },

@@ -78,38 +78,25 @@ export const initWarrantyAnimations = () => {
           }
           
           // Journey Section
-          else if (
-            element.classList.contains('journey-section') ||
-            element.classList.contains('journey-timeline') ||
-            element.classList.contains('journey-timeline-mobile')
-          ) {
-            const container = element.classList.contains('journey-section')
-              ? element
-              : element.closest('.journey-section');
-            if (!container) return;
-
-            const title = container.querySelector('.journey-title');
-            const line = container.querySelector('.journey-line');
-            const steps = container.querySelectorAll('.journey-step');
-
-            // Анимируем оба таймлайна, если они есть
-            const timelines = container.querySelectorAll('.journey-timeline, .journey-timeline-mobile');
+          else if (element.classList.contains('journey-section')) {
+            const title = element.querySelector('.journey-title');
+            const line = element.querySelector('.journey-line');
+            const timelines = element.querySelectorAll('.journey-timeline, .journey-timeline-mobile');
 
             setTimeout(() => title?.classList.add('visible'), 200);
             timelines.forEach((tl) => {
               setTimeout(() => (tl as HTMLElement).classList.add('visible'), 400);
             });
             setTimeout(() => line?.classList.add('visible'), 800);
-
-            steps.forEach((step, index) => {
-              setTimeout(() => {
-                step.classList.add('visible');
-                setTimeout(() => step.querySelector('.journey-step-icon')?.classList.add('visible'), 300);
-                setTimeout(() => step.querySelector('.journey-step-title')?.classList.add('visible'), 500);
-                setTimeout(() => step.querySelector('.journey-step-description')?.classList.add('visible'), 700);
-              }, 1200 + (index * 200));
-            });
           }
+
+          // Анимация каждого шага пути клиента отдельно
+          else if (element.classList.contains('journey-step')) {
+            setTimeout(() => element.classList.add('visible'), 200);
+            setTimeout(() => element.querySelector('.journey-step-icon')?.classList.add('visible'), 400);
+            setTimeout(() => element.querySelector('.journey-step-title')?.classList.add('visible'), 600);
+            setTimeout(() => element.querySelector('.journey-step-description')?.classList.add('visible'), 800);
+           }
           
           observer.unobserve(element);
         }
@@ -123,11 +110,14 @@ export const initWarrantyAnimations = () => {
     .service-section-title,
     .service-section-subtitle,
     .service-card,
-    .journey-section,
-    .journey-timeline,
-    .journey-timeline-mobile
+    .journey-section
   `);
 
+  // Отдельно отслеживаем шаги пути клиента
+  const journeySteps = document.querySelectorAll('.journey-step');
+  journeySteps.forEach((step) => {
+    observer.observe(step);
+  });
   
   // Start observing
   elementsToAnimate.forEach((element) => {
