@@ -6,6 +6,7 @@
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.service-card.visible,
 .service-card.animate {
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -23,6 +24,7 @@
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.service-section-title.visible,
 .service-section-title.animate {
   opacity: 1;
   transform: translateY(0);
@@ -35,6 +37,7 @@
   transition-delay: 0.2s;
 }
 
+.service-section-subtitle.visible,
 .service-section-subtitle.animate {
   opacity: 1;
   transform: translateY(0);
@@ -48,7 +51,9 @@
   transition-delay: 0.3s;
 }
 
-.service-card.animate .service-header {
+.service-card.visible .service-header,
+.service-card.animate .service-header,
+.service-header.visible {
   opacity: 1;
   transform: translateX(0);
 }
@@ -61,7 +66,9 @@
   transition-delay: 0.4s;
 }
 
-.service-card.animate .service-icon {
+.service-card.visible .service-icon,
+.service-card.animate .service-icon,
+.service-icon.visible {
   opacity: 1;
   transform: scale(1) rotate(0deg);
 }
@@ -74,7 +81,9 @@
   transition-delay: 0.5s;
 }
 
-.service-card.animate .service-title {
+.service-card.visible .service-title,
+.service-card.animate .service-title,
+.service-title.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -122,7 +131,9 @@
   transition-delay: 1.4s;
 }
 
-.service-card.animate .service-feature-item {
+.service-card.visible .service-feature-item,
+.service-card.animate .service-feature-item,
+.service-feature-item.visible {
   opacity: 1;
   transform: translateX(0);
 }

@@ -71,7 +71,7 @@ export const initWarrantyAnimations = () => {
 
   // Находим все элементы для анимации
   const elementsToAnimate = document.querySelectorAll(
-    '.warranty-card, .service-card, .journey-section'
+    '.warranty-card, .service-card, .journey-section, .service-section-title, .service-section-subtitle'
   );
 
   // Запускаем наблюдение

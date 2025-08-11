@@ -6,6 +6,7 @@
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.warranty-card.visible,
 .warranty-card.animate {
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -19,7 +20,9 @@
   transition-delay: 0.2s;
 }
 
-.warranty-card.animate .warranty-header {
+.warranty-card.visible .warranty-header,
+.warranty-card.animate .warranty-header,
+.warranty-header.visible {
   opacity: 1;
   transform: translateX(0);
 }
@@ -32,7 +35,9 @@
   transition-delay: 0.3s;
 }
 
-.warranty-card.animate .warranty-icon {
+.warranty-card.visible .warranty-icon,
+.warranty-card.animate .warranty-icon,
+.warranty-icon.visible {
   opacity: 1;
   transform: scale(1) rotate(0deg);
 }
@@ -45,7 +50,9 @@
   transition-delay: 0.4s;
 }
 
-.warranty-card.animate .warranty-title {
+.warranty-card.visible .warranty-title,
+.warranty-card.animate .warranty-title,
+.warranty-title.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -81,7 +88,9 @@
   transition-delay: 1s;
 }
 
-.warranty-card.animate .warranty-feature-item {
+.warranty-card.visible .warranty-feature-item,
+.warranty-card.animate .warranty-feature-item,
+.warranty-feature-item.visible {
   opacity: 1;
   transform: translateX(0);
 }
