@@ -78,14 +78,27 @@ export const initWarrantyAnimations = () => {
           }
           
           // Journey Section
-          else if (element.classList.contains('journey-section')) {
-            const title = element.querySelector('.journey-title');
-            const timeline = element.querySelector('.journey-timeline');
-            const line = element.querySelector('.journey-line');
-            const steps = element.querySelectorAll('.journey-step');
+          else if (
+            element.classList.contains('journey-section') ||
+            element.classList.contains('journey-timeline') ||
+            element.classList.contains('journey-timeline-mobile')
+          ) {
+            const container = element.classList.contains('journey-section')
+              ? element
+              : element.closest('.journey-section');
+            if (!container) return;
+
+            const title = container.querySelector('.journey-title');
+            const line = container.querySelector('.journey-line');
+            const steps = container.querySelectorAll('.journey-step');
+
+            // Анимируем оба таймлайна, если они есть
+            const timelines = container.querySelectorAll('.journey-timeline, .journey-timeline-mobile');
 
             setTimeout(() => title?.classList.add('visible'), 200);
-            setTimeout(() => timeline?.classList.add('visible'), 400);
+            timelines.forEach((tl) => {
+              setTimeout(() => (tl as HTMLElement).classList.add('visible'), 400);
+            });
             setTimeout(() => line?.classList.add('visible'), 800);
 
             steps.forEach((step, index) => {
@@ -110,9 +123,12 @@ export const initWarrantyAnimations = () => {
     .service-section-title,
     .service-section-subtitle,
     .service-card,
-    .journey-section
+    .journey-section,
+    .journey-timeline,
+    .journey-timeline-mobile
   `);
 
+  
   // Start observing
   elementsToAnimate.forEach((element) => {
     observer.observe(element);

@@ -43,12 +43,78 @@
   }
 }
 
-/* Enhanced Title Animation */
 .warranty-hero-title {
-  opacity: 0;
-  transform: translate3d(0, 80px, 0) scale(0.9) rotateX(15deg);
-  animation: heroTitleReveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
+  position: relative;
+  z-index: 2;
 }
+
+/* === Journey Timeline Mobile Animation (новое) === */
+.journey-timeline-mobile {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: opacity, transform;
+}
+
+.journey-timeline-mobile.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Общая анимация для шагов */
+.journey-step {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.journey-step.visible {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* Комбинируем fade-in + glow-пульс в одной декларации */
+.warranty-hero-title.warranty-hero-glow-text {
+  animation:
+    heroTitleFadeGlow 2s cubic-bezier(0.23, 1, 0.32, 1) 0.1s both,
+    titleGlowPulse    4s cubic-bezier(0.4, 0, 0.6, 1)    0s infinite;
+}
+
+@keyframes heroTitleFadeGlow {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+    filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+  }
+}
+
+@media (max-width: 768px) {
+  .warranty-hero-title {
+    animation-duration: 2.2s;
+    animation-delay: 0.15s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .warranty-hero-title {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
 
 @keyframes heroTitleReveal {
   0% {
@@ -83,7 +149,6 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: titleGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   text-shadow:
     0 0 20px rgba(255, 255, 255, 0.3),
     0 0 40px rgba(255, 255, 255, 0.1),
@@ -271,9 +336,11 @@
 }
 
 @media (max-width: 768px) {
-  .warranty-hero-title {
-    animation-duration: 1.4s;
-    animation-delay: 0.2s;
+  /* Мобильная версия: чуть дольше fade-in и плавнее пульс */
+  .warranty-hero-title.warranty-hero-glow-text {
+    animation:
+      heroTitleFadeGlow 2.4s cubic-bezier(0.23, 1, 0.32, 1) 0.15s both,
+      titleGlowPulse    4.4s cubic-bezier(0.4, 0, 0.6, 1)    0s infinite;
   }
 
   .warranty-hero-description {
