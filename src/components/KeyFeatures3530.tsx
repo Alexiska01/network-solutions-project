@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
 import { useInViewAnimate } from "@/hooks/useInViewAnimate";
-import './3530/DeviceCard3530.css';
 
 type Feature = {
   title: string;
@@ -73,31 +73,39 @@ const FEATURES: Feature[] = [
   },
 ];
 
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 24,
+    scale: 0.95,
+    transition: { duration: 0.35 },
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
+    },
+  },
+};
+
 function FeatureCard({
   feature,
-  index,
 }: {
   feature: Feature;
-  index: number;
 }) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, index * 80);
-    
-    return () => clearTimeout(timer);
-  }, [index]);
-
   return (
-    <div
-      className={`device-card-premium backdrop-blur-md bg-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 transform-gpu ${
-        isVisible ? 'is-visible' : 'is-hidden'
-      }`}
-      style={{
-        '--delay': `${index * 80}ms`
-      } as React.CSSProperties}
+    <motion.div
+      variants={cardVariants}
+      whileHover={{
+        y: -4,
+        boxShadow: "0px 6px 20px rgba(0,0,0,0.08)",
+        transition: { duration: 0.3 },
+      }}
+      whileTap={{ scale: 0.98 }}
+      className="backdrop-blur-md bg-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-white/25 shadow-lg hover:bg-white/[0.22] hover:border-white/40 transition-all duration-300 transform-gpu"
     >
       <div className="flex items-start gap-3 sm:gap-4">
         <div className="flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 rounded-full border border-white/30 flex items-center justify-center bg-white/10">
@@ -116,7 +124,7 @@ function FeatureCard({
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -128,12 +136,15 @@ const KeyFeatures3530 = () => {
     if (inView && !hasTriggered) setHasTriggered(true);
   }, [inView, hasTriggered]);
 
+  const animateState = hasTriggered ? "visible" : "hidden";
+
   return (
-    <section
+    <motion.section
       ref={ref}
-      className={`device-card-premium py-8 sm:py-10 md:py-12 px-3 sm:px-4 md:px-10 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl ${
-        hasTriggered ? 'is-visible' : 'is-hidden'
-      }`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+      className="py-8 sm:py-10 md:py-12 px-3 sm:px-4 md:px-10 bg-white/10 rounded-2xl sm:rounded-3xl shadow-xl backdrop-blur-xl"
     >
       <div className="text-center mb-6 sm:mb-8 pt-1 sm:pt-2">
         <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-3 sm:mb-4 md:mb-5 tracking-wide drop-shadow-sm">
@@ -141,12 +152,26 @@ const KeyFeatures3530 = () => {
         </h2>
         <div className="w-16 h-px bg-gradient-to-r from-[#0065B3] via-[#4DB1D4] to-[#0065B3] mx-auto opacity-80" />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-7">
-        {FEATURES.map((feature, index) => (
-          <FeatureCard feature={feature} index={index} key={feature.title} />
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-7"
+        initial="hidden"
+        animate={animateState}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.08,
+              delayChildren: 0.1,
+              when: "beforeChildren",
+            },
+          },
+        }}
+      >
+        {FEATURES.map((feature) => (
+          <FeatureCard feature={feature} key={feature.title} />
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 
