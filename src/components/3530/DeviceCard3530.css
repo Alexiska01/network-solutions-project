@@ -1,0 +1,197 @@
+/*
+ * Premium DeviceCard3530 Animations
+ * GPU-first, enterprise-grade performance
+ */
+
+:root {
+  /* Motion Design Tokens */
+  --device-card-ease-premium: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --device-card-ease-hover: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --device-card-duration-enter: clamp(280ms, calc(280ms + 0.15vw), 520ms);
+  --device-card-duration-hover: 160ms;
+  --device-card-amplitude: clamp(4px, 0.6vw, 12px);
+  --device-card-stagger: 28ms;
+}
+
+/*
+ * Base Card State - Always Visible & Stable
+ */
+.device-card-premium {
+  /* Explicit visibility - prevent white flash */
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  /* Layer management */
+  position: relative;
+  z-index: 1;
+
+  /* GPU compositing without breaking layout */
+  backface-visibility: hidden;
+  transform: translateZ(0);
+
+  /* Stable transition setup */
+  transition:
+    transform var(--device-card-duration-hover) var(--device-card-ease-hover),
+    border-color var(--device-card-duration-hover) var(--device-card-ease-hover);
+
+  /* Clean will-change management */
+  will-change: auto;
+}
+
+/*
+ * Entrance Animation - Motion Preference Only
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .device-card-premium {
+    /* Reset for entrance animation */
+    opacity: 0 !important;
+    transform: translateZ(0) translate3d(0, var(--device-card-amplitude), 0)
+      scale(0.985);
+
+    /* Staggered entrance */
+    animation: device-card-enter var(--device-card-duration-enter)
+      var(--device-card-ease-premium) forwards;
+    animation-delay: var(--stagger-delay, 0ms);
+  }
+}
+
+/*
+ * Entrance Keyframes
+ */
+@keyframes device-card-enter {
+  to {
+    opacity: 1 !important;
+    transform: translateZ(0) translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/*
+ * Interactive States - Micro-interactions
+ */
+.device-card-premium:hover,
+.device-card-premium:focus-within {
+  will-change: transform;
+  transform: translateZ(0) translate3d(0, -2px, 0) scale(1.002);
+  border-color: #93c5fd;
+}
+
+.device-card-premium:active {
+  will-change: transform;
+  transform: translateZ(0) translate3d(0, -1px, 0) scale(0.998);
+}
+
+/*
+ * Clean will-change when idle
+ */
+.device-card-premium:not(:hover):not(:focus-within):not(:active) {
+  will-change: auto;
+}
+
+/*
+ * Subtle Shadow Enhancement
+ */
+.device-card-premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at 50% 50%,
+    rgba(56, 110, 170, 0.04),
+    transparent
+  );
+  opacity: 0;
+  transform: translateZ(-1px) translate3d(0, 8px, 0) scale(1.02);
+  transition: opacity var(--device-card-duration-hover)
+    var(--device-card-ease-hover);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.device-card-premium:hover::before {
+  opacity: 1;
+}
+
+/*
+ * High-DPI Display Optimizations
+ */
+@media (min-resolution: 3dppx) {
+  :root {
+    --device-card-duration-enter: clamp(220ms, calc(220ms + 0.12vw), 420ms);
+    --device-card-duration-hover: 140ms;
+    --device-card-amplitude: clamp(3px, 0.5vw, 10px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .device-card-premium {
+      transform: translateZ(0) translate3d(0, var(--device-card-amplitude), 0)
+        scale(0.988);
+    }
+  }
+
+  .device-card-premium:hover,
+  .device-card-premium:focus-within {
+    transform: translateZ(0) translate3d(0, -1px, 0) scale(1.001);
+  }
+}
+
+/*
+ * Large Display Enhancements
+ */
+@media (min-width: 1600px) {
+  :root {
+    --device-card-amplitude: clamp(6px, 0.8vw, 16px);
+  }
+
+  .device-card-premium:hover,
+  .device-card-premium:focus-within {
+    transform: translateZ(0) translate3d(0, -3px, 0) scale(1.003);
+  }
+}
+
+/*
+ * Accessibility - Reduced Motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --device-card-duration-enter: 0ms;
+    --device-card-duration-hover: 80ms;
+    --device-card-amplitude: 0px;
+  }
+
+  .device-card-premium {
+    /* Force immediate visibility */
+    opacity: 1 !important;
+    transform: translateZ(0) !important;
+    animation: none !important;
+  }
+
+  .device-card-premium:hover,
+  .device-card-premium:focus-within {
+    transform: translateZ(0) translate3d(0, -1px, 0);
+  }
+
+  .device-card-premium:active {
+    transform: translateZ(0) scale(0.999);
+  }
+
+  .device-card-premium::before {
+    display: none;
+  }
+}
+
+/*
+ * High Refresh Rate Optimization
+ */
+@media (min-resolution: 2dppx) and (min-width: 1920px) {
+  :root {
+    --device-card-duration-hover: 120ms;
+  }
+}
+
+/*
+ * Force Hardware Acceleration - Last Resort
+ */
+.device-card-premium * {
+  backface-visibility: hidden;
+}

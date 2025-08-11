@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import './DeviceCardPremium.css';
+import './DeviceCard3530.css';
 
 // По спецификации (см. таблицу)
 function getSpecs(model: SwitchModel) {
@@ -74,9 +74,14 @@ export default function DeviceCard3530({
   const isMobile = useIsMobile();
 
   return (
-    <div
+    <article
       className="device-card-premium bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-md h-full flex flex-col w-full max-w-full"
-      style={{ '--stagger-delay': `${index * 28}ms` } as React.CSSProperties}
+      style={{ 
+        '--stagger-delay': `${index * 28}ms`,
+        opacity: 1,
+        visibility: 'visible'
+      } as React.CSSProperties}
+      data-card-index={index}
     >
       {/* Top */}
       <div className="p-3 sm:p-4 pb-2">
@@ -190,6 +195,6 @@ export default function DeviceCard3530({
           Выбрать
         </Button>
       </div>
-    </div>
+    </article>
   );
 }
