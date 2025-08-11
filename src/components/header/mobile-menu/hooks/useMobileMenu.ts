@@ -1,65 +1,20 @@
 import { useState, useEffect, useRef } from "react";
-import { navigationItems } from "../../navigationData";
-import type { MenuLevel, TouchState } from "../types";
-
-// Простая реализация spring анимации без Framer Motion
-class SimpleSpring {
-  private value: number = 0;
-  private target: number = 0;
-  private velocity: number = 0;
-  private stiffness: number = 300;
-  private damping: number = 30;
-
-  constructor(initialValue: number = 0) {
-    this.value = initialValue;
-    this.target = initialValue;
-  }
-
-  set(newTarget: number) {
-    this.target = newTarget;
-  }
-
-  get(): number {
-    return this.value;
-  }
-
-  update() {
-    const force = (this.target - this.value) * this.stiffness;
-    this.velocity = (this.velocity + force) * (1 - this.damping / 1000);
-    this.value += this.velocity;
-    
-    // Останавливаем анимацию если очень близко к цели
-    if (Math.abs(this.target - this.value) < 0.1 && Math.abs(this.velocity) < 0.1) {
-      this.value = this.target;
-      this.velocity = 0;
-    }
-    
-    return this.value;
-  }
-}
-
-// Функция для трансформации значений
-const transform = (value: number, inputRange: number[], outputRange: number[]): number => {
-  const progress = Math.max(0, Math.min(1, (value - inputRange[0]) / (inputRange[1] - inputRange[0])));
-  return outputRange[0] + (outputRange[1] - outputRange[0]) * progress;
-};
+import { useSpring, useTransform } from "framer-motion";
+import { navigationItems, productSubmenuItems } from "../../navigationData";
+import type { MenuLevel, MenuState, TouchState } from "../types";
 
 export const useMobileMenu = (isOpen: boolean) => {
   const [menuStack, setMenuStack] = useState<MenuLevel[]>([]);
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [activeItem, setActiveItem] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [touchStart, setTouchStart] = useState<TouchState | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Простая spring анимация для драга
-  const dragXRef = useRef(new SimpleSpring(0));
-  const dragX = dragXRef.current;
-  
-  // Создаем объект для opacity трансформации
-  const dragOpacity = {
-    get: () => transform(dragX.get(), [0, 150], [1, 0.7])
-  };
+  // Spring анимация для драга
+  const dragX = useSpring(0, { stiffness: 300, damping: 30 });
+  const dragOpacity = useTransform(dragX, [0, 150], [1, 0.7]);
 
   // Инициализация главного меню
   useEffect(() => {
@@ -80,12 +35,35 @@ export const useMobileMenu = (isOpen: boolean) => {
     }
   }, [isOpen, dragX]);
 
+  // Блокировка скролла body
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, [isOpen]);
+
   const navigateToLevel = (newLevel: MenuLevel) => {
-    setMenuStack((prev) => [...prev, newLevel]);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setMenuStack((prev) => [...prev, newLevel]);
+      setIsTransitioning(false);
+    }, 150);
   };
 
   const navigateBack = () => {
-    setMenuStack((prev) => prev.slice(0, -1));
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setMenuStack((prev) => prev.slice(0, -1));
+      setIsTransitioning(false);
+    }, 150);
   };
 
   const toggleExpanded = (itemPath: string) => {
@@ -107,6 +85,7 @@ export const useMobileMenu = (isOpen: boolean) => {
     menuStack,
     expandedItems,
     activeItem,
+    isTransitioning,
     touchStart,
     isDragging,
     menuRef,

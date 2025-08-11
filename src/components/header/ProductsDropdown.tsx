@@ -4,126 +4,6 @@ import Icon from "@/components/ui/icon";
 import { DropdownState } from "@/hooks/useDropdownMenu";
 import { productSubmenuItems } from "./navigationData";
 
-// GPU-first оптимизации для ProductsDropdown
-const dropdownStyles = `
-  .products-dropdown-gpu-optimized {
-    /* GPU композитинг для максимальной производительности */
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    isolation: isolate;
-    contain: layout style;
-    will-change: opacity, transform;
-  }
-  
-  .dropdown-button-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    transition: all var(--dropdown-transition-duration, 150ms) cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  
-  .dropdown-panel-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    isolation: isolate;
-    opacity: 0;
-    transform: translate3d(0, -10px, 0) scale(0.95);
-    animation: dropdownEntry var(--dropdown-entry-duration, 200ms) cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  
-  .dropdown-item-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    transition: all var(--dropdown-transition-duration, 150ms) cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  
-  /* Hover оптимизации */
-  @media (hover: hover) and (pointer: fine) {
-    .dropdown-button-gpu:hover {
-      transform: translate3d(0, -1px, 0);
-      will-change: transform, color;
-    }
-    
-    .dropdown-item-gpu:hover {
-      transform: translate3d(2px, 0, 0);
-      will-change: transform, background-color;
-    }
-    
-    .dropdown-button-gpu:not(:hover),
-    .dropdown-item-gpu:not(:hover) {
-      will-change: auto;
-    }
-  }
-  
-  /* Иконки оптимизация */
-  .dropdown-icon-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    transition: transform var(--dropdown-transition-duration, 150ms) cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  
-  /* Текст навигации */
-  .dropdown-text-gpu {
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
-    text-rendering: geometricPrecision;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-  }
-  
-  /* Адаптация под герцовку */
-  :root {
-    --dropdown-transition-duration: 150ms;
-    --dropdown-entry-duration: 200ms;
-  }
-  
-  @media (min-refresh-rate: 120hz) {
-    :root {
-      --dropdown-transition-duration: 120ms;
-      --dropdown-entry-duration: 160ms;
-    }
-  }
-  
-  @media (min-refresh-rate: 240hz) {
-    :root {
-      --dropdown-transition-duration: 100ms;
-      --dropdown-entry-duration: 140ms;
-    }
-  }
-  
-  /* Анимация появления */
-  @keyframes dropdownEntry {
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-  }
-  
-  /* Оптимизация скроллбара */
-  .dropdown-scroll-gpu {
-    scrollbar-width: thin;
-    scrollbar-color: rgb(209 213 219) transparent;
-    scroll-behavior: smooth;
-  }
-  
-  .dropdown-scroll-gpu::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .dropdown-scroll-gpu::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .dropdown-scroll-gpu::-webkit-scrollbar-thumb {
-    background: rgb(209 213 219);
-    border-radius: 3px;
-    transition: background var(--dropdown-transition-duration) ease;
-  }
-  
-  .dropdown-scroll-gpu::-webkit-scrollbar-thumb:hover {
-    background: rgb(156 163 175);
-  }
-`;
-
 interface ProductsDropdownProps {
   isOpen: boolean;
   dropdownState: DropdownState;
@@ -143,14 +23,6 @@ const ProductsDropdown = memo(
   }: ProductsDropdownProps) => {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
-    
-    // Инжект стилей для GPU оптимизации
-    if (typeof document !== 'undefined' && !document.getElementById('dropdown-gpu-styles')) {
-      const style = document.createElement('style');
-      style.id = 'dropdown-gpu-styles';
-      style.textContent = dropdownStyles;
-      document.head.appendChild(style);
-    }
 
     const activeItem = useMemo(
       () =>
@@ -162,18 +34,18 @@ const ProductsDropdown = memo(
 
     return (
       <div
-        className="flex items-center relative products-dropdown-gpu-optimized"
+        className="flex items-center relative"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-normal whitespace-nowrap flex items-center space-x-2 h-[44px] lg:h-[54px] dropdown-button-gpu">
-          <Icon name="Network" size={16} className="dropdown-icon-gpu" />
-          <span className="dropdown-text-gpu">Оборудование</span>
+        <button className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-normal transition-colors whitespace-nowrap flex items-center space-x-2 h-[44px] lg:h-[54px]">
+          <Icon name="Network" size={16} className="" />
+          <span>Оборудование</span>
         </button>
 
         {isOpen && (
           <div
-            className={`absolute left-0 top-full bg-white border border-gray-100 rounded-xl shadow-2xl z-50 flex max-h-[600px] overflow-hidden dropdown-panel-gpu ${isHomePage ? "w-80" : ""}`}
+            className={`absolute left-0 top-full bg-white border border-gray-100 rounded-xl shadow-2xl z-50 animate-fade-in flex max-h-[600px] overflow-hidden ${isHomePage ? "w-80" : ""}`}
           >
             {/* Левая панель - основные разделы */}
             <div

@@ -6,7 +6,7 @@ interface UseTouchGesturesProps {
   isDragging: boolean;
   setTouchStart: (state: TouchState | null) => void;
   setIsDragging: (isDragging: boolean) => void;
-  dragX: { set: (value: number) => void; get: () => number; };
+  dragX: any; // MotionValue<number>
   onClose: () => void;
 }
 
