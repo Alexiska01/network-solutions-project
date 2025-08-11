@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Icon from '@/components/ui/icon';
-import { initWarrantyAnimations } from '@/components/warranty/WarrantyAnimation';
+// import { initWarrantyAnimations } from '@/components/warranty/WarrantyAnimation';
 import '@/components/warranty/WarrantyHero.css';
 import '@/components/warranty/WarrantyCard.css';
 import '@/components/warranty/ServiceCard.css';
@@ -13,24 +13,9 @@ const WarrantyPage: React.FC = () => {
     // Мгновенно устанавливаем позицию в начало страницы
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     
-    const cleanup = initWarrantyAnimations();
-
-    // Отдельная логика для мобильных анимаций
-    const initMobileAnimations = () => {
-      const mobileSteps = document.querySelectorAll('.journey-timeline.lg\\:hidden .journey-step');
-      
-      // Активируем анимации с задержками
-      mobileSteps.forEach((step, index) => {
-        setTimeout(() => {
-          step.classList.add('visible');
-        }, 200 + index * 150);
-      });
-    };
-
-    // Запускаем мобильные анимации через небольшую задержку
-    setTimeout(initMobileAnimations, 500);
-
-    return cleanup;
+    // Убрал все анимации - делаем статичным
+    // const cleanup = initWarrantyAnimations();
+    // return cleanup;
   }, []);
 
   return (
