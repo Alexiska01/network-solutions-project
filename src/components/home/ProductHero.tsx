@@ -1,500 +1,377 @@
-import { useState, useEffect, useRef } from 'react';
-import Icon from '@/components/ui/icon';
-import { useNavigate } from 'react-router-dom';
-import { modelPreloader } from '@/utils/modelPreloader';
-import { modelCacheManager } from '@/utils/modelCacheManager';
+// src/components/product/ProductHero.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useMemo, useRef, useState } from "react";
+import Icon from "@/components/ui/icon";
+import { modelPreloader } from "@/utils/modelPreloader";
+import { modelCacheManager } from "@/utils/modelCacheManager";
+import "./ProductHero.css";
 
-// Конфигурация моделей коммутаторов - только "all" версии
+// Разрешаем web-component <model-viewer> для TSX
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "model-viewer": any;
+    }
+  }
+}
+
+// Конфигурация моделей (исходные данные сохранены)
 const heroData = [
   {
-    id: 'IDS3530',
-    series: '3530',
-    title: 'Коммутаторы IDS3530',
-    description: 'Промышленные коммутаторы для критически важных применений',
-    modelUrl: '/models/3530all.glb',
+    id: "IDS3530",
+    series: "3530",
+    title: "Коммутаторы IDS3530",
+    description: "Корпоративные коммутаторы уровня доступа",
+    modelUrl: "/models/3530all.glb",
     features: [
-      'Встроенные блоки питания',
-      'Поддержка РоЕ/РоЕ+',
-      'Статическая и динамическая маршрутизация'
+      "Встроенные блоки питания",
+      "Поддержка РоЕ/РоЕ+",
+      "Статическая и динамическая маршрутизация",
     ],
-    gradient: 'from-[#32398e] via-[#005baa] to-[#0079b6]',
-    glowColor: '[#005baa]',
-    accentColor: '#53c2a4'
+    gradient: "from-[#32398e] via-[#005baa] to-[#0079b6]",
+    glowColor: "[#005baa]",
+    accentColor: "#53c2a4",
   },
   {
-    id: 'IDS3730',
-    series: '3730',
-    title: 'Коммутаторы IDS3730',
-    description: 'Высокопроизводительные коммутаторы для корпоративных сетей',
-    modelUrl: '/models/3730all.glb',
+    id: "IDS3730",
+    series: "3730",
+    title: "Коммутаторы IDS3730",
+    description: "Корпоративные коммутаторы уровня доступа",
+    modelUrl: "/models/3730all.glb",
     features: [
-      'Два модульных блока питания',
-      'Поддержка РоЕ/РоЕ+',
-      'Статическая и динамическая маршрутизация'
+      "Два модульных блока питания",
+      "Поддержка РоЕ/РоЕ+",
+      "Статическая и динамическая маршрутизация",
     ],
-    gradient: 'from-[#32398e] via-[#8338EC] to-[#B5179E]',
-    glowColor: '[#8338EC]',
-    accentColor: '#FF6B35'
+    gradient: "from-[#32398e] via-[#8338EC] to-[#B5179E]",
+    glowColor: "[#8338EC]",
+    accentColor: "#FF6B35",
   },
   {
-    id: 'IDS4530',
-    series: '4530',
-    title: 'Коммутаторы IDS4530',
-    description: 'Модульные коммутаторы с расширенными возможностями',
-    modelUrl: '/models/4530all.glb',
+    id: "IDS4530",
+    series: "4530",
+    title: "Коммутаторы IDS4530",
+    description: "Корпоративные коммутаторы уровня доступа",
+    modelUrl: "/models/4530all.glb",
     features: [
-      'Два модульных блока питания',
-      'Поддержка РоЕ/РоЕ+',
-      'Поддержка технологии VxLAN'
+      "Два модульных блока питания",
+      "Поддержка РоЕ/РоЕ+",
+      "Поддержка технологии VxLAN",
     ],
-    gradient: 'from-[#0093b6] via-[#00acad] to-[#53c2a4]',
-    glowColor: '[#00acad]',
-    accentColor: '#A0EEC0'
+    gradient: "from-[#0093b6] via-[#00acad] to-[#53c2a4]",
+    glowColor: "[#00acad]",
+    accentColor: "#A0EEC0",
   },
   {
-    id: 'IDS6010',
-    series: '6010',
-    title: 'Коммутаторы IDS6010',
-    description: 'Высокопроизводительные коммутаторы для дата-центров',
-    modelUrl: '/models/6010all.glb',
+    id: "IDS6010",
+    series: "6010",
+    title: "Коммутаторы IDS6010",
+    description: "Корпоративные коммутаторы уровня распределения",
+    modelUrl: "/models/6010all.glb",
     features: [
-      'Два модульных блока питания',
-      'Поддержка РоЕ/РоЕ+',
-      'Поддержка технологии VxLAN'
+      "Два модульных блока питания",
+      "Поддержка РоЕ/РоЕ+",
+      "Поддержка технологии VxLAN",
     ],
-    gradient: 'from-[#FF6B35] via-[#F5B700] to-[#FF8C7A]',
-    glowColor: '[#FF6B35]',
-    accentColor: '#FFD6C2'
-  }
-];
+    gradient: "from-[#FF6B35] via-[#F5B700] to-[#FF8C7A]",
+    glowColor: "[#FF6B35]",
+    accentColor: "#FFD6C2",
+  },
+] as const;
+
+type Refresh =
+  | "60hz"
+  | "90hz"
+  | "120hz"
+  | "144hz"
+  | "240hz";
+
+const parseGradientStops = (twLike: string) => {
+  // ожидает строку формата 'from-[#xxxxxx] via-[#xxxxxx] to-[#xxxxxx]'
+  const m = [...twLike.matchAll(/#([0-9a-fA-F]{3,8})/g)].map((x) => `#${x[1]}`);
+  // гарантируем 3 стопа
+  return [m[0] ?? "#0B3C49", m[1] ?? "#1A237E", m[2] ?? "#2E2E2E"];
+};
+
+const stripBrackets = (s: string) => s.replace("[", "").replace("]", "");
 
 const ProductHero = () => {
-  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
-  const [refreshRate, setRefreshRate] = useState<'60hz' | '90hz' | '120hz' | '144hz' | '240hz'>('60hz');
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [refreshRate, setRefreshRate] = useState<Refresh>("60hz");
+  const intervalRef = useRef<number | null>(null);
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
-  const preloadedViewers = useRef<Map<string, any>>(new Map());
-
-  // Отслеживание размера экрана
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Детекция частоты обновления экрана
-  useEffect(() => {
-    let frameCount = 0;
-    let startTime = 0;
-    let animationId: number;
-
-    const measureRefreshRate = () => {
-      if (frameCount === 0) {
-        startTime = performance.now();
-      }
-      frameCount++;
-      
-      if (frameCount === 120) {
-        const endTime = performance.now();
-        const fps = Math.round(120000 / (endTime - startTime));
-        
-        let detectedRate: typeof refreshRate = '60hz';
-        if (fps >= 230) detectedRate = '240hz';
-        else if (fps >= 140) detectedRate = '144hz';
-        else if (fps >= 115) detectedRate = '120hz';
-        else if (fps >= 85) detectedRate = '90hz';
-        
-        setRefreshRate(detectedRate);
-        
-        // Добавляем класс на body для CSS переменных
-        document.body.className = document.body.className
-          .replace(/refresh-\d+hz/g, '')
-          + ` refresh-${detectedRate}`;
-        
-        console.log(`🚀 ProductHero: ${fps} FPS (${detectedRate}) - GPU анимации активны`);
-        return;
-      }
-      
-      animationId = requestAnimationFrame(measureRefreshRate);
-    };
-
-    if (window.matchMedia('(min-refresh-rate: 120hz)').matches) {
-      setRefreshRate('120hz');
-      document.body.className = document.body.className.replace(/refresh-\d+hz/g, '') + ' refresh-120hz';
-    } else {
-      animationId = requestAnimationFrame(measureRefreshRate);
-    }
-
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, []);
-
-  // Инициализация и мгновенная загрузка при наличии кэша
-  useEffect(() => {
-    const initializeComponent = async () => {
-      console.log('🚀 ProductHero: Инициализация компонента');
-      
-      // Проверяем кэш всех моделей
-      const allModelsInCache = heroData.every(model => 
-        modelPreloader.isLoaded(model.modelUrl)
-      );
-      
-      if (allModelsInCache) {
-        console.log('⚡ ProductHero: Все модели в кэше - мгновенная загрузка');
-        // Синхронизируем состояние UI со всеми моделями из кэша
-        const newStatus: Record<string, boolean> = {};
-        heroData.forEach(model => {
-          newStatus[model.modelUrl] = true;
-        });
-        setModelLoadStatus(newStatus);
-        setIsInitialized(true);
-      } else {
-        console.log('📦 ProductHero: Проверяем доступность моделей по отдельности');
-        // Синхронизируем доступные модели перед инициализацией
-        const partialStatus: Record<string, boolean> = {};
-        
-        for (const model of heroData) {
-          const isPreloaded = modelPreloader.isLoaded(model.modelUrl);
-          const isCached = await modelCacheManager.hasModel(model.modelUrl);
-          
-          if (isPreloaded || isCached) {
-            partialStatus[model.modelUrl] = true;
-            console.log(`✅ ProductHero: Модель ${model.series} доступна (preloader: ${isPreloaded}, cache: ${isCached})`);
-          } else {
-            console.log(`⏳ ProductHero: Модель ${model.series} недоступна`);
-          }
-        }
-        
-        if (Object.keys(partialStatus).length > 0) {
-          setModelLoadStatus(partialStatus);
-        }
-        console.log('📦 ProductHero: Модели не в кэше, начинаем загрузку');
-        // Запускаем обычную загрузку
-        const currentModel = heroData[currentIndex];
-        if (!modelPreloader.isLoaded(currentModel.modelUrl)) {
-          modelPreloader.preloadModel(currentModel.modelUrl, 'high');
-        }
-        setIsInitialized(true);
-      }
-      
-      // Предзагружаем следующую модель заранее
-      const preloadNextModel = () => {
-        const nextIndex = (currentIndex + 1) % heroData.length;
-        const nextModel = heroData[nextIndex];
-        
-        if (!modelPreloader.isLoaded(nextModel.modelUrl)) {
-          modelPreloader.preloadModel(nextModel.modelUrl, 'high');
-        }
-      };
-      
-      // Предзагружаем текущую и следующую модели
-      const currentModel = heroData[currentIndex];
-      
-      // Если модель уже загружена в modelPreloader, обновляем modelLoadStatus
-      const isPreloaded = modelPreloader.isLoaded(currentModel.modelUrl);
-      const isCached = await modelCacheManager.hasModel(currentModel.modelUrl);
-      
-      if (isPreloaded || isCached) {
-        console.log(`✅ ProductHero: Модель ${currentModel.series} доступна (preloader: ${isPreloaded}, cache: ${isCached}), синхронизируем UI`);
-        setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
-        preloadNextModel();
-      } else {
-        console.log(`⏳ ProductHero: Начинаем предзагрузку модели ${currentModel.series}`);
-        // Начинаем загрузку
-        modelPreloader.preloadModel(currentModel.modelUrl, 'high').then(() => {
-          console.log(`✅ ProductHero: Модель ${currentModel.series} предзагружена через ModelPreloader`);
-          setModelLoadStatus(prev => ({ ...prev, [currentModel.modelUrl]: true }));
-          preloadNextModel();
-        }).catch(error => {
-          console.error(`❌ ProductHero: Ошибка предзагрузки модели ${currentModel.series}:`, error);
-        });
-      }
-      
-      preloadNextModel();
-    };
-
-    // Инициализируем компонент сразу при первом рендере
-    if (!isInitialized) {
-      initializeComponent();
-    } else {
-      // При смене слайда - предзагружаем следующий
-      const preloadNextModel = () => {
-        const nextIndex = (currentIndex + 1) % heroData.length;
-        const nextModel = heroData[nextIndex];
-        
-        if (!modelPreloader.isLoaded(nextModel.modelUrl)) {
-          modelPreloader.preloadModel(nextModel.modelUrl, 'high');
-        }
-      };
-      
-      preloadNextModel();
-    }
-  }, [currentIndex, isInitialized]);
-
-  // Мобильная инициализация model-viewer
-  useEffect(() => {
-    if (isMobile && modelRef.current) {
-      const initMobileModel = () => {
-        const mv = modelRef.current as any;
-        if (mv && mv.cameraOrbit) {
-          // Принудительная инициализация для мобильных - отдаленная камера без взаимодействий
-          mv.cameraOrbit = "0deg 75deg 1.6m";
-          mv.fieldOfView = "40deg";
-          mv.minCameraOrbit = "auto auto 1.6m";
-          mv.maxCameraOrbit = "auto auto 1.6m";
-          if (mv.jumpCameraToGoal) {
-            mv.jumpCameraToGoal();
-          }
-        }
-      };
-
-      // Мгновенная инициализация
-      initMobileModel();
-      const timer = setTimeout(initMobileModel, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [isMobile, currentIndex]);
-
-  // Трекинг мыши для параллакс эффектов (только на десктопе)
-  useEffect(() => {
-    if (isMobile) return;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: (e.clientY / window.innerHeight) * 2 - 1
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [isMobile]);
-
-  // Автоматическая смена слайдов каждые 11 секунд
-  useEffect(() => {
-    if (isInitialized) {
-      const interval = setInterval(() => {
-        setIsTransitioning(true);
-        
-        // Предзагружаем модель за 2 слайда вперед
-        const nextNextIndex = (currentIndex + 2) % heroData.length;
-        const nextNextModel = heroData[nextNextIndex];
-        if (!modelPreloader.isLoaded(nextNextModel.modelUrl)) {
-          modelPreloader.preloadModel(nextNextModel.modelUrl, 'low');
-        }
-        
-        setTimeout(async () => {
-          const nextIndex = (currentIndex + 1) % heroData.length;
-          const nextModel = heroData[nextIndex];
-          
-          // Принудительная синхронизация для проблемных моделей
-          if (nextModel.series === '3730' || nextModel.series === '4530' || nextModel.series === '6010') {
-            console.log(`🔧 ProductHero: Принудительная синхронизация при переходе к ${nextModel.series}`);
-            // Проверяем cache и preloader перед синхронизацией
-            try {
-              const hasInCache = modelCacheManager.hasModel ? await modelCacheManager.hasModel(nextModel.modelUrl) : false;
-              const hasInPreloader = modelPreloader.isLoaded(nextModel.modelUrl);
-              
-              if (hasInCache || hasInPreloader) {
-                console.log(`✅ ProductHero: Модель ${nextModel.series} найдена (cache: ${hasInCache}, preloader: ${hasInPreloader})`);
-                setModelLoadStatus(prev => ({ ...prev, [nextModel.modelUrl]: true }));
-              }
-            } catch (error) {
-              console.warn(`⚠️ ProductHero: Ошибка проверки кэша для ${nextModel.series}:`, error);
-            }
-          }
-          
-          setCurrentIndex(nextIndex);
-          setIsTransitioning(false);
-        }, isMobile ? 100 : 300);
-      }, 11000);
-      
-      intervalRef.current = interval;
-      return () => clearInterval(interval);
-    }
-  }, [isInitialized, isMobile, currentIndex]);
 
   const currentData = heroData[currentIndex];
 
+  const gradientStops = useMemo(
+    () => parseGradientStops(currentData.gradient),
+    [currentData.gradient]
+  );
+
+  // mobile breakpoint
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // refresh-rate detection (RAF, без странных matchMedia)
+  useEffect(() => {
+    let id = 0;
+    let frames = 0;
+    let t0 = 0;
+
+    const tick = (t: number) => {
+      if (!t0) t0 = t;
+      frames++;
+      if (frames >= 120) {
+        const fps = Math.round((frames * 1000) / (t - t0));
+        let rate: Refresh = "60hz";
+        if (fps >= 230) rate = "240hz";
+        else if (fps >= 140) rate = "144hz";
+        else if (fps >= 115) rate = "120hz";
+        else if (fps >= 85) rate = "90hz";
+        setRefreshRate(rate);
+
+        // поддерживаем класс на <body>
+        document.body.classList.forEach((c) => {
+          if (/^refresh-\d+hz$/.test(c)) document.body.classList.remove(c);
+        });
+        document.body.classList.add(`refresh-${rate}`);
+        return;
+      }
+      id = requestAnimationFrame(tick);
+    };
+
+    id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  // init + кэш/предзагрузка
+  useEffect(() => {
+    let cancelled = false;
+
+    const run = async () => {
+      // Синхронизируем состояние из preloader/cache
+      const status: Record<string, boolean> = {};
+      for (const m of heroData) {
+        const pre = modelPreloader.isLoaded(m.modelUrl);
+        const cache = (await modelCacheManager.hasModel?.(m.modelUrl)) || false;
+        if (pre || cache) status[m.modelUrl] = true;
+      }
+      if (!cancelled) {
+        if (Object.keys(status).length) setModelLoadStatus((p) => ({ ...p, ...status }));
+        setIsInitialized(true);
+      }
+
+      // активная предзагрузка текущей и следующей
+      const cur = heroData[currentIndex];
+      if (!modelPreloader.isLoaded(cur.modelUrl)) {
+        modelPreloader
+          .preloadModel(cur.modelUrl, "high")
+          .then(() => {
+            if (!cancelled) {
+              setModelLoadStatus((p) => ({ ...p, [cur.modelUrl]: true }));
+            }
+          })
+          .catch(() => {
+            if (!cancelled) {
+              setModelLoadStatus((p) => ({ ...p, [cur.modelUrl]: false }));
+            }
+          });
+      } else {
+        setModelLoadStatus((p) => ({ ...p, [cur.modelUrl]: true }));
+      }
+
+      const nextIndex = (currentIndex + 1) % heroData.length;
+      const next = heroData[nextIndex];
+      if (!modelPreloader.isLoaded(next.modelUrl)) {
+        modelPreloader.preloadModel(next.modelUrl, "high").catch(() => void 0);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentIndex]);
+
+  // mobile init для <model-viewer>
+  useEffect(() => {
+    if (!isMobile || !modelRef.current) return;
+    const mv = modelRef.current as any;
+    const init = () => {
+      mv.cameraOrbit = "0deg 78deg 1.0m";
+      mv.fieldOfView = "35deg";
+      mv.minCameraOrbit = "auto auto 1.0m";
+      mv.maxCameraOrbit = "auto auto 1.0m";
+      mv.jumpCameraToGoal?.();
+    };
+    init();
+    const t = window.setTimeout(init, 50);
+    return () => window.clearTimeout(t);
+  }, [isMobile, currentIndex]);
+
+  // mouse parallax (desktop)
+  useEffect(() => {
+    if (isMobile) return;
+    const onMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      });
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [isMobile]);
+
+  // автосмена слайда
+  useEffect(() => {
+    if (!isInitialized) return;
+    const id = window.setInterval(() => {
+      setIsTransitioning(true);
+
+      // подгружаем модель на 2 шага вперёд "втихую"
+      const next2 = heroData[(currentIndex + 2) % heroData.length];
+      if (!modelPreloader.isLoaded(next2.modelUrl)) {
+        modelPreloader.preloadModel(next2.modelUrl, "low").catch(() => void 0);
+      }
+
+      window.setTimeout(async () => {
+        const next = (currentIndex + 1) % heroData.length;
+        const nextModel = heroData[next];
+
+        try {
+          const hasCache = (await modelCacheManager.hasModel?.(nextModel.modelUrl)) || false;
+          const hasPre = modelPreloader.isLoaded(nextModel.modelUrl);
+          if (hasCache || hasPre) {
+            setModelLoadStatus((p) => ({ ...p, [nextModel.modelUrl]: true }));
+          }
+        } catch {
+          /* noop */
+        }
+
+        setCurrentIndex(next);
+        setIsTransitioning(false);
+      }, isMobile ? 100 : 300);
+    }, 11000);
+    intervalRef.current = id;
+    return () => window.clearInterval(id);
+  }, [isInitialized, isMobile, currentIndex]);
+
+  // CSS custom props для динамики
+  const cssVars: React.CSSProperties = {
+    // цвета
+    ["--current-glow-color" as any]: stripBrackets(currentData.glowColor),
+    ["--current-accent-color" as any]: currentData.accentColor,
+    ["--grad-1" as any]: gradientStops[0],
+    ["--grad-2" as any]: gradientStops[1],
+    ["--grad-3" as any]: gradientStops[2],
+    // параллакс
+    ["--mouse-x" as any]: String(mousePosition.x),
+    ["--mouse-y" as any]: String(mousePosition.y),
+  };
+
   return (
-    <div 
-      className={`hero-container refresh-${refreshRate}`}
+    <div
+      className={`ph-container refresh-${refreshRate}`}
       data-loaded={isInitialized}
-      style={{
-        '--current-glow-color': currentData.glowColor.replace('[', '').replace(']', ''),
-        '--current-accent-color': currentData.accentColor,
-        '--mouse-x': mousePosition.x,
-        '--mouse-y': mousePosition.y
-      } as React.CSSProperties}
+      style={cssVars}
     >
-      {/* Динамический фоновый градиент */}
-      <div 
-        className="hero-bg"
-        style={{
-          background: `linear-gradient(135deg, ${currentData.gradient.replace('from-[', '').replace('] via-[', ', ').replace('] to-[', ', ').replace(']', '')})`
-        }}
-      />
-      
-      {/* Параллакс элементы */}
-      <div className="hero-parallax">
-        {/* Основной световой эффект */}
-        <div
-          className="hero-glow-main"
-          style={{
-            backgroundColor: `${currentData.glowColor.replace('[', '').replace(']', '')}40`
-          }}
-        />
-        
-        {/* Дополнительные световые пятна */}
-        <div
-          className="hero-glow-secondary"
-          style={{
-            backgroundColor: `${currentData.accentColor}33`
-          }}
-        />
-        
-        {/* Геометрические элементы */}
-        <div
-          className="hero-geo-1"
-          style={{
-            borderColor: `${currentData.accentColor}40`
-          }}
-        />
-        
-        <div className="hero-geo-2" />
+      {/* Фоновые слои */}
+      <div className="ph-bg" />
+      <div className="ph-parallax">
+        <div className="ph-glow-main" />
+        <div className="ph-glow-secondary" />
+        <div className="ph-geo-1" />
+        <div className="ph-geo-2" />
       </div>
 
-      {/* Основной контент */}
-      <div className="hero-main">
-        <div className="hero-wrapper my-[143px]">
-          <div className="hero-grid">
-            
-            {/* Левая колонка - контент */}
-            <div className="hero-content">
-              {/* Заголовок */}
-              <div className="hero-header">
-                <div className="hero-badge">
-                  ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ
-                </div>
-                
-                <h1
-                  key={currentData.id}
-                  className="hero-title"
-                >
+      {/* Контентная сетка */}
+      <div className="ph-main">
+        <div className="ph-wrapper">
+          <div className="ph-grid">
+            {/* Левая колонка */}
+            <div className="ph-content">
+              <div className="ph-header">
+                <div className="ph-badge">ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ</div>
+
+                <h1 key={currentData.id} className="ph-title">
                   {currentData.title}
                 </h1>
-                
-                <p
-                  key={`${currentData.id}-desc`}
-                  className="hero-description"
-                >
+
+                <p key={`${currentData.id}-desc`} className="ph-desc">
                   {currentData.description}
                 </p>
               </div>
 
-              {/* Особенности */}
-              <div
-                key={`${currentData.id}-features`}
-                className="hero-features"
-              >
+              <div key={`${currentData.id}-features`} className="ph-features">
                 {currentData.features.map((feature, index) => (
                   <div
                     key={`${currentData.id}-feature-${index}`}
-                    className="hero-feature"
-                    style={{ '--feature-index': index } as React.CSSProperties}
+                    className="ph-feature"
+                    style={{ ["--feature-index" as any]: index }}
                   >
-                    <div 
-                      className="hero-feature-dot"
-                      style={{
-                        backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
-                        boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
-                      }}
-                    />
-                    <span className="hero-feature-text">{feature}</span>
+                    <div className="ph-feature-dot" />
+                    <span className="ph-feature-text">{feature}</span>
                   </div>
                 ))}
               </div>
 
-              {/* Индикатор прогресса */}
-              <div className="hero-progress">
-                <div className="hero-progress-dots">
-                  {heroData.map((_, index) => (
+              <div className="ph-progress">
+                <div className="ph-progress-dots">
+                  {heroData.map((_, idx) => (
                     <div
-                      key={index}
-                      className={`hero-progress-dot ${index === currentIndex ? 'active' : ''}`}
-                      style={index === currentIndex ? {
-                        backgroundColor: currentData.glowColor.replace('[', '').replace(']', ''),
-                        boxShadow: `0 0 10px ${currentData.glowColor.replace('[', '').replace(']', '')}80`
-                      } : {}}
+                      key={idx}
+                      className={`ph-progress-dot ${idx === currentIndex ? "active" : ""}`}
                     />
                   ))}
                 </div>
-                <span className="hero-progress-counter">
-                  {String(currentIndex + 1).padStart(2, '0')} / {String(heroData.length).padStart(2, '0')}
+                <span className="ph-progress-counter">
+                  {String(currentIndex + 1).padStart(2, "0")} /{" "}
+                  {String(heroData.length).padStart(2, "0")}
                 </span>
               </div>
             </div>
 
-            {/* Правая колонка - 3D модель */}
-            <div className="hero-model-container">
-              {/* 3D фоновые эффекты */}
-              <div className="hero-model-effects">
-                <div 
-                  className="hero-model-bg" 
-                  style={{
-                    background: `linear-gradient(135deg, ${currentData.gradient.replace('from-[', '').replace('] via-[', ', ').replace('] to-[', ', ').replace(']', '')})`
-                  }}
-                />
-                <div 
-                  className="hero-model-glow"
-                  style={{
-                    backgroundColor: `${currentData.glowColor.replace('[', '').replace(']', '')}20`
-                  }}
-                />
+            {/* Правая колонка — 3D */}
+            <div className="ph-model-container">
+              <div className="ph-model-effects">
+                <div className="ph-model-bg" />
+                <div className="ph-model-glow" />
               </div>
-              
-              {/* 3D модель с интеллектуальной загрузкой */}
-              <div className="hero-model-wrapper">
-                <div
-                  key={currentData.id}
-                  className="hero-model"
-                >
-                  {/* 3D модель для всех устройств с оптимизированными настройками */}
-                  <div className="hero-model-inner">
-                    {/* Лоадер показывается только если модель НЕ доступна */}
-                    {!modelLoadStatus[currentData.modelUrl] && !modelPreloader.isLoaded(currentData.modelUrl) && (
-                      <div className="hero-loader">
-                        <div className="hero-loader-inner">
-                          <div className="loader" />
-                          <p className="hero-loader-text">Загрузка 3D модели...</p>
+
+              <div className="ph-model-wrapper">
+                <div key={currentData.id} className="ph-model">
+                  <div className="ph-model-inner">
+                    {/* Лоадер (если нет в кэше/предзагрузчике) */}
+                    {!modelLoadStatus[currentData.modelUrl] &&
+                      !modelPreloader.isLoaded(currentData.modelUrl) && (
+                        <div className="ph-loader">
+                          <div className="ph-loader-inner">
+                            <div className="ph-spinner" />
+                            <p className="ph-loader-text">Загрузка 3D модели...</p>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                    
+                      )}
+
                     {isMobile ? (
                       <model-viewer
                         ref={modelRef}
                         src={currentData.modelUrl}
                         alt={currentData.title}
-                        auto-rotate={true}
+                        auto-rotate
                         auto-rotate-delay="0"
-                        rotation-per-second="30deg"
-                        camera-orbit="0deg 75deg 1.6m"
-                        min-camera-orbit="auto auto 1.6m"
-                        max-camera-orbit="auto auto 1.6m"
+                        rotation-per-second="32deg"
+                        camera-orbit="0deg 75deg 1.2m"
+                        min-camera-orbit="auto auto 1.2m"
+                        max-camera-orbit="auto auto 1.2m"
                         field-of-view="40deg"
                         exposure="1.2"
                         shadow-intensity="0.3"
@@ -503,80 +380,71 @@ const ProductHero = () => {
                         loading="eager"
                         reveal="auto"
                         style={{
-                          width: '100%',
-                          height: '100%',
-                          background: 'transparent',
-                          borderRadius: '1rem',
-                          '--progress-bar-color': 'transparent',
-                          '--progress-mask': 'transparent',
-                          pointerEvents: 'none'
+                          width: "100%",
+                          height: "100%",
+                          background: "transparent",
+                          borderRadius: "1rem",
+                          ["--progress-bar-color" as any]: "transparent",
+                          ["--progress-mask" as any]: "transparent",
+                          pointerEvents: "none",
                         }}
-                        onLoad={(e: any) => {
-                          console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
-                          setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: true }));
-                          
-                          // Дополнительная синхронизация с modelPreloader
+                        onLoad={() => {
+                          setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
                           if (!modelPreloader.isLoaded(currentData.modelUrl)) {
-                            console.log(`🔄 ProductHero: Синхронизируем модель ${currentData.series} с preloader`);
-                            modelPreloader.markAsLoaded && modelPreloader.markAsLoaded(currentData.modelUrl);
+                            modelPreloader.markAsLoaded?.(currentData.modelUrl);
                           }
                         }}
-                        onError={(e: any) => {
-                          console.error(`❌ ProductHero: Ошибка загрузки модели ${currentData.series}:`, e);
-                          setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: false }));
-                        }}
+                        onError={() =>
+                          setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }))
+                        }
                       />
                     ) : (
                       <model-viewer
                         ref={modelRef}
                         src={currentData.modelUrl}
                         alt={currentData.title}
-                        auto-rotate={true}
+                        auto-rotate
                         auto-rotate-delay="0"
-                        rotation-per-second="30deg"
-                        camera-controls={true}
-                        camera-orbit="0deg 75deg 1.2m"
+                        rotation-per-second="32deg"
+                        camera-controls
+                        camera-orbit="0deg 80deg 0.97m"
                         min-camera-orbit="auto auto 0.4m"
                         max-camera-orbit="auto auto 2.5m"
-                        field-of-view="30deg"
-                        exposure="1.2"
+                        field-of-view="31deg"
+                        exposure="1.1"
                         shadow-intensity="0.3"
                         environment-image="neutral"
                         interaction-prompt="none"
                         loading="eager"
                         reveal="auto"
                         style={{
-                          width: '100%',
-                          height: '100%',
-                          background: 'transparent',
-                          borderRadius: '1rem',
-                          '--progress-bar-color': 'transparent',
-                          '--progress-mask': 'transparent'
+                          width: "95%",
+                          height: "95%",
+                          background: "transparent",
+                          borderRadius: "0rem",
+                          ["--progress-bar-color" as any]: "transparent",
+                          ["--progress-mask" as any]: "transparent",
                         }}
-                        onLoad={(e: any) => {
-                          console.log(`✅ ProductHero: Модель загружена ${currentData.series}`);
-                          setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: true }));
-                          
-                          // Дополнительная синхронизация с modelPreloader
+                        onLoad={() => {
+                          setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
                           if (!modelPreloader.isLoaded(currentData.modelUrl)) {
-                            console.log(`🔄 ProductHero: Синхронизируем модель ${currentData.series} с preloader`);
-                            modelPreloader.markAsLoaded && modelPreloader.markAsLoaded(currentData.modelUrl);
+                            modelPreloader.markAsLoaded?.(currentData.modelUrl);
                           }
                         }}
-                        onError={(e: any) => {
-                          console.error(`❌ ProductHero: Ошибка загрузки модели ${currentData.series}:`, e);
-                          setModelLoadStatus(prev => ({ ...prev, [currentData.modelUrl]: false }));
-                        }}
+                        onError={() =>
+                          setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }))
+                        }
                       />
                     )}
-                    
-                    {/* Fallback для ошибки загрузки */}
+
                     {modelLoadStatus[currentData.modelUrl] === false && (
-                      <div className="hero-model-error">
-                        <div className="hero-model-error-content">
-                          <Icon name="Wifi" size={48} className="hero-model-error-icon" />
-                          <p className="hero-model-error-title">Модель {currentData.series} недоступна</p>
-                          <p className="hero-model-error-text">Проверьте подключение к сети</p>
+                      <div className="ph-model-error">
+                        <div className="ph-model-error-content">
+                          <Icon name="Wifi" size={48} className="ph-model-error-icon" />
+                          <p className="ph-model-error-title">
+                            Модель {currentData.series} недоступна
+                          </p>
+                          <p className="ph-model-error-text">Проверьте подключение к сети</p>
                         </div>
                       </div>
                     )}
@@ -584,751 +452,13 @@ const ProductHero = () => {
                 </div>
               </div>
             </div>
+            {/* /Правая колонка */}
           </div>
         </div>
       </div>
 
-      {/* Переходные эффекты */}
-      {isTransitioning && !isMobile && (
-        <div className="hero-transition" />
-      )}
-
-      <style jsx>{`
-        .hero-container {
-          position: relative;
-          height: 100vh;
-          background: linear-gradient(135deg, #0B3C49, #1A237E, #2E2E2E);
-          overflow: hidden;
-          opacity: 0;
-          transform: scale(0.98) translate3d(0, 40px, 0);
-          filter: blur(20px) brightness(0.3);
-          animation: heroEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
-        }
-
-        @media (min-width: 768px) {
-          .hero-container {
-            height: 70vh;
-          }
-        }
-
-        @keyframes heroEntry {
-          to {
-            opacity: 1;
-            transform: scale(1) translate3d(0, 0, 0);
-            filter: blur(0) brightness(1);
-          }
-        }
-
-        .hero-bg {
-          position: absolute;
-          inset: 0;
-          opacity: 0.3;
-          transition: transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hero-parallax {
-          position: absolute;
-          inset: 0;
-        }
-
-        .hero-glow-main {
-          position: absolute;
-          top: 25%;
-          left: 33.333%;
-          width: 16rem;
-          height: 16rem;
-          border-radius: 50%;
-          filter: blur(3rem);
-          animation: glowFloat 4s ease-in-out infinite;
-        }
-
-        @media (min-width: 768px) {
-          .hero-glow-main {
-            width: 24rem;
-            height: 24rem;
-          }
-        }
-
-        .hero-glow-secondary {
-          position: absolute;
-          bottom: 25%;
-          right: 33.333%;
-          width: 12rem;
-          height: 12rem;
-          border-radius: 50%;
-          filter: blur(2rem);
-          animation: glowFloat 3s ease-in-out infinite reverse;
-        }
-
-        @media (min-width: 768px) {
-          .hero-glow-secondary {
-            width: 16rem;
-            height: 16rem;
-          }
-        }
-
-        .hero-geo-1 {
-          position: absolute;
-          top: 4rem;
-          right: 2rem;
-          width: 5rem;
-          height: 5rem;
-          border-width: 1px;
-          border-style: solid;
-          border-radius: 0.5rem;
-          transform: rotate(12deg);
-        }
-
-        @media (min-width: 768px) {
-          .hero-geo-1 {
-            top: 5rem;
-            right: 5rem;
-            width: 8rem;
-            height: 8rem;
-          }
-        }
-
-        .hero-geo-2 {
-          position: absolute;
-          bottom: 6rem;
-          left: 2rem;
-          width: 4rem;
-          height: 4rem;
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          border-radius: 50%;
-        }
-
-        @media (min-width: 768px) {
-          .hero-geo-2 {
-            bottom: 8rem;
-            left: 5rem;
-            width: 6rem;
-            height: 6rem;
-          }
-        }
-
-        @keyframes glowFloat {
-          0%, 100% {
-            opacity: 0.3;
-            transform: scale(0.8);
-          }
-          50% {
-            opacity: 0.1;
-            transform: scale(1.2);
-          }
-        }
-
-        .hero-main {
-          position: relative;
-          z-index: 10;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-        }
-
-        @media (min-width: 768px) {
-          .hero-main {
-            flex-direction: row;
-            align-items: center;
-            height: auto;
-          }
-        }
-
-        .hero-wrapper {
-          width: 100%;
-          max-width: 80rem;
-          margin: 0 auto;
-          padding: 0 1rem;
-          height: 100%;
-        }
-
-        @media (min-width: 768px) {
-          .hero-wrapper {
-            padding: 0 2rem;
-            height: auto;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .hero-wrapper {
-            padding: 0 4rem;
-          }
-        }
-
-        .hero-grid {
-          display: grid;
-          gap: 0;
-          align-items: stretch;
-          height: 100%;
-        }
-
-        @media (min-width: 768px) {
-          .hero-grid {
-            gap: 1.5rem;
-            align-items: center;
-            height: auto;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .hero-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-          }
-        }
-
-        .hero-content {
-          display: flex;
-          flex-direction: column;
-          justify-content: end;
-          gap: 1rem;
-          order: 2;
-          padding-bottom: max(1rem, env(safe-area-inset-bottom));
-          padding-top: 1rem;
-          height: 45vh;
-          opacity: 0;
-          transform: translate3d(0, 60px, 0);
-          filter: blur(10px);
-          animation: contentEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) var(--ph-content-delay) forwards;
-        }
-
-        @media (min-width: 768px) {
-          .hero-content {
-            justify-content: center;
-            gap: 1.5rem;
-            order: 1;
-            padding: 0;
-            height: auto;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .hero-content {
-            order: 1;
-          }
-        }
-
-        @keyframes contentEntry {
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            filter: blur(0);
-          }
-        }
-
-        .hero-header {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-
-        @media (min-width: 768px) {
-          .hero-header {
-            gap: 1rem;
-          }
-        }
-
-        .hero-badge {
-          display: inline-block;
-          padding: 0.375rem 0.75rem;
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(0.5rem);
-          border-radius: 9999px;
-          font-size: 0.6875rem;
-          font-weight: 500;
-          color: rgba(255, 255, 255, 0.8);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          opacity: 0;
-          transform: scale(0.5) translate3d(0, 20px, 0);
-          animation: badgeEntry 240ms cubic-bezier(0.68, -0.55, 0.265, 1.55) calc(var(--ph-content-delay) + 300ms) forwards;
-        }
-
-        @media (min-width: 768px) {
-          .hero-badge {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-          }
-        }
-
-        @keyframes badgeEntry {
-          to {
-            opacity: 1;
-            transform: scale(1) translate3d(0, 0, 0);
-          }
-        }
-
-        .hero-title {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: white;
-          line-height: 1.25;
-          opacity: 0;
-          transform: translate3d(0, 60px, 0) scale(0.9);
-          filter: blur(8px);
-          animation: titleEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 500ms) forwards;
-        }
-
-        @media (min-width: 375px) {
-          .hero-title {
-            font-size: 1.875rem;
-          }
-        }
-
-        @media (min-width: 414px) {
-          .hero-title {
-            font-size: 2.25rem;
-          }
-        }
-
-        @media (min-width: 768px) {
-          .hero-title {
-            font-size: 1.875rem;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .hero-title {
-            font-size: 2.25rem;
-          }
-        }
-
-        @media (min-width: 1280px) {
-          .hero-title {
-            font-size: 3rem;
-          }
-        }
-
-        @keyframes titleEntry {
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scale(1);
-            filter: blur(0);
-          }
-        }
-
-        .hero-description {
-          font-size: 0.875rem;
-          color: rgba(255, 255, 255, 0.7);
-          line-height: 1.625;
-          max-width: 32rem;
-          opacity: 0;
-          transform: translate3d(0, 20px, 0);
-          animation: descEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 700ms) forwards;
-        }
-
-        @media (min-width: 375px) {
-          .hero-description {
-            font-size: 1rem;
-          }
-        }
-
-        @media (min-width: 414px) {
-          .hero-description {
-            font-size: 1.125rem;
-          }
-        }
-
-        @media (min-width: 768px) {
-          .hero-description {
-            font-size: 1.125rem;
-            max-width: none;
-          }
-        }
-
-        @keyframes descEntry {
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        .hero-features {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          opacity: 0;
-          animation: featuresEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 900ms) forwards;
-        }
-
-        @media (min-width: 768px) {
-          .hero-features {
-            gap: 0.75rem;
-          }
-        }
-
-        @keyframes featuresEntry {
-          to {
-            opacity: 1;
-          }
-        }
-
-        .hero-feature {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 0.75rem 0.75rem;
-          background: rgba(255, 255, 255, 0.05);
-          backdrop-filter: blur(0.5rem);
-          border-radius: 0.75rem;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          transition: background 300ms;
-          opacity: 0;
-          transform: translate3d(-20px, 0, 0);
-          animation: featureEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 1000ms + var(--feature-index, 0) * 100ms) forwards;
-        }
-
-        @media (min-width: 768px) {
-          .hero-feature {
-            gap: 1rem;
-            padding: 1rem;
-            border-radius: 0.75rem;
-          }
-        }
-
-        .hero-feature:hover {
-          background: rgba(255, 255, 255, 0.1);
-        }
-
-        @keyframes featureEntry {
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        .hero-feature-dot {
-          width: 0.5rem;
-          height: 0.5rem;
-          border-radius: 50%;
-        }
-
-        @media (min-width: 768px) {
-          .hero-feature-dot {
-            width: 0.75rem;
-            height: 0.75rem;
-          }
-        }
-
-        .hero-feature-text {
-          color: white;
-          font-weight: 500;
-          font-size: 0.8125rem;
-          line-height: 1.25;
-        }
-
-        @media (min-width: 375px) {
-          .hero-feature-text {
-            font-size: 0.875rem;
-          }
-        }
-
-        @media (min-width: 414px) {
-          .hero-feature-text {
-            font-size: 1rem;
-          }
-        }
-
-        @media (min-width: 768px) {
-          .hero-feature-text {
-            font-size: 1rem;
-          }
-        }
-
-        .hero-progress {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding-top: 0.75rem;
-          opacity: 0;
-          transform: translate3d(0, 20px, 0);
-          animation: progressEntry 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-content-delay) + 1200ms) forwards;
-        }
-
-        @media (min-width: 768px) {
-          .hero-progress {
-            gap: 1rem;
-            padding-top: 1rem;
-          }
-        }
-
-        @keyframes progressEntry {
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        .hero-progress-dots {
-          display: flex;
-          gap: 0.5rem;
-        }
-
-        .hero-progress-dot {
-          height: 0.25rem;
-          border-radius: 9999px;
-          transition: all 500ms;
-          width: 0.75rem;
-          background: rgba(255, 255, 255, 0.2);
-        }
-
-        .hero-progress-dot.active {
-          width: 2.5rem;
-        }
-
-        @media (min-width: 768px) {
-          .hero-progress-dot {
-            height: 0.25rem;
-            width: 1rem;
-          }
-
-          .hero-progress-dot.active {
-            width: 3rem;
-          }
-        }
-
-        .hero-progress-counter {
-          font-size: 0.8125rem;
-          color: rgba(255, 255, 255, 0.5);
-          font-family: ui-monospace, SFMono-Regular, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-          font-variant-numeric: tabular-nums;
-        }
-
-        @media (min-width: 768px) {
-          .hero-progress-counter {
-            font-size: 0.875rem;
-          }
-        }
-
-        .hero-model-container {
-          position: relative;
-          height: 55vh;
-          order: 1;
-          display: flex;
-          align-items: center;
-          opacity: 0;
-          transform: scale(0.7) rotateY(30deg) rotateX(15deg);
-          filter: blur(20px);
-          animation: modelContainerEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) var(--ph-model-delay) forwards;
-        }
-
-        @media (min-width: 375px) {
-          .hero-model-container {
-            height: 50vh;
-          }
-        }
-
-        @media (min-width: 414px) {
-          .hero-model-container {
-            height: 45vh;
-          }
-        }
-
-        @media (min-width: 768px) {
-          .hero-model-container {
-            height: 25rem;
-            order: 2;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .hero-model-container {
-            height: 31.25rem;
-            order: 2;
-          }
-        }
-
-        @keyframes modelContainerEntry {
-          to {
-            opacity: 1;
-            transform: scale(1) rotateY(0) rotateX(0);
-            filter: blur(0);
-          }
-        }
-
-        .hero-model-effects {
-          position: absolute;
-          inset: 0;
-        }
-
-        .hero-model-bg {
-          position: absolute;
-          inset: 0;
-          opacity: 0.3;
-          border-radius: 1.5rem;
-          filter: blur(2rem);
-          animation: modelBgPulse 4s ease-in-out infinite;
-        }
-
-        .hero-model-glow {
-          position: absolute;
-          inset: 0;
-          border-radius: 50%;
-          filter: blur(3rem);
-          animation: modelGlowPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes modelBgPulse {
-          0%, 100% {
-            opacity: 0.3;
-            transform: scale(0.8) rotate(0deg);
-          }
-          50% {
-            opacity: 0.1;
-            transform: scale(1.1) rotate(5deg);
-          }
-        }
-
-        @keyframes modelGlowPulse {
-          0%, 100% {
-            opacity: 0.3;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.1;
-            transform: scale(1.2);
-          }
-        }
-
-        .hero-model-wrapper {
-          width: 100%;
-          height: 100%;
-        }
-
-        .hero-model {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
-          transform: scale(0.9) translate3d(0, 20px, 0);
-          filter: blur(10px);
-          animation: modelEntry var(--ph-entry-duration) cubic-bezier(0.16, 1, 0.3, 1) calc(var(--ph-model-delay) + 600ms) forwards;
-        }
-
-        @keyframes modelEntry {
-          to {
-            opacity: 1;
-            transform: scale(1) translate3d(0, 0, 0);
-            filter: blur(0);
-          }
-        }
-
-        .hero-model-inner {
-          width: 100%;
-          height: 100%;
-          position: relative;
-        }
-
-        .hero-loader {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 10;
-        }
-
-        .hero-loader-inner {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 1rem;
-        }
-
-        .loader {
-          width: 4rem;
-          height: 4rem;
-          border: 4px solid rgba(255, 255, 255, 0.2);
-          border-top: 4px solid rgba(255, 255, 255, 0.8);
-          border-radius: 50%;
-          animation: loaderSpin 1s linear infinite;
-        }
-
-        @keyframes loaderSpin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-
-        .hero-loader-text {
-          color: rgba(255, 255, 255, 0.6);
-          font-size: 0.875rem;
-        }
-
-        .hero-model-error {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(255, 255, 255, 0.05);
-          backdrop-filter: blur(1rem);
-          border-radius: 1rem;
-        }
-
-        .hero-model-error-content {
-          text-align: center;
-          padding: 2rem;
-        }
-
-        .hero-model-error-icon {
-          color: rgba(255, 255, 255, 0.6);
-          margin: 0 auto 1rem;
-        }
-
-        .hero-model-error-title {
-          color: rgba(255, 255, 255, 0.8);
-          font-size: 1.125rem;
-          font-weight: 500;
-          margin-bottom: 0.5rem;
-        }
-
-        .hero-model-error-text {
-          color: rgba(255, 255, 255, 0.6);
-          font-size: 0.875rem;
-        }
-
-        .hero-transition {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 0.25rem;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-          transform: scaleX(0);
-          transform-origin: left;
-          animation: transitionSlide 160ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes transitionSlide {
-          0% { transform: scaleX(0); }
-          50% { transform: scaleX(1); }
-          100% { transform: scaleX(0); }
-        }
-
-        /* Мобильные оптимизации */
-        @media (max-width: 768px) {
-          /* Отключаем параллакс и сложные эффекты на мобильных */
-          .hero-glow-main,
-          .hero-glow-secondary,
-          .hero-geo-1,
-          .hero-geo-2 {
-            animation-duration: 2s;
-          }
-
-          /* Ускоренные анимации для мобильных */
-          .hero-content,
-          .hero-model-container {
-            animation-delay: 300ms;
-            animation-duration: 200ms;
-          }
-
-          .hero-badge { animation-delay: 400ms; }
-          .hero-title { animation-delay: 500ms; }
-          .hero-description { animation-delay: 600ms; }
-          .hero-features { animation-delay: 700ms; }
-          .hero-feature { animation-delay: calc(750ms + var(--feature-index, 0) * 50ms); }
-          .hero-progress { animation-delay: 900ms; }
-        }
-      `}</style>
+      {/* Переходная линия (desktop) */}
+      {isTransitioning && !isMobile && <div className="ph-transition" />}
     </div>
   );
 };
