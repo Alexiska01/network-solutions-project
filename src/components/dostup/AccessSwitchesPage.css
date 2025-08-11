@@ -785,93 +785,150 @@
   }
 }
 
-/* ===== DESKTOP-ONLY GPU OPTIMIZATIONS ===== */
+/* ===== UNIVERSAL GPU OPTIMIZATIONS ===== */
 
-@media (min-width: 1024px) {
-  /* Core GPU acceleration for desktop */
-  .desktop-access-page-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    isolation: isolate;
-    contain: layout style;
-    will-change: transform, opacity;
-  }
+/* Core GPU acceleration for all devices */
+.access-page-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  isolation: isolate;
+  contain: layout style;
+  will-change: transform, opacity;
+}
 
-  /* Hero section GPU optimization */
-  .desktop-hero-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    -webkit-perspective: 1000px;
-    perspective: 1000px;
-  }
+/* Hero section GPU optimization */
+.hero-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
 
-  /* Product cards premium animations */
-  .desktop-product-card-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    will-change: transform, opacity;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+/* Product cards premium animations */
+.product-card-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  .desktop-product-card-gpu:hover {
+/* Desktop hover effects */
+@media (hover: hover) and (pointer: fine) {
+  .product-card-gpu:hover {
     transform: translate3d(0, -12px, 0) rotateX(2deg) rotateY(1deg);
     box-shadow:
       0 32px 64px -12px rgba(50, 57, 142, 0.25),
       0 20px 40px -12px rgba(0, 0, 0, 0.15),
       0 0 0 1px rgba(50, 57, 142, 0.1);
   }
+}
 
-  /* Spec cards GPU optimizations */
-  .desktop-spec-card-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    will-change: transform, box-shadow;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* Mobile touch effects */
+@media (hover: none) and (pointer: coarse) {
+  .product-card-gpu:active {
+    transform: translate3d(0, -4px, 0) scale(0.98);
+    box-shadow:
+      0 16px 32px -8px rgba(50, 57, 142, 0.2),
+      0 8px 16px -4px rgba(0, 0, 0, 0.1);
   }
+}
 
-  .desktop-spec-card-gpu:hover {
+/* Spec cards GPU optimizations */
+.spec-card-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, box-shadow;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Desktop spec card hover */
+@media (hover: hover) and (pointer: fine) {
+  .spec-card-gpu:hover {
     transform: translate3d(0, -4px, 0) scale(1.03) rotateZ(1deg);
     box-shadow:
       0 20px 40px -12px rgba(0, 0, 0, 0.18),
       0 8px 16px -4px rgba(0, 0, 0, 0.12);
   }
+}
 
-  /* Feature badges GPU optimization */
-  .desktop-feature-badge-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    will-change: transform, opacity;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+/* Mobile spec card touch */
+@media (hover: none) and (pointer: coarse) {
+  .spec-card-gpu:active {
+    transform: translate3d(0, -2px, 0) scale(1.01);
+    box-shadow:
+      0 10px 20px -6px rgba(0, 0, 0, 0.15),
+      0 4px 8px -2px rgba(0, 0, 0, 0.1);
   }
+}
 
-  .desktop-feature-badge-gpu:hover {
+/* Feature badges GPU optimization */
+.feature-badge-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Desktop feature badge hover */
+@media (hover: hover) and (pointer: fine) {
+  .feature-badge-gpu:hover {
     transform: translate3d(2px, -3px, 0) scale(1.05);
   }
+}
 
-  /* Button premium hover */
-  .desktop-access-button-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    will-change: transform, box-shadow;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* Mobile feature badge touch */
+@media (hover: none) and (pointer: coarse) {
+  .feature-badge-gpu:active {
+    transform: translate3d(1px, -1px, 0) scale(1.02);
   }
+}
 
-  .desktop-access-button-gpu:hover {
+/* Button premium effects */
+.access-button-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, box-shadow;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Desktop button hover */
+@media (hover: hover) and (pointer: fine) {
+  .access-button-gpu:hover {
     transform: translate3d(0, -2px, 0) scale(1.02);
     box-shadow:
       0 20px 40px -12px rgba(50, 57, 142, 0.4),
       0 8px 16px -4px rgba(50, 57, 142, 0.3);
   }
+}
 
-  /* Icon rotation effects */
-  .desktop-icon-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* Mobile button touch */
+@media (hover: none) and (pointer: coarse) {
+  .access-button-gpu:active {
+    transform: translate3d(0, -1px, 0) scale(1.01);
+    box-shadow:
+      0 12px 24px -8px rgba(50, 57, 142, 0.3),
+      0 4px 8px -2px rgba(50, 57, 142, 0.2);
   }
+}
 
-  .desktop-product-card-gpu:hover .desktop-icon-gpu {
+/* Icon animation effects */
+.icon-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Desktop icon hover */
+@media (hover: hover) and (pointer: fine) {
+  .product-card-gpu:hover .icon-gpu {
     transform: translate3d(0, 0, 0) scale(1.1) rotate(5deg);
+  }
+}
+
+/* Mobile icon touch */
+@media (hover: none) and (pointer: coarse) {
+  .product-card-gpu:active .icon-gpu {
+    transform: translate3d(0, 0, 0) scale(1.05) rotate(2deg);
   }
 }
 
@@ -905,42 +962,42 @@
   }
 }
 
-/* Применение адаптивных длительностей только на десктопе */
-@media (min-width: 1024px) {
-  .desktop-product-card-gpu {
-    transition-duration: var(--access-transition-duration);
-  }
-
-  .desktop-hero-gpu * {
-    animation-duration: var(--access-hero-duration);
-  }
-
-  .desktop-spec-card-gpu {
-    transition-duration: var(--access-spec-duration);
-  }
-
-  .desktop-access-button-gpu {
-    transition-duration: var(--access-button-duration);
-  }
+/* Применение адаптивных длительностей для всех устройств */
+.product-card-gpu {
+  transition-duration: var(--access-transition-duration);
 }
 
-/* Автоматическая очистка will-change */
-@media (min-width: 1024px) {
-  .desktop-access-page-gpu:not(:hover):not(:focus-within) {
-    will-change: auto;
-  }
+.hero-gpu * {
+  animation-duration: var(--access-hero-duration);
+}
 
-  .desktop-product-card-gpu:not(:hover) {
-    will-change: auto;
-  }
+.spec-card-gpu {
+  transition-duration: var(--access-spec-duration);
+}
 
-  .desktop-spec-card-gpu:not(:hover) {
-    will-change: auto;
-  }
+.access-button-gpu {
+  transition-duration: var(--access-button-duration);
+}
 
-  .desktop-access-button-gpu:not(:hover) {
-    will-change: auto;
-  }
+/* Автоматическая очистка will-change для всех устройств */
+.access-page-gpu:not(:hover):not(:focus-within) {
+  will-change: auto;
+}
+
+.product-card-gpu:not(:hover):not(:active) {
+  will-change: auto;
+}
+
+.spec-card-gpu:not(:hover):not(:active) {
+  will-change: auto;
+}
+
+.access-button-gpu:not(:hover):not(:active) {
+  will-change: auto;
+}
+
+.feature-badge-gpu:not(:hover):not(:active) {
+  will-change: auto;
 }
 
 /* ===== ACCESSIBILITY & PERFORMANCE ===== */
