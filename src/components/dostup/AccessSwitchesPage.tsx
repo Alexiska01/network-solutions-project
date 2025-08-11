@@ -132,11 +132,11 @@ const AccessSwitchesPage = () => {
   }, [isMobile, accessSwitches.length]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 desktop-access-page-gpu">
       <Header />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-hero text-white overflow-hidden">
+      <section className="relative bg-gradient-hero text-white overflow-hidden desktop-hero-gpu">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 w-full">
           <div className="max-w-4xl">
             {/* Main Heading */}
@@ -184,7 +184,7 @@ const AccessSwitchesPage = () => {
                     cardRefs.current[index] = el;
                   }
                 }}
-                className={`product-card group transition-all ${
+                className={`product-card group transition-all desktop-product-card-gpu ${
                   // Состояние видимости
                   isMobile 
                     ? (visibleCards[index] ? 'product-card-visible' : 'product-card-hidden')
@@ -220,7 +220,7 @@ const AccessSwitchesPage = () => {
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
                       <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#32398e] to-[#005baa] text-white text-sm font-medium rounded-full shadow-lg">
-                        <Icon name="Wifi" className="h-4 w-4" />
+                        <Icon name="Wifi" className="h-4 w-4 desktop-icon-gpu" />
                         <span>Доступ</span>
                       </div>
                     </div>
@@ -239,9 +239,9 @@ const AccessSwitchesPage = () => {
                     {/* Professional Specs Grid */}
                     <div className="spec-grid-container mb-8">
                       <div className="spec-grid">
-                        <div className="spec-card spec-card-primary group/spec">
+                        <div className="spec-card spec-card-primary group/spec desktop-spec-card-gpu">
                           <div className="spec-icon-wrapper">
-                            <Icon name="Plug" className="spec-icon" />
+                            <Icon name="Plug" className="spec-icon desktop-icon-gpu" />
                             <div className="spec-icon-glow"></div>
                           </div>
                           <div className="spec-content">
@@ -251,9 +251,9 @@ const AccessSwitchesPage = () => {
                           <div className="spec-decoration"></div>
                         </div>
 
-                        <div className="spec-card spec-card-secondary group/spec">
+                        <div className="spec-card spec-card-secondary group/spec desktop-spec-card-gpu">
                           <div className="spec-icon-wrapper">
-                            <Icon name="Zap" className="spec-icon" />
+                            <Icon name="Zap" className="spec-icon desktop-icon-gpu" />
                             <div className="spec-icon-glow"></div>
                           </div>
                           <div className="spec-content">
@@ -263,9 +263,9 @@ const AccessSwitchesPage = () => {
                           <div className="spec-decoration"></div>
                         </div>
 
-                        <div className="spec-card spec-card-accent group/spec">
+                        <div className="spec-card spec-card-accent group/spec desktop-spec-card-gpu">
                           <div className="spec-icon-wrapper">
-                            <Icon name="Activity" className="spec-icon" />
+                            <Icon name="Activity" className="spec-icon desktop-icon-gpu" />
                             <div className="spec-icon-glow"></div>
                           </div>
                           <div className="spec-content">
@@ -275,9 +275,9 @@ const AccessSwitchesPage = () => {
                           <div className="spec-decoration"></div>
                         </div>
 
-                        <div className="spec-card spec-card-neutral group/spec">
+                        <div className="spec-card spec-card-neutral group/spec desktop-spec-card-gpu">
                           <div className="spec-icon-wrapper">
-                            <Icon name="Settings" className="spec-icon" />
+                            <Icon name="Settings" className="spec-icon desktop-icon-gpu" />
                             <div className="spec-icon-glow"></div>
                           </div>
                           <div className="spec-content">
@@ -292,14 +292,14 @@ const AccessSwitchesPage = () => {
                     {/* Professional Features Badges */}
                     <div className="features-section mb-8">
                       <div className="features-label mb-4">
-                        <Icon name="Star" className="features-label-icon" />
+                        <Icon name="Star" className="features-label-icon desktop-icon-gpu" />
                         <span>Ключевые возможности</span>
                       </div>
                       <div className="features-grid">
                         {switchData.specs.features.slice(0, 6).map((feature, idx) => (
                           <div
                             key={idx}
-                            className={`feature-badge feature-badge-${idx % 3}`}
+                            className={`feature-badge feature-badge-${idx % 3} desktop-feature-badge-gpu`}
                             style={{
                               animationDelay: `${idx * 100}ms`
                             }}
@@ -312,7 +312,7 @@ const AccessSwitchesPage = () => {
                                     'Shield', 'Wifi', 'Zap', 
                                     'Network', 'Settings', 'Activity'
                                   ][idx] || 'CheckCircle'} 
-                                  className="feature-badge-icon" 
+                                  className="feature-badge-icon desktop-icon-gpu" 
                                 />
                                 <span className="feature-badge-text">{feature}</span>
                               </div>
@@ -325,11 +325,11 @@ const AccessSwitchesPage = () => {
 
                     {/* Button */}
                     <Button
-                      className="w-full group/btn bg-gradient-to-r from-[#32398e] to-[#005baa] hover:from-[#0079b6] hover:to-[#0093b6] text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#32398e]/25"
+                      className="w-full group/btn bg-gradient-to-r from-[#32398e] to-[#005baa] hover:from-[#0079b6] hover:to-[#0093b6] text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#32398e]/25 desktop-access-button-gpu"
                       onClick={() => navigate(switchData.link)}
                     >
                       <span>Подробнее</span>
-                      <Icon name="ArrowRight" className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                      <Icon name="ArrowRight" className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1 desktop-icon-gpu" />
                     </Button>
                   </div>
                 </div>

@@ -55,7 +55,7 @@ export const productSubmenuItems: NavItem[] = [
         items: [
           {
             name: "Уровень доступа",
-            path: "/products/switches/corporate-lan/access-level",
+            path: "/products/switches/access",
             description: "Коммутаторы для подключения конечных устройств",
             icon: "Wifi",
             badge: "24-48 портов",
