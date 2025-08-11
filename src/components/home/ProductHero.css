@@ -47,10 +47,6 @@
 @media (min-width: 414px) { .ph-container { --ph-model-h: 30vh; } }    /* large phones */
 @media (min-width: 375px) { .ph-container { --ph-model-h: 32vh; } }    /* phones */
  
-/* Только на мобилке хотим "во весь экран" */
-@media (max-width: 767.98px) {
-  .ph-container { min-block-size: 100dvh; }
-}
 
 /* Подстройка длительностей под high-refresh */
 .refresh-90hz .ph-container { --ph-entry-duration: 800ms; }
