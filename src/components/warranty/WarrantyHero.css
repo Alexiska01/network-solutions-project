@@ -47,7 +47,7 @@
 .warranty-hero-title {
   opacity: 0;
   transform: translate3d(0, 80px, 0) scale(0.9) rotateX(15deg);
-  animation: heroTitleReveal 1.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+  animation: heroTitleReveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
 }
 
 @keyframes heroTitleReveal {
@@ -106,8 +106,7 @@
 .warranty-hero-description {
   opacity: 0;
   transform: translate3d(0, 50px, 0) scale(0.95);
-  animation: heroDescriptionFloat 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s
-    forwards;
+  animation: heroDescriptionFloat 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 

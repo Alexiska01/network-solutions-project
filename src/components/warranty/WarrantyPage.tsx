@@ -14,6 +14,22 @@ const WarrantyPage: React.FC = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     
     const cleanup = initWarrantyAnimations();
+
+    // Отдельная логика для мобильных анимаций
+    const initMobileAnimations = () => {
+      const mobileSteps = document.querySelectorAll('.journey-timeline.lg\\:hidden .journey-step');
+      
+      // Активируем анимации с задержками
+      mobileSteps.forEach((step, index) => {
+        setTimeout(() => {
+          step.classList.add('visible');
+        }, 200 + index * 150);
+      });
+    };
+
+    // Запускаем мобильные анимации через небольшую задержку
+    setTimeout(initMobileAnimations, 500);
+
     return cleanup;
   }, []);
 
@@ -193,13 +209,13 @@ const WarrantyPage: React.FC = () => {
               <div className="service-header flex items-center gap-4 mb-4 sm:mb-6 lg:mb-8">
                 {/* Иконки */}
                 <div className="service-icon flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center shadow-lg">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#8e44ad] to-[#667eea] flex items-center justify-center shadow-lg">
                     <Icon name="Clock" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                   </div>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#764ba2] to-[#8e44ad] flex items-center justify-center shadow-lg">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center shadow-lg">
                     <Icon name="Users" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                   </div>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#8e44ad] to-[#667eea] flex items-center justify-center shadow-lg">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#764ba2] to-[#8e44ad] flex items-center justify-center shadow-lg">
                     <Icon name="Zap" size={16} className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                   </div>
                 </div>
