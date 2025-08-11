@@ -1,4 +1,4 @@
-/* DeviceCard3530 - World-Class Airiness Animations */
+/* DeviceCard3530 - World-Class Airiness Animations with No Text Jump */
 
 /* Premium Animation Tokens */
 :root {
@@ -13,24 +13,15 @@
 
 /* Base State - Always Visible Foundation */
 .device-card-premium {
-  /* Guaranteed visibility */
   opacity: 1 !important;
   visibility: visible !important;
   display: flex !important;
-
-  /* Positioning for stacking context */
   position: relative;
   z-index: 1;
-
-  /* Premium GPU compositing */
   backface-visibility: hidden;
   perspective: 1000px;
   transform-style: preserve-3d;
-
-  /* Base transform for animations */
   transform: translate3d(0, 0, 0) scale(1);
-
-  /* Ultra-smooth interactive transitions */
   transition:
     transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
     border-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -40,8 +31,7 @@
 /* Hidden State - Before Intersection */
 .device-card-premium.is-hidden {
   opacity: 0 !important;
-  transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.92)
-    rotateX(8deg);
+  transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.92) rotateX(8deg);
   filter: blur(1px);
 }
 
@@ -51,10 +41,7 @@
     opacity: 1 !important;
     transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
     filter: blur(0px);
-
-    /* Ethereal entrance animation */
-    animation: card-breathe-in var(--card-duration-breathe)
-      var(--card-ease-ethereal) both;
+    animation: card-breathe-in var(--card-duration-breathe) var(--card-ease-ethereal) both;
     animation-delay: var(--stagger-delay, 0ms);
   }
 }
@@ -63,32 +50,24 @@
 @keyframes card-breathe-in {
   0% {
     opacity: 0;
-    transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.88)
-      rotateX(12deg) rotateY(-2deg);
+    transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.88) rotateX(12deg) rotateY(-2deg);
     filter: blur(2px) brightness(0.8);
   }
-
   20% {
     opacity: 0.3;
-    transform: translate3d(0, calc(var(--card-amplitude-rise) * 0.6), 0)
-      scale(0.94) rotateX(8deg) rotateY(-1deg);
+    transform: translate3d(0, calc(var(--card-amplitude-rise) * 0.6), 0) scale(0.94) rotateX(8deg) rotateY(-1deg);
     filter: blur(1px) brightness(0.9);
   }
-
   60% {
     opacity: 0.8;
-    transform: translate3d(0, calc(var(--card-amplitude-rise) * 0.15), 0)
-      scale(0.99) rotateX(2deg) rotateY(0deg);
+    transform: translate3d(0, calc(var(--card-amplitude-rise) * 0.15), 0) scale(0.99) rotateX(2deg) rotateY(0deg);
     filter: blur(0.5px) brightness(0.98);
   }
-
   80% {
     opacity: 0.95;
-    transform: translate3d(0, calc(var(--card-amplitude-rise) * -0.05), 0)
-      scale(1.01) rotateX(-1deg);
+    transform: translate3d(0, calc(var(--card-amplitude-rise) * -0.05), 0) scale(1.01) rotateX(-1deg);
     filter: blur(0px) brightness(1);
   }
-
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg);
@@ -96,42 +75,55 @@
   }
 }
 
-/* Ethereal Hover - Floating Effect */
+/* Hover with zoom (and softened shadows) */
 .device-card-premium.is-visible:hover {
-  transform: translate3d(0, -6px, 4px) scale(1.008) rotateX(-1deg);
+  transform: translateY(-6px) scale(1.008);
   border-color: #93c5fd;
   box-shadow:
-    0 12px 40px rgba(56, 110, 170, 0.08),
-    0 4px 16px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(147, 197, 253, 0.08);
-
-  /* Override transition for silky smooth hover */
+    0 12px 40px rgba(56, 110, 170, 0.06),
+    0 4px 16px rgba(0, 0, 0, 0.03),
+    0 0 0 1px rgba(147, 197, 253, 0.06);
+  filter: saturate(0.98) contrast(0.98);
   transition:
     transform 800ms cubic-bezier(0.23, 1, 0.32, 1),
     border-color 600ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 900ms cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow 900ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 600ms var(--card-ease-gentle);
 }
 
-/* Gentle Press - Ultra-Responsive */
-.device-card-premium.is-visible:active {
-  transform: translate3d(0, -2px, 1px) scale(0.995) rotateX(0.5deg);
+/* Counter-scale text to prevent jump */
+.device-card-premium .card-text,
+.device-card-premium [data-role="text"],
+.device-card-premium [class*="text"] {
+  transform: scale(0.992);
+  transform-origin: center center;
+  will-change: transform;
+}
 
-  /* Instant response but smooth */
+/* Reset text scale when not hovered */
+.device-card-premium:not(:hover) .card-text,
+.device-card-premium:not(:hover) [data-role="text"],
+.device-card-premium:not(:hover) [class*="text"] {
+  transform: scale(1);
+}
+
+/* Gentle Press */
+.device-card-premium.is-visible:active {
+  transform: translateY(-2px) scale(0.995);
   transition: transform 120ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Smooth hover exit transition */
+/* Smooth hover exit */
 .device-card-premium.is-visible:not(:hover):not(:active) {
-  transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
-
-  /* Extra smooth return transition */
+  transform: translateY(0) scale(1);
   transition:
     transform 900ms cubic-bezier(0.23, 1, 0.32, 1),
     border-color 700ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 1000ms cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow 1000ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 600ms var(--card-ease-gentle);
 }
 
-/* Subtle Glow Enhancement */
+/* Glow */
 .device-card-premium.is-visible::before {
   content: "";
   position: absolute;
@@ -149,7 +141,17 @@
 }
 
 .device-card-premium.is-visible:hover::before {
-  opacity: 1;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Text rendering insurance */
+.device-card-premium .card-text,
+.device-card-premium [data-role="text"],
+.device-card-premium [class*="text"] {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* High DPI Refinements */
@@ -159,10 +161,8 @@
     --card-amplitude-rise: clamp(18px, 2.5vw, 36px);
     --card-amplitude-float: clamp(12px, 1.5vw, 24px);
   }
-
   .device-card-premium.is-hidden {
-    transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.94)
-      rotateX(6deg);
+    transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.94) rotateX(6deg);
   }
 }
 
@@ -182,37 +182,24 @@
     --card-amplitude-rise: 4px;
     --card-amplitude-float: 2px;
   }
-
   .device-card-premium.is-hidden {
     opacity: 0 !important;
     transform: translate3d(0, 4px, 0) scale(0.98);
     filter: none;
   }
-
   .device-card-premium.is-visible {
     animation: card-simple-in 200ms ease-out both;
     animation-delay: calc(var(--stagger-delay, 0ms) * 0.3);
   }
-
   @keyframes card-simple-in {
-    from {
-      opacity: 0;
-      transform: translate3d(0, 4px, 0) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
+    from { opacity: 0; transform: translate3d(0, 4px, 0) scale(0.98); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
   }
-
   .device-card-premium.is-visible:hover {
     transform: translate3d(0, -2px, 0) scale(1.01);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
-
-  .device-card-premium::before {
-    display: none;
-  }
+  .device-card-premium::before { display: none; }
 }
 
 /* Performance Optimization */
