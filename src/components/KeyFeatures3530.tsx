@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "@/components/ui/icon";
 import * as LucideIcons from "lucide-react";
-import '../3530/DeviceCard3530.css';
+import './3530/DeviceCard3530.css';
 
 type Feature = {
   title: string;
