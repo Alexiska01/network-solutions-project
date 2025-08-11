@@ -13,7 +13,7 @@
 /* Container optimizations */
 .device-card-3530 {
   /* GPU Compositing */
-  transform: translate3d(0, 0, 0);
+
   backface-visibility: hidden;
 
   /* Initial state for entrance animation */
@@ -23,6 +23,9 @@
   /* Entrance animation with stagger */
   animation: device-card-enter var(--dur-in) var(--ease-premium) forwards;
   animation-delay: calc(var(--card-index, 0) * var(--stagger-step));
+
+  /* Force hardware acceleration during animation */
+  will-change: transform, opacity;
 
   /* Hover/focus preparation */
   transition:
@@ -38,12 +41,17 @@
   }
 }
 
+/* Remove will-change after animation */
+.device-card-3530:not(:hover):not(:focus-visible):not(:active):not(:animating) {
+  will-change: auto;
+}
+
 /* Interactive states */
 .device-card-3530:hover,
 .device-card-3530:focus-visible {
   will-change: transform;
   transform: translate3d(0, -2px, 0) scale(1);
-  border-color: theme("colors.blue.300");
+  border-color: #93c5fd;
 }
 
 .device-card-3530:active {

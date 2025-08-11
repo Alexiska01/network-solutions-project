@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useEffect, useRef } from "react";
 import './DeviceCard3530.css';
 
 // По спецификации (см. таблицу)
@@ -72,9 +73,23 @@ export default function DeviceCard3530({
 }: DeviceCard3530Props) {
   const specs = getSpecs(model);
   const isMobile = useIsMobile();
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const animationDuration = 520 + (index * 28); // max duration + delay
+    const timeoutId = setTimeout(() => {
+      card.style.willChange = 'auto';
+    }, animationDuration);
+
+    return () => clearTimeout(timeoutId);
+  }, [index]);
 
   return (
     <div
+      ref={cardRef}
       className="device-card-3530 bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-md h-full flex flex-col w-full max-w-full"
       style={{ '--card-index': index } as React.CSSProperties}
     >
