@@ -379,7 +379,7 @@ const ProductHero = () => {
 
       {/* Основной контент */}
       <div className="hero-main">
-        <div className="hero-wrapper">
+        <div className="hero-wrapper my-[143px]">
           <div className="hero-grid">
             
             {/* Левая колонка - контент */}

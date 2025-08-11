@@ -187,7 +187,7 @@ const ProductsSection = () => {
     >
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none ps-bg-overlay" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full py-0 my-0">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
           {products.map((product, index) => (
             <div
