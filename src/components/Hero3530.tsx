@@ -288,7 +288,7 @@ const Hero3530 = () => {
                     </div>
                   </div>
                 )}
-              </motion.div>
+              </div>
 
               {/* Premium feature карточки - плавные CSS анимации */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
@@ -313,7 +313,7 @@ const Hero3530 = () => {
                     <span className="text-white/90 font-medium text-sm sm:text-base leading-snug">
                       {label}
                     </span>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 
