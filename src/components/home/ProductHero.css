@@ -43,9 +43,9 @@
 @media (min-width: 1024px) {
   .ph-container { --ph-vgap: 48px; --ph-model-h: 30rem; } /* desktop */
  }
-@media (min-width: 768px) { .ph-container { --ph-model-h: 20rem; } }   /* tablet */
-@media (min-width: 414px) { .ph-container { --ph-model-h: 30vh; } }    /* large phones */
-@media (min-width: 375px) { .ph-container { --ph-model-h: 32vh; } }    /* phones */
+@media (min-width: 768px) { .ph-container { --ph-model-h: 23rem; } }   /* tablet */
+@media (min-width: 414px) { .ph-container { --ph-model-h: 34vh; } }    /* large phones */
+@media (min-width: 375px) { .ph-container { --ph-model-h: 36vh; } }    /* phones */
  
 
 /* Подстройка длительностей под high-refresh */
