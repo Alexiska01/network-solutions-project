@@ -204,7 +204,7 @@ const Hero3530 = () => {
                   QoS, SNMP, автоматизация (ZTP), удалённое управление
                 </span>
               </div>
-            </motion.div>
+            </div>
             
             {/* Premium CSS-анимированная кнопка */}
             <div className="hero-button">
@@ -220,7 +220,7 @@ const Hero3530 = () => {
                 Скачать PDF
               </button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Правая часть - 3D модель и фичи */}
           <div className="hero-model-section relative mt-4 sm:mt-6 lg:mt-0">
