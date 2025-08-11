@@ -1,9 +1,10 @@
-import { motion } from "framer-motion";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import './DeviceCardPremium.css';
 
 // По спецификации (см. таблицу)
 function getSpecs(model: SwitchModel) {
@@ -73,27 +74,9 @@ export default function DeviceCard3530({
   const isMobile = useIsMobile();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      {...(!isMobile && {
-        whileInView: { opacity: 1, y: 0, scale: 1 },
-        viewport: { once: true, amount: 0.15 },
-      })}
-      transition={{
-        duration: 0.44,
-        delay: index * 0.07,
-        ease: [0.23, 1, 0.32, 1],
-      }}
-      whileHover={{
-        y: -7,
-        boxShadow:
-          "0px 8px 32px rgba(56,110,170,0.08), 0px 2px 8px rgba(0,0,0,0.05)",
-        scale: 1.025,
-        borderColor: "#87BFFF",
-        transition: { duration: 0.28 },
-      }}
-      className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 hover:border-blue-300 shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col w-full max-w-full"
+    <div
+      className="device-card-premium bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-md h-full flex flex-col w-full max-w-full"
+      style={{ '--card-index': index } as React.CSSProperties}
     >
       {/* Top */}
       <div className="p-3 sm:p-4 pb-2">
@@ -207,6 +190,6 @@ export default function DeviceCard3530({
           Выбрать
         </Button>
       </div>
-    </motion.div>
+    </div>
   );
 }

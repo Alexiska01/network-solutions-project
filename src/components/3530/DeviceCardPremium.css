@@ -1,0 +1,158 @@
+/* Premium GPU-first animations for DeviceCard3530 */
+
+/* Motion Tokens */
+:root {
+  --ease-premium: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-hover: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-in: clamp(280ms, calc(280ms + 0.15vw), 520ms);
+  --dur-hover: 160ms;
+  --amp: clamp(4px, 0.6vw, 12px);
+  --stagger-step: 28ms;
+}
+
+/* Container Layer Optimization */
+.device-card-premium {
+  /* GPU Compositing Setup */
+  backface-visibility: hidden;
+  contain: paint;
+  isolation: isolate;
+
+  /* Initial State for Entrance */
+  opacity: 0;
+  transform: translate3d(0, var(--amp), 0) scale(0.985);
+
+  /* Entrance Animation with Stagger */
+  animation: premium-card-enter var(--dur-in) var(--ease-premium) forwards;
+  animation-delay: calc(var(--card-index, 0) * var(--stagger-step));
+
+  /* Interactive Preparation */
+  transition:
+    transform var(--dur-hover) var(--ease-hover),
+    border-color var(--dur-hover) var(--ease-hover);
+}
+
+/* Entrance Animation Keyframes */
+@keyframes premium-card-enter {
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Interactive States - Hover & Focus */
+.device-card-premium:hover,
+.device-card-premium:focus-within {
+  will-change: transform;
+  transform: translate3d(0, -2px, 0) scale(1.002);
+  border-color: #93c5fd;
+}
+
+/* Interactive States - Active (Micro Press) */
+.device-card-premium:active {
+  will-change: transform;
+  transform: translate3d(0, -1px, 0) scale(0.998);
+}
+
+/* Remove will-change when not interactive */
+.device-card-premium:not(:hover):not(:focus-within):not(:active) {
+  will-change: auto;
+}
+
+/* Shadow Enhancement via Transform (No box-shadow) */
+.device-card-premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    600px at 50% 50%,
+    rgba(56, 110, 170, 0.03),
+    transparent
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transform: translate3d(0, 8px, 0) scale(1.02);
+  transition: opacity var(--dur-hover) var(--ease-hover);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.device-card-premium:hover::before {
+  opacity: 1;
+}
+
+/* Hi-DPR Optimizations */
+@media (min-resolution: 3dppx) {
+  :root {
+    --dur-in: clamp(220ms, calc(220ms + 0.12vw), 420ms);
+    --dur-hover: 140ms;
+    --amp: clamp(3px, 0.5vw, 10px);
+  }
+
+  .device-card-premium {
+    transform: translate3d(0, var(--amp), 0) scale(0.988);
+  }
+
+  .device-card-premium:hover,
+  .device-card-premium:focus-within {
+    transform: translate3d(0, -2px, 0) scale(1.001);
+  }
+}
+
+/* Wide Screen Adaptations */
+@media (min-width: 1600px) {
+  :root {
+    --amp: clamp(5px, 0.7vw, 14px);
+  }
+
+  .device-card-premium:hover,
+  .device-card-premium:focus-within {
+    transform: translate3d(0, -3px, 0) scale(1.003);
+  }
+}
+
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-in: 80ms;
+    --dur-hover: 60ms;
+    --amp: 1px;
+    --stagger-step: 8ms;
+  }
+
+  .device-card-premium {
+    transform: translate3d(0, var(--amp), 0) scale(0.999);
+  }
+
+  @keyframes premium-card-enter {
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  .device-card-premium:hover,
+  .device-card-premium:focus-within {
+    transform: translate3d(0, -1px, 0) scale(1);
+  }
+
+  .device-card-premium:active {
+    transform: translate3d(0, 0, 0) scale(0.999);
+  }
+
+  .device-card-premium::before {
+    display: none;
+  }
+}
+
+/* Force Compositing Layer for Stable Performance */
+.device-card-premium,
+.device-card-premium::before {
+  transform: translateZ(0);
+}
+
+/* 240Hz+ Optimization */
+@media (min-resolution: 2dppx) and (min-width: 1920px) {
+  :root {
+    --dur-hover: 120ms;
+  }
+}
