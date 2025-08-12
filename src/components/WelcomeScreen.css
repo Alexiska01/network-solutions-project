@@ -43,9 +43,21 @@ body.refresh-240hz :root {
 .ws-bg,
 .ws-grid,
 .ws-main,
-.ws-float {
+.ws-float,
+.ws-progress-ring {
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+/* Performance optimization */
+.ws-progress-bar {
+  will-change: stroke-dashoffset;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ws-progress-bar {
+    will-change: auto;
+  }
 }
 
 /* Background scene */
@@ -53,10 +65,29 @@ body.refresh-240hz :root {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 800px 600px at 20% 40%, rgba(59,130,246,0.12) 0%, transparent 40%),
-    radial-gradient(ellipse 600px 800px at 80% 60%, rgba(147,51,234,0.08) 0%, transparent 45%),
-    radial-gradient(ellipse 1000px 1000px at 50% 50%, rgba(34,211,238,0.05) 0%, transparent 50%),
-    linear-gradient(180deg, #000 0%, #0a0a1a 20%, #0f0f2e 50%, #0a0a1a 80%, #000 100%);
+    radial-gradient(
+      ellipse 800px 600px at 20% 40%,
+      rgba(59, 130, 246, 0.12) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse 600px 800px at 80% 60%,
+      rgba(147, 51, 234, 0.08) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse 1000px 1000px at 50% 50%,
+      rgba(34, 211, 238, 0.05) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      180deg,
+      #000 0%,
+      #0a0a1a 20%,
+      #0f0f2e 50%,
+      #0a0a1a 80%,
+      #000 100%
+    );
   background-attachment: fixed;
   animation: wsFadeIn var(--ws-fade) var(--ws-ease-smooth) both;
 }
@@ -66,12 +97,16 @@ body.refresh-240hz :root {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(34,211,238,0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(34,211,238,0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(34, 211, 238, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 211, 238, 0.08) 1px, transparent 1px);
   background-size: 80px 80px;
-  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
-          mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
-  opacity: .06;
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 0%,
+    transparent 70%
+  );
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  opacity: 0.06;
   animation: wsGridDrift var(--ws-grid) ease-in-out infinite;
 }
 
@@ -79,17 +114,19 @@ body.refresh-240hz :root {
 .ws-title {
   font-weight: 200;
   line-height: 1.15;
-  letter-spacing: .06em;
+  letter-spacing: 0.06em;
   text-align: center;
   color: #fff;
   margin: 0 0 2.5rem 0;
   font-size: clamp(1.875rem, 3.5vw + 1rem, 3.5rem);
   text-shadow:
-    0 0 40px rgba(34,211,238,0.4),
-    0 0 80px rgba(34,211,238,0.2);
+    0 0 40px rgba(34, 211, 238, 0.4),
+    0 0 80px rgba(34, 211, 238, 0.2);
   animation: wsPopIn var(--ws-pop) var(--ws-ease-out) both 200ms;
 }
-.ws-title-line { display: inline; }
+.ws-title-line {
+  display: inline;
+}
 .ws-brand {
   display: inline-block;
   background: linear-gradient(90deg, #67e8f9, #60a5fa, #a78bfa);
@@ -97,7 +134,7 @@ body.refresh-240hz :root {
   background-clip: text;
   color: transparent;
   background-size: 200% 200%;
-  filter: drop-shadow(0 0 20px rgba(34,211,238,0.5));
+  filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.5));
   animation: wsBrandShimmer 5s linear infinite;
 }
 
@@ -110,117 +147,175 @@ body.refresh-240hz :root {
   animation: wsFadeIn var(--ws-fade) var(--ws-ease-smooth) both 200ms;
 }
 @media (min-width: 640px) {
-  .ws-orbit-wrap { width: 12rem; height: 12rem; }
+  .ws-orbit-wrap {
+    width: 12rem;
+    height: 12rem;
+  }
 }
 @media (min-width: 768px) {
-  .ws-orbit-wrap { width: 16rem; height: 16rem; }
+  .ws-orbit-wrap {
+    width: 16rem;
+    height: 16rem;
+  }
 }
 
 /* Rings */
 .ws-ring {
   position: absolute;
-  inset: .5rem;
+  inset: 0.5rem;
   border-radius: 9999px;
-  border: 1px solid rgba(34,211,238,0.2);
+  border: 1px solid rgba(34, 211, 238, 0.2);
 }
-.ws-ring-outer { inset: .5rem; }
-.ws-ring-inner { inset: 1.25rem; border-color: rgba(34,211,238,0.12); }
+.ws-ring-outer {
+  inset: 0.5rem;
+}
+.ws-ring-inner {
+  inset: 1.25rem;
+  border-color: rgba(34, 211, 238, 0.12);
+}
 
 /* Planet */
 .ws-planet {
   position: absolute;
-  top: 50%; left: 50%;
-  width: 2rem; height: 2rem;
+  top: 50%;
+  left: 50%;
+  width: 2rem;
+  height: 2rem;
   transform: translate(-50%, -50%);
   border-radius: 9999px;
   background: radial-gradient(circle at 30% 30%, #60a5fa, #22c55e, #2563eb);
-  box-shadow: 0 8px 24px rgba(34,211,238,0.25);
+  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.25);
   z-index: 2;
   animation: wsSpin var(--ws-spin-planet) linear infinite;
 }
 .ws-planet-core {
-  position: absolute; inset: .2rem;
+  position: absolute;
+  inset: 0.2rem;
   border-radius: inherit;
   background: radial-gradient(circle at 35% 35%, #34d399, #3b82f6);
-  opacity: .8;
+  opacity: 0.8;
 }
 .ws-planet-glints .ws-glint {
-  position: absolute; display: block; border-radius: 9999px; background: #86efac;
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  background: #86efac;
 }
-.ws-glint-1 { top: .2rem; left: .35rem; width: .25rem; height: .25rem; opacity: .6; }
-.ws-glint-2 { bottom: .25rem; right: .25rem; width: .15rem; height: .15rem; opacity: .5; }
+.ws-glint-1 {
+  top: 0.2rem;
+  left: 0.35rem;
+  width: 0.25rem;
+  height: 0.25rem;
+  opacity: 0.6;
+}
+.ws-glint-2 {
+  bottom: 0.25rem;
+  right: 0.25rem;
+  width: 0.15rem;
+  height: 0.15rem;
+  opacity: 0.5;
+}
 
 /* Satellite */
 .ws-satellite-orbit {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   animation: wsSpin var(--ws-spin-sat) linear infinite;
 }
 .ws-satellite {
   position: absolute;
-  top: 0; left: 50%;
-  width: .5rem; height: .5rem;
+  top: 0;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
   transform: translate(-50%, -50%);
-  display: grid; place-items: center;
+  display: grid;
+  place-items: center;
 }
 .ws-body {
   display: block;
-  width: .375rem; height: .375rem;
+  width: 0.375rem;
+  height: 0.375rem;
   background: linear-gradient(135deg, #e5e7eb, #6b7280);
   border-radius: 1px;
-  box-shadow: 0 2px 8px rgba(59,130,246,.6);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.6);
 }
 .ws-panel {
-  position: absolute; top: 0;
-  width: .25rem; height: .75rem;
-  background: rgba(59,130,246,.85);
+  position: absolute;
+  top: 0;
+  width: 0.25rem;
+  height: 0.75rem;
+  background: rgba(59, 130, 246, 0.85);
 }
-.ws-panel-l { left: -.3rem; }
-.ws-panel-r { right: -.3rem; }
+.ws-panel-l {
+  left: -0.3rem;
+}
+.ws-panel-r {
+  right: -0.3rem;
+}
 .ws-antenna {
-  position: absolute; top: -.25rem; left: 50%;
-  width: .25rem; height: .25rem;
+  position: absolute;
+  top: -0.25rem;
+  left: 50%;
+  width: 0.25rem;
+  height: 0.25rem;
   transform: translateX(-50%);
   background: #fff;
 }
 
-/* Progress */
-.ws-progress {
-  position: absolute; left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  width: 4rem; pointer-events: none;
-  text-align: center;
+/* Circular Progress Ring */
+.ws-progress-ring {
+  position: absolute;
+  inset: -1rem;
+  pointer-events: none;
+  z-index: 1;
 }
-.ws-progress-percent {
-  font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: .25rem;
-  animation: wsPulse 2s ease-in-out infinite;
+
+.ws-progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: scale(1.1);
 }
-.ws-progress .ws-progress-value {
-  height: 2px; border-radius: 9999px;
-  background: linear-gradient(90deg, #22d3ee, #3b82f6);
-  transition: width 300ms var(--ws-ease-out);
-  box-shadow: 0 0 10px rgba(34,211,238,.5);
+
+.ws-progress-bg {
+  opacity: 0.6;
 }
-@media (min-width: 640px) {
-  .ws-progress { width: 6rem; }
+
+.ws-progress-bar {
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.4));
+  animation: wsProgressGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes wsProgressGlow {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.4));
+  }
+  100% {
+    filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.6));
+  }
 }
 
 /* Extra glow behind orbit */
 .ws-orbit-glow {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   border-radius: 9999px;
-  box-shadow: 0 0 60px 20px rgba(34,211,238,.18);
+  box-shadow: 0 0 60px 20px rgba(34, 211, 238, 0.18);
   pointer-events: none;
 }
 
 /* Stage line (typewriter holder) */
 .ws-stage {
   margin: 1rem auto 1.5rem auto;
-  height: 2rem; display: flex; align-items: center; justify-content: center;
-  padding: 0 .75rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
   animation: wsFadeIn var(--ws-fade) var(--ws-ease-smooth) both 300ms;
 }
 .ws-tty {
-  color: rgba(255,255,255,.9);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 300;
 }
 .ws-caret {
@@ -228,80 +323,196 @@ body.refresh-240hz :root {
   animation: wsCaretBlink 1s steps(1) infinite;
 }
 
+.ws-caret-complete {
+  animation: wsCaretFade 0.5s ease-out forwards;
+}
+
+@keyframes wsCaretFade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* Tagline */
 .ws-tagline {
-  color: rgba(209,213,219,.7);
+  color: rgba(209, 213, 219, 0.7);
   text-transform: uppercase;
-  letter-spacing: .15em;
-  font-size: .75rem;
-  text-shadow: 0 2px 20px rgba(156,163,175,.2);
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  text-shadow: 0 2px 20px rgba(156, 163, 175, 0.2);
   animation: wsFadeIn var(--ws-fade) var(--ws-ease-smooth) both 450ms;
 }
-@media (min-width: 640px) { .ws-tagline { font-size: .875rem; } }
+@media (min-width: 640px) {
+  .ws-tagline {
+    font-size: 0.875rem;
+  }
+}
 
 /* Floating cosmic glows */
 .ws-float {
-  position: absolute; pointer-events: none; filter: blur(32px); opacity: .6;
+  position: absolute;
+  pointer-events: none;
+  filter: blur(32px);
+  opacity: 0.6;
 }
 .ws-float-1 {
-  top: 30%; left: 18%;
-  width: 8rem; height: 8rem; border-radius: 9999px;
-  background: rgba(34,211,238,.16);
+  top: 30%;
+  left: 18%;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  background: rgba(34, 211, 238, 0.16);
   animation: wsFloat1 var(--ws-float-1) ease-in-out infinite;
 }
 .ws-float-2 {
-  bottom: 28%; right: 20%;
-  width: 8rem; height: 8rem; border-radius: 9999px;
-  background: rgba(168,85,247,.12);
+  bottom: 28%;
+  right: 20%;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  background: rgba(168, 85, 247, 0.12);
   animation: wsFloat2 var(--ws-float-2) ease-in-out infinite;
 }
 @media (min-width: 768px) {
-  .ws-float-1, .ws-float-2 { width: 16rem; height: 16rem; filter: blur(48px); }
+  .ws-float-1,
+  .ws-float-2 {
+    width: 16rem;
+    height: 16rem;
+    filter: blur(48px);
+  }
 }
 
 /* Keyframes */
 @keyframes wsFadeIn {
-  from { opacity: 0; transform: translate3d(0, 8px, 0); filter: blur(6px); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
 }
 @keyframes wsPopIn {
-  0% { opacity: 0; transform: translate3d(0,-20px,0) scale(.98); filter: blur(10px); }
-  100% { opacity: 1; transform: translate3d(0,0,0) scale(1); filter: blur(0); }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0) scale(0.98);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
 }
 @keyframes wsGridDrift {
-  0% { background-position: 0 0, 0 0; opacity: .02; }
-  50% { background-position: 80px 80px, 80px 80px; opacity: .08; }
-  100% { background-position: 0 0, 0 0; opacity: .02; }
+  0% {
+    background-position:
+      0 0,
+      0 0;
+    opacity: 0.02;
+  }
+  50% {
+    background-position:
+      80px 80px,
+      80px 80px;
+    opacity: 0.08;
+  }
+  100% {
+    background-position:
+      0 0,
+      0 0;
+    opacity: 0.02;
+  }
 }
 @keyframes wsBrandShimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-@keyframes wsSpin { to { transform: rotate(360deg); } }
-@keyframes wsPulse { 0%,100% { opacity: .6; } 50% { opacity: 1; } }
-@keyframes wsCaretBlink { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
+@keyframes wsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes wsPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes wsCaretBlink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 @keyframes wsFloat1 {
-  0% { transform: translate(0,0) scale(1); }
-  50% { transform: translate(30px,20px) scale(1.1); }
-  100% { transform: translate(0,0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, 20px) scale(1.1);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 @keyframes wsFloat2 {
-  0% { transform: translate(0,0) scale(1.1); }
-  50% { transform: translate(-30px,-20px) scale(1); }
-  100% { transform: translate(0,0) scale(1.1); }
+  0% {
+    transform: translate(0, 0) scale(1.1);
+  }
+  50% {
+    transform: translate(-30px, -20px) scale(1);
+  }
+  100% {
+    transform: translate(0, 0) scale(1.1);
+  }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .ws-bg, .ws-grid, .ws-title, .ws-orbit-wrap, .ws-planet,
-  .ws-satellite-orbit, .ws-progress-percent, .ws-brand,
-  .ws-stage, .ws-tagline, .ws-float-1, .ws-float-2 {
+  .ws-bg,
+  .ws-grid,
+  .ws-title,
+  .ws-orbit-wrap,
+  .ws-planet,
+  .ws-satellite-orbit,
+  .ws-progress-bar,
+  .ws-brand,
+  .ws-stage,
+  .ws-tagline,
+  .ws-float-1,
+  .ws-float-2,
+  .ws-caret {
     animation: none !important;
     transition: none !important;
     filter: none !important;
   }
+
+  .ws-progress-bar {
+    will-change: auto;
+  }
 }
 
 /* Containment & layering niceties */
-.ws-main { isolation: isolate; }
+.ws-main {
+  isolation: isolate;
+}

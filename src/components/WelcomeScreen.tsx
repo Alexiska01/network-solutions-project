@@ -1,8 +1,8 @@
 // src/components/welcome/WelcomeScreen.tsx
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useWelcomeScreen } from '@/hooks/useWelcomeScreen';
 import { useWelcomePreloader } from '@/hooks/useWelcomePreloader';
 import { modelPreloader } from '@/utils/modelPreloader';
-import { useActivityTracker } from '@/hooks/useActivityTracker';
 import './WelcomeScreen.css';
 
 interface WelcomeScreenProps {
@@ -17,52 +17,83 @@ interface LoadingStage {
 }
 
 const LOADING_STAGES: LoadingStage[] = [
-  { id: 'connect',  text: 'Установление защищённого соединения',            duration: 2500 },
-  { id: 'station',  text: 'Подключение к центральной станции управления',   duration: 2800 },
-  { id: 'data',     text: 'Получение данных о корпоративном оборудовании',  duration: 3200 },
-  { id: 'complete', text: 'Система готова к работе',                        duration: 1500 },
+  { id: 'connect',  text: 'Установление защищённого соединения',            duration: 3000 },
+  { id: 'station',  text: 'Подключение к центральной станции управления',   duration: 3200 },
+  { id: 'data',     text: 'Получение данных о корпоративном оборудовании',  duration: 2600 },
+  { id: 'complete', text: 'Система готова к работе',                        duration: 1200 },
 ];
 
 const TOTAL_DURATION_MS = 10_000 as const;
 
 type Refresh = '60hz' | '90hz' | '120hz' | '144hz' | '240hz';
 
-const TypewriterText = React.memo(({ text, durationMs }: { text: string; durationMs: number }) => {
+const TypewriterText = React.memo(({ text, durationMs, onComplete }: { 
+  text: string; 
+  durationMs: number; 
+  onComplete?: () => void;
+}) => {
   const [displayText, setDisplayText] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+  const timerRef = useRef<number>();
+  const startTimeRef = useRef<number>();
+  
   useEffect(() => {
     setDisplayText('');
-    const safe = Math.max(0, durationMs - 250);                       // небольшой буфер
-    const step = Math.max(10, Math.floor(safe / Math.max(1, text.length)));
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < text.length) {
-        i++;
-        setDisplayText(text.slice(0, i));
-      } else {
-        clearInterval(timer);
+    setIsComplete(false);
+    
+    const startTyping = () => {
+      startTimeRef.current = performance.now();
+      const typeChar = (currentTime: number) => {
+        if (!startTimeRef.current) return;
+        
+        const elapsed = currentTime - startTimeRef.current;
+        const progress = Math.min(elapsed / durationMs, 1);
+        const charIndex = Math.floor(progress * text.length);
+        
+        setDisplayText(text.slice(0, charIndex));
+        
+        if (progress < 1) {
+          timerRef.current = requestAnimationFrame(typeChar);
+        } else {
+          setIsComplete(true);
+          onComplete?.();
+        }
+      };
+      timerRef.current = requestAnimationFrame(typeChar);
+    };
+    
+    startTyping();
+    
+    return () => {
+      if (timerRef.current) {
+        cancelAnimationFrame(timerRef.current);
       }
-    }, step);
-    return () => clearInterval(timer);
-  }, [text, durationMs]);
+    };
+  }, [text, durationMs, onComplete]);
 
   return (
     <span className="ws-tty">
       {displayText}
-      <span className="ws-caret" aria-hidden="true">|</span>
+      <span className={`ws-caret ${isComplete ? 'ws-caret-complete' : ''}`} aria-hidden="true">|</span>
     </span>
   );
 });
 TypewriterText.displayName = 'TypewriterText';
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = false }) => {
-  const { shouldShowWelcome, markWelcomeAsShown } = useActivityTracker();
-  const [isVisible, setIsVisible] = useState(forceShow);
+  const { isVisible, progress, isAnimating, hideWelcomeScreen } = useWelcomeScreen();
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
+  const [isScreenVisible, setIsScreenVisible] = useState(forceShow || isVisible);
+  const stageTimersRef = useRef<number[]>([]);
 
   // показывать/скрывать по трекеру
   useEffect(() => {
-    if (!forceShow) setIsVisible(shouldShowWelcome);
-  }, [shouldShowWelcome, forceShow]);
+    if (forceShow) {
+      setIsScreenVisible(true);
+    } else {
+      setIsScreenVisible(isVisible);
+    }
+  }, [isVisible, forceShow]);
 
   // список моделей для предзагрузки
   const heroData = useMemo(
@@ -101,47 +132,44 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // последовательная смена стадий, строго по их duration (сумма = 10с)
+  // последовательная смена стадий, синхронизированная с мастер-таймером
   useEffect(() => {
+    if (!isScreenVisible || !isAnimating) return;
+    
     let acc = 0;
-    const timers: number[] = [];
+    stageTimersRef.current.forEach(timer => clearTimeout(timer));
+    stageTimersRef.current = [];
+    
     for (let i = 1; i < LOADING_STAGES.length; i++) {
       acc += LOADING_STAGES[i - 1].duration;
-      timers.push(window.setTimeout(() => setCurrentStageIndex(i), acc));
+      const timer = window.setTimeout(() => {
+        setCurrentStageIndex(i);
+      }, acc);
+      stageTimersRef.current.push(timer);
     }
-    return () => { timers.forEach(clearTimeout); };
-  }, []);
-
-  // прогресс по ВРЕМЕНИ: 0..100 за 10с
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    if (!isVisible) return;
-    let raf = 0;
-    let start = performance.now();
-    const loop = (now: number) => {
-      const elapsed = Math.min(TOTAL_DURATION_MS, now - start);
-      setProgress(Math.round((elapsed / TOTAL_DURATION_MS) * 100));
-      if (elapsed < TOTAL_DURATION_MS) {
-        raf = requestAnimationFrame(loop);
-      }
+    
+    return () => {
+      stageTimersRef.current.forEach(timer => clearTimeout(timer));
+      stageTimersRef.current = [];
     };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
-  }, [isVisible]);
+  }, [isScreenVisible, isAnimating]);
 
-  // завершение строго через 10с (без раннего выхода)
-  const finish = useCallback(() => {
-    if (!isVisible) return;
-    markWelcomeAsShown();
-    setIsVisible(false);
-    onComplete?.();
-  }, [isVisible, markWelcomeAsShown, onComplete]);
+  // Прогресс теперь управляется хуком useWelcomeScreen
+  const circularProgress = progress * 360; // Конвертируем в градусы для SVG
 
+  // Обработка завершения анимации
   useEffect(() => {
-    if (!isVisible) return;
-    const endTimer = window.setTimeout(finish, TOTAL_DURATION_MS);
-    return () => clearTimeout(endTimer);
-  }, [isVisible, finish]);
+    if (!isAnimating && isScreenVisible && !forceShow) {
+      // Fade out анимация
+      const fadeOutTimer = setTimeout(() => {
+        setIsScreenVisible(false);
+        hideWelcomeScreen();
+        onComplete?.();
+      }, 400);
+      
+      return () => clearTimeout(fadeOutTimer);
+    }
+  }, [isAnimating, isScreenVisible, forceShow, hideWelcomeScreen, onComplete]);
 
   // первоначальная невидимая предзагрузка (как у тебя было)
   useEffect(() => {
@@ -179,7 +207,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     return () => clearTimeout(cleanup);
   }, [heroData]);
 
-  if (!isVisible) return null;
+  if (!isScreenVisible) return null;
 
   const currentStage = LOADING_STAGES[currentStageIndex];
 
@@ -215,16 +243,56 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
             </div>
           </div>
 
-          <div className="ws-progress">
-            <div className="ws-progress-percent">{progress}%</div>
-            <div className="ws-progress-value" style={{ width: `${progress}%` }} />
+          {/* Круговой прогресс вокруг Земли */}
+          <div className="ws-progress-ring">
+            <svg className="ws-progress-svg" viewBox="0 0 200 200">
+              <circle
+                className="ws-progress-bg"
+                cx="100"
+                cy="100"
+                r="85"
+                fill="none"
+                stroke="rgba(34,211,238,0.1)"
+                strokeWidth="2"
+              />
+              <circle
+                className="ws-progress-bar"
+                cx="100"
+                cy="100"
+                r="85"
+                fill="none"
+                stroke="url(#progressGradient)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray={`${2 * Math.PI * 85}`}
+                strokeDashoffset={`${2 * Math.PI * 85 * (1 - progress)}`}
+                transform="rotate(-90 100 100)"
+                style={{
+                  transition: isAnimating ? 'none' : 'stroke-dashoffset 0.3s ease',
+                  willChange: isAnimating ? 'stroke-dashoffset' : 'auto'
+                }}
+              />
+              <defs>
+                <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#22d3ee" />
+                  <stop offset="50%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#a78bfa" />
+                </linearGradient>
+              </defs>
+            </svg>
           </div>
 
           <div className="ws-orbit-glow" aria-hidden="true"></div>
         </div>
 
         <div className="ws-stage">
-          <TypewriterText text={currentStage.text} durationMs={currentStage.duration} />
+          <TypewriterText 
+            text={currentStage.text} 
+            durationMs={currentStage.duration}
+            onComplete={() => {
+              // Можно добавить логику завершения печати стадии
+            }}
+          />
         </div>
 
         <p className="ws-tagline">Корпоративная сеть нового поколения</p>

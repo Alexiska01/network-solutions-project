@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import ProductHero from "./components/home/ProductHero";
+import WelcomeScreen from "./components/WelcomeScreen";
 
 // Model-viewer загружается в index.html через CDN
 
@@ -104,6 +105,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <WelcomeScreen />
         <Toaster />
         <Sonner />
         <BrowserRouter>
