@@ -95,6 +95,18 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     }
   }, [isVisible, forceShow]);
 
+  // ПРИНУДИТЕЛЬНЫЙ таймер на 10 секунд
+  useEffect(() => {
+    console.log('⏰ WelcomeScreen: Запуск принудительного таймера на 10 секунд');
+    const forceHideTimer = setTimeout(() => {
+      console.log('⏰ WelcomeScreen: ПРИНУДИТЕЛЬНОЕ скрытие через 10 секунд');
+      setIsScreenVisible(false);
+      onComplete?.();
+    }, 10000);
+
+    return () => clearTimeout(forceHideTimer);
+  }, [onComplete]);
+
   // список моделей для предзагрузки
   const heroData = useMemo(
     () => [
@@ -159,9 +171,11 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
 
   // Обработка завершения анимации
   useEffect(() => {
-    if (!isAnimating && isScreenVisible && !forceShow) {
+    if (!isAnimating && isScreenVisible) {
+      console.log('🎯 WelcomeScreen: Анимация завершена, запускаем fade out');
       // Fade out анимация
       const fadeOutTimer = setTimeout(() => {
+        console.log('✅ WelcomeScreen: Скрываем экран');
         setIsScreenVisible(false);
         hideWelcomeScreen();
         onComplete?.();
@@ -169,7 +183,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
       
       return () => clearTimeout(fadeOutTimer);
     }
-  }, [isAnimating, isScreenVisible, forceShow, hideWelcomeScreen, onComplete]);
+  }, [isAnimating, isScreenVisible, hideWelcomeScreen, onComplete]);
 
   // Упрощенная предзагрузка без model-viewer для избежания ошибок
   useEffect(() => {
