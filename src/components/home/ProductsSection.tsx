@@ -34,7 +34,7 @@ const products = [
     gradientPosition: "from-blue-700 to-blue-800",
   },
   {
-    title: "Беспроводные\nрешения", 
+    title: "Беспроводные решения", 
     description: "Enterprise-класс точки доступа и контроллеры Wi-Fi 6",
     detailedInfo: "Современные беспроводные системы корпоративного уровня с поддержкой новейших стандартов Wi-Fi 6E для обеспечения высокой пропускной способности и надёжности.",
     features: [
@@ -48,7 +48,7 @@ const products = [
     gradientPosition: "from-blue-800 to-teal-600",
   },
   {
-    title: "Системы\nуправления",
+    title: "Системы управления",
     description: "Централизованные платформы для управления инфраструктурой",
     detailedInfo: "Комплексные решения для мониторинга, управления и автоматизации сетевой инфраструктуры с возможностью интеграции различных систем в единую платформу.",
     features: [
@@ -245,13 +245,13 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* Заголовок */}
-                  <div className={`ps-section-header ${isMobile ? 'mb-4' : 'mb-6'}`}>
+                  <div className={`ps-section-header ${isMobile ? 'mb-4' : 'mb-[10px]'}`}>
                     <div className={isMobile ? '' : 'min-h-[80px] flex flex-col justify-center'}>
                       <h3 className="ps-title font-bold text-gray-900 leading-tight tracking-tight whitespace-normal lg:whitespace-pre-line">
                         {product.title}
                       </h3>
                       {/* GPU-анимированная подчеркивающая линия */}
-                      <div className="ps-underline relative h-0.5 bg-gray-100 rounded-full overflow-hidden mt-3">
+                      <div className="ps-underline relative h-0.5 bg-gray-100 rounded-full overflow-hidden mt-0">
                         <div className={`ps-underline-fill absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full`} />
                       </div>
                     </div>
@@ -280,7 +280,7 @@ const ProductsSection = () => {
                   )}
                 
                   {/* Характеристики */}
-                  <div className="ps-section-features flex-1 mb-8">
+                  <div className="ps-section-features mb-8 lg:mb-[16px]">
                     <div className={`${isMobile ? 'space-y-3' : 'space-y-4'}`}>
                       {(isMobile ? product.features.slice(0, 3) : product.features).map((feature, idx) => (
                         <div 
@@ -305,7 +305,7 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* CTA кнопка - всегда внизу */}
-                  <div className="ps-section-cta mt-auto pt-4">
+                  <div className="ps-section-cta pt-[5px]">
                     {index === 0 ? (
                       <Link
                         to="/switches"

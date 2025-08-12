@@ -202,7 +202,7 @@
 @media (min-width: 1024px) {
   .ps-feature {
     gap: 16px !important;
-    margin-bottom: 4px;
+    /* без mb, чистые 16px из space-y-4 */
   }
 }
 
@@ -301,7 +301,7 @@
 /* Grid Section Heights - Professional Layout */
 @media (min-width: 1024px) {
   .ps-section-header {
-    min-height: 120px;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -328,11 +328,11 @@
   }
 
   .ps-section-cta {
-    min-height: 72px;
-    display: flex;
-    align-items: flex-end;
-    margin-top: auto;
-    padding-top: 24px;
+   min-height: 72px;
+   display: flex;
+   align-items: center;   /* не критично */
+   margin-top: 0;         /* убираем «эластичный» разрыв */
+   padding-top: 12px;      /* поставь 0–12px по вкусу */
   }
 }
 
@@ -450,3 +450,21 @@
     transform: none;
   }
 }
+
+/* === DESKTOP: карточка должна сжиматься по контенту === */
+@media (min-width: 768px) {
+  .products-section .ps-card { min-height: auto !important; }
+}
+@media (min-width: 1024px) {
+  .products-section .ps-card { min-height: auto !important; }
+}
+@media (min-width: 1280px) {
+  .products-section .ps-card { min-height: auto !important; }
+}
+
+/* дети не тянут высоту искусственно */
+@media (min-width: 1024px) {
+  .products-section .ps-card > div { height: auto !important; }
+  .products-section .ps-card-inner { height: auto !important; }
+}
+
