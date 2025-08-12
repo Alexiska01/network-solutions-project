@@ -105,7 +105,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WelcomeScreen />
         <Toaster />
         <Sonner />
         <BrowserRouter>

@@ -175,9 +175,21 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
     const initWelcomeScreen = () => {
       console.log('🚀 useWelcomeScreen: Начинаем инициализацию');
       
-      // ПРИНУДИТЕЛЬНО ПОКАЗЫВАЕМ WELCOMESCREEN
-      console.log('✅ useWelcomeScreen: ПРИНУДИТЕЛЬНЫЙ запуск WelcomeScreen');
-      showWelcomeScreen();
+      // Проверяем условия показа через modelCacheManager
+      modelCacheManager.resetInactivityState();
+      const shouldShow = shouldShowWelcomeScreen();
+      
+      console.log('🎯 useWelcomeScreen: Нужно показать?', shouldShow);
+      console.log('📊 useWelcomeScreen: Метаданные:', modelCacheManager.currentMetadata);
+      
+      if (shouldShow) {
+        console.log('✅ useWelcomeScreen: Запускаем WelcomeScreen');
+        showWelcomeScreen();
+      } else {
+        console.log('❌ useWelcomeScreen: WelcomeScreen НЕ запущен');
+        modelCacheManager.markHomeVisit();
+        updateActivity();
+      }
     };
     
     // Небольшая задержка для стабильной инициализации

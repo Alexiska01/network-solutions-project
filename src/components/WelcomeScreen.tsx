@@ -83,7 +83,7 @@ TypewriterText.displayName = 'TypewriterText';
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = false }) => {
   const { isVisible, progress, isAnimating, hideWelcomeScreen } = useWelcomeScreen();
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
-  const [isScreenVisible, setIsScreenVisible] = useState(true); // ПРИНУДИТЕЛЬНО ПОКАЗЫВАЕМ
+  const [isScreenVisible, setIsScreenVisible] = useState(forceShow || isVisible);
   const [hasStarted, setHasStarted] = useState(false); // ЗАЩИТА ОТ ПОВТОРНЫХ ЗАПУСКОВ
   const stageTimersRef = useRef<number[]>([]);
 
@@ -216,7 +216,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     }
   }, [isScreenVisible, isVisible, forceShow]);
   
-  // if (!isScreenVisible) return null; // ВРЕМЕННО ОТКЛЮЧЕНО ДЛЯ ТЕСТИРОВАНИЯ
+  if (!isScreenVisible) return null;
 
   const currentStage = LOADING_STAGES[currentStageIndex];
 
