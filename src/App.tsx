@@ -11,7 +11,7 @@ import ProductHero from "./components/home/ProductHero";
 
 // Lazy loading для второстепенных страниц
 const SeriesCatalog3730 = lazy(() => import("./pages/SeriesCatalog3730"));
-const SeriesCatalog3530 = lazy(() => import("./pages/SeriesCatalog3530"));
+const SeriesCatalog3530 = lazy(() => import("./pages/3530/SeriesCatalog3530"));
 const SeriesCatalog4530 = lazy(() => import("./pages/SeriesCatalog4530"));
 const SeriesCatalog6010 = lazy(() => import("./pages/SeriesCatalog6010"));
 const SwitchesCatalog = lazy(() => import("./pages/SwitchesCatalog"));
@@ -133,10 +133,6 @@ const App = () => {
               <Route
                 path="/products/switches/ids6010"
                 element={<SeriesCatalog6010 />}
-              />
-              <Route
-                path="/models/ids3530-24p-6x"
-                element={<ModelIDS3530_24P_6X />}
               />
               <Route
                 path="/products/switches/ids3530/24p-6x"

@@ -14,7 +14,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import { switchModels3530 } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
 import Hero3530 from "@/components/3530/Hero3530";
@@ -40,8 +39,6 @@ const SeriesCatalog3530Component = () => {
   const filteredModels = switchModels3530.filter((model) =>
     filter === "all" ? true : model.category === filter,
   );
-
-  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">

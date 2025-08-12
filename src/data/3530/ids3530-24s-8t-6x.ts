@@ -1,67 +1,106 @@
-export const ids3530_24s_8t_6x = {
-  model: "IDS3530-24S-8T-6X",
-  name: "IDS3530-24S-8T-6X",
-  description: "8×1000M Base-T, 24×SFP, 6×10G SFP+",
-  modelUrl: "https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-24S.glb",
-  
-  // Характеристики
-  characteristics: {
-    ports: "8×1000M Base-T, 24×SFP",
-    slots: "6×10G SFP+",
-    poe: "Нет",
-    performance: "184 Gbps",
-    power: "Dual AC Power Supply"
-  },
+import { ProductInfo } from "@/types/product";
 
-  // Порты и интерфейсы
-  ports: {
-    ethernet: "8×10/100/1000M Base-T RJ45",
-    sfp: "24×1G SFP",
-    sfpPlus: "6×10G SFP+",
-    console: "RJ45",
-    management: "OOB интерфейс, 1×USB 2.0"
-  },
-
-  // PoE характеристики
-  poe: {
-    support: "Нет",
-    standards: "Н/Д"
-  },
-
-  // Производительность
-  performance: {
-    switchingCapacity: "184 Gbps",
-    throughput: "136.8 Mpps",
-    flash: "8 GB",
-    ram: "1 GB",
-    ipv4Routes: "12K",
-    ipv6Routes: "6K"
-  },
-
-  // Физические характеристики
-  physical: {
-    dimensions: "442×320×44.2 мм",
-    weight: "≈4.3 кг",
-    mounting: "19\" стойка, 1U",
-    housing: "Металл",
-    ventilation: "Да"
-  },
-
-  // Питание и охлаждение
-  powerCooling: {
-    powerSupply: "Два встроенных блока питания переменного тока",
-    voltage: "100–240V AC, 50/60Hz",
-    consumption: "≤52W",
-    cooling: "Активное, интеллектуальные вентиляторы"
-  },
-
-  // Условия эксплуатации
-  environment: {
-    operatingTemp: "-5°C ~ 50°C",
-    storageTemp: "-40°C ~ 70°C",
-    operatingHumidity: "10% ~ 90% (без конденсата)",
-    storageHumidity: "5% ~ 95% (без конденсата)",
-    altitude: "до 3000 м",
-    staticProtection: "6KV"
-  }
+export const ids353024s8t6xData: ProductInfo = {
+  id: "ids3530-24s-8t-6x",
+  title: "IDS3530-24S-8T-6X",
+  description:
+    "24×1G Base-T + 6×10G SFP+, PoE+ 380 Вт — оптимальная производительность для среднего бизнеса",
+  modelPath: "/models/IDS3530-24S.glb",
+  basicSpecs: [
+    { label: "Порты:", value: "24×1000M Base-T" },
+    { label: "Слоты:", value: "6×10G SFP+" },
+    { label: "Поддержка PoE&PoE+:", value: "380W" },
+    { label: "Производительность:", value: "168 Gbps" },
+    { label: "Питание:", value: "Fixed One AC Power Supply" },
+  ],
+  features: [
+    {
+      icon: "Zap",
+      iconColor: "from-blue-500 to-indigo-500",
+      title: "PoE+ 380 Вт",
+      description:
+        "Надежное питание IP-камер, точек доступа и других устройств",
+    },
+    {
+      icon: "Network",
+      iconColor: "from-emerald-500 to-green-500",
+      title: "6×10G SFP+",
+      description:
+        "Высокоскоростные аплинки для подключения к серверам и магистрали",
+    },
+    {
+      icon: "Shield",
+      iconColor: "from-purple-500 to-indigo-500",
+      title: "L2+/L3 функции",
+      description: "Продвинутая маршрутизация и функции безопасности",
+    },
+  ],
+  specGroups: [
+    {
+      title: "Порты и интерфейсы",
+      icon: "Plug",
+      iconColor: "text-blue-600",
+      specs: [
+        { label: "Порты Ethernet:", value: "24×10/100/1000M Base-T RJ45" },
+        { label: "SFP+ слоты:", value: "6×10G SFP+" },
+        { label: "Консольный порт:", value: "1×RJ45" },
+        { label: "USB-порт:", value: "1×USB 2.0" },
+      ],
+    },
+    {
+      title: "Производительность",
+      icon: "Gauge",
+      iconColor: "text-green-600",
+      specs: [
+        { label: "Пропускная способность:", value: "168 Gbps" },
+        { label: "Скорость передачи:", value: "125 Mpps" },
+        { label: "Таблица MAC-адресов:", value: "32K" },
+        { label: "Задержка:", value: "< 3 μs" },
+      ],
+    },
+    {
+      title: "PoE характеристики",
+      icon: "Zap",
+      iconColor: "text-orange-600",
+      specs: [
+        { label: "Общая мощность PoE:", value: "380W" },
+        { label: "PoE портов:", value: "24 порта" },
+        { label: "Стандарты:", value: "IEEE 802.3af/at" },
+        { label: "Мощность на порт:", value: "до 30W" },
+      ],
+    },
+    {
+      title: "Физические характеристики",
+      icon: "Box",
+      iconColor: "text-purple-600",
+      specs: [
+        { label: "Размеры (ШxГxВ):", value: "440×260×44 мм" },
+        { label: "Вес:", value: "3.2 кг" },
+        { label: "Монтаж:", value: '19" стойка, 1U' },
+        { label: "Материал корпуса:", value: "Металл" },
+      ],
+    },
+    {
+      title: "Питание и охлаждение",
+      icon: "Cpu",
+      iconColor: "text-red-600",
+      specs: [
+        { label: "Источник питания:", value: "Fixed One AC Power Supply" },
+        { label: "Напряжение:", value: "100-240V AC, 50/60Hz" },
+        { label: "Максимальное потребление:", value: "450W" },
+        { label: "Охлаждение:", value: "Интеллектуальные вентиляторы" },
+      ],
+    },
+    {
+      title: "Условия эксплуатации",
+      icon: "Thermometer",
+      iconColor: "text-indigo-600",
+      specs: [
+        { label: "Рабочая температура:", value: "0°C ~ 50°C" },
+        { label: "Температура хранения:", value: "-40°C ~ 70°C" },
+        { label: "Влажность:", value: "10% ~ 90% (без конденсата)" },
+        { label: "Высота над уровнем моря:", value: "до 3000 м" },
+      ],
+    },
+  ],
 };

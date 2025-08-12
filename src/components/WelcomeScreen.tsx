@@ -1,8 +1,9 @@
+// src/components/welcome/WelcomeScreen.tsx
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useWelcomePreloader } from '@/hooks/useWelcomePreloader';
 import { modelPreloader } from '@/utils/modelPreloader';
 import { useActivityTracker } from '@/hooks/useActivityTracker';
+import './WelcomeScreen.css';
 
 interface WelcomeScreenProps {
   onComplete?: () => void;
@@ -16,442 +17,222 @@ interface LoadingStage {
 }
 
 const LOADING_STAGES: LoadingStage[] = [
-  { id: 'connect', text: 'Установление защищённого соединения', duration: 2500 },
-  { id: 'station', text: 'Подключение к центральной станции управления', duration: 2800 },
-  { id: 'data', text: 'Получение данных о корпоративном оборудовании', duration: 3200 },
-  { id: 'complete', text: 'Система готова к работе', duration: 1500 }
+  { id: 'connect',  text: 'Установление защищённого соединения',            duration: 2500 },
+  { id: 'station',  text: 'Подключение к центральной станции управления',   duration: 2800 },
+  { id: 'data',     text: 'Получение данных о корпоративном оборудовании',  duration: 3200 },
+  { id: 'complete', text: 'Система готова к работе',                        duration: 1500 },
 ];
 
-const TypewriterText = React.memo(({ text }: { text: string }) => {
+const TOTAL_DURATION_MS = 10_000 as const;
+
+type Refresh = '60hz' | '90hz' | '120hz' | '144hz' | '240hz';
+
+const TypewriterText = React.memo(({ text, durationMs }: { text: string; durationMs: number }) => {
   const [displayText, setDisplayText] = useState('');
-  
   useEffect(() => {
     setDisplayText('');
+    const safe = Math.max(0, durationMs - 250);                       // небольшой буфер
+    const step = Math.max(10, Math.floor(safe / Math.max(1, text.length)));
     let i = 0;
     const timer = setInterval(() => {
       if (i < text.length) {
-        setDisplayText(text.slice(0, i + 1));
         i++;
+        setDisplayText(text.slice(0, i));
       } else {
         clearInterval(timer);
       }
-    }, 30);
-    
+    }, step);
     return () => clearInterval(timer);
-  }, [text]);
+  }, [text, durationMs]);
 
   return (
-    <span className="text-white/90 font-light">
+    <span className="ws-tty">
       {displayText}
-      <motion.span
-        animate={{ opacity: [0, 1, 0] }}
-        transition={{ duration: 1, repeat: Infinity }}
-        className="text-cyan-400"
-      >
-        |
-      </motion.span>
+      <span className="ws-caret" aria-hidden="true">|</span>
     </span>
   );
 });
-
 TypewriterText.displayName = 'TypewriterText';
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = false }) => {
   const { shouldShowWelcome, markWelcomeAsShown } = useActivityTracker();
   const [isVisible, setIsVisible] = useState(forceShow);
+  const [currentStageIndex, setCurrentStageIndex] = useState(0);
+
+  // показывать/скрывать по трекеру
+  useEffect(() => {
+    if (!forceShow) setIsVisible(shouldShowWelcome);
+  }, [shouldShowWelcome, forceShow]);
+
+  // список моделей для предзагрузки
+  const heroData = useMemo(
+    () => [
+      { modelUrl: '/models/3530all.glb' },
+      { modelUrl: '/models/3730all.glb' },
+      { modelUrl: '/models/4530all.glb' },
+      { modelUrl: '/models/6010all.glb' },
+    ],
+    []
+  );
+
+  // запускаем предзагрузку в фоне (не влияет на таймлайн 10с)
+  useWelcomePreloader(heroData);
+
+  // детект частоты и класс на body
+  useEffect(() => {
+    let raf = 0, frames = 0, t0 = 0;
+    const tick = (t: number) => {
+      if (!t0) t0 = t;
+      frames++;
+      if (frames >= 120) {
+        const fps = Math.round((frames * 1000) / (t - t0));
+        let rate: Refresh = '60hz';
+        if (fps >= 230) rate = '240hz';
+        else if (fps >= 140) rate = '144hz';
+        else if (fps >= 115) rate = '120hz';
+        else if (fps >= 85)  rate = '90hz';
+        document.body.classList.forEach((c) => { if (/^refresh-\d+hz$/.test(c)) document.body.classList.remove(c); });
+        document.body.classList.add(`refresh-${rate}`);
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  // последовательная смена стадий, строго по их duration (сумма = 10с)
+  useEffect(() => {
+    let acc = 0;
+    const timers: number[] = [];
+    for (let i = 1; i < LOADING_STAGES.length; i++) {
+      acc += LOADING_STAGES[i - 1].duration;
+      timers.push(window.setTimeout(() => setCurrentStageIndex(i), acc));
+    }
+    return () => { timers.forEach(clearTimeout); };
+  }, []);
+
+  // прогресс по ВРЕМЕНИ: 0..100 за 10с
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    if (!isVisible) return;
+    let raf = 0;
+    let start = performance.now();
+    const loop = (now: number) => {
+      const elapsed = Math.min(TOTAL_DURATION_MS, now - start);
+      setProgress(Math.round((elapsed / TOTAL_DURATION_MS) * 100));
+      if (elapsed < TOTAL_DURATION_MS) {
+        raf = requestAnimationFrame(loop);
+      }
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [isVisible]);
+
+  // завершение строго через 10с (без раннего выхода)
+  const finish = useCallback(() => {
+    if (!isVisible) return;
+    markWelcomeAsShown();
+    setIsVisible(false);
+    onComplete?.();
+  }, [isVisible, markWelcomeAsShown, onComplete]);
 
   useEffect(() => {
-    if (!forceShow) {
-      setIsVisible(shouldShowWelcome);
-    }
-  }, [shouldShowWelcome, forceShow]);
-  const heroData = useMemo(() => [
-    { modelUrl: '/models/3530all.glb' },
-    { modelUrl: '/models/3730all.glb' },
-    { modelUrl: '/models/4530all.glb' },
-    { modelUrl: '/models/6010all.glb' }
-  ], []);
+    if (!isVisible) return;
+    const endTimer = window.setTimeout(finish, TOTAL_DURATION_MS);
+    return () => clearTimeout(endTimer);
+  }, [isVisible, finish]);
 
-  const { isWelcomeLoadingComplete, loadingProgress } = useWelcomePreloader(heroData);
-  const [currentStageIndex, setCurrentStageIndex] = useState(0);
-  const [isExiting, setIsExiting] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
-  
-  // Оптимизация для мобильных устройств
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-  const isLowPerformance = typeof window !== 'undefined' && 
-    (navigator.hardwareConcurrency <= 2 || navigator.deviceMemory <= 2);
-  
-  const preloadModels = useCallback(() => {
-    const modelUrls = heroData.map(item => item.modelUrl);
-    console.log('🚀 WelcomeScreen: Начинаем оптимизированную предзагрузку моделей');
-    
-    // Создаем невидимый контейнер для предзагрузки
+  // первоначальная невидимая предзагрузка (как у тебя было)
+  useEffect(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const isLowPerf = typeof window !== 'undefined' &&
+      (navigator.hardwareConcurrency <= 2 || (navigator as any).deviceMemory <= 2);
+    const modelUrls = heroData.map((h) => h.modelUrl);
     const preloadContainer = document.createElement('div');
-    preloadContainer.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;';
+    preloadContainer.style.cssText =
+      'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;';
     document.body.appendChild(preloadContainer);
-    
-    // Ограничиваем количество одновременно загружаемых моделей для мобильных
-    const maxConcurrent = isMobile || isLowPerformance ? 1 : 2;
+
+    const maxConcurrent = isMobile || isLowPerf ? 1 : 2;
     const modelsToPreload = isMobile ? modelUrls.slice(0, 2) : modelUrls;
-    
-    console.log(`📱 WelcomeScreen: Мобильное устройство: ${isMobile}, Слабое устройство: ${isLowPerformance}`);
-    console.log(`🔄 WelcomeScreen: Загружаем ${modelsToPreload.length} моделей (максимум одновременно: ${maxConcurrent})`);
-    
-    modelsToPreload.slice(0, maxConcurrent).forEach((url, index) => {
+
+    modelsToPreload.slice(0, maxConcurrent).forEach((url) => {
       const viewer = document.createElement('model-viewer') as any;
       viewer.src = url;
       viewer.loading = 'eager';
       viewer.reveal = 'immediate';
       viewer.style.cssText = 'width:100%;height:100%;max-width:1px;max-height:1px;';
-      
-      // Оптимизации для мобильных устройств
       if (isMobile) {
         viewer.setAttribute('camera-controls', 'false');
         viewer.setAttribute('auto-rotate', 'false');
         viewer.setAttribute('interaction-prompt', 'none');
       }
-      
       viewer.setAttribute('cache-model', 'true');
-      
-      viewer.addEventListener('load', () => {
-        console.log(`✅ WelcomeScreen: Модель ${index + 1} загружена и закэширована`);
-      });
-      
-      viewer.addEventListener('error', (error: any) => {
-        console.warn(`⚠️ WelcomeScreen: Ошибка загрузки модели ${index + 1}:`, error);
-      });
-      
       preloadContainer.appendChild(viewer);
     });
-    
-    // Дополнительная предзагрузка через modelPreloader с ограничениями
+
     modelPreloader.preloadMultiple(modelsToPreload, maxConcurrent);
-    
-    return () => {
-      // Очистка через увеличенное время для стабильности кэша
-      const cleanupDelay = isMobile ? 60000 : 30000; // 1 минута для мобильных
-      setTimeout(() => {
-        if (preloadContainer.parentNode) {
-          preloadContainer.remove();
-        }
-      }, cleanupDelay);
-    };
-  }, [heroData, isMobile, isLowPerformance]);
 
-  useEffect(() => {
-    return preloadModels();
-  }, [preloadModels]);
+    const cleanupDelay = isMobile ? 60000 : 30000;
+    const cleanup = setTimeout(() => preloadContainer.remove(), cleanupDelay);
+    return () => clearTimeout(cleanup);
+  }, [heroData]);
 
-  useEffect(() => {
-    if (currentStageIndex < LOADING_STAGES.length - 1) {
-      const timer = setTimeout(() => {
-        setCurrentStageIndex(currentStageIndex + 1);
-      }, LOADING_STAGES[currentStageIndex].duration);
-      return () => clearTimeout(timer);
-    }
-  }, [currentStageIndex]);
-
-  const handleComplete = useCallback(() => {
-    if (!isComplete) {
-      console.log('✅ WelcomeScreen: Загрузка завершена, запускаем мгновенный выход');
-      setIsComplete(true);
-      setIsExiting(true);
-      
-      // Отмечаем что welcome screen был показан
-      if (!forceShow) {
-        markWelcomeAsShown();
-      }
-      
-      // Убираем задержку для мгновенного перехода
-      console.log('🚀 WelcomeScreen: Вызываем onComplete мгновенно');
-      setIsVisible(false);
-      onComplete?.();
-    }
-  }, [isComplete, onComplete, forceShow, markWelcomeAsShown]);
-
-  useEffect(() => {
-    if (isWelcomeLoadingComplete && loadingProgress >= 100) {
-      handleComplete();
-    }
-  }, [isWelcomeLoadingComplete, loadingProgress, handleComplete]);
-
-  useEffect(() => {
-    // Адаптивный таймер в зависимости от устройства
-    const fallbackTime = isMobile || isLowPerformance ? 18000 : 12000; // 18 сек для мобильных
-    
-    console.log(`⏰ WelcomeScreen: Запускаем fallback таймер на ${fallbackTime / 1000} секунд`);
-    const fallbackTimer = setTimeout(() => {
-      console.log('⚠️ WelcomeScreen: Fallback таймер сработал');
-      handleComplete();
-    }, fallbackTime);
-
-    return () => {
-      console.log('🧹 WelcomeScreen: Очищаем fallback таймер');
-      clearTimeout(fallbackTimer);
-    };
-  }, [handleComplete, isMobile, isLowPerformance]);
+  if (!isVisible) return null;
 
   const currentStage = LOADING_STAGES[currentStageIndex];
 
-  const backgroundStyle = useMemo(() => ({
-    background: `
-      radial-gradient(ellipse 800px 600px at 20% 40%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
-      radial-gradient(ellipse 600px 800px at 80% 60%, rgba(147, 51, 234, 0.08) 0%, transparent 45%),
-      radial-gradient(ellipse 1000px 1000px at 50% 50%, rgba(34, 211, 238, 0.05) 0%, transparent 50%),
-      linear-gradient(180deg, #000000 0%, #0a0a1a 20%, #0f0f2e 50%, #0a0a1a 80%, #000000 100%)
-    `,
-    backgroundAttachment: 'fixed'
-  }), []);
-
-  if (!isVisible) {
-    return null;
-  }
-
   return (
-    <AnimatePresence>
-      {!isExiting && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ 
-            opacity: 0,
-            scale: 1.05,
-            filter: "blur(12px)",
-            y: -20
-          }}
-          transition={{ 
-            duration: isExiting ? 1.0 : 1.5,
-            ease: [0.25, 0.46, 0.45, 0.94]
-          }}
-          className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-8"
-          style={backgroundStyle}
-        >
-          <motion.div
-            className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2, delay: 0.5 }}
-          >
-            <motion.div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `
-                  linear-gradient(to right, rgba(34, 211, 238, 0.08) 1px, transparent 1px),
-                  linear-gradient(to bottom, rgba(34, 211, 238, 0.08) 1px, transparent 1px)
-                `,
-                backgroundSize: '80px 80px',
-                maskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)'
-              }}
-              animate={{
-                backgroundPosition: ['0px 0px', '80px 80px'],
-                opacity: [0.02, 0.08, 0.02]
-              }}
-              transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
-          
-          <div className="relative z-10 text-center w-full max-w-sm sm:max-w-2xl">
-            <motion.h1
-              initial={{ opacity: 0, y: -30, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ 
-                duration: 1,
-                delay: 0.3,
-                ease: [0.25, 0.46, 0.45, 0.94]
-              }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-8 sm:mb-12 leading-tight tracking-wider"
-              style={{ 
-                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                fontWeight: 200,
-                textShadow: `
-                  0 0 40px rgba(34, 211, 238, 0.4),
-                  0 0 80px rgba(34, 211, 238, 0.2)
-                `
-              }}
-            >
-              <span className="block sm:inline">Добро пожаловать в{' '}</span>
-              <motion.span
-                className="relative inline-block"
-              >
-                <motion.span
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500 block sm:inline"
-                  animate={{
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                  }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                  style={{
-                    backgroundSize: '200% 200%',
-                    filter: 'drop-shadow(0 0 20px rgba(34, 211, 238, 0.5))'
-                  }}
-                >
-                  iDATA
-                </motion.span>
-              </motion.span>
-            </motion.h1>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ 
-                duration: 1,
-                delay: 0.8,
-                ease: [0.43, 0.13, 0.23, 0.96]
-              }}
-              className="relative mb-8"
-            >
-              <div className="relative w-32 h-32 mx-auto flex items-center justify-center">
-                {/* Орбитальные кольца */}
-                <div className="absolute inset-2 border border-cyan-400/20 rounded-full"></div>
-                <div className="absolute inset-4 border border-cyan-400/10 rounded-full"></div>
-                
-                {/* Земля в центре */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute top-1/2 left-1/2 w-8 h-8 -mt-4 -ml-4 bg-gradient-to-br from-blue-400 via-green-500 to-blue-600 rounded-full shadow-lg z-10"
-                >
-                  <div className="absolute inset-1 bg-gradient-to-br from-green-400 to-blue-500 rounded-full opacity-80"></div>
-                  <div className="absolute top-1 left-1.5 w-1 h-1 bg-green-300 rounded-full opacity-60"></div>
-                  <div className="absolute bottom-1 right-1 w-0.5 h-0.5 bg-green-300 rounded-full opacity-60"></div>
-                </motion.div>
-          
-                {/* Спутник на орбите */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0"
-                >
-                  <div className="relative w-full h-full">
-                    <motion.div
-                      className="absolute top-0 left-1/2 w-2 h-2 -ml-1 -mt-1"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    >
-                      {/* Корпус спутника */}
-                      <div className="w-1.5 h-1.5 bg-gradient-to-br from-gray-300 to-gray-500 rounded-sm shadow-lg relative">
-                        {/* Солнечные панели */}
-                        <div className="absolute -left-0.5 top-0 w-0.5 h-1.5 bg-blue-400 opacity-80"></div>
-                        <div className="absolute -right-0.5 top-0 w-0.5 h-1.5 bg-blue-400 opacity-80"></div>
-                        {/* Антенна */}
-                        <div className="absolute top-0 left-1/2 w-0.5 h-0.5 bg-white -translate-x-0.5 -translate-y-0.5"></div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </motion.div>
-          
-                {/* Прогресс в центре */}
-                <div className="text-center relative z-20">
-                  <motion.div
-                    className="text-lg font-bold text-white mb-1"
-                    animate={{ opacity: [0.6, 1, 0.6] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    {Math.round(loadingProgress)}%
-                  </motion.div>
-                  <div className="w-16 h-0.5 bg-white/20 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
-                      style={{ width: `${loadingProgress}%` }}
-                      transition={{ type: "spring", damping: 20 }}
-                    />
-                  </div>
-                </div>
-          
-                {/* Световые эффекты */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.2, 0.4, 0.2],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute inset-0 bg-cyan-400/20 rounded-full blur-lg"
-                ></motion.div>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.8,
-                delay: 1.2,
-                ease: [0.25, 0.46, 0.45, 0.94]
-              }}
-              className="text-sm sm:text-base md:text-lg mb-6 h-8 sm:h-10 flex items-center justify-center px-4"
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentStage.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <TypewriterText text={currentStage.text} />
-                </motion.div>
-              </AnimatePresence>
-            </motion.div>
-            
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ 
-                duration: 1,
-                delay: 1.8
-              }}
-              className="text-gray-300/70 text-xs sm:text-sm font-light tracking-[0.15em] uppercase px-4"
-              style={{ 
-                textShadow: '0 2px 20px rgba(156, 163, 175, 0.2)'
-              }}
-            >
-              Корпоративная сеть нового поколения
-            </motion.p>
+    <div className="ws-screen fixed inset-0 z-[1000] flex items-center justify-center px-4 sm:px-8">
+      <div className="ws-bg" aria-hidden="true"></div>
+      <div className="ws-grid" aria-hidden="true"></div>
+
+      <div className="ws-main relative z-10 text-center w-full max-w-sm sm:max-w-2xl">
+        <h1 className="ws-title">
+          <span className="ws-title-line">Добро пожаловать в&nbsp;</span>
+          <span className="ws-brand">iDATA</span>
+        </h1>
+
+        <div className="ws-orbit-wrap">
+          <div className="ws-ring ws-ring-outer"></div>
+          <div className="ws-ring ws-ring-inner"></div>
+
+          <div className="ws-planet">
+            <div className="ws-planet-core"></div>
+            <div className="ws-planet-glints">
+              <span className="ws-glint ws-glint-1"></span>
+              <span className="ws-glint ws-glint-2"></span>
+            </div>
           </div>
-          
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2, delay: 1 }}
-          >
-            <motion.div 
-              className="absolute top-1/3 left-1/4 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64" 
-              animate={{
-                x: [-30, 30, -30],
-                y: [-20, 20, -20],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <div className="w-full h-full bg-cyan-400/8 rounded-full blur-3xl" />
-            </motion.div>
-            
-            <motion.div 
-              className="absolute bottom-1/3 right-1/4 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64"
-              animate={{
-                x: [30, -30, 30],
-                y: [20, -20, 20],
-                scale: [1.1, 1, 1.1]
-              }}
-              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <div className="w-full h-full bg-purple-400/6 rounded-full blur-3xl" />
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+
+          <div className="ws-satellite-orbit">
+            <div className="ws-satellite">
+              <span className="ws-panel ws-panel-l"></span>
+              <span className="ws-body"></span>
+              <span className="ws-panel ws-panel-r"></span>
+              <span className="ws-antenna"></span>
+            </div>
+          </div>
+
+          <div className="ws-progress">
+            <div className="ws-progress-percent">{progress}%</div>
+            <div className="ws-progress-value" style={{ width: `${progress}%` }} />
+          </div>
+
+          <div className="ws-orbit-glow" aria-hidden="true"></div>
+        </div>
+
+        <div className="ws-stage">
+          <TypewriterText text={currentStage.text} durationMs={currentStage.duration} />
+        </div>
+
+        <p className="ws-tagline">Корпоративная сеть нового поколения</p>
+      </div>
+
+      <div className="ws-float ws-float-1" aria-hidden="true"></div>
+      <div className="ws-float ws-float-2" aria-hidden="true"></div>
+    </div>
   );
 };
 

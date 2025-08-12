@@ -1,0 +1,307 @@
+/* ===== WELCOME SCREEN — GPU-FIRST, PURE CSS ANIMATIONS ===== */
+
+/* Base timings + easing */
+:root {
+  --ws-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ws-ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* 60Hz defaults */
+  --ws-fade: 900ms;
+  --ws-pop: 800ms;
+  --ws-grid: 25s;
+  --ws-spin-planet: 20s;
+  --ws-spin-sat: 8s;
+  --ws-float-1: 12s;
+  --ws-float-2: 15s;
+}
+
+/* 90/120/144/240 Hz quickening */
+body.refresh-90hz :root {
+  --ws-fade: 780ms;
+  --ws-pop: 700ms;
+}
+body.refresh-120hz :root {
+  --ws-fade: 640ms;
+  --ws-pop: 560ms;
+}
+body.refresh-144hz :root {
+  --ws-fade: 560ms;
+  --ws-pop: 480ms;
+}
+body.refresh-240hz :root {
+  --ws-fade: 420ms;
+  --ws-pop: 380ms;
+}
+
+/* Utilities */
+.ws-screen * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+.ws-screen,
+.ws-bg,
+.ws-grid,
+.ws-main,
+.ws-float {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Background scene */
+.ws-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 20% 40%, rgba(59,130,246,0.12) 0%, transparent 40%),
+    radial-gradient(ellipse 600px 800px at 80% 60%, rgba(147,51,234,0.08) 0%, transparent 45%),
+    radial-gradient(ellipse 1000px 1000px at 50% 50%, rgba(34,211,238,0.05) 0%, transparent 50%),
+    linear-gradient(180deg, #000 0%, #0a0a1a 20%, #0f0f2e 50%, #0a0a1a 80%, #000 100%);
+  background-attachment: fixed;
+  animation: wsFadeIn var(--ws-fade) var(--ws-ease-smooth) both;
+}
+
+/* Grid overlay with drift */
+.ws-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(34,211,238,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34,211,238,0.08) 1px, transparent 1px);
+  background-size: 80px 80px;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+          mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  opacity: .06;
+  animation: wsGridDrift var(--ws-grid) ease-in-out infinite;
+}
+
+/* Title */
+.ws-title {
+  font-weight: 200;
+  line-height: 1.15;
+  letter-spacing: .06em;
+  text-align: center;
+  color: #fff;
+  margin: 0 0 2.5rem 0;
+  font-size: clamp(1.875rem, 3.5vw + 1rem, 3.5rem);
+  text-shadow:
+    0 0 40px rgba(34,211,238,0.4),
+    0 0 80px rgba(34,211,238,0.2);
+  animation: wsPopIn var(--ws-pop) var(--ws-ease-out) both 200ms;
+}
+.ws-title-line { display: inline; }
+.ws-brand {
+  display: inline-block;
+  background: linear-gradient(90deg, #67e8f9, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% 200%;
+  filter: drop-shadow(0 0 20px rgba(34,211,238,0.5));
+  animation: wsBrandShimmer 5s linear infinite;
+}
+
+/* Orbit cluster */
+.ws-orbit-wrap {
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto 2rem auto;
+  animation: wsFadeIn var(--ws-fade) var(--ws-ease-smooth) both 200ms;
+}
+@media (min-width: 640px) {
+  .ws-orbit-wrap { width: 12rem; height: 12rem; }
+}
+@media (min-width: 768px) {
+  .ws-orbit-wrap { width: 16rem; height: 16rem; }
+}
+
+/* Rings */
+.ws-ring {
+  position: absolute;
+  inset: .5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(34,211,238,0.2);
+}
+.ws-ring-outer { inset: .5rem; }
+.ws-ring-inner { inset: 1.25rem; border-color: rgba(34,211,238,0.12); }
+
+/* Planet */
+.ws-planet {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 2rem; height: 2rem;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: radial-gradient(circle at 30% 30%, #60a5fa, #22c55e, #2563eb);
+  box-shadow: 0 8px 24px rgba(34,211,238,0.25);
+  z-index: 2;
+  animation: wsSpin var(--ws-spin-planet) linear infinite;
+}
+.ws-planet-core {
+  position: absolute; inset: .2rem;
+  border-radius: inherit;
+  background: radial-gradient(circle at 35% 35%, #34d399, #3b82f6);
+  opacity: .8;
+}
+.ws-planet-glints .ws-glint {
+  position: absolute; display: block; border-radius: 9999px; background: #86efac;
+}
+.ws-glint-1 { top: .2rem; left: .35rem; width: .25rem; height: .25rem; opacity: .6; }
+.ws-glint-2 { bottom: .25rem; right: .25rem; width: .15rem; height: .15rem; opacity: .5; }
+
+/* Satellite */
+.ws-satellite-orbit {
+  position: absolute; inset: 0;
+  animation: wsSpin var(--ws-spin-sat) linear infinite;
+}
+.ws-satellite {
+  position: absolute;
+  top: 0; left: 50%;
+  width: .5rem; height: .5rem;
+  transform: translate(-50%, -50%);
+  display: grid; place-items: center;
+}
+.ws-body {
+  display: block;
+  width: .375rem; height: .375rem;
+  background: linear-gradient(135deg, #e5e7eb, #6b7280);
+  border-radius: 1px;
+  box-shadow: 0 2px 8px rgba(59,130,246,.6);
+}
+.ws-panel {
+  position: absolute; top: 0;
+  width: .25rem; height: .75rem;
+  background: rgba(59,130,246,.85);
+}
+.ws-panel-l { left: -.3rem; }
+.ws-panel-r { right: -.3rem; }
+.ws-antenna {
+  position: absolute; top: -.25rem; left: 50%;
+  width: .25rem; height: .25rem;
+  transform: translateX(-50%);
+  background: #fff;
+}
+
+/* Progress */
+.ws-progress {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4rem; pointer-events: none;
+  text-align: center;
+}
+.ws-progress-percent {
+  font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: .25rem;
+  animation: wsPulse 2s ease-in-out infinite;
+}
+.ws-progress .ws-progress-value {
+  height: 2px; border-radius: 9999px;
+  background: linear-gradient(90deg, #22d3ee, #3b82f6);
+  transition: width 300ms var(--ws-ease-out);
+  box-shadow: 0 0 10px rgba(34,211,238,.5);
+}
+@media (min-width: 640px) {
+  .ws-progress { width: 6rem; }
+}
+
+/* Extra glow behind orbit */
+.ws-orbit-glow {
+  position: absolute; inset: 0;
+  border-radius: 9999px;
+  box-shadow: 0 0 60px 20px rgba(34,211,238,.18);
+  pointer-events: none;
+}
+
+/* Stage line (typewriter holder) */
+.ws-stage {
+  margin: 1rem auto 1.5rem auto;
+  height: 2rem; display: flex; align-items: center; justify-content: center;
+  padding: 0 .75rem;
+  animation: wsFadeIn var(--ws-fade) var(--ws-ease-smooth) both 300ms;
+}
+.ws-tty {
+  color: rgba(255,255,255,.9);
+  font-weight: 300;
+}
+.ws-caret {
+  color: #22d3ee;
+  animation: wsCaretBlink 1s steps(1) infinite;
+}
+
+/* Tagline */
+.ws-tagline {
+  color: rgba(209,213,219,.7);
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  font-size: .75rem;
+  text-shadow: 0 2px 20px rgba(156,163,175,.2);
+  animation: wsFadeIn var(--ws-fade) var(--ws-ease-smooth) both 450ms;
+}
+@media (min-width: 640px) { .ws-tagline { font-size: .875rem; } }
+
+/* Floating cosmic glows */
+.ws-float {
+  position: absolute; pointer-events: none; filter: blur(32px); opacity: .6;
+}
+.ws-float-1 {
+  top: 30%; left: 18%;
+  width: 8rem; height: 8rem; border-radius: 9999px;
+  background: rgba(34,211,238,.16);
+  animation: wsFloat1 var(--ws-float-1) ease-in-out infinite;
+}
+.ws-float-2 {
+  bottom: 28%; right: 20%;
+  width: 8rem; height: 8rem; border-radius: 9999px;
+  background: rgba(168,85,247,.12);
+  animation: wsFloat2 var(--ws-float-2) ease-in-out infinite;
+}
+@media (min-width: 768px) {
+  .ws-float-1, .ws-float-2 { width: 16rem; height: 16rem; filter: blur(48px); }
+}
+
+/* Keyframes */
+@keyframes wsFadeIn {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); filter: blur(6px); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+}
+@keyframes wsPopIn {
+  0% { opacity: 0; transform: translate3d(0,-20px,0) scale(.98); filter: blur(10px); }
+  100% { opacity: 1; transform: translate3d(0,0,0) scale(1); filter: blur(0); }
+}
+@keyframes wsGridDrift {
+  0% { background-position: 0 0, 0 0; opacity: .02; }
+  50% { background-position: 80px 80px, 80px 80px; opacity: .08; }
+  100% { background-position: 0 0, 0 0; opacity: .02; }
+}
+@keyframes wsBrandShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes wsSpin { to { transform: rotate(360deg); } }
+@keyframes wsPulse { 0%,100% { opacity: .6; } 50% { opacity: 1; } }
+@keyframes wsCaretBlink { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
+@keyframes wsFloat1 {
+  0% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(30px,20px) scale(1.1); }
+  100% { transform: translate(0,0) scale(1); }
+}
+@keyframes wsFloat2 {
+  0% { transform: translate(0,0) scale(1.1); }
+  50% { transform: translate(-30px,-20px) scale(1); }
+  100% { transform: translate(0,0) scale(1.1); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ws-bg, .ws-grid, .ws-title, .ws-orbit-wrap, .ws-planet,
+  .ws-satellite-orbit, .ws-progress-percent, .ws-brand,
+  .ws-stage, .ws-tagline, .ws-float-1, .ws-float-2 {
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+  }
+}
+
+/* Containment & layering niceties */
+.ws-main { isolation: isolate; }
