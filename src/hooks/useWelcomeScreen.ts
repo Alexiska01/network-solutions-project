@@ -161,14 +161,27 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
     };
   }, []);
 
-  // Инициализация при монтировании
+  // Инициализация при монтировании с задержкой для modelCacheManager
   useEffect(() => {
-    if (shouldShowWelcomeScreen()) {
-      showWelcomeScreen();
-    } else {
-      updateActivity();
-    }
-  }, [shouldShowWelcomeScreen, showWelcomeScreen, updateActivity]);
+    console.log('🚀 useWelcomeScreen: Инициализация');
+    
+    const initWelcomeScreen = async () => {
+      // Даем время modelCacheManager для инициализации
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      const shouldShow = shouldShowWelcomeScreen();
+      console.log('🎯 useWelcomeScreen: Нужно показать?', shouldShow);
+      
+      if (shouldShow) {
+        showWelcomeScreen();
+      } else {
+        updateActivity();
+      }
+    };
+    
+    initWelcomeScreen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Запускаем только один раз при монтировании
 
   return {
     isVisible: state.isVisible,

@@ -32,6 +32,11 @@ class ModelCacheManager {
   private cache: Cache | null = null;
   private metadata: CacheMetadata | null = null;
 
+  constructor() {
+    // Сразу инициализируем метаданные синхронно
+    this.initSync();
+  }
+
   /**
    * Синхронная инициализация метаданных
    */
@@ -48,8 +53,10 @@ class ModelCacheManager {
           quickReturnMode: false,
           models: {}
         };
-        this.saveMetadata();
+        // Синхронное сохранение
+        localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
       }
+      console.log('✅ ModelCacheManager: Синхронная инициализация завершена', this.metadata);
     } catch (error) {
       console.warn('⚠️ ModelCacheManager: Ошибка синхронной инициализации', error);
       this.metadata = {
@@ -122,7 +129,10 @@ class ModelCacheManager {
    * Проверка необходимости показа WelcomeScreen
    */
   shouldShowWelcomeScreen(): boolean {
+    console.log('🔍 ModelCacheManager: Проверка необходимости показа WelcomeScreen');
+    
     if (!this.metadata) {
+      console.log('📝 ModelCacheManager: Метаданные не найдены, инициализируем');
       // Если метаданные не инициализированы, делаем это сейчас
       try {
         this.initSync();
@@ -132,11 +142,30 @@ class ModelCacheManager {
       }
     }
     
-    if (!this.metadata) return true;
+    if (!this.metadata) {
+      console.log('❌ ModelCacheManager: Метаданные все еще отсутствуют');
+      return true;
+    }
 
     const now = Date.now();
     const timeSinceActivity = now - this.metadata.lastActivity;
     const timeSinceHomeVisit = this.metadata.lastHomeVisit ? now - this.metadata.lastHomeVisit : Infinity;
+
+    console.log('📊 ModelCacheManager:', {
+      now,
+      lastActivity: this.metadata.lastActivity,
+      lastHomeVisit: this.metadata.lastHomeVisit,
+      timeSinceActivity: Math.round(timeSinceActivity / 1000) + 's',
+      timeSinceHomeVisit: timeSinceHomeVisit === Infinity ? 'Infinity' : Math.round(timeSinceHomeVisit / 1000) + 's',
+      activityTimeout: Math.round(this.ACTIVITY_TIMEOUT / 1000) + 's',
+      quickReturnThreshold: Math.round(this.QUICK_RETURN_THRESHOLD / 1000) + 's'
+    });
+
+    // Если это первый визит (lastHomeVisit = 0)
+    if (this.metadata.lastHomeVisit === 0) {
+      console.log('🆕 ModelCacheManager: Первый визит - показываем WelcomeScreen');
+      return true;
+    }
 
     // Режим быстрого возврата: если пользователь был на главной недавно (< 10 минут)
     if (timeSinceHomeVisit < this.QUICK_RETURN_THRESHOLD) {
