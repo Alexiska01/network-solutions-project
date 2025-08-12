@@ -166,11 +166,9 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
     console.log('🚀 useWelcomeScreen: Инициализация');
     
     const initWelcomeScreen = () => {
-      // ВРЕМЕННАЯ ОТЛАДКА: принудительно показываем WelcomeScreen
-      console.log('🧪 useWelcomeScreen: ОТЛАДОЧНЫЙ РЕЖИМ - принудительный показ');
-      modelCacheManager.forceFirstVisit();
+      console.log('🚀 useWelcomeScreen: Начинаем инициализацию');
       
-      // Сначала проверяем и сбрасываем состояние при долгом бездействии
+      // Проверяем и сбрасываем состояние при долгом бездействии
       modelCacheManager.resetInactivityState();
       
       const shouldShow = shouldShowWelcomeScreen();

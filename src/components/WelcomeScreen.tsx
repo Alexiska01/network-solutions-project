@@ -171,51 +171,33 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     }
   }, [isAnimating, isScreenVisible, forceShow, hideWelcomeScreen, onComplete]);
 
-  // первоначальная невидимая предзагрузка (как у тебя было)
+  // Упрощенная предзагрузка без model-viewer для избежания ошибок
   useEffect(() => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    const isLowPerf = typeof window !== 'undefined' &&
-      (navigator.hardwareConcurrency <= 2 || (navigator as any).deviceMemory <= 2);
+    console.log('📦 WelcomeScreen: Запуск упрощенной предзагрузки моделей');
     const modelUrls = heroData.map((h) => h.modelUrl);
-    const preloadContainer = document.createElement('div');
-    preloadContainer.style.cssText =
-      'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;';
-    document.body.appendChild(preloadContainer);
-
-    const maxConcurrent = isMobile || isLowPerf ? 1 : 2;
+    
+    // Простая предзагрузка через modelPreloader без DOM элементов
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const maxConcurrent = isMobile ? 1 : 2;
     const modelsToPreload = isMobile ? modelUrls.slice(0, 2) : modelUrls;
-
-    modelsToPreload.slice(0, maxConcurrent).forEach((url) => {
-      const viewer = document.createElement('model-viewer') as any;
-      viewer.src = url;
-      viewer.loading = 'eager';
-      viewer.reveal = 'immediate';
-      viewer.style.cssText = 'width:100%;height:100%;max-width:1px;max-height:1px;';
-      if (isMobile) {
-        viewer.setAttribute('camera-controls', 'false');
-        viewer.setAttribute('auto-rotate', 'false');
-        viewer.setAttribute('interaction-prompt', 'none');
-      }
-      viewer.setAttribute('cache-model', 'true');
-      preloadContainer.appendChild(viewer);
+    
+    // Запускаем предзагрузку в фоне
+    modelPreloader.preloadMultiple(modelsToPreload, maxConcurrent).catch(error => {
+      console.warn('⚠️ WelcomeScreen: Ошибка предзагрузки моделей', error);
     });
-
-    modelPreloader.preloadMultiple(modelsToPreload, maxConcurrent);
-
-    const cleanupDelay = isMobile ? 60000 : 30000;
-    const cleanup = setTimeout(() => preloadContainer.remove(), cleanupDelay);
-    return () => clearTimeout(cleanup);
   }, [heroData]);
 
-  // ОТЛАДКА: принудительное отображение для тестирования
-  console.log('🎭 WelcomeScreen: isScreenVisible =', isScreenVisible, 'isVisible =', isVisible, 'forceShow =', forceShow);
+  // Логирование состояния через useEffect
+  useEffect(() => {
+    console.log('🎭 WelcomeScreen: isScreenVisible =', isScreenVisible, 'isVisible =', isVisible, 'forceShow =', forceShow);
+    if (!isScreenVisible) {
+      console.log('❌ WelcomeScreen: Компонент скрыт, не рендерится');
+    } else {
+      console.log('✅ WelcomeScreen: Компонент рендерится!');
+    }
+  }, [isScreenVisible, isVisible, forceShow]);
   
-  if (!isScreenVisible) {
-    console.log('❌ WelcomeScreen: Компонент скрыт, не рендерится');
-    return null;
-  }
-  
-  console.log('✅ WelcomeScreen: Компонент рендерится!');
+  if (!isScreenVisible) return null;
 
   const currentStage = LOADING_STAGES[currentStageIndex];
 

@@ -514,3 +514,12 @@ class ModelCacheManager {
 }
 
 export const modelCacheManager = new ModelCacheManager();
+
+// Глобальная функция для тестирования WelcomeScreen
+(window as any).testWelcomeScreen = () => {
+  console.log('🧪 Принудительный показ WelcomeScreen для тестирования');
+  modelCacheManager.forceFirstVisit();
+  window.location.reload();
+};
+
+console.log('💡 Для тестирования WelcomeScreen вызовите в консоли: testWelcomeScreen()');
