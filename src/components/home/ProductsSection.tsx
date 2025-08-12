@@ -257,16 +257,18 @@ const ProductsSection = () => {
                     </div>
                   </div>
                 
-                  {/* Описание */}
-                  <div className={`ps-section-description ${isMobile ? 'mb-6' : 'mb-6'}`}>
-                    <div className={isMobile ? '' : 'min-h-[48px] flex flex-col justify-center'}>
-                      <p className="ps-description text-gray-600 font-medium leading-relaxed">
-                        {product.description}
-                      </p>
+                  {/* Описание - только для мобильных */}
+                  {isMobile && (
+                    <div className="ps-section-description mb-6">
+                      <div>
+                        <p className="ps-description text-gray-600 font-medium leading-relaxed">
+                          {product.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   
-                  {/* Дополнительная информация - только десктоп */}
+                  {/* Детальная информация - только десктоп */}
                   {!isMobile && (
                     <div className="ps-section-detailed mb-6">
                       <div className="min-h-[72px] flex flex-col justify-center">
