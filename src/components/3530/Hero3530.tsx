@@ -21,9 +21,35 @@ const Hero3530 = () => {
   const [isModelVisible, setIsModelVisible] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const modelViewerRef = useRef<any>(null);
   const heroSectionRef = useRef<HTMLDivElement>(null);
   const hasCheckedCacheRef = useRef(false);
+
+  // Брейкпоинт для мобилки (как в ProductHero)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  // Инициализация камеры на мобилке (мягкий угол / фикс. дистанция)
+  useEffect(() => {
+    if (!isMobile || !modelViewerRef.current) return;
+    const mv = modelViewerRef.current as any;
+    const init = () => {
+      mv.cameraOrbit = "0deg 80deg 1.1m";
+      mv.fieldOfView = "40deg";
+      mv.minCameraOrbit = "auto auto 1.1m";
+      mv.maxCameraOrbit = "auto auto 1.1m";
+      mv.jumpCameraToGoal?.();
+    };
+    init();
+    const t = window.setTimeout(init, 50);
+    return () => window.clearTimeout(t);
+  }, [isMobile, isModelLoaded]);
+
 
   useEffect(() => {
     const checkModelCacheStatus = async () => {
@@ -182,52 +208,91 @@ const Hero3530 = () => {
                 {/* 3D модель - Premium CSS анимации, прозрачная интеграция */}
                 {isModelLoaded && (
                   <div className={`hero-model relative z-10 w-full h-full ${isModelVisible ? 'model-loaded' : ''}`}>
-                    <model-viewer
-                      ref={modelViewerRef}
-                      src={model3530Data.modelUrl}
-                      alt="3D модель коммутатора IDS3530"
-                      auto-rotate
-                      auto-rotate-delay="1000"
-                      rotation-per-second="32deg"
-                      camera-orbit="0deg 82deg 75%"
-                      min-camera-orbit="auto auto 75%"
-                      max-camera-orbit="auto auto 75%"
-                      interaction-policy="none"
-                      disable-zoom
-                      disable-pan
-                      disable-tap
-                      environment-image="neutral"
-                      shadow-intensity="0"
-                      exposure="1.0"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        background: 'transparent',
-                        border: 'none',
-                        outline: 'none',
-                        boxShadow: 'none',
-                        pointerEvents: 'none',
-                        touchAction: 'none',
-                      }}
-                      onLoad={() => {
-                        console.log(`✅ Hero3530: 3D-модель ${model3530Data.series} загружена и отображается`);
-                        setIsModelVisible(true);
-                        setShowLoader(false);
-                        
-                        // Дополнительная синхронизация с preloader
-                        if (!modelPreloader.isLoaded(model3530Data.modelUrl)) {
-                          console.log(`🔄 Hero3530: Синхронизируем модель ${model3530Data.series} с preloader`);
-                          modelPreloader.markAsLoaded && modelPreloader.markAsLoaded(model3530Data.modelUrl);
-                        }
-                      }}
-                      onError={(e) => {
+                    {isMobile ? (
+                      <model-viewer
+                        ref={modelViewerRef}
+                        src={model3530Data.modelUrl}
+                        alt="3D модель коммутатора IDS3530"
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="32deg"
+                        camera-orbit="0deg 80deg 1.15m"
+                        min-camera-orbit="auto auto 1.1m"
+                        max-camera-orbit="auto auto 1.1m"
+                        field-of-view="40deg"
+                        interaction-prompt="none"
+                        environment-image="neutral"
+                        shadow-intensity="0.2"
+                        exposure="1.1"
+                        disable-zoom
+                        disable-pan
+                        disable-tap
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          background: 'transparent',
+                          border: 'none',
+                          outline: 'none',
+                          boxShadow: 'none',
+                          pointerEvents: 'none',
+                          touchAction: 'none',
+                        }}
+                        onLoad={() => {
+                          setIsModelVisible(true);
+                          setShowLoader(false);
+                          if (!modelPreloader.isLoaded(model3530Data.modelUrl)) {
+                            modelPreloader.markAsLoaded?.(model3530Data.modelUrl);
+                          }
+                        }}
+                        onError={(e: unknown) => {
                         console.error(`❌ Hero3530: Ошибка загрузки модели ${model3530Data.series}`, e);
                         setShowLoader(false);
                       }}
-                    />
+
+                      />
+                    ) : (
+                      <model-viewer
+                        ref={modelViewerRef}
+                        src={model3530Data.modelUrl}
+                        alt="3D модель коммутатора IDS3530"
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="30deg"
+                        camera-controls
+                        camera-orbit="0deg 80deg 0.9m"
+                        min-camera-orbit="auto auto 0.5m"
+                        max-camera-orbit="auto auto 1.2m"
+                        field-of-view="32deg"
+                        interaction-prompt="none"
+                        environment-image="neutral"
+                        shadow-intensity="0.25"
+                        exposure="1.05"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          background: 'transparent',
+                          border: 'none',
+                          outline: 'none',
+                          boxShadow: 'none',
+                          // если захочешь интерактив на десктопе — просто убери следующую строку
+                          pointerEvents: 'none',
+                        }}
+                        onLoad={() => {
+                          setIsModelVisible(true);
+                          setShowLoader(false);
+                          if (!modelPreloader.isLoaded(model3530Data.modelUrl)) {
+                            modelPreloader.markAsLoaded?.(model3530Data.modelUrl);
+                          }
+                        }}
+                        onError={(e: unknown) => {
+                        console.error(`❌ Hero3530: Ошибка загрузки модели ${model3530Data.series}`, e);
+                        setShowLoader(false);
+                        }}
+                      />
+                    )}
                   </div>
                 )}
-                
+
                 {/* Минималистичный лоадер - ТОЛЬКО при необходимости */}
                 {showLoader && !isModelVisible && (
                   <div className="absolute inset-0 flex items-center justify-center z-20">
