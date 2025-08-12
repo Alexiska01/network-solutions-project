@@ -96,21 +96,23 @@ class ModelCacheManager {
       const stored = localStorage.getItem(this.METADATA_KEY);
       if (stored) {
         this.metadata = JSON.parse(stored);
+        console.log('📚 ModelCacheManager: Загружены существующие метаданные', this.metadata);
       } else {
+        console.log('🆕 ModelCacheManager: Первый визит - создание метаданных');
         this.metadata = {
           version: '2.0',
-          lastActivity: Date.now(),
-          lastHomeVisit: 0,
+          lastActivity: 0, // ПЕРВЫЙ ВИЗИТ - нет активности
+          lastHomeVisit: 0, // ПЕРВЫЙ ВИЗИТ
           quickReturnMode: false,
           models: {}
         };
-        await this.saveMetadata();
+        // НЕ СОХРАНЯЕМ автоматически для первого визита
       }
     } catch (error) {
       console.warn('⚠️ ModelCacheManager: Ошибка загрузки метаданных', error);
       this.metadata = {
         version: '2.0',
-        lastActivity: Date.now(),
+        lastActivity: 0,
         lastHomeVisit: 0,
         quickReturnMode: false,
         models: {}
@@ -207,10 +209,16 @@ class ModelCacheManager {
   }
 
   /**
-   * Отметка посещения главной страницы
+   * Отметка посещения главной страницы (ТОЛЬКО после показа WelcomeScreen)
    */
   markHomeVisit(): void {
     if (this.metadata) {
+      // ЕСЛИ ЭТО ПЕРВЫЙ ВИЗИТ (lastHomeVisit = 0) - НЕ ОБНОВЛЯЕМ СРАЗУ
+      if (this.metadata.lastHomeVisit === 0) {
+        console.log('🚫 ModelCacheManager: Первый визит - НЕ отмечаем посещение до показа WelcomeScreen');
+        return;
+      }
+      
       const now = Date.now();
       this.metadata.lastHomeVisit = now;
       this.metadata.lastActivity = now;
@@ -224,6 +232,24 @@ class ModelCacheManager {
         });
       } catch (error) {
         console.warn('⚠️ ModelCacheManager: Ошибка сохранения посещения', error);
+      }
+    }
+  }
+
+  /**
+   * Отметка завершения WelcomeScreen (теперь можно обновлять посещения)
+   */
+  markWelcomeScreenComplete(): void {
+    if (this.metadata) {
+      const now = Date.now();
+      this.metadata.lastHomeVisit = now;
+      this.metadata.lastActivity = now;
+      this.metadata.quickReturnMode = true;
+      try {
+        localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
+        console.log('✅ ModelCacheManager: WelcomeScreen завершен, активность отмечена');
+      } catch (error) {
+        console.warn('⚠️ ModelCacheManager: Ошибка отметки завершения WelcomeScreen', error);
       }
     }
   }
@@ -463,10 +489,13 @@ class ModelCacheManager {
    */
   clearForTesting(): void {
     try {
+      // ПОЛНАЯ очистка localStorage
       localStorage.removeItem(this.METADATA_KEY);
-      console.log('🧪 ModelCacheManager: Данные очищены для тестирования');
+      localStorage.removeItem('welcomeScreen_lastShown');
+      localStorage.removeItem('welcomeScreen_lastActivity');
+      console.log('🧪 ModelCacheManager: ВСЕ данные очищены');
       
-      // Принудительно создаем состояние "первого визита"
+      // Устанавливаем состояние "первого визита" БЕЗ сохранения
       this.metadata = {
         version: '2.0',
         lastActivity: 0,
@@ -475,8 +504,11 @@ class ModelCacheManager {
         models: {}
       };
       
-      localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
       console.log('✅ ModelCacheManager: Установлен режим первого визита', this.metadata);
+      console.log('🔍 localStorage после очистки:', {
+        metadata: localStorage.getItem(this.METADATA_KEY),
+        welcome: localStorage.getItem('welcomeScreen_lastShown')
+      });
     } catch (error) {
       console.warn('⚠️ ModelCacheManager: Ошибка очистки для тестирования', error);
     }

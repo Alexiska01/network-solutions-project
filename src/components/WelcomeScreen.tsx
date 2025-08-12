@@ -183,6 +183,11 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         console.log('✅ WelcomeScreen: Скрываем экран');
         setIsScreenVisible(false);
         hideWelcomeScreen();
+        
+        // Отмечаем завершение WelcomeScreen
+        const { modelCacheManager } = require('@/utils/modelCacheManager');
+        modelCacheManager.markWelcomeScreenComplete();
+        
         onComplete?.();
       }, 400);
       
