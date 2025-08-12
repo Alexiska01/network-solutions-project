@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   const quickLinks = [
     { name: "Оборудование iDATA", path: "/products" },
-    { name: "Гарантия и сервис", path: "/warranty-service" },
-    { name: "Программное обеспечение", path: "/software" },
+    { name: "Гарантия и сервис", path: "/warranty" },
+    { name: "Программное обеспечение", path: "/prormaning" },
     { name: "Документация", path: "/documentation" },
   ];
 
@@ -75,7 +75,7 @@ const Footer = () => {
               Контакты
             </h3>
             <div className="space-y-2 md:space-y-3 text-xs md:text-sm text-gray-400 font-sans">
-              <p>+7 (495) 123-45-66</p>
+              <p>+7 (985) 220-04-32</p>
               <p>info@idata.ru</p>
               <p>Москва, ул. Примерная, 123</p>
             </div>

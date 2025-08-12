@@ -405,12 +405,12 @@ const ProductHero = () => {
                         alt={currentData.title}
                         auto-rotate
                         auto-rotate-delay="0"
-                        rotation-per-second="32deg"
+                        rotation-per-second="35deg"
                         camera-controls
-                        camera-orbit="0deg 80deg 0.97m"
+                        camera-orbit="0deg 80deg 1.02m"
                         min-camera-orbit="auto auto 0.4m"
                         max-camera-orbit="auto auto 2.5m"
-                        field-of-view="31deg"
+                        field-of-view="35deg"
                         exposure="1.1"
                         shadow-intensity="0.3"
                         environment-image="neutral"
@@ -418,12 +418,13 @@ const ProductHero = () => {
                         loading="eager"
                         reveal="auto"
                         style={{
-                          width: "95%",
-                          height: "95%",
+                          width: "90%",
+                          height: "90%",
                           background: "transparent",
                           borderRadius: "0rem",
                           ["--progress-bar-color" as any]: "transparent",
                           ["--progress-mask" as any]: "transparent",
+                          pointerEvents: "none",
                         }}
                         onLoad={() => {
                           setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));

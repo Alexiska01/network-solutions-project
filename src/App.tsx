@@ -28,7 +28,6 @@ const ModelIDS4530_24S_4X = lazy(() => import("./pages/4530/ModelIDS4530_24S_4X"
 const ModelIDS4530_48S_4X = lazy(() => import("./pages/4530/ModelIDS4530_48S_4X"));
 const ModelIDS3730_24T_6X = lazy(() => import("./pages/ModelIDS3730_24T_6X"));
 const ModelIDS3730_24P_6X = lazy(() => import("./pages/ModelIDS3730_24P_6X"));
-const SoftwarePage = lazy(() => import("./pages/SoftwarePage"));
 const Partners = lazy(() => import("./pages/Partners"));
 // const ProductHero = lazy(() => import("./pages/ProductHero")); // Заменён на прямой импорт
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -191,7 +190,6 @@ const App = () => {
                 path="/products/switches/ids3730/24p-6x"
                 element={<ModelIDS3730_24P_6X />}
               />
-              <Route path="/software" element={<SoftwarePage />} />
               <Route path="/product-hero" element={<ProductHero />} />
               <Route path="/contacts" element={<ContactsPage />} />
               <Route path="/products/switches/access" element={<AccessSwitchesPage />} />

@@ -29,7 +29,7 @@ export const navigationItems: NavItem[] = [
     icon: "Network",
   },
   { name: "Гарантия и сервис", path: "/warranty", icon: "ShieldCheck" },
-  { name: "Программное обеспечение", path: "/software", icon: "Code" },
+  { name: "Программное обеспечение", path: "/prormaning", icon: "Code" },
   { name: "Документация", path: "/documentation", icon: "FileText" },
   { name: "Партнеры", path: "/partners", icon: "Users" },
   { name: "Контакты", path: "/contacts", icon: "Phone" },
