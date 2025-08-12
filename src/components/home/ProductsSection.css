@@ -33,23 +33,45 @@
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Desktop Card Dimensions - Balanced & Premium */
+/* Desktop Card Dimensions - Professional Grid System */
 @media (min-width: 768px) {
   .ps-card {
-    min-height: 520px;
+    min-height: 640px;
   }
 }
 
 @media (min-width: 1024px) {
   .ps-card {
-    min-height: 580px;
+    min-height: 720px;
     max-width: 100%;
   }
 }
 
 @media (min-width: 1280px) {
   .ps-card {
-    min-height: 600px;
+    min-height: 760px;
+  }
+}
+
+/* Professional Grid Layout - Apple Style */
+@media (min-width: 1024px) {
+  .ps-card > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .ps-card-inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* Content Area Flex Grid */
+  .ps-card-inner > div:last-child {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 }
 
@@ -115,7 +137,7 @@
   }
 }
 
-/* Typography - Apple-like Precision */
+/* Typography - Apple-like Precision & Grid Alignment */
 .ps-title {
   font-size: 1.25rem;
   font-weight: 700;
@@ -135,6 +157,7 @@
   .ps-title {
     font-size: 1.5rem;
     line-height: 1.2;
+    margin-bottom: 0;
   }
 }
 
@@ -142,20 +165,52 @@
   font-size: 0.9375rem;
   color: #6b7280;
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 @media (min-width: 768px) {
   .ps-description {
     font-size: 1rem;
-    line-height: 1.35;
+    line-height: 1.45;
   }
 }
 
-/* Feature Icons - Refined */
+@media (min-width: 1024px) {
+  .ps-description {
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+}
+
+/* Desktop Additional Info */
+@media (min-width: 1024px) {
+  .ps-detailed-info {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #6b7280;
+    font-weight: 400;
+  }
+}
+
+/* Feature Lists - Professional Apple Style */
+.ps-feature {
+  align-items: flex-start !important;
+  gap: 12px !important;
+}
+
+@media (min-width: 1024px) {
+  .ps-feature {
+    gap: 16px !important;
+    margin-bottom: 4px;
+  }
+}
+
+/* Feature Icons - Refined & Aligned */
 .ps-feature-icon {
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 }
 
 @media (min-width: 768px) {
@@ -165,7 +220,31 @@
   }
 }
 
-/* CTA Button - Premium Interaction */
+@media (min-width: 1024px) {
+  .ps-feature-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+  }
+}
+
+/* Feature Text - Perfect Alignment */
+.ps-feature-text {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .ps-feature-text {
+    font-size: 0.9375rem !important;
+    line-height: 1.5 !important;
+    font-weight: 500;
+    color: #4b5563;
+  }
+}
+
+/* CTA Button - Premium Interaction & Grid Alignment */
 .ps-cta {
   padding: 16px 20px;
   border-radius: 16px;
@@ -175,6 +254,8 @@
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 @media (min-width: 768px) {
@@ -192,6 +273,14 @@
   }
 }
 
+@media (min-width: 1024px) {
+  .ps-cta {
+    padding: 20px 28px;
+    border-radius: 20px;
+    margin-top: 0;
+  }
+}
+
 .ps-cta-icon {
   width: 28px;
   height: 28px;
@@ -206,6 +295,44 @@
 
   .ps-cta:hover .ps-cta-icon {
     transform: translateX(4px);
+  }
+}
+
+/* Grid Section Heights - Professional Layout */
+@media (min-width: 1024px) {
+  .ps-section-header {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .ps-section-description {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+  }
+
+  .ps-section-detailed {
+    min-height: 96px;
+    display: flex;
+    align-items: center;
+  }
+
+  .ps-section-features {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 200px;
+  }
+
+  .ps-section-cta {
+    min-height: 72px;
+    display: flex;
+    align-items: flex-end;
+    margin-top: auto;
+    padding-top: 24px;
   }
 }
 
@@ -260,6 +387,17 @@
 }
 .ps-card.ps-delay-3.ps-visible {
   transition-delay: 0.4s;
+}
+
+/* Perfect Grid Spacing */
+@media (min-width: 1024px) {
+  .ps-grid-spacing {
+    padding: 40px 0;
+  }
+
+  .ps-grid-spacing > * + * {
+    margin-top: 32px;
+  }
 }
 
 /* Performance Optimizations */

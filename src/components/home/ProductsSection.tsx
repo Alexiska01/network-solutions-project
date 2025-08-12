@@ -8,10 +8,13 @@ const products = [
   {
     title: "Управляемые коммутаторы",
     description: "Гибкое управление сетями с корпоративными L3-коммутаторами",
+    detailedInfo: "Профессиональные решения для построения масштабируемых корпоративных сетей с расширенными возможностями мониторинга, управления трафиком и обеспечения высокой надёжности подключений.",
     features: [
-      "24/48 портов Gigabit",
-      "PoE+ поддержка", 
-      "SNMP мониторинг",
+      "24/48 портов Gigabit Ethernet",
+      "PoE/PoE+ поддержка до 370W", 
+      "SNMP v3 мониторинг и управление",
+      "VLAN и QoS конфигурация",
+      "Redundant power supply"
     ],
     icon: "Network",
     gradientPosition: "from-blue-600 to-blue-700",
@@ -19,10 +22,13 @@ const products = [
   {
     title: "Корпоративные маршрутизаторы",
     description: "Высокопроизводительные решения для филиальных сетей",
+    detailedInfo: "Надёжные и производительные маршрутизаторы для обеспечения стабильного подключения удалённых офисов к центральной сети с поддержкой современных протоколов безопасности.",
     features: [
-      "VPN подключения",
-      "Встроенный Firewall",
-      "Load balancing",
+      "Site-to-Site VPN подключения",
+      "Встроенный Next-Gen Firewall",
+      "WAN Load balancing и Failover",
+      "SD-WAN технология",
+      "Centralized policy management"
     ],
     icon: "Router",
     gradientPosition: "from-blue-700 to-blue-800",
@@ -30,10 +36,13 @@ const products = [
   {
     title: "Беспроводные\nрешения", 
     description: "Enterprise-класс точки доступа и контроллеры Wi-Fi 6",
+    detailedInfo: "Современные беспроводные системы корпоративного уровня с поддержкой новейших стандартов Wi-Fi 6E для обеспечения высокой пропускной способности и надёжности.",
     features: [
-      "Wi-Fi 6E поддержка",
-      "Mesh технология",
-      "Централизованное управление",
+      "Wi-Fi 6E поддержка (6GHz band)",
+      "Mesh технология и roaming",
+      "Централизованное cloud-управление",
+      "Advanced security (WPA3)",
+      "AI-powered optimization"
     ],
     icon: "Wifi",
     gradientPosition: "from-blue-800 to-teal-600",
@@ -41,10 +50,13 @@ const products = [
   {
     title: "Системы\nуправления",
     description: "Централизованные платформы для управления инфраструктурой",
+    detailedInfo: "Комплексные решения для мониторинга, управления и автоматизации сетевой инфраструктуры с возможностью интеграции различных систем в единую платформу.",
     features: [
-      "Унифицированная панель",
-      "Аналитика и отчеты",
-      "Автоматизация процессов",
+      "Унифицированная dashboard панель",
+      "Real-time аналитика и отчёты",
+      "Автоматизация сетевых процессов",
+      "Integration API и webhooks",
+      "Multi-tenant архитектура"
     ],
     icon: "Settings",
     gradientPosition: "from-teal-600 to-teal-500",
@@ -222,7 +234,7 @@ const ProductsSection = () => {
                 
                 <div className={`relative z-10 h-full flex flex-col ${isMobile ? 'p-6' : 'p-8 lg:p-10'}`}>
                   {/* Иконка */}
-                  <div className={`${isMobile ? 'mb-6' : 'mb-8 lg:mb-10'}`}>
+                  <div className={`ps-section-icon ${isMobile ? 'mb-6' : 'mb-8'}`}>
                     <div className="ps-icon-wrapper bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center">
                       <Icon
                         name={product.icon as any}
@@ -233,41 +245,56 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* Заголовок */}
-                  <div className={`${isMobile ? 'mb-4' : 'mb-6 lg:mb-8'}`} style={{ height: isMobile ? "48px" : "80px" }}>
-                    <h3 className="ps-title font-bold text-gray-900 leading-tight tracking-tight whitespace-normal lg:whitespace-pre-line">
-                      {product.title}
-                    </h3>
-                    {/* GPU-анимированная подчеркивающая линия */}
-                    <div className="ps-underline relative h-0.5 bg-gray-100 rounded-full overflow-hidden">
-                      <div className={`ps-underline-fill absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full`} />
+                  <div className={`ps-section-header ${isMobile ? 'mb-4' : 'mb-6'}`}>
+                    <div className={isMobile ? '' : 'min-h-[80px] flex flex-col justify-center'}>
+                      <h3 className="ps-title font-bold text-gray-900 leading-tight tracking-tight whitespace-normal lg:whitespace-pre-line">
+                        {product.title}
+                      </h3>
+                      {/* GPU-анимированная подчеркивающая линия */}
+                      <div className="ps-underline relative h-0.5 bg-gray-100 rounded-full overflow-hidden mt-3">
+                        <div className={`ps-underline-fill absolute inset-0 bg-gradient-to-r ${product.gradientPosition} rounded-full`} />
+                      </div>
                     </div>
                   </div>
                 
                   {/* Описание */}
-                  <div className={`${isMobile ? 'mb-6' : 'mb-8 lg:mb-10'}`} style={{ height: isMobile ? "36px" : "56px" }}>
-                    <p className="ps-description text-gray-600 font-medium leading-tight">
-                      {product.description}
-                    </p>
+                  <div className={`ps-section-description ${isMobile ? 'mb-6' : 'mb-6'}`}>
+                    <div className={isMobile ? '' : 'min-h-[48px] flex flex-col justify-center'}>
+                      <p className="ps-description text-gray-600 font-medium leading-relaxed">
+                        {product.description}
+                      </p>
+                    </div>
                   </div>
+                  
+                  {/* Дополнительная информация - только десктоп */}
+                  {!isMobile && (
+                    <div className="ps-section-detailed mb-6">
+                      <div className="min-h-[72px] flex flex-col justify-center">
+                        <p className="ps-detailed-info text-sm text-gray-500 font-normal leading-relaxed">
+                          {product.detailedInfo}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 
                   {/* Характеристики */}
-                  <div className={`flex-1 ${isMobile ? 'mb-6' : 'mb-8 lg:mb-10'}`}>
-                    <div className="space-y-3">
-                      {product.features.map((feature, idx) => (
+                  <div className="ps-section-features flex-1 mb-8">
+                    <div className={`${isMobile ? 'space-y-3' : 'space-y-4'}`}>
+                      {(isMobile ? product.features.slice(0, 3) : product.features).map((feature, idx) => (
                         <div 
                           key={idx} 
-                          className="ps-feature grid grid-cols-[auto_1fr] gap-3 items-center"
+                          className="ps-feature flex items-start gap-3"
                           style={{ '--feature-index': idx } as React.CSSProperties}
                         >
-                          <div className="ps-feature-icon rounded-full bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center">
+                          <div className={`ps-feature-icon rounded-full bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center flex-shrink-0 ${isMobile ? 'mt-0.5' : 'mt-1'}`}>
                             <Icon
                               name="Check"
                               size={isMobile ? 10 : 12}
                               className="text-white"
-                              strokeWidth={2}
+                              strokeWidth={3}
                             />
                           </div>
-                          <span className="ps-feature-text font-medium text-gray-700 leading-tight">
+                          <span className={`ps-feature-text font-medium text-gray-700 leading-relaxed flex-1 ${isMobile ? 'text-sm' : 'text-base'}`}>
                             {feature}
                           </span>
                         </div>
@@ -275,8 +302,8 @@ const ProductsSection = () => {
                     </div>
                   </div>
                 
-                  {/* CTA кнопка */}
-                  <div className="mt-auto">
+                  {/* CTA кнопка - всегда внизу */}
+                  <div className="ps-section-cta mt-auto pt-4">
                     {index === 0 ? (
                       <Link
                         to="/switches"
