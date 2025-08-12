@@ -207,7 +207,15 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     return () => clearTimeout(cleanup);
   }, [heroData]);
 
-  if (!isScreenVisible) return null;
+  // ОТЛАДКА: принудительное отображение для тестирования
+  console.log('🎭 WelcomeScreen: isScreenVisible =', isScreenVisible, 'isVisible =', isVisible, 'forceShow =', forceShow);
+  
+  if (!isScreenVisible) {
+    console.log('❌ WelcomeScreen: Компонент скрыт, не рендерится');
+    return null;
+  }
+  
+  console.log('✅ WelcomeScreen: Компонент рендерится!');
 
   const currentStage = LOADING_STAGES[currentStageIndex];
 

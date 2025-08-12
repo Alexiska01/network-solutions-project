@@ -166,15 +166,22 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
     console.log('🚀 useWelcomeScreen: Инициализация');
     
     const initWelcomeScreen = () => {
+      // ВРЕМЕННАЯ ОТЛАДКА: принудительно показываем WelcomeScreen
+      console.log('🧪 useWelcomeScreen: ОТЛАДОЧНЫЙ РЕЖИМ - принудительный показ');
+      modelCacheManager.forceFirstVisit();
+      
       // Сначала проверяем и сбрасываем состояние при долгом бездействии
       modelCacheManager.resetInactivityState();
       
       const shouldShow = shouldShowWelcomeScreen();
       console.log('🎯 useWelcomeScreen: Нужно показать?', shouldShow);
+      console.log('📊 useWelcomeScreen: Текущие метаданные:', modelCacheManager.currentMetadata);
       
       if (shouldShow) {
+        console.log('✅ useWelcomeScreen: Запускаем WelcomeScreen');
         showWelcomeScreen();
       } else {
+        console.log('❌ useWelcomeScreen: WelcomeScreen НЕ запущен');
         // Отмечаем активность и посещение
         modelCacheManager.markHomeVisit();
         updateActivity();

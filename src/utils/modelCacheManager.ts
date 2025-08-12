@@ -32,9 +32,15 @@ class ModelCacheManager {
   private cache: Cache | null = null;
   private metadata: CacheMetadata | null = null;
 
+  // Публичный геттер для отладки
+  get currentMetadata(): CacheMetadata | null {
+    return this.metadata;
+  }
+
   constructor() {
     // Сразу инициализируем метаданные синхронно
     this.initSync();
+    console.log('🎉 ModelCacheManager: Конструктор выполнен');
   }
 
   /**
@@ -484,6 +490,25 @@ class ModelCacheManager {
       this.initSync();
     } catch (error) {
       console.warn('⚠️ ModelCacheManager: Ошибка очистки для тестирования', error);
+    }
+  }
+
+  /**
+   * Принудительная очистка для первого визита
+   */
+  forceFirstVisit(): void {
+    try {
+      this.metadata = {
+        version: '2.0',
+        lastActivity: Date.now(),
+        lastHomeVisit: 0, // Обнуляем для первого визита
+        quickReturnMode: false,
+        models: {}
+      };
+      localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
+      console.log('🔄 ModelCacheManager: Принудительный первый визит', this.metadata);
+    } catch (error) {
+      console.warn('⚠️ ModelCacheManager: Ошибка принудительного первого визита', error);
     }
   }
 }
