@@ -116,7 +116,7 @@ const Hero3530 = () => {
       const modelViewer = modelViewerRef.current;
       
       // Настройка камеры - приближаем для большего размера модели
-      modelViewer.cameraOrbit = "0deg 75deg 85%"; // Уменьшили с 110% до 85% для увеличения модели
+      modelViewer.cameraOrbit = "0deg 75deg 65%"; // Уменьшили с 85% до 65% для большего увеличения модели
       modelViewer.autoRotate = true;
       modelViewer.autoRotateDelay = 1000;
       modelViewer.rotationPerSecond = "25deg";
@@ -155,53 +155,64 @@ const Hero3530 = () => {
   return (
     <section 
       ref={heroSectionRef}
-      className={`bg-gradient-hero text-white py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden min-h-[420px] md:min-h-[480px] ${isInView ? 'hero-visible' : ''}`}
+      className={`bg-gradient-hero text-white py-8 lg:py-16 relative overflow-hidden min-h-[500px] lg:min-h-[600px] ${isInView ? 'hero-visible' : ''}`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-start lg:items-center w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
           
           {/* Левая часть - Текстовый контент */}
-          <div className="hero-text-content lg:pr-4 xl:pr-8">
-            <p className="hero-subtitle text-xs sm:text-sm text-blue-200 font-medium mb-1 sm:mb-2 md:mb-3 uppercase tracking-wide">
+          <div className="hero-text-content lg:pr-8">
+            <p className="hero-subtitle text-sm text-blue-200 font-medium mb-3 uppercase tracking-wide">
               Серия корпоративных коммутаторов
             </p>
             
-            <h1 className="hero-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 leading-tight">
+            <h1 className="hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight">
               IDS3530
             </h1>
             
-            <div className="hero-features mb-4 sm:mb-5 md:mb-6 lg:mb-8 space-y-2 sm:space-y-3">
-              <div className="flex items-center gap-2 sm:gap-3 text-blue-100">
+            <div className="hero-features mb-6 space-y-3">
+              <div className="hero-feature-item flex items-center gap-3 text-blue-100">
                 <Icon
                   name="Server"
                   size={18}
                   strokeWidth={1.8}
                   className="text-blue-300 flex-shrink-0"
                 />
-                <span className="text-xs sm:text-sm md:text-base">
+                <span className="text-sm md:text-base">
                   До 760 Вт PoE+, 10G uplink, модульные БП
                 </span>
               </div>
-              <div className="flex items-center gap-2 sm:gap-3 text-blue-100">
+              <div className="hero-feature-item flex items-center gap-3 text-blue-100">
                 <Icon
                   name="Layers3"
                   size={18}
                   strokeWidth={1.8}
                   className="text-blue-300 flex-shrink-0"
                 />
-                <span className="text-xs sm:text-sm md:text-base">
+                <span className="text-sm md:text-base">
                   Стек до 8 устройств, кольцевые топологии
                 </span>
               </div>
-              <div className="flex items-center gap-2 sm:gap-3 text-blue-100">
+              <div className="hero-feature-item flex items-center gap-3 text-blue-100">
                 <Icon
                   name="Settings"
                   size={18}
                   strokeWidth={1.8}
                   className="text-blue-300 flex-shrink-0"
                 />
-                <span className="text-xs sm:text-sm md:text-base">
+                <span className="text-sm md:text-base">
                   QoS, SNMP, автоматизация (ZTP), удалённое управление
+                </span>
+              </div>
+              <div className="hero-feature-item flex items-center gap-3 text-blue-100">
+                <Icon
+                  name="ServerCog"
+                  size={18}
+                  strokeWidth={1.8}
+                  className="text-blue-300 flex-shrink-0"
+                />
+                <span className="text-sm md:text-base">
+                  Высокая доступность: STP, RSTP, MSTP
                 </span>
               </div>
             </div>
@@ -209,7 +220,7 @@ const Hero3530 = () => {
             {/* Premium CSS-анимированная кнопка */}
             <div className="hero-button">
               <button
-                className="bg-white text-[#0065B3] px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white min-h-[44px] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                className="bg-white text-[#0065B3] px-6 py-3 rounded-lg text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white min-h-[44px] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 transition-all duration-300"
                 onClick={() =>
                   window.open(
                     "https://drive.google.com/file/d/1-4xHlvPUr7kUBCQBzgh7Lz2FGC1COfwe/view?usp=drive_link",
@@ -222,12 +233,10 @@ const Hero3530 = () => {
             </div>
           </div>
 
-          {/* Правая часть - 3D модель и фичи */}
-          <div className="hero-model-section relative mt-4 sm:mt-6 lg:mt-0">
-            <div className="flex flex-col space-y-4 sm:space-y-5 md:space-y-6">
-              
+          {/* Правая часть - только 3D модель */}
+          <div className="hero-model-section relative order-first lg:order-last mt-0 lg:mt-0 flex justify-center">
               {/* Контейнер с 3D-моделью - Premium CSS анимации */}
-              <div className="hero-model-container relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[420px] h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] mx-auto lg:mx-0 cursor-pointer">
+              <div className="hero-model-container relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[600px] h-[280px] sm:h-[320px] md:h-[380px] lg:h-[420px] cursor-pointer">
                 {/* 3D модель - Premium CSS анимации, прозрачная интеграция */}
                 {isModelLoaded && (
                   <div className={`hero-model relative z-10 w-full h-full ${isModelVisible ? 'model-loaded' : ''}`}>
@@ -238,9 +247,9 @@ const Hero3530 = () => {
                       auto-rotate
                       auto-rotate-delay="1000"
                       rotation-per-second="25deg"
-                      camera-orbit="0deg 75deg 85%"
-                      min-camera-orbit="auto auto 85%"
-                      max-camera-orbit="auto auto 85%"
+                      camera-orbit="0deg 75deg 65%"
+                      min-camera-orbit="auto auto 65%"
+                      max-camera-orbit="auto auto 65%"
                       interaction-policy="none"
                       disable-zoom
                       disable-pan
@@ -290,55 +299,7 @@ const Hero3530 = () => {
                 )}
               </div>
 
-              {/* Premium feature карточки - плавные CSS анимации */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
-                {featuresRight.map(({ icon, label }, i) => (
-                  <div
-                    key={label}
-                    className={`hero-feature-card hero-feature-${i + 1} flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer focus-visible:outline-1 focus-visible:outline-white focus-visible:outline-offset-1`}
-                    style={{
-                      backgroundColor: "rgba(255,255,255,0.06)",
-                      backdropFilter: "blur(8px)",
-                    }}
-                    tabIndex={0}
-                  >
-                    <div className="flex items-center justify-center w-6 h-6 rounded-md bg-white/10 flex-shrink-0">
-                      <Icon
-                        name={icon as any}
-                        size={16}
-                        strokeWidth={1.8}
-                        className="text-white/90"
-                      />
-                    </div>
-                    <span className="text-white/90 font-medium text-sm sm:text-base leading-snug">
-                      {label}
-                    </span>
-                  </div>
-                ))}
-              </div>
 
-              {/* Premium дополнительное описание - плавные CSS переходы */}
-              <div
-                className="hero-description flex items-start gap-3 px-4 py-3 rounded-lg cursor-pointer focus-visible:outline-1 focus-visible:outline-white focus-visible:outline-offset-1"
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.04)",
-                  backdropFilter: "blur(6px)",
-                }}
-                tabIndex={0}
-              >
-                <div className="flex items-center justify-center w-6 h-6 rounded-md bg-white/8 flex-shrink-0 mt-0.5">
-                  <Icon
-                    name="ServerCog"
-                    size={16}
-                    strokeWidth={1.8}
-                    className="text-white/80"
-                  />
-                </div>
-                <span className="text-white/80 font-medium text-xs sm:text-sm leading-relaxed">
-                  Лёгкая интеграция в корпоративные сети различной сложности,
-                  поддержка кольцевых топологий, автоматизация и удалённое управление
-                </span>
-              </div>
             </div>
           </div>
         </div>

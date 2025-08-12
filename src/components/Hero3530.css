@@ -165,7 +165,7 @@
   will-change: transform, opacity;
 }
 
-.hero-feature-card {
+.hero-feature-item {
   opacity: 0;
   transform: translate3d(0, var(--hero-translate-y), 0);
   transition:
@@ -217,7 +217,7 @@
     transition-duration: var(--hero-desktop-slow);
   }
 
-  .hero-feature-card {
+  .hero-feature-item {
     transition-duration: var(--hero-desktop-medium);
   }
 
@@ -281,23 +281,29 @@
   transition-delay: var(--hero-delay-7);
 }
 
-/* Premium feature cards staggered animation */
-.hero-visible .hero-feature-card:nth-child(1) {
+/* Premium feature items staggered animation */
+.hero-visible .hero-feature-item:nth-child(1) {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-7) + 100ms);
+  transition-delay: calc(var(--hero-delay-5) + 100ms);
 }
 
-.hero-visible .hero-feature-card:nth-child(2) {
+.hero-visible .hero-feature-item:nth-child(2) {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-7) + 200ms);
+  transition-delay: calc(var(--hero-delay-5) + 200ms);
 }
 
-.hero-visible .hero-feature-card:nth-child(3) {
+.hero-visible .hero-feature-item:nth-child(3) {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-7) + 300ms);
+  transition-delay: calc(var(--hero-delay-5) + 300ms);
+}
+
+.hero-visible .hero-feature-item:nth-child(4) {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: calc(var(--hero-delay-5) + 400ms);
 }
 
 /* Legacy support for numbered feature classes */
@@ -347,20 +353,15 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   }
 
-  .hero-feature-card:hover {
+  .hero-feature-item:hover {
     transform: translate3d(0, var(--hero-translate-hover), 0)
       scale(var(--hero-scale-hover));
-    backdrop-filter: blur(12px);
-    background-color: rgba(255, 255, 255, 0.08);
-    transition:
-      transform var(--hero-hover-duration) var(--hero-ease-out),
-      backdrop-filter var(--hero-hover-duration) var(--hero-ease-out),
-      background-color var(--hero-hover-duration) var(--hero-ease-out);
+    transition: transform var(--hero-hover-duration) var(--hero-ease-out);
   }
 
   .hero-model-container:hover {
     transform: translate3d(0, calc(var(--hero-translate-hover) * 0.5), 0)
-      scale(1.005);
+      scale(1.02);
     transition: transform var(--hero-hover-duration) var(--hero-ease-out);
   }
 }
@@ -372,7 +373,7 @@
     transition-duration: var(--hero-active-duration);
   }
 
-  .hero-feature-card:active {
+  .hero-feature-item:active {
     transform: translate3d(0, 1px, 0) scale(var(--hero-scale-active));
     transition-duration: var(--hero-active-duration);
   }
