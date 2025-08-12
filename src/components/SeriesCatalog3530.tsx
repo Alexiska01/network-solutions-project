@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import DeviceCard3530 from "@/components/3530/DeviceCard3530";
 import FilterButtons from "@/components/FilterButtons";
@@ -20,19 +19,7 @@ import { switchModels3530 } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
 import Hero3530 from "@/components/Hero3530";
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 32 },
-  visible: (custom: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: custom * 0.08 + 0.11,
-      duration: 0.42,
-      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
-    },
-  }),
-  exit: { opacity: 0, y: 30, transition: { duration: 0.3 } },
-};
+
 
 const SeriesCatalog3530Component = () => {
   const [filter, setFilter] = useState<FilterType>("all");
@@ -93,12 +80,9 @@ const SeriesCatalog3530Component = () => {
       <Hero3530 />
 
       {/* Models Section */}
-      <motion.section
+      <section
         id="models-section"
         className="py-7 xs:py-8 sm:py-12 lg:py-16 px-2 xs:px-3 sm:px-6 bg-white"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-6 sm:mb-9">
@@ -124,48 +108,20 @@ const SeriesCatalog3530Component = () => {
               sm:grid-cols-2
             "
           >
-            <AnimatePresence mode="popLayout">
-              {filteredModels.map((model, index) => {
-                if (isMobile) {
-                  // Мобильная версия — без motion.div
-                  return (
-                    <div key={model.id} className="flex">
-                      <DeviceCard3530
-                        model={model}
-                        index={index}
-                        isInCompareList={compareModels.includes(model.id)}
-                        onToggleCompare={toggleCompareModel}
-                        onNavigate={handleNavigate}
-                      />
-                    </div>
-                  );
-                }
-                // Десктоп с анимацией
-                return (
-                  <motion.div
-                    key={model.id}
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    custom={index}
-                    layout
-                    className="flex"
-                  >
-                    <DeviceCard3530
-                      model={model}
-                      index={index}
-                      isInCompareList={compareModels.includes(model.id)}
-                      onToggleCompare={toggleCompareModel}
-                      onNavigate={handleNavigate}
-                    />
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+            {filteredModels.map((model, index) => (
+              <div key={model.id} className="flex">
+                <DeviceCard3530
+                  model={model}
+                  index={index}
+                  isInCompareList={compareModels.includes(model.id)}
+                  onToggleCompare={toggleCompareModel}
+                  onNavigate={handleNavigate}
+                />
+              </div>
+            ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Comparison Panel */}
       <ComparisonPanel
@@ -184,23 +140,17 @@ const SeriesCatalog3530Component = () => {
       />
 
       {/* Key Features */}
-      <motion.section
+      <section
         className="py-8 sm:py-12 lg:py-16 px-2 xs:px-3 sm:px-6 bg-gradient-hero"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
       >
         <div className="max-w-6xl mx-auto">
           <KeyFeatures3530 />
         </div>
-      </motion.section>
+      </section>
 
       {/* CTA Section */}
-      <motion.section
+      <section
         className="py-6 xs:py-8 md:py-12 lg:py-16 px-2 xs:px-3 sm:px-6 bg-white"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="relative inline-block text-base xs:text-xl sm:text-2xl font-semibold mx-auto px-2 sm:px-4">
@@ -217,7 +167,7 @@ const SeriesCatalog3530Component = () => {
             Связаться с партнёром
           </Button>
         </div>
-      </motion.section>
+      </section>
     </div>
   );
 };
