@@ -298,9 +298,6 @@ const Hero3530 = () => {
                   </div>
                 )}
               </div>
-
-
-            </div>
           </div>
         </div>
       </div>
