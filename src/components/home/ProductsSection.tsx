@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { useEffect, useState, useRef } from "react";
+import "./ProductsSection.css";
 
 // Данные продуктов
 const products = [
@@ -188,7 +189,8 @@ const ProductsSection = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none ps-bg-overlay" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full py-0 my-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+        {/* Desktop: Premium 2x2 Grid with balanced spacing */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:gap-8 lg:max-w-6xl lg:mx-auto xl:max-w-7xl">
           {products.map((product, index) => (
             <div
               key={index}
@@ -218,9 +220,9 @@ const ProductsSection = () => {
                   <div className="ps-border-glow absolute inset-0 rounded-3xl border border-transparent" />
                 )}
                 
-                <div className={`relative z-10 h-full flex flex-col ${isMobile ? 'p-6' : 'p-8'}`}>
+                <div className={`relative z-10 h-full flex flex-col ${isMobile ? 'p-6' : 'p-8 lg:p-10'}`}>
                   {/* Иконка */}
-                  <div className={`${isMobile ? 'mb-6' : 'mb-8'}`}>
+                  <div className={`${isMobile ? 'mb-6' : 'mb-8 lg:mb-10'}`}>
                     <div className="ps-icon-wrapper bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center">
                       <Icon
                         name={product.icon as any}
@@ -231,7 +233,7 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* Заголовок */}
-                  <div className={`${isMobile ? 'mb-4' : 'mb-6'}`} style={{ height: isMobile ? "48px" : "72px" }}>
+                  <div className={`${isMobile ? 'mb-4' : 'mb-6 lg:mb-8'}`} style={{ height: isMobile ? "48px" : "80px" }}>
                     <h3 className="ps-title font-bold text-gray-900 leading-tight tracking-tight whitespace-normal lg:whitespace-pre-line">
                       {product.title}
                     </h3>
@@ -242,14 +244,14 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* Описание */}
-                  <div className={`${isMobile ? 'mb-6' : 'mb-8'}`} style={{ height: isMobile ? "36px" : "48px" }}>
+                  <div className={`${isMobile ? 'mb-6' : 'mb-8 lg:mb-10'}`} style={{ height: isMobile ? "36px" : "56px" }}>
                     <p className="ps-description text-gray-600 font-medium leading-tight">
                       {product.description}
                     </p>
                   </div>
                 
                   {/* Характеристики */}
-                  <div className={`flex-1 ${isMobile ? 'mb-6' : 'mb-8'}`}>
+                  <div className={`flex-1 ${isMobile ? 'mb-6' : 'mb-8 lg:mb-10'}`}>
                     <div className="space-y-3">
                       {product.features.map((feature, idx) => (
                         <div 
