@@ -464,10 +464,19 @@ class ModelCacheManager {
   clearForTesting(): void {
     try {
       localStorage.removeItem(this.METADATA_KEY);
-      this.metadata = null;
       console.log('🧪 ModelCacheManager: Данные очищены для тестирования');
-      // Повторная инициализация
-      this.initSync();
+      
+      // Принудительно создаем состояние "первого визита"
+      this.metadata = {
+        version: '2.0',
+        lastActivity: 0,
+        lastHomeVisit: 0, // Первый визит!
+        quickReturnMode: false,
+        models: {}
+      };
+      
+      localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
+      console.log('✅ ModelCacheManager: Установлен режим первого визита', this.metadata);
     } catch (error) {
       console.warn('⚠️ ModelCacheManager: Ошибка очистки для тестирования', error);
     }
@@ -508,14 +517,22 @@ export const modelCacheManager = new ModelCacheManager();
   window.location.reload();
 };
 
+(window as any).forceShowWelcome = () => {
+  console.log('🚀 ПРИНУДИТЕЛЬНЫЙ показ WelcomeScreen');
+  localStorage.clear(); // Очищаем ВСЕ данные
+  window.location.reload();
+};
+
 (window as any).showWelcomeInfo = () => {
   console.log('📊 Текущее состояние WelcomeScreen:', {
     metadata: modelCacheManager.currentMetadata,
-    shouldShow: modelCacheManager.shouldShowWelcomeScreen()
+    shouldShow: modelCacheManager.shouldShowWelcomeScreen(),
+    localStorage: localStorage.getItem('modelCacheMetadata')
   });
 };
 
 console.log('💡 Команды для тестирования WelcomeScreen:');
 console.log('   testWelcomeScreen() - принудительный показ');
 console.log('   clearWelcomeData() - очистить данные');
+console.log('   forceShowWelcome() - ПОЛНАЯ очистка и показ');
 console.log('   showWelcomeInfo() - показать состояние');
