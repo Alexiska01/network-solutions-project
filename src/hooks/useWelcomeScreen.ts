@@ -17,8 +17,8 @@ interface WelcomeScreenConfig {
 const DEFAULT_CONFIG: WelcomeScreenConfig = {
   duration: 10000,
   fadeOutDuration: 400,
-  inactivityThreshold: 60 * 60 * 1000, // 1 час
-  tabCloseThreshold: 15 * 60 * 1000, // 15 минут
+  inactivityThreshold: 10 * 60 * 1000, // 10 минут
+  tabCloseThreshold: 10 * 60 * 1000, // 10 минут
 };
 
 const STORAGE_KEY = 'welcomeScreen_lastShown';
@@ -89,8 +89,8 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
     startTimeRef.current = undefined;
     runAnimation();
 
-    // Сохраняем время показа через modelCacheManager
-    modelCacheManager.updateActivity();
+    // Отмечаем посещение главной страницы
+    modelCacheManager.markHomeVisit();
   }, [runAnimation]);
 
   // Скрытие WelcomeScreen
@@ -161,13 +161,13 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
     };
   }, []);
 
-  // Инициализация при монтировании с задержкой для modelCacheManager
+  // Инициализация при монтировании
   useEffect(() => {
     console.log('🚀 useWelcomeScreen: Инициализация');
     
-    const initWelcomeScreen = async () => {
-      // Даем время modelCacheManager для инициализации
-      await new Promise(resolve => setTimeout(resolve, 100));
+    const initWelcomeScreen = () => {
+      // Сначала проверяем и сбрасываем состояние при долгом бездействии
+      modelCacheManager.resetInactivityState();
       
       const shouldShow = shouldShowWelcomeScreen();
       console.log('🎯 useWelcomeScreen: Нужно показать?', shouldShow);
@@ -175,11 +175,16 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
       if (shouldShow) {
         showWelcomeScreen();
       } else {
+        // Отмечаем активность и посещение
+        modelCacheManager.markHomeVisit();
         updateActivity();
       }
     };
     
-    initWelcomeScreen();
+    // Небольшая задержка для стабильной инициализации
+    const timer = setTimeout(initWelcomeScreen, 100);
+    
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Запускаем только один раз при монтировании
 

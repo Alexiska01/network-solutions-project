@@ -25,7 +25,7 @@ interface CacheMetadata {
 class ModelCacheManager {
   private readonly CACHE_NAME = 'idata-models-v2';
   private readonly CACHE_DURATION = 365 * 24 * 60 * 60 * 1000; // 1 год
-  private readonly ACTIVITY_TIMEOUT = 60 * 60 * 1000; // 1 час
+  private readonly ACTIVITY_TIMEOUT = 10 * 60 * 1000; // 10 минут
   private readonly QUICK_RETURN_THRESHOLD = 10 * 60 * 1000; // 10 минут для быстрого возврата
   private readonly METADATA_KEY = 'cache-metadata';
   
@@ -173,9 +173,9 @@ class ModelCacheManager {
       return false;
     }
 
-    // Если прошло больше часа с последней активности
+    // Если прошло больше 10 минут с последней активности
     if (timeSinceActivity > this.ACTIVITY_TIMEOUT) {
-      console.log('🕐 ModelCacheManager: Показываем WelcomeScreen - прошло более 1 часа');
+      console.log('🕐 ModelCacheManager: Показываем WelcomeScreen - прошло более 10 минут');
       return true;
     }
 
@@ -211,7 +211,12 @@ class ModelCacheManager {
   updateActivity(): void {
     if (this.metadata) {
       this.metadata.lastActivity = Date.now();
-      this.saveMetadata();
+      // Синхронное сохранение для быстрой отметки активности
+      try {
+        localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
+      } catch (error) {
+        console.warn('⚠️ ModelCacheManager: Ошибка сохранения активности', error);
+      }
     }
   }
 
@@ -220,10 +225,20 @@ class ModelCacheManager {
    */
   markHomeVisit(): void {
     if (this.metadata) {
-      this.metadata.lastHomeVisit = Date.now();
+      const now = Date.now();
+      this.metadata.lastHomeVisit = now;
+      this.metadata.lastActivity = now;
       this.metadata.quickReturnMode = true;
-      this.saveMetadata();
-      console.log('🏠 ModelCacheManager: Отмечено посещение главной страницы');
+      // Синхронное сохранение
+      try {
+        localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
+        console.log('🏠 ModelCacheManager: Отмечено посещение главной страницы', {
+          lastHomeVisit: now,
+          lastActivity: now
+        });
+      } catch (error) {
+        console.warn('⚠️ ModelCacheManager: Ошибка сохранения посещения', error);
+      }
     }
   }
 
@@ -234,8 +249,38 @@ class ModelCacheManager {
     if (this.metadata) {
       this.metadata.lastHomeVisit = 0;
       this.metadata.quickReturnMode = false;
-      this.saveMetadata();
-      console.log('🔄 ModelCacheManager: Принудительный показ WelcomeScreen');
+      // Синхронное сохранение
+      try {
+        localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
+        console.log('🔄 ModelCacheManager: Принудительный показ WelcomeScreen');
+      } catch (error) {
+        console.warn('⚠️ ModelCacheManager: Ошибка принудительного показа', error);
+      }
+    }
+  }
+
+  /**
+   * Сброс состояния при долгом бездействии
+   */
+  resetInactivityState(): void {
+    if (this.metadata) {
+      const now = Date.now();
+      const timeSinceActivity = now - this.metadata.lastActivity;
+      
+      // Если прошло больше 10 минут с последней активности - сбрасываем состояние
+      if (timeSinceActivity > this.ACTIVITY_TIMEOUT) {
+        this.metadata.lastHomeVisit = 0;
+        this.metadata.quickReturnMode = false;
+        // Синхронное сохранение
+        try {
+          localStorage.setItem(this.METADATA_KEY, JSON.stringify(this.metadata));
+          console.log('🔄 ModelCacheManager: Сброс состояния из-за бездействия', {
+            timeSinceActivity: Math.round(timeSinceActivity / 1000) + 's'
+          });
+        } catch (error) {
+          console.warn('⚠️ ModelCacheManager: Ошибка сброса состояния', error);
+        }
+      }
     }
   }
 
@@ -425,6 +470,21 @@ class ModelCacheManager {
       oldestModel: oldest ? oldest[0] : null,
       newestModel: newest ? newest[0] : null
     };
+  }
+
+  /**
+   * Очистка данных для тестирования WelcomeScreen
+   */
+  clearForTesting(): void {
+    try {
+      localStorage.removeItem(this.METADATA_KEY);
+      this.metadata = null;
+      console.log('🧪 ModelCacheManager: Данные очищены для тестирования');
+      // Повторная инициализация
+      this.initSync();
+    } catch (error) {
+      console.warn('⚠️ ModelCacheManager: Ошибка очистки для тестирования', error);
+    }
   }
 }
 
