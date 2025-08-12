@@ -37,31 +37,31 @@ const TypewriterText = React.memo(({ text, durationMs, onComplete }: {
   const timerRef = useRef<number>();
   const startTimeRef = useRef<number>();
   
+  const typeChar = useCallback((currentTime: number) => {
+    if (!startTimeRef.current) return;
+    
+    const elapsed = currentTime - startTimeRef.current;
+    const progress = Math.min(elapsed / durationMs, 1);
+    const charIndex = Math.floor(progress * text.length);
+    
+    setDisplayText(text.slice(0, charIndex));
+    
+    if (progress < 1) {
+      timerRef.current = requestAnimationFrame(typeChar);
+    } else {
+      setIsComplete(true);
+      onComplete?.();
+    }
+  }, [durationMs, text.length, onComplete]);
+  
+  const startTyping = useCallback(() => {
+    startTimeRef.current = performance.now();
+    timerRef.current = requestAnimationFrame(typeChar);
+  }, [typeChar]);
+  
   useEffect(() => {
     setDisplayText('');
     setIsComplete(false);
-    
-    const startTyping = () => {
-      startTimeRef.current = performance.now();
-      const typeChar = (currentTime: number) => {
-        if (!startTimeRef.current) return;
-        
-        const elapsed = currentTime - startTimeRef.current;
-        const progress = Math.min(elapsed / durationMs, 1);
-        const charIndex = Math.floor(progress * text.length);
-        
-        setDisplayText(text.slice(0, charIndex));
-        
-        if (progress < 1) {
-          timerRef.current = requestAnimationFrame(typeChar);
-        } else {
-          setIsComplete(true);
-          onComplete?.();
-        }
-      };
-      timerRef.current = requestAnimationFrame(typeChar);
-    };
-    
     startTyping();
     
     return () => {
@@ -69,7 +69,7 @@ const TypewriterText = React.memo(({ text, durationMs, onComplete }: {
         cancelAnimationFrame(timerRef.current);
       }
     };
-  }, [text, durationMs, onComplete]);
+  }, [startTyping]);
 
   return (
     <span className="ws-tty">
@@ -154,8 +154,8 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     };
   }, [isScreenVisible, isAnimating]);
 
-  // Прогресс теперь управляется хуком useWelcomeScreen
-  const circularProgress = progress * 360; // Конвертируем в градусы для SVG
+  // Прогресс теперь управляется хуком useWelcomeScreen (0 до 1)
+  // Используется в SVG stroke-dashoffset
 
   // Обработка завершения анимации
   useEffect(() => {
@@ -289,9 +289,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
           <TypewriterText 
             text={currentStage.text} 
             durationMs={currentStage.duration}
-            onComplete={() => {
-              // Можно добавить логику завершения печати стадии
-            }}
+            onComplete={useCallback(() => {
+              console.log(`✅ WelcomeScreen: Стадия "${currentStage.text}" завершена`);
+            }, [currentStage.text])}
           />
         </div>
 

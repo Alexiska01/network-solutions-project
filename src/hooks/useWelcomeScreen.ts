@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { modelCacheManager } from '@/utils/modelCacheManager';
 
 interface WelcomeScreenState {
   isVisible: boolean;
@@ -36,36 +37,10 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
   const startTimeRef = useRef<number>();
   const isTabVisibleRef = useRef(true);
 
-  // Проверка условий показа экрана
+  // Проверка условий показа экрана через modelCacheManager
   const shouldShowWelcomeScreen = useCallback((): boolean => {
-    const now = Date.now();
-    const lastShown = localStorage.getItem(STORAGE_KEY);
-    const lastActivity = localStorage.getItem(LAST_ACTIVITY_KEY);
-
-    // Первый визит
-    if (!lastShown) {
-      console.log('🚀 WelcomeScreen: Первый визит пользователя');
-      return true;
-    }
-
-    // Проверка неактивности ≥ 1 часа
-    if (lastActivity) {
-      const timeSinceActivity = now - parseInt(lastActivity);
-      if (timeSinceActivity >= finalConfig.inactivityThreshold) {
-        console.log('🚀 WelcomeScreen: Неактивность ≥ 1 часа');
-        return true;
-      }
-    }
-
-    // Проверка закрытия вкладки ≥ 15 минут
-    const timeSinceLastShown = now - parseInt(lastShown);
-    if (timeSinceLastShown >= finalConfig.tabCloseThreshold) {
-      console.log('🚀 WelcomeScreen: Вкладка была закрыта ≥ 15 минут');
-      return true;
-    }
-
-    return false;
-  }, [finalConfig.inactivityThreshold, finalConfig.tabCloseThreshold]);
+    return modelCacheManager.shouldShowWelcomeScreen();
+  }, []);
 
   // Мастер-таймер анимации
   const runAnimation = useCallback(() => {
@@ -114,8 +89,8 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
     startTimeRef.current = undefined;
     runAnimation();
 
-    // Сохраняем время показа
-    localStorage.setItem(STORAGE_KEY, Date.now().toString());
+    // Сохраняем время показа через modelCacheManager
+    modelCacheManager.updateActivity();
   }, [runAnimation]);
 
   // Скрытие WelcomeScreen
@@ -155,7 +130,7 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
 
   // Обновление активности пользователя
   const updateActivity = useCallback(() => {
-    localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
+    modelCacheManager.updateActivity();
   }, []);
 
   // Обработка активности пользователя
