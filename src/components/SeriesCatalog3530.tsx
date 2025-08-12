@@ -17,7 +17,7 @@ import {
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { switchModels3530 } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
-import Hero3530 from "@/components/Hero3530";
+import Hero3530 from "@/components/3530/Hero3530";
 
 
 

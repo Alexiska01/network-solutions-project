@@ -5,22 +5,6 @@ import { modelPreloader } from '@/utils/modelPreloader';
 import { modelCacheManager } from '@/utils/modelCacheManager';
 import './Hero3530.css';
 
-// Фичи для правого блока IDS3530
-const featuresRight = [
-  {
-    icon: "Layers3",
-    label: "Стек до 8 устройств (10G SFP+)",
-  },
-  {
-    icon: "Zap",
-    label: "PoE/PoE+ для питания устройств",
-  },
-  {
-    icon: "Repeat",
-    label: "Высокая доступность: STP, RSTP, MSTP",
-  },
-];
-
 // Данные 3D-модели 3530
 const model3530Data = {
   modelUrl: '/models/3530all.glb',
@@ -110,55 +94,13 @@ const Hero3530 = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // Настройка автоматического вращения и прозрачности модели
-    if (modelViewerRef.current && isModelVisible) {
-      const modelViewer = modelViewerRef.current;
-      
-      // Настройка камеры - приближаем для большего размера модели
-      modelViewer.cameraOrbit = "0deg 75deg 65%"; // Уменьшили с 85% до 65% для большего увеличения модели
-      modelViewer.autoRotate = true;
-      modelViewer.autoRotateDelay = 1000;
-      modelViewer.rotationPerSecond = "25deg";
-      
-      // Полное отключение touch и mouse взаимодействий
-      modelViewer.disableZoom = true;
-      modelViewer.disablePan = true;
-      modelViewer.disableTap = true;
-      modelViewer.interactionPolicy = 'none';
-      modelViewer.cameraControls = false;
-      
-      // Убираем все фоны и границы
-      modelViewer.style.background = 'transparent';
-      modelViewer.style.border = 'none';
-      modelViewer.style.outline = 'none';
-      modelViewer.style.boxShadow = 'none';
-      modelViewer.style.pointerEvents = 'none'; // Полностью отключаем интерактивность
-      
-      // Настройки освещения для интеграции с фоном
-      modelViewer.setAttribute('environment-image', 'neutral');
-      modelViewer.setAttribute('shadow-intensity', '0');
-      modelViewer.setAttribute('exposure', '1.0');
-      
-      // Принудительное отключение всех touch событий
-      modelViewer.addEventListener('touchstart', (e: Event) => e.preventDefault(), { passive: false });
-      modelViewer.addEventListener('touchmove', (e: Event) => e.preventDefault(), { passive: false });
-      modelViewer.addEventListener('touchend', (e: Event) => e.preventDefault(), { passive: false });
-      modelViewer.addEventListener('gesturestart', (e: Event) => e.preventDefault(), { passive: false });
-      modelViewer.addEventListener('gesturechange', (e: Event) => e.preventDefault(), { passive: false });
-      modelViewer.addEventListener('gestureend', (e: Event) => e.preventDefault(), { passive: false });
-      
-      console.log(`🎬 Hero3530: Модель настроена - touch отключен, камера приближена (85%)`);
-    }
-  }, [isModelVisible]);
-
   return (
     <section 
       ref={heroSectionRef}
       className={`bg-gradient-hero text-white py-8 lg:py-16 relative overflow-hidden min-h-[500px] lg:min-h-[600px] ${isInView ? 'hero-visible' : ''}`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start lg:items-center w-full">
           
           {/* Левая часть - Текстовый контент */}
           <div className="hero-text-content lg:pr-8">
@@ -220,7 +162,7 @@ const Hero3530 = () => {
             {/* Premium CSS-анимированная кнопка */}
             <div className="hero-button">
               <button
-                className="bg-white text-[#0065B3] px-6 py-3 rounded-lg text-base font-medium hover:bg-gradient-brand hover:text-white hover:border hover:border-white min-h-[44px] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 transition-all duration-300"
+                className="btn-cta cta-button-gpu min-h-[44px]"
                 onClick={() =>
                   window.open(
                     "https://drive.google.com/file/d/1-4xHlvPUr7kUBCQBzgh7Lz2FGC1COfwe/view?usp=drive_link",
@@ -236,7 +178,7 @@ const Hero3530 = () => {
           {/* Правая часть - только 3D модель */}
           <div className="hero-model-section relative order-first lg:order-last mt-0 lg:mt-0 flex justify-center">
               {/* Контейнер с 3D-моделью - Premium CSS анимации */}
-              <div className="hero-model-container relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[600px] h-[280px] sm:h-[320px] md:h-[380px] lg:h-[420px] cursor-pointer">
+              <div className="hero-model-container relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[600px] h-[280px] sm:h-[320px] md:h-[380px] lg:h-[420px]">
                 {/* 3D модель - Premium CSS анимации, прозрачная интеграция */}
                 {isModelLoaded && (
                   <div className={`hero-model relative z-10 w-full h-full ${isModelVisible ? 'model-loaded' : ''}`}>

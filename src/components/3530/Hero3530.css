@@ -41,9 +41,8 @@
   --hero-translate-hover: -2px;
 }
 
-/* 120Hz optimizations - faster timings */
-@media (min-refresh-rate: 120hz) {
-  :root {
+/* 120Hz optimizations - faster timings (через класс на <body>) */
+body.refresh-120hz :root {
     /* Mobile 120Hz (160-240ms) */
     --hero-mobile-fast: 200ms;
     --hero-mobile-medium: 220ms;
@@ -63,11 +62,9 @@
     --hero-translate-y: 25px;
     --hero-translate-x: 25px;
   }
-}
 
 /* 144Hz+ optimizations - ultra smooth */
-@media (min-refresh-rate: 144hz) {
-  :root {
+body.refresh-144hz :root {
     /* Mobile 144Hz+ (140-200ms) */
     --hero-mobile-fast: 180ms;
     --hero-mobile-medium: 190ms;
@@ -88,7 +85,6 @@
     --hero-translate-x: 20px;
     --hero-translate-hover: -1px;
   }
-}
 
 /* ===== SCROLL REVEAL ANIMATIONS ===== */
 
@@ -333,38 +329,92 @@
 
 /* ===== PREMIUM INTERACTIVE EFFECTS ===== */
 
-/* Premium button interactions */
+/* Контейнер кнопки изолируем от текста/сетки, чтобы ховер не влиял на соседей */
 .hero-button {
-  cursor: pointer;
+  display: inline-block;
+  cursor: default;
+  transition: none;
+  will-change: auto;
+  contain: layout;         /* убрали paint — иначе глоу клипается */
+  isolation: isolate;      /* отдельный stacking context */
+  overflow: visible;       /* позволяем свечению выходить за рамки */
+  position: relative;      /* база для псевдо-элемента с z-index:-1 */
+}
+
+/* Новая кнопка: отдельный слой, градиентная рамка, внешний глоу и блик */
+.btn-cta {
+  position: relative;
+  z-index: 0;              /* создаём свой stacking context для ::before -1 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  /* Двухслойный фон: 1) заливка; 2) градиентная рамка без layout-shift */
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(90deg, #0079b6, #005baa) border-box;
+  color: #0065B3;
+  border: 1px solid transparent;
+  transform: translateZ(0);                 /* свой композиторный слой */
+  will-change: transform, box-shadow, filter, background-color, color, border-color;
   transition:
     transform var(--hero-hover-duration) var(--hero-ease-out),
-    opacity var(--hero-hover-duration) var(--hero-ease-out),
     box-shadow var(--hero-hover-duration) var(--hero-ease-out),
     background-color var(--hero-hover-duration) var(--hero-ease-out),
-    color var(--hero-hover-duration) var(--hero-ease-out);
-  will-change: transform, opacity, box-shadow;
+    color var(--hero-hover-duration) var(--hero-ease-out),
+    border-color var(--hero-hover-duration) var(--hero-ease-out);
+    overflow: visible; /* не клипаем псевдо-элементы */
 }
 
-/* Desktop hover effects - only on devices that support hover */
+/* Светящийся контур (мягкое свечение по периметру) */
+.btn-cta::before {
+  content: "";
+  position: absolute;
+  inset: -12px;                 /* реально вылезаем наружу */
+  border-radius: 16px;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(0,121,182,.45), rgba(0,91,170,.0) 70%);
+  filter: blur(18px) saturate(1.1);
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity 380ms var(--hero-ease-smooth),
+    transform 380ms var(--hero-ease-smooth);
+  z-index: -1;             /* свечение ПОД кнопкой, не размывает контент */
+  pointer-events: none;
+}
+
+/* Hover/Focus эффекты только на кнопке */
 @media (hover: hover) and (pointer: fine) {
-  .hero-button:hover {
-    transform: translate3d(0, var(--hero-translate-hover), 0)
-      scale(var(--hero-scale-hover));
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  .btn-cta:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      0 18px 40px -16px rgba(0, 101, 179, .45),
+      0 8px 20px -10px rgba(0, 101, 179, .25);
+    /* остаёмся на двух слоях: верх — белая заливка -> чуть прозрачнее, низ — градиентная рамка */
+      background:
+      linear-gradient(#ffffff, #ffffff) padding-box,         /* полностью непрозрачно */
+      linear-gradient(90deg, #53c2a4, #005baa) border-box;
+    color: #005baa;
+    border-color: transparent; /* рамка = через background, не через border-color */
   }
-
-  .hero-feature-item:hover {
-    transform: translate3d(0, var(--hero-translate-hover), 0)
-      scale(var(--hero-scale-hover));
-    transition: transform var(--hero-hover-duration) var(--hero-ease-out);
-  }
-
-  .hero-model-container:hover {
-    transform: translate3d(0, calc(var(--hero-translate-hover) * 0.5), 0)
-      scale(1.02);
-    transition: transform var(--hero-hover-duration) var(--hero-ease-out);
-  }
+  .btn-cta:hover::before { opacity: .9; transform: scale(1.0); }
+  
 }
+
+.btn-cta:focus-visible {
+  outline: 2px solid rgba(255,255,255,.9);
+  outline-offset: 3px;
+  transform: translateY(-1px) scale(1.01);
+}
+.btn-cta:active {
+  transform: translateY(0) scale(0.99);
+  box-shadow:
+    0 10px 24px -12px rgba(0, 101, 179, .35),
+    0 6px 12px -8px rgba(0, 101, 179, .20);
+}
+
 
 /* Touch/mobile active states - only on touch devices */
 @media (hover: none) and (pointer: coarse) {
@@ -379,16 +429,6 @@
   }
 }
 
-/* Premium focus-visible styles for accessibility */
-.hero-button:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.8);
-  outline-offset: 3px;
-  transform: translate3d(0, var(--hero-translate-hover), 0)
-    scale(var(--hero-scale-hover));
-  transition:
-    transform var(--hero-focus-duration) var(--hero-ease-out),
-    outline var(--hero-focus-duration) var(--hero-ease-out);
-}
 
 .hero-feature-card:focus-visible {
   outline: 1px solid rgba(255, 255, 255, 0.6);
@@ -410,10 +450,7 @@
   will-change: transform;
 }
 
-.hero-model-container {
-  transition: transform var(--hero-hover-duration) var(--hero-ease-out);
-  will-change: transform;
-}
+.hero-model-container { transition: none; will-change: auto; }
 
 /* Disable will-change after animations complete to save memory */
 .hero-visible .hero-subtitle,
@@ -429,15 +466,15 @@
 }
 
 /* Re-enable will-change only during interactions */
-.hero-button:hover,
-.hero-button:focus-visible,
-.hero-button:active,
+.btn-cta:hover,
+.btn-cta:focus-visible,
+.btn-cta:active,
 .hero-feature-card:hover,
 .hero-feature-card:focus-visible,
-.hero-feature-card:active,
-.hero-model-container:hover {
+.hero-feature-card:active {
   will-change: transform, opacity, box-shadow;
 }
+.hero-model-container:hover { will-change: auto; }
 
 /* Core GPU acceleration for all devices */
 .hero-gpu {
@@ -490,23 +527,16 @@
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   will-change: transform, box-shadow, background-color;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.3s var(--hero-ease-out),
+    box-shadow 0.3s var(--hero-ease-out),
+    background-color 0.3s var(--hero-ease-out);
 }
 
-/* Desktop button hover effects */
-@media (hover: hover) and (pointer: fine) {
-  .cta-button-gpu:hover {
-    transform: translate3d(0, -3px, 0) scale(1.05);
-    box-shadow:
-      0 20px 40px -12px rgba(0, 101, 179, 0.4),
-      0 8px 16px -4px rgba(0, 101, 179, 0.3);
-  }
-}
-
-/* Mobile button touch effects */
+/* Mobile button touch effects — на новой кнопке */
 @media (hover: none) and (pointer: coarse) {
-  .cta-button-gpu:active {
-    transform: translate3d(0, -1px, 0) scale(1.02);
+  .btn-cta:active {
+    transform: translate3d(0, -1px, 0) scale(1.01);
     box-shadow:
       0 12px 24px -8px rgba(0, 101, 179, 0.3),
       0 4px 8px -2px rgba(0, 101, 179, 0.2);
@@ -533,7 +563,9 @@
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   will-change: transform, box-shadow;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.3s var(--hero-ease-out),
+    box-shadow 0.3s var(--hero-ease-out);
 }
 
 /* Desktop feature card hover */
@@ -561,7 +593,9 @@
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   will-change: transform, box-shadow;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.3s var(--hero-ease-out),
+    box-shadow 0.3s var(--hero-ease-out);
 }
 
 /* Desktop description card hover */
@@ -633,24 +667,22 @@
 }
 
 /* 120Hz ускоренные анимации */
-@media (min-refresh-rate: 120hz) {
-  :root {
+body.refresh-120hz :root {
     --hero-text-duration: 560ms;
     --hero-model-duration: 640ms;
     --hero-feature-duration: 400ms;
     --hero-button-duration: 240ms;
   }
-}
+
 
 /* 240Hz максимальная производительность */
-@media (min-refresh-rate: 240hz) {
-  :root {
+body.refresh-240hz :root {
     --hero-text-duration: 420ms;
     --hero-model-duration: 480ms;
     --hero-feature-duration: 300ms;
     --hero-button-duration: 180ms;
   }
-}
+
 
 /* 120fps optimization class */
 .hero-120fps .hero-subtitle,
