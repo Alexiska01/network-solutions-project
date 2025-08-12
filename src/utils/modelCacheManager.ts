@@ -139,7 +139,6 @@ class ModelCacheManager {
     
     if (!this.metadata) {
       console.log('📝 ModelCacheManager: Метаданные не найдены, инициализируем');
-      // Если метаданные не инициализированы, делаем это сейчас
       try {
         this.initSync();
       } catch (error) {
@@ -167,48 +166,29 @@ class ModelCacheManager {
       quickReturnThreshold: Math.round(this.QUICK_RETURN_THRESHOLD / 1000) + 's'
     });
 
-    // Если это первый визит (lastHomeVisit = 0)
+    // УПРОЩЕННАЯ ЛОГИКА: показываем WelcomeScreen в следующих случаях:
+    
+    // 1. Первый визит (lastHomeVisit = 0)
     if (this.metadata.lastHomeVisit === 0) {
       console.log('🆕 ModelCacheManager: Первый визит - показываем WelcomeScreen');
       return true;
     }
 
-    // Режим быстрого возврата: если пользователь был на главной недавно (< 10 минут)
-    if (timeSinceHomeVisit < this.QUICK_RETURN_THRESHOLD) {
-      console.log('⚡ ModelCacheManager: Быстрый возврат - скрываем WelcomeScreen');
-      return false;
-    }
-
-    // Если прошло больше 10 минут с последней активности
+    // 2. Прошло больше 10 минут с последней активности
     if (timeSinceActivity > this.ACTIVITY_TIMEOUT) {
-      console.log('🕐 ModelCacheManager: Показываем WelcomeScreen - прошло более 10 минут');
+      console.log('🕐 ModelCacheManager: Показываем WelcomeScreen - прошло более 10 минут с активности');
       return true;
     }
 
-    // Проверяем наличие ключевых моделей в кэше (все основные модели)
-    const criticalModels = [
-      '/models/3530all.glb',
-      '/models/3730all.glb',
-      '/models/4530all.glb',
-      '/models/6010all.glb'
-    ];
-
-    const criticalModelsCached = criticalModels.every(url => {
-      const modelInfo = this.metadata!.models[url];
-      if (!modelInfo) return false;
-
-      const age = now - modelInfo.timestamp;
-      return age < this.CACHE_DURATION;
-    });
-
-    // Если есть критичные модели, пропускаем WelcomeScreen
-    if (criticalModelsCached) {
-      console.log('⚡ ModelCacheManager: Скрываем WelcomeScreen - критичные модели в кэше');
-      return false;
+    // 3. Прошло больше 10 минут с последнего посещения главной
+    if (timeSinceHomeVisit > this.QUICK_RETURN_THRESHOLD) {
+      console.log('🔄 ModelCacheManager: Показываем WelcomeScreen - прошло более 10 минут с посещения');
+      return true;
     }
 
-    console.log('📦 ModelCacheManager: Показываем WelcomeScreen - нет критичных моделей в кэше');
-    return true;
+    // Все остальные случаи - не показываем
+    console.log('❌ ModelCacheManager: Скрываем WelcomeScreen - недавняя активность');
+    return false;
   }
 
   /**
@@ -515,11 +495,27 @@ class ModelCacheManager {
 
 export const modelCacheManager = new ModelCacheManager();
 
-// Глобальная функция для тестирования WelcomeScreen
+// Глобальные функции для тестирования WelcomeScreen
 (window as any).testWelcomeScreen = () => {
   console.log('🧪 Принудительный показ WelcomeScreen для тестирования');
   modelCacheManager.forceFirstVisit();
   window.location.reload();
 };
 
-console.log('💡 Для тестирования WelcomeScreen вызовите в консоли: testWelcomeScreen()');
+(window as any).clearWelcomeData = () => {
+  console.log('🧪 Очистка данных WelcomeScreen');
+  modelCacheManager.clearForTesting();
+  window.location.reload();
+};
+
+(window as any).showWelcomeInfo = () => {
+  console.log('📊 Текущее состояние WelcomeScreen:', {
+    metadata: modelCacheManager.currentMetadata,
+    shouldShow: modelCacheManager.shouldShowWelcomeScreen()
+  });
+};
+
+console.log('💡 Команды для тестирования WelcomeScreen:');
+console.log('   testWelcomeScreen() - принудительный показ');
+console.log('   clearWelcomeData() - очистить данные');
+console.log('   showWelcomeInfo() - показать состояние');
