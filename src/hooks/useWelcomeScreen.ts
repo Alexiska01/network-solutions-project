@@ -36,6 +36,7 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
   const animationFrameRef = useRef<number>();
   const startTimeRef = useRef<number>();
   const isTabVisibleRef = useRef(true);
+  const hasInitializedRef = useRef(false); // ЗАЩИТА ОТ ПОВТОРНОЙ ИНИЦИАЛИЗАЦИИ
 
   // Проверка условий показа экрана через modelCacheManager
   const shouldShowWelcomeScreen = useCallback((): boolean => {
@@ -163,7 +164,13 @@ export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
 
   // Инициализация при монтировании
   useEffect(() => {
+    if (hasInitializedRef.current) {
+      console.log('⚠️ useWelcomeScreen: Уже инициализирован, пропускаем');
+      return;
+    }
+    
     console.log('🚀 useWelcomeScreen: Инициализация');
+    hasInitializedRef.current = true;
     
     const initWelcomeScreen = () => {
       console.log('🚀 useWelcomeScreen: Начинаем инициализацию');

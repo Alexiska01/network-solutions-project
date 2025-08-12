@@ -84,6 +84,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
   const { isVisible, progress, isAnimating, hideWelcomeScreen } = useWelcomeScreen();
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
   const [isScreenVisible, setIsScreenVisible] = useState(true); // ПРИНУДИТЕЛЬНО ПОКАЗЫВАЕМ
+  const [hasStarted, setHasStarted] = useState(false); // ЗАЩИТА ОТ ПОВТОРНЫХ ЗАПУСКОВ
   const stageTimersRef = useRef<number[]>([]);
 
   // показывать/скрывать по трекеру
@@ -95,9 +96,13 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     }
   }, [isVisible, forceShow]);
 
-  // ПРИНУДИТЕЛЬНЫЙ таймер на 10 секунд
+  // ПРИНУДИТЕЛЬНЫЙ таймер на 10 секунд (ТОЛЬКО ОДИН РАЗ)
   useEffect(() => {
+    if (hasStarted) return; // Уже запускали таймер
+    
     console.log('⏰ WelcomeScreen: Запуск принудительного таймера на 10 секунд');
+    setHasStarted(true);
+    
     const forceHideTimer = setTimeout(() => {
       console.log('⏰ WelcomeScreen: ПРИНУДИТЕЛЬНОЕ скрытие через 10 секунд');
       setIsScreenVisible(false);
@@ -105,7 +110,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     }, 10000);
 
     return () => clearTimeout(forceHideTimer);
-  }, [onComplete]);
+  }, [hasStarted, onComplete]);
 
   // список моделей для предзагрузки
   const heroData = useMemo(
