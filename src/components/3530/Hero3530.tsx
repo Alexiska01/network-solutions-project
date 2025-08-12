@@ -188,10 +188,10 @@ const Hero3530 = () => {
                       alt="3D модель коммутатора IDS3530"
                       auto-rotate
                       auto-rotate-delay="1000"
-                      rotation-per-second="25deg"
-                      camera-orbit="0deg 75deg 65%"
-                      min-camera-orbit="auto auto 65%"
-                      max-camera-orbit="auto auto 65%"
+                      rotation-per-second="32deg"
+                      camera-orbit="0deg 82deg 75%"
+                      min-camera-orbit="auto auto 75%"
+                      max-camera-orbit="auto auto 75%"
                       interaction-policy="none"
                       disable-zoom
                       disable-pan
