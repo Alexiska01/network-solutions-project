@@ -341,7 +341,7 @@ const ProductHero = memo(() => {
     ["--mouse-x" as any]: mousePosition.x.toString(),
     ["--mouse-y" as any]: mousePosition.y.toString(),
     ["--morphing" as any]: isMorphing ? '1' : '0',
-  }), [glowColor, currentData.accentColor, gradientStops, mousePosition, transitionPhase]);
+  }), [glowColor, currentData.accentColor, gradientStops, mousePosition, isMorphing]);
 
   return (
     <div
