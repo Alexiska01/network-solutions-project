@@ -121,18 +121,15 @@ export class ModelPreloader {
       `;
       
       const modelViewer = document.createElement('model-viewer') as any;
-      modelViewer.src = url;
       
-      // Оптимизация загрузки в зависимости от приоритета
-      if (priority === 'high') {
-        modelViewer.loading = 'eager';
-        modelViewer.reveal = 'immediate';
-        modelViewer.setAttribute('fetchpriority', 'high');
-      } else {
-        modelViewer.loading = 'lazy';
-        modelViewer.reveal = 'interaction';
-        modelViewer.setAttribute('fetchpriority', 'low');
-      }
+      // КРИТИЧНО: НЕ устанавливаем src сразу - это создает preload warning
+      // modelViewer.src = url;
+      
+      // Принудительно отключаем любые preload через атрибуты
+      modelViewer.loading = 'lazy';
+      modelViewer.reveal = 'interaction';
+      modelViewer.setAttribute('fetchpriority', 'low');
+      modelViewer.setAttribute('preload', 'none');
       
       // Настройки для минимального потребления ресурсов
       modelViewer.style.cssText = 'width: 100%; height: 100%;';
@@ -177,18 +174,22 @@ export class ModelPreloader {
       modelViewer.addEventListener('load', loadHandler, { once: true });
       modelViewer.addEventListener('error', errorHandler, { once: true });
       
-      // Добавляем небольшую задержку для избежания preload warnings
+      // Добавляем элементы в DOM сначала без src
+      container.appendChild(modelViewer);
+      document.body.appendChild(container);
+      
+      // ЗАДЕРЖКА перед установкой src для избежания preload warning
       setTimeout(() => {
-        container.appendChild(modelViewer);
-        document.body.appendChild(container);
+        // Теперь устанавливаем src когда element уже в DOM и готов
+        modelViewer.src = url;
         
-        // Устанавливаем таймаут
+        // Устанавливаем таймаут только после установки src
         timeoutId = setTimeout(() => {
           if (!this.loadedModels.has(url)) {
             errorHandler();
           }
         }, 20000); // 20 сек для всех моделей
-      }, 200); // 200мс задержка для избежания конфликта с preload
+      }, 500); // 500мс задержка должна быть достаточной
     });
 
     this.loadingModels.set(url, loadPromise);

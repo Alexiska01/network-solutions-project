@@ -19,6 +19,9 @@
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   
+  <!-- Отключаем автоматический preload для ресурсов -->
+  <meta name="resource-preload" content="disabled">
+  
   <!-- Шрифты с максимальным приоритетом -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   
@@ -56,8 +59,7 @@
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r158/three.min.js" as="script">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r158/three.min.js"></script>
   
-  <!-- Model Viewer Script с предзагрузкой -->
-  <link rel="modulepreload" href="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+  <!-- Model Viewer Script БЕЗ предзагрузки для избежания warning -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
   <meta name="pp-name" value="network-solutions-project">
