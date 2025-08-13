@@ -15,62 +15,49 @@ const LOADING_STAGES = [
   'Система готова к работе'
 ];
 
-// Профессиональный компонент печатающегося текста в стиле Star Wars
-const TypewriterText: React.FC<{ 
-  texts: string[]; 
-  currentStage: number;
-}> = ({ texts, currentStage }) => {
+// Простой компонент печатающегося текста
+const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+
+  useEffect(() => {
+    // Сброс при смене текста
+    setDisplayText('');
+    setIsTyping(true);
+  }, [text]);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     
-    const currentText = texts[currentTextIndex] || '';
-    
     if (isTyping) {
-      // Режим печатания
-      if (displayText.length < currentText.length) {
+      // Печатаем символ за символом
+      if (displayText.length < text.length) {
         timeoutId = setTimeout(() => {
-          setDisplayText(prev => currentText.slice(0, prev.length + 1));
-        }, 60); // Скорость печатания
+          setDisplayText(text.slice(0, displayText.length + 1));
+        }, 60);
       } else {
-        // Текст полностью напечатан, пауза перед стиранием
+        // Напечатали, пауза перед стиранием
         timeoutId = setTimeout(() => {
           setIsTyping(false);
-        }, 1200); // Пауза перед стиранием
+        }, 1000);
       }
     } else {
-      // Режим стирания
+      // Стираем символ за символом
       if (displayText.length > 0) {
         timeoutId = setTimeout(() => {
-          setDisplayText(prev => prev.slice(0, -1)); // Убираем последний символ
-        }, 40); // Скорость стирания (быстрее печатания)
-      } else {
-        // Текст полностью стёрт, переходим к следующему
-        const nextIndex = (currentTextIndex + 1) % texts.length;
-        setCurrentTextIndex(nextIndex);
-        setIsTyping(true);
+          setDisplayText(prev => prev.slice(0, -1));
+        }, 30);
       }
+      // После стирания просто ждём нового текста
     }
 
     return () => clearTimeout(timeoutId);
-  }, [displayText, isTyping, currentTextIndex, texts]);
-
-  // Принудительная синхронизация с внешним currentStage
-  useEffect(() => {
-    if (currentStage !== currentTextIndex) {
-      setCurrentTextIndex(currentStage);
-      setDisplayText('');
-      setIsTyping(true);
-    }
-  }, [currentStage, currentTextIndex]);
+  }, [displayText, isTyping, text]);
 
   return (
-    <span className="font-mono text-cyan-300 tracking-wide text-lg">
+    <span className="font-mono text-cyan-300 tracking-wide">
       {displayText}
-      <span className="animate-pulse text-cyan-400 ml-1">_</span>
+      <span className="animate-pulse text-cyan-400">_</span>
     </span>
   );
 };
@@ -214,10 +201,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         {/* Печатающийся текст загрузки */}
         <div className="space-y-6">
           <div className="text-xl text-cyan-300 tracking-wide min-h-[60px] flex items-center justify-center">
-            <TypewriterText 
-              texts={LOADING_STAGES} 
-              currentStage={currentStage}
-            />
+            <TypewriterText text={LOADING_STAGES[currentStage]} />
           </div>
           
           {/* Прогресс бар */}
