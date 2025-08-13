@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { useWelcomeScreen } from '@/hooks/useWelcomeScreen';
 import { useWelcomePreloader } from '@/hooks/useWelcomePreloader';
 import { modelPreloader } from '@/utils/modelPreloader';
+import { modelCacheManager } from '@/utils/modelCacheManager';
 import './WelcomeScreen.css';
 
 interface WelcomeScreenProps {
@@ -91,7 +92,6 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     if (forceShow) return true;
     
     // Прямой вызов функции проверки
-    const { modelCacheManager } = require('@/utils/modelCacheManager');
     const needToShow = modelCacheManager.shouldShowWelcomeScreen();
     
     console.log('🎯 WelcomeScreen: shouldShow =', needToShow, { forceShow, isVisible });
@@ -195,7 +195,6 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         hideWelcomeScreen();
         
         // Отмечаем завершение WelcomeScreen
-        const { modelCacheManager } = require('@/utils/modelCacheManager');
         modelCacheManager.markWelcomeScreenComplete();
         
         onComplete?.();
