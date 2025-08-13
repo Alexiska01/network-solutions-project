@@ -34,34 +34,24 @@ export class ModelPreloader {
   }
   
   private setupIntelligentCache() {
-    // Используем Service Worker для кэширования моделей (если доступен)
+    // Только используем Service Worker для кэширования (если доступен)
     if ('serviceWorker' in navigator && 'caches' in window) {
       this.enableServiceWorkerCache();
     }
     
-    // Resource Hints для браузера
-    this.addResourceHints();
+    // Убираем Resource Hints чтобы избежать preload ошибок
   }
   
   private enableServiceWorkerCache() {
-    // Проверяем, зарегистрирован ли Service Worker
-    navigator.serviceWorker.ready.then(registration => {
-      console.log('🔧 ModelPreloader: Service Worker готов для кэширования моделей');
-    }).catch(err => {
-      console.warn('⚠️ ModelPreloader: Service Worker недоступен', err);
+    // Тихая проверка Service Worker без логирования
+    navigator.serviceWorker.ready.then(() => {
+      // Service Worker готов
+    }).catch(() => {
+      // Service Worker недоступен, продолжаем без него
     });
   }
   
-  private addResourceHints() {
-    // УБИРАЕМ preload/prefetch чтобы избежать ошибок в консоли
-    // Только добавляем dns-prefetch для ускорения соединения
-    const preconnect = document.createElement('link');
-    preconnect.rel = 'preconnect';
-    preconnect.href = window.location.origin;
-    document.head.appendChild(preconnect);
-    
-    // DNS prefetch настроен
-  }
+
 
   static getInstance(): ModelPreloader {
     if (!ModelPreloader.instance) {

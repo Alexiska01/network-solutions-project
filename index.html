@@ -22,17 +22,7 @@
   <!-- Шрифты с максимальным приоритетом -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- СУПЕР АГРЕССИВНАЯ предзагрузка 3D моделей -->
-  <!-- Критические модели - preload с максимальным приоритетом -->
-  <link rel="preload" href="/models/3530all.glb" as="fetch" fetchpriority="high" crossorigin>
-  <link rel="preload" href="/models/3730all.glb" as="fetch" fetchpriority="high" crossorigin>
-  <link rel="preload" href="/models/4530all.glb" as="fetch" fetchpriority="high" crossorigin>
-  
-  <!-- Второстепенные модели - prefetch в фоне -->
-  <link rel="prefetch" href="/models/6010all.glb" as="fetch" crossorigin>
-  <link rel="prefetch" href="/models/IDS3530-24P.glb" as="fetch" crossorigin>
-  <link rel="prefetch" href="/models/IDS3530-24T.glb" as="fetch" crossorigin>
-  <link rel="prefetch" href="/models/IDS3530-24S.glb" as="fetch" crossorigin>
+  <!-- 3D модели загружаются динамически через ModelPreloader для избежания preload warnings -->
   
   <!-- Критические изображения -->
   <link rel="preload" href="https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png" as="image" fetchpriority="high">
