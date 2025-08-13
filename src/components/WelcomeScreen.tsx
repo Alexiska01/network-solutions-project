@@ -99,40 +99,109 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
 
   return (
     <div className="fixed inset-0 z-[1000] bg-black overflow-hidden flex items-center justify-center">
-      {/* Космический фон со звездами */}
-      <div className="absolute inset-0">
-        {/* Движущиеся звезды */}
-        {Array.from({ length: 100 }).map((_, i) => (
+      {/* Живой космический фон */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Дальние звезды - медленно мерцают */}
+        {Array.from({ length: 150 }).map((_, i) => (
           <div
-            key={i}
-            className="absolute bg-white rounded-full opacity-70"
+            key={`far-${i}`}
+            className="absolute bg-white rounded-full"
+            style={{
+              width: `${Math.random() * 2 + 0.5}px`,
+              height: `${Math.random() * 2 + 0.5}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              opacity: Math.random() * 0.8 + 0.2,
+              animation: `twinkle ${Math.random() * 4 + 3}s infinite ease-in-out alternate`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+
+        {/* Средние звезды - движутся медленно */}
+        {Array.from({ length: 80 }).map((_, i) => (
+          <div
+            key={`mid-${i}`}
+            className="absolute bg-cyan-200 rounded-full"
             style={{
               width: `${Math.random() * 3 + 1}px`,
               height: `${Math.random() * 3 + 1}px`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animation: `twinkle ${Math.random() * 3 + 2}s infinite ease-in-out alternate`,
+              opacity: Math.random() * 0.6 + 0.3,
+              animation: `twinkle ${Math.random() * 3 + 2}s infinite ease-in-out alternate, float ${Math.random() * 20 + 15}s infinite linear`,
+              animationDelay: `${Math.random() * 3}s`,
             }}
           />
         ))}
-        
-        {/* Полосы гиперпространства */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute bg-gradient-to-r from-transparent via-blue-400/20 to-transparent h-px"
-              style={{
-                width: '200%',
-                left: '-50%',
-                top: `${Math.random() * 100}%`,
-                transform: 'rotate(-10deg)',
-                animation: `hyperspace ${Math.random() * 2 + 1}s infinite linear`,
-                animationDelay: `${Math.random() * 2}s`,
-              }}
-            />
-          ))}
-        </div>
+
+        {/* Близкие звезды - быстро мерцают */}
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div
+            key={`near-${i}`}
+            className="absolute bg-blue-300 rounded-full"
+            style={{
+              width: `${Math.random() * 4 + 2}px`,
+              height: `${Math.random() * 4 + 2}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              opacity: Math.random() * 0.9 + 0.1,
+              animation: `twinkle ${Math.random() * 2 + 1}s infinite ease-in-out alternate, drift ${Math.random() * 30 + 20}s infinite linear`,
+              animationDelay: `${Math.random() * 2}s`,
+            }}
+          />
+        ))}
+
+        {/* Космические туманности */}
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div
+            key={`nebula-${i}`}
+            className="absolute rounded-full blur-sm"
+            style={{
+              width: `${Math.random() * 200 + 100}px`,
+              height: `${Math.random() * 200 + 100}px`,
+              left: `${Math.random() * 120 - 10}%`,
+              top: `${Math.random() * 120 - 10}%`,
+              background: `radial-gradient(circle, ${
+                ['rgba(59, 130, 246, 0.1)', 'rgba(147, 51, 234, 0.1)', 'rgba(34, 211, 238, 0.1)', 'rgba(168, 85, 247, 0.1)'][i % 4]
+              } 0%, transparent 70%)`,
+              animation: `nebula ${Math.random() * 40 + 30}s infinite ease-in-out alternate`,
+              animationDelay: `${Math.random() * 10}s`,
+            }}
+          />
+        ))}
+
+        {/* Падающие звезды */}
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={`meteor-${i}`}
+            className="absolute h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-70"
+            style={{
+              width: `${Math.random() * 100 + 50}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              transform: `rotate(${Math.random() * 90 - 45}deg)`,
+              animation: `meteor ${Math.random() * 3 + 2}s infinite linear`,
+              animationDelay: `${Math.random() * 10}s`,
+            }}
+          />
+        ))}
+
+        {/* Космическая пыль */}
+        {Array.from({ length: 200 }).map((_, i) => (
+          <div
+            key={`dust-${i}`}
+            className="absolute bg-gray-400 rounded-full opacity-20"
+            style={{
+              width: '1px',
+              height: '1px',
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `dust ${Math.random() * 50 + 30}s infinite linear`,
+              animationDelay: `${Math.random() * 20}s`,
+            }}
+          />
+        ))}
       </div>
 
       {/* Главный контент */}
@@ -202,17 +271,44 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         </div>
       </div>
 
-      {/* CSS для анимаций */}
+      {/* CSS для космических анимаций */}
       <style jsx>{`
         @keyframes twinkle {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.2); }
+          0%, 100% { opacity: 0.2; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.3); }
         }
         
-        @keyframes hyperspace {
-          0% { transform: translateX(-100%) rotate(-10deg); opacity: 0; }
-          50% { opacity: 1; }
-          100% { transform: translateX(200vw) rotate(-10deg); opacity: 0; }
+        @keyframes float {
+          0% { transform: translate(0, 0); }
+          25% { transform: translate(2px, -3px); }
+          50% { transform: translate(-1px, -5px); }
+          75% { transform: translate(-3px, -2px); }
+          100% { transform: translate(0, 0); }
+        }
+        
+        @keyframes drift {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(5px, -8px) rotate(120deg); }
+          66% { transform: translate(-3px, 5px) rotate(240deg); }
+          100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        @keyframes nebula {
+          0%, 100% { opacity: 0.05; transform: scale(1) rotate(0deg); }
+          50% { opacity: 0.15; transform: scale(1.1) rotate(180deg); }
+        }
+        
+        @keyframes meteor {
+          0% { opacity: 0; transform: translateX(-100px) translateY(-100px) scale(0); }
+          10% { opacity: 1; transform: translateX(-50px) translateY(-50px) scale(1); }
+          90% { opacity: 1; transform: translateX(100vw) translateY(100vh) scale(1); }
+          100% { opacity: 0; transform: translateX(100vw) translateY(100vh) scale(0); }
+        }
+        
+        @keyframes dust {
+          0% { transform: translate(0, 0); opacity: 0.1; }
+          50% { opacity: 0.3; }
+          100% { transform: translate(20px, -30px); opacity: 0.1; }
         }
       `}</style>
     </div>
