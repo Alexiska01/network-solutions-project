@@ -7,8 +7,41 @@ interface WelcomeScreenProps {
   forceShow?: boolean;
 }
 
+// Стадии загрузки
+const LOADING_STAGES = [
+  'Установление защищённого соединения',
+  'Подключение к центральной станции управления',
+  'Получение данных о корпоративном оборудовании',
+  'Система готова к работе'
+];
+
+// Компонент печатающегося текста в стиле Star Wars
+const TypewriterText: React.FC<{ text: string; speed?: number }> = ({ text, speed = 60 }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayText(text.slice(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+      }, speed);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, text, speed]);
+
+  return (
+    <span className="font-mono text-cyan-300 tracking-wide">
+      {displayText}
+      <span className="animate-pulse text-cyan-400">_</span>
+    </span>
+  );
+};
+
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = false }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentStage, setCurrentStage] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const shouldShow = forceShow || modelCacheManager.shouldShowWelcomeScreen();
@@ -21,16 +54,39 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     }
 
     setIsVisible(true);
-    console.log('✅ WelcomeScreen: Показываем на 8 секунд');
+    console.log('✅ WelcomeScreen: Показываем на 13 секунд');
+
+    // Прогресс анимация
+    const startTime = Date.now();
+    const duration = 13000;
+    
+    const updateProgress = () => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min(elapsed / duration, 1);
+      setProgress(newProgress);
+      
+      if (newProgress < 1) {
+        requestAnimationFrame(updateProgress);
+      }
+    };
+    updateProgress();
+
+    // Смена стадий каждые 3.25 секунды (13 секунд / 4 стадии)
+    const stageInterval = setInterval(() => {
+      setCurrentStage(prev => (prev + 1) % LOADING_STAGES.length);
+    }, 3250);
 
     const timer = setTimeout(() => {
       console.log('⏰ WelcomeScreen: Скрываем');
       setIsVisible(false);
       modelCacheManager.markWelcomeScreenComplete();
       onComplete?.();
-    }, 8000);
+    }, duration);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(stageInterval);
+    };
   }, [forceShow, onComplete]);
 
   if (!isVisible) {
@@ -118,19 +174,24 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
           </div>
         </div>
 
-        {/* Текст загрузки */}
-        <div className="space-y-4">
-          <div className="text-2xl font-light text-blue-300 tracking-wide">
-            Подключение к Галактической Сети...
+        {/* Печатающийся текст загрузки */}
+        <div className="space-y-6">
+          <div className="text-xl text-cyan-300 tracking-wide min-h-[60px] flex items-center justify-center">
+            <TypewriterText text={LOADING_STAGES[currentStage]} speed={80} />
           </div>
           
-          {/* Прогресс бар в стиле голограммы */}
-          <div className="w-80 h-2 mx-auto bg-gray-800 border border-blue-400/50 rounded">
-            <div className="h-full bg-gradient-to-r from-blue-400 to-cyan-400 rounded animate-pulse" 
-                 style={{ width: '70%', boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)' }}></div>
+          {/* Прогресс бар */}
+          <div className="w-80 h-3 mx-auto bg-gray-800 border border-cyan-400/50 rounded overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-cyan-400 to-blue-400 rounded transition-all duration-100 ease-linear" 
+              style={{ 
+                width: `${progress * 100}%`,
+                boxShadow: '0 0 15px rgba(34, 211, 238, 0.6)'
+              }}
+            ></div>
           </div>
           
-          <p className="text-lg text-gray-300 italic">
+          <p className="text-lg text-gray-300 italic opacity-80">
             "Корпоративная сеть нового поколения"
           </p>
         </div>
