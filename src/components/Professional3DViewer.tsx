@@ -15,6 +15,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   modelPath,
   indicatorsOn,
   onToggleIndicators,
+  modelLoaded = false,
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [background, setBackground] = useState("studio");
@@ -22,33 +23,11 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
   const [cameraPreset, setCameraPreset] = useState("default");
   const [showSpecs, setShowSpecs] = useState(false);
-  const [modelLoaded, setModelLoaded] = useState(false);
 
-  // Model loading effect
+  // Debug modelLoaded prop changes
   useEffect(() => {
-    if (modelRef.current) {
-      const handleLoad = () => {
-        console.log('✅ Professional3DViewer: Model loaded successfully');
-        setModelLoaded(true);
-      };
-      
-      const handleError = (error: any) => {
-        console.error('❌ Professional3DViewer: Model failed to load', error);
-        console.error('❌ Professional3DViewer: Model path:', modelPath);
-        setModelLoaded(false);
-      };
-
-      modelRef.current.addEventListener('load', handleLoad);
-      modelRef.current.addEventListener('error', handleError);
-      
-      return () => {
-        if (modelRef.current) {
-          modelRef.current.removeEventListener('load', handleLoad);
-          modelRef.current.removeEventListener('error', handleError);
-        }
-      };
-    }
-  }, [modelPath]);
+    console.log('🔍 Professional3DViewer: modelLoaded prop changed:', modelLoaded);
+  }, [modelLoaded]);
 
   // Отладка изменения modelPath
   useEffect(() => {

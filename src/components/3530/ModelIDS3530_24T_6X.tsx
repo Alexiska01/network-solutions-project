@@ -103,6 +103,7 @@ const ModelIDS3530_24T_6XComponent = () => {
                 modelPath={ids353024t6xData.modelPath}
                 indicatorsOn={indicatorsOn}
                 onToggleIndicators={toggleIndicators}
+                modelLoaded={modelLoaded}
               />
             </div>
 

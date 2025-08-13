@@ -25,6 +25,7 @@ export interface Professional3DViewerProps {
   modelPath: string;
   indicatorsOn: boolean;
   onToggleIndicators: () => void;
+  modelLoaded?: boolean;
 }
 
 export interface ViewerState {
