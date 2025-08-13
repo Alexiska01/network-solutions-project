@@ -12,17 +12,16 @@ import Icon from "@/components/ui/icon";
 import { SwitchModel } from "@/data/switchesData";
 
 // Импортируем созданные компоненты
-import SwitchCardBadge from "./switch-card/SwitchCardBadge";
+
 import SwitchCardContent from "./switch-card/SwitchCardContent";
 import SwitchCardMobile from "./switch-card/SwitchCardMobile";
 import SwitchCardDialog from "./switch-card/SwitchCardDialog";
 
 interface SwitchCardProps {
   switchData: SwitchModel;
-  onSpecFilter?: (filterKey: string, value: string) => void;
 }
 
-const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
+const SwitchCard = ({ switchData }: SwitchCardProps) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = useIsMobile();
@@ -113,12 +112,7 @@ const SwitchCard = ({ switchData, onSpecFilter }: SwitchCardProps) => {
       {/* Gradient overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-500" />
 
-      {/* Category badge */}
-      <SwitchCardBadge
-        category={switchData.category}
-        getCategoryColor={getCategoryColor}
-        getCategoryIcon={getCategoryIcon}
-      />
+
 
       {!isMobile && !isTablet ? (
         /* --- ДИСПЛЕЙ ДЛЯ ДЕСКТОПА --- */

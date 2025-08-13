@@ -29,7 +29,7 @@ export const navigationItems: NavItem[] = [
     icon: "Network",
   },
   { name: "Гарантия и сервис", path: "/warranty", icon: "ShieldCheck" },
-  { name: "Программное обеспечение", path: "/prormaning", icon: "Code" },
+  { name: "Программное обеспечение", path: "#", icon: "Code", badge: "В разработке" },
   { name: "Документация", path: "/documentation", icon: "FileText" },
   { name: "Партнеры", path: "/partners", icon: "Users" },
   { name: "Контакты", path: "/contacts", icon: "Phone" },
@@ -228,11 +228,11 @@ export const productSubmenuItems: NavItem[] = [
   },
   {
     name: "Программное обеспечение",
-    path: "/products/software",
+    path: "#",
     icon: "Code",
     description: "ПО для управления сетевой инфраструктурой",
     category: "Программное обеспечение",
-    badge: "Cloud Ready",
+    badge: "В разработке",
   },
   {
     name: "Кабельные сборки и трансиверы",

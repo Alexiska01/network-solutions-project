@@ -5,8 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import DeviceCard4530 from "@/components/4530/DeviceCard4530";
 import FilterButtons from "@/components/FilterButtons";
-import ComparisonPanel from "@/components/ComparisonPanel";
-import ComparisonModal from "@/components/ComparisonModal";
+// import ComparisonPanel from "@/components/ComparisonPanel";
+// import ComparisonModal from "@/components/ComparisonModal";
 import KeyFeatures from "@/components/KeyFeatures";
 import { switchModels4530 } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
@@ -38,7 +38,7 @@ const cardVariants = {
 const SeriesCatalog4530Component = () => {
   const [filter, setFilter] = useState<FilterType>("all");
   const [compareModels, setCompareModels] = useState<string[]>([]);
-  const [showCompareModal, setShowCompareModal] = useState(false);
+  // const [showCompareModal, setShowCompareModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -172,20 +172,20 @@ const SeriesCatalog4530Component = () => {
       </motion.section>
 
       {/* Comparison Panel */}
-      <ComparisonPanel
-        compareModels={compareModels}
-        onClearAll={() => setCompareModels([])}
-        onRemoveModel={toggleCompareModel}
-        onShowModal={() => setShowCompareModal(true)}
-      />
+        {/* <ComparisonPanel
+          compareModels={compareModels}
+          onClearAll={() => setCompareModels([])}
+          onRemoveModel={toggleCompareModel}
+          onShowModal={() => setShowCompareModal(true)}
+        /> */}
 
       {/* Comparison Modal */}
-      <ComparisonModal
+      {/* <ComparisonModal
         isOpen={showCompareModal}
         compareModels={compareModels}
         onClose={() => setShowCompareModal(false)}
         onRemoveModel={toggleCompareModel}
-      />
+      /> */}
 
       {/* Key Features Section */}
       <motion.section

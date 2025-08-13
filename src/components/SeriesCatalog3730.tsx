@@ -4,8 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import DeviceCard3730 from "@/components/DeviceCard3730"; // если нужен свой компонент
 import FilterButtons from "@/components/FilterButtons";
-import ComparisonPanel from "@/components/ComparisonPanel";
-import ComparisonModal from "@/components/ComparisonModal";
+// import ComparisonModal from "@/components/ComparisonModal";
 import { switchModels3730 } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
 import {
@@ -37,7 +36,7 @@ const cardVariants = {
 const SeriesCatalog3730Component = () => {
   const [filter, setFilter] = useState<FilterType>("all");
   const [compareModels, setCompareModels] = useState<string[]>([]);
-  const [showCompareModal, setShowCompareModal] = useState(false);
+  // const [showCompareModal, setShowCompareModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -167,21 +166,14 @@ const SeriesCatalog3730Component = () => {
         </div>
       </motion.section>
 
-      {/* Comparison Panel */}
-      <ComparisonPanel
-        compareModels={compareModels}
-        onClearAll={() => setCompareModels([])}
-        onRemoveModel={toggleCompareModel}
-        onShowModal={() => setShowCompareModal(true)}
-      />
 
       {/* Comparison Modal */}
-      <ComparisonModal
+      {/* <ComparisonModal
         isOpen={showCompareModal}
         compareModels={compareModels}
         onClose={() => setShowCompareModal(false)}
         onRemoveModel={toggleCompareModel}
-      />
+      /> */}
 
       {/* Key Features Section */}
       <motion.section

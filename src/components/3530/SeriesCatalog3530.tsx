@@ -3,8 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import DeviceCard3530 from "@/components/3530/DeviceCard3530";
 import FilterButtons from "@/components/FilterButtons";
-import ComparisonPanel from "@/components/ComparisonPanel";
-import ComparisonModal from "@/components/ComparisonModal";
+// import ComparisonModal from "@/components/ComparisonModal";
 import KeyFeatures3530 from "@/components/KeyFeatures3530";
 import {
   Breadcrumb,
@@ -23,7 +22,7 @@ import Hero3530 from "@/components/3530/Hero3530";
 const SeriesCatalog3530Component = () => {
   const [filter, setFilter] = useState<FilterType>("all");
   const [compareModels, setCompareModels] = useState<string[]>([]);
-  const [showCompareModal, setShowCompareModal] = useState(false);
+  // const [showCompareModal, setShowCompareModal] = useState(false);
   const navigate = useNavigate();
 
   const toggleCompareModel = (model: string) => {
@@ -121,20 +120,20 @@ const SeriesCatalog3530Component = () => {
       </section>
 
       {/* Comparison Panel */}
-      <ComparisonPanel
+      {/* <ComparisonPanel
         compareModels={compareModels}
         onClearAll={() => setCompareModels([])}
         onRemoveModel={toggleCompareModel}
         onShowModal={() => setShowCompareModal(true)}
-      />
+      /> */}
 
       {/* Comparison Modal */}
-      <ComparisonModal
+      {/* <ComparisonModal
         isOpen={showCompareModal}
         compareModels={compareModels}
         onClose={() => setShowCompareModal(false)}
         onRemoveModel={toggleCompareModel}
-      />
+      /> */}
 
       {/* Key Features */}
       <section

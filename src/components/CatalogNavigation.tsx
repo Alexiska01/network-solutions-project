@@ -2,11 +2,12 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Icon from "@/components/ui/icon";
+import * as LucideIcons from "lucide-react";
 
 interface NavigationItem {
   id: string;
   name: string;
-  icon: string;
+  icon: keyof typeof LucideIcons;
   children?: NavigationItem[];
 }
 
@@ -219,8 +220,9 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
         whileHover={{ scale: 1.02, x: 4 }}
         whileTap={{ scale: 0.98 }}
         className={`
-          group w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center justify-between relative overflow-hidden
-          ${level === 0 ? "font-bold text-base" : level === 1 ? "font-semibold text-sm" : "font-medium text-sm"}
+          group w-full text-left
+          ${level === 0 ? "px-4 py-3 rounded-xl font-bold text-base" : level === 1 ? "px-3 py-2 rounded-lg font-semibold text-sm max-w-[300px]" : "px-2 py-1.5 rounded-md font-medium text-sm max-w-[262px]"}
+          transition-all duration-300 flex items-center justify-between relative overflow-hidden
           ${
             isActive
               ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25"

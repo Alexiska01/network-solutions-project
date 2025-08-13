@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import ModelCard from "@/components/ModelCard";
 import FeatureIconsGrid from "@/components/FeatureIconsGrid";
 import FilterButtons from "@/components/FilterButtons";
-import ComparisonPanel from "@/components/ComparisonPanel";
-import ComparisonModal from "@/components/ComparisonModal";
+// import ComparisonPanel from "@/components/ComparisonPanel";
+// import ComparisonModal from "@/components/ComparisonModal";
 import { switchModels6010, featureIcons6010 } from "@/data/switchModels";
 import { FilterType } from "@/types/models";
 import {
@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 const SeriesCatalog6010Component = () => {
   const [filter, setFilter] = useState<FilterType>("all");
   const [compareModels, setCompareModels] = useState<string[]>([]);
-  const [showCompareModal, setShowCompareModal] = useState(false);
+  // const [showCompareModal, setShowCompareModal] = useState(false);
 
   const toggleCompareModel = (model: string) => {
     setCompareModels((prev) =>
@@ -64,12 +64,12 @@ const SeriesCatalog6010Component = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>IDS6010</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
+        {/* <ComparisonPanel
+          compareModels={compareModels}
+          onClearAll={() => setCompareModels([])}
+          onRemoveModel={toggleCompareModel}
+          onShowModal={() => setShowCompareModal(true)}
+        /> */}
 
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-8 md:py-12 lg:py-16 xl:py-20 relative overflow-hidden">
@@ -195,19 +195,19 @@ const SeriesCatalog6010Component = () => {
         </div>
       </motion.section>
 
-      <ComparisonPanel
+      {/* <ComparisonPanel
         compareModels={compareModels}
         onClearAll={() => setCompareModels([])}
         onRemoveModel={toggleCompareModel}
         onShowModal={() => setShowCompareModal(true)}
-      />
+      /> */}
 
-      <ComparisonModal
+      {/* <ComparisonModal
         isOpen={showCompareModal}
         compareModels={compareModels}
         onClose={() => setShowCompareModal(false)}
         onRemoveModel={toggleCompareModel}
-      />
+      /> */}
 
       {/* CTA Section */}
       <motion.section

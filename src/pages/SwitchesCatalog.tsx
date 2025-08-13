@@ -1,13 +1,13 @@
-import React, { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CatalogNavigation from "@/components/CatalogNavigation";
-import HeroCommuts from "@/components/HeroCommuts";
+
 import CatalogHeader from "@/components/catalog/CatalogHeader";
 import CatalogMobileNav from "@/components/catalog/CatalogMobileNav";
 import CatalogGrid from "@/components/catalog/CatalogGrid";
-import CatalogCTA from "@/components/catalog/CatalogCTA";
+
 import { switchesData } from "@/data/switchesData";
 
 const SwitchesCatalog = () => {
@@ -86,16 +86,17 @@ const SwitchesCatalog = () => {
   }, [filteredSwitches]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative bg-gradient-to-b from-gray-200/80 via-gray-100/90 to-transparent">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-transparent to-teal-100/40 pointer-events-none ps-bg-overlay" />
       <Header />
       <CatalogHeader />
-      <HeroCommuts />
+
       <CatalogMobileNav onNavigate={handleScrollToCard} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
           {/* Левое меню навигации - скрыто на мобильных */}
-          <div className="hidden lg:block w-96 flex-shrink-0">
+          <div className="hidden lg:block w-96 flex-shrink-0 sticky top-24 h-fit">
             <CatalogNavigation onNavigate={handleScrollToCard} />
           </div>
 
@@ -107,8 +108,7 @@ const SwitchesCatalog = () => {
           />
         </div>
         
-        {/* CTA блок внизу */}
-        <CatalogCTA />
+
       </div>
       <Footer />
     </div>
