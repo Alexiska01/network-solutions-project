@@ -232,7 +232,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
           </div>
           
           <p className="text-lg text-gray-300 italic opacity-80 animate-pulse">
-            "Корпоративная сеть нового поколения"
+            Корпоративная сеть нового поколения
           </p>
         </div>
       </div>
