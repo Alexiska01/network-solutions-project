@@ -136,6 +136,31 @@ const App = () => {
       });
     };
 
+    // Глобальные команды для тестирования
+    (window as any).clearCache = () => {
+      console.log('🧹 Очистка всего кэша приложения');
+      localStorage.clear();
+      sessionStorage.clear();
+      // Очистка Service Worker кэша
+      if ('caches' in window) {
+        caches.keys().then(names => {
+          names.forEach(name => caches.delete(name));
+        });
+      }
+      window.location.reload();
+    };
+
+    (window as any).testWelcomeAfterHour = () => {
+      console.log('🕐 Эмуляция возврата через час');
+      const oneHourAgo = Date.now() - (60 * 60 * 1000);
+      localStorage.setItem('lastVisitTime', oneHourAgo.toString());
+      window.location.reload();
+    };
+
+    console.log('💡 Команды для тестирования:');
+    console.log('   clearCache() - полная очистка кэша');
+    console.log('   testWelcomeAfterHour() - эмуляция возврата через час');
+
     // Запускаем загрузку сразу после монтирования компонента
     preloadImages();
     preloadModels();
