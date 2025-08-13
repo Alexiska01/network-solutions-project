@@ -38,13 +38,47 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
   }
 
   return (
-    <div className="fixed inset-0 z-[1000] bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
-      <div className="text-center text-white">
-        <h1 className="text-4xl font-bold mb-4">
-          Добро пожаловать в <span className="text-cyan-400">iDATA</span>
+    <div className="fixed inset-0 z-[1000] bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 flex items-center justify-center">
+      {/* Звездный фон */}
+      <div className="absolute inset-0 opacity-30">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="text-center text-white relative z-10">
+        <h1 className="text-5xl font-bold mb-8">
+          Добро пожаловать в{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+            iDATA
+          </span>
         </h1>
-        <div className="animate-spin w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full mx-auto mb-4"></div>
-        <p className="text-lg opacity-80">Корпоративная сеть нового поколения</p>
+
+        {/* Планета с орбитой */}
+        <div className="relative w-32 h-32 mx-auto mb-8">
+          {/* Орбита */}
+          <div className="absolute inset-0 border border-cyan-400/30 rounded-full animate-spin" style={{ animationDuration: '10s' }}>
+            {/* Спутник */}
+            <div className="absolute w-3 h-3 bg-cyan-400 rounded-full -top-1.5 left-1/2 transform -translate-x-1/2"></div>
+          </div>
+          
+          {/* Планета */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full animate-pulse">
+            <div className="absolute top-2 left-2 w-2 h-2 bg-white/50 rounded-full"></div>
+            <div className="absolute bottom-3 right-3 w-1 h-1 bg-white/30 rounded-full"></div>
+          </div>
+        </div>
+
+        <div className="text-xl mb-4 font-light">Загрузка системы...</div>
+        <p className="text-lg opacity-70">Корпоративная сеть нового поколения</p>
       </div>
     </div>
   );
