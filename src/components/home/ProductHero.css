@@ -87,6 +87,10 @@
 .ph-container {
   --ph-transition-duration: 800ms;
   --ph-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Background transitions только в idle режиме */
+.ph-container:not(.ph-transition-fadeOut):not(.ph-transition-fadeIn) {
   transition: background-color var(--ph-transition-duration)
     var(--ph-transition-ease);
 }
@@ -99,6 +103,8 @@
   filter: blur(6px);
   transition: all calc(var(--ph-transition-duration) * 0.5)
     var(--ph-transition-ease);
+  /* Принудительно переопределяем все остальные анимации */
+  animation: none !important;
 }
 
 .ph-transition-fadeIn .ph-content,
@@ -107,6 +113,8 @@
   transform: translateY(-15px) scale(1.02);
   animation: ph-fade-in calc(var(--ph-transition-duration) * 0.75)
     var(--ph-transition-ease) forwards;
+  /* Отключаем conflicting transitions во время анимации */
+  transition: none !important;
 }
 
 /* Мобильная оптимизация - менее интенсивные эффекты */
