@@ -122,7 +122,9 @@ function throttle<T extends (...args: any[]) => void>(func: T, wait: number): T 
 
 const ProductHero = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [transitionPhase, setTransitionPhase] = useState<'idle' | 'fadeOut' | 'fadeIn'>('idle');
   const [isInitialized, setIsInitialized] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -278,12 +280,18 @@ const ProductHero = memo(() => {
     return () => window.removeEventListener("mousemove", onMove);
   }, [isMobile, throttledMouseMove]);
 
-  // ОПТИМИЗИРОВАННАЯ автосмена серий (сохранена функциональность!)
+  // ПЛАВНАЯ автосмена серий с фазированной анимацией
   useEffect(() => {
     if (!isInitialized) return;
     
     const autoSlide = () => {
-      setIsTransitioning(true);
+      const nextIdx = (currentIndex + 1) % heroData.length;
+      setNextIndex(nextIdx);
+      
+      // Предзагружаем следующую модель
+      if (!modelPreloader.isLoaded(heroData[nextIdx].modelUrl)) {
+        modelPreloader.preloadModel(heroData[nextIdx].modelUrl, "high").catch(() => void 0);
+      }
       
       // Предзагружаем модель на 2 шага вперёд в фоне
       const next2Index = (currentIndex + 2) % heroData.length;
@@ -292,15 +300,27 @@ const ProductHero = memo(() => {
         modelPreloader.preloadModel(next2Model.modelUrl, "low").catch(() => void 0);
       }
       
-      // Переход к следующей серии
+      // ПЛАВНЫЙ 3-фазный переход с оптимизацией под устройство
+      setTransitionPhase('fadeOut');
+      setIsTransitioning(true);
+      
+      const fadeOutDuration = isMobile ? 300 : 400;
+      const totalDuration = isMobile ? 700 : 1000;
+      
+      // Фаза 1: Fade out
       setTimeout(() => {
-        const nextIndex = (currentIndex + 1) % heroData.length;
-        setCurrentIndex(nextIndex);
+        setCurrentIndex(nextIdx);
+        setTransitionPhase('fadeIn');
+      }, fadeOutDuration);
+      
+      // Фаза 2: Fade in  
+      setTimeout(() => {
+        setTransitionPhase('idle');
         setIsTransitioning(false);
-      }, isMobile ? 100 : 300);
+      }, totalDuration);
     };
     
-    const interval = setInterval(autoSlide, 11000); // Интервал сохранён
+    const interval = setInterval(autoSlide, 11000);
     intervalRef.current = interval;
     
     return () => {
@@ -309,7 +329,7 @@ const ProductHero = memo(() => {
         intervalRef.current = null;
       }
     };
-  }, [isInitialized, currentIndex, isMobile]);
+  }, [isInitialized, currentIndex]);
 
   // МЕМОИЗИРОВАННЫЕ CSS переменные для оптимальной производительности
   const cssVars: React.CSSProperties = useMemo(() => ({
@@ -320,12 +340,14 @@ const ProductHero = memo(() => {
     ["--grad-3" as any]: gradientStops[2],
     ["--mouse-x" as any]: mousePosition.x.toString(),
     ["--mouse-y" as any]: mousePosition.y.toString(),
-  }), [glowColor, currentData.accentColor, gradientStops, mousePosition]);
+    ["--transition-phase" as any]: transitionPhase,
+  }), [glowColor, currentData.accentColor, gradientStops, mousePosition, transitionPhase]);
 
   return (
     <div
-      className={`ph-container refresh-${refreshRate}`}
+      className={`ph-container refresh-${refreshRate} ${transitionPhase !== 'idle' ? `ph-transition-${transitionPhase}` : ''}`}
       data-loaded={isInitialized}
+      data-transitioning={isTransitioning}
       style={cssVars}
     >
       {/* Фоновые слои */}
