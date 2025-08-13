@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect, lazy, Suspense, useState, useCallback } from "react";
+import { useEffect, lazy, Suspense, useState } from "react";
 import Index from "./pages/Index";
 import ProductHero from "./components/home/ProductHero";
 import WelcomeScreen from "./components/WelcomeScreen";
@@ -73,41 +73,43 @@ const PRELOAD_MODELS = [
 
 const App = () => {
   const [showWelcome, setShowWelcome] = useState(false);
-  const [lastActivityTime, setLastActivityTime] = useState(Date.now());
 
-  // Обработка активности пользователя
-  const handleUserActivity = useCallback(() => {
-    setLastActivityTime(Date.now());
-  }, []);
-
-  // Отслеживание неактивности
+  // Отслеживание закрытия/открытия сайта
   useEffect(() => {
-    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    const STORAGE_KEY = 'lastVisitTime';
+    const ONE_HOUR = 60 * 60 * 1000; // 1 час в миллисекундах
     
-    // Добавляем слушатели активности
-    events.forEach(event => {
-      document.addEventListener(event, handleUserActivity, true);
-    });
-
-    // Проверяем неактивность каждые 10 секунд
-    const inactivityCheck = setInterval(() => {
-      const now = Date.now();
-      const inactiveTime = now - lastActivityTime;
-      const oneHour = 60 * 60 * 1000; // 1 час в миллисекундах
-      
-      if (inactiveTime >= oneHour) {
+    // При загрузке страницы проверяем последнее время посещения
+    const lastVisit = localStorage.getItem(STORAGE_KEY);
+    const currentTime = Date.now();
+    
+    if (lastVisit) {
+      const timeDifference = currentTime - parseInt(lastVisit);
+      if (timeDifference >= ONE_HOUR) {
         setShowWelcome(true);
-        setLastActivityTime(now); // Сбрасываем счётчик
       }
-    }, 10000); // Проверяем каждые 10 секунд
-
-    return () => {
-      events.forEach(event => {
-        document.removeEventListener(event, handleUserActivity, true);
-      });
-      clearInterval(inactivityCheck);
+    }
+    
+    // Сохраняем время при закрытии страницы
+    const handleBeforeUnload = () => {
+      localStorage.setItem(STORAGE_KEY, currentTime.toString());
     };
-  }, [handleUserActivity, lastActivityTime]);
+    
+    // Сохраняем время при скрытии страницы (переключение вкладок)
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        localStorage.setItem(STORAGE_KEY, Date.now().toString());
+      }
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   // Предварительная загрузка всех изображений и моделей
   useEffect(() => {
@@ -147,7 +149,11 @@ const App = () => {
         {showWelcome && (
           <WelcomeScreen
             forceShow={true}
-            onComplete={() => setShowWelcome(false)}
+            onComplete={() => {
+              setShowWelcome(false);
+              // Обновляем время последнего посещения при завершении Welcome
+              localStorage.setItem('lastVisitTime', Date.now().toString());
+            }}
           />
         )}
         <BrowserRouter>
