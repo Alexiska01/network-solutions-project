@@ -28,7 +28,9 @@ const Index = () => {
   // Показываем контент сразу если WelcomeScreen не нужен
   useEffect(() => {
     const shouldShowWelcome = modelCacheManager.shouldShowWelcomeScreen();
+    console.log('🏠 Index: shouldShowWelcome =', shouldShowWelcome);
     if (!shouldShowWelcome) {
+      console.log('🏠 Index: WelcomeScreen не нужен, показываем контент сразу');
       setShowMainContent(true);
     }
   }, []);
