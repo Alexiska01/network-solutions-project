@@ -53,40 +53,14 @@ export class ModelPreloader {
   }
   
   private addResourceHints() {
-    // Только для "all" моделей - основные модели коммутаторов
-    const allModels = [
-      '/models/3530all.glb',
-      '/models/3730all.glb',
-      '/models/4530all.glb',
-      '/models/6010all.glb'
-    ];
-    
-    // Добавляем dns-prefetch и preconnect для ускорения загрузки
+    // УБИРАЕМ preload/prefetch чтобы избежать ошибок в консоли
+    // Только добавляем dns-prefetch для ускорения соединения
     const preconnect = document.createElement('link');
     preconnect.rel = 'preconnect';
     preconnect.href = window.location.origin;
     document.head.appendChild(preconnect);
     
-    // Добавляем prefetch для первых двух моделей (самые важные)
-    allModels.slice(0, 2).forEach(url => {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = url;
-      link.as = 'fetch';
-      link.setAttribute('fetchpriority', 'high');
-      document.head.appendChild(link);
-      console.log(`📥 ModelPreloader: Prefetch добавлен для ${url}`);
-    });
-    
-    // Для остальных моделей используем preload с низким приоритетом
-    allModels.slice(2).forEach(url => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.href = url;
-      link.as = 'fetch';
-      link.setAttribute('fetchpriority', 'low');
-      document.head.appendChild(link);
-    });
+    // DNS prefetch настроен
   }
 
   static getInstance(): ModelPreloader {
@@ -99,12 +73,10 @@ export class ModelPreloader {
   async preloadModel(url: string, priority: 'high' | 'low' = 'low'): Promise<void> {
     // Проверяем, что загружаем только "all" модели
     if (!url.includes('all.glb')) {
-      console.warn(`⚠️ ModelPreloader: Пропускаем загрузку не-all модели: ${url}`);
       return;
     }
     
     if (this.loadedModels.get(url)) {
-      console.log(`✅ ModelPreloader: Модель уже загружена: ${url}`);
       return;
     }
 
@@ -154,9 +126,12 @@ export class ModelPreloader {
       modelViewer.setAttribute('shadow-intensity', '0');
       modelViewer.setAttribute('exposure', '0.5');
       
+      // Общий таймаут для всех моделей
+      let timeoutId: NodeJS.Timeout;
+      
       // Оптимизированная обработка событий
       const loadHandler = () => {
-        console.log(`✅ ModelPreloader: Модель загружена [${priority}]: ${url}`);
+        clearTimeout(timeoutId);
         this.loadedModels.set(url, true);
         this.modelElements.set(url, container);
         
@@ -170,12 +145,12 @@ export class ModelPreloader {
         resolve();
       };
       
-      const errorHandler = (e: Event) => {
-        console.warn(`⚠️ ModelPreloader: Не удалось загрузить модель: ${url}`, e);
-        this.loadedModels.set(url, false); // Отмечаем как неудачную загрузку
+      const errorHandler = () => {
+        clearTimeout(timeoutId);
+        // Тихо обрабатываем ошибку без лишних логов
+        this.loadedModels.set(url, false);
         container.remove();
-        // Не reject'аем, чтобы не ломать весь процесс
-        resolve(); // Разрешаем промис, чтобы продолжить работу
+        resolve(); // Graceful degradation
       };
       
       modelViewer.addEventListener('load', loadHandler, { once: true });
@@ -184,13 +159,12 @@ export class ModelPreloader {
       container.appendChild(modelViewer);
       document.body.appendChild(container);
       
-      // Уменьшенный таймаут для проблемных моделей (особенно 3730)
-      setTimeout(() => {
+      // Устанавливаем таймаут
+      timeoutId = setTimeout(() => {
         if (!this.loadedModels.has(url)) {
-          console.warn(`⏰ ModelPreloader: Таймаут загрузки модели: ${url}`);
-          errorHandler(new Event('timeout'));
+          errorHandler();
         }
-      }, url.includes('3730') ? 15000 : 30000); // 15 сек для 3730, 30 для остальных
+      }, 20000); // 20 сек для всех моделей
     });
 
     this.loadingModels.set(url, loadPromise);
@@ -208,7 +182,6 @@ export class ModelPreloader {
     const allModels = urls.filter(url => url.includes('all.glb'));
     
     if (allModels.length === 0) {
-      console.warn('⚠️ ModelPreloader: Нет all-моделей для загрузки');
       return;
     }
     
@@ -276,7 +249,7 @@ export class ModelPreloader {
     this.loadingModels.clear();
     this.preloadQueue = [];
     
-    console.log('🧹 ModelPreloader: Очистка завершена');
+    // Очистка завершена
   }
   
   // Метод для предзагрузки только конкретной модели коммутатора
@@ -288,7 +261,6 @@ export class ModelPreloader {
   // Метод для принудительной отметки модели как загруженной (для синхронизации)
   markAsLoaded(url: string): void {
     this.loadedModels.set(url, true);
-    console.log(`🔄 ModelPreloader: Модель отмечена как загруженная: ${url}`);
   }
 }
 

@@ -415,9 +415,10 @@ const ProductHero = memo(() => {
                           modelPreloader.markAsLoaded?.(currentData.modelUrl);
                         }
                       }}
-                      onError={() =>
-                        setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }))
-                      }
+                      onError={() => {
+                        // Тихо обрабатываем ошибку без логов в консоль
+                        setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }));
+                      }}
                     />
 
                     {modelLoadStatus[currentData.modelUrl] === false && (
