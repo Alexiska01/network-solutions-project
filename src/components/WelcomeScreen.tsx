@@ -15,44 +15,43 @@ const LOADING_STAGES = [
   'Система готова к работе'
 ];
 
-// Простой компонент печатающегося текста
-const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
+// Компонент печатающегося текста с правильным стиранием
+const TypewriterText: React.FC<{ currentStage: number }> = ({ currentStage }) => {
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
-
-  useEffect(() => {
-    // Сброс при смене текста
-    setDisplayText('');
-    setIsTyping(true);
-  }, [text]);
+  const [stageIndex, setStageIndex] = useState(0);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
+    const currentText = LOADING_STAGES[stageIndex] || '';
     
     if (isTyping) {
       // Печатаем символ за символом
-      if (displayText.length < text.length) {
+      if (displayText.length < currentText.length) {
         timeoutId = setTimeout(() => {
-          setDisplayText(text.slice(0, displayText.length + 1));
-        }, 60);
+          setDisplayText(currentText.slice(0, displayText.length + 1));
+        }, 70);
       } else {
-        // Напечатали, пауза перед стиранием
+        // Напечатали полностью, пауза перед стиранием
         timeoutId = setTimeout(() => {
           setIsTyping(false);
-        }, 1000);
+        }, 1200);
       }
     } else {
       // Стираем символ за символом
       if (displayText.length > 0) {
         timeoutId = setTimeout(() => {
           setDisplayText(prev => prev.slice(0, -1));
-        }, 30);
+        }, 40);
+      } else {
+        // Стерли полностью, переходим к следующей стадии
+        setStageIndex(prev => (prev + 1) % LOADING_STAGES.length);
+        setIsTyping(true);
       }
-      // После стирания просто ждём нового текста
     }
 
     return () => clearTimeout(timeoutId);
-  }, [displayText, isTyping, text]);
+  }, [displayText, isTyping, stageIndex]);
 
   return (
     <span className="font-mono text-cyan-300 tracking-wide">
@@ -201,7 +200,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         {/* Печатающийся текст загрузки */}
         <div className="space-y-6">
           <div className="text-xl text-cyan-300 tracking-wide min-h-[60px] flex items-center justify-center">
-            <TypewriterText text={LOADING_STAGES[currentStage]} />
+            <TypewriterText currentStage={currentStage} />
           </div>
           
           {/* Прогресс бар */}
