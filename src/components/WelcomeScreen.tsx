@@ -106,18 +106,18 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     setIsScreenVisible(shouldShow);
   }, [shouldShow]);
 
-  // ПРИНУДИТЕЛЬНЫЙ таймер на 10 секунд (ТОЛЬКО ОДИН РАЗ)
+  // ПРИНУДИТЕЛЬНЫЙ таймер на 3 секунды для быстрого тестирования
   useEffect(() => {
-    if (!shouldShow || hasStarted) return; // Не запускаем если не нужно показывать
+    if (!shouldShow || hasStarted) return;
     
-    console.log('⏰ WelcomeScreen: Запуск принудительного таймера на 10 секунд');
+    console.log('⏰ WelcomeScreen: Запуск таймера на 3 секунды');
     setHasStarted(true);
     
     const forceHideTimer = setTimeout(() => {
-      console.log('⏰ WelcomeScreen: ПРИНУДИТЕЛЬНОЕ скрытие через 10 секунд');
+      console.log('⏰ WelcomeScreen: Скрытие через 3 секунды');
       setIsScreenVisible(false);
       onComplete?.();
-    }, 10000);
+    }, 3000);
 
     return () => clearTimeout(forceHideTimer);
   }, [shouldShow, hasStarted, onComplete]);
