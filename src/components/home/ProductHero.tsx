@@ -394,16 +394,7 @@ const ProductHero = memo(() => {
               <div className="ph-model-wrapper">
                 <div className="ph-model">
                   <div className="ph-model-inner">
-                    {/* Лоадер (если нет в кэше/предзагрузчике) */}
-                    {!modelLoadStatus[currentData.modelUrl] &&
-                      !modelPreloader.isLoaded(currentData.modelUrl) && (
-                        <div className="ph-loader">
-                          <div className="ph-loader-inner">
-                            <div className="ph-spinner" />
-                            <p className="ph-loader-text">Загрузка 3D модели...</p>
-                          </div>
-                        </div>
-                      )}
+                    {/* Убран лоадер - больше не показываем "Загрузка 3D модели..." */}
 
                     <OptimizedModelViewer
                       src={currentData.modelUrl}
