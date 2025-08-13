@@ -15,59 +15,62 @@ const LOADING_STAGES = [
   'Система готова к работе'
 ];
 
-// Компонент печатающегося текста в стиле Star Wars
+// Профессиональный компонент печатающегося текста в стиле Star Wars
 const TypewriterText: React.FC<{ 
   texts: string[]; 
   currentStage: number;
 }> = ({ texts, currentStage }) => {
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
-  const [charIndex, setCharIndex] = useState(0);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
   useEffect(() => {
-    const currentText = texts[currentStage] || '';
+    let timeoutId: NodeJS.Timeout;
+    
+    const currentText = texts[currentTextIndex] || '';
     
     if (isTyping) {
-      // Печатаем по символу
-      if (charIndex < currentText.length) {
-        const timer = setTimeout(() => {
-          setDisplayText(currentText.slice(0, charIndex + 1));
-          setCharIndex(charIndex + 1);
-        }, 50);
-        return () => clearTimeout(timer);
+      // Режим печатания
+      if (displayText.length < currentText.length) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(prev => currentText.slice(0, prev.length + 1));
+        }, 60); // Скорость печатания
       } else {
-        // Текст напечатан, ждём немного и начинаем стирать
-        const timer = setTimeout(() => {
+        // Текст полностью напечатан, пауза перед стиранием
+        timeoutId = setTimeout(() => {
           setIsTyping(false);
-        }, 800);
-        return () => clearTimeout(timer);
+        }, 1200); // Пауза перед стиранием
       }
     } else {
-      // Стираем по символу
-      if (charIndex > 0) {
-        const timer = setTimeout(() => {
-          setCharIndex(charIndex - 1);
-          setDisplayText(currentText.slice(0, charIndex - 1));
-        }, 30);
-        return () => clearTimeout(timer);
+      // Режим стирания
+      if (displayText.length > 0) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(prev => prev.slice(0, -1)); // Убираем последний символ
+        }, 40); // Скорость стирания (быстрее печатания)
       } else {
-        // Текст стёрт, готов к следующему
+        // Текст полностью стёрт, переходим к следующему
+        const nextIndex = (currentTextIndex + 1) % texts.length;
+        setCurrentTextIndex(nextIndex);
         setIsTyping(true);
       }
     }
-  }, [charIndex, isTyping, currentStage, texts]);
 
-  // Сброс при смене стадии
+    return () => clearTimeout(timeoutId);
+  }, [displayText, isTyping, currentTextIndex, texts]);
+
+  // Принудительная синхронизация с внешним currentStage
   useEffect(() => {
-    setDisplayText('');
-    setCharIndex(0);
-    setIsTyping(true);
-  }, [currentStage]);
+    if (currentStage !== currentTextIndex) {
+      setCurrentTextIndex(currentStage);
+      setDisplayText('');
+      setIsTyping(true);
+    }
+  }, [currentStage, currentTextIndex]);
 
   return (
-    <span className="font-mono text-cyan-300 tracking-wide">
+    <span className="font-mono text-cyan-300 tracking-wide text-lg">
       {displayText}
-      <span className="animate-pulse text-cyan-400">_</span>
+      <span className="animate-pulse text-cyan-400 ml-1">_</span>
     </span>
   );
 };
