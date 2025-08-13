@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { modelCacheManager } from '@/utils/modelCacheManager';
 import './WelcomeScreen.css';
 
 interface WelcomeScreenProps {
@@ -73,23 +72,13 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const shouldShow = forceShow || modelCacheManager.shouldShowWelcomeScreen();
-    console.log('🎯 WelcomeScreen: shouldShow =', shouldShow);
-    
-    if (!shouldShow) {
-      console.log('🚀 WelcomeScreen: Не нужен, вызываем onComplete сразу');
-      onComplete?.();
-      return;
+    if (forceShow) {
+      setIsVisible(true);
     }
-
-    setIsVisible(true);
-    console.log('✅ WelcomeScreen: Показываем автоматически');
-  }, [forceShow, onComplete]);
+  }, [forceShow]);
 
   const handleComplete = () => {
-    console.log('⏰ WelcomeScreen: Автозавершение');
     setIsVisible(false);
-    modelCacheManager.markWelcomeScreenComplete();
     onComplete?.();
   };
 

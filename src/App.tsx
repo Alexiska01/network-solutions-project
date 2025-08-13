@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense, useState, useCallback } from "react";
 import Index from "./pages/Index";
 import ProductHero from "./components/home/ProductHero";
 import WelcomeScreen from "./components/WelcomeScreen";
@@ -72,6 +72,43 @@ const PRELOAD_MODELS = [
 ];
 
 const App = () => {
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [lastActivityTime, setLastActivityTime] = useState(Date.now());
+
+  // Обработка активности пользователя
+  const handleUserActivity = useCallback(() => {
+    setLastActivityTime(Date.now());
+  }, []);
+
+  // Отслеживание неактивности
+  useEffect(() => {
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    
+    // Добавляем слушатели активности
+    events.forEach(event => {
+      document.addEventListener(event, handleUserActivity, true);
+    });
+
+    // Проверяем неактивность каждые 10 секунд
+    const inactivityCheck = setInterval(() => {
+      const now = Date.now();
+      const inactiveTime = now - lastActivityTime;
+      const oneHour = 60 * 60 * 1000; // 1 час в миллисекундах
+      
+      if (inactiveTime >= oneHour) {
+        setShowWelcome(true);
+        setLastActivityTime(now); // Сбрасываем счётчик
+      }
+    }, 10000); // Проверяем каждые 10 секунд
+
+    return () => {
+      events.forEach(event => {
+        document.removeEventListener(event, handleUserActivity, true);
+      });
+      clearInterval(inactivityCheck);
+    };
+  }, [handleUserActivity, lastActivityTime]);
+
   // Предварительная загрузка всех изображений и моделей
   useEffect(() => {
     // Модели теперь локальные, preconnect не нужен
@@ -107,6 +144,12 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        {showWelcome && (
+          <WelcomeScreen
+            forceShow={true}
+            onComplete={() => setShowWelcome(false)}
+          />
+        )}
         <BrowserRouter>
           <Suspense
             fallback={
