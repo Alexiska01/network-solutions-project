@@ -14,16 +14,10 @@
   background: linear-gradient(135deg, #0b3c49, #1a237e, #2e2e2e);
   overflow: hidden;
 
-  /* начальное состояние для entry */
-  opacity: 0;
-  transform: translate3d(0, 40px, 0) scale(0.98);
-  filter: blur(20px) brightness(0.3);
-
-  --ph-ease-hero: cubic-bezier(0.16, 1, 0.3, 1);
-  --ph-ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
-  --ph-entry-duration: 900ms;
-  --ph-content-delay: 200ms;
-  --ph-model-delay: 200ms;
+  /* Нормальное начальное состояние */
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: none;
 
   /* цвета (динамика из TSX) */
   --current-glow-color: #4ea1ff;
@@ -36,8 +30,7 @@
   --mouse-x: 0.5;
   --mouse-y: 0.5;
 
-  animation: ph-hero-entry var(--ph-entry-duration) var(--ph-ease-hero) 200ms
-    forwards;
+  /* Никаких автоматических анимаций - только морфинг по запросу */
   will-change: transform, opacity, filter;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
@@ -100,33 +93,28 @@
 }
 
 /* ЕДИНАЯ МОРФИНГ АНИМАЦИЯ */
-.ph-morphing {
+.ph-morphing .ph-content,
+.ph-morphing .ph-model {
   animation: ph-series-morph var(--ph-adaptive-duration) var(--ph-morph-ease)
     forwards;
+}
 
-  /* Блокируем все остальные анимации */
-  * {
-    transition: none !important;
-    animation-delay: 0 !important;
-  }
+/* Блокируем ВСЕ остальные анимации и transitions */
+.ph-morphing * {
+  transition: none !important;
+  animation: none !important;
+}
+
+.ph-morphing .ph-content,
+.ph-morphing .ph-model {
+  animation: ph-series-morph var(--ph-adaptive-duration) var(--ph-morph-ease)
+    forwards !important;
 }
 
 /* 📱 МОБИЛЬНАЯ ОПТИМИЗАЦИЯ */
 @media (max-width: 767px) {
   .ph-container {
     --ph-adaptive-duration: 800ms; /* Быстрее на мобильных */
-  }
-
-  /* Менее интенсивные эффекты */
-  @keyframes ph-series-morph {
-    35% {
-      transform: translateY(20px) scale(0.92) rotateX(3deg);
-      filter: blur(4px) brightness(0.8) saturate(0.7);
-    }
-    45% {
-      transform: translateY(-30px) scale(1.04) rotateX(-2deg);
-      filter: blur(6px) brightness(1.2) saturate(0.5);
-    }
   }
 }
 
@@ -184,13 +172,7 @@
   }
 }
 
-@keyframes ph-hero-entry {
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0) brightness(1);
-  }
-}
+/* Удалена ph-hero-entry - оставлена только ph-series-morph */
 
 /* Фоны */
 .ph-bg {
@@ -203,7 +185,8 @@
     var(--grad-2),
     var(--grad-3)
   );
-  /* Отключаем transitions - только морфинг */
+  /* Никаких transitions - только морфинг */
+  transition: none;
   will-change: transform, background;
   transform: translate3d(
     calc((var(--mouse-x) - 0.5) * 10px),
