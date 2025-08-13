@@ -16,19 +16,56 @@ const LOADING_STAGES = [
 ];
 
 // Компонент печатающегося текста в стиле Star Wars
-const TypewriterText: React.FC<{ text: string; speed?: number }> = ({ text, speed = 60 }) => {
+const TypewriterText: React.FC<{ 
+  texts: string[]; 
+  currentStage: number;
+  typeSpeed?: number;
+  eraseSpeed?: number;
+}> = ({ texts, currentStage, typeSpeed = 60, eraseSpeed = 30 }) => {
   const [displayText, setDisplayText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
   useEffect(() => {
-    if (currentIndex < text.length) {
-      const timer = setTimeout(() => {
-        setDisplayText(text.slice(0, currentIndex + 1));
-        setCurrentIndex(currentIndex + 1);
-      }, speed);
-      return () => clearTimeout(timer);
+    const currentText = texts[currentTextIndex] || '';
+    
+    if (isTyping) {
+      // Печатаем текст
+      if (displayText.length < currentText.length) {
+        const timer = setTimeout(() => {
+          setDisplayText(currentText.slice(0, displayText.length + 1));
+        }, typeSpeed);
+        return () => clearTimeout(timer);
+      } else {
+        // Текст напечатан, ждём и начинаем стирать
+        const timer = setTimeout(() => {
+          setIsTyping(false);
+        }, 1500);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      // Стираем текст
+      if (displayText.length > 0) {
+        const timer = setTimeout(() => {
+          setDisplayText(displayText.slice(0, -1));
+        }, eraseSpeed);
+        return () => clearTimeout(timer);
+      } else {
+        // Текст стёрт, переходим к следующему
+        setCurrentTextIndex((prev) => (prev + 1) % texts.length);
+        setIsTyping(true);
+      }
     }
-  }, [currentIndex, text, speed]);
+  }, [displayText, isTyping, currentTextIndex, texts, typeSpeed, eraseSpeed]);
+
+  // Синхронизируем с внешним currentStage
+  useEffect(() => {
+    if (currentStage !== currentTextIndex) {
+      setCurrentTextIndex(currentStage);
+      setDisplayText('');
+      setIsTyping(true);
+    }
+  }, [currentStage, currentTextIndex]);
 
   return (
     <span className="font-mono text-cyan-300 tracking-wide">
@@ -177,7 +214,12 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         {/* Печатающийся текст загрузки */}
         <div className="space-y-6">
           <div className="text-xl text-cyan-300 tracking-wide min-h-[60px] flex items-center justify-center">
-            <TypewriterText text={LOADING_STAGES[currentStage]} speed={80} />
+            <TypewriterText 
+              texts={LOADING_STAGES} 
+              currentStage={currentStage}
+              typeSpeed={60}
+              eraseSpeed={30}
+            />
           </div>
           
           {/* Прогресс бар */}
