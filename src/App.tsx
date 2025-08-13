@@ -46,29 +46,47 @@ const queryClient = new QueryClient({
   },
 });
 
-// Все изображения для предварительной загрузки
-const PRELOAD_IMAGES = [
+// СУПЕР АГРЕССИВНАЯ ПРЕДЗАГРУЗКА для максимальной скорости
+
+// Критические изображения (загружаем первыми)
+const CRITICAL_IMAGES = [
   // Логотипы партнеров
-  "https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png", // Инфосэл
-  "https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png", // Инлайн ГРУП
-  "https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png", // КРОК
-  // Схемы из public/img
+  "https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png",
+  "https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png", 
+  "https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png",
+];
+
+// Схемы и диаграммы (загружаем вторыми)
+const SECONDARY_IMAGES = [
   "/img/Иерархия_3530.png",
-  "/img/Иерархия_3730.png",
+  "/img/Иерархия_3730.png", 
   "/img/Иерархия_4530(1).png",
   "/img/Иерархия_4530(2).png",
   "/img/Иерархия_4530.png",
 ];
 
-// 3D модели для предварительной загрузки
-const PRELOAD_MODELS = [
+// Приоритетные 3D модели (показываются чаще всего)
+const PRIORITY_MODELS = [
   "/models/3530all.glb",
   "/models/3730all.glb",
   "/models/4530all.glb",
+];
+
+// Второстепенные модели (загружаем в фоне)
+const BACKGROUND_MODELS = [
   "/models/6010all.glb",
   "/models/IDS3530-24P.glb",
   "/models/IDS3530-24T.glb",
   "/models/IDS3530-24S.glb",
+];
+
+// Ключевые страницы для предзагрузки
+const PRELOAD_ROUTES = [
+  '/products/switches/ids3530',
+  '/products/switches/ids3730', 
+  '/products/switches/ids4530',
+  '/partners',
+  '/contacts'
 ];
 
 const App = () => {
@@ -111,28 +129,90 @@ const App = () => {
     };
   }, []);
 
-  // Предварительная загрузка всех изображений и моделей
+  // СУПЕР АГРЕССИВНАЯ ПРЕДЗАГРУЗКА для максимальной производительности
   useEffect(() => {
-    // Модели теперь локальные, preconnect не нужен
-
-    const preloadImages = () => {
-      PRELOAD_IMAGES.forEach((imageUrl) => {
+    // Этап 1: КРИТИЧЕСКИЕ ресурсы загружаем НЕМЕДЛЕННО
+    const preloadCritical = () => {
+      // Критические изображения с максимальным приоритетом
+      CRITICAL_IMAGES.forEach((imageUrl, index) => {
         const img = new Image();
+        img.loading = 'eager';
+        img.fetchPriority = 'high';
         img.src = imageUrl;
+        
+        // DNS prefetch для внешних доменов
+        if (imageUrl.includes('cdn.poehali.dev')) {
+          const link = document.createElement('link');
+          link.rel = 'dns-prefetch';
+          link.href = 'https://cdn.poehali.dev';
+          document.head.appendChild(link);
+        }
       });
-    };
-
-    const preloadModels = () => {
-      // Добавляем prefetch для 3D моделей с высоким приоритетом
-      PRELOAD_MODELS.forEach((modelUrl) => {
+      
+      // Приоритетные 3D модели с высоким приоритетом
+      PRIORITY_MODELS.forEach((modelUrl) => {
         const link = document.createElement('link');
-        link.rel = 'prefetch';
+        link.rel = 'preload';
         link.href = modelUrl;
         link.as = 'fetch';
         link.crossOrigin = 'anonymous';
-        // Vercel CDN автоматически обрабатывает Cache-Control
+        link.setAttribute('fetchpriority', 'high');
         document.head.appendChild(link);
-        console.log(`📥 App: Добавлен prefetch для модели ${modelUrl}`);
+      });
+      
+      console.log('⚡ Критические ресурсы загружаются...');
+    };
+
+    // Этап 2: ВТОРОСТЕПЕННЫЕ ресурсы через 500мс
+    const preloadSecondary = () => {
+      setTimeout(() => {
+        // Второстепенные изображения
+        SECONDARY_IMAGES.forEach((imageUrl) => {
+          const img = new Image();
+          img.loading = 'lazy';
+          img.src = imageUrl;
+        });
+        
+        // Ключевые страницы для мгновенного перехода
+        PRELOAD_ROUTES.forEach((route) => {
+          const link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = route;
+          document.head.appendChild(link);
+        });
+        
+        console.log('🔄 Второстепенные ресурсы загружаются...');
+      }, 500);
+    };
+
+    // Этап 3: ФОНОВЫЕ модели через 2 секунды (когда пользователь уже взаимодействует)
+    const preloadBackground = () => {
+      setTimeout(() => {
+        BACKGROUND_MODELS.forEach((modelUrl, index) => {
+          // Загружаем с задержкой чтобы не блокировать основной поток
+          setTimeout(() => {
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = modelUrl;
+            link.as = 'fetch';
+            link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+          }, index * 200); // Интервал между моделями
+        });
+        
+        console.log('🎯 Фоновые модели загружаются...');
+      }, 2000);
+    };
+
+    // Этап 4: Preconnect к критическим доменам
+    const setupPreconnect = () => {
+      const domains = ['https://cdn.poehali.dev'];
+      domains.forEach(domain => {
+        const link = document.createElement('link');
+        link.rel = 'preconnect';
+        link.href = domain;
+        link.crossOrigin = 'anonymous';
+        document.head.appendChild(link);
       });
     };
 
@@ -144,9 +224,13 @@ const App = () => {
       window.location.reload();
     };
 
-    // Запускаем загрузку сразу после монтирования компонента
-    preloadImages();
-    preloadModels();
+    // ЗАПУСКАЕМ ВСЕ ЭТАПЫ ПРЕДЗАГРУЗКИ
+    setupPreconnect();
+    preloadCritical();
+    preloadSecondary();
+    preloadBackground();
+    
+    console.log('🚀 СУПЕР АГРЕССИВНАЯ предзагрузка запущена!');
   }, []);
 
   return (
@@ -173,6 +257,8 @@ const App = () => {
             }
           >
             <Routes>
+              {/* Prefetch критических компонентов */}
+              <Route path="/prefetch-critical" element={null} />
               <Route path="/" element={<Index />} />
 
               <Route path="/partners" element={<Partners />} />

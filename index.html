@@ -8,19 +8,36 @@
   <meta name="description" content="Poehali.dev — запусти свой сайт за минуту!"/>
   <meta name="author" content="poehali.dev"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- СУПЕР АГРЕССИВНАЯ ОПТИМИЗАЦИЯ для максимальной скорости -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.poehali.dev" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  
+  <!-- DNS prefetch для критических доменов -->
+  <link rel="dns-prefetch" href="https://mc.yandex.ru">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  
+  <!-- Шрифты с максимальным приоритетом -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Preload 3D models from local public/models folder -->
-  <!-- Prefetch с высоким приоритетом для первых двух моделей -->
-  <link rel="prefetch" href="/models/3530all.glb" as="fetch" fetchpriority="high">
-  <link rel="prefetch" href="/models/3730all.glb" as="fetch" fetchpriority="high">
-  <link rel="prefetch" href="/models/4530all.glb" as="fetch">
-  <link rel="prefetch" href="/models/6010all.glb" as="fetch">
+  <!-- СУПЕР АГРЕССИВНАЯ предзагрузка 3D моделей -->
+  <!-- Критические модели - preload с максимальным приоритетом -->
+  <link rel="preload" href="/models/3530all.glb" as="fetch" fetchpriority="high" crossorigin>
+  <link rel="preload" href="/models/3730all.glb" as="fetch" fetchpriority="high" crossorigin>
+  <link rel="preload" href="/models/4530all.glb" as="fetch" fetchpriority="high" crossorigin>
   
-  <!-- Preload для первой модели -->
-  <link rel="preload" href="/models/3530all.glb" as="fetch">
+  <!-- Второстепенные модели - prefetch в фоне -->
+  <link rel="prefetch" href="/models/6010all.glb" as="fetch" crossorigin>
+  <link rel="prefetch" href="/models/IDS3530-24P.glb" as="fetch" crossorigin>
+  <link rel="prefetch" href="/models/IDS3530-24T.glb" as="fetch" crossorigin>
+  <link rel="prefetch" href="/models/IDS3530-24S.glb" as="fetch" crossorigin>
+  
+  <!-- Критические изображения -->
+  <link rel="preload" href="https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png" as="image" fetchpriority="high">
+  <link rel="preload" href="https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png" as="image" fetchpriority="high">
+  <link rel="preload" href="https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png" as="image" fetchpriority="high">
   <meta property="og:title" content="Поехали!">
   <meta property="og:description" content="Ваш личный программист, который делает сайты в 30 раз быстрее обычного.">
   <meta property="og:image:width" content="4800">
@@ -45,10 +62,12 @@
   <script src="https://cdn.poehali.dev/intertnal/js/route-min.js"></script>
   <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS COMMENT! -->
 
-  <!-- Three.js CDN -->
+  <!-- Three.js CDN с высоким приоритетом -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r158/three.min.js" as="script">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r158/three.min.js"></script>
   
-  <!-- Model Viewer Script -->
+  <!-- Model Viewer Script с предзагрузкой -->
+  <link rel="modulepreload" href="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
   <meta name="pp-name" value="network-solutions-project">

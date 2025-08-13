@@ -3,17 +3,29 @@ import App from './App'
 import './index.css'
 import { modelCacheManager } from '@/utils/modelCacheManager'
 
-// Регистрируем Service Worker для кэширования моделей
+// СУПЕР АГРЕССИВНАЯ регистрация Service Worker
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('🚀 Service Worker зарегистрирован для кэширования моделей');
-      })
-      .catch((error) => {
-        console.warn('⚠️ Ошибка регистрации Service Worker:', error);
+  // Регистрируем НЕМЕДЛЕННО, не ждём load
+  navigator.serviceWorker.register('/sw.js')
+    .then((registration) => {
+      console.log('🔥 СУПЕР Service Worker зарегистрирован для максимальной производительности');
+      
+      // Принудительное обновление SW если есть новая версия
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('🔄 Обновление Service Worker - перезагружаем через 1 сек');
+              setTimeout(() => window.location.reload(), 1000);
+            }
+          });
+        }
       });
-  });
+    })
+    .catch((error) => {
+      console.warn('⚠️ Ошибка регистрации СУПЕР Service Worker:', error);
+    });
 }
 
 // Инициализируем modelCacheManager
