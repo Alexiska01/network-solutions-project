@@ -15,8 +15,8 @@ const LOADING_STAGES = [
   'Система готова к работе'
 ];
 
-// Компонент печатающегося текста с правильным стиранием
-const TypewriterText: React.FC<{ currentStage: number }> = ({ currentStage }) => {
+// Компонент печатающегося текста с автозавершением
+const TypewriterText: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
   const [stageIndex, setStageIndex] = useState(0);
@@ -30,28 +30,36 @@ const TypewriterText: React.FC<{ currentStage: number }> = ({ currentStage }) =>
       if (displayText.length < currentText.length) {
         timeoutId = setTimeout(() => {
           setDisplayText(currentText.slice(0, displayText.length + 1));
-        }, 70);
+        }, 60);
       } else {
-        // Напечатали полностью, пауза перед стиранием
-        timeoutId = setTimeout(() => {
-          setIsTyping(false);
-        }, 1200);
+        // Напечатали полностью
+        if (stageIndex === LOADING_STAGES.length - 1) {
+          // Последняя строка "Система готова к работе" - ждём 2 секунды и завершаем
+          timeoutId = setTimeout(() => {
+            onComplete();
+          }, 2000);
+        } else {
+          // Обычная строка - пауза перед стиранием
+          timeoutId = setTimeout(() => {
+            setIsTyping(false);
+          }, 1000);
+        }
       }
     } else {
       // Стираем символ за символом
       if (displayText.length > 0) {
         timeoutId = setTimeout(() => {
           setDisplayText(prev => prev.slice(0, -1));
-        }, 40);
+        }, 30);
       } else {
         // Стерли полностью, переходим к следующей стадии
-        setStageIndex(prev => (prev + 1) % LOADING_STAGES.length);
+        setStageIndex(prev => prev + 1);
         setIsTyping(true);
       }
     }
 
     return () => clearTimeout(timeoutId);
-  }, [displayText, isTyping, stageIndex]);
+  }, [displayText, isTyping, stageIndex, onComplete]);
 
   return (
     <span className="font-mono text-cyan-300 tracking-wide">
@@ -63,8 +71,6 @@ const TypewriterText: React.FC<{ currentStage: number }> = ({ currentStage }) =>
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = false }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [currentStage, setCurrentStage] = useState(0);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const shouldShow = forceShow || modelCacheManager.shouldShowWelcomeScreen();
@@ -77,40 +83,15 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     }
 
     setIsVisible(true);
-    console.log('✅ WelcomeScreen: Показываем на 13 секунд');
-
-    // Прогресс анимация
-    const startTime = Date.now();
-    const duration = 13000;
-    
-    const updateProgress = () => {
-      const elapsed = Date.now() - startTime;
-      const newProgress = Math.min(elapsed / duration, 1);
-      setProgress(newProgress);
-      
-      if (newProgress < 1) {
-        requestAnimationFrame(updateProgress);
-      }
-    };
-    updateProgress();
-
-    // Смена стадий каждые 3.25 секунды (13 секунд / 4 стадии)
-    const stageInterval = setInterval(() => {
-      setCurrentStage(prev => (prev + 1) % LOADING_STAGES.length);
-    }, 3250);
-
-    const timer = setTimeout(() => {
-      console.log('⏰ WelcomeScreen: Скрываем');
-      setIsVisible(false);
-      modelCacheManager.markWelcomeScreenComplete();
-      onComplete?.();
-    }, duration);
-
-    return () => {
-      clearTimeout(timer);
-      clearInterval(stageInterval);
-    };
+    console.log('✅ WelcomeScreen: Показываем автоматически');
   }, [forceShow, onComplete]);
+
+  const handleComplete = () => {
+    console.log('⏰ WelcomeScreen: Автозавершение');
+    setIsVisible(false);
+    modelCacheManager.markWelcomeScreenComplete();
+    onComplete?.();
+  };
 
   if (!isVisible) {
     return null;
@@ -198,21 +179,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         </div>
 
         {/* Печатающийся текст загрузки */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div className="text-xl text-cyan-300 tracking-wide min-h-[60px] flex items-center justify-center">
-            <TypewriterText currentStage={currentStage} />
-          </div>
-          
-          {/* Прогресс бар */}
-          <div className="w-80 h-3 mx-auto bg-gray-800 border border-cyan-400/50 rounded overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-cyan-400 to-blue-400 rounded" 
-              style={{ 
-                width: `${progress * 100}%`,
-                boxShadow: '0 0 15px rgba(34, 211, 238, 0.6)',
-                transition: 'width 0.1s linear'
-              }}
-            ></div>
+            <TypewriterText onComplete={handleComplete} />
           </div>
           
           <p className="text-lg text-gray-300 italic opacity-80">
