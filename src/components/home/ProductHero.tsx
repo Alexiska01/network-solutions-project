@@ -44,9 +44,9 @@ const heroData = [
       "Поддержка РоЕ/РоЕ+",
       "Статическая и динамическая маршрутизация",
     ],
-    gradient: "from-[#32398e] via-[#8338EC] to-[#B5179E]",
-    glowColor: "[#8338EC]",
-    accentColor: "#FF6B35",
+    gradient: "from-[#32398e] via-[#7C3AED] to-[#A855F7]",
+    glowColor: "[#7C3AED]",
+    accentColor: "#F59E0B",
   },
   {
     id: "IDS4530",
@@ -409,6 +409,7 @@ const ProductHero = memo(() => {
                       src={currentData.modelUrl}
                       alt={currentData.title}
                       isMobile={isMobile}
+                      series={currentData.series}
                       onLoad={() => {
                         setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
                         if (!modelPreloader.isLoaded(currentData.modelUrl)) {
