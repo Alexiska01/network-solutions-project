@@ -39,25 +39,21 @@ const Index = () => {
   console.log('🎬 Index: Рендер компонента, showMainContent =', showMainContent);
 
   return (
-    <>
-      <WelcomeScreen onComplete={handleWelcomeComplete} />
-      {showMainContent ? (
-        <div className="min-h-screen bg-white">
-          <div className="p-4 bg-green-100 text-green-800">
-            ✅ ГЛАВНАЯ СТРАНИЦА ЗАГРУЖЕНА - showMainContent = {String(showMainContent)}
-          </div>
-          <Header />
-          <div className="p-8 text-center">
-            <h1 className="text-4xl font-bold">🚀 Главная страница IDATA</h1>
-            <p className="text-lg mt-4">Корпоративная сеть нового поколения</p>
-          </div>
+    <div className="min-h-screen bg-white">
+      <div className="p-4 bg-blue-100 text-blue-800">
+        🧪 ТЕСТ БЕЗ WELCOMESCREEN - showMainContent = {String(showMainContent)}
+      </div>
+      <Header />
+      <div className="p-8 text-center">
+        <h1 className="text-4xl font-bold">🚀 Главная страница IDATA</h1>
+        <p className="text-lg mt-4">Корпоративная сеть нового поколения</p>
+        <div className="mt-8 p-4 bg-gray-100 rounded">
+          <p>✅ Index.tsx рендерится корректно</p>
+          <p>✅ Header загружается</p>
+          <p>✅ Основной контент отображается</p>
         </div>
-      ) : (
-        <div className="fixed inset-0 bg-red-100 text-red-800 p-4 z-[999]">
-          ❌ КОНТЕНТ НЕ ПОКАЗАН - showMainContent = {String(showMainContent)}
-        </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 };
 
