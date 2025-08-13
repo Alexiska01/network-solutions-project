@@ -16,18 +16,14 @@ const OptimizedModelViewer = memo<OptimizedModelViewerProps>(({
   onError 
 }) => {
   const [hasError, setHasError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   const handleLoad = () => {
-    setIsLoading(false);
     setHasError(false);
     onLoad();
   };
 
   const handleError = () => {
     setHasError(true);
-    setIsLoading(false);
-    console.warn(`Failed to load model: ${src}`);
     onError();
   };
   // Общие свойства для всех устройств (одинаковые для всех серий)
@@ -109,25 +105,6 @@ const OptimizedModelViewer = memo<OptimizedModelViewerProps>(({
           <div>Модель недоступна</div>
         </div>
       </div>
-    );
-  }
-
-  // Показываем loading state
-  if (isLoading) {
-    return (
-      <>
-        <model-viewer {...props} />
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          color: 'rgba(255, 255, 255, 0.7)',
-          fontSize: '0.875rem',
-        }}>
-          Загрузка...
-        </div>
-      </>
     );
   }
 

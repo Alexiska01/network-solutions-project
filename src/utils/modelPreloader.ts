@@ -9,10 +9,41 @@ export class ModelPreloader {
   private maxConcurrentLoads = 2;
 
   private constructor() {
+    // Очищаем любые существующие preload ссылки для избежания конфликтов
+    this.removeExistingPreloadLinks();
     // Настраиваем приоритеты для моделей коммутаторов
     this.setupPriorityQueue();
     // Добавляем интеллектуальное кэширование
     this.setupIntelligentCache();
+  }
+  
+  private removeExistingPreloadLinks() {
+    // АГРЕССИВНАЯ очистка всех preload/prefetch ссылок для .glb файлов
+    const selectors = [
+      'link[rel="preload"][href*=".glb"]',
+      'link[rel="prefetch"][href*=".glb"]',
+      'link[rel="modulepreload"][href*=".glb"]',
+      'link[href*="3730all.glb"]',
+      'link[href*="3530all.glb"]',
+      'link[href*="4530all.glb"]',
+      'link[href*="6010all.glb"]'
+    ];
+    
+    selectors.forEach(selector => {
+      const links = document.querySelectorAll(selector);
+      links.forEach(link => {
+        link.remove();
+      });
+    });
+    
+    // Дополнительно очищаем из head все ссылки на модели
+    const allLinks = document.head.querySelectorAll('link');
+    allLinks.forEach(link => {
+      const href = link.getAttribute('href') || '';
+      if (href.includes('.glb')) {
+        link.remove();
+      }
+    });
   }
   
   private setupPriorityQueue() {
@@ -146,15 +177,18 @@ export class ModelPreloader {
       modelViewer.addEventListener('load', loadHandler, { once: true });
       modelViewer.addEventListener('error', errorHandler, { once: true });
       
-      container.appendChild(modelViewer);
-      document.body.appendChild(container);
-      
-      // Устанавливаем таймаут
-      timeoutId = setTimeout(() => {
-        if (!this.loadedModels.has(url)) {
-          errorHandler();
-        }
-      }, 20000); // 20 сек для всех моделей
+      // Добавляем небольшую задержку для избежания preload warnings
+      setTimeout(() => {
+        container.appendChild(modelViewer);
+        document.body.appendChild(container);
+        
+        // Устанавливаем таймаут
+        timeoutId = setTimeout(() => {
+          if (!this.loadedModels.has(url)) {
+            errorHandler();
+          }
+        }, 20000); // 20 сек для всех моделей
+      }, 200); // 200мс задержка для избежания конфликта с preload
     });
 
     this.loadingModels.set(url, loadPromise);
