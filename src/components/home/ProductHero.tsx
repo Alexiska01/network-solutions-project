@@ -123,7 +123,7 @@ function throttle<T extends (...args: any[]) => void>(func: T, wait: number): T 
 const ProductHero = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(0);
-  // Морфинг убран - остается только обычная смена контента
+  const [isMorphing, setIsMorphing] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -299,8 +299,25 @@ const ProductHero = memo(() => {
         modelPreloader.preloadModel(next2Model.modelUrl, "low").catch(() => void 0);
       }
       
-      // Просто меняем индекс без анимаций
-      setCurrentIndex(nextIdx);
+      // 🚀 WORLD-CLASS ЕДИНАЯ МОРФИНГ АНИМАЦИЯ
+      setIsMorphing(true);
+      
+      // Адаптивная длительность под устройство/refresh
+      const morphDuration = isMobile ? 800 : 
+        refreshRate === '240hz' ? 700 :
+        refreshRate === '144hz' ? 800 :
+        refreshRate === '120hz' ? 900 :
+        refreshRate === '90hz' ? 1000 : 1200;
+      
+      // Смена контента на 35% анимации (невидимая фаза)
+      setTimeout(() => {
+        setCurrentIndex(nextIdx);
+      }, morphDuration * 0.35);
+      
+      // Окончание морфинга
+      setTimeout(() => {
+        setIsMorphing(false);
+      }, morphDuration);
     };
     
     const interval = setInterval(autoSlide, 11000);
@@ -323,13 +340,14 @@ const ProductHero = memo(() => {
     ["--grad-3" as any]: gradientStops[2],
     ["--mouse-x" as any]: mousePosition.x.toString(),
     ["--mouse-y" as any]: mousePosition.y.toString(),
-    // Morphing переменная убрана
-  }), [glowColor, currentData.accentColor, gradientStops, mousePosition]);
+    ["--morphing" as any]: isMorphing ? '1' : '0',
+  }), [glowColor, currentData.accentColor, gradientStops, mousePosition, isMorphing]);
 
   return (
     <div
-      className={`ph-container refresh-${refreshRate}`}
+      className={`ph-container refresh-${refreshRate} ${isMorphing ? 'ph-morphing' : ''}`}
       data-loaded={isInitialized}
+      data-morphing={isMorphing}
       style={cssVars}
     >
       {/* Фоновые слои */}
@@ -436,7 +454,8 @@ const ProductHero = memo(() => {
         </div>
       </div>
 
-      {/* Морфинг убран */}
+      {/* Morphing индикатор (опционально) */}
+      {isMorphing && !isMobile && <div className="ph-morph-indicator" />}
     </div>
   );
 });
