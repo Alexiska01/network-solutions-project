@@ -1,7 +1,8 @@
 // src/components/product/ProductHero.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback, memo } from "react";
 import Icon from "@/components/ui/icon";
+import OptimizedModelViewer from "@/components/OptimizedModelViewer";
 import { modelPreloader } from "@/utils/modelPreloader";
 import { modelCacheManager } from "@/utils/modelCacheManager";
 import "./ProductHero.css";
@@ -86,42 +87,70 @@ type Refresh =
   | "144hz"
   | "240hz";
 
-const parseGradientStops = (twLike: string) => {
-  // ожидает строку формата 'from-[#xxxxxx] via-[#xxxxxx] to-[#xxxxxx]'
-  const m = [...twLike.matchAll(/#([0-9a-fA-F]{3,8})/g)].map((x) => `#${x[1]}`);
-  // гарантируем 3 стопа
-  return [m[0] ?? "#0B3C49", m[1] ?? "#1A237E", m[2] ?? "#2E2E2E"];
-};
+// Предвычисляем градиенты один раз для максимальной производительности
+const PRECOMPUTED_GRADIENTS = heroData.map(item => {
+  const matches = [...item.gradient.matchAll(/#([0-9a-fA-F]{3,8})/g)].map((x) => `#${x[1]}`);
+  return [matches[0] ?? "#0B3C49", matches[1] ?? "#1A237E", matches[2] ?? "#2E2E2E"];
+});
 
-const stripBrackets = (s: string) => s.replace("[", "").replace("]", "");
+const PRECOMPUTED_GLOW_COLORS = heroData.map(item => 
+  item.glowColor.replace("[", "").replace("]", "")
+);
 
-const ProductHero = () => {
+// Throttle функция для оптимизации mouse events
+function throttle<T extends (...args: any[]) => void>(func: T, wait: number): T {
+  let timeout: NodeJS.Timeout | null = null;
+  let previous = 0;
+  return ((...args: any[]) => {
+    const now = Date.now();
+    if (now - previous > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      func(...args);
+    } else if (!timeout) {
+      timeout = setTimeout(() => {
+        previous = Date.now();
+        func(...args);
+        timeout = null;
+      }, wait - (now - previous));
+    }
+  }) as T;
+}
+
+const ProductHero = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isMobile, setIsMobile] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [refreshRate, setRefreshRate] = useState<Refresh>("60hz");
-  const intervalRef = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
 
   const currentData = heroData[currentIndex];
+  
+  // Мемоизированные вычисления для максимальной производительности
+  const gradientStops = useMemo(() => PRECOMPUTED_GRADIENTS[currentIndex], [currentIndex]);
+  const glowColor = useMemo(() => PRECOMPUTED_GLOW_COLORS[currentIndex], [currentIndex]);
 
-  const gradientStops = useMemo(
-    () => parseGradientStops(currentData.gradient),
-    [currentData.gradient]
-  );
-
-  // mobile breakpoint
+  // Оптимизированная проверка mobile с debounce
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
+    const checkMobile = throttle(() => {
+      const newIsMobile = window.innerWidth < 768;
+      if (newIsMobile !== isMobile) {
+        setIsMobile(newIsMobile);
+      }
+    }, 100);
+    
     window.addEventListener("resize", checkMobile, { passive: true });
     return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  }, [isMobile]);
 
-  // refresh-rate detection (RAF, без странных matchMedia)
+  // Оптимизированное определение refresh rate (меньше кадров)
   useEffect(() => {
     let id = 0;
     let frames = 0;
@@ -130,20 +159,19 @@ const ProductHero = () => {
     const tick = (t: number) => {
       if (!t0) t0 = t;
       frames++;
-      if (frames >= 120) {
+      if (frames >= 60) { // Уменьшили с 120 до 60 кадров
         const fps = Math.round((frames * 1000) / (t - t0));
         let rate: Refresh = "60hz";
         if (fps >= 230) rate = "240hz";
         else if (fps >= 140) rate = "144hz";
         else if (fps >= 115) rate = "120hz";
         else if (fps >= 85) rate = "90hz";
-        setRefreshRate(rate);
-
-        // поддерживаем класс на <body>
-        document.body.classList.forEach((c) => {
-          if (/^refresh-\d+hz$/.test(c)) document.body.classList.remove(c);
-        });
-        document.body.classList.add(`refresh-${rate}`);
+        
+        if (rate !== refreshRate) {
+          setRefreshRate(rate);
+          // Оптимизируем работу с classList
+          document.body.className = document.body.className.replace(/refresh-\d+hz/g, '') + ` refresh-${rate}`;
+        }
         return;
       }
       id = requestAnimationFrame(tick);
@@ -151,56 +179,66 @@ const ProductHero = () => {
 
     id = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(id);
-  }, []);
+  }, [refreshRate]);
 
-  // init + кэш/предзагрузка
+  // ОПТИМИЗИРОВАННАЯ инициализация (только при монтировании)
   useEffect(() => {
     let cancelled = false;
-
-    const run = async () => {
-      // Синхронизируем состояние из preloader/cache
-      const status: Record<string, boolean> = {};
-      for (const m of heroData) {
-        const pre = modelPreloader.isLoaded(m.modelUrl);
-        const cache = (await modelCacheManager.hasModel?.(m.modelUrl)) || false;
-        if (pre || cache) status[m.modelUrl] = true;
+    
+    const initializeApp = async () => {
+      try {
+        // Проверяем статус всех моделей одним батчем
+        const statusPromises = heroData.map(async (item) => {
+          const isPreloaded = modelPreloader.isLoaded(item.modelUrl);
+          const isCached = await modelCacheManager.hasModel?.(item.modelUrl) || false;
+          return { url: item.modelUrl, loaded: isPreloaded || isCached };
+        });
+        
+        const results = await Promise.all(statusPromises);
+        const status = results.reduce((acc, result) => {
+          if (result.loaded) acc[result.url] = true;
+          return acc;
+        }, {} as Record<string, boolean>);
+        
+        if (!cancelled) {
+          setModelLoadStatus(status);
+          setIsInitialized(true);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setIsInitialized(true);
+        }
       }
-      if (!cancelled) {
-        if (Object.keys(status).length) setModelLoadStatus((p) => ({ ...p, ...status }));
-        setIsInitialized(true);
-      }
-
-      // активная предзагрузка текущей и следующей
-      const cur = heroData[currentIndex];
-      if (!modelPreloader.isLoaded(cur.modelUrl)) {
-        modelPreloader
-          .preloadModel(cur.modelUrl, "high")
-          .then(() => {
-            if (!cancelled) {
-              setModelLoadStatus((p) => ({ ...p, [cur.modelUrl]: true }));
-            }
-          })
-          .catch(() => {
-            if (!cancelled) {
-              setModelLoadStatus((p) => ({ ...p, [cur.modelUrl]: false }));
-            }
-          });
-      } else {
-        setModelLoadStatus((p) => ({ ...p, [cur.modelUrl]: true }));
-      }
-
+    };
+    
+    initializeApp();
+    return () => { cancelled = true; };
+  }, []); // Только при монтировании!
+  
+  // ОТДЕЛЬНАЯ предзагрузка при смене индекса
+  useEffect(() => {
+    if (!isInitialized) return;
+    
+    const preloadCurrentAndNext = () => {
+      const current = heroData[currentIndex];
       const nextIndex = (currentIndex + 1) % heroData.length;
       const next = heroData[nextIndex];
+      
+      // Предзагружаем текущую модель с высоким приоритетом
+      if (!modelPreloader.isLoaded(current.modelUrl)) {
+        modelPreloader.preloadModel(current.modelUrl, "high")
+          .then(() => setModelLoadStatus(prev => ({ ...prev, [current.modelUrl]: true })))
+          .catch(() => setModelLoadStatus(prev => ({ ...prev, [current.modelUrl]: false })));
+      }
+      
+      // Предзагружаем следующую модель в фоне
       if (!modelPreloader.isLoaded(next.modelUrl)) {
-        modelPreloader.preloadModel(next.modelUrl, "high").catch(() => void 0);
+        modelPreloader.preloadModel(next.modelUrl, "low").catch(() => void 0);
       }
     };
-
-    run();
-    return () => {
-      cancelled = true;
-    };
-  }, [currentIndex]);
+    
+    preloadCurrentAndNext();
+  }, [currentIndex, isInitialized]);
 
   // mobile init для <model-viewer>
   useEffect(() => {
@@ -218,65 +256,71 @@ const ProductHero = () => {
     return () => window.clearTimeout(t);
   }, [isMobile, currentIndex]);
 
-  // mouse parallax (desktop)
+  // ОПТИМИЗИРОВАННЫЙ mouse parallax с throttling
+  const throttledMouseMove = useCallback(
+    throttle((x: number, y: number) => {
+      setMousePosition({ x, y });
+    }, 16), // ~60fps
+    []
+  );
+  
   useEffect(() => {
     if (isMobile) return;
+    
     const onMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      });
+      throttledMouseMove(
+        e.clientX / window.innerWidth,
+        e.clientY / window.innerHeight
+      );
     };
+    
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
-  }, [isMobile]);
+  }, [isMobile, throttledMouseMove]);
 
-  // автосмена слайда
+  // ОПТИМИЗИРОВАННАЯ автосмена серий (сохранена функциональность!)
   useEffect(() => {
     if (!isInitialized) return;
-    const id = window.setInterval(() => {
+    
+    const autoSlide = () => {
       setIsTransitioning(true);
-
-      // подгружаем модель на 2 шага вперёд "втихую"
-      const next2 = heroData[(currentIndex + 2) % heroData.length];
-      if (!modelPreloader.isLoaded(next2.modelUrl)) {
-        modelPreloader.preloadModel(next2.modelUrl, "low").catch(() => void 0);
+      
+      // Предзагружаем модель на 2 шага вперёд в фоне
+      const next2Index = (currentIndex + 2) % heroData.length;
+      const next2Model = heroData[next2Index];
+      if (!modelPreloader.isLoaded(next2Model.modelUrl)) {
+        modelPreloader.preloadModel(next2Model.modelUrl, "low").catch(() => void 0);
       }
-
-      window.setTimeout(async () => {
-        const next = (currentIndex + 1) % heroData.length;
-        const nextModel = heroData[next];
-
-        try {
-          const hasCache = (await modelCacheManager.hasModel?.(nextModel.modelUrl)) || false;
-          const hasPre = modelPreloader.isLoaded(nextModel.modelUrl);
-          if (hasCache || hasPre) {
-            setModelLoadStatus((p) => ({ ...p, [nextModel.modelUrl]: true }));
-          }
-        } catch {
-          /* noop */
-        }
-
-        setCurrentIndex(next);
+      
+      // Переход к следующей серии
+      setTimeout(() => {
+        const nextIndex = (currentIndex + 1) % heroData.length;
+        setCurrentIndex(nextIndex);
         setIsTransitioning(false);
       }, isMobile ? 100 : 300);
-    }, 11000);
-    intervalRef.current = id;
-    return () => window.clearInterval(id);
-  }, [isInitialized, isMobile, currentIndex]);
+    };
+    
+    const interval = setInterval(autoSlide, 11000); // Интервал сохранён
+    intervalRef.current = interval;
+    
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isInitialized, currentIndex, isMobile]);
 
-  // CSS custom props для динамики
-  const cssVars: React.CSSProperties = {
-    // цвета
-    ["--current-glow-color" as any]: stripBrackets(currentData.glowColor),
+  // МЕМОИЗИРОВАННЫЕ CSS переменные для оптимальной производительности
+  const cssVars: React.CSSProperties = useMemo(() => ({
+    ["--current-glow-color" as any]: glowColor,
     ["--current-accent-color" as any]: currentData.accentColor,
     ["--grad-1" as any]: gradientStops[0],
     ["--grad-2" as any]: gradientStops[1],
     ["--grad-3" as any]: gradientStops[2],
-    // параллакс
-    ["--mouse-x" as any]: String(mousePosition.x),
-    ["--mouse-y" as any]: String(mousePosition.y),
-  };
+    ["--mouse-x" as any]: mousePosition.x.toString(),
+    ["--mouse-y" as any]: mousePosition.y.toString(),
+  }), [glowColor, currentData.accentColor, gradientStops, mousePosition]);
 
   return (
     <div
@@ -302,19 +346,19 @@ const ProductHero = () => {
               <div className="ph-header">
                 <div className="ph-badge">ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ</div>
 
-                <h1 key={currentData.id} className="ph-title">
+                <h1 className="ph-title">
                   {currentData.title}
                 </h1>
 
-                <p key={`${currentData.id}-desc`} className="ph-desc">
+                <p className="ph-desc">
                   {currentData.description}
                 </p>
               </div>
 
-              <div key={`${currentData.id}-features`} className="ph-features">
+              <div className="ph-features">
                 {currentData.features.map((feature, index) => (
                   <div
-                    key={`${currentData.id}-feature-${index}`}
+                    key={index}
                     className="ph-feature"
                     style={{ ["--feature-index" as any]: index }}
                   >
@@ -348,7 +392,7 @@ const ProductHero = () => {
               </div>
 
               <div className="ph-model-wrapper">
-                <div key={currentData.id} className="ph-model">
+                <div className="ph-model">
                   <div className="ph-model-inner">
                     {/* Лоадер (если нет в кэше/предзагрузчике) */}
                     {!modelLoadStatus[currentData.modelUrl] &&
@@ -361,82 +405,20 @@ const ProductHero = () => {
                         </div>
                       )}
 
-                    {isMobile ? (
-                      <model-viewer
-                        ref={modelRef}
-                        src={currentData.modelUrl}
-                        alt={currentData.title}
-                        auto-rotate
-                        auto-rotate-delay="0"
-                        rotation-per-second="32deg"
-                        camera-orbit="0deg 80deg 1.1m"
-                        min-camera-orbit="auto auto 1.1m"
-                        max-camera-orbit="auto auto 1.1m"
-                        field-of-view="40deg"
-                        exposure="1.2"
-                        shadow-intensity="0.3"
-                        environment-image="neutral"
-                        interaction-prompt="none"
-                        loading="eager"
-                        reveal="auto"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          background: "transparent",
-                          borderRadius: "1rem",
-                          ["--progress-bar-color" as any]: "transparent",
-                          ["--progress-mask" as any]: "transparent",
-                          pointerEvents: "none",
-                        }}
-                        onLoad={() => {
-                          setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
-                          if (!modelPreloader.isLoaded(currentData.modelUrl)) {
-                            modelPreloader.markAsLoaded?.(currentData.modelUrl);
-                          }
-                        }}
-                        onError={() =>
-                          setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }))
+                    <OptimizedModelViewer
+                      src={currentData.modelUrl}
+                      alt={currentData.title}
+                      isMobile={isMobile}
+                      onLoad={() => {
+                        setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
+                        if (!modelPreloader.isLoaded(currentData.modelUrl)) {
+                          modelPreloader.markAsLoaded?.(currentData.modelUrl);
                         }
-                      />
-                    ) : (
-                      <model-viewer
-                        ref={modelRef}
-                        src={currentData.modelUrl}
-                        alt={currentData.title}
-                        auto-rotate
-                        auto-rotate-delay="0"
-                        rotation-per-second="35deg"
-                        camera-controls
-                        camera-orbit="0deg 80deg 1.02m"
-                        min-camera-orbit="auto auto 0.4m"
-                        max-camera-orbit="auto auto 2.5m"
-                        field-of-view="35deg"
-                        exposure="1.1"
-                        shadow-intensity="0.3"
-                        environment-image="neutral"
-                        interaction-prompt="none"
-                        loading="eager"
-                        reveal="auto"
-                        style={{
-                          width: "90%",
-                          height: "90%",
-                          background: "transparent",
-                          borderRadius: "0rem",
-                          ["--progress-bar-color" as any]: "transparent",
-                          ["--progress-mask" as any]: "transparent",
-                          pointerEvents: "none",
-                        }}
-                        onLoad={() => {
-                          setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
-                          if (!modelPreloader.isLoaded(currentData.modelUrl)) {
-                            modelPreloader.markAsLoaded?.(currentData.modelUrl);
-                          }
-                        }}
-                        onError={() =>
-                          setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }))
-                        }
-                      />
-                    )}
+                      }}
+                      onError={() =>
+                        setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }))
+                      }
+                    />
 
                     {modelLoadStatus[currentData.modelUrl] === false && (
                       <div className="ph-model-error">
@@ -462,6 +444,6 @@ const ProductHero = () => {
       {isTransitioning && !isMobile && <div className="ph-transition" />}
     </div>
   );
-};
+});
 
 export default ProductHero;
