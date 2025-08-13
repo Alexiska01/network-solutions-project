@@ -40,16 +40,25 @@ const Index = () => {
     setShowMainContent(true);
   };
 
+  console.log('🎬 Index: Рендер компонента, showMainContent =', showMainContent);
+
   return (
     <>
       <WelcomeScreen onComplete={handleWelcomeComplete} />
-      {showMainContent && (
-        <div className="min-h-screen">
+      {showMainContent ? (
+        <div className="min-h-screen bg-white">
+          <div className="p-4 bg-green-100 text-green-800">
+            ✅ ГЛАВНАЯ СТРАНИЦА ЗАГРУЖЕНА - showMainContent = {String(showMainContent)}
+          </div>
           <Header />
           <ProductHero />
           <ProductsSection />
           <FeaturesSection />
           <Footer />
+        </div>
+      ) : (
+        <div className="fixed inset-0 bg-red-100 text-red-800 p-4 z-[999]">
+          ❌ КОНТЕНТ НЕ ПОКАЗАН - showMainContent = {String(showMainContent)}
         </div>
       )}
     </>
