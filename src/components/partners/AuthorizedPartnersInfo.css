@@ -1,0 +1,108 @@
+/* entry-анимация: плавный подъём + снятие blur; уважаем reduce-motion */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(12px) scale(.995); filter: blur(8px); }
+  to   { opacity: 1; transform: none;                     filter: blur(0); }
+}
+
+.card.reveal-hidden {
+  opacity: 0;
+  transform: translateY(12px) scale(.995);
+  filter: blur(8px);
+  will-change: transform, opacity, filter;
+}
+
+.card.reveal-in {
+  animation: reveal-up 620ms cubic-bezier(.16,1,.3,1) both;
+}
+
+/* мягкий hover без убийства FPS */
+.group:hover .lift-icon { transform: translateY(-1px) scale(1.06); transition: transform 320ms cubic-bezier(.16,1,.3,1); }
+.lift-icon { transition: transform 280ms cubic-bezier(.16,1,.3,1); }
+
+/* mobile grid fine-tune: две колонки и растяжка последней */
+@media (max-width: 767px) {
+  ul[role="list"] { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  ul[role="list"] > li:last-child { grid-column: 1 / -1; }
+}
+
+/* reduce-motion: только статично */
+@media (prefers-reduced-motion: reduce) {
+  .card.reveal-in { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+}
+
+/* ===== Premium hover штрихи ===== */
+
+/* Shine анимация по иконке */
+@keyframes icon-shine {
+  0%   { background-position: -40px 0; }
+  100% { background-position: 40px 0; }
+}
+
+.group:hover .lift-icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.group:hover .lift-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.4) 50%,
+    transparent 100%
+  );
+  background-size: 80px 100%;
+  animation: icon-shine 0.8s ease-out forwards;
+}
+
+/* Цветной border-accent сверху */
+.card {
+  border-top: 3px solid transparent;
+  transition: border-color 320ms cubic-bezier(.16,1,.3,1);
+}
+.group:hover.card {
+  border-top-color: #00BEAD; /* твой фирменный акцент */
+}
+
+/* Одноразовый премиальный entry + стаггер через inline delay */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(12px) scale(.995); filter: blur(8px); }
+  to   { opacity: 1; transform: none;                     filter: blur(0); }
+}
+
+/* базовое состояние карточки (видима по умолчанию),
+   анимация применится только если есть класс reveal-once */
+.partner-card { opacity: 1; transform: none; filter: none; }
+
+.reveal-once {
+  opacity: 0;
+  transform: translateY(12px) scale(.995);
+  filter: blur(8px);
+  animation: reveal-up 620ms cubic-bezier(.16,1,.3,1) both;
+}
+
+/* hover-штрихи, как было */
+.group:hover .lift-icon { transform: translateY(-1px) scale(1.06); transition: transform 320ms cubic-bezier(.16,1,.3,1); }
+.lift-icon { transition: transform 280ms cubic-bezier(.16,1,.3,1); }
+
+/* shine по иконке + border-accent */
+@keyframes icon-shine { 0%{background-position:-40px 0;} 100%{background-position:40px 0;} }
+.group:hover .lift-icon { position: relative; overflow: hidden; }
+.group:hover .lift-icon::after {
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.4) 50%, transparent 100%);
+  background-size:80px 100%; animation: icon-shine .8s ease-out forwards;
+}
+.partner-card { border-top:3px solid transparent; transition:border-color 320ms cubic-bezier(.16,1,.3,1); }
+.group:hover.partner-card { border-top-color:#00BEAD; }
+
+/* мобильная сетка и reduce-motion — без изменений */
+@media (max-width: 767px) {
+  ul[role="list"] { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  ul[role="list"] > li:last-child { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-once { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+}

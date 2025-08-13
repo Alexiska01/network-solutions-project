@@ -1,126 +1,104 @@
-
+// AuthorizedPartnersInfo.tsx
 import { useRef, useEffect } from "react";
 import Icon from "@/components/ui/icon";
-import * as LucideIcons from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import "./AuthorizedPartnersInfo.css";
 
+const ICONS = ["Shield", "Truck", "CheckCircle", "Award", "Settings"] as const;
+type IconName = typeof ICONS[number];
 
-type IconName = keyof typeof LucideIcons;
 type Benefit = {
   icon: IconName;
   title: string;
   description: string;
 };
 
+type ObserveFn = (el: Element | null, i?: number) => void;
+
 const benefits: Benefit[] = [
-  {
-    icon: "Shield",
-    title: "Экспертная поддержка",
-    description: "Поддержка от специалистов, обученных нашим технологиям",
-  },
-  {
-    icon: "Truck",
-    title: "Логистическая эффективность",
-    description: "Оперативные поставки и логистическая прозрачность",
-  },
-  {
-    icon: "CheckCircle",
-    title: "Корпоративные стандарты",
-    description:
-      "Соответствие корпоративным стандартам и требованиям безопасности",
-  },
-  {
-    icon: "Award",
-    title: "Техническая поддержка",
-    description:
-      "Гарантийное и постгарантийное обслуживание, сервисный центр",
-  },
-  {
-    icon: "Settings",
-    title: "Полный цикл решений",
-    description:
-      "Комплексный подход - от технического проектирования до внедрения и запуска решений",
-  },
+  { icon: "Shield", title: "Экспертная поддержка", description: "Поддержка от специалистов, обученных нашим технологиям" },
+  { icon: "Truck", title: "Логистическая эффективность", description: "Оперативные поставки и логистическая прозрачность" },
+  { icon: "CheckCircle", title: "Корпоративные стандарты", description: "Соответствие корпоративным стандартам и требованиям безопасности" },
+  { icon: "Award", title: "Техническая поддержка", description: "Гарантийное и постгарантийное обслуживание, сервисный центр" },
+  { icon: "Settings", title: "Полный цикл решений", description: "Комплексный подход — от техпроекта до внедрения и запуска решений" },
 ];
 
-const AuthorizedPartnersInfo = () => {
+function BenefitCard({
+  benefit,
+  index,
+  observe,
+}: {
+  benefit: Benefit;
+  index: number;
+  observe?: ObserveFn;   // <-- опциональный, но уже не обязателен
+}) {
+  const ref = useRef<HTMLLIElement | null>(null);
+
+  useEffect(() => {
+    observe?.(ref.current, index);
+  }, [observe, index]);
 
   return (
-    <>
-      <style>{`
-        @keyframes bounce {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-6px);
-          }
-        }
-        
-        @media (max-width: 767px) {
-          .mobile-grid {
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 1rem;
-          }
-          .mobile-grid .card:last-child {
-            grid-column: 1 / -1;
-          }
-        }
-      `}</style>
-      <section className="py-12 md:py-20 bg-gradient-to-r from-blue-900/10 via-blue-600/10 to-teal-500/10">
-        <div className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8">
-          <div className="text-center mb-8 md:mb-12">
-            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-              Станьте частью экосистемы iDATA и получите доступ к эксклюзивным возможностям
-            </p>
-          </div>
+    <li
+      ref={ref}
+      className={[
+        "partner-card group bg-white rounded-xl md:rounded-2xl p-4 md:p-6",
+        "shadow-sm border border-gray-100",
+        "transition duration-500 will-change-transform",
+        "hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]",
+        "reveal-once", // всегда анимируем на маунте
+      ].join(" ")}
+      style={{ animationDelay: `${index * 140}ms` }} // стаггер по индексу
+    >
+      <div className="lift-icon w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-105 transition-transform duration-300">
+        <Icon name={benefit.icon} className="text-white" size={18} />
+      </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-12 mobile-grid">
-            {benefits.map((benefit, index) => {
-              const cardRef = useRef<HTMLDivElement>(null);
-              const { observeElement, isVisible } = useScrollReveal({
-                staggerDelay: 150,
-              });
-
-              useEffect(() => {
-                observeElement(cardRef.current, index);
-              }, [observeElement, index]);
-
-              return (
-                <div
-                  key={index}
-                  ref={cardRef}
-                  className={`card group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-1 hover:scale-[1.02] border border-gray-100 hover:border-[#00BEAD]/20 ${
-                    isVisible(index)
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-5"
-                  }`}
-                >
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Icon
-                      name={benefit.icon}
-                      className="text-white group-hover:animate-[bounce_0.6s_ease]"
-                      size={18}
-                    />
-                  </div>
-
-                  <h3 className="font-montserrat font-semibold text-sm md:text-base text-[#0A1F44] mt-3 md:mt-4 mb-1 md:mb-2 group-hover:text-[#0A1F44] transition-colors">
-                    {benefit.title}
-                  </h3>
-
-                  <p className="font-montserrat font-normal text-xs md:text-sm text-[#333] mt-1 md:mt-2 leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    </>
+      <h3 className="font-montserrat font-semibold text-sm md:text-base text-[#0A1F44] mt-3 md:mt-4 mb-1 md:mb-2">
+        {benefit.title}
+      </h3>
+      <p className="font-montserrat font-normal text-xs md:text-sm text-[#333] mt-1 md:mt-2 leading-relaxed">
+        {benefit.description}
+      </p>
+    </li>
   );
-};
+}
 
-export default AuthorizedPartnersInfo;
+export default function AuthorizedPartnersInfo() {
+  const sr = useScrollReveal?.({ staggerDelay: 140 }) as
+    | { observeElement: ObserveFn }
+    | undefined;
+  const observeElement = sr?.observeElement;
+
+  return (
+    <section
+      aria-labelledby="partners-benefits-heading"
+      className="py-10 md:py-16 bg-gradient-to-r from-blue-900/10 via-blue-600/10 to-teal-500/10"
+    >
+      <div className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8">
+        <header className="text-center mb-8 md:mb-12">
+          <h2
+            id="partners-benefits-heading"
+            className="font-montserrat font-extrabold text-lg md:text-2xl text-[#0A1F44]"
+          >
+            Возможности партнёров iDATA
+          </h2>
+          <p className="mt-2 text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
+            Станьте частью экосистемы iDATA и получите доступ к эксклюзивным возможностям
+          </p>
+        </header>
+
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6" role="list">
+          {benefits.map((b, i) => (
+            <BenefitCard
+              key={b.title}
+              benefit={b}
+              index={i}
+              observe={observeElement}
+            />
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}

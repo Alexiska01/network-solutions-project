@@ -21,7 +21,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
       name: "Инфосэл",
       logo: "https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png",
       region: "Россия",
-      type: "Дистрибьютор",
+      type: "Интегратор",
       category: "Коммутаторы",
       phone: "+7 (495) 651-82-85",
       email: "info@infocellprint.ru",
@@ -32,7 +32,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
       name: "Инлайн ГРУП",
       logo: "https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png",
       region: "Россия",
-      type: "Реселлер",
+      type: "Интегратор",
       category: "Маршрутизаторы",
       phone: "+7 (495) 787-59-40",
       email: "info@inlinegroup.ru",
@@ -106,7 +106,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
         <div className="mb-4 md:mb-8">
           <h2 className="text-lg md:text-3xl font-bold text-gray-900 font-montserrat mb-2 md:mb-4">
             {filteredPartners.length > 0
-              ? `Найдено партнёров: ${filteredPartners.length}`
+              ? "Партнёрская сеть iDATA"
               : "Партнёры не найдены"}
           </h2>
         </div>
@@ -195,7 +195,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
 
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-gray-500 font-montserrat">
-                      {partner.category}
+                      Подробнее
                     </span>
                     <Icon
                       name="ArrowRight"
