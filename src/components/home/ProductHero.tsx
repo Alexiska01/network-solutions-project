@@ -123,8 +123,7 @@ function throttle<T extends (...args: any[]) => void>(func: T, wait: number): T 
 const ProductHero = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionPhase, setTransitionPhase] = useState<'idle' | 'fadeOut' | 'fadeIn'>('idle');
+  const [isMorphing, setIsMorphing] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -300,24 +299,25 @@ const ProductHero = memo(() => {
         modelPreloader.preloadModel(next2Model.modelUrl, "low").catch(() => void 0);
       }
       
-      // ПЛАВНЫЙ 3-фазный переход с оптимизацией под устройство
-      setTransitionPhase('fadeOut');
-      setIsTransitioning(true);
+      // 🚀 WORLD-CLASS ЕДИНАЯ МОРФИНГ АНИМАЦИЯ
+      setIsMorphing(true);
       
-      const fadeOutDuration = isMobile ? 300 : 400;
-      const totalDuration = isMobile ? 700 : 1000;
+      // Адаптивная длительность под устройство/refresh
+      const morphDuration = isMobile ? 800 : 
+        refreshRate === '240hz' ? 700 :
+        refreshRate === '144hz' ? 800 :
+        refreshRate === '120hz' ? 900 :
+        refreshRate === '90hz' ? 1000 : 1200;
       
-      // Фаза 1: Fade out
+      // Смена контента на 35% анимации (невидимая фаза)
       setTimeout(() => {
         setCurrentIndex(nextIdx);
-        setTransitionPhase('fadeIn');
-      }, fadeOutDuration);
+      }, morphDuration * 0.35);
       
-      // Фаза 2: Fade in  
+      // Окончание морфинга
       setTimeout(() => {
-        setTransitionPhase('idle');
-        setIsTransitioning(false);
-      }, totalDuration);
+        setIsMorphing(false);
+      }, morphDuration);
     };
     
     const interval = setInterval(autoSlide, 11000);
@@ -340,14 +340,14 @@ const ProductHero = memo(() => {
     ["--grad-3" as any]: gradientStops[2],
     ["--mouse-x" as any]: mousePosition.x.toString(),
     ["--mouse-y" as any]: mousePosition.y.toString(),
-    ["--transition-phase" as any]: transitionPhase,
+    ["--morphing" as any]: isMorphing ? '1' : '0',
   }), [glowColor, currentData.accentColor, gradientStops, mousePosition, transitionPhase]);
 
   return (
     <div
-      className={`ph-container refresh-${refreshRate} ${transitionPhase !== 'idle' ? `ph-transition-${transitionPhase}` : ''}`}
+      className={`ph-container refresh-${refreshRate} ${isMorphing ? 'ph-morphing' : ''}`}
       data-loaded={isInitialized}
-      data-transitioning={isTransitioning}
+      data-morphing={isMorphing}
       style={cssVars}
     >
       {/* Фоновые слои */}
@@ -454,8 +454,8 @@ const ProductHero = memo(() => {
         </div>
       </div>
 
-      {/* Переходная линия (desktop) */}
-      {isTransitioning && !isMobile && <div className="ph-transition" />}
+      {/* Morphing индикатор (опционально) */}
+      {isMorphing && !isMobile && <div className="ph-morph-indicator" />}
     </div>
   );
 });

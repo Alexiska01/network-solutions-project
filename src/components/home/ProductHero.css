@@ -65,81 +65,122 @@
   }
 } /* phones */
 
-/* Подстройка длительностей под high-refresh */
+/* 🔥 HIGH-REFRESH АДАПТАЦИЯ */
 .refresh-90hz .ph-container {
-  --ph-entry-duration: 800ms;
-  --ph-transition-duration: 700ms;
+  --ph-adaptive-duration: 1000ms;
+  --ph-morph-ease: cubic-bezier(0.25, 1, 0.5, 1);
 }
 .refresh-120hz .ph-container {
-  --ph-entry-duration: 700ms;
-  --ph-transition-duration: 600ms;
+  --ph-adaptive-duration: 900ms;
+  --ph-morph-ease: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .refresh-144hz .ph-container {
-  --ph-entry-duration: 650ms;
-  --ph-transition-duration: 550ms;
+  --ph-adaptive-duration: 800ms;
+  --ph-morph-ease: cubic-bezier(0.2, 1, 0.3, 1);
 }
 .refresh-240hz .ph-container {
-  --ph-entry-duration: 600ms;
-  --ph-transition-duration: 500ms;
+  --ph-adaptive-duration: 700ms;
+  --ph-morph-ease: cubic-bezier(0.18, 1, 0.28, 1);
 }
 
-/* Плавные переходы между сериями */
+/* 🚀 WORLD-CLASS ЕДИНАЯ АНИМАЦИЯ ПЕРЕХОДОВ */
 .ph-container {
-  --ph-transition-duration: 800ms;
-  --ph-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Профессиональные тайминги */
+  --ph-morph-duration: 1200ms;
+  --ph-morph-ease: cubic-bezier(
+    0.23,
+    1,
+    0.32,
+    1
+  ); /* easeOutQuart - Apple стиль */
+  --ph-morph-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* easeOutBack */
+
+  /* Адаптивные тайминги под refresh rate */
+  --ph-adaptive-duration: var(--ph-morph-duration);
 }
 
-/* Background transitions только в idle режиме */
-.ph-container:not(.ph-transition-fadeOut):not(.ph-transition-fadeIn) {
-  transition: background-color var(--ph-transition-duration)
-    var(--ph-transition-ease);
+/* ЕДИНАЯ МОРФИНГ АНИМАЦИЯ */
+.ph-morphing {
+  animation: ph-series-morph var(--ph-adaptive-duration) var(--ph-morph-ease)
+    forwards;
+
+  /* Блокируем все остальные анимации */
+  * {
+    transition: none !important;
+    animation-delay: 0 !important;
+  }
 }
 
-/* Фазы перехода */
-.ph-transition-fadeOut .ph-content,
-.ph-transition-fadeOut .ph-model {
-  opacity: 0.2;
-  transform: translateY(30px) scale(0.95);
-  filter: blur(6px);
-  transition: all calc(var(--ph-transition-duration) * 0.5)
-    var(--ph-transition-ease);
-  /* Принудительно переопределяем все остальные анимации */
-  animation: none !important;
-}
-
-.ph-transition-fadeIn .ph-content,
-.ph-transition-fadeIn .ph-model {
-  opacity: 0.8;
-  transform: translateY(-15px) scale(1.02);
-  animation: ph-fade-in calc(var(--ph-transition-duration) * 0.75)
-    var(--ph-transition-ease) forwards;
-  /* Отключаем conflicting transitions во время анимации */
-  transition: none !important;
-}
-
-/* Мобильная оптимизация - менее интенсивные эффекты */
+/* 📱 МОБИЛЬНАЯ ОПТИМИЗАЦИЯ */
 @media (max-width: 767px) {
-  .ph-transition-fadeOut .ph-content,
-  .ph-transition-fadeOut .ph-model {
-    opacity: 0.4;
-    transform: translateY(15px) scale(0.97);
-    filter: blur(2px);
-    transition: all 300ms var(--ph-transition-ease);
+  .ph-container {
+    --ph-adaptive-duration: 800ms; /* Быстрее на мобильных */
   }
 
-  .ph-transition-fadeIn .ph-content,
-  .ph-transition-fadeIn .ph-model {
-    opacity: 0.9;
-    transform: translateY(-8px) scale(1.01);
-    animation: ph-fade-in 400ms var(--ph-transition-ease) forwards;
+  /* Менее интенсивные эффекты */
+  @keyframes ph-series-morph {
+    35% {
+      transform: translateY(20px) scale(0.92) rotateX(3deg);
+      filter: blur(4px) brightness(0.8) saturate(0.7);
+    }
+    45% {
+      transform: translateY(-30px) scale(1.04) rotateX(-2deg);
+      filter: blur(6px) brightness(1.2) saturate(0.5);
+    }
   }
 }
 
-@keyframes ph-fade-in {
-  to {
+/* 🎭 WORLD-CLASS МОРФИНГ АНИМАЦИЯ */
+@keyframes ph-series-morph {
+  /* Фаза 1: Dramatic Exit (0-35%) */
+  0% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
+    transform: translateY(0) scale(1) rotateX(0deg);
+    filter: blur(0) brightness(1) saturate(1);
+    clip-path: inset(0%);
+  }
+
+  20% {
+    opacity: 0.7;
+    transform: translateY(-8px) scale(1.015) rotateX(2deg);
+    filter: blur(1px) brightness(1.1) saturate(1.2);
+  }
+
+  35% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.88) rotateX(8deg);
+    filter: blur(8px) brightness(0.6) saturate(0.5);
+    clip-path: inset(0% 0% 15% 0%);
+  }
+
+  /* Фаза 2: Content Switch (35-45%) - невидимая смена */
+  45% {
+    opacity: 0;
+    transform: translateY(-60px) scale(1.08) rotateX(-5deg);
+    filter: blur(12px) brightness(1.4) saturate(0.3);
+    clip-path: inset(25% 0% 0% 0%);
+  }
+
+  /* Фаза 3: Spectacular Entry (45-100%) */
+  65% {
+    opacity: 0.3;
+    transform: translateY(-25px) scale(1.05) rotateX(-2deg);
+    filter: blur(4px) brightness(1.3) saturate(1.5);
+    clip-path: inset(8% 0% 0% 0%);
+  }
+
+  85% {
+    opacity: 0.9;
+    transform: translateY(-5px) scale(1.01) rotateX(0.5deg);
+    filter: blur(0.5px) brightness(1.05) saturate(1.1);
+    clip-path: inset(1% 0% 0% 0%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+    filter: blur(0) brightness(1) saturate(1);
+    clip-path: inset(0%);
   }
 }
 
@@ -162,9 +203,7 @@
     var(--grad-2),
     var(--grad-3)
   );
-  transition:
-    transform 1000ms var(--ph-ease-hero),
-    background 800ms var(--ph-transition-ease);
+  /* Отключаем transitions - только морфинг */
   will-change: transform, background;
   transform: translate3d(
     calc((var(--mouse-x) - 0.5) * 10px),
