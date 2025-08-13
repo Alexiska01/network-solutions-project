@@ -153,28 +153,40 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
         {/* Имперская звезда смерти */}
         <div className="relative w-40 h-40 mx-auto mb-8">
           {/* Главная сфера */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-400 via-gray-600 to-gray-800 rounded-full border border-gray-500 shadow-2xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-400 via-gray-600 to-gray-800 rounded-full border border-gray-500 shadow-2xl animate-pulse" style={{ animationDuration: '4s' }}>
             {/* Супер лазер */}
-            <div className="absolute top-6 right-6 w-6 h-6 bg-red-500 rounded-full shadow-lg shadow-red-500/50">
+            <div className="absolute top-6 right-6 w-6 h-6 bg-red-500 rounded-full shadow-lg shadow-red-500/50 animate-ping" style={{ animationDuration: '2s' }}>
               <div className="absolute inset-1 bg-red-300 rounded-full animate-pulse"></div>
             </div>
             
-            {/* Поверхностные детали */}
-            <div className="absolute top-8 left-12 w-16 h-1 bg-gray-700"></div>
-            <div className="absolute top-12 left-8 w-20 h-1 bg-gray-700"></div>
-            <div className="absolute bottom-16 right-8 w-12 h-1 bg-gray-700"></div>
-            <div className="absolute bottom-12 right-12 w-8 h-8 border border-gray-700 rounded"></div>
+            {/* Поверхностные детали с анимацией */}
+            <div className="absolute top-8 left-12 w-16 h-1 bg-gray-700 opacity-60 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+            <div className="absolute top-12 left-8 w-20 h-1 bg-gray-700 opacity-70 animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute bottom-16 right-8 w-12 h-1 bg-gray-700 opacity-50 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+            <div className="absolute bottom-12 right-12 w-8 h-8 border border-gray-700 rounded animate-pulse" style={{ animationDelay: '2s' }}></div>
             
             {/* Вращающиеся кольца энергии */}
-            <div className="absolute inset-0 border-2 border-blue-400/30 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
-            <div className="absolute inset-4 border border-cyan-400/20 rounded-full animate-spin" style={{ animationDuration: '12s', animationDirection: 'reverse' }}></div>
+            <div className="absolute inset-0 border-2 border-blue-400/30 rounded-full animate-spin" style={{ animationDuration: '6s' }}></div>
+            <div className="absolute inset-4 border border-cyan-400/20 rounded-full animate-spin" style={{ animationDuration: '10s', animationDirection: 'reverse' }}></div>
+            <div className="absolute inset-8 border border-purple-400/15 rounded-full animate-spin" style={{ animationDuration: '15s' }}></div>
           </div>
           
-          {/* TIE Fighter */}
-          <div className="absolute -top-8 -right-8 w-4 h-4">
-            <div className="w-3 h-6 bg-gray-600 mx-auto"></div>
-            <div className="w-6 h-3 bg-gray-700 -mt-1.5"></div>
-            <div className="w-3 h-6 bg-gray-600 mx-auto -mt-1.5"></div>
+          {/* TIE Fighter на орбите */}
+          <div className="absolute inset-0 animate-spin" style={{ animationDuration: '8s' }}>
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 animate-bounce" style={{ animationDuration: '1.5s' }}>
+              <div className="w-2 h-4 bg-gray-600 mx-auto shadow-lg"></div>
+              <div className="w-4 h-2 bg-gray-700 -mt-1 shadow-lg"></div>
+              <div className="w-2 h-4 bg-gray-600 mx-auto -mt-1 shadow-lg"></div>
+            </div>
+          </div>
+          
+          {/* Второй TIE Fighter на противоположной орбите */}
+          <div className="absolute inset-0 animate-spin" style={{ animationDuration: '12s', animationDirection: 'reverse' }}>
+            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-3 h-3 animate-pulse">
+              <div className="w-1.5 h-3 bg-gray-500 mx-auto shadow-md"></div>
+              <div className="w-3 h-1.5 bg-gray-600 -mt-0.5 shadow-md"></div>
+              <div className="w-1.5 h-3 bg-gray-500 mx-auto -mt-0.5 shadow-md"></div>
+            </div>
           </div>
         </div>
 
