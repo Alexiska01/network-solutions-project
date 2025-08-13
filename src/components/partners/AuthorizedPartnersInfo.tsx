@@ -1,39 +1,49 @@
-import React, { useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+
+import { useRef, useEffect } from "react";
 import Icon from "@/components/ui/icon";
+import * as LucideIcons from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
+
+type IconName = keyof typeof LucideIcons;
+type Benefit = {
+  icon: IconName;
+  title: string;
+  description: string;
+};
+
+const benefits: Benefit[] = [
+  {
+    icon: "Shield",
+    title: "Экспертная поддержка",
+    description: "Поддержка от специалистов, обученных нашим технологиям",
+  },
+  {
+    icon: "Truck",
+    title: "Логистическая эффективность",
+    description: "Оперативные поставки и логистическая прозрачность",
+  },
+  {
+    icon: "CheckCircle",
+    title: "Корпоративные стандарты",
+    description:
+      "Соответствие корпоративным стандартам и требованиям безопасности",
+  },
+  {
+    icon: "Award",
+    title: "Техническая поддержка",
+    description:
+      "Гарантийное и постгарантийное обслуживание, сервисный центр",
+  },
+  {
+    icon: "Settings",
+    title: "Полный цикл решений",
+    description:
+      "Комплексный подход - от технического проектирования до внедрения и запуска решений",
+  },
+];
+
 const AuthorizedPartnersInfo = () => {
-  const benefits = [
-    {
-      icon: "Shield",
-      title: "Экспертная поддержка",
-      description: "Поддержка от специалистов, обученных нашим технологиям",
-    },
-    {
-      icon: "Truck",
-      title: "Логистическая эффективность",
-      description: "Оперативные поставки и логистическая прозрачность",
-    },
-    {
-      icon: "CheckCircle",
-      title: "Корпоративные стандарты",
-      description:
-        "Соответствие корпоративным стандартам и требованиям безопасности",
-    },
-    {
-      icon: "Award",
-      title: "Техническая поддержка",
-      description:
-        "Гарантийное и постгарантийное обслуживание, сервисный центр",
-    },
-    {
-      icon: "Settings",
-      title: "Полный цикл решений",
-      description:
-        "Комплексный подход - от технического проектирования до внедрения и запуска решений",
-    },
-  ];
 
   return (
     <>
@@ -63,8 +73,7 @@ const AuthorizedPartnersInfo = () => {
         <div className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-              Станьте частью экосистемы iDATA и получите доступ к эксклюзивным
-              возможностям
+              Станьте частью экосистемы iDATA и получите доступ к эксклюзивным возможностям
             </p>
           </div>
 
@@ -107,16 +116,6 @@ const AuthorizedPartnersInfo = () => {
                 </div>
               );
             })}
-          </div>
-
-          <div className="text-center">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-semibold font-montserrat rounded-lg md:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-            >
-              Стать партнером
-              <Icon name="ArrowRight" className="ml-2" size={16} />
-            </Button>
           </div>
         </div>
       </section>

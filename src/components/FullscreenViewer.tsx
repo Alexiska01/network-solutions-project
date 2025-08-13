@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
-import { cameraPresets } from './ViewerConstants';
+import { cameraPresets } from './3d-viewer/ViewerConstants';
 
 interface FullscreenViewerProps {
   isVisible: boolean;

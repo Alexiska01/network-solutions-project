@@ -1,4 +1,4 @@
-import { Hotspot } from './ViewerTypes';
+import { Hotspot } from '../ViewerTypes';
 
 export const cameraPresets = {
   default: "0deg 75deg 0.88m",

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo, useRef, useState, useCallback, memo } from "react";
 import Icon from "@/components/ui/icon";
-import OptimizedModelViewer from "@/components/OptimizedModelViewer";
+import OptimizedModelViewer from "@/components/3d-viewer/OptimizedModelViewer";
 import { modelPreloader } from "@/utils/modelPreloader";
 import { modelCacheManager } from "@/utils/modelCacheManager";
 import "./ProductHero.css";
@@ -122,7 +122,7 @@ function throttle<T extends (...args: any[]) => void>(func: T, wait: number): T 
 
 const ProductHero = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(0);
+  // const [nextIndex, setNextIndex] = useState(0);
   // Морфинг убран - остается только обычная смена контента
   const [isInitialized, setIsInitialized] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
@@ -285,7 +285,7 @@ const ProductHero = memo(() => {
     
     const autoSlide = () => {
       const nextIdx = (currentIndex + 1) % heroData.length;
-      setNextIndex(nextIdx);
+  // setNextIndex(nextIdx);
       
       // Предзагружаем следующую модель
       if (!modelPreloader.isLoaded(heroData[nextIdx].modelUrl)) {

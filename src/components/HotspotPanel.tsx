@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 import { Hotspot } from './ViewerTypes';
-import { getHotspotIcon, getHotspotColor } from './ViewerConstants';
+import { getHotspotIcon, getHotspotColor } from './3d-viewer/ViewerConstants';
 
 interface HotspotPanelProps {
   hotspot: Hotspot | null;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cameraPresets, backgrounds } from '../ViewerConstants';
+import { cameraPresets, backgrounds } from '../3d-viewer/ViewerConstants';
 
 interface MobileViewerControlsProps {
   background: string;

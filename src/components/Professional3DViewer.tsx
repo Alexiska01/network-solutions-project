@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import LoadingOverlay from "./LoadingOverlay";
-import ViewerControls from "./ViewerControls";
+import ViewerControls from "./3d-viewer/ViewerControls";
 import MobileViewerControls from "./MobileViewerControls";
 import HotspotPanel from "./HotspotPanel";
 import FullscreenViewer from "./FullscreenViewer";
 
 import { Professional3DViewerProps } from "./ViewerTypes";
-import { cameraPresets, backgrounds, hotspots, getHotspotIcon, getHotspotColor } from "./ViewerConstants";
+import { cameraPresets, backgrounds, hotspots, getHotspotIcon, getHotspotColor } from "./3d-viewer/ViewerConstants";
 
 const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   modelRef,
