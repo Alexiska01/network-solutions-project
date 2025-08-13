@@ -171,9 +171,11 @@ export class ModelPreloader {
       };
       
       const errorHandler = (e: Event) => {
-        console.error(`❌ ModelPreloader: Ошибка загрузки модели: ${url}`, e);
+        console.warn(`⚠️ ModelPreloader: Не удалось загрузить модель: ${url}`, e);
+        this.loadedModels.set(url, false); // Отмечаем как неудачную загрузку
         container.remove();
-        reject(new Error(`Failed to preload model: ${url}`));
+        // Не reject'аем, чтобы не ломать весь процесс
+        resolve(); // Разрешаем промис, чтобы продолжить работу
       };
       
       modelViewer.addEventListener('load', loadHandler, { once: true });
@@ -182,12 +184,13 @@ export class ModelPreloader {
       container.appendChild(modelViewer);
       document.body.appendChild(container);
       
-      // Таймаут для предотвращения зависания
+      // Уменьшенный таймаут для проблемных моделей (особенно 3730)
       setTimeout(() => {
-        if (!this.loadedModels.get(url)) {
+        if (!this.loadedModels.has(url)) {
+          console.warn(`⏰ ModelPreloader: Таймаут загрузки модели: ${url}`);
           errorHandler(new Event('timeout'));
         }
-      }, 30000); // 30 секунд таймаут
+      }, url.includes('3730') ? 15000 : 30000); // 15 сек для 3730, 30 для остальных
     });
 
     this.loadingModels.set(url, loadPromise);
@@ -243,7 +246,9 @@ export class ModelPreloader {
   }
 
   isLoaded(url: string): boolean {
-    return this.loadedModels.get(url) || false;
+    const status = this.loadedModels.get(url);
+    // Возвращаем true только если модель успешно загружена (не false)
+    return status === true;
   }
   
   getLoadedCount(): number {

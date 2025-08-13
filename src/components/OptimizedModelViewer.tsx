@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 interface OptimizedModelViewerProps {
   src: string;
@@ -15,6 +15,21 @@ const OptimizedModelViewer = memo<OptimizedModelViewerProps>(({
   onLoad, 
   onError 
 }) => {
+  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleLoad = () => {
+    setIsLoading(false);
+    setHasError(false);
+    onLoad();
+  };
+
+  const handleError = () => {
+    setHasError(true);
+    setIsLoading(false);
+    console.warn(`Failed to load model: ${src}`);
+    onError();
+  };
   // Общие свойства для всех устройств (одинаковые для всех серий)
   const commonProps = {
     src,
@@ -27,8 +42,8 @@ const OptimizedModelViewer = memo<OptimizedModelViewerProps>(({
     'interaction-prompt': 'none',
     loading: 'eager' as const,
     reveal: 'auto' as const,
-    onLoad,
-    onError,
+    onLoad: handleLoad,
+    onError: handleError,
   };
 
   // Свойства для мобильных устройств (одинаковые для всех серий)
@@ -73,6 +88,48 @@ const OptimizedModelViewer = memo<OptimizedModelViewerProps>(({
     ...commonProps,
     ...(isMobile ? mobileProps : desktopProps),
   };
+
+  // Показываем fallback при ошибке загрузки
+  if (hasError) {
+    return (
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: isMobile ? '1rem' : '0rem',
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: '0.875rem',
+        textAlign: 'center',
+      }}>
+        <div>
+          <div style={{ marginBottom: '8px' }}>⚠️</div>
+          <div>Модель недоступна</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Показываем loading state
+  if (isLoading) {
+    return (
+      <>
+        <model-viewer {...props} />
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: 'rgba(255, 255, 255, 0.7)',
+          fontSize: '0.875rem',
+        }}>
+          Загрузка...
+        </div>
+      </>
+    );
+  }
 
   return <model-viewer {...props} />;
 });
