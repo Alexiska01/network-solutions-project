@@ -39,11 +39,7 @@
   animation: ph-hero-entry var(--ph-entry-duration) var(--ph-ease-hero) 200ms
     forwards;
 
-  /* Прерываем entry анимацию во время морфинга */
-}
-
-.ph-morphing {
-  animation: none !important; /* Останавливаем entry анимацию */
+  /* entry анимация работает нормально */
   will-change: transform, opacity, filter;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
@@ -71,58 +67,11 @@
   }
 } /* phones */
 
-/* 🔥 HIGH-REFRESH АДАПТАЦИЯ */
-.refresh-90hz .ph-container {
-  --ph-adaptive-duration: 1000ms;
-  --ph-morph-ease: cubic-bezier(0.25, 1, 0.5, 1);
-}
-.refresh-120hz .ph-container {
-  --ph-adaptive-duration: 900ms;
-  --ph-morph-ease: cubic-bezier(0.23, 1, 0.32, 1);
-}
-.refresh-144hz .ph-container {
-  --ph-adaptive-duration: 800ms;
-  --ph-morph-ease: cubic-bezier(0.2, 1, 0.3, 1);
-}
-.refresh-240hz .ph-container {
-  --ph-adaptive-duration: 700ms;
-  --ph-morph-ease: cubic-bezier(0.18, 1, 0.28, 1);
-}
+/* High-refresh переменные для морфинга удалены */
 
-/* 🚀 WORLD-CLASS ЕДИНАЯ АНИМАЦИЯ ПЕРЕХОДОВ */
-.ph-container {
-  /* Профессиональные тайминги */
-  --ph-morph-duration: 1200ms;
-  --ph-morph-ease: cubic-bezier(
-    0.23,
-    1,
-    0.32,
-    1
-  ); /* easeOutQuart - Apple стиль */
-  --ph-morph-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* easeOutBack */
+/* Морфинг переменные удалены */
 
-  /* Адаптивные тайминги под refresh rate */
-  --ph-adaptive-duration: var(--ph-morph-duration);
-}
-
-/* ЕДИНАЯ МОРФИНГ АНИМАЦИЯ */
-.ph-morphing .ph-content,
-.ph-morphing .ph-model {
-  animation: ph-series-morph var(--ph-adaptive-duration) var(--ph-morph-ease)
-    forwards;
-}
-
-/* Блокируем ВСЕ остальные анимации и transitions */
-.ph-morphing * {
-  transition: none !important;
-  animation: none !important;
-}
-
-.ph-morphing .ph-content,
-.ph-morphing .ph-model {
-  animation: ph-series-morph var(--ph-adaptive-duration) var(--ph-morph-ease)
-    forwards !important;
-}
+/* Морфинг анимация удалена */
 
 /* 📱 МОБИЛЬНАЯ ОПТИМИЗАЦИЯ */
 @media (max-width: 767px) {
@@ -131,59 +80,7 @@
   }
 }
 
-/* 🎭 WORLD-CLASS МОРФИНГ АНИМАЦИЯ */
-@keyframes ph-series-morph {
-  /* Фаза 1: Dramatic Exit (0-35%) */
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg);
-    filter: blur(0) brightness(1) saturate(1);
-    clip-path: inset(0%);
-  }
-
-  20% {
-    opacity: 0.7;
-    transform: translateY(-8px) scale(1.015) rotateX(2deg);
-    filter: blur(1px) brightness(1.1) saturate(1.2);
-  }
-
-  35% {
-    opacity: 0;
-    transform: translateY(40px) scale(0.88) rotateX(8deg);
-    filter: blur(8px) brightness(0.6) saturate(0.5);
-    clip-path: inset(0% 0% 15% 0%);
-  }
-
-  /* Фаза 2: Content Switch (35-45%) - невидимая смена */
-  45% {
-    opacity: 0;
-    transform: translateY(-60px) scale(1.08) rotateX(-5deg);
-    filter: blur(12px) brightness(1.4) saturate(0.3);
-    clip-path: inset(25% 0% 0% 0%);
-  }
-
-  /* Фаза 3: Spectacular Entry (45-100%) */
-  65% {
-    opacity: 0.3;
-    transform: translateY(-25px) scale(1.05) rotateX(-2deg);
-    filter: blur(4px) brightness(1.3) saturate(1.5);
-    clip-path: inset(8% 0% 0% 0%);
-  }
-
-  85% {
-    opacity: 0.9;
-    transform: translateY(-5px) scale(1.01) rotateX(0.5deg);
-    filter: blur(0.5px) brightness(1.05) saturate(1.1);
-    clip-path: inset(1% 0% 0% 0%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg);
-    filter: blur(0) brightness(1) saturate(1);
-    clip-path: inset(0%);
-  }
-}
+/* ph-series-morph удалена - остается только простая смена контента */
 
 @keyframes ph-hero-entry {
   to {
