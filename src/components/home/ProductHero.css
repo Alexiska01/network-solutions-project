@@ -14,10 +14,16 @@
   background: linear-gradient(135deg, #0b3c49, #1a237e, #2e2e2e);
   overflow: hidden;
 
-  /* Нормальное начальное состояние */
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  filter: none;
+  /* начальное состояние для entry */
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) scale(0.98);
+  filter: blur(20px) brightness(0.3);
+
+  --ph-ease-hero: cubic-bezier(0.16, 1, 0.3, 1);
+  --ph-ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+  --ph-entry-duration: 900ms;
+  --ph-content-delay: 200ms;
+  --ph-model-delay: 200ms;
 
   /* цвета (динамика из TSX) */
   --current-glow-color: #4ea1ff;
@@ -30,7 +36,14 @@
   --mouse-x: 0.5;
   --mouse-y: 0.5;
 
-  /* Никаких автоматических анимаций - только морфинг по запросу */
+  animation: ph-hero-entry var(--ph-entry-duration) var(--ph-ease-hero) 200ms
+    forwards;
+
+  /* Прерываем entry анимацию во время морфинга */
+}
+
+.ph-morphing {
+  animation: none !important; /* Останавливаем entry анимацию */
   will-change: transform, opacity, filter;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
@@ -172,7 +185,13 @@
   }
 }
 
-/* Удалена ph-hero-entry - оставлена только ph-series-morph */
+@keyframes ph-hero-entry {
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0) brightness(1);
+  }
+}
 
 /* Фоны */
 .ph-bg {
