@@ -7,8 +7,41 @@ interface WelcomeScreenProps {
   forceShow?: boolean;
 }
 
+// Стадии загрузки
+const LOADING_STAGES = [
+  'Установление защищённого соединения...',
+  'Подключение к центральной станции управления...',
+  'Получение данных о корпоративном оборудовании...',
+  'Система готова к работе'
+];
+
+// Компонент печатающегося текста
+const TypewriterText: React.FC<{ text: string; speed?: number }> = ({ text, speed = 50 }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayText(text.slice(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+      }, speed);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, text, speed]);
+
+  return (
+    <span className="font-mono">
+      {displayText}
+      <span className="animate-pulse text-cyan-400">|</span>
+    </span>
+  );
+};
+
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = false }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentStage, setCurrentStage] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const shouldShow = forceShow || modelCacheManager.shouldShowWelcomeScreen();
@@ -23,14 +56,37 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     setIsVisible(true);
     console.log('✅ WelcomeScreen: Показываем на 8 секунд');
 
+    // Прогресс анимация
+    const startTime = Date.now();
+    const duration = 8000;
+    
+    const updateProgress = () => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min(elapsed / duration, 1);
+      setProgress(newProgress);
+      
+      if (newProgress < 1) {
+        requestAnimationFrame(updateProgress);
+      }
+    };
+    updateProgress();
+
+    // Смена стадий каждые 2 секунды
+    const stageInterval = setInterval(() => {
+      setCurrentStage(prev => (prev + 1) % LOADING_STAGES.length);
+    }, 2000);
+
     const timer = setTimeout(() => {
       console.log('⏰ WelcomeScreen: Скрываем');
       setIsVisible(false);
       modelCacheManager.markWelcomeScreenComplete();
       onComplete?.();
-    }, 8000);
+    }, duration);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(stageInterval);
+    };
   }, [forceShow, onComplete]);
 
   if (!isVisible) {
@@ -77,60 +133,91 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
 
       {/* Главный контент */}
       <div className="text-center text-white relative z-10 px-8">
-        {/* Логотип в стиле Star Wars */}
+        {/* Логотип в стиле Star Wars с нашими цветами */}
         <div className="mb-12">
-          <h1 className="text-6xl md:text-8xl font-bold mb-4 text-yellow-400 tracking-wider" 
+          <h1 className="text-6xl md:text-8xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 tracking-wider" 
               style={{ 
                 fontFamily: 'serif',
-                textShadow: '0 0 20px rgba(255, 255, 0, 0.5), 0 0 40px rgba(255, 255, 0, 0.3)',
+                textShadow: '0 0 20px rgba(34, 211, 238, 0.5), 0 0 40px rgba(59, 130, 246, 0.3)',
                 transform: 'perspective(300px) rotateX(25deg)',
               }}>
             iDATA
           </h1>
-          <div className="h-1 w-64 mx-auto bg-gradient-to-r from-transparent via-yellow-400 to-transparent mb-8"></div>
+          <div className="h-1 w-64 mx-auto bg-gradient-to-r from-transparent via-cyan-400 to-transparent mb-8"></div>
         </div>
 
-        {/* Имперская звезда смерти */}
-        <div className="relative w-40 h-40 mx-auto mb-8">
-          {/* Главная сфера */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-400 via-gray-600 to-gray-800 rounded-full border border-gray-500 shadow-2xl">
-            {/* Супер лазер */}
-            <div className="absolute top-6 right-6 w-6 h-6 bg-red-500 rounded-full shadow-lg shadow-red-500/50">
-              <div className="absolute inset-1 bg-red-300 rounded-full animate-pulse"></div>
+        {/* Центральная планета с прогресс-кольцом */}
+        <div className="relative w-48 h-48 mx-auto mb-8">
+          {/* Прогресс кольцо */}
+          <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 200 200">
+            <circle
+              cx="100"
+              cy="100"
+              r="90"
+              fill="none"
+              stroke="rgba(34,211,238,0.1)"
+              strokeWidth="3"
+            />
+            <circle
+              cx="100"
+              cy="100"
+              r="90"
+              fill="none"
+              stroke="url(#progressGradient)"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray={`${2 * Math.PI * 90}`}
+              strokeDashoffset={`${2 * Math.PI * 90 * (1 - progress)}`}
+              style={{
+                transition: 'stroke-dashoffset 0.3s ease',
+                filter: 'drop-shadow(0 0 8px rgba(34, 211, 238, 0.6))'
+              }}
+            />
+            <defs>
+              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#22d3ee" />
+                <stop offset="50%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#a78bfa" />
+              </linearGradient>
+            </defs>
+          </svg>
+          
+          {/* Главная планета */}
+          <div className="absolute inset-8 bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-700 rounded-full border-2 border-cyan-400/50 shadow-2xl shadow-cyan-400/30">
+            {/* Энергетическое ядро */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/70">
+              <div className="absolute inset-1 bg-white rounded-full opacity-60"></div>
             </div>
             
-            {/* Поверхностные детали */}
-            <div className="absolute top-8 left-12 w-16 h-1 bg-gray-700"></div>
-            <div className="absolute top-12 left-8 w-20 h-1 bg-gray-700"></div>
-            <div className="absolute bottom-16 right-8 w-12 h-1 bg-gray-700"></div>
-            <div className="absolute bottom-12 right-12 w-8 h-8 border border-gray-700 rounded"></div>
+            {/* Детали поверхности */}
+            <div className="absolute top-4 left-6 w-12 h-1 bg-cyan-300/40 rounded"></div>
+            <div className="absolute top-8 left-4 w-16 h-1 bg-blue-300/40 rounded"></div>
+            <div className="absolute bottom-6 right-4 w-10 h-1 bg-purple-300/40 rounded"></div>
+            <div className="absolute bottom-4 right-8 w-6 h-6 border border-cyan-300/40 rounded"></div>
             
-            {/* Вращающиеся кольца энергии */}
-            <div className="absolute inset-0 border-2 border-blue-400/30 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
-            <div className="absolute inset-4 border border-cyan-400/20 rounded-full animate-spin" style={{ animationDuration: '12s', animationDirection: 'reverse' }}></div>
+            {/* Вращающиеся энергетические кольца */}
+            <div className="absolute inset-0 border-2 border-cyan-400/20 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
+            <div className="absolute inset-4 border border-blue-400/20 rounded-full animate-spin" style={{ animationDuration: '12s', animationDirection: 'reverse' }}></div>
           </div>
           
-          {/* TIE Fighter */}
-          <div className="absolute -top-8 -right-8 w-4 h-4">
-            <div className="w-3 h-6 bg-gray-600 mx-auto"></div>
-            <div className="w-6 h-3 bg-gray-700 -mt-1.5"></div>
-            <div className="w-3 h-6 bg-gray-600 mx-auto -mt-1.5"></div>
+          {/* Спутник/корабль */}
+          <div className="absolute -top-4 -right-4 w-6 h-6 bg-gradient-to-r from-cyan-400 to-blue-400 rounded transform rotate-45 shadow-lg shadow-cyan-400/50">
+            <div className="absolute inset-1 bg-white/60 rounded"></div>
           </div>
         </div>
 
-        {/* Текст загрузки */}
-        <div className="space-y-4">
-          <div className="text-2xl font-light text-blue-300 tracking-wide">
-            Подключение к Галактической Сети...
+        {/* Печатающийся текст загрузки */}
+        <div className="space-y-6">
+          <div className="text-xl text-cyan-300 tracking-wide min-h-[60px] flex items-center justify-center">
+            <TypewriterText text={LOADING_STAGES[currentStage]} speed={80} />
           </div>
           
-          {/* Прогресс бар в стиле голограммы */}
-          <div className="w-80 h-2 mx-auto bg-gray-800 border border-blue-400/50 rounded">
-            <div className="h-full bg-gradient-to-r from-blue-400 to-cyan-400 rounded animate-pulse" 
-                 style={{ width: '70%', boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)' }}></div>
+          {/* Прогресс в процентах */}
+          <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+            {Math.round(progress * 100)}%
           </div>
           
-          <p className="text-lg text-gray-300 italic">
+          <p className="text-lg text-gray-300 italic opacity-80">
             "Корпоративная сеть нового поколения"
           </p>
         </div>
