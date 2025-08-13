@@ -83,22 +83,32 @@ TypewriterText.displayName = 'TypewriterText';
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = false }) => {
   const { isVisible, progress, isAnimating, hideWelcomeScreen } = useWelcomeScreen();
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
-  const [isScreenVisible, setIsScreenVisible] = useState(forceShow || isVisible);
   const [hasStarted, setHasStarted] = useState(false); // ЗАЩИТА ОТ ПОВТОРНЫХ ЗАПУСКОВ
   const stageTimersRef = useRef<number[]>([]);
 
-  // показывать/скрывать по трекеру
+  // ПРЯМАЯ проверка условий показа (без промежуточного состояния)
+  const shouldShow = useMemo(() => {
+    if (forceShow) return true;
+    
+    // Прямой вызов функции проверки
+    const { modelCacheManager } = require('@/utils/modelCacheManager');
+    const needToShow = modelCacheManager.shouldShowWelcomeScreen();
+    
+    console.log('🎯 WelcomeScreen: shouldShow =', needToShow, { forceShow, isVisible });
+    return needToShow;
+  }, [forceShow, isVisible]);
+
+  const [isScreenVisible, setIsScreenVisible] = useState(shouldShow);
+
+  // Синхронизация с shouldShow
   useEffect(() => {
-    if (forceShow) {
-      setIsScreenVisible(true);
-    } else {
-      setIsScreenVisible(isVisible);
-    }
-  }, [isVisible, forceShow]);
+    console.log('🔄 WelcomeScreen: Синхронизация shouldShow =', shouldShow);
+    setIsScreenVisible(shouldShow);
+  }, [shouldShow]);
 
   // ПРИНУДИТЕЛЬНЫЙ таймер на 10 секунд (ТОЛЬКО ОДИН РАЗ)
   useEffect(() => {
-    if (hasStarted) return; // Уже запускали таймер
+    if (!shouldShow || hasStarted) return; // Не запускаем если не нужно показывать
     
     console.log('⏰ WelcomeScreen: Запуск принудительного таймера на 10 секунд');
     setHasStarted(true);
@@ -110,7 +120,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
     }, 10000);
 
     return () => clearTimeout(forceHideTimer);
-  }, [hasStarted, onComplete]);
+  }, [shouldShow, hasStarted, onComplete]);
 
   // список моделей для предзагрузки
   const heroData = useMemo(
@@ -213,13 +223,19 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
 
   // Логирование состояния через useEffect
   useEffect(() => {
-    console.log('🎭 WelcomeScreen: isScreenVisible =', isScreenVisible, 'isVisible =', isVisible, 'forceShow =', forceShow);
+    console.log('🎭 WelcomeScreen:', {
+      isScreenVisible,
+      isVisible,
+      forceShow,
+      shouldShow,
+      hasStarted
+    });
     if (!isScreenVisible) {
       console.log('❌ WelcomeScreen: Компонент скрыт, не рендерится');
     } else {
       console.log('✅ WelcomeScreen: Компонент рендерится!');
     }
-  }, [isScreenVisible, isVisible, forceShow]);
+  }, [isScreenVisible, isVisible, forceShow, shouldShow, hasStarted]);
   
   if (!isScreenVisible) return null;
 
