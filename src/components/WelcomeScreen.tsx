@@ -231,8 +231,15 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete, forceShow = f
             <TypewriterText onComplete={handleComplete} />
           </div>
           
-          <p className="text-lg text-gray-300 italic opacity-80">
-            "Корпоративная сеть нового поколения"
+          <p className="text-lg text-gray-300 italic opacity-80 animate-pulse font-mono tracking-wider">
+            <span className="text-cyan-400">"</span>
+            <span className="animate-ping inline-block w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+            <span className="text-green-400 animate-pulse">Корпоративная</span>
+            <span className="mx-2 text-cyan-300 animate-bounce">сеть</span>
+            <span className="text-blue-400 animate-pulse">нового</span>
+            <span className="mx-2 text-purple-400 animate-ping inline-block">поколения</span>
+            <span className="text-cyan-400">"</span>
+            <span className="animate-ping inline-block w-2 h-2 bg-green-400 rounded-full ml-2"></span>
           </p>
         </div>
       </div>
