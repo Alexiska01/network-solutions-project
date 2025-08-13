@@ -64,7 +64,7 @@ const OptimizedModelViewer = memo<OptimizedModelViewerProps>(({
   const desktopProps = {
     'rotation-per-second': '35deg',
     'camera-controls': true,
-    'camera-orbit': '0deg 80deg 1.02m',
+    'camera-orbit': '0deg 80deg 0.95m',
     'min-camera-orbit': 'auto auto 0.4m',
     'max-camera-orbit': 'auto auto 2.5m',
     'field-of-view': '35deg',

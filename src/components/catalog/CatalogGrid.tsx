@@ -103,7 +103,6 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
                 "text-gray-600 mt-1",
                 isMobile ? "text-sm leading-relaxed" : "text-sm sm:text-base"
               )}>
-                Решения для корпоративных локальных сетей
               </p>
             </div>
           </div>

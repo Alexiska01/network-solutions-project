@@ -348,7 +348,6 @@ const ProductHero = memo(() => {
             {/* Левая колонка */}
             <div className="ph-content">
               <div className="ph-header">
-                <div className="ph-badge">ТЕЛЕКОММУНИКАЦИОННОЕ ОБОРУДОВАНИЕ</div>
 
                 <h1 className="ph-title">
                   {currentData.title}

@@ -198,9 +198,6 @@ const FeaturesSection = () => {
             Почему выбирают iDATA
           </h2>
           <div className="w-16 md:w-24 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-4 md:mb-6 rounded-full"></div>
-          <p className="text-base md:text-xl lg:text-2xl text-gray-600 leading-tight md:leading-relaxed max-w-3xl mx-auto font-medium">
-            Преимущества, которые получают наши клиенты
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
