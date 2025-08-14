@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDropdownMenu } from "@/hooks/useDropdownMenu";
+import { SafeImage } from "@/components/ui/safe-image";
 import DesktopNavigation from "./header/DesktopNavigation";
 import MobileMenu from "./header/MobileMenu";
 
@@ -128,8 +129,8 @@ const Header = () => {
               className="desktop-logo"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
-              <img
-                src="https://cdn.poehali.dev/files/8e9b5768-33e6-4132-af48-c9e933188013.png"
+              <SafeImage
+                src="/img/104c7de0-7c29-41ab-97ee-97f064ac7ecd.jpg"
                 alt="IDATA Logo"
                 className="h-9 w-auto sm:h-10"
               />

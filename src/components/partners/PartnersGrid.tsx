@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Partner } from "@/pages/Partners";
 import Icon from "@/components/ui/icon";
+import { SafeImage } from "@/components/ui/safe-image";
 
 interface PartnersGridProps {
   selectedFilters: {
@@ -19,7 +20,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 1,
       name: "Инфосэл",
-      logo: "https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png",
+      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
       region: "Россия",
       type: "Интегратор",
       category: "Коммутаторы",
@@ -30,7 +31,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 2,
       name: "Инлайн ГРУП",
-      logo: "https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png",
+      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
       region: "Россия",
       type: "Интегратор",
       category: "Маршрутизаторы",
@@ -41,7 +42,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 3,
       name: "КРОК",
-      logo: "https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png",
+      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
       region: "Россия",
       type: "Интегратор",
       category: "Wi-Fi",
@@ -52,7 +53,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 4,
       name: "САТЕЛ",
-      logo: "https://cdn.poehali.dev/files/5ebbdc36-0607-4a74-beca-446f7f24445d.png",
+      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
       region: "Россия",
       type: "Интегратор",
       category: "Коммутаторы",
@@ -128,38 +129,10 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
               >
                 <div className="p-3 md:p-6">
                   <div className="relative h-[140px] w-full mb-3 md:mb-4 bg-white border border-gray-200 rounded-lg overflow-hidden group-hover:border-blue-200 transition-colors flex items-center justify-center p-4">
-                    <img
+                    <SafeImage
                       src={partner.logo}
                       alt={partner.name}
                       className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "КРОК" ? "w-auto h-auto scale-50" : partner.name === "САТЕЛ" ? "w-auto h-auto scale-150" : "w-full h-full object-cover"} rounded-lg`}
-                      loading="eager"
-                      onLoad={(e) => {
-                        const placeholder =
-                          e.currentTarget.parentElement?.querySelector(
-                            ".animate-pulse",
-                          );
-                        if (placeholder) {
-                          placeholder.remove();
-                        }
-                      }}
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                        const placeholder =
-                          e.currentTarget.parentElement?.querySelector(
-                            ".animate-pulse",
-                          );
-                        if (placeholder) {
-                          placeholder.remove();
-                        }
-                        const fallback = document.createElement("div");
-                        fallback.className =
-                          "w-full h-full bg-gray-200 rounded-lg flex items-center justify-center";
-                        fallback.innerHTML =
-                          '<span class="text-gray-400 text-lg font-medium">' +
-                          partner.name.charAt(0) +
-                          "</span>";
-                        e.currentTarget.parentElement?.appendChild(fallback);
-                      }}
                     />
                     <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg -z-10"></div>
                   </div>
