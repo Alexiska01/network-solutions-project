@@ -31,7 +31,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 2,
       name: "Инлайн ГРУП",
-      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
+      logo: "https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png",
       region: "Россия",
       type: "Интегратор",
       category: "Маршрутизаторы",
@@ -42,7 +42,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 3,
       name: "КРОК",
-      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
+      logo: "https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png",
       region: "Россия",
       type: "Интегратор",
       category: "Wi-Fi",
@@ -53,7 +53,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 4,
       name: "САТЕЛ",
-      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
+      logo: "https://cdn.poehali.dev/files/5ebbdc36-0607-4a74-beca-446f7f24445d.png",
       region: "Россия",
       type: "Интегратор",
       category: "Коммутаторы",

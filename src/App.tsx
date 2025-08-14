@@ -48,9 +48,12 @@ const queryClient = new QueryClient({
 
 // СУПЕР АГРЕССИВНАЯ ПРЕДЗАГРУЗКА для максимальной скорости
 
-// Критические изображения (временно отключены из-за CORS)
-const CRITICAL_IMAGES: string[] = [
-  // CDN временно недоступен - используем заглушки
+// Критические изображения (загружаем первыми)
+const CRITICAL_IMAGES = [
+  // Логотипы партнеров
+  "https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png",
+  "https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png", 
+  "https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png",
 ];
 
 // Схемы и диаграммы (загружаем вторыми)
@@ -137,7 +140,13 @@ const App = () => {
         img.fetchPriority = 'high';
         img.src = imageUrl;
         
-        // DNS prefetch отключен из-за CORS проблем CDN
+        // DNS prefetch для внешних доменов
+        if (imageUrl.includes('cdn.poehali.dev')) {
+          const link = document.createElement('link');
+          link.rel = 'dns-prefetch';
+          link.href = 'https://cdn.poehali.dev';
+          document.head.appendChild(link);
+        }
       });
       
       // Приоритетные 3D модели с высоким приоритетом
@@ -195,9 +204,16 @@ const App = () => {
       }, 2000);
     };
 
-    // Этап 4: Preconnect отключен из-за CORS проблем CDN
+    // Этап 4: Preconnect к критическим доменам
     const setupPreconnect = () => {
-      // CDN временно недоступен
+      const domains = ['https://cdn.poehali.dev'];
+      domains.forEach(domain => {
+        const link = document.createElement('link');
+        link.rel = 'preconnect';
+        link.href = domain;
+        link.crossOrigin = 'anonymous';
+        document.head.appendChild(link);
+      });
     };
 
     // Команда для тестирования WelcomeScreen (только для разработки)
