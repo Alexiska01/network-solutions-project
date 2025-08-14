@@ -339,9 +339,6 @@ const ProductsSection = () => {
                   </div>
                 </div>
 
-
-              </div>
-
               {/* Bottom accent line */}
               <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl transition-transform duration-500 md:duration-700 ease-out pointer-events-none"></div>
             </div>
