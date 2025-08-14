@@ -77,7 +77,7 @@
   }
 }
 
-/* Card Inner - Premium Material Design */
+/* Card Inner - Premium Material Design без размытки текста */
 .ps-card-inner {
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.95);
@@ -86,6 +86,10 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   /* Premium Shadow - Apple Style */
@@ -141,13 +145,17 @@
   }
 }
 
-/* Typography - Apple-like Precision & Grid Alignment */
+/* Typography - Apple-like Precision & Grid Alignment без размытки */
 .ps-title {
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.3;
   color: #1a1a1a;
   letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transform: translateZ(0);
 }
 
 @media (min-width: 768px) {
@@ -170,6 +178,10 @@
   color: #6b7280;
   font-weight: 500;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transform: translateZ(0);
 }
 
 @media (min-width: 768px) {
@@ -187,13 +199,17 @@
   }
 }
 
-/* Desktop Additional Info */
+/* Desktop Additional Info без размытки */
 @media (min-width: 1024px) {
   .ps-detailed-info {
     font-size: 0.9375rem;
     line-height: 1.6;
     color: #6b7280;
     font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transform: translateZ(0);
   }
 }
 
@@ -232,11 +248,15 @@
   }
 }
 
-/* Feature Text - Perfect Alignment */
+/* Feature Text - Perfect Alignment без размытки */
 .ps-feature-text {
   flex: 1;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transform: translateZ(0);
 }
 
 @media (min-width: 1024px) {
@@ -436,6 +456,23 @@
 .ps-cta-line {
   transform: translateZ(0);
   will-change: transform;
+}
+
+/* Четкость текста для всех элементов карточки */
+.ps-card *,
+.ps-card-inner *,
+.ps-card h1,
+.ps-card h2,
+.ps-card h3,
+.ps-card h4,
+.ps-card p,
+.ps-card span,
+.ps-card div {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
 }
 
 /* Reduce Motion Support */
