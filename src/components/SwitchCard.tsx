@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -95,15 +94,8 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
   ];
 
   const CardContent = (
-    <motion.div
+    <div
       id={switchData.id.toLowerCase()}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{
-        y: -8,
-        transition: { duration: 0.2 },
-      }}
       className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -139,26 +131,23 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
         <div className="absolute inset-0 rounded-2xl shadow-2xl shadow-blue-500/10" />
       </div>
-    </motion.div>
+    </div>
   );
 
   // Создаем содержимое карточки БЕЗ кнопки для мобильной версии
   const CardContentWithoutButton = (
-    <motion.div
+    <div
       id={switchData.id.toLowerCase()}
       className={cn(
         "group relative cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm transition-all duration-300",
-        "hover:shadow-xl hover:border-blue-200 hover:-translate-y-1",
         isMobile 
           ? "mx-auto max-w-sm" 
           : isTablet 
             ? "h-auto" 
             : "h-full"
       )}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      whileHover={{ y: isMobile ? 0 : -4 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {!isTablet && !isMobile ? (
         /* --- ДЕСКТОПНАЯ ВЕРСИЯ --- */
@@ -185,7 +174,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
         <div className="absolute inset-0 rounded-2xl shadow-2xl shadow-blue-500/10" />
       </div>
-    </motion.div>
+    </div>
   );
 
   /* --- Возврат результата --- */

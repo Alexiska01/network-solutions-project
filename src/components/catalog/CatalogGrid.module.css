@@ -154,11 +154,10 @@
   display: block;
 }
 
-/* Профессиональный hover эффект идентично FeaturesSection */
+/* Чистый hover эффект как в FeaturesSection */
 .cardShell {
   position: relative;
   border-radius: 14px;
-  contain: layout paint style;
   isolation: isolate;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
