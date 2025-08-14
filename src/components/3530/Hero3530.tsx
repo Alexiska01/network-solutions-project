@@ -123,22 +123,19 @@ const Hero3530 = () => {
   return (
     <section 
       ref={heroSectionRef}
-      className={`bg-gradient-hero text-white py-8 lg:py-16 relative overflow-hidden min-h-[500px] lg:min-h-[600px] ${isInView ? 'hero-visible' : ''}`}
+  className={`bg-gradient-hero text-white py-1 lg:py-2 relative overflow-hidden min-h-[175px] lg:min-h-[210px] ${isInView ? 'hero-visible' : ''}`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start lg:items-center w-full">
           
           {/* Левая часть - Текстовый контент */}
           <div className="hero-text-content lg:pr-8">
-            <p className="hero-subtitle text-sm text-blue-200 font-medium mb-3 uppercase tracking-wide">
-              Серия корпоративных коммутаторов
-            </p>
-            
-            <h1 className="hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight">
+            {/* Подзаголовок удалён, место освобождено */}
+            <h1 className="hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 leading-tight mt-2">
               IDS3530
             </h1>
             
-            <div className="hero-features mb-6 space-y-3">
+            <div className="hero-features mb-4 space-y-3">
               <div className="hero-feature-item flex items-center gap-3 text-blue-100">
                 <Icon
                   name="Server"
@@ -186,7 +183,7 @@ const Hero3530 = () => {
             </div>
             
             {/* Premium CSS-анимированная кнопка */}
-            <div className="hero-button">
+            <div className="hero-button mt-2">
               <button
                 className="btn-cta cta-button-gpu min-h-[44px]"
                 onClick={() =>
@@ -259,10 +256,10 @@ const Hero3530 = () => {
                         auto-rotate-delay="0"
                         rotation-per-second="30deg"
                         camera-controls
-                        camera-orbit="0deg 80deg 0.9m"
+                        camera-orbit="0deg 83deg 1.1m"
                         min-camera-orbit="auto auto 0.5m"
                         max-camera-orbit="auto auto 1.2m"
-                        field-of-view="32deg"
+                        field-of-view="35deg"
                         interaction-prompt="none"
                         environment-image="neutral"
                         shadow-intensity="0.25"

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import DeviceCard3530 from "@/components/3530/DeviceCard3530";
-import FilterButtons from "@/components/FilterButtons";
 // import ComparisonModal from "@/components/ComparisonModal";
 import KeyFeatures3530 from "@/components/KeyFeatures3530";
 import {
@@ -14,13 +13,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { switchModels3530 } from "@/data/switchModels";
-import { FilterType } from "@/types/models";
 import Hero3530 from "@/components/3530/Hero3530";
 
 
 
 const SeriesCatalog3530Component = () => {
-  const [filter, setFilter] = useState<FilterType>("all");
+  // const [filter, setFilter] = useState<FilterType>("all");
   const [compareModels, setCompareModels] = useState<string[]>([]);
   // const [showCompareModal, setShowCompareModal] = useState(false);
   const navigate = useNavigate();
@@ -35,9 +33,7 @@ const SeriesCatalog3530Component = () => {
     navigate(url);
   };
 
-  const filteredModels = switchModels3530.filter((model) =>
-    filter === "all" ? true : model.category === filter,
-  );
+  const filteredModels = switchModels3530;
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -81,21 +77,10 @@ const SeriesCatalog3530Component = () => {
         className="py-7 xs:py-8 sm:py-12 lg:py-16 px-2 xs:px-3 sm:px-6 bg-white"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-6 sm:mb-9">
+          <div className="text-center mb-9 sm:mb-12">
             <h2 className="text-base xs:text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4 font-sans px-1 xs:px-2">
               Модели серии IDS3530
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 font-sans mb-3 xs:mb-4 sm:mb-7 px-2">
-              Выберите оптимальную конфигурацию для ваших задач
-            </p>
-            <div className="w-full overflow-x-auto pb-1">
-              <div className="inline-flex gap-2 sm:gap-3">
-                <FilterButtons
-                  activeFilter={filter}
-                  onFilterChange={setFilter}
-                />
-              </div>
-            </div>
           </div>
           <div
             className="
