@@ -1,237 +1,190 @@
-/* ===== PRODUCTS SECTION: Содержимое карточек (не сами карточки) ===== */
-
-/* Icon Wrapper - Enhanced Premium с плавностью */
-.ps-icon-wrapper {
-  width: 56px;
-  height: 56px;
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow:
-    0 4px 12px rgba(0, 172, 173, 0.3),
-    0 2px 6px rgba(0, 100, 120, 0.2);
+/* ===== Section layout with Fit-4 ===== */
+:root {
+  --ease-premium: cubic-bezier(.16, 1, .3, 1);
 }
 
-@media (min-width: 768px) {
-  .ps-icon-wrapper {
-    width: 64px;
-    height: 64px;
-  }
+.products-section{
+  --pad-y: clamp(24px, 5vh, 48px);
+  --v-gap: 28px;
+  --section-head: 0px;
+  padding: var(--pad-y) 0;
+  background: linear-gradient(180deg, rgba(229,231,235,.6), rgba(243,244,246,.9) 40%, transparent 100%);
+  position: relative;
+}
 
-  .ps-card:hover .ps-icon-wrapper {
-    transform: translateY(-3px) scale(1.05) translateZ(0);
-    box-shadow:
-      0 8px 24px rgba(0, 172, 173, 0.5),
-      0 4px 12px rgba(0, 100, 120, 0.4);
+.products-section__bg{
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 60% at 10% 10%, rgba(59,130,246,.07), transparent 60%),
+    radial-gradient(60% 60% at 90% 0%,  rgba(20,184,166,.08), transparent 60%);
+}
+
+/* ===== Card (Compact+) ===== */
+.feature-card{
+  --r: 22px;
+  --pad: clamp(18px, 2.2vw, 24px);
+  /* новые токены расстояний */
+  --gap-head-list: 16px;   /* отступ между заголовком и списком */
+  --gap-list-cta: 16px;    /* отступ между списком и кнопкой */
+
+  position: relative;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--r);
+  will-change: transform, box-shadow, opacity;
+  content-visibility: auto;
+  contain: layout paint style;
+}
+
+/* Fit-4: две строки карточек в первый экран */
+@media (min-width: 1024px){
+  .products-section[data-fit4="on"] .feature-card{
+    --fit4-offset: calc(var(--pad-y) * 2 + var(--v-gap) + var(--section-head));
+    --card-h: calc((100dvh - var(--fit4-offset)) / 2);
+    height: clamp(236px, var(--card-h), 268px);
   }
 }
 
-/* Typography - Apple-like Precision & Grid Alignment без размытки */
-.ps-title {
-  font-size: 1.25rem;
+/* Entry animation */
+.feature-card[data-state="hidden"]{
+  opacity: 0; transform: translateY(14px);
+}
+.feature-card[data-state="visible"]{
+  opacity: 1; transform: none;
+  transition: opacity .5s var(--ease-premium) var(--stagger, 0ms),
+              transform .5s var(--ease-premium) var(--stagger, 0ms);
+}
+
+/* Hover overlay */
+.feature-card__overlay{
+  position:absolute; inset:0; border-radius: var(--r);
+  background: linear-gradient(135deg, rgba(239,246,255,.45), transparent 40%, rgba(240,253,250,.35));
+  opacity:0; transition: opacity .45s var(--ease-premium);
+}
+.feature-card:hover .feature-card__overlay{ opacity: 1; }
+
+/* ===== Card content ===== */
+.feature-card__content{
+  position: relative; z-index: 3; /* выше stretched-link */
+  display: flex; flex-direction: column; height: 100%;
+  padding: var(--pad);
+}
+
+/* Header (слегка компактнее) */
+.card__head{ display:flex; gap: 14px; align-items: center; margin-bottom: 8px; }
+.card__icon{ flex: none; }
+.card__icon-bg{
+  width: 48px; height: 48px; border-radius: 14px;
+  display:grid; place-items:center;
+  background: linear-gradient(180deg, #2563eb, #14b8a6);
+  box-shadow: 0 6px 16px rgba(20,184,166,.25), 0 2px 6px rgba(37,99,235,.25);
+  transition: transform .35s var(--ease-premium), box-shadow .35s var(--ease-premium);
+  will-change: transform;
+}
+.feature-card:hover .card__icon-bg{
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(20,184,166,.35), 0 6px 16px rgba(37,99,235,.28);
+}
+
+.card__titles{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+.card__title{
+  margin:0;
   font-weight: 700;
-  line-height: 1.3;
-  color: #1a1a1a;
-  letter-spacing: -0.01em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  transform: translateZ(0);
+  font-size: clamp(18px, 1.25vw, 20px);
+  line-height: 1.2;
+  color:#0f172a;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.card__rule{
+  display:block; width: clamp(64px, 10vw, 96px); height:2px; border-radius:2px;
+  background: #e5e7eb;
 }
 
-@media (min-width: 768px) {
-  .ps-title {
-    font-size: 1.375rem;
-    line-height: 1.25;
-  }
+/* Features (3 строки, по 1 строке текста) */
+.card__features{
+  display:grid;
+  gap: 8px;                   /* список компактнее по вертикали */
+  margin: var(--gap-head-list) 0 0 0; /* отступ между заголовком и списком */
+  padding:0; list-style:none;
+}
+.card__feature{ display:flex; align-items: center; gap: 10px; min-width:0; }
+.card__feature-bullet{
+  flex:none; width: 18px; height: 18px; border-radius: 999px;
+  display:grid; place-items:center;
+  background: linear-gradient(180deg, #2563eb, #14b8a6);
+}
+.card__feature-text{
+  font-size: 15px; line-height: 1.4; color:#374151;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-@media (min-width: 1024px) {
-  .ps-title {
-    font-size: 1.5rem;
-    line-height: 1.2;
-    margin-bottom: 0;
-  }
-}
+/* Footer (CTA) — больше отступа сверху, сама кнопка ниже ростом */
+.card__foot{ margin-top: auto; padding-top: var(--gap-list-cta); }
 
-.ps-description {
-  font-size: 0.9375rem;
-  color: #6b7280;
-  font-weight: 500;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  transform: translateZ(0);
-}
-
-@media (min-width: 768px) {
-  .ps-description {
-    font-size: 1rem;
-    line-height: 1.45;
-  }
-}
-
-@media (min-width: 1024px) {
-  .ps-description {
-    font-size: 1.0625rem;
-    line-height: 1.5;
-    margin-bottom: 0;
-  }
-}
-
-/* Desktop Additional Info без размытки */
-@media (min-width: 1024px) {
-  .ps-detailed-info {
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    color: #6b7280;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    transform: translateZ(0);
-  }
-}
-
-/* Feature Icons */
-.ps-feature-icon {
-  width: 16px;
-  height: 16px;
-}
-
-@media (min-width: 768px) {
-  .ps-feature-icon {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-/* Feature Text - Perfect Alignment без размытки */
-.ps-feature-text {
-  flex: 1;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  transform: translateZ(0);
-}
-
-/* CTA Button - Premium Interactive */
-.ps-cta {
-  padding: 14px 20px;
+/* Компактная кнопка */
+.ps-cta{
+  position: relative;
+  width: 100%;
+  display:flex; align-items:center; justify-content: space-between;
+  padding: 10px 16px;                 /* было 14x18 — стало ниже */
   border-radius: 12px;
-  background-color: rgba(249, 250, 251, 0.8);
+  background: rgba(249,250,251,.9);
+  border: 1px solid #e5e7eb;
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform .3s var(--ease-premium), background-color .3s var(--ease-premium), border-color .3s var(--ease-premium), box-shadow .2s ease-out;
+}
+.ps-cta__text{ font-weight: 600; color:#0f172a; }
+.ps-cta__icon{
+  width: 28px; height: 28px;          /* было 32 — стало компактнее */
+  border-radius: 999px;
+  display:grid; place-items:center;
+  background: linear-gradient(90deg, #2563eb, #14b8a6);
+  transition: transform .3s var(--ease-premium);
+}
+.ps-cta__line{
+  position:absolute; left: 16px; right: 16px; bottom: 0;
+  height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #2563eb, #14b8a6);
+  transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease-premium);
 }
 
-@media (min-width: 768px) {
-  .ps-cta {
-    padding: 16px 24px;
-    border-radius: 14px;
-  }
-}
-
-/* CTA Icon */
-.ps-cta-icon {
-  width: 28px;
-  height: 28px;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-@media (min-width: 768px) {
-  .ps-cta-icon {
-    width: 32px;
-    height: 32px;
-  }
-}
-
-/* CTA Hover Effects */
-.ps-cta:hover {
-  background-color: rgba(243, 244, 246, 0.9);
-  border-color: rgba(59, 130, 246, 0.3);
+/* Hover/focus */
+.ps-cta:hover{
   transform: translateY(-1px);
+  background: rgba(243,244,246,.96);
+  border-color: rgba(59,130,246,.35);
+}
+.ps-cta:hover .ps-cta__icon{ transform: translateX(2px) scale(1.03); }
+.ps-cta:hover .ps-cta__line{ transform: scaleX(1); }
+
+.ps-cta:focus-visible{
+  outline: 0;
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px rgba(37,99,235,.9);
+  border-color: rgba(37,99,235,.6);
 }
 
-.ps-cta:hover .ps-cta-icon {
-  transform: translateX(3px) scale(1.05);
+/* Растянутый линк (вся карточка кликабельна, не мешает таб-циклу) */
+.stretched-link{
+  position:absolute; inset:0; z-index: 2;
 }
 
-/* CTA Line Animation */
-.ps-cta-line {
-  left: 20px;
-  right: 20px;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* Responsive tweaks */
+@media (max-width: 767.98px){
+  .feature-card{ height: clamp(220px, 32vh, 248px); }
+  .card__icon-bg{ width:44px; height:44px; border-radius:12px; }
+  .ps-cta{ padding: 10px 14px; border-radius: 10px; } /* ещё компактнее на мобилке */
+  .ps-cta__icon{ width:26px; height:26px; }
 }
 
-@media (min-width: 768px) {
-  .ps-cta-line {
-    left: 24px;
-    right: 24px;
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .feature-card,
+  .feature-card__overlay,
+  .card__icon-bg,
+  .ps-cta,
+  .ps-cta__icon{
+    transition: none !important;
   }
-}
-
-.ps-cta:hover .ps-cta-line {
-  transform: scaleX(1);
-}
-
-/* Animation States от FeaturesSection */
-.ps-enter {
-  opacity: 0;
-  transform: translateY(40px);
-}
-
-.ps-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.ps-delay-0 {
-  transition-delay: 0ms;
-}
-.ps-delay-1 {
-  transition-delay: 100ms;
-}
-.ps-delay-2 {
-  transition-delay: 200ms;
-}
-.ps-delay-3 {
-  transition-delay: 300ms;
-}
-
-/* Mobile Responsive */
-@media (max-width: 767px) {
-  .ps-mobile .ps-cta {
-    padding: 12px 16px;
-    border-radius: 10px;
-  }
-
-  .ps-mobile .ps-cta-icon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .ps-mobile .ps-cta-line {
-    left: 16px;
-    right: 16px;
-  }
-}
-
-/* Четкость текста для всех элементов карточки */
-.feature-card *,
-.feature-card h1,
-.feature-card h2,
-.feature-card h3,
-.feature-card h4,
-.feature-card p,
-.feature-card span,
-.feature-card div {
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
-  text-rendering: optimizeLegibility !important;
-  transform: translateZ(0) !important;
-  backface-visibility: hidden !important;
 }

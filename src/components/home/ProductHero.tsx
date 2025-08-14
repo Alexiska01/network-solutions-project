@@ -1,8 +1,6 @@
 // src/components/product/ProductHero.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo, useRef, useState, useCallback, memo } from "react";
-import Icon from "@/components/ui/icon";
-import OptimizedModelViewer from "@/components/3d-viewer/OptimizedModelViewer";
 import { modelPreloader } from "@/utils/modelPreloader";
 import { modelCacheManager } from "@/utils/modelCacheManager";
 import "./ProductHero.css";
@@ -387,22 +385,46 @@ const ProductHero = memo(() => {
               </div>
             </div>
 
-            {/* Правая колонка — 3D */}
-            <div className="ph-model-container">
+            {/* Правая колонка — 3D (реализация как в Hero3530) */}
+            <div className="ph-model-container relative order-first lg:order-last mt-0 lg:mt-0 flex justify-center">
               <div className="ph-model-effects">
                 <div className="ph-model-bg" />
                 <div className="ph-model-glow" />
               </div>
-
-              <div className="ph-model-wrapper">
-                <div className="ph-model">
-                  <div className="ph-model-inner">
-                    {/* Убран лоадер - больше не показываем "Загрузка 3D модели..." */}
-
-                    <OptimizedModelViewer
+              <div className="ph-model-wrapper relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[600px] h-[280px] sm:h-[320px] md:h-[380px] lg:h-[420px]">
+                {/* 3D модель с лоадером и обработкой ошибок */}
+                {modelLoadStatus[currentData.modelUrl] !== false && (
+                  <div className={`ph-model relative z-10 w-full h-full`}>
+                    <model-viewer
+                      ref={modelRef}
                       src={currentData.modelUrl}
                       alt={currentData.title}
-                      isMobile={isMobile}
+                      auto-rotate
+                      auto-rotate-delay="0"
+                      rotation-per-second={isMobile ? "32deg" : "30deg"}
+                      camera-controls={!isMobile}
+                      camera-orbit={isMobile ? "0deg 80deg 1.1m" : "0deg 83deg 1.1m"}
+                      min-camera-orbit={isMobile ? "auto auto 1.1m" : "auto auto 0.5m"}
+                      max-camera-orbit={isMobile ? "auto auto 1.1m" : "auto auto 1.2m"}
+                      field-of-view={isMobile ? "40deg" : "35deg"}
+                      interaction-prompt="none"
+                      environment-image="neutral"
+                      shadow-intensity={isMobile ? "0.2" : "0.25"}
+                      exposure={isMobile ? "1.1" : "1.05"}
+                      disable-zoom={isMobile ? true : undefined}
+                      disable-pan={isMobile ? true : undefined}
+                      disable-tap={isMobile ? true : undefined}
+                      style={{
+                        width: isMobile ? '100%' : '90%',
+                        height: isMobile ? '100%' : '90%',
+                        background: 'transparent',
+                        border: 'none',
+                        outline: 'none',
+                        boxShadow: 'none',
+                        borderRadius: isMobile ? '1rem' : '0rem',
+                        pointerEvents: 'none',
+                        touchAction: isMobile ? 'none' : undefined,
+                      }}
                       onLoad={() => {
                         setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
                         if (!modelPreloader.isLoaded(currentData.modelUrl)) {
@@ -410,27 +432,25 @@ const ProductHero = memo(() => {
                         }
                       }}
                       onError={() => {
-                        // Тихо обрабатываем ошибку без логов в консоль
                         setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }));
                       }}
                     />
-
-                    {modelLoadStatus[currentData.modelUrl] === false && (
-                      <div className="ph-model-error">
-                        <div className="ph-model-error-content">
-                          <Icon name="Wifi" size={48} className="ph-model-error-icon" />
-                          <p className="ph-model-error-title">
-                            Модель {currentData.series} недоступна
-                          </p>
-                          <p className="ph-model-error-text">Проверьте подключение к сети</p>
-                        </div>
-                      </div>
-                    )}
                   </div>
-                </div>
+                )}
+                {/* Лоадер убран по просьбе пользователя */}
+                {/* Ошибка */}
+                {modelLoadStatus[currentData.modelUrl] === false && (
+                  <div className="absolute inset-0 flex items-center justify-center z-20">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="text-3xl">⚠️</div>
+                      <span className="text-white/60 text-sm font-medium">
+                        Модель недоступна
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-            {/* /Правая колонка */}
           </div>
         </div>
       </div>
