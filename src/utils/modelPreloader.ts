@@ -65,21 +65,9 @@ export class ModelPreloader {
   }
   
   private setupIntelligentCache() {
-    // Только используем Service Worker для кэширования (если доступен)
-    if ('serviceWorker' in navigator && 'caches' in window) {
-      this.enableServiceWorkerCache();
-    }
-    
-    // Убираем Resource Hints чтобы избежать preload ошибок
-  }
-  
-  private enableServiceWorkerCache() {
-    // Тихая проверка Service Worker без логирования
-    navigator.serviceWorker.ready.then(() => {
-      // Service Worker готов
-    }).catch(() => {
-      // Service Worker недоступен, продолжаем без него
-    });
+    // Service Worker временно отключен для устранения ошибок
+    // Используем только обычное кэширование браузера
+    console.log('🎯 ModelPreloader: Кэширование настроено без Service Worker');
   }
   
 
