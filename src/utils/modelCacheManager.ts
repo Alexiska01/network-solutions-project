@@ -559,7 +559,7 @@ export const modelCacheManager = new ModelCacheManager();
   console.log('📊 Текущее состояние WelcomeScreen:', {
     metadata: modelCacheManager.currentMetadata,
     shouldShow: modelCacheManager.shouldShowWelcomeScreen(),
-    localStorage: localStorage.getItem('modelCacheMetadata')
+    localStorage: localStorage.getItem('cache-metadata')
   });
 };
 
