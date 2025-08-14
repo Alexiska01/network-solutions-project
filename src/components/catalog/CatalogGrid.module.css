@@ -1,12 +1,32 @@
 /* ===== Герцовка → длительность 1 кадра ===== */
-.root { --frame: 16.667ms; /* по умолчанию 60 Гц */ }
+.root {
+  --frame: 16.667ms; /* по умолчанию 60 Гц */
+}
 
-/* 60fps   */ .hz60  { --frame: 16.667ms; }
-/* 120fps  */ .hz120 { --frame: 8.333ms;  }
-/* 144fps  */ .hz144 { --frame: 6.944ms;  }
-/* 165fps  */ .hz165 { --frame: 6.061ms;  }
-/* 240fps  */ .hz240 { --frame: 4.167ms;  }
-/* 244fps  */ .hz244 { --frame: 4.098ms;  }
+/* 60fps   */
+.hz60 {
+  --frame: 16.667ms;
+}
+/* 120fps  */
+.hz120 {
+  --frame: 8.333ms;
+}
+/* 144fps  */
+.hz144 {
+  --frame: 6.944ms;
+}
+/* 165fps  */
+.hz165 {
+  --frame: 6.061ms;
+}
+/* 240fps  */
+.hz240 {
+  --frame: 4.167ms;
+}
+/* 244fps  */
+.hz244 {
+  --frame: 4.098ms;
+}
 
 /* ===== Общие мелочи ===== */
 .section {
@@ -16,57 +36,91 @@
     opacity calc(10 * var(--frame)) ease,
     transform calc(10 * var(--frame)) ease;
 }
-.section { opacity: 1; transform: none; } /* сразу видимы, анимируем только карточки */
-.revealBase {}
+.section {
+  opacity: 1;
+  transform: none;
+} /* сразу видимы, анимируем только карточки */
+.revealBase {
+}
 
 /* Бейджи-иконки */
 .badgeBlue {
-  width: 40px; height: 40px; border-radius: 12px;
-  display:flex; align-items:center; justify-content:center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90deg, #3b82f6, #6366f1);
-  box-shadow: 0 6px 18px rgba(79,70,229,.18);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.18);
 }
 .badgeCyan {
-  width: 32px; height: 32px; border-radius: 10px;
-  display:flex; align-items:center; justify-content:center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90deg, #60a5fa, #2563eb);
-  box-shadow: 0 5px 16px rgba(37,99,235,.18);
+  box-shadow: 0 5px 16px rgba(37, 99, 235, 0.18);
 }
 .badgeIndigo {
-  width: 32px; height: 32px; border-radius: 10px;
-  display:flex; align-items:center; justify-content:center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90deg, #818cf8, #4f46e5);
-  box-shadow: 0 5px 16px rgba(79,70,229,.18);
+  box-shadow: 0 5px 16px rgba(79, 70, 229, 0.18);
 }
 .badgePurpleXL {
-  width: 48px; height: 48px; border-radius: 16px;
-  display:flex; align-items:center; justify-content:center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90deg, #a855f7, #7c3aed);
-  box-shadow: 0 8px 22px rgba(124,58,237,.22);
+  box-shadow: 0 8px 22px rgba(124, 58, 237, 0.22);
 }
 .badgePurple {
-  width: 32px; height: 32px; border-radius: 10px;
-  display:flex; align-items:center; justify-content:center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90deg, #a78bfa, #7c3aed);
-  box-shadow: 0 5px 16px rgba(124,58,237,.18);
+  box-shadow: 0 5px 16px rgba(124, 58, 237, 0.18);
 }
 .badgeEmerald {
-  width: 32px; height: 32px; border-radius: 10px;
-  display:flex; align-items:center; justify-content:center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90deg, #34d399, #059669);
-  box-shadow: 0 5px 16px rgba(5,150,105,.18);
+  box-shadow: 0 5px 16px rgba(5, 150, 105, 0.18);
 }
 
 /* ===== Карточки: reveal по скроллу, только transform+opacity ===== */
 @keyframes cg-fade-up {
-  from { opacity: 0; transform: translateY(12px) scale(.985); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Базовое скрытое состояние */
 .cardReveal {
   opacity: 0;
-  transform: translateY(12px) scale(.985);
+  transform: translateY(12px) scale(0.985);
   will-change: transform, opacity;
   /* Задержка = индекс * (стаггер-кадры * длительность кадра) */
   /* --i ставим из TS, --stagger в кадрах */
@@ -76,11 +130,14 @@
 
 /* Как только добавили класс revealed — включая анимацию */
 .cardReveal.revealed {
-  animation: cg-fade-up calc(24 * var(--frame)) cubic-bezier(.16,1,.3,1) var(--delay) both;
+  animation: cg-fade-up calc(24 * var(--frame)) cubic-bezier(0.16, 1, 0.3, 1)
+    var(--delay) both;
 }
 
 /* ВАЖНО: чтобы класс не выкинулся как “пустой” в CSS-module */
-.revealed { --revealed: 1; }
+.revealed {
+  --revealed: 1;
+}
 
 /* ===== A11y ===== */
 @media (prefers-reduced-motion: reduce) {
@@ -92,10 +149,12 @@
 }
 
 /* Glyph цвет берёт из фона бейджа через currentColor */
-.badgeGlyph { color: #fff; display:block; }
+.badgeGlyph {
+  color: #fff;
+  display: block;
+}
 
-/* Ховер/фокус/press эффекты вокруг карточки (обёртка над SwitchCard) */
-/* Ховер-эффект безопасен: тень позади, контент не перекрываем */
+/* Профессиональный hover эффект идентично FeaturesSection */
 .cardShell {
   position: relative;
   border-radius: 14px;
@@ -104,45 +163,82 @@
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   background: transparent;
-  /* обёртка больше не двигается и не рисует тень */
-  isolation: isolate;                  /* свой стек без z-index */
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  overflow: hidden;
   box-shadow:
-    0 1px 2px rgba(0,0,0,.04),
-    0 0 0 rgba(0,0,0,0);               /* старт — без свечения */
+    0 2px 12px rgba(0, 0, 0, 0.06),
+    0 4px 20px rgba(0, 0, 0, 0.08);
 }
 .cardInner {
   position: relative;
-  z-index: 0;
+  z-index: 3;
   border-radius: inherit;
   transform: translateZ(0);
   backface-visibility: hidden;
   will-change: transform, box-shadow;
   transition:
-    transform calc(10 * var(--frame)) cubic-bezier(.16,1,.3,1),
-    box-shadow calc(14 * var(--frame)) cubic-bezier(.16,1,.3,1);
+    transform calc(10 * var(--frame)) cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow calc(14 * var(--frame)) cubic-bezier(0.16, 1, 0.3, 1);
 }
-/* hover-glow и движение — на самом контенте */
+/* Профессиональная анимация hover точно как в FeaturesSection */
 .cardShell:hover .cardInner {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
   box-shadow:
-    0 12px 28px rgba(0,0,0,.10),
-    0  6px 16px rgba(0,0,0,.06),
-    0  0  0 2px rgba(59,130,246,.20),
-    0  8px 32px rgba(59,130,246,.14);
+    0 8px 24px rgba(0, 0, 0, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Gradient overlay на hover (как в FeaturesSection) */
+.cardShell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.03) 0%,
+    transparent 50%,
+    rgba(20, 184, 166, 0.03) 100%
+  );
+  opacity: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity calc(12 * var(--frame)) ease;
+  z-index: 1;
+}
+
+.cardShell:hover::before {
+  opacity: 1;
+}
+
+/* Accent line на hover (как в FeaturesSection) */
+.cardShell::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #14b8a6);
+  transform: scaleX(0);
+  transform-origin: left;
+  border-radius: 0 0 14px 14px;
+  transition: transform calc(12 * var(--frame)) cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.cardShell:hover::after {
+  transform: scaleX(1);
 }
 .cardShell:active .cardInner {
   transform: translateY(0);
   box-shadow:
-    0 8px 18px rgba(0,0,0,.06),
-    0 3px 10px rgba(0,0,0,.04);
+    0 8px 18px rgba(0, 0, 0, 0.06),
+    0 3px 10px rgba(0, 0, 0, 0.04);
 }
 .cardShell:focus-within .cardInner {
   box-shadow:
-    0 0 0 2px rgba(0,190,173,.22),
-    0 10px 24px rgba(0,0,0,.06),
-    0  8px 32px rgba(0,190,173,.10);
+    0 0 0 2px rgba(0, 190, 173, 0.22),
+    0 10px 24px rgba(0, 0, 0, 0.06),
+    0 8px 32px rgba(0, 190, 173, 0.1);
 }
 /* локальные outlines для интерактивов, без влияния на фон */
 .cardInner :focus-visible {
@@ -154,11 +250,11 @@
 /* Мобильный tap (вместо hover) */
 @media (hover: none) and (pointer: coarse) {
   .cardShell:active .cardInner {
-    transform: translateY(0) scale(.995);
+    transform: translateY(0) scale(0.995);
     box-shadow:
-      0  8px 18px rgba(0,0,0,.10),
-      0  3px 10px rgba(0,0,0,.06),
-      0  0  0 2px rgba(59,130,246,.18),
-      0  6px 24px rgba(59,130,246,.12);
+      0 8px 18px rgba(0, 0, 0, 0.1),
+      0 3px 10px rgba(0, 0, 0, 0.06),
+      0 0 0 2px rgba(59, 130, 246, 0.18),
+      0 6px 24px rgba(59, 130, 246, 0.12);
   }
 }
