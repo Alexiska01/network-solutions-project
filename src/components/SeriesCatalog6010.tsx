@@ -64,13 +64,6 @@ const SeriesCatalog6010Component = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>IDS6010</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
-
         {/* <ComparisonPanel
           compareModels={compareModels}
           onClearAll={() => setCompareModels([])}

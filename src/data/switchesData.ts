@@ -28,7 +28,7 @@ export const switchesData: SwitchModel[] = [
       features: ["VLAN", "QoS", "ACL", "SNMP"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids3530",
   },
   {
@@ -44,7 +44,7 @@ export const switchesData: SwitchModel[] = [
       features: ["Advanced QoS", "Layer 3", "IPv6", "Security"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids3730",
   },
   {
@@ -60,7 +60,7 @@ export const switchesData: SwitchModel[] = [
       features: ["802.1X", "NAC", "Advanced Security", "Stacking"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids4530",
   },
   {
@@ -75,7 +75,7 @@ export const switchesData: SwitchModel[] = [
       features: ["Web UI", "Basic L3", "Energy Saving", "Fanless"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids6012",
   },
 
@@ -93,7 +93,7 @@ export const switchesData: SwitchModel[] = [
       features: ["Модульность", "Hot Swap", "MLAG", "VSU"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids6010",
   },
   {
@@ -109,7 +109,7 @@ export const switchesData: SwitchModel[] = [
       features: ["Virtual Chassis", "EVPN", "VXLAN", "SDN Ready"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids6030",
   },
   {
@@ -124,7 +124,7 @@ export const switchesData: SwitchModel[] = [
       features: ["400G Ready", "AI/ML Optimization", "Zero Touch", "Telemetry"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids6032",
   },
 
@@ -141,7 +141,7 @@ export const switchesData: SwitchModel[] = [
       features: ["BGP EVPN", "VXLAN", "Low Latency", "Telemetry"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids8030",
   },
   {
@@ -156,7 +156,7 @@ export const switchesData: SwitchModel[] = [
       features: ["ECMP", "BFD", "MPLS", "Segment Routing"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids8010",
   },
 
@@ -173,7 +173,7 @@ export const switchesData: SwitchModel[] = [
       features: ["Container Support", "Micro-services", "Zero Touch", "APIs"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids6150",
   },
   {
@@ -188,7 +188,7 @@ export const switchesData: SwitchModel[] = [
       features: ["OpenFlow", "Docker", "Kubernetes", "Multi-tenancy"],
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&h=300",
+      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
     link: "/products/switches/ids6130",
   },
 ];
