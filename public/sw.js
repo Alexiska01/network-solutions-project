@@ -1,8 +1,8 @@
 // СУПЕР АГРЕССИВНЫЙ Service Worker для максимальной производительности
-const CACHE_NAME = 'idata-super-cache-v5';
-const CRITICAL_CACHE = 'idata-critical-v5';
-const MODEL_CACHE = 'idata-models-v5';
-const IMAGE_CACHE = 'idata-images-v5';
+const CACHE_NAME = 'idata-super-cache-v6';
+const CRITICAL_CACHE = 'idata-critical-v6';
+const MODEL_CACHE = 'idata-models-v6';
+const IMAGE_CACHE = 'idata-images-v6';
 
 // Критические ресурсы - кэшируем НАВСЕГДА
 const CRITICAL_RESOURCES = [
