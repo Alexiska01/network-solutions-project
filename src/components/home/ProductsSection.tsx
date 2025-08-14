@@ -211,7 +211,7 @@ const ProductsSection = () => {
                   cardRefs.current[index] = el;
                 }
               }}
-              className={`ps-card ps-enter ps-hover ps-delay-${index} ${
+              className={`ps-card group ps-enter ps-hover ps-delay-${index} ${
                 isMobile ? 'ps-mobile' : 'ps-desktop'
               } ${
                 isMobile 
@@ -223,7 +223,7 @@ const ProductsSection = () => {
                 '--ps-total': products.length
               } as React.CSSProperties}
             >
-              <div className="ps-card-inner group relative bg-white h-full overflow-hidden">
+              <div className="ps-card-inner relative bg-white h-full overflow-hidden">
                 {/* GPU-оптимизированный градиентный overlay */}
                 <div className="ps-gradient-overlay absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20" />
                 
@@ -347,8 +347,7 @@ const ProductsSection = () => {
                   </div>
                 </div>
 
-                {/* Bottom accent line - как в FeaturesSection */}
-                <div className="ps-accent-line absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl transition-transform duration-500 md:duration-700 ease-out pointer-events-none"></div>
+
               </div>
             </div>
           ))}
