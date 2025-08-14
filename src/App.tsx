@@ -51,7 +51,7 @@ const queryClient = new QueryClient({
 // Критические изображения (загружаем первыми)
 const CRITICAL_IMAGES: string[] = [
   // Локальные логотипы партнеров
-  "/img/12db13e6-167a-4402-90a7-1b42f60b8848.jpg",
+  "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
 ];
 
 // Схемы и диаграммы (загружаем вторыми)
