@@ -22,9 +22,9 @@ export const switchesData: SwitchModel[] = [
       "Управляемые коммутаторы уровня доступа с поддержкой PoE+ и расширенными L2/L3 функциями",
     category: "access",
     specs: {
-      ports: "24-48 портов",
-      power: "PoE+ до 370Вт",
-      throughput: "До 176 Гбит/с",
+      ports: "8 - 48 портов 10/100/1000Base-T",
+      power: "PoE/PoE+ до 760Вт",
+      throughput: "168 - 216 Гбит/с",
       features: ["VLAN", "QoS", "ACL", "SNMP"],
     },
     image:
@@ -38,9 +38,9 @@ export const switchesData: SwitchModel[] = [
       "Высокопроизводительные коммутаторы доступа с улучшенной системой охлаждения",
     category: "access",
     specs: {
-      ports: "24-48 портов",
-      power: "PoE++ до 740Вт",
-      throughput: "До 336 Гбит/с",
+      ports: "8 - 48 портов 10/100/1000Base-T",
+      power: "PoE/PoE+ до 1440Вт",
+      throughput: "168 - 216 Гбит/с",
       features: ["Advanced QoS", "Layer 3", "IPv6", "Security"],
     },
     image:
@@ -54,9 +54,9 @@ export const switchesData: SwitchModel[] = [
       "Мощные коммутаторы доступа для больших офисов с продвинутыми функциями безопасности",
     category: "access",
     specs: {
-      ports: "48 портов",
-      power: "PoE++ до 1440Вт",
-      throughput: "До 512 Гбит/с",
+      ports: "24 - 48 портов 10/100/1000Base-T",
+      power: "PoE/PoE+ до 1440Вт",
+      throughput: "448 - 688 Гбит/с",
       features: ["802.1X", "NAC", "Advanced Security", "Stacking"],
     },
     image:
@@ -69,9 +69,9 @@ export const switchesData: SwitchModel[] = [
     description: "Компактные коммутаторы доступа для малых и средних сетей",
     category: "access",
     specs: {
-      ports: "12-24 порта",
-      power: "PoE до 185Вт",
-      throughput: "До 88 Гбит/с",
+      ports: "?",
+      power: "?",
+      throughput: "560 - 640 Гбит/с",
       features: ["Web UI", "Basic L3", "Energy Saving", "Fanless"],
     },
     image:
@@ -87,9 +87,9 @@ export const switchesData: SwitchModel[] = [
       "Модульные коммутаторы распределения с высокой плотностью портов",
     category: "distribution",
     specs: {
-      ports: "До 288 портов",
-      power: "Резервированное питание",
-      throughput: "До 1.28 Тбит/с",
+      ports: "?",
+      power: "?",
+      throughput: "640 - 960 Гбит/с",
       features: ["Модульность", "Hot Swap", "MLAG", "VSU"],
     },
     image:
@@ -103,9 +103,9 @@ export const switchesData: SwitchModel[] = [
       "Высокопроизводительные коммутаторы распределения для крупных сетей",
     category: "distribution",
     specs: {
-      ports: "До 384 порта",
-      power: "Dual PSU",
-      throughput: "До 2.56 Тбит/с",
+      ports: "?",
+      power: "?",
+      throughput: "?",
       features: ["Virtual Chassis", "EVPN", "VXLAN", "SDN Ready"],
     },
     image:
@@ -118,9 +118,9 @@ export const switchesData: SwitchModel[] = [
     description: "Флагманские коммутаторы распределения с поддержкой 400G",
     category: "distribution",
     specs: {
-      ports: "До 512 портов",
-      power: "N+1 Redundancy",
-      throughput: "До 5.12 Тбит/с",
+      ports: "?",
+      power: "?",
+      throughput: "?",
       features: ["400G Ready", "AI/ML Optimization", "Zero Touch", "Telemetry"],
     },
     image:
@@ -135,9 +135,9 @@ export const switchesData: SwitchModel[] = [
     description: "Spine-коммутаторы для крупных дата-центров с поддержкой 400G",
     category: "spine",
     specs: {
-      ports: "32x400G",
-      power: "Redundant PSU",
-      throughput: "12.8 Тбит/с",
+      ports: "?",
+      power: "?",
+      throughput: "?",
       features: ["BGP EVPN", "VXLAN", "Low Latency", "Telemetry"],
     },
     image:
@@ -150,9 +150,9 @@ export const switchesData: SwitchModel[] = [
     description: "Компактные spine-коммутаторы для средних дата-центров",
     category: "spine",
     specs: {
-      ports: "64x100G",
-      power: "AC/DC Power",
-      throughput: "6.4 Тбит/с",
+      ports: "?",
+      power: "?",
+      throughput: "?",
       features: ["ECMP", "BFD", "MPLS", "Segment Routing"],
     },
     image:
@@ -167,9 +167,9 @@ export const switchesData: SwitchModel[] = [
     description: "Leaf-коммутаторы с высокой плотностью 100G портов",
     category: "leaf",
     specs: {
-      ports: "48x25G + 8x100G",
-      power: "Энергоэффективность",
-      throughput: "3.2 Тбит/с",
+      ports: "?",
+      power: "?",
+      throughput: "?",
       features: ["Container Support", "Micro-services", "Zero Touch", "APIs"],
     },
     image:
@@ -182,9 +182,9 @@ export const switchesData: SwitchModel[] = [
     description: "Универсальные leaf-коммутаторы для гибридных облачных сред",
     category: "leaf",
     specs: {
-      ports: "48x10G + 6x40G",
-      power: "Fanless Design",
-      throughput: "1.28 Тбит/с",
+      ports: "?",
+      power: "?",
+      throughput: "?",
       features: ["OpenFlow", "Docker", "Kubernetes", "Multi-tenancy"],
     },
     image:
