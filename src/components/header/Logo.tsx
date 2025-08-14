@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <Link to="/" className="flex items-center flex-shrink-0">
       <SafeImage
-        src="/img/104c7de0-7c29-41ab-97ee-97f064ac7ecd.jpg"
+        src="/img/ЛОГО.png"
         alt="iDATA"
         className="h-8 w-auto object-contain hover:opacity-80 transition-opacity px-0 mx-0 my-0 py-[3px]"
       />

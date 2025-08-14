@@ -51,7 +51,11 @@ const queryClient = new QueryClient({
 // Критические изображения (загружаем первыми)
 const CRITICAL_IMAGES: string[] = [
   // Локальные логотипы партнеров
-  "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
+  "/img/сател.png",
+  "/img/ЛОГО.png",
+  "/img/КРОК.png",
+  "/img/Инфосэл.png",
+  "/img/инлайн.png",
 ];
 
 // Схемы и диаграммы (загружаем вторыми)
@@ -132,7 +136,7 @@ const App = () => {
     // Этап 1: КРИТИЧЕСКИЕ ресурсы загружаем НЕМЕДЛЕННО
     const preloadCritical = () => {
       // Критические изображения с максимальным приоритетом
-      CRITICAL_IMAGES.forEach((imageUrl, index) => {
+      CRITICAL_IMAGES.forEach((imageUrl) => {
         const img = new Image();
         img.loading = 'eager';
         img.fetchPriority = 'high';

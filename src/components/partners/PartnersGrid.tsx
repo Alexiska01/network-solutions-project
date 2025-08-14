@@ -20,7 +20,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 1,
       name: "Инфосэл",
-      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
+      logo: "/img/Инфосэл.png",
       region: "Россия",
       type: "Интегратор",
       category: "Коммутаторы",
@@ -31,7 +31,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 2,
       name: "Инлайн ГРУП",
-      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
+      logo: "/img/инлайн.png",
       region: "Россия",
       type: "Интегратор",
       category: "Маршрутизаторы",
@@ -42,7 +42,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 3,
       name: "КРОК",
-      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
+      logo: "/img/КРОК.png",
       region: "Россия",
       type: "Интегратор",
       category: "Wi-Fi",
@@ -53,7 +53,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     {
       id: 4,
       name: "САТЕЛ",
-      logo: "/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg",
+      logo: "/img/сател.png",
       region: "Россия",
       type: "Интегратор",
       category: "Коммутаторы",

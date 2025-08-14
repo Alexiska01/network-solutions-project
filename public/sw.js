@@ -24,8 +24,11 @@ const MODEL_URLS = [
 
 // Критические изображения
 const CRITICAL_IMAGES = [
-  '/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg',
-  '/img/630b2904-1fe7-4f43-bd28-37f177352805.jpg'
+  '/img/ЛОГО.png',
+  '/img/КРОК.png',
+  '/img/Инфосэл.png',
+  '/img/САТЕЛ.png',
+  '/img/инлайн.png',
 ];
 
 // Установка Service Worker
