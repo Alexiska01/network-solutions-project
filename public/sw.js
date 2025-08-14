@@ -23,9 +23,8 @@ const MODEL_URLS = [
 
 // Критические изображения - кэшируем навсегда
 const CRITICAL_IMAGES = [
-  'https://cdn.poehali.dev/files/71f08bb6-26da-4283-8bca-5f89f31db427.png',
-  'https://cdn.poehali.dev/files/8bc26615-50dc-4cf3-944f-5ee56b4eada8.png',
-  'https://cdn.poehali.dev/files/76dacccf-6833-4e57-9f96-4c08f84f93fa.png'
+  // Используем локальные изображения вместо CDN
+  '/img/12db13e6-167a-4402-90a7-1b42f60b8848.jpg'
 ];
 
 // Установка SW - СУПЕР агрессивное кэширование
