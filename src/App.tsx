@@ -94,17 +94,44 @@ const PRELOAD_ROUTES = [
 const App = () => {
   const [showWelcome, setShowWelcome] = useState(false);
 
-  // Показ WelcomeScreen только при первом посещении
+  // Отслеживание закрытия/открытия сайта
   useEffect(() => {
-    const STORAGE_KEY = 'hasVisited';
+    const STORAGE_KEY = 'lastVisitTime';
+    const ONE_HOUR = 60 * 60 * 1000; // 1 час в миллисекундах
     
-    // Проверяем, был ли пользователь уже на сайте
-    const hasVisited = localStorage.getItem(STORAGE_KEY);
+    // При загрузке страницы проверяем последнее время посещения
+    const lastVisit = localStorage.getItem(STORAGE_KEY);
+    const currentTime = Date.now();
     
-    if (!hasVisited) {
+    if (!lastVisit) {
       // Первое посещение - показываем WelcomeScreen
       setShowWelcome(true);
+    } else {
+      const timeDifference = currentTime - parseInt(lastVisit);
+      if (timeDifference >= ONE_HOUR) {
+        setShowWelcome(true);
+      }
     }
+    
+    // Сохраняем время при закрытии страницы
+    const handleBeforeUnload = () => {
+      localStorage.setItem(STORAGE_KEY, currentTime.toString());
+    };
+    
+    // Сохраняем время при скрытии страницы (переключение вкладок)
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        localStorage.setItem(STORAGE_KEY, Date.now().toString());
+      }
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   // СУПЕР АГРЕССИВНАЯ ПРЕДЗАГРУЗКА для максимальной производительности
@@ -182,9 +209,10 @@ const App = () => {
     };
 
     // Команда для тестирования WelcomeScreen (только для разработки)
-    (window as any).testWelcomeScreen = () => {
-      console.log('🧪 Тестирование: показ WelcomeScreen');
-      localStorage.removeItem('hasVisited');
+    (window as any).testWelcomeAfterHour = () => {
+      console.log('🕐 Тестирование: эмуляция возврата через час');
+      const oneHourAgo = Date.now() - (60 * 60 * 1000);
+      localStorage.setItem('lastVisitTime', oneHourAgo.toString());
       window.location.reload();
     };
 
@@ -207,8 +235,8 @@ const App = () => {
             forceShow={true}
             onComplete={() => {
               setShowWelcome(false);
-              // Отмечаем, что пользователь уже был на сайте
-              localStorage.setItem('hasVisited', 'true');
+              // Обновляем время последнего посещения при завершении Welcome
+              localStorage.setItem('lastVisitTime', Date.now().toString());
             }}
           />
         )}
