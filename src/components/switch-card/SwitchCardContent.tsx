@@ -43,9 +43,6 @@ const SwitchCardContent = ({
             {switchData.title}
           </motion.h3>
 
-          <p className="text-gray-600 text-base mb-6 leading-relaxed line-clamp-3">
-            {switchData.description}
-          </p>
 
           {/* Specs Grid */}
           <SwitchCardSpecs
