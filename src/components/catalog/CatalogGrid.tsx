@@ -2,34 +2,15 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SwitchCard from "@/components/SwitchCard";
+import type { SwitchModel } from "@/data/switchesData";
 import SwitchesSearch from "@/components/SwitchesSearch";
 import Icon from "@/components/ui/icon";
 
 interface GroupedSwitches {
-  corporateAccess: Array<{
-    id: string;
-    title: string;
-    category: string;
-    [key: string]: any;
-  }>;
-  corporateDistribution: Array<{
-    id: string;
-    title: string;
-    category: string;
-    [key: string]: any;
-  }>;
-  dataCenterSpine: Array<{
-    id: string;
-    title: string;
-    category: string;
-    [key: string]: any;
-  }>;
-  dataCenterLeaf: Array<{
-    id: string;
-    title: string;
-    category: string;
-    [key: string]: any;
-  }>;
+  corporateAccess: SwitchModel[];
+  corporateDistribution: SwitchModel[];
+  dataCenterSpine: SwitchModel[];
+  dataCenterLeaf: SwitchModel[];
 }
 
 interface CatalogGridProps {
@@ -99,11 +80,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
               )}>
                 Коммутаторы для корпоративных ЛВС
               </h2>
-              <p className={cn(
-                "text-gray-600 mt-1",
-                isMobile ? "text-sm leading-relaxed" : "text-sm sm:text-base"
-              )}>
-              </p>
+              {/* Пустой абзац удалён, место освобождено */}
             </div>
           </div>
         </motion.div>
@@ -268,12 +245,6 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
               )}>
                 Центры обработки данных
               </h2>
-              <p className={cn(
-                "text-gray-600 mt-1",
-                isMobile ? "text-sm" : ""
-              )}>
-                Высокопроизводительные решения для ЦОД
-              </p>
             </div>
           </div>
         </motion.div>

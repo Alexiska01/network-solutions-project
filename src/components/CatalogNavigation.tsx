@@ -251,24 +251,27 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
           }`}
         />
 
-        <div className="flex items-center gap-3 relative z-10">
-          <div
-            className={`p-1.5 rounded-lg transition-all duration-300 ${
-              isActive
-                ? "bg-white/20"
-                : "group-hover:bg-white/60 group-hover:shadow-sm"
-            }`}
-          >
-            <Icon
-              name={item.icon}
-              size={level === 0 ? 18 : 16}
-              className={`transition-colors duration-300 ${
-                isActive ? "text-white" : getIconColor()
-              }`}
-            />
+          <div className="flex items-center gap-3 relative z-10">
+            {/* Показываем иконку только для первого уровня */}
+            {level === 0 && (
+              <div
+                className={`p-1.5 rounded-lg transition-all duration-300 ${
+                  isActive
+                    ? "bg-white/20"
+                    : "group-hover:bg-white/60 group-hover:shadow-sm"
+                }`}
+              >
+                <Icon
+                  name={item.icon}
+                  size={18}
+                  className={`transition-colors duration-300 ${
+                    isActive ? "text-white" : getIconColor()
+                  }`}
+                />
+              </div>
+            )}
+            <span className="relative z-10">{item.name}</span>
           </div>
-          <span className="relative z-10">{item.name}</span>
-        </div>
 
         {item.children && (
           <motion.div
