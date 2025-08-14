@@ -19,10 +19,10 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [background, setBackground] = useState("studio");
-  const [viewMode, setViewMode] = useState("explore");
+  const [viewMode] = useState("explore");
   const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
   const [cameraPreset, setCameraPreset] = useState("default");
-  const [showSpecs, setShowSpecs] = useState(false);
+
 
   // Debug modelLoaded prop changes
   useEffect(() => {

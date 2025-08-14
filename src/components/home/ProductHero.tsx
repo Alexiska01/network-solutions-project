@@ -350,10 +350,6 @@ const ProductHero = memo(() => {
                 <h1 className="ph-title">
                   {currentData.title}
                 </h1>
-
-                <p className="ph-desc">
-                  {currentData.description}
-                </p>
               </div>
 
               <div className="ph-features">
@@ -385,16 +381,11 @@ const ProductHero = memo(() => {
               </div>
             </div>
 
-            {/* Правая колонка — 3D (реализация как в Hero3530) */}
-            <div className="ph-model-container relative order-first lg:order-last mt-0 lg:mt-0 flex justify-center">
-              <div className="ph-model-effects">
-                <div className="ph-model-bg" />
-                <div className="ph-model-glow" />
-              </div>
-              <div className="ph-model-wrapper relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[600px] h-[280px] sm:h-[320px] md:h-[380px] lg:h-[420px]">
-                {/* 3D модель с лоадером и обработкой ошибок */}
+            {/* Правая колонка — 3D модель (структура как в Hero3530, но с OptimizedModelViewer) */}
+            <div className="hero-model-section ph-model-center relative order-first lg:order-last mt-0 lg:mt-0">
+              <div className="hero-model-container relative w-full max-w-[343px] sm:max-w-[411px] md:max-w-[446px] lg:max-w-[514px] h-[240px] sm:h-[275px] md:h-[326px] lg:h-[360px]" style={{ transform: 'translateY(-20px)' }}>
                 {modelLoadStatus[currentData.modelUrl] !== false && (
-                  <div className={`ph-model relative z-10 w-full h-full`}>
+                  <div className="hero-model relative z-10 w-full h-full">
                     <model-viewer
                       ref={modelRef}
                       src={currentData.modelUrl}
@@ -403,20 +394,20 @@ const ProductHero = memo(() => {
                       auto-rotate-delay="0"
                       rotation-per-second={isMobile ? "32deg" : "30deg"}
                       camera-controls={!isMobile}
-                      camera-orbit={isMobile ? "0deg 80deg 1.1m" : "0deg 83deg 1.1m"}
+                      camera-orbit={isMobile ? "0deg 80deg 1.0m" : "0deg 83deg 0.95m"}
                       min-camera-orbit={isMobile ? "auto auto 1.1m" : "auto auto 0.5m"}
                       max-camera-orbit={isMobile ? "auto auto 1.1m" : "auto auto 1.2m"}
-                      field-of-view={isMobile ? "40deg" : "35deg"}
+                      field-of-view={isMobile ? "40deg" : "40deg"}
                       interaction-prompt="none"
                       environment-image="neutral"
                       shadow-intensity={isMobile ? "0.2" : "0.25"}
-                      exposure={isMobile ? "1.1" : "1.05"}
+                      exposure={isMobile ? "1.1" : "1.1"}
                       disable-zoom={isMobile ? true : undefined}
                       disable-pan={isMobile ? true : undefined}
                       disable-tap={isMobile ? true : undefined}
                       style={{
-                        width: isMobile ? '100%' : '90%',
-                        height: isMobile ? '100%' : '90%',
+                        width: isMobile ? '100%' : '100%',
+                        height: isMobile ? '100%' : '100%',
                         background: 'transparent',
                         border: 'none',
                         outline: 'none',
@@ -424,12 +415,14 @@ const ProductHero = memo(() => {
                         borderRadius: isMobile ? '1rem' : '0rem',
                         pointerEvents: 'none',
                         touchAction: isMobile ? 'none' : undefined,
-                      }}
+                        '--progress-bar-color': 'transparent',
+                        '--progress-mask': 'transparent',
+                      } as React.CSSProperties}
                       onLoad={() => {
-                        setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
                         if (!modelPreloader.isLoaded(currentData.modelUrl)) {
                           modelPreloader.markAsLoaded?.(currentData.modelUrl);
                         }
+                        setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
                       }}
                       onError={() => {
                         setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }));
@@ -437,8 +430,6 @@ const ProductHero = memo(() => {
                     />
                   </div>
                 )}
-                {/* Лоадер убран по просьбе пользователя */}
-                {/* Ошибка */}
                 {modelLoadStatus[currentData.modelUrl] === false && (
                   <div className="absolute inset-0 flex items-center justify-center z-20">
                     <div className="flex flex-col items-center gap-3">

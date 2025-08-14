@@ -183,10 +183,6 @@ const SwitchesCatalog = ({ data = switchesData }: SwitchesCatalogProps) => {
                 <SwitchCard
                   key={sw.id}
                   switchData={sw}
-                  onSpecFilter={(k, v) => {
-                    setFilters((prev) => ({ ...prev, [k]: v }));
-                    setPage(1);
-                  }}
                 />
               ))}
             </div>

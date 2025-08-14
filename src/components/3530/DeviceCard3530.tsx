@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import type { SwitchModel } from "@/types/models";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import { useEffect, useRef, useState } from "react";
 import './DeviceCard3530.css';
 
@@ -72,7 +71,6 @@ export default function DeviceCard3530({
   onNavigate,
 }: DeviceCard3530Props) {
   const specs = getSpecs(model);
-  const isMobile = useIsMobile();
   const cardRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 

@@ -18,7 +18,7 @@ const SwitchCardBadge = ({
       >
         <div className="w-3.5 h-3.5 flex items-center justify-center flex-shrink-0">
           <Icon 
-            name={getCategoryIcon(category)} 
+            name={getCategoryIcon(category) as keyof typeof import('lucide-react')} 
             className="text-white"
             style={{ 
               width: '14px', 

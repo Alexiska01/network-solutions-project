@@ -1,16 +1,34 @@
+/* Центрирование содержимого внутри model-viewer */
+.hero-model-container model-viewer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  box-sizing: border-box;
+}
+/* Центрирование правого блока с 3D-моделью */
+.ph-model-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 100%;
+}
 /* src/components/product/ProductHero.css */
 /* Премиальный, чистый, GPU-first. Без JS-анимаций, только CSS. */
 
 /* Токены анимаций и дефолты */
+/* Уменьшен размер hero-блока и модели */
+/* min-height как в Hero3530, без переменных высоты */
+/* Более компактный hero-блок */
+/* Гарантированное вертикальное центрирование */
+/* Уменьшено на 20% */
 .ph-container {
   position: relative;
   box-sizing: border-box;
-  --ph-vgap: 30px; /* вертикальные поля по умолчанию (mobile/tablet) */
-  --ph-model-h: 34vh; /* высота контейнера модели (mobile default) */
-  min-block-size: calc(
-    var(--ph-model-h) + (var(--ph-vgap) * 2)
-  ); /* привязка к модели */
-  padding-block: var(--ph-vgap); /* вместо margin у .ph-wrapper */
+  min-height: 96px;
+  padding-block: 6px;
+  height: 100%;
   background: linear-gradient(135deg, #0b3c49, #1a237e, #2e2e2e);
   overflow: hidden;
 
@@ -47,25 +65,11 @@
 
 @media (min-width: 1024px) {
   .ph-container {
-    --ph-vgap: 48px;
-    --ph-model-h: 30rem;
-  } /* desktop */
+    min-height: 120px;
+    padding-block: 14px;
+  }
 }
-@media (min-width: 768px) {
-  .ph-container {
-    --ph-model-h: 23rem;
-  }
-} /* tablet */
-@media (min-width: 414px) {
-  .ph-container {
-    --ph-model-h: 34vh;
-  }
-} /* large phones */
-@media (min-width: 375px) {
-  .ph-container {
-    --ph-model-h: 36vh;
-  }
-} /* phones */
+/* убраны все переменные высоты для полной унификации с Hero3530 */
 
 /* High-refresh переменные для морфинга удалены */
 
@@ -131,43 +135,37 @@
   will-change: transform, opacity;
 }
 
-.ph-glow-main {
-  top: 25%;
-  left: 33.333%;
-  width: 16rem;
-  height: 16rem;
-}
-@media (min-width: 768px) {
-  .ph-glow-main {
-    width: 24rem;
-    height: 24rem;
-  }
-}
+/* Компактные характеристики */
 
-.ph-glow-secondary {
-  bottom: 25%;
-  right: 33.333%;
-  width: 12rem;
-  height: 12rem;
-  animation-direction: reverse;
-}
-@media (min-width: 768px) {
-  .ph-glow-secondary {
-    width: 16rem;
-    height: 16rem;
-  }
-}
 
-@keyframes ph-glow-float {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scale(0.85);
-  }
-  50% {
-    opacity: 0.15;
-    transform: scale(1.2);
-  }
+.ph-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 6px 0 0 0;
+}
+.ph-feature {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-size: 0.56rem;
+  font-weight: 500;
+  color: #1e293b;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  padding: 0;
+  opacity: 0;
+  transform: translateY(4px);
+  animation: ph-feature-fadein 0.7s var(--ease-premium) forwards;
+  animation-delay: calc(0.12s + var(--feature-index, 0) * 0.08s);
+}
+.ph-feature-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--current-accent-color, #53c2a4), var(--current-glow-color, #005baa));
+  box-shadow: 0 1px 1px rgba(0,0,0,0.10);
+  flex: none;
 }
 
 .ph-geo-1,
@@ -212,10 +210,11 @@
 }
 
 /* Основная сетка */
+/* Для вертикального центрирования .ph-content */
 .ph-main {
   position: relative;
   z-index: 1;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -230,11 +229,11 @@
 .ph-wrapper {
   width: 100%;
   max-width: 80rem;
-  margin: 0 auto; /* вертикальные отступы теперь на контейнере */
+  margin: 0 auto;
   margin-top: 0;
   margin-bottom: 0;
   padding: 0 1rem;
-  height: auto; /* контент сам задаёт высоту */
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -248,11 +247,17 @@
   } /* desktop */
 }
 
+/* Вертикальное центрирование на десктопе */
 .ph-grid {
   display: grid;
   gap: 0;
   align-items: stretch;
-  height: auto;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .ph-grid {
+    align-items: center;
+  }
 }
 
 @media (min-width: 768px) {
@@ -269,15 +274,15 @@
   }
 }
 
+/* Центрирование левого блока */
 .ph-content {
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: center;
   gap: 1rem;
   order: 2;
-  padding-bottom: max(1rem, env(safe-area-inset-bottom));
-  padding-top: 1rem;
-  height: 45vh;
+  padding: 0;
+  height: 100%;
 
   opacity: 0;
   filter: blur(10px);
@@ -293,7 +298,7 @@
     gap: 1.5rem;
     order: 1;
     padding: 0;
-    height: auto;
+    height: 100%;
   }
 }
 @media (min-width: 1024px) {
@@ -352,11 +357,12 @@
   }
 }
 
+/* Уменьшено на 15% */
 .ph-title {
   color: #fff;
   font-weight: 700;
   line-height: 1.25;
-  font-size: 1.5rem;
+  font-size: 1.275rem;
   opacity: 0;
   filter: blur(8px);
   transform: translate3d(0, 60px, 0) scale(0.9);
@@ -366,27 +372,27 @@
 }
 @media (min-width: 375px) {
   .ph-title {
-    font-size: 1.875rem;
+    font-size: 1.59375rem;
   }
 }
 @media (min-width: 414px) {
   .ph-title {
-    font-size: 2.25rem;
+    font-size: 1.9125rem;
   }
 }
 @media (min-width: 768px) {
   .ph-title {
-    font-size: 1.875rem;
+    font-size: 1.59375rem;
   }
 }
 @media (min-width: 1024px) {
   .ph-title {
-    font-size: 2.25rem;
+    font-size: 1.9125rem;
   }
 }
 @media (min-width: 1280px) {
   .ph-title {
-    font-size: 3rem;
+    font-size: 2.55rem;
   }
 }
 @keyframes ph-title-entry {
@@ -598,6 +604,7 @@
   order: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   opacity: 0;
   filter: blur(20px);
   transform: scale(0.7) rotateY(30deg) rotateX(15deg);

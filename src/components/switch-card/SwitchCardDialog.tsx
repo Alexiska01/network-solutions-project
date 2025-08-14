@@ -51,7 +51,7 @@ const SwitchCardDialog = ({
           className={`w-12 h-12 rounded-full bg-gradient-to-r ${getCategoryColor(switchData.category)} flex items-center justify-center ${isMobile ? 'mb-2' : ''}`}
         >
           <Icon
-            name={getCategoryIcon(switchData.category)}
+            name={getCategoryIcon(switchData.category) as keyof typeof import('lucide-react')}
             size={22}
             className="text-white"
           />
