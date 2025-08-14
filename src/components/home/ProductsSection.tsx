@@ -224,9 +224,9 @@ const ProductsSection = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl transition-opacity duration-500 md:duration-700 ease-out pointer-events-none"></div>
               
               {/* Content */}
-              <div className="relative z-10 flex flex-col h-full">
+              <div className="relative z-10 flex flex-col h-full space-y-5 md:space-y-8">
                   {/* Иконка */}
-                  <div className={`ps-section-icon relative ${isMobile ? 'mb-6' : 'mb-8'}`}>
+                  <div className="ps-section-icon relative">
                     <div className="ps-icon-wrapper bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center">
                       <Icon
                         name={product.icon as any}
@@ -241,7 +241,7 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* Заголовок */}
-                  <div className={`ps-section-header ${isMobile ? 'mb-4' : 'mb-[10px]'}`}>
+                  <div className="ps-section-header">
                     <div className={isMobile ? '' : 'min-h-[80px] flex flex-col justify-center'}>
                       <h3 className="ps-title font-bold text-gray-900 leading-tight tracking-tight whitespace-normal lg:whitespace-pre-line">
                         {product.title}
@@ -255,7 +255,7 @@ const ProductsSection = () => {
                 
                   {/* Описание - только для мобильных */}
                   {isMobile && (
-                    <div className="ps-section-description mb-6">
+                    <div className="ps-section-description">
                       <div>
                         <p className="ps-description text-gray-600 font-medium leading-relaxed">
                           {product.description}
@@ -266,7 +266,7 @@ const ProductsSection = () => {
                   
                   {/* Детальная информация - только десктоп */}
                   {!isMobile && (
-                    <div className="ps-section-detailed mb-6">
+                    <div className="ps-section-detailed">
                       <div className="min-h-[72px] flex flex-col justify-center">
                         <p className="ps-detailed-info text-sm text-gray-500 font-normal leading-relaxed">
                           {product.detailedInfo}
@@ -276,7 +276,7 @@ const ProductsSection = () => {
                   )}
                 
                   {/* Характеристики */}
-                  <div className="ps-section-features mb-8 lg:mb-[16px]">
+                  <div className="ps-section-features flex-1">
                     <div className={`${isMobile ? 'space-y-3' : 'space-y-4'}`}>
                       {(isMobile ? product.features.slice(0, 3) : product.features).map((feature, idx) => (
                         <div 
@@ -301,7 +301,7 @@ const ProductsSection = () => {
                   </div>
                 
                   {/* CTA кнопка - всегда внизу */}
-                  <div className="ps-section-cta pt-[5px]">
+                  <div className="ps-section-cta">
                     {index === 0 ? (
                       <Link
                         to="/switches"
