@@ -1,16 +1,17 @@
-// СУПЕР АГРЕССИВНЫЙ Service Worker для максимальной производительности
-const CACHE_NAME = 'idata-super-cache-v6';
-const CRITICAL_CACHE = 'idata-critical-v6';
-const MODEL_CACHE = 'idata-models-v6';
-const IMAGE_CACHE = 'idata-images-v6';
+// Профессиональный Service Worker с надёжным error handling
+const CACHE_VERSION = 'v7';
+const CACHE_NAME = `idata-cache-${CACHE_VERSION}`;
+const CRITICAL_CACHE = `idata-critical-${CACHE_VERSION}`;
+const MODEL_CACHE = `idata-models-${CACHE_VERSION}`;
+const IMAGE_CACHE = `idata-images-${CACHE_VERSION}`;
 
-// Критические ресурсы - кэшируем НАВСЕГДА
+// Критические ресурсы для офлайн работы
 const CRITICAL_RESOURCES = [
   '/',
   '/manifest.json'
 ];
 
-// 3D Модели - кэшируем на год
+// 3D модели для кэширования
 const MODEL_URLS = [
   '/models/3530all.glb',
   '/models/3730all.glb',
@@ -21,271 +22,217 @@ const MODEL_URLS = [
   '/models/IDS3530-24S.glb'
 ];
 
-// Критические изображения - кэшируем навсегда
+// Критические изображения
 const CRITICAL_IMAGES = [
-  // Используем локальные изображения вместо CDN
-  '/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg'
+  '/img/164ca65e-bdb4-4caa-89fb-0459f4ca4138.jpg',
+  '/img/630b2904-1fe7-4f43-bd28-37f177352805.jpg'
 ];
 
-// Установка SW - СУПЕР агрессивное кэширование
+// Установка Service Worker
 self.addEventListener('install', (event) => {
-  console.log('🚀 СУПЕР Service Worker: Установка с агрессивным кэшированием');
+  console.log('🚀 Service Worker: Installing...');
   
   event.waitUntil(
-    Promise.all([
-      // Критические ресурсы
-      caches.open(CRITICAL_CACHE).then(cache => {
-        console.log('⚡ Кэшируем критические ресурсы');
-        return cache.addAll(CRITICAL_RESOURCES).catch(err => {
-          console.warn('⚠️ Ошибка кэширования критических ресурсов:', err);
-        });
-      }),
-      
-      // 3D модели с высоким приоритетом
-      caches.open(MODEL_CACHE).then(cache => {
-        console.log('🎯 Кэшируем 3D модели');
-        return Promise.all(
-          MODEL_URLS.map(url => {
-            return fetch(url, {
-              priority: 'high',
-              mode: 'cors',
-              credentials: 'omit'
-            })
-            .then(response => {
-              if (response.ok) {
-                console.log('✅ Модель закэширована:', url);
-                return cache.put(url, response);
-              }
-            })
-            .catch(err => {
-              console.warn('⚠️ Ошибка кэширования модели:', url, err);
-            });
-          })
-        );
-      }),
-      
-      // Критические изображения
-      caches.open(IMAGE_CACHE).then(cache => {
-        console.log('🖼️ Кэшируем критические изображения');
-        return Promise.all(
-          CRITICAL_IMAGES.map(url => {
-            return fetch(url, {
-              mode: 'cors',
-              credentials: 'omit'
-            })
-            .then(response => {
-              if (response.ok) {
-                console.log('✅ Изображение закэшировано:', url);
-                return cache.put(url, response);
-              }
-            })
-            .catch(err => {
-              console.warn('⚠️ Ошибка кэширования изображения:', url, err);
-            });
-          })
-        );
-      })
-    ]).then(() => {
+    Promise.allSettled([
+      // Кэшируем критические ресурсы
+      cacheResources(CRITICAL_CACHE, CRITICAL_RESOURCES, 'критические ресурсы'),
+      // Кэшируем изображения
+      cacheResources(IMAGE_CACHE, CRITICAL_IMAGES, 'изображения'),
+      // Предзагружаем модели в фоне (не блокируем установку)
+      preloadModelsInBackground()
+    ]).then((results) => {
+      console.log('✅ Service Worker: Installation complete');
+      results.forEach((result, index) => {
+        if (result.status === 'rejected') {
+          console.warn(`⚠️ Cache operation ${index} failed:`, result.reason);
+        }
+      });
       // Принудительно активируем новый SW
-      console.log('✅ Все ресурсы предзагружены, активируем SW');
-      self.skipWaiting();
+      return self.skipWaiting();
     })
   );
 });
 
-// Активация - берём контроль немедленно
+// Активация Service Worker
 self.addEventListener('activate', (event) => {
-  console.log('✅ СУПЕР Service Worker активирован');
+  console.log('✅ Service Worker: Activating...');
   
   event.waitUntil(
     Promise.all([
-      // Удаляем старые кэши
-      caches.keys().then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(cacheName => {
-            if (!cacheName.includes('v5')) {
-              console.log('🗑️ Удаляем старый кэш:', cacheName);
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      }),
+      // Очищаем старые кэши
+      cleanOldCaches(),
       // Берём контроль над всеми клиентами
       self.clients.claim()
-    ])
+    ]).then(() => {
+      console.log('✅ Service Worker: Activated and ready');
+    })
   );
 });
 
-// Fetch - СУПЕР агрессивная стратегия кэширования
+// Обработка fetch запросов
 self.addEventListener('fetch', (event) => {
   const { request } = event;
-  const url = request.url;
   
-  // Игнорируем не-GET запросы
+  // Обрабатываем только GET запросы
   if (request.method !== 'GET') return;
   
-  // 3D МОДЕЛИ - максимальный приоритет, кэш НАВСЕГДА
-  if (MODEL_URLS.some(modelUrl => url.endsWith(modelUrl))) {
-    event.respondWith(superCacheFirst(request, MODEL_CACHE, '🎯 Модель'));
-  }
+  const url = new URL(request.url);
   
-  // КРИТИЧЕСКИЕ ИЗОБРАЖЕНИЯ - кэш навсегда
-  else if (CRITICAL_IMAGES.some(imageUrl => url.includes(imageUrl))) {
-    event.respondWith(superCacheFirst(request, IMAGE_CACHE, '🖼️ Изображение'));
-  }
-  
-  // СТАТИЧЕСКИЕ РЕСУРСЫ - агрессивное кэширование
-  else if (isStaticAsset(request)) {
-    event.respondWith(aggressiveCache(request, CACHE_NAME, '📦 Статика'));
-  }
-  
-  // HTML СТРАНИЦЫ - кэш с обновлением в фоне
-  else if (isHTMLPage(request)) {
-    event.respondWith(staleWhileRevalidate(request, CACHE_NAME, '📄 HTML'));
-  }
-  
-  // ВСЁ ОСТАЛЬНОЕ - стандартное кэширование
-  else {
-    event.respondWith(standardCache(request, CACHE_NAME, '🌐 Прочее'));
+  // Определяем стратегию кэширования
+  if (isModelRequest(url)) {
+    event.respondWith(cacheFirstStrategy(request, MODEL_CACHE));
+  } else if (isCriticalImage(url)) {
+    event.respondWith(cacheFirstStrategy(request, IMAGE_CACHE));
+  } else if (isStaticAsset(url)) {
+    event.respondWith(cacheFirstStrategy(request, CACHE_NAME));
+  } else if (isHTMLRequest(url)) {
+    event.respondWith(networkFirstStrategy(request, CACHE_NAME));
+  } else {
+    event.respondWith(networkFirstStrategy(request, CACHE_NAME));
   }
 });
 
-// Проверки типов ресурсов
-function isStaticAsset(request) {
-  const url = new URL(request.url);
-  return url.pathname.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|webp|glb)$/);
-}
-
-function isHTMLPage(request) {
-  const url = new URL(request.url);
-  return url.pathname === '/' || !url.pathname.includes('.');
-}
-
-// СУПЕР кэш - ресурс НИКОГДА не перезагружается
-async function superCacheFirst(request, cacheName, logPrefix) {
-  const cache = await caches.open(cacheName);
-  const cachedResponse = await cache.match(request);
-  
-  if (cachedResponse) {
-    console.log(`⚡ ${logPrefix} из СУПЕР кэша:`, request.url);
-    return cachedResponse;
-  }
-  
+// Утилиты для кэширования
+async function cacheResources(cacheName, resources, description) {
   try {
-    console.log(`🌐 ${logPrefix} загружаем ПЕРВЫЙ раз:`, request.url);
-    const networkResponse = await fetch(request, {
-      priority: 'high',
-      mode: 'cors',
-      credentials: 'omit'
-    });
+    const cache = await caches.open(cacheName);
+    const validResources = [];
     
-    if (networkResponse.ok) {
-      // Кэшируем НАВСЕГДА
-      await cache.put(request, networkResponse.clone());
-      console.log(`✅ ${logPrefix} закэширован НАВСЕГДА:`, request.url);
+    // Проверяем каждый ресурс отдельно
+    for (const resource of resources) {
+      try {
+        const response = await fetch(resource, { 
+          method: 'HEAD',
+          cache: 'no-cache'
+        });
+        if (response.ok) {
+          validResources.push(resource);
+        } else {
+          console.warn(`⚠️ Resource not available: ${resource}`);
+        }
+      } catch (error) {
+        console.warn(`⚠️ Failed to check resource: ${resource}`, error);
+      }
     }
     
-    return networkResponse;
+    if (validResources.length > 0) {
+      await cache.addAll(validResources);
+      console.log(`✅ Cached ${validResources.length} ${description}`);
+    }
+    
+    return true;
   } catch (error) {
-    console.warn(`❌ ${logPrefix} недоступен:`, request.url, error);
-    return new Response(`${logPrefix} offline`, { status: 503 });
+    console.error(`❌ Failed to cache ${description}:`, error);
+    throw error;
   }
 }
 
-// Агрессивное кэширование - долгий TTL
-async function aggressiveCache(request, cacheName, logPrefix) {
-  const cache = await caches.open(cacheName);
-  const cachedResponse = await cache.match(request);
+async function preloadModelsInBackground() {
+  // Загружаем модели в фоне, не блокируя установку
+  setTimeout(async () => {
+    try {
+      await cacheResources(MODEL_CACHE, MODEL_URLS, '3D модели');
+    } catch (error) {
+      console.warn('⚠️ Background model preloading failed:', error);
+    }
+  }, 2000);
   
-  if (cachedResponse) {
-    // Проверяем возраст кэша (24 часа)
-    const cachedDate = new Date(cachedResponse.headers.get('sw-cached-date') || 0);
-    const now = new Date();
-    const ageHours = (now - cachedDate) / (1000 * 60 * 60);
+  return Promise.resolve();
+}
+
+async function cleanOldCaches() {
+  try {
+    const cacheNames = await caches.keys();
+    const oldCaches = cacheNames.filter(name => 
+      name.startsWith('idata-') && !name.includes(CACHE_VERSION)
+    );
     
-    if (ageHours < 24) {
-      console.log(`⚡ ${logPrefix} из агрессивного кэша:`, request.url);
+    await Promise.all(
+      oldCaches.map(cacheName => {
+        console.log(`🗑️ Deleting old cache: ${cacheName}`);
+        return caches.delete(cacheName);
+      })
+    );
+    
+    console.log(`🧹 Cleaned ${oldCaches.length} old caches`);
+  } catch (error) {
+    console.warn('⚠️ Cache cleanup failed:', error);
+  }
+}
+
+// Стратегии кэширования
+async function cacheFirstStrategy(request, cacheName) {
+  try {
+    const cache = await caches.open(cacheName);
+    const cachedResponse = await cache.match(request);
+    
+    if (cachedResponse) {
       return cachedResponse;
     }
-  }
-  
-  try {
+    
     const networkResponse = await fetch(request);
     
     if (networkResponse.ok) {
-      // Добавляем метку времени кэширования
-      const responseClone = networkResponse.clone();
-      const headers = new Headers(responseClone.headers);
-      headers.set('sw-cached-date', new Date().toISOString());
-      
-      const newResponse = new Response(responseClone.body, {
-        status: responseClone.status,
-        statusText: responseClone.statusText,
-        headers: headers
-      });
-      
-      await cache.put(request, newResponse);
-      console.log(`✅ ${logPrefix} обновлён в агрессивном кэше:`, request.url);
+      cache.put(request, networkResponse.clone());
     }
     
     return networkResponse;
   } catch (error) {
-    // Возвращаем старый кэш даже если устарел
-    if (cachedResponse) {
-      console.log(`🔄 ${logPrefix} из СТАРОГО кэша (офлайн):`, request.url);
-      return cachedResponse;
+    console.warn('⚠️ Cache-first strategy failed:', error);
+    
+    // Пытаемся найти в любом кэше
+    const fallbackResponse = await caches.match(request);
+    if (fallbackResponse) {
+      return fallbackResponse;
     }
     
-    return new Response(`${logPrefix} offline`, { status: 503 });
+    return new Response('Resource unavailable offline', { 
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
   }
 }
 
-// Stale While Revalidate - для HTML страниц
-async function staleWhileRevalidate(request, cacheName, logPrefix) {
-  const cache = await caches.open(cacheName);
-  const cachedResponse = await cache.match(request);
-  
-  // Обновляем в фоне
-  const fetchPromise = fetch(request).then(response => {
-    if (response.ok) {
-      cache.put(request, response.clone());
-      console.log(`🔄 ${logPrefix} обновлён в фоне:`, request.url);
-    }
-    return response;
-  }).catch(() => {
-    console.warn(`⚠️ ${logPrefix} не удалось обновить:`, request.url);
-  });
-  
-  if (cachedResponse) {
-    console.log(`⚡ ${logPrefix} из кэша + обновление в фоне:`, request.url);
-    return cachedResponse;
-  }
-  
-  return fetchPromise;
-}
-
-// Стандартное кэширование
-async function standardCache(request, cacheName, logPrefix) {
+async function networkFirstStrategy(request, cacheName) {
   try {
     const networkResponse = await fetch(request);
     
     if (networkResponse.ok) {
       const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
-      console.log(`✅ ${logPrefix} закэширован:`, request.url);
     }
     
     return networkResponse;
   } catch (error) {
-    const cachedResponse = await caches.match(request);
+    console.warn('⚠️ Network request failed, trying cache:', error);
     
+    const cachedResponse = await caches.match(request);
     if (cachedResponse) {
-      console.log(`🔄 ${logPrefix} из резервного кэша:`, request.url);
       return cachedResponse;
     }
     
-    return new Response(`${logPrefix} offline`, { status: 503 });
+    return new Response('Resource unavailable', { 
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
   }
 }
 
-console.log('🔥🚀 СУПЕР АГРЕССИВНЫЙ Service Worker готов к работе!');
+// Проверки типов запросов
+function isModelRequest(url) {
+  return MODEL_URLS.some(modelUrl => url.pathname.endsWith(modelUrl));
+}
+
+function isCriticalImage(url) {
+  return CRITICAL_IMAGES.some(imageUrl => url.pathname.includes(imageUrl));
+}
+
+function isStaticAsset(url) {
+  return /\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|webp|glb)$/.test(url.pathname);
+}
+
+function isHTMLRequest(url) {
+  return url.pathname === '/' || (!url.pathname.includes('.') && !url.pathname.startsWith('/api/'));
+}
+
+console.log('🚀 Professional Service Worker initialized');
