@@ -103,7 +103,10 @@ const App = () => {
     const lastVisit = localStorage.getItem(STORAGE_KEY);
     const currentTime = Date.now();
     
-    if (lastVisit) {
+    if (!lastVisit) {
+      // Первое посещение - показываем WelcomeScreen
+      setShowWelcome(true);
+    } else {
       const timeDifference = currentTime - parseInt(lastVisit);
       if (timeDifference >= ONE_HOUR) {
         setShowWelcome(true);
