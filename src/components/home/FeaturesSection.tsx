@@ -209,7 +209,7 @@ const FeaturesSection = () => {
                   cardRefs.current[index] = el;
                 }
               }}
-              className={`feature-card group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full overflow-hidden ${
+              className={`feature-card group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full overflow-hidden transition-all duration-500 ease-out hover:-translate-y-1 transform-gpu ${
                 isMobile 
                   ? (visibleCards[index] ? 'feature-card-visible' : 'feature-card-hidden-mobile')
                   : (isVisible ? 'feature-card-visible' : 'feature-card-hidden')
@@ -219,13 +219,13 @@ const FeaturesSection = () => {
               } as React.CSSProperties}
             >
               {/* Subtle gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl transition-opacity duration-300 md:duration-500 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl transition-opacity duration-500 md:duration-700 ease-out pointer-events-none"></div>
               
               {/* Content */}
               <div className="relative z-10 flex flex-col h-full">
                 {/* Icon with enhanced styling */}
                 <div className="relative mb-5 md:mb-8">
-                  <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl group-hover:scale-105 transition-all duration-300 transform translate3d(0, 0, 0) backface-visibility-hidden">
+                  <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl transform translateZ(0) transition-all duration-500 ease-out backface-visibility-hidden -webkit-font-smoothing-antialiased">
                     <Icon
                       name={feature.icon as any}
                       size={isMobile ? 20 : 28}
@@ -249,7 +249,7 @@ const FeaturesSection = () => {
               </div>
 
               {/* Bottom accent line */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl transition-transform duration-300 md:duration-500 pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl transition-transform duration-500 md:duration-700 ease-out pointer-events-none"></div>
             </div>
           ))}
         </div>
