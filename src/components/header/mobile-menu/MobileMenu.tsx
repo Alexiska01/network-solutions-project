@@ -146,7 +146,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       </div>
 
       {/* GPU-FIRST Styles */}
-      <style jsx>{`
+      <style>{`
         /* GPU Performance Tokens */
         :root {
           --dur-fast: 160ms;

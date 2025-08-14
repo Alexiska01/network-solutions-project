@@ -35,7 +35,7 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
       </div>
 
       {/* GPU-FIRST Styles */}
-      <style jsx>{`
+      <style>{`
         /* GPU Performance Tokens */
         .ease-gpu {
           transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);

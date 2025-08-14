@@ -70,7 +70,7 @@ const MenuHeader: React.FC<MenuHeaderProps> = memo(
         />
 
         {/* GPU-FIRST Styles */}
-        <style jsx>{`
+        <style>{`
           /* Performance Tokens */
           .ease-gpu {
             transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
