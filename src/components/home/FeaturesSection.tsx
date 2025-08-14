@@ -185,7 +185,7 @@ const FeaturesSection = () => {
       className={`pt-12 pb-12 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
     >
       {/* Декоративный фон */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 via-transparent to-teal-50/20 pointer-events-none"></div>
+  <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 to-teal-50/20 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div 

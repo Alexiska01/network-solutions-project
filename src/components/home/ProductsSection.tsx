@@ -277,14 +277,15 @@ const ProductsSection = () => {
                 
                   {/* Характеристики */}
                   <div className="ps-section-features mb-8 lg:mb-[16px]">
-                    <div className={`${isMobile ? 'space-y-3' : 'space-y-4'}`}>
+                    <div className={`${isMobile ? 'space-y-3' : 'space-y-4'}`}> 
+                      {/* Список характеристик всегда отображается, анимация только на карточке */}
                       {(isMobile ? product.features.slice(0, 3) : product.features).map((feature, idx) => (
                         <div 
                           key={idx} 
                           className="ps-feature flex items-start gap-3"
                           style={{ '--feature-index': idx } as React.CSSProperties}
                         >
-                          <div className={`ps-feature-icon rounded-full bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center flex-shrink-0 ${isMobile ? 'mt-0.5' : 'mt-1'}`}>
+                          <div className={`ps-feature-icon rounded-full bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center flex-shrink-0 ${isMobile ? 'mt-0.5' : 'mt-1'}`}> 
                             <Icon
                               name="Check"
                               size={isMobile ? 10 : 12}
@@ -318,7 +319,6 @@ const ProductsSection = () => {
                           />
                         </div>
                         {/* Анимированная линия в кнопке */}
-                        <div className="ps-cta-line absolute bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full" />
                       </Link>
                     ) : (
                       <button className="ps-cta group/cta relative flex items-center justify-between w-full border border-gray-200">
