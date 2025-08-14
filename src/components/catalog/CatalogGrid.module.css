@@ -174,13 +174,17 @@
   transform: translateZ(0);
   backface-visibility: hidden;
   will-change: transform, box-shadow;
+  /* Обеспечиваем четкость текста */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   transition:
     transform calc(10 * var(--frame)) cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow calc(14 * var(--frame)) cubic-bezier(0.16, 1, 0.3, 1);
 }
-/* Профессиональная анимация hover точно как в FeaturesSection */
+/* Четкая анимация hover без размывки текста */
 .cardShell:hover .cardInner {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-3px) translateZ(0);
   box-shadow:
     0 8px 24px rgba(0, 0, 0, 0.1),
     0 20px 40px rgba(0, 0, 0, 0.12);
