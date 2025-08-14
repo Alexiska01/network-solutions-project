@@ -99,16 +99,58 @@
     0 16px 32px -8px rgba(0, 0, 0, 0.02);
 }
 
-/* Desktop Hover Enhancement - Четкий без размытки */
+/* Desktop Hover Enhancement - Apple-style как в FeaturesSection */
 @media (min-width: 768px) {
+  .ps-card {
+    transition: all 0.5s ease-out;
+  }
+
+  .ps-card:hover {
+    transform: translateY(-4px) translateZ(0);
+  }
+
   .ps-card:hover .ps-card-inner {
-    transform: translateY(-6px) translateZ(0);
+    transform: translateZ(0);
     box-shadow:
-      0 8px 32px -4px rgba(0, 0, 0, 0.12),
-      0 16px 48px -8px rgba(0, 0, 0, 0.08),
-      0 24px 64px -12px rgba(0, 0, 0, 0.04),
+      0 8px 24px rgba(0, 0, 0, 0.1),
+      0 20px 40px rgba(0, 0, 0, 0.12),
       0 0 0 1px rgba(0, 172, 173, 0.1);
   }
+}
+
+/* Градиентный overlay для hover эффекта */
+.ps-gradient-overlay {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  pointer-events: none;
+  border-radius: 24px;
+}
+
+@media (max-width: 767px) {
+  .ps-gradient-overlay {
+    border-radius: 20px;
+  }
+}
+
+.ps-card:hover .ps-gradient-overlay {
+  opacity: 1;
+}
+
+/* Декоративная рамка для ховера */
+.ps-border-glow {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.1) 0%,
+    transparent 50%,
+    rgba(20, 184, 166, 0.1) 100%
+  );
+}
+
+.ps-card:hover .ps-border-glow {
+  opacity: 1;
 }
 
 /* Mobile Card - Keep Current Styling */

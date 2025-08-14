@@ -234,7 +234,7 @@ const ProductsSection = () => {
                 
                 <div className={`relative z-10 h-full flex flex-col ${isMobile ? 'p-6' : 'p-8 lg:p-10'}`}>
                   {/* Иконка */}
-                  <div className={`ps-section-icon ${isMobile ? 'mb-6' : 'mb-8'}`}>
+                  <div className={`ps-section-icon relative ${isMobile ? 'mb-6' : 'mb-8'}`}>
                     <div className="ps-icon-wrapper bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center">
                       <Icon
                         name={product.icon as any}
@@ -242,6 +242,10 @@ const ProductsSection = () => {
                         className="text-white ps-icon"
                       />
                     </div>
+                    {/* Декоративное кольцо - только на десктопе */}
+                    {!isMobile && (
+                      <div className="ps-icon-ring absolute -inset-2 rounded-2xl border-2 border-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                    )}
                   </div>
                 
                   {/* Заголовок */}
@@ -342,6 +346,9 @@ const ProductsSection = () => {
                     )}
                   </div>
                 </div>
+
+                {/* Bottom accent line - как в FeaturesSection */}
+                <div className="ps-accent-line absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl transition-transform duration-500 md:duration-700 ease-out pointer-events-none"></div>
               </div>
             </div>
           ))}
