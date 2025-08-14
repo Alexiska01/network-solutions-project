@@ -1,170 +1,4 @@
-/* ===== PRODUCTS SECTION: APPLE/CISCO LEVEL DESIGN ===== */
-
-/* Section Layout - Premium Desktop Grid */
-.products-section {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* Desktop Grid: Balanced 2x2 Layout */
-@media (min-width: 1024px) {
-  .products-section .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-}
-
-@media (min-width: 1280px) {
-  .products-section .grid {
-    gap: 2.5rem;
-    max-width: 1300px;
-  }
-}
-
-/* Card Container - GPU Optimized с мягкими переходами */
-.ps-card {
-  will-change: transform, opacity;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Desktop Card Dimensions - Professional Grid System */
-@media (min-width: 768px) {
-  .ps-card {
-    min-height: 640px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .ps-card {
-    min-height: 720px;
-    max-width: 100%;
-  }
-}
-
-@media (min-width: 1280px) {
-  .ps-card {
-    min-height: 760px;
-  }
-}
-
-/* Professional Grid Layout - Apple Style */
-@media (min-width: 1024px) {
-  .ps-card > div {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .ps-card-inner {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  /* Content Area Flex Grid */
-  .ps-card-inner > div:last-child {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-}
-
-/* Card Inner - Premium Material Design без размытки текста */
-.ps-card-inner {
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-  /* Premium Shadow - Apple Style */
-  box-shadow:
-    0 4px 16px -2px rgba(0, 0, 0, 0.08),
-    0 8px 24px -4px rgba(0, 0, 0, 0.04),
-    0 16px 32px -8px rgba(0, 0, 0, 0.02);
-}
-
-/* Desktop Hover Enhancement - Четкий плавный подъем */
-@media (min-width: 768px) {
-  .ps-card {
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    cursor: pointer;
-  }
-
-  .ps-card:hover {
-    transform: translateY(-12px) translateZ(0);
-  }
-
-  .ps-card-inner {
-    transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .ps-card:hover .ps-card-inner {
-    box-shadow:
-      0 16px 40px rgba(0, 0, 0, 0.15),
-      0 32px 64px rgba(0, 0, 0, 0.1),
-      0 0 0 1px rgba(59, 130, 246, 0.2);
-  }
-}
-
-/* Градиентный overlay для hover эффекта */
-.ps-gradient-overlay {
-  opacity: 0;
-  transition: opacity 0.5s ease-out;
-  pointer-events: none;
-  border-radius: 24px;
-}
-
-@media (max-width: 767px) {
-  .ps-gradient-overlay {
-    border-radius: 20px;
-  }
-}
-
-.ps-card:hover .ps-gradient-overlay {
-  opacity: 1;
-}
-
-/* Декоративная рамка для ховера */
-.ps-border-glow {
-  opacity: 0;
-  transition: opacity 0.3s ease-out;
-  pointer-events: none;
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.1) 0%,
-    transparent 50%,
-    rgba(20, 184, 166, 0.1) 100%
-  );
-}
-
-.ps-card:hover .ps-border-glow {
-  opacity: 1;
-}
-
-/* Mobile Card - Keep Current Styling */
-@media (max-width: 767px) {
-  .ps-card-inner {
-    border-radius: 20px;
-    box-shadow:
-      0 2px 8px -1px rgba(0, 0, 0, 0.06),
-      0 4px 16px -2px rgba(0, 0, 0, 0.03);
-  }
-}
+/* ===== PRODUCTS SECTION: Содержимое карточек (не сами карточки) ===== */
 
 /* Icon Wrapper - Enhanced Premium с плавностью */
 .ps-icon-wrapper {
@@ -258,38 +92,16 @@
   }
 }
 
-/* Feature Lists - Professional Apple Style */
-.ps-feature {
-  align-items: flex-start !important;
-  gap: 12px !important;
-}
-
-@media (min-width: 1024px) {
-  .ps-feature {
-    gap: 16px !important;
-    /* без mb, чистые 16px из space-y-4 */
-  }
-}
-
-/* Feature Icons - Refined & Aligned */
+/* Feature Icons */
 .ps-feature-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
 }
 
 @media (min-width: 768px) {
   .ps-feature-icon {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .ps-feature-icon {
-    width: 20px;
-    height: 20px;
-    margin-top: 2px;
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -304,56 +116,28 @@
   transform: translateZ(0);
 }
 
-@media (min-width: 1024px) {
-  .ps-feature-text {
-    font-size: 0.9375rem !important;
-    line-height: 1.5 !important;
-    font-weight: 500;
-    color: #4b5563;
-  }
-}
-
-/* CTA Button - Premium Interaction & Grid Alignment */
+/* CTA Button - Premium Interactive */
 .ps-cta {
-  padding: 16px 20px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
-  overflow: hidden;
-  margin-top: auto;
-  flex-shrink: 0;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background-color: rgba(249, 250, 251, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 @media (min-width: 768px) {
   .ps-cta {
-    padding: 18px 24px;
-    border-radius: 18px;
-  }
-
-  .ps-cta:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(0, 172, 173, 0.3);
-    box-shadow:
-      0 4px 16px rgba(0, 172, 173, 0.1),
-      0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 16px 24px;
+    border-radius: 14px;
   }
 }
 
-@media (min-width: 1024px) {
-  .ps-cta {
-    padding: 20px 28px;
-    border-radius: 20px;
-    margin-top: 0;
-  }
-}
-
+/* CTA Icon */
 .ps-cta-icon {
   width: 28px;
   height: 28px;
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 @media (min-width: 768px) {
@@ -361,205 +145,93 @@
     width: 32px;
     height: 32px;
   }
-
-  .ps-cta:hover .ps-cta-icon {
-    transform: translateX(4px);
-  }
 }
 
-/* Grid Section Heights - Professional Layout */
-@media (min-width: 1024px) {
-  .ps-section-header {
-    min-height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .ps-section-description {
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-  }
-
-  .ps-section-detailed {
-    min-height: 96px;
-    display: flex;
-    align-items: center;
-  }
-
-  .ps-section-features {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-height: 200px;
-  }
-
-  .ps-section-cta {
-    min-height: 72px;
-    display: flex;
-    align-items: center; /* не критично */
-    margin-top: 0; /* убираем «эластичный» разрыв */
-    padding-top: 12px; /* поставь 0–12px по вкусу */
-  }
+/* CTA Hover Effects */
+.ps-cta:hover {
+  background-color: rgba(243, 244, 246, 0.9);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
 
-/* Underline Animation */
-.ps-underline {
-  margin-top: 8px;
-  overflow: hidden;
-}
-
-.ps-underline-fill {
-  transform: translateX(-100%);
-  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transition-delay: 0.2s;
-}
-
-.ps-card:hover .ps-underline-fill {
-  transform: translateX(0);
+.ps-cta:hover .ps-cta-icon {
+  transform: translateX(3px) scale(1.05);
 }
 
 /* CTA Line Animation */
 .ps-cta-line {
-  left: 0;
-  right: 0;
-  transform: translateX(-100%);
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  left: 20px;
+  right: 20px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@media (min-width: 768px) {
+  .ps-cta-line {
+    left: 24px;
+    right: 24px;
+  }
 }
 
 .ps-cta:hover .ps-cta-line {
-  transform: translateX(0);
+  transform: scaleX(1);
 }
 
-/* Entrance Animations */
-.ps-card.ps-hidden {
+/* Animation States от FeaturesSection */
+.ps-enter {
   opacity: 0;
-  transform: translateY(40px) scale(0.95);
+  transform: translateY(40px);
 }
 
-.ps-card.ps-visible {
+.ps-visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
 }
 
-/* Desktop Cascade Delays */
-.ps-card.ps-delay-0.ps-visible {
-  transition-delay: 0.1s;
+.ps-delay-0 {
+  transition-delay: 0ms;
 }
-.ps-card.ps-delay-1.ps-visible {
-  transition-delay: 0.2s;
+.ps-delay-1 {
+  transition-delay: 100ms;
 }
-.ps-card.ps-delay-2.ps-visible {
-  transition-delay: 0.3s;
+.ps-delay-2 {
+  transition-delay: 200ms;
 }
-.ps-card.ps-delay-3.ps-visible {
-  transition-delay: 0.4s;
+.ps-delay-3 {
+  transition-delay: 300ms;
 }
 
-/* Perfect Grid Spacing */
-@media (min-width: 1024px) {
-  .ps-grid-spacing {
-    padding: 40px 0;
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .ps-mobile .ps-cta {
+    padding: 12px 16px;
+    border-radius: 10px;
   }
 
-  .ps-grid-spacing > * + * {
-    margin-top: 32px;
+  .ps-mobile .ps-cta-icon {
+    width: 24px;
+    height: 24px;
   }
-}
 
-/* Performance Optimizations */
-@media (min-refresh-rate: 120hz) {
-  .ps-card,
-  .ps-card-inner,
-  .ps-icon-wrapper,
-  .ps-cta,
-  .ps-underline-fill,
-  .ps-cta-line {
-    transition-duration: 0.25s;
+  .ps-mobile .ps-cta-line {
+    left: 16px;
+    right: 16px;
   }
-}
-
-@media (min-refresh-rate: 144hz) {
-  .ps-card,
-  .ps-card-inner,
-  .ps-icon-wrapper,
-  .ps-cta,
-  .ps-underline-fill,
-  .ps-cta-line {
-    transition-duration: 0.2s;
-  }
-}
-
-/* GPU Acceleration Hints */
-.ps-card,
-.ps-card-inner,
-.ps-icon-wrapper,
-.ps-cta-icon,
-.ps-underline-fill,
-.ps-cta-line {
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 /* Четкость текста для всех элементов карточки */
-.ps-card *,
-.ps-card-inner *,
-.ps-card h1,
-.ps-card h2,
-.ps-card h3,
-.ps-card h4,
-.ps-card p,
-.ps-card span,
-.ps-card div {
+.feature-card *,
+.feature-card h1,
+.feature-card h2,
+.feature-card h3,
+.feature-card h4,
+.feature-card p,
+.feature-card span,
+.feature-card div {
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
   text-rendering: optimizeLegibility !important;
   transform: translateZ(0) !important;
   backface-visibility: hidden !important;
-}
-
-/* Reduce Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  .ps-card,
-  .ps-card-inner,
-  .ps-icon-wrapper,
-  .ps-cta,
-  .ps-underline-fill,
-  .ps-cta-line {
-    transition: none !important;
-    animation: none !important;
-  }
-
-  .ps-card:hover .ps-card-inner {
-    transform: none;
-  }
-}
-
-/* === DESKTOP: карточка должна сжиматься по контенту === */
-@media (min-width: 768px) {
-  .products-section .ps-card {
-    min-height: auto !important;
-  }
-}
-@media (min-width: 1024px) {
-  .products-section .ps-card {
-    min-height: auto !important;
-  }
-}
-@media (min-width: 1280px) {
-  .products-section .ps-card {
-    min-height: auto !important;
-  }
-}
-
-/* дети не тянут высоту искусственно */
-@media (min-width: 1024px) {
-  .products-section .ps-card > div {
-    height: auto !important;
-  }
-  .products-section .ps-card-inner {
-    height: auto !important;
-  }
 }

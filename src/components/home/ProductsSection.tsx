@@ -211,28 +211,20 @@ const ProductsSection = () => {
                   cardRefs.current[index] = el;
                 }
               }}
-              className={`ps-card group ps-enter ps-hover ps-delay-${index} ${
-                isMobile ? 'ps-mobile' : 'ps-desktop'
-              } ${
+              className={`feature-card group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full overflow-hidden transition-all duration-500 ease-out hover:-translate-y-1 transform-gpu ${
                 isMobile 
-                  ? (visibleCards[index] ? 'ps-visible' : 'ps-hidden')
-                  : (isVisible ? 'ps-visible' : 'ps-hidden')
+                  ? (visibleCards[index] ? 'feature-card-visible' : 'feature-card-hidden-mobile')
+                  : (isVisible ? 'feature-card-visible' : 'feature-card-hidden')
               }`}
               style={{
-                '--ps-index': index,
-                '--ps-total': products.length
+                '--feature-index': index,
               } as React.CSSProperties}
             >
-              <div className="ps-card-inner relative bg-white h-full overflow-hidden">
-                {/* GPU-оптимизированный градиентный overlay */}
-                <div className="ps-gradient-overlay absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-teal-50/20" />
-                
-                {/* Премиальная анимированная рамка для десктопа */}
-                {!isMobile && (
-                  <div className="ps-border-glow absolute inset-0 rounded-3xl border border-transparent" />
-                )}
-                
-                <div className={`relative z-10 h-full flex flex-col ${isMobile ? 'p-6' : 'p-8 lg:p-10'}`}>
+              {/* Subtle gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl transition-opacity duration-500 md:duration-700 ease-out pointer-events-none"></div>
+              
+              {/* Content */}
+              <div className="relative z-10 flex flex-col h-full">
                   {/* Иконка */}
                   <div className={`ps-section-icon relative ${isMobile ? 'mb-6' : 'mb-8'}`}>
                     <div className="ps-icon-wrapper bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center">
@@ -349,6 +341,9 @@ const ProductsSection = () => {
 
 
               </div>
+
+              {/* Bottom accent line */}
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl transition-transform duration-500 md:duration-700 ease-out pointer-events-none"></div>
             </div>
           ))}
         </div>
