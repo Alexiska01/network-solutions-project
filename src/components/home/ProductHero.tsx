@@ -1,6 +1,7 @@
 // src/components/product/ProductHero.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo, useRef, useState, useCallback, memo } from "react";
+import { registerDeferredAutoRotate } from '../../utils/deferredAutoRotate';
 import { AUTO_SLIDE_INTERVAL_MS, LAYER_CLEANUP_DELAY_MS, REFRESH_SAMPLING_FRAMES, REFRESH_THRESHOLDS } from './heroTokens.ts';
 // Предзагрузка через кастомные менеджеры временно отключена — используем прямую загрузку
 import "./ProductHero.css";
@@ -16,6 +17,7 @@ declare global {
 
 // (Удалено) Ошибочная вставка интервала вне компонента
 import { heroData, HeroItem } from './heroData.ts';
+import { createLayerIdGenerator } from './layerIdGenerator';
 
 type Refresh =
   | "60hz"
@@ -59,9 +61,9 @@ function throttle<T extends (...args: any[]) => void>(func: T, wait: number): T 
 
 const ProductHero = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const layerIdRef = useRef(0);
+  const layerIdGenRef = useRef(createLayerIdGenerator());
   const [layers, setLayers] = useState<Array<{ idx:number; phase:'enter'|'active'|'leave'; lid:number }>>([
-    { idx: 0, phase: 'active', lid: layerIdRef.current++ }
+    { idx: 0, phase: 'active', lid: layerIdGenRef.current() }
   ]);
   // const [nextIndex, setNextIndex] = useState(0);
   // Морфинг убран - остается только обычная смена контента
@@ -73,6 +75,8 @@ const ProductHero = memo(() => {
   const pausedRef = useRef(false); // состояние паузы из-за visibility
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
+  const [highResLoaded, setHighResLoaded] = useState<Record<string, boolean>>({});
+  const [autoRotateStarted, setAutoRotateStarted] = useState(false);
   // Управление ручной сменой слайда
   const changeSlide = useCallback((nextIdx: number) => {
     if (nextIdx === currentIndex) return;
@@ -81,7 +85,7 @@ const ProductHero = memo(() => {
     setCurrentIndex(nextIdx);
     setLayers(ls => {
       const updated = ls.map(l => l.idx === currentIndex ? { ...l, phase: 'leave' as const } : l);
-      return [...updated, { idx: nextIdx, phase: 'enter' as const, lid: layerIdRef.current++ }];
+  return [...updated, { idx: nextIdx, phase: 'enter' as const, lid: layerIdGenRef.current() }];
     });
   }, [currentIndex]);
   // Агрегированный лог цикла (п.7)
@@ -270,6 +274,22 @@ const ProductHero = memo(() => {
     return () => clearTimeout(t);
   }, [layers]);
 
+  // Отложенный запуск авто-ротации
+  useEffect(() => {
+    const cleanup = registerDeferredAutoRotate(() => {
+      setAutoRotateStarted(true);
+      document.querySelectorAll('model-viewer').forEach(el => {
+        try { (el as any).autoRotate = true; } catch {/* noop */}
+      });
+    }, 4500);
+    return cleanup;
+  }, []);
+
+  useEffect(() => {
+    if (!autoRotateStarted || !modelRef.current) return;
+    try { (modelRef.current as any).autoRotate = true; } catch {/* noop */}
+  }, [autoRotateStarted, currentIndex]);
+
   return (
     <div
       className={`ph-container refresh-${refreshRate}`}
@@ -339,13 +359,14 @@ const ProductHero = memo(() => {
         {layers.map(layer => {
                   const data = heroData[layer.idx];
                   const failed = modelLoadStatus[data.modelUrl] === false;
+                  const showHigh = highResLoaded[data.modelUrl];
                   return (
           <div key={`${data.id}-${layer.lid}`} className={`ph-model-layer ${layer.phase} relative w-full h-full`}>
                       {!failed && (
                         <div className="ph-hero-model relative z-10 w-full h-full">
                           <model-viewer
                             ref={layer.idx === currentIndex ? modelRef : undefined}
-                            src={data.modelUrl}
+                            src={showHigh ? data.modelUrl : (data.previewModelUrl || data.modelUrl)}
                             alt={data.title}
                             auto-rotate
                             auto-rotate-delay="0"
@@ -365,9 +386,24 @@ const ProductHero = memo(() => {
                             style={{
                               width:'100%',height:'100%',background:'transparent',border:'none',outline:'none',boxShadow:'none',borderRadius:isMobile ? '1rem':'0rem',pointerEvents:'none',touchAction:isMobile ? 'none':undefined,'--progress-bar-color':'transparent','--progress-mask':'transparent'
                             } as React.CSSProperties}
-                            onLoad={() => {
-                              setModelLoadStatus(p => ({...p,[data.modelUrl]:true}));
-                              cycleEventsRef.current.push({url: data.modelUrl, ok:true, t: performance.now()});
+                            onLoad={(e: any) => {
+                              const src = (e?.target?.src || data.modelUrl) as string;
+                              if (src.endsWith(data.modelUrl) || src.includes(data.modelUrl)) {
+                                setModelLoadStatus(p => ({...p,[data.modelUrl]:true}));
+                                setHighResLoaded(p => ({...p,[data.modelUrl]:true}));
+                                cycleEventsRef.current.push({url: data.modelUrl, ok:true, t: performance.now()});
+                              } else if (data.previewModelUrl && (src.endsWith(data.previewModelUrl) || src.includes(data.previewModelUrl))) {
+                                // После загрузки превью — параллельно грузим high-res, если ещё нет
+                                if (!highResLoaded[data.modelUrl]) {
+                                  const link = document.createElement('link');
+                                  link.rel = 'preload';
+                                  link.as = 'fetch';
+                                  link.href = data.modelUrl;
+                                  link.crossOrigin = 'anonymous';
+                                  document.head.appendChild(link);
+                                  fetch(data.modelUrl).catch(()=>{});
+                                }
+                              }
                             }}
                             onError={(e: any) => {
                               console.warn('❌ model-viewer error', data.modelUrl, e?.detail);

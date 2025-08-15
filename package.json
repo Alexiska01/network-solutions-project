@@ -13,8 +13,11 @@
     "models:analyze": "node scripts/analyze-models.js",
     "models:compress": "node scripts/compress-models.js",
     "models:update-urls": "node scripts/update-model-urls.js",
+  "models:meshopt": "node scripts/meshopt-compress-models.js",
+  "models:compare": "node scripts/compare-model-sizes.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+  "test:watch": "vitest",
+  "analyze": "vite build && (start dist/bundle-stats.html || xdg-open dist/bundle-stats.html || open dist/bundle-stats.html)"
   },
   "dependencies": {
     "@google/model-viewer": "^4.1.0",
@@ -70,7 +73,6 @@
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "test": "^3.3.0",
     "vaul": "^0.9.3",
     "zod": "^3.23.8"
   },
@@ -93,6 +95,7 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
-    "vitest": "^2.0.5"
+  "vitest": "^2.0.5",
+  "rollup-plugin-visualizer": "^5.12.0"
   }
 }

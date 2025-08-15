@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import { useEffect, useState, useRef } from "react";
+import { registerDeferredAutoRotate } from '@/utils/deferredAutoRotate';
 import { modelPreloader } from '@/utils/modelPreloader';
 import { modelCacheManager } from '@/utils/modelCacheManager';
 
@@ -41,7 +42,7 @@ const cardVariants = {
   hover: { 
     scale: 1.01, 
     y: -1,
-    transition: { duration: 0.3, ease: "easeOut" }
+    transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }
   },
   tap: { scale: 0.99 },
 };
@@ -52,6 +53,7 @@ const Hero4530 = () => {
   const [showLoader, setShowLoader] = useState(false);
   const modelViewerRef = useRef<any>(null);
   const hasCheckedCacheRef = useRef(false);
+  const [autoRotateStarted, setAutoRotateStarted] = useState(false);
 
   useEffect(() => {
     const checkModelCacheStatus = async () => {
@@ -102,9 +104,9 @@ const Hero4530 = () => {
       const modelViewer = modelViewerRef.current;
       
       // Настройка камеры - приближаем для большего размера модели
-      modelViewer.cameraOrbit = "0deg 75deg 85%"; // Уменьшили с дефолтного до 85% для увеличения модели
-      modelViewer.autoRotate = true;
-      modelViewer.autoRotateDelay = 1000;
+      modelViewer.cameraOrbit = "0deg 75deg 85%";
+      modelViewer.autoRotate = !!autoRotateStarted;
+      modelViewer.autoRotateDelay = 0;
       modelViewer.rotationPerSecond = "25deg";
       
       // Полное отключение touch и mouse взаимодействий
@@ -136,7 +138,18 @@ const Hero4530 = () => {
       
       console.log(`🎬 Hero4530: Модель настроена - touch отключен, камера приближена (85%)`);
     }
-  }, [isModelVisible]);
+  }, [isModelVisible, autoRotateStarted]);
+
+  useEffect(() => {
+    if (!isModelLoaded) return;
+    const cleanup = registerDeferredAutoRotate(() => {
+      setAutoRotateStarted(true);
+      if (modelViewerRef.current) {
+        try { modelViewerRef.current.autoRotate = true; } catch {/* noop */}
+      }
+    }, 4500);
+    return cleanup;
+  }, [isModelLoaded]);
 
   return (
     <section className="bg-gradient-hero text-white py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden min-h-[420px] md:min-h-[480px]">
@@ -305,7 +318,7 @@ const Hero4530 = () => {
                           modelPreloader.markAsLoaded && modelPreloader.markAsLoaded(model4530Data.modelUrl);
                         }
                       }}
-                      onError={(e) => {
+                      onError={(e: unknown) => {
                         console.error(`❌ Hero4530: Ошибка загрузки модели ${model4530Data.series}`, e);
                         setShowLoader(false);
                       }}
