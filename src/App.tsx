@@ -52,7 +52,7 @@ const queryClient = new QueryClient({
 const CRITICAL_IMAGES: string[] = [
   // Локальные логотипы партнеров
   "/img/сател.png",
-  "/img/ЛОГО.png",
+  "/img/логотип.png",
   "/img/КРОК.png",
   "/img/Инфосэл.png",
   "/img/инлайн.png",

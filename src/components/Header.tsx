@@ -130,7 +130,7 @@ const Header = () => {
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               <SafeImage
-                src="/img/ЛОГО.png"
+                src="/img/логотип.png"
                 alt="IDATA Logo"
                 className="h-9 w-auto sm:h-10"
               />

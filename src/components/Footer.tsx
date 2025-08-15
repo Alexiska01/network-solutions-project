@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center space-x-1.5 md:space-x-2 mb-3 md:mb-4 lg:mb-6">
               <SafeImage
-                src="/img/ЛОГО.png"
+                src="/img/логотип.png"
                 alt="iDATA"
                 className="h-6 md:h-8 w-auto rounded-0 object-contain py-0 mx-0"
               />
