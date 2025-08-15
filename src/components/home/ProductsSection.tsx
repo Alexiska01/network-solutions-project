@@ -100,7 +100,7 @@ const ProductsSection = () => {
             return (
               <article
                 key={index}
-                className="feature-card group bg-white border border-gray-100 rounded-xl md:rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.12)] transition-all duration-400 ease-premium hover:-translate-y-[2px]"
+                className="feature-card group bg-white rounded-xl md:rounded-3xl transition-all duration-400 ease-premium hover:-translate-y-[2px]"
                 style={
                   { "--stagger": `${index * 60}ms` } as React.CSSProperties
                 }
@@ -134,28 +134,32 @@ const ProductsSection = () => {
                     </div>
                   </header>
 
-                  {/* Список характеристик (3 шт.) */}
+                  {/* Список характеристик (3 шт.) со встроенной стрелкой */}
                   <ul className="card__features">
-                    {threeFeatures.map((f, i) => (
-                      <li className="card__feature" key={i} title={f}>
-                        <span className="card__feature-bullet">
-                          <Icon name="Check" size={12} className="text-white" />
-                        </span>
-                        <span className="card__feature-text">{f}</span>
-                      </li>
-                    ))}
+                    {threeFeatures.map((f, i) => {
+                      const isLast = i === threeFeatures.length - 1;
+                      return (
+                        <li
+                          className={`card__feature ${isLast ? "card__feature--with-action" : ""}`}
+                          key={i}
+                          title={f}
+                        >
+                          <span className="card__feature-bullet">
+                            <Icon name="Check" size={11} className="text-white" />
+                          </span>
+                          <span className="card__feature-text">{f}</span>
+                          {isLast && (
+                            <span
+                              className="card__inline-arrow-btn"
+                              aria-hidden="true"
+                            >
+                              <Icon name="ArrowRight" size={14} className="text-white" />
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
-
-                  {/* CTA (компактная) */}
-                  <footer className="card__foot">
-                    <Link to={product.href} className="ps-cta">
-                      <span className="ps-cta__text">Подробнее</span>
-                      <span className="ps-cta__icon">
-                        <Icon name="ArrowRight" size={14} className="text-white" />
-                      </span>
-                      <span className="ps-cta__line" aria-hidden />
-                    </Link>
-                  </footer>
                 </div>
 
                 {/* Убрали нижнюю линию карточки по твоей просьбе */}

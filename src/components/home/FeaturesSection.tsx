@@ -182,7 +182,7 @@ const FeaturesSection = () => {
   return (
     <section 
       ref={sectionRef} 
-      className={`pt-12 pb-12 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
+  className={`pt-[36px] pb-12 md:pt-[60px] md:pb-20 lg:pt-[72px] lg:pb-24 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
     >
       {/* Декоративный фон */}
   <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 to-teal-50/20 pointer-events-none"></div>
@@ -194,10 +194,10 @@ const FeaturesSection = () => {
             headerVisible ? 'feature-header-visible' : 'feature-header-hidden'
           }`}
         >
-          <h2 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight tracking-tight">
+          <h2 className="text-lg md:text-2xl lg:text-3xl xl:text-[2.375rem] font-bold text-gray-900 mb-3 md:mb-5 leading-snug tracking-tight">
             Почему выбирают iDATA
           </h2>
-          <div className="w-16 md:w-24 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-4 md:mb-6 rounded-full"></div>
+          <div className="w-14 md:w-20 h-0.5 md:h-[3px] bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-4 md:mb-6 rounded-full"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">

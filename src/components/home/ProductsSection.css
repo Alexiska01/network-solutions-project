@@ -22,18 +22,21 @@
 /* ===== Card (Compact+) ===== */
 .feature-card{
   --r: 22px;
-  --pad: clamp(18px, 2.2vw, 24px);
-  /* новые токены расстояний */
-  --gap-head-list: 16px;   /* отступ между заголовком и списком */
-  --gap-list-cta: 16px;    /* отступ между списком и кнопкой */
-
+  --pad: clamp(16px, 2vw, 22px);
+  --gap-head-list: 12px;
   position: relative;
   display: flex; flex-direction: column;
   overflow: hidden;
   border-radius: var(--r);
-  will-change: transform, box-shadow, opacity;
   content-visibility: auto;
   contain: layout paint style;
+  border: 0;
+  box-shadow: 0 4px 14px -4px rgba(0,0,0,.10), 0 2px 6px -2px rgba(0,0,0,.06);
+  transition: box-shadow .35s var(--ease-premium), transform .35s var(--ease-premium);
+  cursor: pointer;
+}
+.feature-card:hover{
+  box-shadow: 0 6px 22px -6px rgba(0,0,0,.16), 0 3px 10px -3px rgba(0,0,0,.10);
 }
 
 /* Fit-4: две строки карточек в первый экран */
@@ -41,7 +44,13 @@
   .products-section[data-fit4="on"] .feature-card{
     --fit4-offset: calc(var(--pad-y) * 2 + var(--v-gap) + var(--section-head));
     --card-h: calc((100dvh - var(--fit4-offset)) / 2);
-    height: clamp(236px, var(--card-h), 268px);
+    height: clamp(160px, var(--card-h), 190px);
+  }
+
+  /* Для всех карточек на десктопе, если fit4 выключен */
+  .feature-card {
+    --pad: clamp(14px, 1.5vw, 18px);
+    height: clamp(160px, 28vh, 190px);
   }
 }
 
@@ -65,9 +74,10 @@
 
 /* ===== Card content ===== */
 .feature-card__content{
-  position: relative; z-index: 3; /* выше stretched-link */
+  position: relative; z-index: 3; /* визуально над ссылкой */
   display: flex; flex-direction: column; height: 100%;
   padding: var(--pad);
+  pointer-events: none; /* пропускаем клики к растянутой ссылке */
 }
 
 /* Header (слегка компактнее) */
@@ -101,69 +111,27 @@
 }
 
 /* Features (3 строки, по 1 строке текста) */
-.card__features{
-  display:grid;
-  gap: 8px;                   /* список компактнее по вертикали */
-  margin: var(--gap-head-list) 0 0 0; /* отступ между заголовком и списком */
-  padding:0; list-style:none;
-}
-.card__feature{ display:flex; align-items: center; gap: 10px; min-width:0; }
-.card__feature-bullet{
-  flex:none; width: 18px; height: 18px; border-radius: 999px;
-  display:grid; place-items:center;
-  background: linear-gradient(180deg, #2563eb, #14b8a6);
-}
-.card__feature-text{
-  font-size: 15px; line-height: 1.4; color:#374151;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+.card__features{ display:grid; gap:6px; margin: var(--gap-head-list) 0 0 0; padding:0; list-style:none; }
+.card__feature{ display:flex; align-items:center; gap:8px; min-width:0; position:relative; }
+.card__feature-bullet{ flex:none; width:16px; height:16px; border-radius:4px; display:grid; place-items:center; background: linear-gradient(180deg,#2563eb,#14b8a6); }
+.card__feature-text{ font-size:14px; line-height:1.35; color:#374151; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* модификатор последней строки со стрелкой */
+.card__feature--with-action{ align-items:center; gap:8px; padding-right:4px; }
+.card__feature--with-action .card__feature-text{ flex:1; }
+.card__inline-arrow-btn{ flex:0 0 auto; width:32px; height:32px; border-radius:999px; display:grid; place-items:center; background:linear-gradient(90deg,#2563eb,#0ea5e9); box-shadow:0 2px 6px rgba(0,0,0,.18); transition:background .35s var(--ease-premium), box-shadow .35s var(--ease-premium); pointer-events:none; transform-origin:center bottom; will-change:transform; }
+/* Hover анимация подпрыгивания (бесконечный цикл пока удерживается hover) */
+.feature-card:hover .card__inline-arrow-btn{ animation:arrow-bounce .75s cubic-bezier(.33,1.4,.42,1) infinite; }
 
-/* Footer (CTA) — больше отступа сверху, сама кнопка ниже ростом */
-.card__foot{ margin-top: auto; padding-top: var(--gap-list-cta); }
+@keyframes arrow-bounce{
+  0%{ transform:translateY(0) scale(1); }
+  35%{ transform:translateY(-7px) scale(1.04); }
+  55%{ transform:translateY(2px) scale(.97); }
+  72%{ transform:translateY(-3px) scale(1.015); }
+  100%{ transform:translateY(0) scale(1); }
+}
+.card__inline-arrow-btn:focus-visible{ outline:0; box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(37,99,235,.9); }
 
-/* Компактная кнопка */
-.ps-cta{
-  position: relative;
-  width: 100%;
-  display:flex; align-items:center; justify-content: space-between;
-  padding: 10px 16px;                 /* было 14x18 — стало ниже */
-  border-radius: 12px;
-  background: rgba(249,250,251,.9);
-  border: 1px solid #e5e7eb;
-  backdrop-filter: blur(8px);
-  transition: transform .3s var(--ease-premium), background-color .3s var(--ease-premium), border-color .3s var(--ease-premium), box-shadow .2s ease-out;
-}
-.ps-cta__text{ font-weight: 600; color:#0f172a; }
-.ps-cta__icon{
-  width: 28px; height: 28px;          /* было 32 — стало компактнее */
-  border-radius: 999px;
-  display:grid; place-items:center;
-  background: linear-gradient(90deg, #2563eb, #14b8a6);
-  transition: transform .3s var(--ease-premium);
-}
-.ps-cta__line{
-  position:absolute; left: 16px; right: 16px; bottom: 0;
-  height: 2px; border-radius: 2px;
-  background: linear-gradient(90deg, #2563eb, #14b8a6);
-  transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease-premium);
-}
-
-/* Hover/focus */
-.ps-cta:hover{
-  transform: translateY(-1px);
-  background: rgba(243,244,246,.96);
-  border-color: rgba(59,130,246,.35);
-}
-.ps-cta:hover .ps-cta__icon{ transform: translateX(2px) scale(1.03); }
-.ps-cta:hover .ps-cta__line{ transform: scaleX(1); }
-
-.ps-cta:focus-visible{
-  outline: 0;
-  box-shadow:
-    0 0 0 2px #fff,
-    0 0 0 4px rgba(37,99,235,.9);
-  border-color: rgba(37,99,235,.6);
-}
+/* удалён footer CTA */
 
 /* Растянутый линк (вся карточка кликабельна, не мешает таб-циклу) */
 .stretched-link{
@@ -174,17 +142,11 @@
 @media (max-width: 767.98px){
   .feature-card{ height: clamp(220px, 32vh, 248px); }
   .card__icon-bg{ width:44px; height:44px; border-radius:12px; }
-  .ps-cta{ padding: 10px 14px; border-radius: 10px; } /* ещё компактнее на мобилке */
-  .ps-cta__icon{ width:26px; height:26px; }
+  .card__inline-arrow-btn{ width:30px; height:30px; }
 }
 
-/* Reduced motion */
+/* Reduced motion: убираем прыжок */
 @media (prefers-reduced-motion: reduce){
-  .feature-card,
-  .feature-card__overlay,
-  .card__icon-bg,
-  .ps-cta,
-  .ps-cta__icon{
-    transition: none !important;
-  }
+  .feature-card:hover .card__inline-arrow-btn{ animation:none; }
+  .card__icon-bg{ transition: none !important; }
 }

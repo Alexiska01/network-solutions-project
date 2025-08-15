@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, lazy, Suspense, useState } from "react";
 import Index from "./pages/Index";
 import ProductHero from "./components/home/ProductHero";
@@ -90,6 +90,19 @@ const PRELOAD_ROUTES = [
   '/partners',
   '/contacts'
 ];
+
+// Компонент для сброса скролла (исключает нежелательный авто-восстановление)
+const ScrollRestorationController = () => {
+  const location = useLocation();
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    // На каждой навигации (особенно на /) жёстко ставим в начало
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  }, [location.pathname]);
+  return null;
+};
 
 const App = () => {
   const [showWelcome, setShowWelcome] = useState(false);
@@ -240,7 +253,7 @@ const App = () => {
             }}
           />
         )}
-        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Suspense
             fallback={
               <div className="min-h-screen flex items-center justify-center">
@@ -248,6 +261,7 @@ const App = () => {
               </div>
             }
           >
+      <ScrollRestorationController />
             <Routes>
               {/* Prefetch критических компонентов */}
               <Route path="/prefetch-critical" element={null} />

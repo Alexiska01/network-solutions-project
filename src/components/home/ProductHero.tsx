@@ -383,7 +383,8 @@ const ProductHero = memo(() => {
 
             {/* Правая колонка — 3D модель (структура как в Hero3530, но с OptimizedModelViewer) */}
             <div className="hero-model-section ph-model-center relative order-first lg:order-last mt-0 lg:mt-0">
-              <div className="hero-model-container relative w-full max-w-[343px] sm:max-w-[411px] md:max-w-[446px] lg:max-w-[514px] h-[240px] sm:h-[275px] md:h-[326px] lg:h-[360px]" style={{ transform: 'translateY(-20px)' }}>
+              {/* уменьшено ~на 5%: 240->228, 275->261, 326->310, 360->342 */}
+              <div className="hero-model-container relative w-full max-w-[343px] sm:max-w-[411px] md:max-w-[446px] lg:max-w-[514px] h-[228px] sm:h-[261px] md:h-[310px] lg:h-[342px]" style={{ transform: 'translateY(-20px)' }}>
                 {modelLoadStatus[currentData.modelUrl] !== false && (
                   <div className="hero-model relative z-10 w-full h-full">
                     <model-viewer
