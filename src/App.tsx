@@ -67,14 +67,13 @@ const SECONDARY_IMAGES = [
   "/img/Иерархия_4530.png",
 ];
 
-// Приоритетные 3D модели (показываются чаще всего)
-const PRIORITY_MODELS = [
-  "/models/3530all.glb",
+// 3D модели: только первая — реальный preload; остальные мягко prefetch
+const FIRST_MODEL = "/models/3530all.glb";
+const OTHER_PRIMARY_MODELS = [
   "/models/3730all.glb",
   "/models/4530all.glb",
 ];
-
-// Второстепенные модели (загружаем в фоне)
+// Второстепенные/варианты — только on-demand (prefetch позже)
 const BACKGROUND_MODELS = [
   "/models/6010all.glb",
   "/models/IDS3530-24P.glb",
@@ -161,14 +160,27 @@ const App = () => {
         // DNS prefetch отключен из-за CORS проблем CDN
       });
       
-      // Приоритетные 3D модели с высоким приоритетом
-      PRIORITY_MODELS.forEach((modelUrl) => {
+      // Первая модель — реальный preload (если не продублирован index.html)
+      const preloadExists = !!document.querySelector(`link[rel="preload"][href="${FIRST_MODEL}"]`);
+      if (!preloadExists) {
         const link = document.createElement('link');
         link.rel = 'preload';
-        link.href = modelUrl;
+        link.href = FIRST_MODEL;
         link.as = 'fetch';
+        link.type = 'model/gltf-binary';
         link.crossOrigin = 'anonymous';
         link.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(link);
+      }
+
+      // Остальные модели — только prefetch (низкий приоритет), чтобы избежать warning
+      OTHER_PRIMARY_MODELS.forEach((modelUrl) => {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = modelUrl;
+        link.as = 'fetch';
+        link.type = 'model/gltf-binary';
+        link.crossOrigin = 'anonymous';
         document.head.appendChild(link);
       });
       

@@ -1,67 +1,26 @@
 // Интеллектуальная система предзагрузки 3D моделей с оптимизацией производительности
+import { modelCacheManager } from './modelCacheManager';
+
 export class ModelPreloader {
   private static instance: ModelPreloader;
   private loadedModels: Map<string, boolean> = new Map();
   private loadingModels: Map<string, Promise<void>> = new Map();
-  private modelElements: Map<string, HTMLElement> = new Map();
-  private preloadQueue: Array<{ url: string; priority: number }> = [];
-  private isProcessingQueue = false;
-  private maxConcurrentLoads = 2;
 
   private constructor() {
-    // Очищаем любые существующие preload ссылки для избежания конфликтов
-    this.removeExistingPreloadLinks();
+  // РАНЬШЕ: агрессивно очищали все preload/prefetch ссылки для .glb, что удаляло
+  // статические <link> из index.html и приводило к повторным вставкам и предупреждениям
+  // браузера о "preload не был использован достаточно быстро".
+  // ТЕПЕРЬ: не трогаем статические resource hints, оставляем браузеру их обработку.
+  // (Функция removeExistingPreloadLinks сохранена ниже, но намеренно не вызывается.)
     // Настраиваем приоритеты для моделей коммутаторов
     this.setupPriorityQueue();
     // Добавляем интеллектуальное кэширование
     this.setupIntelligentCache();
   }
   
-  private removeExistingPreloadLinks() {
-    // АГРЕССИВНАЯ очистка всех preload/prefetch ссылок для .glb файлов
-    const selectors = [
-      'link[rel="preload"][href*=".glb"]',
-      'link[rel="prefetch"][href*=".glb"]',
-      'link[rel="modulepreload"][href*=".glb"]',
-      'link[href*="3730all.glb"]',
-      'link[href*="3530all.glb"]',
-      'link[href*="4530all.glb"]',
-      'link[href*="6010all.glb"]'
-    ];
-    
-    selectors.forEach(selector => {
-      const links = document.querySelectorAll(selector);
-      links.forEach(link => {
-        link.remove();
-      });
-    });
-    
-    // Дополнительно очищаем из head все ссылки на модели
-    const allLinks = document.head.querySelectorAll('link');
-    allLinks.forEach(link => {
-      const href = link.getAttribute('href') || '';
-      if (href.includes('.glb')) {
-        link.remove();
-      }
-    });
-  }
   
   private setupPriorityQueue() {
-    // Модели загружаются с равными приоритетами для устранения проблем с 4530 и 6010
-    const modelPriorities = [
-      { url: '/models/3530all.glb', priority: 10 }, // Самая популярная модель  
-      { url: '/models/3730all.glb', priority: 10 }, // Равный приоритет
-      { url: '/models/4530all.glb', priority: 10 }, // Повышенный приоритет
-      { url: '/models/6010all.glb', priority: 10 }  // Повышенный приоритет
-    ];
-    
-    // Добавляем в очередь с приоритетами
-    modelPriorities.forEach(({ url, priority }) => {
-      this.preloadQueue.push({ url, priority });
-    });
-    
-    // Сортируем по приоритету (больший приоритет = раньше загрузка)
-    this.preloadQueue.sort((a, b) => b.priority - a.priority);
+  // Очередь отключена
   }
   
   private setupIntelligentCache() {
@@ -93,101 +52,35 @@ export class ModelPreloader {
       return this.loadingModels.get(url)!;
     }
 
-    const loadPromise = new Promise<void>((resolve, reject) => {
-      // Создаем оптимизированный контейнер
-      const container = document.createElement('div');
-      container.style.cssText = `
-        position: fixed;
-        width: 1px;
-        height: 1px;
-        opacity: 0;
-        pointer-events: none;
-        z-index: -9999;
-        left: -9999px;
-        top: -9999px;
-        visibility: hidden;
-      `;
-      
-      const modelViewer = document.createElement('model-viewer') as any;
-      
-      // КРИТИЧНО: НЕ устанавливаем src сразу - это создает preload warning
-      // modelViewer.src = url;
-      
-      // Принудительно отключаем любые preload через атрибуты
-      modelViewer.loading = 'lazy';
-      modelViewer.reveal = 'interaction';
-      modelViewer.setAttribute('fetchpriority', 'low');
-      modelViewer.setAttribute('preload', 'none');
-      
-      // Настройки для минимального потребления ресурсов
-      modelViewer.style.cssText = 'width: 100%; height: 100%;';
-      modelViewer.setAttribute('disable-zoom', '');
-      modelViewer.setAttribute('disable-pan', '');
-      modelViewer.setAttribute('disable-tap', '');
-      modelViewer.setAttribute('interaction-prompt', 'none');
-      modelViewer.setAttribute('ar', 'false');
-      modelViewer.setAttribute('ar-modes', '');
-      modelViewer.setAttribute('camera-controls', 'false');
-      modelViewer.setAttribute('auto-rotate', 'false');
-      modelViewer.setAttribute('shadow-intensity', '0');
-      modelViewer.setAttribute('exposure', '0.5');
-      
-      // Общий таймаут для всех моделей
-      let timeoutId: NodeJS.Timeout;
-      
-      // Оптимизированная обработка событий
-      const loadHandler = () => {
-        clearTimeout(timeoutId);
+    // ⚡ Быстрый путь: если модель уже в Cache API — отмечаем мгновенно и пропускаем скрытую загрузку
+    try {
+      if (await modelCacheManager.hasModel(url)) {
         this.loadedModels.set(url, true);
-        this.modelElements.set(url, container);
-        
-        // Освобождаем память после загрузки
+        return;
+      }
+    } catch {
+      // Тихо игнорируем
+    }
+
+    const controller = new AbortController();
+    const loadPromise = (async () => {
+      try {
+        // Высокий приоритет — без задержки, низкий — лёгкая пауза
         if (priority === 'low') {
-          setTimeout(() => {
-            modelViewer.dismissPoster?.();
-          }, 100);
+          await new Promise(r => setTimeout(r, 200));
         }
-        
-        resolve();
-      };
-      
-      const errorHandler = () => {
-        clearTimeout(timeoutId);
-        // Тихо обрабатываем ошибку без лишних логов
+        const res = await fetch(url, { signal: controller.signal, cache: 'force-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        // Не создаём blob/objectURL — model-viewer сам загрузит по URL, мы лишь прогрели кэш
+        this.loadedModels.set(url, true);
+      } catch (e) {
         this.loadedModels.set(url, false);
-        container.remove();
-        resolve(); // Graceful degradation
-      };
-      
-      modelViewer.addEventListener('load', loadHandler, { once: true });
-      modelViewer.addEventListener('error', errorHandler, { once: true });
-      
-      // Добавляем элементы в DOM сначала без src
-      container.appendChild(modelViewer);
-      document.body.appendChild(container);
-      
-      // ЗАДЕРЖКА перед установкой src для избежания preload warning
-      setTimeout(() => {
-        // Теперь устанавливаем src когда element уже в DOM и готов
-        modelViewer.src = url;
-        
-        // Устанавливаем таймаут только после установки src
-        timeoutId = setTimeout(() => {
-          if (!this.loadedModels.has(url)) {
-            errorHandler();
-          }
-        }, 20000); // 20 сек для всех моделей
-      }, 500); // 500мс задержка должна быть достаточной
-    });
+      }
+    })();
 
     this.loadingModels.set(url, loadPromise);
     
-    try {
-      await loadPromise;
-    } finally {
-      this.loadingModels.delete(url);
-      this.processQueue(); // Обрабатываем очередь после загрузки
-    }
+  try { await loadPromise; } finally { this.loadingModels.delete(url); }
   }
 
   async preloadMultiple(urls: string[], highPriorityCount: number = 2): Promise<void> {
@@ -214,22 +107,6 @@ export class ModelPreloader {
     await Promise.allSettled(lowPriorityPromises);
   }
 
-  private async processQueue() {
-    if (this.isProcessingQueue || this.preloadQueue.length === 0) {
-      return;
-    }
-    
-    this.isProcessingQueue = true;
-    
-    while (this.preloadQueue.length > 0 && this.loadingModels.size < this.maxConcurrentLoads) {
-      const item = this.preloadQueue.shift();
-      if (item && !this.loadedModels.get(item.url)) {
-        this.preloadModel(item.url, item.priority >= 9 ? 'high' : 'low');
-      }
-    }
-    
-    this.isProcessingQueue = false;
-  }
 
   isLoaded(url: string): boolean {
     const status = this.loadedModels.get(url);
@@ -250,19 +127,17 @@ export class ModelPreloader {
   }
 
   cleanup(): void {
-    // Очищаем элементы с задержкой для предотвращения проблем с отображением
-    this.modelElements.forEach((element, url) => {
-      setTimeout(() => {
-        element.remove();
-      }, 100);
-    });
-    
-    this.modelElements.clear();
+  // Убрали скрытые элементы — теперь просто чистим карты
     this.loadedModels.clear();
     this.loadingModels.clear();
-    this.preloadQueue = [];
-    
     // Очистка завершена
+  }
+  // Для отладки
+  debugState() {
+    return {
+      loaded: Array.from(this.loadedModels.entries()),
+      loading: Array.from(this.loadingModels.keys())
+    };
   }
   
   // Метод для предзагрузки только конкретной модели коммутатора

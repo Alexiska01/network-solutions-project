@@ -1,8 +1,8 @@
 // src/components/product/ProductHero.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo, useRef, useState, useCallback, memo } from "react";
-import { modelPreloader } from "@/utils/modelPreloader";
-import { modelCacheManager } from "@/utils/modelCacheManager";
+import { AUTO_SLIDE_INTERVAL_MS, LAYER_CLEANUP_DELAY_MS, REFRESH_SAMPLING_FRAMES, REFRESH_THRESHOLDS } from './heroTokens.ts';
+// Предзагрузка через кастомные менеджеры временно отключена — используем прямую загрузку
 import "./ProductHero.css";
 
 // Разрешаем web-component <model-viewer> для TSX
@@ -14,69 +14,8 @@ declare global {
   }
 }
 
-// Конфигурация моделей (исходные данные сохранены)
-const heroData = [
-  {
-    id: "IDS3530",
-    series: "3530",
-    title: "Коммутаторы IDS3530",
-    description: "Корпоративные коммутаторы уровня доступа",
-    modelUrl: "/models/3530all.glb",
-    features: [
-      "Встроенные блоки питания",
-      "Поддержка РоЕ/РоЕ+",
-      "Статическая и динамическая маршрутизация",
-    ],
-    gradient: "from-[#32398e] via-[#005baa] to-[#0079b6]",
-    glowColor: "[#005baa]",
-    accentColor: "#53c2a4",
-  },
-  {
-    id: "IDS3730",
-    series: "3730",
-    title: "Коммутаторы IDS3730",
-    description: "Корпоративные коммутаторы уровня доступа",
-    modelUrl: "/models/3730all.glb",
-    features: [
-      "Два модульных блока питания",
-      "Поддержка РоЕ/РоЕ+",
-      "Статическая и динамическая маршрутизация",
-    ],
-    gradient: "from-[#32398e] via-[#8338EC] to-[#B5179E]",
-    glowColor: "[#8338EC]",
-    accentColor: "#FF6B35",
-  },
-  {
-    id: "IDS4530",
-    series: "4530",
-    title: "Коммутаторы IDS4530",
-    description: "Корпоративные коммутаторы уровня доступа",
-    modelUrl: "/models/4530all.glb",
-    features: [
-      "Два модульных блока питания",
-      "Поддержка РоЕ/РоЕ+",
-      "Поддержка технологии VxLAN",
-    ],
-    gradient: "from-[#0093b6] via-[#00acad] to-[#53c2a4]",
-    glowColor: "[#00acad]",
-    accentColor: "#A0EEC0",
-  },
-  {
-    id: "IDS6010",
-    series: "6010",
-    title: "Коммутаторы IDS6010",
-    description: "Корпоративные коммутаторы уровня распределения",
-    modelUrl: "/models/6010all.glb",
-    features: [
-      "Два модульных блока питания",
-      "Поддержка РоЕ/РоЕ+",
-      "Поддержка технологии VxLAN",
-    ],
-    gradient: "from-[#FF6B35] via-[#F5B700] to-[#FF8C7A]",
-    glowColor: "[#FF6B35]",
-    accentColor: "#FFD6C2",
-  },
-] as const;
+// (Удалено) Ошибочная вставка интервала вне компонента
+import { heroData, HeroItem } from './heroData.ts';
 
 type Refresh =
   | "60hz"
@@ -86,12 +25,12 @@ type Refresh =
   | "240hz";
 
 // Предвычисляем градиенты один раз для максимальной производительности
-const PRECOMPUTED_GRADIENTS = heroData.map(item => {
+const PRECOMPUTED_GRADIENTS = heroData.map((item: HeroItem) => {
   const matches = [...item.gradient.matchAll(/#([0-9a-fA-F]{3,8})/g)].map((x) => `#${x[1]}`);
   return [matches[0] ?? "#0B3C49", matches[1] ?? "#1A237E", matches[2] ?? "#2E2E2E"];
 });
 
-const PRECOMPUTED_GLOW_COLORS = heroData.map(item => 
+const PRECOMPUTED_GLOW_COLORS = heroData.map((item: HeroItem) => 
   item.glowColor.replace("[", "").replace("]", "")
 );
 
@@ -120,15 +59,44 @@ function throttle<T extends (...args: any[]) => void>(func: T, wait: number): T 
 
 const ProductHero = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const layerIdRef = useRef(0);
+  const [layers, setLayers] = useState<Array<{ idx:number; phase:'enter'|'active'|'leave'; lid:number }>>([
+    { idx: 0, phase: 'active', lid: layerIdRef.current++ }
+  ]);
   // const [nextIndex, setNextIndex] = useState(0);
   // Морфинг убран - остается только обычная смена контента
-  const [isInitialized, setIsInitialized] = useState(false);
+  const isInitialized = true; // упрощено
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [refreshRate, setRefreshRate] = useState<Refresh>("60hz");
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const pausedRef = useRef(false); // состояние паузы из-за visibility
   const modelRef = useRef<any>(null);
   const [modelLoadStatus, setModelLoadStatus] = useState<Record<string, boolean>>({});
+  // Управление ручной сменой слайда
+  const changeSlide = useCallback((nextIdx: number) => {
+    if (nextIdx === currentIndex) return;
+    if (nextIdx < 0) nextIdx = heroData.length - 1;
+    if (nextIdx >= heroData.length) nextIdx = 0;
+    setCurrentIndex(nextIdx);
+    setLayers(ls => {
+      const updated = ls.map(l => l.idx === currentIndex ? { ...l, phase: 'leave' as const } : l);
+      return [...updated, { idx: nextIdx, phase: 'enter' as const, lid: layerIdRef.current++ }];
+    });
+  }, [currentIndex]);
+  // Агрегированный лог цикла (п.7)
+  const cycleEventsRef = useRef<Array<{url:string; ok:boolean; t:number}>>([]);
+  const lastFlushedIndexRef = useRef<number>(0);
+  const flushCycleLog = useCallback((reason: string) => {
+    if (cycleEventsRef.current.length === 0) return;
+    const success = cycleEventsRef.current.filter(e => e.ok).length;
+    const fail = cycleEventsRef.current.length - success;
+    const details = cycleEventsRef.current.map(e => `${e.url.split('/').pop()}:${e.ok?'ok':'err'}`).join(',');
+    // Одна строка на цикл
+    // eslint-disable-next-line no-console
+    console.info(`🧩 HeroCycle[${lastFlushedIndexRef.current}] ${reason} models=${cycleEventsRef.current.length} ok=${success} fail=${fail} [${details}]`);
+    cycleEventsRef.current = [];
+  }, []);
 
   const currentData = heroData[currentIndex];
   
@@ -158,13 +126,13 @@ const ProductHero = memo(() => {
     const tick = (t: number) => {
       if (!t0) t0 = t;
       frames++;
-      if (frames >= 60) { // Уменьшили с 120 до 60 кадров
+      if (frames >= REFRESH_SAMPLING_FRAMES) {
         const fps = Math.round((frames * 1000) / (t - t0));
         let rate: Refresh = "60hz";
-        if (fps >= 230) rate = "240hz";
-        else if (fps >= 140) rate = "144hz";
-        else if (fps >= 115) rate = "120hz";
-        else if (fps >= 85) rate = "90hz";
+        if (fps >= REFRESH_THRESHOLDS['240hz']) rate = '240hz';
+        else if (fps >= REFRESH_THRESHOLDS['144hz']) rate = '144hz';
+        else if (fps >= REFRESH_THRESHOLDS['120hz']) rate = '120hz';
+        else if (fps >= REFRESH_THRESHOLDS['90hz']) rate = '90hz';
         
         if (rate !== refreshRate) {
           setRefreshRate(rate);
@@ -180,64 +148,9 @@ const ProductHero = memo(() => {
     return () => cancelAnimationFrame(id);
   }, [refreshRate]);
 
-  // ОПТИМИЗИРОВАННАЯ инициализация (только при монтировании)
-  useEffect(() => {
-    let cancelled = false;
-    
-    const initializeApp = async () => {
-      try {
-        // Проверяем статус всех моделей одним батчем
-        const statusPromises = heroData.map(async (item) => {
-          const isPreloaded = modelPreloader.isLoaded(item.modelUrl);
-          const isCached = await modelCacheManager.hasModel?.(item.modelUrl) || false;
-          return { url: item.modelUrl, loaded: isPreloaded || isCached };
-        });
-        
-        const results = await Promise.all(statusPromises);
-        const status = results.reduce((acc, result) => {
-          if (result.loaded) acc[result.url] = true;
-          return acc;
-        }, {} as Record<string, boolean>);
-        
-        if (!cancelled) {
-          setModelLoadStatus(status);
-          setIsInitialized(true);
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setIsInitialized(true);
-        }
-      }
-    };
-    
-    initializeApp();
-    return () => { cancelled = true; };
-  }, []); // Только при монтировании!
+  // Упрощённо: не делаем асинхронной инициализации / кэширующих проверок
   
-  // ОТДЕЛЬНАЯ предзагрузка при смене индекса
-  useEffect(() => {
-    if (!isInitialized) return;
-    
-    const preloadCurrentAndNext = () => {
-      const current = heroData[currentIndex];
-      const nextIndex = (currentIndex + 1) % heroData.length;
-      const next = heroData[nextIndex];
-      
-      // Предзагружаем текущую модель с высоким приоритетом
-      if (!modelPreloader.isLoaded(current.modelUrl)) {
-        modelPreloader.preloadModel(current.modelUrl, "high")
-          .then(() => setModelLoadStatus(prev => ({ ...prev, [current.modelUrl]: true })))
-          .catch(() => setModelLoadStatus(prev => ({ ...prev, [current.modelUrl]: false })));
-      }
-      
-      // Предзагружаем следующую модель в фоне
-      if (!modelPreloader.isLoaded(next.modelUrl)) {
-        modelPreloader.preloadModel(next.modelUrl, "low").catch(() => void 0);
-      }
-    };
-    
-    preloadCurrentAndNext();
-  }, [currentIndex, isInitialized]);
+  // Убрана кастомная предзагрузка — браузер сам загрузит src при появлении слоя
 
   // mobile init для <model-viewer>
   useEffect(() => {
@@ -280,37 +193,52 @@ const ProductHero = memo(() => {
   // ПЛАВНАЯ автосмена серий с фазированной анимацией
   useEffect(() => {
     if (!isInitialized) return;
-    
+
     const autoSlide = () => {
       const nextIdx = (currentIndex + 1) % heroData.length;
-  // setNextIndex(nextIdx);
-      
-      // Предзагружаем следующую модель
-      if (!modelPreloader.isLoaded(heroData[nextIdx].modelUrl)) {
-        modelPreloader.preloadModel(heroData[nextIdx].modelUrl, "high").catch(() => void 0);
-      }
-      
-      // Предзагружаем модель на 2 шага вперёд в фоне
-      const next2Index = (currentIndex + 2) % heroData.length;
-      const next2Model = heroData[next2Index];
-      if (!modelPreloader.isLoaded(next2Model.modelUrl)) {
-        modelPreloader.preloadModel(next2Model.modelUrl, "low").catch(() => void 0);
-      }
-      
-      // Просто меняем индекс без анимаций
-      setCurrentIndex(nextIdx);
+      flushCycleLog('slide-change');
+      lastFlushedIndexRef.current = nextIdx;
+      changeSlide(nextIdx);
     };
-    
-    const interval = setInterval(autoSlide, 11000);
-    intervalRef.current = interval;
-    
+
+    intervalRef.current = setInterval(autoSlide, AUTO_SLIDE_INTERVAL_MS);
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+        pausedRef.current = true;
+        if (modelRef.current) {
+          try { (modelRef.current as any).autoRotate = false; } catch {/* noop */}
+        }
+      } else if (pausedRef.current && !intervalRef.current) {
+        intervalRef.current = setInterval(autoSlide, AUTO_SLIDE_INTERVAL_MS);
+        pausedRef.current = false;
+        if (modelRef.current) {
+          try { (modelRef.current as any).autoRotate = true; } catch {/* noop */}
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); changeSlide(currentIndex + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(currentIndex - 1); }
+    };
+    window.addEventListener('keydown', handleKey);
+
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
+      flushCycleLog('unmount');
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('keydown', handleKey);
     };
-  }, [isInitialized, currentIndex]);
+  }, [currentIndex, changeSlide, flushCycleLog]);
 
   // МЕМОИЗИРОВАННЫЕ CSS переменные для оптимальной производительности
   const cssVars: React.CSSProperties = useMemo(() => ({
@@ -323,6 +251,24 @@ const ProductHero = memo(() => {
     ["--mouse-y" as any]: mousePosition.y.toString(),
     // Morphing переменная убрана
   }), [glowColor, currentData.accentColor, gradientStops, mousePosition]);
+
+  // Переводим новые enter слои в active на следующий кадр (чтобы сработал transition)
+  useEffect(() => {
+    if (!layers.some(l => l.phase === 'enter')) return;
+    const raf = requestAnimationFrame(() => {
+  setLayers(ls => ls.map(l => l.phase === 'enter' ? { ...l, phase: 'active' as const } : l));
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [layers]);
+
+  // Очищаем leave слои после окончания анимации
+  useEffect(() => {
+    if (!layers.some(l => l.phase === 'leave')) return;
+    const t = setTimeout(() => {
+      setLayers(ls => ls.filter(l => l.phase !== 'leave'));
+    }, LAYER_CLEANUP_DELAY_MS); // длительность transition + небольшой запас (токенизировано)
+    return () => clearTimeout(t);
+  }, [layers]);
 
   return (
     <div
@@ -344,103 +290,104 @@ const ProductHero = memo(() => {
         <div className="ph-wrapper">
           <div className="ph-grid">
             {/* Левая колонка */}
-            <div className="ph-content">
-              <div className="ph-header">
-
-                <h1 className="ph-title">
-                  {currentData.title}
-                </h1>
-              </div>
-
-              <div className="ph-features">
-                {currentData.features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="ph-feature"
-                    style={{ ["--feature-index" as any]: index }}
-                  >
-                    <div className="ph-feature-dot" />
-                    <span className="ph-feature-text">{feature}</span>
+            <div className="ph-content-stack">
+              {layers.map(layer => {
+                const data = heroData[layer.idx];
+                return (
+                  <div key={`${data.id}-${layer.lid}`} className={`ph-content-layer ${layer.phase}`}>
+                    <div className="ph-content">
+                      <div className="ph-header">
+                        <h1 className="ph-title">{data.title}</h1>
+                      </div>
+                      <div className="ph-features">
+                        {data.features.map((feature: string, index: number) => (
+                          <div key={index} className="ph-feature" style={{ ["--feature-index" as any]: index }}>
+                            <div className="ph-feature-dot" />
+                            <span className="ph-feature-text">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="ph-progress">
+                        <div className="ph-progress-dots">
+                          {heroData.map((_, idx: number) => (
+                            <div
+                              key={idx}
+                              role="button"
+                              tabIndex={0}
+                              aria-label={`Показать серию ${idx + 1}`}
+                              aria-pressed={idx === currentIndex}
+                              className={`ph-progress-dot ${idx === currentIndex ? 'active' : ''}`}
+                              onClick={() => changeSlide(idx)}
+                              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); changeSlide(idx); } }}
+                            />
+                          ))}
+                        </div>
+                        <span className="ph-progress-counter">
+                          {String(currentIndex + 1).padStart(2, '0')} / {String(heroData.length).padStart(2, '0')}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                ))}
-              </div>
-
-              <div className="ph-progress">
-                <div className="ph-progress-dots">
-                  {heroData.map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`ph-progress-dot ${idx === currentIndex ? "active" : ""}`}
-                    />
-                  ))}
-                </div>
-                <span className="ph-progress-counter">
-                  {String(currentIndex + 1).padStart(2, "0")} /{" "}
-                  {String(heroData.length).padStart(2, "0")}
-                </span>
-              </div>
+                );
+              })}
             </div>
 
             {/* Правая колонка — 3D модель (структура как в Hero3530, но с OptimizedModelViewer) */}
-            <div className="hero-model-section ph-model-center relative order-first lg:order-last mt-0 lg:mt-0">
+            <div className="ph-hero-model-section ph-model-center relative order-first lg:order-last mt-0 lg:mt-0">
               {/* уменьшено ~на 5%: 240->228, 275->261, 326->310, 360->342 */}
-              <div className="hero-model-container relative w-full max-w-[343px] sm:max-w-[411px] md:max-w-[446px] lg:max-w-[514px] h-[228px] sm:h-[261px] md:h-[310px] lg:h-[342px]" style={{ transform: 'translateY(-20px)' }}>
-                {modelLoadStatus[currentData.modelUrl] !== false && (
-                  <div className="hero-model relative z-10 w-full h-full">
-                    <model-viewer
-                      ref={modelRef}
-                      src={currentData.modelUrl}
-                      alt={currentData.title}
-                      auto-rotate
-                      auto-rotate-delay="0"
-                      rotation-per-second={isMobile ? "32deg" : "30deg"}
-                      camera-controls={!isMobile}
-                      camera-orbit={isMobile ? "0deg 80deg 1.0m" : "0deg 83deg 0.95m"}
-                      min-camera-orbit={isMobile ? "auto auto 1.1m" : "auto auto 0.5m"}
-                      max-camera-orbit={isMobile ? "auto auto 1.1m" : "auto auto 1.2m"}
-                      field-of-view={isMobile ? "40deg" : "40deg"}
-                      interaction-prompt="none"
-                      environment-image="neutral"
-                      shadow-intensity={isMobile ? "0.2" : "0.25"}
-                      exposure={isMobile ? "1.1" : "1.1"}
-                      disable-zoom={isMobile ? true : undefined}
-                      disable-pan={isMobile ? true : undefined}
-                      disable-tap={isMobile ? true : undefined}
-                      style={{
-                        width: isMobile ? '100%' : '100%',
-                        height: isMobile ? '100%' : '100%',
-                        background: 'transparent',
-                        border: 'none',
-                        outline: 'none',
-                        boxShadow: 'none',
-                        borderRadius: isMobile ? '1rem' : '0rem',
-                        pointerEvents: 'none',
-                        touchAction: isMobile ? 'none' : undefined,
-                        '--progress-bar-color': 'transparent',
-                        '--progress-mask': 'transparent',
-                      } as React.CSSProperties}
-                      onLoad={() => {
-                        if (!modelPreloader.isLoaded(currentData.modelUrl)) {
-                          modelPreloader.markAsLoaded?.(currentData.modelUrl);
-                        }
-                        setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: true }));
-                      }}
-                      onError={() => {
-                        setModelLoadStatus((p) => ({ ...p, [currentData.modelUrl]: false }));
-                      }}
-                    />
-                  </div>
-                )}
-                {modelLoadStatus[currentData.modelUrl] === false && (
-                  <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="text-3xl">⚠️</div>
-                      <span className="text-white/60 text-sm font-medium">
-                        Модель недоступна
-                      </span>
+              <div className="ph-hero-model-container ph-model-stack relative w-full max-w-[343px] sm:max-w-[411px] md:max-w-[446px] lg:max-w-[514px] h-[228px] sm:h-[261px] md:h-[310px] lg:h-[342px]" style={{ transform: 'translateY(-20px)' }}>
+        {layers.map(layer => {
+                  const data = heroData[layer.idx];
+                  const failed = modelLoadStatus[data.modelUrl] === false;
+                  return (
+          <div key={`${data.id}-${layer.lid}`} className={`ph-model-layer ${layer.phase} relative w-full h-full`}>
+                      {!failed && (
+                        <div className="ph-hero-model relative z-10 w-full h-full">
+                          <model-viewer
+                            ref={layer.idx === currentIndex ? modelRef : undefined}
+                            src={data.modelUrl}
+                            alt={data.title}
+                            auto-rotate
+                            auto-rotate-delay="0"
+                            rotation-per-second={isMobile ? '32deg' : '30deg'}
+                            camera-controls={!isMobile}
+                            camera-orbit={isMobile ? '0deg 80deg 1.0m' : '0deg 83deg 0.95m'}
+                            min-camera-orbit={isMobile ? 'auto auto 1.1m' : 'auto auto 0.5m'}
+                            max-camera-orbit={isMobile ? 'auto auto 1.1m' : 'auto auto 1.2m'}
+                            field-of-view={isMobile ? '40deg' : '40deg'}
+                            interaction-prompt='none'
+                            environment-image='neutral'
+                            shadow-intensity={isMobile ? '0.2' : '0.25'}
+                            exposure={isMobile ? '1.1' : '1.1'}
+                            disable-zoom={isMobile ? true : undefined}
+                            disable-pan={isMobile ? true : undefined}
+                            disable-tap={isMobile ? true : undefined}
+                            style={{
+                              width:'100%',height:'100%',background:'transparent',border:'none',outline:'none',boxShadow:'none',borderRadius:isMobile ? '1rem':'0rem',pointerEvents:'none',touchAction:isMobile ? 'none':undefined,'--progress-bar-color':'transparent','--progress-mask':'transparent'
+                            } as React.CSSProperties}
+                            onLoad={() => {
+                              setModelLoadStatus(p => ({...p,[data.modelUrl]:true}));
+                              cycleEventsRef.current.push({url: data.modelUrl, ok:true, t: performance.now()});
+                            }}
+                            onError={(e: any) => {
+                              console.warn('❌ model-viewer error', data.modelUrl, e?.detail);
+                              setModelLoadStatus(p => ({...p,[data.modelUrl]:false}));
+                              cycleEventsRef.current.push({url: data.modelUrl, ok:false, t: performance.now()});
+                            }}
+                          />
+                        </div>
+                      )}
+                      {failed && (
+                        <div className="absolute inset-0 flex items-center justify-center z-20">
+                          <div className="flex flex-col items-center gap-3">
+                            <div className="text-3xl">⚠️</div>
+                            <span className="text-white/60 text-sm font-medium">Модель недоступна</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                )}
+                  );
+                })}
               </div>
             </div>
           </div>
