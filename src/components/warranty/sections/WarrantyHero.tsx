@@ -38,7 +38,7 @@ export const WarrantyHero: React.FC<WarrantyHeroProps> = ({
   }, [isMobile]);
 
   return (
-  <section id="warranty-hero" className="warranty-hero-section warranty-hero-gradient relative overflow-hidden pt-8 sm:pt-9 lg:pt-10 xl:pt-12 pb-6 sm:pb-7 lg:pb-8 xl:pb-8 flex items-center min-h-[200px] sm:min-h-[210px] lg:min-h-[220px]">
+  <section id="warranty-hero" className="warranty-hero-section warranty-hero-gradient warranty-hero-alt relative overflow-hidden pt-8 sm:pt-9 lg:pt-10 xl:pt-12 pb-6 sm:pb-7 lg:pb-8 xl:pb-8 flex items-center min-h-[200px] sm:min-h-[210px] lg:min-h-[220px]">
       {/* Optional subtle particles (сократили до 3) */}
       <div className="warranty-hero-particles minimal">
         {[0,1,2].map(i => (<div key={i} className="warranty-particle" />))}
@@ -53,6 +53,7 @@ export const WarrantyHero: React.FC<WarrantyHeroProps> = ({
             <h1 className="warranty-hero-title text-white text-3xl sm:text-5xl md:text-[52px] lg:text-[58px] xl:text-[62px] font-bold leading-[1.02] tracking-tight mb-4">
               {title}
             </h1>
+            <div className="warranty-hero-separator mb-4" aria-hidden="true" />
             <p className="warranty-hero-description text-base sm:text-lg md:text-xl lg:text-[19px] font-light text-white/85 max-w-none lg:whitespace-nowrap">
               {subtitle}
             </p>
@@ -60,7 +61,7 @@ export const WarrantyHero: React.FC<WarrantyHeroProps> = ({
 
           {/* Right 3D model column */}
           <div className="col-span-1 lg:col-span-6 xl:col-span-5 flex justify-center lg:justify-end">
-            <div className="warranty-hero-model-shell relative">
+            <div className="warranty-hero-model-shell shift-left-10 relative">
               {/* Удалён фон-щит по запросу */}
               <div className="warranty-model-inner">
                 <model-viewer

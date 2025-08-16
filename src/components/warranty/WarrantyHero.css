@@ -24,12 +24,110 @@
   animation: heroGradientFlow 30s ease-in-out infinite alternate;
 }
 
+/* === ENHANCED SERVICE / WARRANTY THEME BACKGROUND LAYERS === */
+/* We enrich the hero with symbolic shield arcs + service scan + subtle circuit grid */
+.warranty-hero-section {
+  --w-bg-shield-accent: 210, 245, 255; /* light cyan */
+  --w-bg-core-accent: 0, 150, 173;     /* core teal */
+  --w-bg-scan-accent: 120, 240, 255;   /* scanning line */
+}
+
+.warranty-hero-section:before,
+.warranty-hero-section:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* sits under content but above base gradient */
+}
+
+/* BEFORE: layered shield arcs + radial trust halo */
+.warranty-hero-section:before {
+  background:
+    /* soft radial halo */ radial-gradient(circle at 28% 52%, rgba(var(--w-bg-shield-accent),0.18), rgba(var(--w-bg-shield-accent),0) 55%),
+    /* secondary halo */ radial-gradient(circle at 72% 48%, rgba(255,255,255,0.12), rgba(255,255,255,0) 60%),
+    /* shield concentric arcs using masks */
+    repeating-conic-gradient(from 0deg, rgba(255,255,255,0.12) 0deg 2deg, transparent 2deg 6deg);
+  mask:
+    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.4) 46%, rgba(0,0,0,0.15) 60%, transparent 72%);
+  mix-blend-mode: overlay;
+  opacity: .55;
+  animation: warrantyShieldPulse 14s ease-in-out infinite;
+}
+
+/* AFTER: circuit grid + animated service scanning beam */
+.warranty-hero-section:after {
+  background:
+    /* scanning beam */ linear-gradient(105deg, rgba(var(--w-bg-scan-accent),0) 0%, rgba(var(--w-bg-scan-accent),0.35) 45%, rgba(var(--w-bg-scan-accent),0) 82%),
+    /* fine circuit lattice */ linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size:
+    280% 280%, /* beam large to allow travel */
+    120px 120px,
+    120px 120px;
+  background-position: 0% 50%, 0 0, 0 0;
+  mix-blend-mode: screen;
+  mask: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.85) 42%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.15) 78%, transparent 85%);
+  animation: warrantyScan 18s linear infinite, warrantyGridFade 1.4s ease 0.4s both;
+  opacity: .65;
+}
+
+@keyframes warrantyScan {
+  0% { background-position: 0% 50%, 0 0, 0 0; }
+  48% { background-position: 100% 50%, 0 0, 0 0; }
+  50% { background-position: 100% 48%, 0 0, 0 0; }
+  98% { background-position: 0% 48%, 0 0, 0 0; }
+  100% { background-position: 0% 50%, 0 0, 0 0; }
+}
+
+@keyframes warrantyShieldPulse {
+  0%, 100% { filter: brightness(1) saturate(1); opacity:.55; }
+  40% { filter: brightness(1.15) saturate(1.15); opacity:.7; }
+  70% { filter: brightness(1.05) saturate(1.05); opacity:.5; }
+}
+
+@keyframes warrantyGridFade { from { opacity: 0; transform: scale(1.02); } to { opacity: .65; transform: scale(1); } }
+
+/* Performance / reduced motion: freeze scan + pulse */
+@media (prefers-reduced-motion: reduce) {
+  .warranty-hero-section:before, .warranty-hero-section:after { animation: none !important; }
+  .warranty-hero-section:after { background-position: 50% 50%, 0 0, 0 0; }
+  .warranty-hero-title { animation:none !important; opacity:1; transform:none; filter:none; }
+}
+
+/* === ALT BACKGROUND VARIANT (applied via .warranty-hero-alt) === */
+.warranty-hero-alt { position:relative; }
+.warranty-hero-alt:before { animation: none; opacity:.42; background:
+  linear-gradient(125deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 38%),
+  repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 2px, rgba(255,255,255,0) 2px 12px);
+  mix-blend-mode:overlay; mask: linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0)); }
+.warranty-hero-alt:after { background:
+  /* moving diagonal pulse */ linear-gradient(60deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%),
+  /* thin vertical lines */ repeating-linear-gradient(90deg, rgba(255,255,255,0.09) 0 1px, transparent 1px 42px),
+  /* thin horizontal lines */ repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 38px);
+  background-size: 260% 260%, 100% 100%, 100% 100%;
+  animation: altSweep 22s linear infinite, warrantyGridFade 1.2s ease .3s both;
+  opacity:.55; mix-blend-mode:screen; mask:linear-gradient(160deg, rgba(0,0,0,.95), rgba(0,0,0,.2) 70%, transparent 92%);
+}
+@keyframes altSweep { 0%{background-position:0% 50%,0 0,0 0;} 50%{background-position:100% 50%,0 0,0 0;} 100%{background-position:0% 50%,0 0,0 0;} }
+
+@media (max-width:768px){ .warranty-hero-alt:before{opacity:.3;} .warranty-hero-alt:after{opacity:.4;} }
+
 @keyframes heroGradientFlow { 0% { background-position:0% 50%; } 100% { background-position:100% 50%; } }
 
 .warranty-hero-title {
   position: relative;
   z-index: 2;
 }
+/* Subtle entrance animation (no glow) */
+.warranty-hero-title { opacity:0; animation:heroTitleAppear .9s cubic-bezier(.16,1,.3,1) .05s forwards; }
+@keyframes heroTitleAppear { 0%{opacity:0;transform:translate3d(0,32px,0) scale(.985);filter:blur(6px);} 65%{opacity:1;transform:translate3d(0,-4px,0) scale(1.01);filter:blur(1.2px);} 100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0);} }
+
+/* Decorative separator under title */
+.warranty-hero-separator { position:relative; width:100%; max-width:340px; height:3px; background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.75) 18%,rgba(255,255,255,0.35) 55%,rgba(255,255,255,0) 100%); border-radius:4px; overflow:hidden; }
+.warranty-hero-separator:after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,255,214,0) 0%,rgba(0,255,214,.65) 50%,rgba(0,255,214,0) 100%); mix-blend-mode:screen; transform:translateX(-40%); animation: separatorSweep 6s cubic-bezier(.4,0,.6,1) infinite; opacity:.9; }
+@keyframes separatorSweep { 0%{transform:translateX(-60%);} 50%{transform:translateX(35%);} 100%{transform:translateX(110%);} }
+@media (prefers-reduced-motion: reduce){ .warranty-hero-separator:after { animation:none; transform:translateX(0); } }
 
 /* === Journey Timeline Mobile Animation (новое) === */
 .journey-timeline-mobile {
@@ -275,6 +373,8 @@
 
 /* Model shell */
 .warranty-hero-model-shell { width:100%; max-width:340px; position:relative; height:var(--warranty-model-h,140px); }
+.shift-left-10 { }
+@media (min-width:1024px){ .shift-left-10 { transform:translateX(-25%); } }
 .warranty-model-glow { display:none; }
 .warranty-model-inner { position:relative; width:100%; height:100%; background:transparent !important; border:none !important; box-shadow:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; border-radius:0; overflow:visible; }
 .warranty-model-inner model-viewer { --progress-bar-color: transparent; }
