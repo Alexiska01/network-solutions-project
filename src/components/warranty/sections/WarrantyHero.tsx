@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '@/components/warranty/WarrantyHero.css';
-import Icon from '@/components/ui/icon';
 
 interface WarrantyHeroProps {
   title?: string;
@@ -11,7 +10,7 @@ interface WarrantyHeroProps {
 export const WarrantyHero: React.FC<WarrantyHeroProps> = ({
   title = 'Сервис и Гарантия',
   subtitle = 'Техническая поддержка для непрерывной работы вашего бизнеса',
-  modelUrl = ''
+  modelUrl = '/models/Щит.glb'
 }) => {
   const modelRef = useRef<any>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -51,7 +50,7 @@ export const WarrantyHero: React.FC<WarrantyHeroProps> = ({
         <div className="warranty-hero-layout grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* Left textual column */}
           <div className="col-span-1 lg:col-span-6 xl:col-span-7 max-w-3xl">
-            <h1 className="warranty-hero-title warranty-hero-glow-text text-3xl sm:text-5xl md:text-[52px] lg:text-[58px] xl:text-[62px] font-bold leading-[1.02] tracking-tight mb-4">
+            <h1 className="warranty-hero-title text-white text-3xl sm:text-5xl md:text-[52px] lg:text-[58px] xl:text-[62px] font-bold leading-[1.02] tracking-tight mb-4">
               {title}
             </h1>
             <p className="warranty-hero-description text-base sm:text-lg md:text-xl lg:text-[19px] font-light text-white/85 max-w-none lg:whitespace-nowrap">
@@ -62,10 +61,7 @@ export const WarrantyHero: React.FC<WarrantyHeroProps> = ({
           {/* Right 3D model column */}
           <div className="col-span-1 lg:col-span-6 xl:col-span-5 flex justify-center lg:justify-end">
             <div className="warranty-hero-model-shell relative">
-              {/* Фоновая иконка щита (та же, что в блоке "Гарантия на оборудование") */}
-              <div className="warranty-model-bg-icon" aria-hidden="true">
-                <Icon name="Shield" className="warranty-model-bg-svg" strokeWidth={1.25} />
-              </div>
+              {/* Удалён фон-щит по запросу */}
               <div className="warranty-model-inner">
                 <model-viewer
                   ref={modelRef}
@@ -73,15 +69,15 @@ export const WarrantyHero: React.FC<WarrantyHeroProps> = ({
                   alt="Warranty infrastructure model"
                   auto-rotate
                   auto-rotate-delay="0"
-                  rotation-per-second={isMobile ? '26deg' : '24deg'}
+                  rotation-per-second={isMobile ? '26deg' : '50deg'}
                   camera-controls={!isMobile}
                   interaction-prompt="none"
-                  camera-orbit={isMobile ? '0deg 78deg 0.8m' : '0deg 80deg 0.85m'}
+                  camera-orbit={isMobile ? '0deg 78deg 0.8m' : '0deg 90deg 0.3m'}
                   min-camera-orbit={isMobile ? 'auto auto 0.8m' : 'auto auto 0.45m'}
                   max-camera-orbit={isMobile ? 'auto auto 0.8m' : 'auto auto 1.0m'}
-                  field-of-view={isMobile ? '36deg' : '34deg'}
+                  field-of-view={isMobile ? '36deg' : '26deg'}
                   environment-image="neutral"
-                  shadow-intensity={isMobile ? '0.18' : '0.25'}
+                  shadow-intensity={isMobile ? '0.18' : '0'}
                   exposure="1.05"
                   style={{ width: '100%', height: '100%', background: 'transparent', pointerEvents: 'none' }}
                 />

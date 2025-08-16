@@ -58,11 +58,7 @@
 
 
 /* Комбинируем fade-in + glow-пульс в одной декларации */
-.warranty-hero-title.warranty-hero-glow-text {
-  animation:
-    heroTitleFadeGlow 2s cubic-bezier(0.23, 1, 0.32, 1) 0.1s both,
-    titleGlowPulse    4s cubic-bezier(0.4, 0, 0.6, 1)    0s infinite;
-}
+/* removed glow animation from title */
 
 @keyframes heroTitleFadeGlow {
   0% {
@@ -117,26 +113,7 @@
   }
 }
 
-/* Premium Glow Text Effect */
-.warranty-hero-glow-text {
-  background: linear-gradient(
-    45deg,
-    #ffffff 0%,
-    #e8f4fd 20%,
-    #ffffff 40%,
-    #f0f8ff 60%,
-    #ffffff 80%,
-    #e8f4fd 100%
-  );
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow:
-    0 0 20px rgba(255, 255, 255, 0.3),
-    0 0 40px rgba(255, 255, 255, 0.1),
-    0 4px 20px rgba(0, 0, 0, 0.2);
-}
+/* removed premium glow gradient text */
 
 @keyframes titleGlowPulse {
   0%,
@@ -302,11 +279,7 @@
 .warranty-model-inner { position:relative; width:100%; height:100%; background:transparent !important; border:none !important; box-shadow:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; border-radius:0; overflow:visible; }
 .warranty-model-inner model-viewer { --progress-bar-color: transparent; }
 
-/* Shield background icon */
-.warranty-model-bg-icon { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
-.warranty-model-bg-svg { width:100%; height:100%; max-width:252px; max-height:252px; color:rgba(255,255,255,0.12); filter:drop-shadow(0 0 18px rgba(0,0,0,0.25)); transform:scale(1); }
-@media (min-width:1280px){ .warranty-model-bg-svg { max-width:288px; max-height:288px; } }
-@media (max-width:640px){ .warranty-model-bg-icon { display:none; } }
+/* (shield background icon styles removed) */
 
 @media (max-width: 1024px) { .warranty-hero-model-shell { max-width:300px; height:130px; } .warranty-model-inner { border-radius:20px; } }
 @media (min-width: 1024px) { .warranty-hero-model-shell { --warranty-model-h:150px; } }
@@ -453,11 +426,7 @@
 
 @media (max-width: 768px) {
   /* Мобильная версия: чуть дольше fade-in и плавнее пульс */
-  .warranty-hero-title.warranty-hero-glow-text {
-    animation:
-      heroTitleFadeGlow 2.4s cubic-bezier(0.23, 1, 0.32, 1) 0.15s both,
-      titleGlowPulse    4.4s cubic-bezier(0.4, 0, 0.6, 1)    0s infinite;
-  }
+  /* glow class removed */
 
   .warranty-hero-description {
     animation-duration: 1.2s;
@@ -486,9 +455,7 @@
   .warranty-hero-gradient,
   .warranty-particle,
   .warranty-hero-decoration,
-  .warranty-hero-glow-text {
-    animation: none !important;
-  }
+  /* glow class removed */
 
   .warranty-hero-title,
   .warranty-hero-description {

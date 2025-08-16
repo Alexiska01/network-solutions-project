@@ -4,17 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const { glob } = require('glob');
 
-// Маппинг старых URL на новые локальные пути (только all версии)
-const modelMapping = {
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3530all.glb': '/models/3530all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/3730all.glb': '/models/3730all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/4530all.glb': '/models/4530all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/6010all.glb': '/models/6010all.glb',
-  // Альтернативные названия
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S3530-all.glb': '/models/3530all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/S4530-all.glb': '/models/4530all.glb',
-  'https://s3.twcstorage.ru/c80bd43d-3dmodels/IDS6010-all.glb': '/models/6010all.glb'
-};
 
 async function updateFileContent(filePath) {
   try {
