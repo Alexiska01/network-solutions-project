@@ -182,22 +182,23 @@ const FeaturesSection = () => {
   return (
     <section 
       ref={sectionRef} 
-  className={`pt-[36px] pb-12 md:pt-[60px] md:pb-20 lg:pt-[72px] lg:pb-24 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
+  className={`pt-[8px] pb-[12px] md:pt-[20px] md:pb-[24px] lg:pt-[28px] lg:pb-[32px] bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
     >
       {/* Декоративный фон */}
   <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 to-teal-50/20 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="flex flex-col justify-center min-h-[340px] md:min-h-[400px] lg:min-h-[440px]">
         <div 
           ref={headerRef}
-          className={`text-center mb-8 md:mb-16 feature-header ${
+          className={`text-center mb-3 md:mb-6 feature-header ${
             headerVisible ? 'feature-header-visible' : 'feature-header-hidden'
           }`}
         >
-          <h2 className="text-lg md:text-2xl lg:text-3xl xl:text-[2.375rem] font-bold text-gray-900 mb-3 md:mb-5 leading-snug tracking-tight">
+          <h2 className="text-lg md:text-2xl lg:text-3xl xl:text-[2.375rem] font-bold text-gray-900 mb-2 md:mb-4 leading-snug tracking-tight">
             Почему выбирают iDATA
           </h2>
-          <div className="w-14 md:w-20 h-0.5 md:h-[3px] bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-4 md:mb-6 rounded-full"></div>
+          <div className="w-14 md:w-20 h-0.5 md:h-[3px] bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-1 md:mb-2 rounded-full"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
@@ -222,7 +223,7 @@ const FeaturesSection = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl transition-opacity duration-500 md:duration-700 ease-out pointer-events-none"></div>
               
               {/* Content */}
-              <div className="relative z-10 flex flex-col h-full">
+              <div className="relative z-10 flex flex-col h-full justify-center">
                 {/* Icon with enhanced styling */}
                 <div className="relative mb-5 md:mb-8">
                   <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl transform translateZ(0) transition-all duration-500 ease-out backface-visibility-hidden -webkit-font-smoothing-antialiased">
@@ -252,6 +253,7 @@ const FeaturesSection = () => {
               <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-600 to-teal-500 transform scale-x-0 group-hover:scale-x-100 origin-left rounded-b-xl md:rounded-b-3xl transition-transform duration-500 md:duration-700 ease-out pointer-events-none"></div>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </section>

@@ -370,9 +370,9 @@ const ProductHero = memo(() => {
                             alt={data.title}
                             auto-rotate
                             auto-rotate-delay="0"
-                            rotation-per-second={isMobile ? '32deg' : '30deg'}
+                            rotation-per-second={isMobile ? '32deg' : '32deg'}
                             camera-controls={!isMobile}
-                            camera-orbit={isMobile ? '0deg 80deg 1.0m' : '0deg 83deg 0.95m'}
+                            camera-orbit={isMobile ? '0deg 80deg 1.0m' : '0deg 82deg 1.0m'}
                             min-camera-orbit={isMobile ? 'auto auto 1.1m' : 'auto auto 0.5m'}
                             max-camera-orbit={isMobile ? 'auto auto 1.1m' : 'auto auto 1.2m'}
                             field-of-view={isMobile ? '40deg' : '40deg'}
