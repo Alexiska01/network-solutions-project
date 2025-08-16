@@ -82,6 +82,29 @@
   overflow: hidden;
 }
 
+/* Soft bounce animation (applied together with gradient shift on card hover) */
+@keyframes iconSoftBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-4px) scale(1.015); }
+  50% { transform: translateY(-2px) scale(1.01); }
+  75% { transform: translateY(-5px) scale(1.018); }
+}
+
+/* Combine existing gradient animation with bounce only while hovering the whole card */
+.warranty-card.compact:hover .warranty-icon > div {
+  animation: iconGradientShift 3s ease-in-out infinite, iconSoftBounce 3.6s cubic-bezier(.42,.12,.18,.99) infinite;
+  will-change: transform;
+}
+
+/* Title bounce (aligned timing with icon) */
+@keyframes titleSoftBounce { 0%,100%{ transform:translateY(0); } 25%{ transform:translateY(-3px); } 50%{ transform:translateY(-1px); } 75%{ transform:translateY(-4px); } }
+.warranty-card.compact:hover .warranty-title { animation:titleSoftBounce 3.6s cubic-bezier(.42,.12,.18,.99) infinite; will-change:transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .warranty-card.compact:hover .warranty-icon > div { animation: iconGradientShift 6s linear infinite; }
+  .warranty-card.compact:hover .warranty-title { animation:none; }
+}
+
 .warranty-icon > div::before {
   content: "";
   position: absolute;
@@ -215,9 +238,38 @@
   transition: all 0.3s ease;
 }
 
-.warranty-feature-item:hover .font-semibold {
-  color: #005baa;
-  transform: translateX(2px);
+/* Hover изменение цвета/смещения заголовка пункта отключено по требованию */
+
+/* === FEATURE ICON GLOW (card-level hover) === */
+.warranty-feature-item > span { position:relative; overflow:visible; transition:transform .6s cubic-bezier(.34,1.56,.5,1), box-shadow .7s ease, background .5s ease; will-change:transform, box-shadow; }
+.warranty-feature-item > span::after { content:""; position:absolute; inset:-3px; border-radius:inherit; background:radial-gradient(circle at 50% 50%, var(--accent) 0%, rgba(255,255,255,0) 70%); opacity:0; transform:scale(.4); filter:blur(6px) saturate(160%); mix-blend-mode:screen; transition:opacity .7s cubic-bezier(.4,.2,.2,1), transform .7s cubic-bezier(.34,1.56,.5,1); pointer-events:none; }
+
+@keyframes iconGlobalPulse { 0%,100% { box-shadow:0 0 0 0 var(--accent),0 0 10px -2px rgba(0,0,0,.18); } 50% { box-shadow:0 0 0 2px rgba(255,255,255,.6),0 0 14px 2px var(--accent); } }
+
+/* When hovering entire card: all icons glow & pulse */
+.warranty-card.compact:hover .warranty-feature-item > span { transform:scale(1.12) rotate(4deg); box-shadow:0 0 0 1px rgba(255,255,255,.65),0 0 0 3px var(--accent),0 0 14px 4px var(--accent),0 4px 12px -4px rgba(0,0,0,.25); animation:iconGlobalPulse 2.4s ease-in-out infinite; }
+.warranty-card.compact:hover .warranty-feature-item > span::after { opacity:.9; transform:scale(1); }
+
+/* Slight stagger using nth-child animation-delay for variety */
+/* Равномерная подсветка без ступенчатых задержек */
+
+@media (prefers-reduced-motion: reduce){
+  .warranty-feature-item > span,.warranty-feature-item > span::after{transition:none !important; animation:none !important;}
+  .warranty-card.compact:hover .warranty-feature-item > span { transform:none; box-shadow:0 0 0 2px var(--accent); }
+  .warranty-card.compact:hover .warranty-feature-item > span::after { opacity:.75; transform:none; }
+}
+
+/* === Focus hover style (single variant) === */
+.warranty-card.compact { position:relative; isolation:isolate; background:linear-gradient(150deg,#ffffff,#f6f9fb); transition: box-shadow .45s cubic-bezier(.4,.2,.2,1), transform .45s cubic-bezier(.4,.2,.2,1), border-color .4s; }
+.warranty-card.compact:hover { filter:none; }
+.warranty-card.compact::before { content:""; position:absolute; inset:0; border-radius:inherit; background:radial-gradient(circle at 50% 55%,rgba(255,255,255,.6),rgba(255,255,255,0) 70%); mix-blend-mode:soft-light; opacity:0; transition:opacity .5s ease; pointer-events:none; }
+.warranty-card.compact::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .5s ease; box-shadow:0 0 0 3px rgba(255,255,255,.15) inset,0 0 0 1px rgba(255,255,255,.25) inset; }
+.warranty-card.compact:hover { border-color:var(--accent); transform:translateY(-6px); box-shadow:0 4px 10px -2px rgba(0,0,0,.10),0 12px 24px -6px rgba(0,0,0,.12),0 24px 46px -14px rgba(0,0,0,.18),0 0 0 1px var(--accent); }
+.warranty-card.compact:hover::before, .warranty-card.compact:hover::after { opacity:1; }
+
+@media (prefers-reduced-motion: reduce){
+  .warranty-card.compact,.warranty-card.compact::before,.warranty-card.compact::after{transition:none !important;}
+  .warranty-card.compact:hover{transform:none !important;}
 }
 
 /* Responsive Optimizations */

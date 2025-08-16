@@ -8,7 +8,6 @@ import '@/components/warranty/ServiceCard.css';
 import '@/components/warranty/JourneyPath.css';
 import { WarrantyHero } from '@/components/warranty/sections/WarrantyHero';
 import { WarrantyInfoCard } from '@/components/warranty/sections/WarrantyInfoCard';
-import { ServicePackagesSection } from '@/components/warranty/sections/ServicePackagesSection';
 import { CustomerJourney } from '@/components/warranty/sections/CustomerJourney';
 
 const WarrantyPage: React.FC = () => {
@@ -42,7 +41,6 @@ const WarrantyPage: React.FC = () => {
       
   <WarrantyHero />
   <WarrantyInfoCard />
-  <ServicePackagesSection />
   <CustomerJourney />
 
       <Footer />

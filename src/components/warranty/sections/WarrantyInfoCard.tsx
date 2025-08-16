@@ -2,54 +2,109 @@ import React from 'react';
 import Icon from '@/components/ui/icon';
 import '@/components/warranty/WarrantyCard.css';
 
+interface CompactCard {
+  key: string;
+  title: string;
+  icon: string;
+  color: string; // primary accent hex
+  items: { title?: string; desc: string }[];
+}
+
+const WARRANTY_CARDS: CompactCard[] = [
+  {
+    key: 'warranty',
+    title: 'Гарантия на оборудование',
+    icon: 'Shield',
+    color: '#32398e',
+    items: [
+      { title: '12 месяцев гарантии', desc: 'Действует с момента продажи оборудования' },
+      { title: 'Базовая поддержка', desc: 'Включена в гарантийную поддержку' },
+      { title: 'Рабочие часы', desc: 'Приём заявок с 9:00 до 18:00 по московскому времени' },
+      { title: 'Обновления ПО', desc: 'Предоставляются по запросу' },
+      { title: 'Ремонт/замена', desc: 'Восстановление в течение 60 рабочих дней' },
+      { title: 'Условия доставки', desc: 'Доставка в сервисный центр за счёт заказчика' }
+    ]
+  },
+  {
+    key: '24x7x4',
+    title: 'Поддержка 24x7x4',
+    icon: 'Zap',
+    color: '#0079b6',
+    items: [
+      { title: 'Сервисная поддержка на 12/36/60 месяцев', desc: 'Действует с момента продажи оборудования' },
+  { title: 'Расширенная поддержка', desc: 'Консультации по эксплуатации и настройке' },
+      { title: 'Рабочие часы', desc: 'Круглосуточный приём заявок' },
+      { title: 'Обновления ПО', desc: 'Предоставляются по запросу' },
+      { title: 'Замена вышедшего из строя оборудования', desc: 'Отгрузка со склада СЦ в течение 4 часов' },
+      { title: 'Условия доставки', desc: 'Доставка в СЦ и возврат - за счёт сервисного центра' }
+    ]
+  },
+  {
+    key: '8x5xNBD',
+    title: 'Поддержка 8x5xNBD',
+    icon: 'Clock',
+    color: '#00acad',
+    items: [
+      { title: 'Сервисная поддержка на 12/36/60 месяцев', desc: 'Действует с момента продажи оборудования' },
+  { title: 'Расширенная поддержка', desc: 'Консультации по эксплуатации и настройке' },
+      { title: 'Рабочие часы', desc: 'Приём заявок с 9:00 до 18:00 по московскому времени' },
+      { title: 'Обновления ПО', desc: 'Предоставляются по запросу' },
+      { title: 'Замена вышедшего из строя оборудования', desc: 'Отгрузка со склада СЦ на следующий рабочий день' },
+      { title: 'Условия доставки', desc: 'Доставка в СЦ и возврат - за счёт сервисного центра' }
+    ]
+  }
+];
+
+// helper: convert hex (#rrggbb) to rgba with alpha
+const hexToRgba = (hex: string, alpha: number) => {
+  const h = hex.replace('#','');
+  const bigint = parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h,16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+};
+
 export const WarrantyInfoCard: React.FC = () => {
-  const items = [
-    { title: '12 месяцев гарантии', desc: 'Гарантия действует с момента продажи оборудования' },
-    { title: 'Базовая поддержка', desc: 'Всё оборудование поставляется с гарантийной поддержкой' },
-    { title: 'Рабочие часы', desc: 'Приём заявок с 9:00 до 18:00 по московскому времени' },
-    { title: 'Обновления ПО', desc: 'Регулярные обновления программного обеспечения' },
-    { title: 'Ремонт/замена', desc: 'Восстановление в течение 60 рабочих дней' },
-    { title: 'Условия доставки', desc: 'Доставка в сервисный центр за счёт заказчика' }
-  ];
-
   return (
-    <section className="py-8 sm:py-12 lg:py-16 xl:py-24">
-      <div className="container mx-auto px-4 sm:px-6 flex justify-center">
-        <div
-          className="warranty-card bg-white rounded-2xl p-8 lg:p-10 max-w-2xl w-full relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(145deg, #ffffff 0%, #fafbfc 100%)',
-            boxShadow: '0 10px 24px rgba(0,0,0,0.06)'
-          }}
-        >
-          <div className="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-r from-[#32398e] via-[#005baa] to-[#00acad] -z-10">
-            <div className="h-full w-full rounded-2xl bg-white" />
-          </div>
-
-          <div className="warranty-header flex items-center justify-center lg:justify-center gap-4 mb-8">
-            <div className="warranty-icon flex-shrink-0">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-[#005baa] to-[#00acad] flex items-center justify-center shadow-lg">
-                <Icon name="Shield" size={24} className="text-white sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
+  <section className="py-6 md:py-8 lg:py-10 xl:py-12">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid gap-6 lg:gap-8 md:grid-cols-3 items-stretch">
+          {WARRANTY_CARDS.map(card => (
+            <div
+              key={card.key}
+              className="warranty-card compact bg-white rounded-2xl p-6 lg:p-7 relative overflow-hidden flex flex-col justify-center h-full"
+              style={{
+                background: 'linear-gradient(150deg,#ffffff,#f8fafc)',
+                boxShadow: '0 6px 18px rgba(0,0,0,0.04)',
+                border: `1px solid ${hexToRgba(card.color,0.55)}`,
+                ['--accent' as any]: card.color
+              }}
+              data-hover-style="3"
+            >
+              <div className="warranty-header flex items-center gap-3 mb-5">
+                <div className="warranty-icon flex-shrink-0">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-md" style={{ background: `linear-gradient(135deg, var(--accent), var(--accent))` }}>
+                    <Icon name={card.icon as any} size={20} className="text-white" />
+                  </div>
+                </div>
+                <h3 className="warranty-title text-base sm:text-lg lg:text-xl font-bold text-gray-900 tracking-tight">{card.title}</h3>
               </div>
+              <ul className="flex flex-col gap-4">
+                {card.items.map((it, idx) => (
+                  <li key={idx} className="warranty-feature-item flex items-start gap-3">
+                    <span className="flex-shrink-0 mt-0.5 inline-flex w-5 h-5 rounded-full items-center justify-center" style={{ background: 'var(--accent)' }}>
+                      <Icon name="Check" size={12} className="text-white" />
+                    </span>
+                    <div className="flex-1 leading-snug">
+                      {it.title && <div className="font-semibold text-gray-900 text-[13px] sm:text-[14px] mb-0.5">{it.title}</div>}
+                      <div className="text-[12px] sm:text-[13px] text-gray-700">{it.desc}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <h3 className="warranty-title text-lg sm:text-xl lg:text-3xl font-bold text-gray-900 text-left lg:text-center flex-1 lg:flex-none">
-              Гарантия на оборудование
-            </h3>
-          </div>
-
-          <div className="space-y-5">
-            {items.map((item, i) => (
-              <div key={i} className="warranty-feature-item flex gap-4 items-start">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#0093b6] to-[#00acad] flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Icon name="Check" size={14} className="text-white" />
-                </div>
-                <div>
-                  <div className="font-semibold text-gray-900 mb-1">{item.title}</div>
-                  <div className="text-sm text-gray-600 leading-relaxed">{item.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>
