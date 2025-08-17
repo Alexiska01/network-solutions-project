@@ -21,7 +21,7 @@ const SwitchesSubmenu = ({
   updateDropdownState,
 }: SwitchesSubmenuProps) => {
   // Обработчики ховеров для третьего/четвертого уровня
-  const openSubmenu = (level: keyof DropdownState) =>
+  const resetFlags = () =>
     updateDropdownState({
       isCorporateLanSubmenuOpen: false,
       isDataCentersSubmenuOpen: false,
@@ -29,8 +29,20 @@ const SwitchesSubmenu = ({
       isDistributionLevelSubmenuOpen: false,
       isSpineLevelSubmenuOpen: false,
       isLeafLevelSubmenuOpen: false,
-      [level]: true,
     });
+
+  const openSubmenu = (
+    level:
+      | "isCorporateLanSubmenuOpen"
+      | "isDataCentersSubmenuOpen"
+      | "isAccessLevelSubmenuOpen"
+      | "isDistributionLevelSubmenuOpen"
+      | "isSpineLevelSubmenuOpen"
+      | "isLeafLevelSubmenuOpen"
+  ) => {
+    resetFlags();
+    updateDropdownState({ [level]: true });
+  };
 
   // Вспомогательные функции для третьего уровня
   const renderFourthLevel = (

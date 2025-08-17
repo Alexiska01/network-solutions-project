@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { useSpring, useTransform } from "framer-motion";
-import { navigationItems, productSubmenuItems } from "../../navigationData";
-import type { MenuLevel, MenuState, TouchState } from "../types";
+import { navigationItems } from "../../navigationData";
+import type { MenuLevel, TouchState } from "../types";
 
 export const useMobileMenu = (isOpen: boolean) => {
   const [menuStack, setMenuStack] = useState<MenuLevel[]>([]);
@@ -12,9 +11,9 @@ export const useMobileMenu = (isOpen: boolean) => {
   const [isDragging, setIsDragging] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Spring анимация для драга
-  const dragX = useSpring(0, { stiffness: 300, damping: 30 });
-  const dragOpacity = useTransform(dragX, [0, 150], [1, 0.7]);
+  // Простое числовое состояние вместо framer-motion spring
+  const [dragXValue, setDragXValue] = useState(0);
+  const dragOpacityValue = 1 - Math.min(dragXValue, 150) / 150 * 0.3; // 0 ->1, 150->0.7
 
   // Инициализация главного меню
   useEffect(() => {
@@ -30,10 +29,10 @@ export const useMobileMenu = (isOpen: boolean) => {
         setMenuStack([]);
         setActiveItem(null);
         setExpandedItems(new Set());
-        dragX.set(0);
+  setDragXValue(0);
       }, 300);
     }
-  }, [isOpen, dragX]);
+  }, [isOpen]);
 
   // Блокировка скролла body
   useEffect(() => {
@@ -89,8 +88,9 @@ export const useMobileMenu = (isOpen: boolean) => {
     touchStart,
     isDragging,
     menuRef,
-    dragX,
-    dragOpacity,
+  dragXValue,
+  dragOpacityValue,
+  setDragXValue,
     currentLevel,
     canGoBack,
     setActiveItem,

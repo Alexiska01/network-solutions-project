@@ -6,7 +6,8 @@ interface UseTouchGesturesProps {
   isDragging: boolean;
   setTouchStart: (state: TouchState | null) => void;
   setIsDragging: (isDragging: boolean) => void;
-  dragX: any; // MotionValue<number>
+  dragXValue: number;
+  setDragXValue: (val: number) => void;
   onClose: () => void;
 }
 
@@ -15,7 +16,8 @@ export const useTouchGestures = ({
   isDragging,
   setTouchStart,
   setIsDragging,
-  dragX,
+  dragXValue,
+  setDragXValue,
   onClose,
 }: UseTouchGesturesProps) => {
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -37,30 +39,29 @@ export const useTouchGestures = ({
 
     const currentX = e.touches[0].clientX;
     const currentY = e.touches[0].clientY;
-    const diffX = currentX - touchStart.x;
+  const diffX = currentX - touchStart.x; // отрицательный при свайпе влево
     const diffY = Math.abs(currentY - touchStart.y);
 
     // Проверяем что это горизонтальный свайп и не клик по кнопке
-    if (Math.abs(diffX) > 25 && diffY < 50) {
+  if (Math.abs(diffX) > 25 && diffY < 50) {
       // Проверяем что целевой элемент не является кнопкой или ссылкой
       const target = e.target as HTMLElement;
       const isClickable = target.closest("button, a");
 
       if (!isClickable) {
-        setIsDragging(true);
-        if (diffX > 0) {
-          // Свайп вправо
-          dragX.set(Math.min(diffX, 200));
-        }
+    setIsDragging(true);
+    // Панель открывается справа, закрывающий свайп влево -> diffX < 0
+    if (diffX < 0) setDragXValue(Math.max(diffX, -200));
       }
     }
   };
 
   const handleTouchEnd = () => {
-    if (isDragging && dragX.get() > 80) {
+  // dragXValue отрицательный при свайпе влево. Если по модулю превышает порог - закрываем
+  if (isDragging && Math.abs(dragXValue) > 80) {
       onClose();
     } else {
-      dragX.set(0);
+      setDragXValue(0);
     }
     setTouchStart(null);
     setIsDragging(false);

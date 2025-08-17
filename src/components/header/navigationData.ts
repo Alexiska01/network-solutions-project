@@ -18,6 +18,7 @@ export interface NavItem {
   isPopular?: boolean;
   image?: string;
   category?: string;
+  disabled?: boolean; // заглушка / нет реакции
 }
 
 /** Главные пункты хедера */
@@ -29,8 +30,8 @@ export const navigationItems: NavItem[] = [
     icon: "Network",
   },
   { name: "Гарантия и сервис", path: "/warranty", icon: "ShieldCheck" },
-  { name: "Программное обеспечение", path: "#", icon: "Code", badge: "В разработке" },
-  { name: "Документация", path: "/documentation", icon: "FileText" },
+  { name: "Программное обеспечение", path: "#", icon: "Code", disabled: true },
+  { name: "Документация", path: "/documentation", icon: "FileText", disabled: true },
   { name: "Партнеры", path: "/partners", icon: "Users" },
   { name: "Контакты", path: "/contacts", icon: "Phone" },
 ];

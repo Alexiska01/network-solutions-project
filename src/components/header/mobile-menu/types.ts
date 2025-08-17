@@ -1,4 +1,5 @@
 import type { NavItem } from "../navigationData";
+export type { NavItem }; // реэкспорт для удобства типизации других модулей
 
 export interface MobileMenuProps {
   isOpen: boolean;

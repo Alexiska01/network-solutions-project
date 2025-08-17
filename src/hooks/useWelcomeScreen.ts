@@ -21,8 +21,9 @@ const DEFAULT_CONFIG: WelcomeScreenConfig = {
   tabCloseThreshold: 10 * 60 * 1000, // 10 минут
 };
 
-const STORAGE_KEY = 'welcomeScreen_lastShown';
-const LAST_ACTIVITY_KEY = 'welcomeScreen_lastActivity';
+// Примечание: ранее использовались отдельные ключи localStorage (welcomeScreen_lastShown / welcomeScreen_lastActivity)
+// Сейчас логика показа WelcomeScreen полностью инкапсулирована в modelCacheManager,
+// поэтому дополнительные ключи больше не нужны и удалены, чтобы избежать предупреждений ESLint об их неиспользовании.
 
 export const useWelcomeScreen = (config: Partial<WelcomeScreenConfig> = {}) => {
   const finalConfig = { ...DEFAULT_CONFIG, ...config };

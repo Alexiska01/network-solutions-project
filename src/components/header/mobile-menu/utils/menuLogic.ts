@@ -1,4 +1,5 @@
-import type { NavItem, MenuLevel } from "../types";
+import type { MenuLevel } from "../types";
+import type { NavItem } from "../../navigationData";
 
 export const handleMenuItemClick = (
   item: NavItem,
@@ -40,7 +41,7 @@ export const handleMenuItemClick = (
     e.preventDefault();
     // Проверяем, есть ли у дочерних элементов свои items (4-й уровень)
     const hasDeepNesting = item.items.some(
-      (child) => child.items && child.items.length > 0,
+      (child: NavItem) => (child.items?.length || 0) > 0,
     );
     if (hasDeepNesting && item.hasThirdLevel) {
       // Если есть глубокая вложенность, показываем аккордеон

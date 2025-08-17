@@ -1,0 +1,37 @@
+/* CatalogNavigation pure CSS animations */
+
+@keyframes nav-fade-slide {
+  0% { opacity: 0; transform: translateX(-28px) scale(.98); filter: blur(2px); }
+  55% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes nav-item-in {
+  0% { opacity: 0; transform: translateY(28px) scale(.96); filter: blur(3px); }
+  60% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes nav-child-in {
+  0% { opacity: 0; transform: translateX(-18px) scale(.95); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.nav-root-anim { animation: nav-fade-slide .9s cubic-bezier(.22,.61,.36,1) forwards; }
+
+.nav-item-anim { opacity: 0; animation: nav-item-in .85s cubic-bezier(.22,.61,.36,1) forwards; animation-delay: calc(var(--i) * 0.16s); }
+
+.nav-child-anim { opacity: 0; animation: nav-child-in .7s cubic-bezier(.25,.46,.45,.94) forwards; animation-delay: calc(var(--ci) * 0.07s); }
+
+/* Collapse container (always mounted) */
+.nav-collapse { transition: max-height .6s cubic-bezier(.22,.61,.36,1), opacity .45s ease, transform .55s ease; max-height: 0; opacity: 0; transform: translateY(-4px); }
+.nav-collapse[data-open="true"] { max-height: 900px; opacity: 1; transform: translateY(0); }
+
+/* Prevent pointer events while collapsed */
+.nav-collapse[data-open="false"] .nav-children { pointer-events: none; }
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav-root-anim, .nav-item-anim, .nav-child-anim { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .nav-collapse { transition: none; }
+}
