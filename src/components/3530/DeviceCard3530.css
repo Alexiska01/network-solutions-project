@@ -13,19 +13,10 @@
 
 /* Base State - Always Visible Foundation */
 .device-card-premium {
-  opacity: 1 !important;
-  visibility: visible !important;
-  display: flex !important;
-  position: relative;
-  z-index: 1;
-  backface-visibility: hidden;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  transform: translate3d(0, 0, 0) scale(1);
-  transition:
-    transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    border-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity:1 !important; visibility:visible !important; display:flex !important; position:relative; z-index:1;
+  backface-visibility:hidden; transform-style:preserve-3d; transform:translate3d(0,0,0);
+  contain:layout paint; font-synthesis:none; will-change:transform;
+  transition: transform 600ms cubic-bezier(0.25,0.46,0.45,0.94), border-color 500ms cubic-bezier(0.4,0,0.2,1), box-shadow 700ms cubic-bezier(0.25,0.46,0.45,0.94);
 }
 
 /* Hidden State - Before Intersection */
@@ -38,11 +29,12 @@
 /* Visible State Trigger - Intersection Observer */
 @media (prefers-reduced-motion: no-preference) {
   .device-card-premium.is-visible {
-    opacity: 1 !important;
-    transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
-    filter: blur(0px);
-    animation: card-breathe-in var(--card-duration-breathe) var(--card-ease-ethereal) both;
-    animation-delay: var(--stagger-delay, 0ms);
+  opacity: 1 !important; 
+  --card-lift: 0px; /* baseline */
+  transform: translate3d(0,var(--card-lift),0) scale(1) rotateX(0deg); 
+  filter: blur(0px); 
+  animation: card-breathe-in var(--card-duration-breathe) var(--card-ease-ethereal) both; 
+  animation-delay: var(--stagger-delay, 0ms); 
   }
 }
 
@@ -75,53 +67,64 @@
   }
 }
 
-/* Hover with zoom (and softened shadows) */
-.device-card-premium.is-visible:hover {
-  transform: translateY(-6px) scale(1.008);
-  border-color: #93c5fd;
-  box-shadow:
-    0 12px 40px rgba(56, 110, 170, 0.06),
-    0 4px 16px rgba(0, 0, 0, 0.03),
-    0 0 0 1px rgba(147, 197, 253, 0.06);
-  filter: saturate(0.98) contrast(0.98);
-  transition:
-    transform 800ms cubic-bezier(0.23, 1, 0.32, 1),
-    border-color 600ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 900ms cubic-bezier(0.23, 1, 0.32, 1),
-    filter 600ms var(--card-ease-gentle);
+/* PRO HOVER 2.0 — Layered Lift, Chromatic Border Sweep, Soft Inner Glow */
+.device-card-premium.is-visible::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px; /* gradient border */
+  background: linear-gradient(140deg, rgba(0,123,255,0) 0%, rgba(0,123,255,0.25) 35%, rgba(0,200,170,0.35) 55%, rgba(0,123,255,0) 80%) center/200% 200% no-repeat;
+  -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask-composite: xor; /* Safari */
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 450ms var(--card-ease-gentle);
+  pointer-events: none;
 }
 
-/* Counter-scale text to prevent jump */
+.device-card-premium.is-visible:hover::after { opacity:1; animation: border-scan 3200ms linear infinite; }
+
+@keyframes border-scan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Hover без scale для отсутствия дрожания */
+/* SOFT LIFT HOVER (мягкое приподнятие без дерганий) */
+.device-card-premium.is-visible:hover {
+  --card-lift: -3px;
+  transform: translate3d(0,var(--card-lift),0) scale(1);
+  box-shadow:0 16px 42px -14px rgba(15,60,120,.20),0 6px 18px -6px rgba(15,60,120,.12),0 0 0 1px rgba(120,170,230,.34);
+  border-color:rgba(96,165,250,.58);
+  transition: transform 460ms cubic-bezier(0.22,1,0.36,1), box-shadow 520ms cubic-bezier(0.22,1,0.36,1), border-color 480ms var(--card-ease-gentle);
+}
+
+/* Stable text (убрали подскакивание при выходе из :hover) */
+.device-card-premium h3,
+.device-card-premium .inline-flex { 
+  transform: translateY(0); /* базовое значение, чтобы не появлялось новое свойство только на hover */
+  transition: color 450ms var(--card-ease-gentle), filter 450ms var(--card-ease-gentle); 
+}
+.device-card-premium h3 { font-weight:600; }
+.device-card-premium.is-visible:hover h3 { font-weight:600; }
+.device-card-premium.is-visible:hover h3 { color:#0f3c78; }
+.device-card-premium.is-visible:hover .inline-flex { filter:brightness(1.05) saturate(1.05); }
+
+/* Smooth reset */
+/* Base (не hover) состояние */
+.device-card-premium.is-visible:not(:hover):not(:active) { --card-lift:0px; transform:translate3d(0,var(--card-lift),0) scale(1); box-shadow:0 2px 10px -4px rgba(15,60,120,.06),0 1px 3px rgba(0,0,0,.05),0 0 0 1px rgba(185,198,210,.42); border-color:rgba(203,213,225,0.7); transition: transform 520ms cubic-bezier(0.19,1,0.22,1), box-shadow 560ms cubic-bezier(0.19,1,0.22,1), border-color 550ms var(--card-ease-gentle); }
+
+/* Crisp text (без масштабов/blur) */
 .device-card-premium .card-text,
 .device-card-premium [data-role="text"],
-.device-card-premium [class*="text"] {
-  transform: scale(0.992);
-  transform-origin: center center;
-  will-change: transform;
-}
-
-/* Reset text scale when not hovered */
-.device-card-premium:not(:hover) .card-text,
-.device-card-premium:not(:hover) [data-role="text"],
-.device-card-premium:not(:hover) [class*="text"] {
-  transform: scale(1);
-}
+.device-card-premium [class*="text"] { transform:none !important; }
 
 /* Gentle Press */
-.device-card-premium.is-visible:active {
-  transform: translateY(-2px) scale(0.995);
-  transition: transform 120ms cubic-bezier(0.4, 0, 0.2, 1);
-}
+.device-card-premium.is-visible:active { --card-lift:-1px; transform:translate3d(0,var(--card-lift),0) scale(1); filter:brightness(.97); transition: transform 160ms cubic-bezier(0.4,0,0.2,1), filter 140ms cubic-bezier(0.4,0,0.2,1); }
 
 /* Smooth hover exit */
-.device-card-premium.is-visible:not(:hover):not(:active) {
-  transform: translateY(0) scale(1);
-  transition:
-    transform 900ms cubic-bezier(0.23, 1, 0.32, 1),
-    border-color 700ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 1000ms cubic-bezier(0.23, 1, 0.32, 1),
-    filter 600ms var(--card-ease-gentle);
-}
+/* (удален дубликат состояния reset для исключения конфликтов переходов) */
 
 /* Glow */
 .device-card-premium.is-visible::before {
@@ -195,14 +198,31 @@
     from { opacity: 0; transform: translate3d(0, 4px, 0) scale(0.98); }
     to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
   }
-  .device-card-premium.is-visible:hover {
-    transform: translate3d(0, -2px, 0) scale(1.01);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
+  .device-card-premium.is-visible:hover { --card-lift:-2px; transform:translate3d(0,var(--card-lift),0) scale(1) !important; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
   .device-card-premium::before { display: none; }
 }
 
 /* Performance Optimization */
 .device-card-premium * {
   backface-visibility: hidden;
+}
+
+/* Clickable state enhancements */
+.device-card-premium[data-clickable="true"] {
+  transition: box-shadow 600ms var(--card-ease-gentle), border-color 600ms var(--card-ease-gentle), transform 700ms var(--card-ease-float);
+}
+.device-card-premium[data-clickable="true"]:hover { /* unified with pro hover above */ }
+.device-card-premium[data-clickable="true"]:active { transform:translate3d(0,-1px,0); box-shadow:0 6px 18px -10px rgba(15,60,120,.20),0 0 0 1px rgba(96,165,250,.45); }
+.device-card-premium[data-clickable="true"]:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px rgba(59,130,246,0.6);
+  border-color: #3b82f6;
+}
+.device-card-premium[data-clickable="true"] .card-hint-icon {
+  transition: transform 500ms var(--card-ease-gentle);
+}
+.device-card-premium[data-clickable="true"]:hover .card-hint-icon {
+  transform: translateX(4px);
 }

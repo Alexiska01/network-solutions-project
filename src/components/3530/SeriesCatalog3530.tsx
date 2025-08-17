@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import DeviceCard3530 from "@/components/3530/DeviceCard3530";
+import DeviceCard3530 from "@/components/3530/DeviceCard3530"; // legacy card (will be replaced by redesigned grid)
 // import ComparisonModal from "@/components/ComparisonModal";
 import KeyFeatures3530 from "@/components/KeyFeatures3530";
 import {
@@ -71,34 +71,29 @@ const SeriesCatalog3530Component = () => {
       {/* Hero Section */}
       <Hero3530 />
 
-      {/* Models Section */}
-      <section
-        id="models-section"
-        className="py-7 xs:py-8 sm:py-12 lg:py-16 px-2 xs:px-3 sm:px-6 bg-white"
-      >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-9 sm:mb-12">
-            <h2 className="text-base xs:text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4 font-sans px-1 xs:px-2">
-              Модели серии IDS3530
+      {/* Models Section (will be refactored to new professional layout) */}
+  <section id="models-section" className="py-6 sm:py-8 lg:py-10 px-3 sm:px-6 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[radial-gradient(circle_at_70%_30%,#0079b6_0%,transparent_60%)]" />
+        {/* Full-width decorative line in background */}
+  <div className="absolute left-0 right-0 top-[66px] sm:top-[71px] md:top-[74px] h-[2px] bg-gradient-to-r from-gray-400/30 via-gray-500/45 to-gray-400/30" />
+        <div className="max-w-7xl mx-auto relative">
+          <header className="text-center mb-0">
+            <h2 className="flex items-center justify-center">
+              <span className="font-semibold tracking-[0.35em] text-gray-500 text-xs sm:text-sm md:text-base">SERIES 3530</span>
             </h2>
-          </div>
-          <div
-            className="
-              grid gap-4 xs:gap-5 sm:gap-6 lg:gap-8
-              grid-cols-1
-              sm:grid-cols-2
-            "
-          >
+          </header>
+          <div className="mt-3 sm:mt-4 mb-6 sm:mb-8" />
+          {/* Legacy list (to be replaced by redesigned grid component) */}
+          <div className="grid gap-5 sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2">
             {filteredModels.map((model, index) => (
-              <div key={model.id} className="flex">
-                <DeviceCard3530
-                  model={model}
-                  index={index}
-                  isInCompareList={compareModels.includes(model.id)}
-                  onToggleCompare={toggleCompareModel}
-                  onNavigate={handleNavigate}
-                />
-              </div>
+              <DeviceCard3530
+                key={model.id}
+                model={model}
+                index={index}
+                isInCompareList={compareModels.includes(model.id)}
+                onToggleCompare={toggleCompareModel}
+                onNavigate={handleNavigate}
+              />
             ))}
           </div>
         </div>
