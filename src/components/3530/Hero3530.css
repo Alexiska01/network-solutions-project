@@ -151,15 +151,12 @@ body.refresh-144hz :root {
     opacity var(--hero-mobile-slow) var(--hero-ease-smooth);
   will-change: transform, opacity;
 }
+/* Удалён промежуточный слой .hero-model для упрощения пайплайна */
 
-.hero-model {
-  opacity: 0;
-  transform: translate3d(0, calc(var(--hero-translate-y) * 0.7), 0) scale(0.95);
-  transition:
-    transform var(--hero-mobile-slow) var(--hero-ease-smooth),
-    opacity var(--hero-mobile-slow) var(--hero-ease-smooth);
-  will-change: transform, opacity;
-}
+/* Темный плавный плейсхолдер против белой вспышки */
+.hero-model-container::after {content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(145deg,#061628,#0b2f4a 55%,#0c4d72);opacity:.9;transition:opacity 420ms var(--hero-ease-smooth);pointer-events:none;}
+.hero-model-container[data-model-state='loaded']::after {opacity:.55;}
+.hero-model-container[data-model-state='ready']::after {opacity:0;}
 
 .hero-feature-item {
   opacity: 0;
@@ -208,10 +205,7 @@ body.refresh-144hz :root {
   .hero-model-container {
     transition-duration: var(--hero-desktop-slow);
   }
-
-  .hero-model {
-    transition-duration: var(--hero-desktop-slow);
-  }
+  /* hero-model удалён */
 
   .hero-feature-item {
     transition-duration: var(--hero-desktop-medium);
@@ -264,68 +258,22 @@ body.refresh-144hz :root {
   transform: translate3d(0, 0, 0) scale(1);
   transition-delay: var(--hero-delay-5);
 }
+/* Overshoot появление модели после полной готовности */
+@keyframes heroModelOvershoot {0%{transform:translate3d(0,0,0) scale(.94);opacity:.85}60%{transform:translate3d(0,0,0) scale(1.017)}85%{transform:translate3d(0,0,0) scale(.997)}100%{transform:translate3d(0,0,0) scale(1)}}
+.hero-visible .hero-model-container[data-model-state='ready']{animation:heroModelOvershoot 620ms var(--hero-ease-smooth) forwards;animation-delay:var(--hero-delay-5)}
 
-.hero-visible .hero-model {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  transition-delay: var(--hero-delay-7);
-}
+/* Универсальный stagger по data-anim-index */
+.hero-visible .hero-feature-item {opacity:1;transform:translate3d(0,0,0);}
+.hero-visible .hero-feature-item[data-anim-index='0']{transition-delay:calc(var(--hero-delay-5) + 90ms)}
+.hero-visible .hero-feature-item[data-anim-index='1']{transition-delay:calc(var(--hero-delay-5) + 180ms)}
+.hero-visible .hero-feature-item[data-anim-index='2']{transition-delay:calc(var(--hero-delay-5) + 270ms)}
+.hero-visible .hero-feature-item[data-anim-index='3']{transition-delay:calc(var(--hero-delay-5) + 360ms)}
+.hero-visible .hero-feature-item[data-anim-index='4']{transition-delay:calc(var(--hero-delay-5) + 450ms)}
+.hero-visible .hero-feature-item[data-anim-index='5']{transition-delay:calc(var(--hero-delay-5) + 540ms)}
+.hero-visible .hero-feature-item[data-anim-index='6']{transition-delay:calc(var(--hero-delay-5) + 630ms)}
+.hero-visible .hero-feature-item[data-anim-index='7']{transition-delay:calc(var(--hero-delay-5) + 720ms)}
 
-.hero-visible .hero-model.model-loaded {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  transition-delay: var(--hero-delay-7);
-}
-
-/* Premium feature items staggered animation */
-.hero-visible .hero-feature-item:nth-child(1) {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-5) + 100ms);
-}
-
-.hero-visible .hero-feature-item:nth-child(2) {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-5) + 200ms);
-}
-
-.hero-visible .hero-feature-item:nth-child(3) {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-5) + 300ms);
-}
-
-.hero-visible .hero-feature-item:nth-child(4) {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-5) + 400ms);
-}
-
-/* Legacy support for numbered feature classes */
-.hero-visible .hero-feature-1 {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-7) + 100ms);
-}
-
-.hero-visible .hero-feature-2 {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-7) + 200ms);
-}
-
-.hero-visible .hero-feature-3 {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-7) + 300ms);
-}
-
-.hero-visible .hero-description {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--hero-delay-7) + 400ms);
-}
+/* Legacy feature-* и hero-description удалены (не используются) */
 
 /* ===== PREMIUM INTERACTIVE EFFECTS ===== */
 
@@ -342,31 +290,47 @@ body.refresh-144hz :root {
 }
 
 /* Новая кнопка: отдельный слой, градиентная рамка, внешний глоу и блик */
-.btn-cta {
-  position: relative;
-  z-index: 0;              /* создаём свой stacking context для ::before -1 */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px 24px;
-  border-radius: 12px;
-  /* Двухслойный фон: 1) заливка; 2) градиентная рамка без layout-shift */
-  background:
-    linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(90deg, #0079b6, #005baa) border-box;
-  color: #0065B3;
-  border: 1px solid transparent;
-  transform: translateZ(0);                 /* свой композиторный слой */
-  will-change: transform, box-shadow, filter, background-color, color, border-color;
-  transition:
-    transform var(--hero-hover-duration) var(--hero-ease-out),
-    box-shadow var(--hero-hover-duration) var(--hero-ease-out),
-    background-color var(--hero-hover-duration) var(--hero-ease-out),
-    color var(--hero-hover-duration) var(--hero-ease-out),
-    border-color var(--hero-hover-duration) var(--hero-ease-out);
-    overflow: visible; /* не клипаем псевдо-элементы */
+/* ===== REDESIGN: HERO DOWNLOAD BUTTON (softer, cleaner, comfort hover) ===== */
+.hero-download-btn { 
+  --btn-radius: 12px;
+  --btn-pad-y: 12px;
+  --btn-pad-x: 26px;
+  --btn-border-grad: linear-gradient(120deg,#32398e,#005baa 55%,#0079b6);
+  --btn-surface: rgba(20,30,65,0.35);
+  --btn-surface-hover: rgba(34,48,92,0.55);
+  --btn-surface-active: rgba(18,26,54,0.65);
+  --btn-text: #f3f8ff;
+  --btn-accent: #3fbfa0;
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:var(--btn-pad-y) var(--btn-pad-x);
+  min-height:46px;line-height:1.05;font-size:14.5px;font-weight:600;letter-spacing:.4px;
+  color:var(--btn-text);
+  background:var(--btn-surface);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:var(--btn-radius);
+  box-shadow:0 2px 4px -2px rgba(0,0,40,.55),0 6px 16px -8px rgba(0,40,90,.45);
+  backdrop-filter:blur(8px) saturate(1.25);
+  -webkit-backdrop-filter:blur(8px) saturate(1.25);
+  isolation:isolate;overflow:hidden;cursor:pointer;
+  transition:background 420ms var(--hero-ease-smooth),box-shadow 420ms var(--hero-ease-out),transform 380ms var(--hero-ease-out),color 300ms var(--hero-ease-out),border-color 420ms var(--hero-ease-out);
 }
+.hero-download-btn::before { /* gradient border ring via mask */
+  content:"";position:absolute;inset:0;padding:1px;border-radius:inherit;background:var(--btn-border-grad);
+  -webkit-mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);
+  -webkit-mask-composite: xor;mask-composite: exclude;opacity:.55;transition:opacity 520ms var(--hero-ease-smooth);pointer-events:none;
+}
+.hero-download-btn::after { /* subtle light sweep */
+  content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 100% at 50% 0%,rgba(255,255,255,.25),rgba(255,255,255,0) 65%);mix-blend-mode:overlay;opacity:.4;transition:opacity 600ms var(--hero-ease-smooth);pointer-events:none;
+}
+@media (hover:hover) and (pointer:fine){
+  .hero-download-btn:hover {background:var(--btn-surface-hover);box-shadow:0 4px 14px -4px rgba(0,0,40,.6),0 10px 32px -12px rgba(0,60,120,.55);transform:translateY(-1px) scale(1.012);}
+  .hero-download-btn:hover::before{opacity:.85}
+  .hero-download-btn:hover::after{opacity:.65}
+}
+.hero-download-btn:active {background:var(--btn-surface-active);transform:translateY(0) scale(.985);box-shadow:0 2px 6px -2px rgba(0,0,40,.6),0 6px 20px -10px rgba(0,50,110,.5);transition-duration:130ms;}
+.hero-download-btn:focus-visible {outline:2px solid var(--btn-accent);outline-offset:3px;}
+@media (hover:none) and (pointer:coarse){.hero-download-btn:active{transform:translateY(1px) scale(.97);}}
+@media (prefers-reduced-motion:reduce){.hero-download-btn{transition:none}.hero-download-btn:hover,.hero-download-btn:active{transform:none}}
 
 /* Светящийся контур (мягкое свечение по периметру) */
 .btn-cta::before {
@@ -450,7 +414,7 @@ body.refresh-144hz :root {
   will-change: transform;
 }
 
-.hero-model-container { transition: none; will-change: auto; }
+/* После появления отключаем will-change через уже существующий блок .hero-visible ... */
 
 /* Disable will-change after animations complete to save memory */
 .hero-visible .hero-subtitle,
@@ -466,9 +430,9 @@ body.refresh-144hz :root {
 }
 
 /* Re-enable will-change only during interactions */
-.btn-cta:hover,
-.btn-cta:focus-visible,
-.btn-cta:active,
+.hero-download-btn:hover,
+.hero-download-btn:focus-visible,
+.hero-download-btn:active,
 .hero-feature-card:hover,
 .hero-feature-card:focus-visible,
 .hero-feature-card:active {
@@ -523,19 +487,11 @@ body.refresh-144hz :root {
   will-change: transform, opacity;
 }
 
-.cta-button-gpu {
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  will-change: transform, box-shadow, background-color;
-  transition:
-    transform 0.3s var(--hero-ease-out),
-    box-shadow 0.3s var(--hero-ease-out),
-    background-color 0.3s var(--hero-ease-out);
-}
+/* cta-button-gpu объединён с btn-cta */
 
 /* Mobile button touch effects — на новой кнопке */
 @media (hover: none) and (pointer: coarse) {
-  .btn-cta:active {
+  .hero-download-btn:active {
     transform: translate3d(0, -1px, 0) scale(1.01);
     box-shadow:
       0 12px 24px -8px rgba(0, 101, 179, 0.3),
@@ -636,7 +592,7 @@ body.refresh-144hz :root {
     transform: translate3d(0, 0, 0) scale(1.05) rotate(3deg);
   }
 
-  .cta-button-gpu:hover .icon-gpu {
+  .btn-cta:hover .icon-gpu {
     transform: translate3d(2px, 0, 0) scale(1.1);
   }
 }
@@ -651,7 +607,7 @@ body.refresh-144hz :root {
     transform: translate3d(0, 0, 0) scale(1.02) rotate(1deg);
   }
 
-  .cta-button-gpu:active .icon-gpu {
+  .btn-cta:active .icon-gpu {
     transform: translate3d(1px, 0, 0) scale(1.05);
   }
 }
@@ -704,9 +660,7 @@ body.refresh-240hz :root {
   transition-duration: var(--hero-feature-duration);
 }
 
-.hero-120fps .cta-button-gpu {
-  transition-duration: var(--hero-button-duration);
-}
+.hero-120fps .btn-cta { transition-duration: var(--hero-button-duration); }
 
 /* Автоматическая очистка will-change для всех устройств */
 .hero-gpu:not(:hover):not(:focus-within) {
@@ -725,9 +679,7 @@ body.refresh-240hz :root {
   will-change: auto;
 }
 
-.cta-button-gpu:not(:hover):not(:active) {
-  will-change: auto;
-}
+.btn-cta:not(:hover):not(:active) { will-change: auto; }
 
 /* ===== ACCESSIBILITY & PERFORMANCE ===== */
 
@@ -754,7 +706,7 @@ body.refresh-240hz :root {
   .text-content-gpu *,
   .model-section-gpu *,
   .feature-card-gpu,
-  .cta-button-gpu {
+  .btn-cta {
     animation: none !important;
     transition: none !important;
   }
@@ -768,9 +720,7 @@ body.refresh-240hz :root {
 @media (hover: none) and (pointer: coarse) {
   .feature-card-gpu,
   .description-card-gpu,
-  .cta-button-gpu {
-    transition-duration: 200ms;
-  }
+  .hero-download-btn { transition-duration: 200ms; }
 
   .icon-gpu {
     transition-duration: 150ms;
@@ -784,7 +734,6 @@ body.refresh-240hz :root {
 .title-gpu,
 .features-list-gpu,
 .button-container-gpu,
-.cta-button-gpu,
 .model-section-gpu,
 .model-container-gpu,
 .feature-card-gpu,
@@ -800,15 +749,19 @@ body.refresh-240hz :root {
 
 /* Mobile specific optimizations */
 @media (max-width: 768px) {
-  .feature-card-gpu {
-    will-change: transform;
-  }
-
-  .cta-button-gpu {
-    will-change: transform, background-color;
-  }
-
-  .icon-gpu {
-    will-change: transform;
-  }
+  .feature-card-gpu { will-change: transform; }
+  .hero-download-btn { will-change: transform, background-color; }
+  .icon-gpu { will-change: transform; }
 }
+
+/* Ambient мягкая динамика фона hero */
+.hero-3530 { position: relative; }
+.hero-3530::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 80% at 70% 40%,rgba(0,121,182,.28),rgba(0,91,170,0) 70%); mix-blend-mode:screen; opacity:.5; animation:heroAmbientShift 9s ease-in-out infinite; will-change:transform; }
+@keyframes heroAmbientShift { 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,2px,0)} 100%{transform:translate3d(0,0,0)} }
+
+/* ===== HIDE DEFAULT MODEL-VIEWER PROGRESS BAR (используем свой лоадер) ===== */
+.hero-model-container model-viewer::part(progress-bar){display:none !important;}
+.hero-model-container model-viewer::part(progress-mask){display:none !important;}
+/* Доп. защита от «чёрной линии»: обнуляем высоту и цвет глобально */
+model-viewer{--progress-bar-color:transparent;--progress-bar-height:0px;}
+model-viewer::part(progress-bar),model-viewer::part(progress-mask){display:none !important;height:0 !important;opacity:0 !important;}

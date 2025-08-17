@@ -18,7 +18,7 @@ const model3530Data = {
 
 const Hero3530 = () => {
   const [isModelLoaded, setIsModelLoaded] = useState(false);
-  const [isModelVisible, setIsModelVisible] = useState(false);
+  const [isModelVisible, setIsModelVisible] = useState(false); // becomes true after fade-in
   const [showLoader, setShowLoader] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -100,30 +100,33 @@ const Hero3530 = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
-          console.log('🎬 Hero3530: Секция появилась в зоне видимости - запускаю CSS анимации');
+          // Однократное срабатывание — оставляем DOM в финальном состоянии для стабильности
+          if (heroSectionRef.current) observer.unobserve(heroSectionRef.current);
+          console.log('🎬 Hero3530: Секция появилась — запускаю оптимизированные анимации');
         }
       },
-      { 
-        threshold: 0.1,
-        rootMargin: '-10% 0px -10% 0px'
+      {
+        threshold: 0.15,
+        rootMargin: '0px 0px -5% 0px'
       }
     );
-
-    if (heroSectionRef.current) {
-      observer.observe(heroSectionRef.current);
-    }
-
-    return () => {
-      if (heroSectionRef.current) {
-        observer.unobserve(heroSectionRef.current);
-      }
-    };
+    if (heroSectionRef.current) observer.observe(heroSectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
+  // Описываем фичи декларативно — позволяет легко варьировать порядок / количество и генерить индексы
+  const featureItems = [
+    { icon: 'Server', text: 'До 760 Вт PoE+, 10G uplink, модульные БП' },
+    { icon: 'Layers3', text: 'Стек до 8 устройств, кольцевые топологии' },
+    { icon: 'Settings', text: 'QoS, SNMP, автоматизация (ZTP), удалённое управление' },
+    { icon: 'ServerCog', text: 'Высокая доступность: STP, RSTP, MSTP' },
+  ] as const;
+
   return (
-    <section 
+    <section
       ref={heroSectionRef}
-  className={`bg-gradient-hero text-white py-1 lg:py-2 relative overflow-hidden min-h-[175px] lg:min-h-[210px] ${isInView ? 'hero-visible' : ''}`}
+  className={`hero-3530 bg-gradient-hero text-white py-1 lg:py-2 relative overflow-hidden min-h-[140px] lg:min-h-[168px] ${isInView ? 'hero-visible' : 'hero-prerender'}`}
+      data-animated={isInView ? 'true' : 'false'}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10 h-full flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start lg:items-center w-full">
@@ -135,57 +138,29 @@ const Hero3530 = () => {
               IDS3530
             </h1>
             
-            <div className="hero-features mb-4 space-y-3">
-              <div className="hero-feature-item flex items-center gap-3 text-blue-100">
-                <Icon
-                  name="Server"
-                  size={18}
-                  strokeWidth={1.8}
-                  className="text-blue-300 flex-shrink-0"
-                />
-                <span className="text-sm md:text-base">
-                  До 760 Вт PoE+, 10G uplink, модульные БП
-                </span>
-              </div>
-              <div className="hero-feature-item flex items-center gap-3 text-blue-100">
-                <Icon
-                  name="Layers3"
-                  size={18}
-                  strokeWidth={1.8}
-                  className="text-blue-300 flex-shrink-0"
-                />
-                <span className="text-sm md:text-base">
-                  Стек до 8 устройств, кольцевые топологии
-                </span>
-              </div>
-              <div className="hero-feature-item flex items-center gap-3 text-blue-100">
-                <Icon
-                  name="Settings"
-                  size={18}
-                  strokeWidth={1.8}
-                  className="text-blue-300 flex-shrink-0"
-                />
-                <span className="text-sm md:text-base">
-                  QoS, SNMP, автоматизация (ZTP), удалённое управление
-                </span>
-              </div>
-              <div className="hero-feature-item flex items-center gap-3 text-blue-100">
-                <Icon
-                  name="ServerCog"
-                  size={18}
-                  strokeWidth={1.8}
-                  className="text-blue-300 flex-shrink-0"
-                />
-                <span className="text-sm md:text-base">
-                  Высокая доступность: STP, RSTP, MSTP
-                </span>
-              </div>
+            <div className="hero-features mb-4 space-y-3" role="list">
+              {featureItems.map((f, idx) => (
+                <div
+                  key={f.text}
+                  role="listitem"
+                  className="hero-feature-item flex items-center gap-3 text-blue-100"
+                  data-anim-index={idx}
+                >
+                  <Icon
+                    name={f.icon as any}
+                    size={18}
+                    strokeWidth={1.8}
+                    className="text-blue-300 flex-shrink-0"
+                  />
+                  <span className="text-sm md:text-base">{f.text}</span>
+                </div>
+              ))}
             </div>
             
             {/* Premium CSS-анимированная кнопка */}
             <div className="hero-button mt-2">
               <button
-                className="btn-cta cta-button-gpu min-h-[44px]"
+                className="hero-download-btn"
                 onClick={() =>
                   window.open(
                     "https://drive.google.com/file/d/1-4xHlvPUr7kUBCQBzgh7Lz2FGC1COfwe/view?usp=drive_link",
@@ -199,12 +174,10 @@ const Hero3530 = () => {
           </div>
 
           {/* Правая часть - только 3D модель */}
-          <div className="hero-model-section relative order-first lg:order-last mt-0 lg:mt-0 flex justify-center">
-              {/* Контейнер с 3D-моделью - Premium CSS анимации */}
-              <div className="hero-model-container relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[600px] h-[280px] sm:h-[320px] md:h-[380px] lg:h-[420px]">
-                {/* 3D модель - Premium CSS анимации, прозрачная интеграция */}
+          <div className="hero-model-section relative order-first lg:order-last mt-0 lg:mt-0 flex items-center justify-center">
+              <div className="hero-model-container relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[600px] h-[224px] sm:h-[256px] md:h-[304px] lg:h-[336px]" data-model-state={isModelVisible ? 'ready' : (isModelLoaded ? 'loaded' : 'loading')}>
                 {isModelLoaded && (
-                  <div className={`hero-model relative z-10 w-full h-full ${isModelVisible ? 'model-loaded' : ''}`}>
+                  <>
                     {isMobile ? (
                       <model-viewer
                         ref={modelViewerRef}
@@ -213,6 +186,7 @@ const Hero3530 = () => {
                         auto-rotate
                         auto-rotate-delay="0"
                         rotation-per-second="32deg"
+                        poster-color="#0a1e2f"
                         camera-orbit="0deg 80deg 1.15m"
                         min-camera-orbit="auto auto 1.1m"
                         max-camera-orbit="auto auto 1.1m"
@@ -254,12 +228,13 @@ const Hero3530 = () => {
                         alt="3D модель коммутатора IDS3530"
                         auto-rotate
                         auto-rotate-delay="0"
-                        rotation-per-second="30deg"
+                        rotation-per-second="25deg"
+                        poster-color="#0a1e2f"
                         camera-controls
-                        camera-orbit="0deg 83deg 1.1m"
+                        camera-orbit="0deg 83deg 0.95m"
                         min-camera-orbit="auto auto 0.5m"
                         max-camera-orbit="auto auto 1.2m"
-                        field-of-view="35deg"
+                        field-of-view="90deg"
                         interaction-prompt="none"
                         environment-image="neutral"
                         shadow-intensity="0.25"
@@ -287,7 +262,7 @@ const Hero3530 = () => {
                         }}
                       />
                     )}
-                  </div>
+                  </>
                 )}
 
                 {/* Минималистичный лоадер - ТОЛЬКО при необходимости */}
