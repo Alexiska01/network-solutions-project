@@ -137,12 +137,12 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
   return (
     <div className={cn(s.root, s[hzClass], "flex-1")}>
       {/* Поиск */}
-      <div className={cn("mb-6 sm:mb-8", isMobile && "px-1")}>
+  <div className={cn("mb-5 sm:mb-7", isMobile && "px-1.5")}> 
         <SwitchesSearch searchTerm={searchTerm} onSearchChange={onSearchChange} />
       </div>
 
       {/* Корпоративные ЛВС */}
-      <section id="corporate-lan" className={cn("mb-12 sm:mb-16", isMobile && "px-1")}>
+  <section id="corporate-lan" className={cn("mb-10 sm:mb-14", isMobile && "px-1.5")}> 
         <div className={sectionClass}>
           <div className={cn("flex flex-col gap-3 mb-4", !isMobile && "sm:flex-row sm:items-center sm:gap-4")}>
             <div className={s.badgeBlue}>
@@ -160,7 +160,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
         {groupedSwitches.corporateAccess.length > 0 && (
           <div id="access-level" className={cn("mb-10 sm:mb-12", isMobile && "px-2")}>
             <div className={sectionClass}>
-              <div className={cn("flex items-center gap-3 mb-5 sm:mb-6", isMobile && "justify-center")}>
+              <div className={cn("flex items-center gap-3 mb-4 sm:mb-6", isMobile && "justify-center")}> 
                 <div className={s.badgeCyan}>
                   <SwitchIcon className="text-white" style={{ width: 18, height: 18 }} />
                 </div>
@@ -170,7 +170,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
               </div>
             </div>
 
-            <div className={cn(isMobile ? "space-y-4" : "space-y-6", s.cardGroup)}>
+            <div className={cn(s.cardGroup, !isMobile && "tabletGrid", isMobile ? "tight" : "", !isMobile && "gap-y-6") }>
               {groupedSwitches.corporateAccess.map((sw, i) => (
                 <div
                   key={sw.id}
@@ -190,7 +190,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
         {groupedSwitches.corporateDistribution.length > 0 && (
           <div id="distribution-level" className={cn(isMobile && "px-2")}> 
             <div className={sectionClass}> 
-              <div className={cn("flex items-center gap-3 mb-5 sm:mb-6", isMobile && "justify-center")}> 
+              <div className={cn("flex items-center gap-3 mb-4 sm:mb-6", isMobile && "justify-center")}> 
                 <div className={s.badgeIndigo}> 
                   <Shield className="text-white" style={{ width: 18, height: 18 }} /> 
                 </div> 
@@ -200,7 +200,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
               </div> 
             </div> 
 
-            <div className={cn(isMobile ? "space-y-4" : "space-y-6", s.cardGroup)}> 
+            <div className={cn(s.cardGroup, !isMobile && "tabletGrid", isMobile ? "tight" : "", !isMobile && "gap-y-6") }>
               {groupedSwitches.corporateDistribution.map((sw, i) => ( 
                 <div 
                   key={sw.id} 
@@ -218,7 +218,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
       </section>
 
       {/* ЦОД */}
-      <section id="data-center" className={cn("mb-12 sm:mb-16", isMobile && "px-1")}>
+  <section id="data-center" className={cn("mb-10 sm:mb-14", isMobile && "px-1.5")}> 
         <div className={sectionClass}>
           <div className={cn("flex gap-4 mb-4", isMobile ? "flex-col items-center text-center" : "items-center")}>
             <div className={s.badgePurpleXL}>
@@ -236,7 +236,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
         {groupedSwitches.dataCenterSpine.length > 0 && (
           <div id="spine-level" className={cn("mb-10 sm:mb-12", isMobile && "px-2")}>
             <div className={sectionClass}>
-              <div className={cn("flex items-center gap-3 mb-5 sm:mb-6", isMobile && "justify-center")}>
+              <div className={cn("flex items-center gap-3 mb-4 sm:mb-6", isMobile && "justify-center")}> 
                 <div className={s.badgePurple}>
                   <Cloud className="text-white" style={{ width: 18, height: 18 }} />
                 </div>
@@ -244,7 +244,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
               </div>
             </div>
 
-            <div className={cn(isMobile ? "space-y-4" : "space-y-6", s.cardGroup)}> 
+            <div className={cn(s.cardGroup, !isMobile && "tabletGrid", isMobile ? "tight" : "", !isMobile && "gap-y-6") }>
               {groupedSwitches.dataCenterSpine.map((sw, i) => ( 
                 <div 
                   key={sw.id} 
@@ -264,7 +264,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
         {groupedSwitches.dataCenterLeaf.length > 0 && (
           <div id="leaf-level" className={cn(isMobile && "px-2")}>
             <div className={sectionClass}>
-              <div className={cn("flex items-center gap-3 mb-5 sm:mb-6", isMobile && "justify-center")}>
+              <div className={cn("flex items-center gap-3 mb-4 sm:mb-6", isMobile && "justify-center")}> 
                 <div className={s.badgeEmerald}>
                   <Layers className="text-white" style={{ width: 18, height: 18 }} />
                 </div>
@@ -272,7 +272,7 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
               </div>
             </div>
 
-            <div className={cn(isMobile ? "space-y-4" : "space-y-6", s.cardGroup)}> 
+            <div className={cn(s.cardGroup, !isMobile && "tabletGrid", isMobile ? "tight" : "", !isMobile && "gap-y-6") }>
               {groupedSwitches.dataCenterLeaf.map((sw, i) => ( 
                 <div 
                   key={sw.id} 

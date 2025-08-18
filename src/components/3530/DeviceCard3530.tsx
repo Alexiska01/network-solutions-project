@@ -72,10 +72,7 @@ export default function DeviceCard3530({ model, index, isInCompareList: _isInCom
           )}
         </div>
       </div>
-  <div className="mt-auto px-3 sm:px-4 pb-3 sm:pb-4 pt-1 text-[11px] sm:text-xs text-gray-400 flex items-center gap-1 select-none pointer-events-none justify-end text-right">
-        <span>Подробнее</span>
-        <Icon name="ArrowRight" size={14} className="text-gray-300 card-hint-icon" />
-      </div>
+  {/* Нижний CTA "Подробнее" удалён по требованию */}
     </article>
   );
 }

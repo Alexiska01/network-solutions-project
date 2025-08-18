@@ -12,9 +12,6 @@ import { CustomerJourney } from '@/components/warranty/sections/CustomerJourney'
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
-    // Мгновенно устанавливаем позицию в начало страницы
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    
     const cleanup = initWarrantyAnimations();
 
     // Отдельная логика для мобильных анимаций

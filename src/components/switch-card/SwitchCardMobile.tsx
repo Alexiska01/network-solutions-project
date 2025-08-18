@@ -24,7 +24,7 @@ const SwitchCardMobile = ({
   withButton = false
 }: SwitchCardMobileProps) => {
   return (
-    <div className="p-5">
+  <div className="px-3 py-3 sm:px-4 sm:py-4">
       {/* Image */}
       <SwitchCardImage
         src={switchData.image}
@@ -34,12 +34,12 @@ const SwitchCardMobile = ({
       />
 
       {/* Title */}
-      <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors duration-300">
+  <h3 className="text-[0.95rem] sm:text-[1.05rem] font-semibold text-gray-900 mb-2 leading-snug tracking-tight">
         {switchData.title}
       </h3>
 
       {/* Description */}
-      <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-3">
+  <p className="text-gray-600 text-[0.72rem] sm:text-[0.8rem] leading-snug sm:leading-tight mb-3 line-clamp-2">
         {switchData.description}
       </p>
 
@@ -47,18 +47,17 @@ const SwitchCardMobile = ({
       <SwitchCardSpecs
         specs={specs}
         isMobile={true}
-        isHovered={isHovered}
       />
 
       {/* Button (optional) */}
-      {withButton && (
+    {withButton && (
         <Button
-          variant="outline"
-          size="default"
-          className="w-full h-12 group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
+      variant="outline"
+      size="sm"
+      className="w-full h-10 sm:h-11 text-[0.8rem] sm:text-[0.85rem] font-medium group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
           onClick={handleLinkClick}
         >
-          <span className="mr-2 font-medium">Подробнее</span>
+      <span className="mr-2">Подробнее</span>
           <Icon
             name="ArrowRight"
             className="h-4 w-4 transition-transform group-hover/btn:translate-x-1"

@@ -33,10 +33,10 @@ const SwitchCardContent = ({
       />
 
       {/* Content Section */}
-      <div className="flex-1 p-6 flex flex-col justify-between">
+  <div className="flex-1 p-5 xl:p-6 flex flex-col justify-between gap-4">
         <div>
           <motion.h3
-            className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300"
+    className="text-[1.05rem] md:text-xl lg:text-2xl font-semibold text-gray-900 mb-2.5 group-hover:text-blue-600 transition-colors duration-300 leading-snug tracking-tight"
             animate={{ x: isHovered ? 4 : 0 }}
             transition={{ duration: 0.2 }}
           >
@@ -45,10 +45,7 @@ const SwitchCardContent = ({
 
 
           {/* Specs Grid */}
-          <SwitchCardSpecs
-            specs={specs}
-            isHovered={isHovered}
-          />
+          <SwitchCardSpecs specs={specs} />
         </div>
 
         {/* Action Button */}
@@ -58,8 +55,8 @@ const SwitchCardContent = ({
         >
           <Button
             variant="outline"
-            size="lg"
-            className="w-full group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent shadow-sm hover:shadow-lg transition-all duration-300"
+            size="sm"
+            className="w-full h-10 group/btn hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent shadow-sm hover:shadow-lg transition-all duration-300 text-[0.82rem] font-medium"
             onClick={handleLinkClick}
           >
             <span className="mr-2">Подробнее</span>

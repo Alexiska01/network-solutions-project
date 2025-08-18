@@ -33,7 +33,7 @@ const ModelIDS4530_48S_4XComponent = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/#products">Продукты</Link>
+                  {/* Продукты удалено */}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />

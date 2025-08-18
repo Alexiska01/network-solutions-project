@@ -53,7 +53,7 @@ const SeriesCatalog6010Component = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/products">Продукты</Link>
+                  {/* Продукты удалено */}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />

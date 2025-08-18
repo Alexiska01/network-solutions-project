@@ -2,10 +2,10 @@ import Icon from "@/components/ui/icon";
 import { useEffect, useRef, useState } from "react";
 
 const FeaturesSection = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 768 : false);
   const [isVisible, setIsVisible] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(false);
-  const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
+  const [visibleCards, setVisibleCards] = useState<boolean[]>(() => new Array(4).fill(false));
   const [refreshRate, setRefreshRate] = useState<'60hz' | '90hz' | '120hz' | '144hz' | '240hz'>('60hz');
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -38,170 +38,103 @@ const FeaturesSection = () => {
   ];
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const mq = window.matchMedia('(max-width: 767px)');
+    const handler = (e: MediaQueryListEvent | MediaQueryList) => setIsMobile(e.matches);
+    handler(mq);
+    mq.addEventListener('change', handler as any);
+    return () => mq.removeEventListener('change', handler as any);
   }, []);
 
   // Детекция частоты обновления экрана
   useEffect(() => {
-    let frameCount = 0;
-    let startTime = 0;
-    let animationId: number;
-
-    const measureRefreshRate = () => {
-      if (frameCount === 0) {
-        startTime = performance.now();
-      }
-      frameCount++;
-      
-      if (frameCount === 120) {
-        const endTime = performance.now();
-        const fps = Math.round(120000 / (endTime - startTime));
-        
-        let detectedRate: typeof refreshRate = '60hz';
-        if (fps >= 230) detectedRate = '240hz';
-        else if (fps >= 140) detectedRate = '144hz';
-        else if (fps >= 115) detectedRate = '120hz';
-        else if (fps >= 85) detectedRate = '90hz';
-        
-        setRefreshRate(detectedRate);
-        
-        // Добавляем класс на body для CSS переменных
-        document.body.className = document.body.className
-          .replace(/refresh-\d+hz/g, '')
-          + ` refresh-${detectedRate}`;
-        
-        console.log(`🚀 FeaturesSection: ${fps} FPS (${detectedRate}) - GPU анимации активны`);
+    // Упрощённая и более быстрая детекция частоты
+    let frames = 0; let t0 = 0; let id: number;
+    const sampleTarget = 60; // меньше итераций
+    const tick = (t: number) => {
+      if (!t0) t0 = t;
+      frames++;
+      if (frames >= sampleTarget) {
+        const fps = Math.round(frames * 1000 / (t - t0));
+        let rate: typeof refreshRate = '60hz';
+        if (fps >= 230) rate = '240hz'; else if (fps >= 140) rate = '144hz'; else if (fps >= 115) rate = '120hz'; else if (fps >= 85) rate = '90hz';
+        setRefreshRate(rate);
+        document.body.className = document.body.className.replace(/refresh-\d+hz/g, '') + ` refresh-${rate}`;
         return;
       }
-      
-      animationId = requestAnimationFrame(measureRefreshRate);
+      id = requestAnimationFrame(tick);
     };
-
-    if (window.matchMedia('(min-refresh-rate: 120hz)').matches) {
-      setRefreshRate('120hz');
-      document.body.className = document.body.className.replace(/refresh-\d+hz/g, '') + ' refresh-120hz';
-    } else {
-      animationId = requestAnimationFrame(measureRefreshRate);
-    }
-
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
+    id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
   }, []);
 
-  // Инициализация массивов состояния
+  // Синхронизация длины массива если список фич изменится
   useEffect(() => {
-    setVisibleCards(new Array(features.length).fill(false));
-    cardRefs.current = new Array(features.length).fill(null);
-  }, []);
+    if (visibleCards.length !== features.length) {
+      setVisibleCards(prev => {
+        const next = [...prev];
+        while (next.length < features.length) next.push(false);
+        return next.slice(0, features.length);
+      });
+    }
+  }, [features.length, visibleCards.length]);
 
   // IntersectionObserver для анимаций появления
   useEffect(() => {
+    const desktopObserverOptions = { threshold: 0.2, rootMargin: '-50px 0px -50px 0px' };
+    const mobileObserverOptions = { threshold: 0.25, rootMargin: '-25px 0px -25px 0px' };
     if (!isMobile) {
-      // ДЕСКТОП - каскадное появление всей секции
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            setHeaderVisible(true);
-            console.log('🎬 FeaturesSection: Каскадная анимация запущена (десктоп)');
-          }
-        },
-        { 
-          threshold: 0.2,
-          rootMargin: '-50px 0px -50px 0px'
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true); setHeaderVisible(true);
         }
-      );
-
-      if (sectionRef.current) {
-        observer.observe(sectionRef.current);
-      }
-
+      }, desktopObserverOptions);
+      if (sectionRef.current) observer.observe(sectionRef.current);
+      // Fallback: если observer не сработал (например SSR/layout shift) — показать через timeout
+  setTimeout(() => {
+        if (!isVisible) { setIsVisible(true); setHeaderVisible(true); }
+      }, 1200);
       return () => observer.disconnect();
-    } else {
-      // МОБИЛЬНЫЙ - индивидуальное появление заголовка и карточек
-      const observers: IntersectionObserver[] = [];
-      
-      // Observer для заголовка на мобильных
-      if (headerRef.current) {
-        const headerObserver = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              setHeaderVisible(true);
-              console.log('🎬 FeaturesSection: Заголовок появился (мобильный)');
-            }
-          },
-          { 
-            threshold: 0.3,
-            rootMargin: '-20px 0px -20px 0px'
-          }
-        );
-        
-        headerObserver.observe(headerRef.current);
-        observers.push(headerObserver);
-      }
-      
-      cardRefs.current.forEach((cardRef, index) => {
-        if (cardRef) {
-          const observer = new IntersectionObserver(
-            ([entry]) => {
-              if (entry.isIntersecting) {
-                setVisibleCards(prev => {
-                  const newVisible = [...prev];
-                  newVisible[index] = true;
-                  console.log(`🎬 FeaturesSection: Карточка ${index + 1} появилась (мобильный)`);
-                  return newVisible;
-                });
-              }
-            },
-            { 
-              threshold: 0.3,
-              rootMargin: '-20px 0px -20px 0px'
-            }
-          );
-          
-          observer.observe(cardRef);
-          observers.push(observer);
-        }
-      });
-
-      return () => {
-        observers.forEach(observer => observer.disconnect());
-      };
     }
-  }, [isMobile, cardRefs.current.length]);
+    const observers: IntersectionObserver[] = [];
+    if (headerRef.current) {
+      const hObs = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setHeaderVisible(true); }, mobileObserverOptions);
+      hObs.observe(headerRef.current); observers.push(hObs);
+    }
+    cardRefs.current.forEach((cardRef, index) => {
+      if (!cardRef) return;
+      const cObs = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleCards(prev => { if (prev[index]) return prev; const cp = [...prev]; cp[index] = true; return cp; });
+        }
+      }, mobileObserverOptions);
+      cObs.observe(cardRef); observers.push(cObs);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, [isMobile, features.length, isVisible]);
 
   return (
-    <section 
-      ref={sectionRef} 
-  className={`pt-[8px] pb-[12px] md:pt-[20px] md:pb-[24px] lg:pt-[28px] lg:pb-[32px] bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
+    <section
+      ref={sectionRef}
+      className={`pt-3 pb-4 sm:pt-4 sm:pb-6 md:pt-6 md:pb-8 lg:pt-7 lg:pb-9 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
     >
       {/* Декоративный фон */}
   <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 to-teal-50/20 pointer-events-none"></div>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="flex flex-col justify-center min-h-[340px] md:min-h-[400px] lg:min-h-[440px]">
+      <div className="max-w-7xl mx-auto px-3 sm:px-5 md:px-6 lg:px-8 relative">
+        <div className="flex flex-col justify-center min-h-[320px] sm:min-h-[340px] md:min-h-[400px] lg:min-h-[440px]">
         <div 
           ref={headerRef}
           className={`text-center mb-3 md:mb-6 feature-header ${
             headerVisible ? 'feature-header-visible' : 'feature-header-hidden'
           }`}
         >
-          <h2 className="text-lg md:text-2xl lg:text-3xl xl:text-[2.375rem] font-bold text-gray-900 mb-2 md:mb-4 leading-snug tracking-tight">
+          <h2 className="text-[1.25rem] sm:text-[1.45rem] md:text-2xl lg:text-3xl xl:text-[2.375rem] font-bold text-gray-900 mb-2 md:mb-4 leading-snug tracking-tight">
             Почему выбирают iDATA
           </h2>
           <div className="w-14 md:w-20 h-0.5 md:h-[3px] bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mb-1 md:mb-2 rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -210,7 +143,7 @@ const FeaturesSection = () => {
                   cardRefs.current[index] = el;
                 }
               }}
-              className={`feature-card group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] md:hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] px-4 py-5 md:p-8 h-full overflow-hidden transition-all duration-500 ease-out hover:-translate-y-1 transform-gpu ${
+              className={`feature-card group relative bg-white rounded-xl md:rounded-3xl border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.05)] md:shadow-[0_4px_18px_rgba(0,0,0,0.07)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.08)] md:hover:shadow-[0_16px_36px_rgba(0,0,0,0.10)] px-4 py-4 sm:py-5 md:p-7 xl:p-8 min-h-[170px] sm:min-h-[180px] md:min-h-[190px] h-full overflow-hidden transition-all duration-500 ease-out hover:-translate-y-1 focus-visible:-translate-y-1 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white transform-gpu will-change-transform ${
                 isMobile 
                   ? (visibleCards[index] ? 'feature-card-visible' : 'feature-card-hidden-mobile')
                   : (isVisible ? 'feature-card-visible' : 'feature-card-hidden')
@@ -218,6 +151,7 @@ const FeaturesSection = () => {
               style={{
                 '--feature-index': index,
               } as React.CSSProperties}
+              tabIndex={0}
             >
               {/* Subtle gradient overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 md:from-blue-50/50 via-transparent to-teal-50/20 md:to-teal-50/30 opacity-0 group-hover:opacity-100 rounded-xl md:rounded-3xl transition-opacity duration-500 md:duration-700 ease-out pointer-events-none"></div>
@@ -225,11 +159,11 @@ const FeaturesSection = () => {
               {/* Content */}
               <div className="relative z-10 flex flex-col h-full justify-center">
                 {/* Icon with enhanced styling */}
-                <div className="relative mb-5 md:mb-8">
-                  <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl transform translateZ(0) transition-all duration-500 ease-out backface-visibility-hidden -webkit-font-smoothing-antialiased">
+                <div className="relative mb-4 md:mb-7">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-md md:shadow-lg group-hover:shadow-lg md:group-hover:shadow-xl transform translateZ(0) transition-all duration-500 ease-out backface-visibility-hidden -webkit-font-smoothing-antialiased">
                     <Icon
                       name={feature.icon as any}
-                      size={isMobile ? 20 : 28}
+                      size={isMobile ? 22 : 28}
                       className="text-white transform translate3d(0, 0, 0)"
                     />
                   </div>
@@ -238,12 +172,12 @@ const FeaturesSection = () => {
                 </div>
                 
                 {/* Text content */}
-                <div className="flex-1 space-y-3 md:space-y-4">
-                  <h3 className="text-base md:text-xl font-bold text-gray-900 leading-tight tracking-tight break-words">
+                <div className="flex-1 space-y-2.5 sm:space-y-3 md:space-y-4">
+                  <h3 className="text-[0.95rem] sm:text-base md:text-xl font-bold text-gray-900 leading-tight tracking-tight break-words">
                     {feature.title}
                   </h3>
                   <div className="w-8 md:w-12 h-0.5 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full opacity-60"></div>
-                  <p className="text-gray-600 leading-tight md:leading-relaxed text-sm md:text-[15px] font-medium break-words">
+                  <p className="text-gray-600 leading-snug sm:leading-tight md:leading-relaxed text-[0.8rem] sm:text-sm md:text-[15px] font-medium break-words">
                     {feature.description}
                   </p>
                 </div>

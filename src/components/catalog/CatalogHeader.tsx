@@ -21,12 +21,6 @@ const CatalogHeader = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to="/products">Продукты</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
               <BreadcrumbPage>Коммутаторы</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>

@@ -36,7 +36,7 @@ const ModelIDS3530_24T_6XComponent = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/#products">Продукты</Link>
+                  {/* Продукты удалено */}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />

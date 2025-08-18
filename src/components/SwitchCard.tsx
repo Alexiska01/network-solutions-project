@@ -95,8 +95,8 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
 
   const CardContent = (
     <div
-      id={switchData.id.toLowerCase()}
-      className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden cursor-pointer"
+  id={switchData.id.toLowerCase()}
+  className="group relative bg-white rounded-xl sm:rounded-2xl border border-gray-200 overflow-hidden cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleScrollToCard}
@@ -139,11 +139,11 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
     <div
       id={switchData.id.toLowerCase()}
       className={cn(
-        "group relative cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm transition-all duration-300",
-        isMobile 
-          ? "mx-auto max-w-sm" 
-          : isTablet 
-            ? "h-auto" 
+        "group relative cursor-pointer bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm transition-all duration-300",
+        isMobile
+          ? "mx-auto max-w-[460px] w-full"
+          : isTablet
+            ? "h-auto"
             : "h-full"
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -181,7 +181,7 @@ const SwitchCard = ({ switchData }: SwitchCardProps) => {
   if (isMobile) {
     // В мобильной версии возвращаем карточку без Dialog И отдельную кнопку
     return (
-      <div className="space-y-4">
+  <div className="space-y-3 sm:space-y-4">
         {CardContentWithoutButton}
         <Button
           variant="outline"

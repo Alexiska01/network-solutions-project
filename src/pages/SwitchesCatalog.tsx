@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CatalogNavigation from "@/components/CatalogNavigation";
@@ -12,12 +11,9 @@ import { switchesData } from "@/data/switchesData";
 
 const SwitchesCatalog = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const isMobile = useIsMobile();
 
-  // Прокрутка к верху страницы при монтировании компонента
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // Автоскролл при монтировании отключён
+  useEffect(() => {}, []);
 
   const filteredSwitches = useMemo(() => {
     let filtered = switchesData;
@@ -43,12 +39,7 @@ const SwitchesCatalog = () => {
       });
 
       // Скроллим к элементу с учетом высоты sticky навигации
-      const offset = isMobile ? 80 : 0; // высота мобильной навигации
-      const elementPosition = element.offsetTop - offset;
-      window.scrollTo({
-        top: elementPosition,
-        behavior: "smooth"
-      });
+  // Автоскролл отключён (offset ранее рассчитывался)
 
       // Очищаем хеш из URL
       window.history.replaceState(

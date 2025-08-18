@@ -355,7 +355,7 @@ const ProductHero = memo(() => {
             {/* Правая колонка — 3D модель (структура как в Hero3530, но с OptimizedModelViewer) */}
             <div className="ph-hero-model-section ph-model-center relative order-first lg:order-last mt-0 lg:mt-0">
               {/* уменьшено ~на 5%: 240->228, 275->261, 326->310, 360->342 */}
-              <div className="ph-hero-model-container ph-model-stack relative w-full max-w-[343px] sm:max-w-[411px] md:max-w-[446px] lg:max-w-[514px] h-[228px] sm:h-[261px] md:h-[310px] lg:h-[342px]" style={{ transform: 'translateY(-20px)' }}>
+              <div className="ph-hero-model-container ph-model-stack relative w-full max-w-[340px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[540px] h-[240px] sm:h-[270px] md:h-[330px] lg:h-[360px] xl:h-[400px]" style={{ transform: isMobile ? 'none' : 'translateY(-12px)' }}>
         {layers.map(layer => {
                   const data = heroData[layer.idx];
                   const failed = modelLoadStatus[data.modelUrl] === false;

@@ -138,35 +138,7 @@
 /* Компактные характеристики */
 
 
-.ph-features {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin: 6px 0 0 0;
-}
-.ph-feature {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  font-size: 0.56rem;
-  font-weight: 500;
-  color: #1e293b;
-  letter-spacing: 0.01em;
-  line-height: 1;
-  padding: 0;
-  opacity: 0;
-  transform: translateY(4px);
-  animation: ph-feature-fadein 0.7s var(--ease-premium) forwards;
-  animation-delay: calc(0.12s + var(--feature-index, 0) * 0.08s);
-}
-.ph-feature-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--current-accent-color, #53c2a4), var(--current-glow-color, #005baa));
-  box-shadow: 0 1px 1px rgba(0,0,0,0.10);
-  flex: none;
-}
+/* (Удалён дубль ранней версии .ph-features/.ph-feature для консистентности) */
 
 .ph-geo-1,
 .ph-geo-2 {
@@ -240,6 +212,9 @@
   .ph-wrapper {
     padding: 0 2rem;
   }
+}
+@media (max-width: 479px) {
+  .ph-wrapper { padding: 0 0.75rem; }
 }
 @media (min-width: 1024px) {
   .ph-wrapper {
@@ -379,6 +354,9 @@
     font-size: 1.59375rem;
   }
 }
+@media (max-width: 359px) {
+  .ph-title { font-size: 1.15rem; line-height:1.15; }
+}
 @media (min-width: 414px) {
   .ph-title {
     font-size: 1.9125rem;
@@ -460,6 +438,12 @@
     --ph-feature-gap-base: 0.75rem;
   }
 }
+@media (max-width: 480px) {
+  .ph-features { --ph-feature-scale: 0.80; }
+}
+@media (min-width: 640px) and (max-width: 767px) { /* небольшие планшеты в портретной ориентации */
+  .ph-features { --ph-feature-scale: 0.90; }
+}
 @keyframes ph-features-entry {
   to {
     opacity: 1;
@@ -491,6 +475,9 @@
     gap: calc(1rem * var(--ph-feature-scale));
     padding: calc(1rem * var(--ph-feature-scale));
   }
+}
+@media (max-width: 480px) {
+  .ph-feature { padding: calc(0.6rem * var(--ph-feature-scale)) calc(0.7rem * var(--ph-feature-scale)); }
 }
 .ph-feature:hover {
   background: rgba(255, 255, 255, 0.1);
@@ -530,6 +517,23 @@
 }
 @media (min-width: 768px) {
   .ph-feature-text { --ph-feature-font-base: 1rem; }
+}
+@media (max-width: 480px) {
+  .ph-feature-text { line-height:1.15; }
+}
+
+/* Переупаковка сетки для планшетов (две строки: текст над моделью) */
+@media (max-width: 1023px) {
+  .ph-grid { grid-template-columns: 1fr; }
+  .ph-hero-model-section { margin-top: 1.25rem; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .ph-hero-model-section { margin-top: 0.5rem; }
+}
+
+/* Тонкая корректировка отступов контейнера модели на очень узких экранах */
+@media (max-width: 359px) {
+  .ph-hero-model-container { transform: scale(.92) !important; }
 }
 
 /* --- STACKED CROSSFADE LAYERS --- */

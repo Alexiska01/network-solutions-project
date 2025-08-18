@@ -49,12 +49,6 @@ const SeriesCatalog3530Component = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/#products">Продукты</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
                   <Link to="/switches">Коммутаторы</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -73,17 +67,10 @@ const SeriesCatalog3530Component = () => {
       {/* Models Section (will be refactored to new professional layout) */}
   <section id="models-section" className="py-6 sm:py-8 lg:py-10 px-3 sm:px-6 bg-white relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[radial-gradient(circle_at_70%_30%,#0079b6_0%,transparent_60%)]" />
-        {/* Full-width decorative line in background */}
-  <div className="absolute left-0 right-0 top-[66px] sm:top-[71px] md:top-[74px] h-[2px] bg-gradient-to-r from-gray-400/30 via-gray-500/45 to-gray-400/30" />
         <div className="max-w-7xl mx-auto relative">
-          <header className="text-center mb-0">
-            <h2 className="flex items-center justify-center">
-              <span className="font-semibold tracking-[0.35em] text-gray-500 text-xs sm:text-sm md:text-base">SERIES 3530</span>
-            </h2>
-          </header>
-          <div className="mt-3 sm:mt-4 mb-6 sm:mb-8" />
+          {/* Подзаголовок и декоративная линия удалены по требованию */}
           {/* Legacy list (to be replaced by redesigned grid component) */}
-          <div className="grid gap-5 sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-5 sm:gap-6 lg:gap-8 grid-cols-1 xs:grid-cols-2 md:grid-cols-3">
             {filteredModels.map((model, index) => (
               <DeviceCard3530
                 key={model.id}

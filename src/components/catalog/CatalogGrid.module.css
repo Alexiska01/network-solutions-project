@@ -233,6 +233,12 @@
 .cardShell:hover::after {
   transform: scaleX(1);
 }
+/* Отключаем hover-анимации на устройствах без аппаратного hover (мобильные / touch) */
+@media (hover: none) {
+  .cardShell:hover .cardInner { transform:none; box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.08); }
+  .cardShell:hover::before { opacity:0; }
+  .cardShell:hover::after { transform:scaleX(0); }
+}
 /* Чистые active/focus состояния без конфликтов */
 .cardShell:active .cardInner {
   transform: translateY(0) scale(1);
@@ -245,3 +251,27 @@
   outline: 2px solid rgba(59, 130, 246, 0.4);
   outline-offset: 2px;
 }
+
+/* ===== Группы карточек (адаптивная сетка) ===== */
+.cardGroup {
+  --cg-gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cg-gap);
+}
+@media (min-width:640px){
+  .cardGroup.tabletGrid { display:grid; grid-template-columns: 1fr; }
+}
+@media (min-width:768px){
+  .cardGroup.tabletGrid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--cg-gap); }
+}
+@media (min-width:1024px){
+  .cardGroup.tabletGrid { grid-template-columns: 1fr; } /* возвращаем одиночную колонку на десктопе для читабельности */
+}
+@media (min-width:1280px){
+  .cardGroup.tabletGrid.wide3 { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+
+/* Регулировка gap через модификаторы (можно добавлять классы) */
+.cardGroup.tight { --cg-gap: .75rem; }
+.cardGroup.loose { --cg-gap: 1.5rem; }
