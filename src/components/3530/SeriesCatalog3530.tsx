@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import DeviceCard3530 from "@/components/3530/DeviceCard3530"; // legacy card (will be replaced by redesigned grid)
 // import ComparisonModal from "@/components/ComparisonModal";
-import KeyFeatures3530 from "@/components/KeyFeatures3530";
+import KeyFeatures3530 from "@/components/3530/KeyFeatures3530";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -124,26 +123,7 @@ const SeriesCatalog3530Component = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section
-        className="py-6 xs:py-8 md:py-12 lg:py-16 px-2 xs:px-3 sm:px-6 bg-white"
-      >
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="relative inline-block text-base xs:text-xl sm:text-2xl font-semibold mx-auto px-2 sm:px-4">
-            Нужна помощь с выбором оборудования?
-            <span className="block w-12 sm:w-16 md:w-24 h-0.5 bg-gray-300 mt-2 sm:mt-3 mb-3 sm:mb-4 md:mb-6 mx-auto" />
-          </h2>
-          <p className="text-gray-600 mb-4 sm:mb-6 md:mb-8 font-sans w-[97%] sm:w-[85%] md:w-[65%] mx-auto text-xs sm:text-base md:text-lg leading-relaxed px-1 sm:px-4">
-            Свяжитесь с нашими партнёрами!
-          </p>
-          <Button
-            size="lg"
-            className="bg-brand-primary hover:bg-gradient-hero text-white font-medium transition-all duration-300 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 shadow-lg hover:shadow-xl text-sm sm:text-base w-full sm:w-auto max-w-xs sm:max-w-none"
-          >
-            Связаться с партнёром
-          </Button>
-        </div>
-      </section>
+  {/* CTA Section удалён по требованию */}
     </div>
   );
 };

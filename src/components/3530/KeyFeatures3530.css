@@ -1,0 +1,129 @@
+/* KeyFeatures3530.css – Cleaned & fixed version (GPU CSS, gentle airy fly‑in) */
+
+/* Root tokens */
+:root {
+  --kf3530-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --kf3530-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --kf3530-rise: clamp(18px, 3vw, 42px);
+  --kf3530-duration-in: clamp(820ms, 900ms + 0.18vw, 1200ms);
+  --kf3530-card-delay-step: 70ms;
+  --kf3530-float-amplitude: 6px;
+  --kf3530-float-depth: 12px;
+}
+
+/* Refresh rate adaptation */
+.hz-60  { --kf3530-duration-in: 1100ms; --kf3530-rise: clamp(18px,3vw,42px); }
+.hz-90  { --kf3530-duration-in: 980ms;  --kf3530-rise: clamp(16px,2.8vw,38px); }
+.hz-120 { --kf3530-duration-in: 900ms;  --kf3530-rise: clamp(15px,2.6vw,36px); }
+.hz-165 { --kf3530-duration-in: 820ms;  --kf3530-rise: clamp(14px,2.3vw,34px); }
+.hz-180 { --kf3530-duration-in: 780ms;  --kf3530-rise: clamp(13px,2.1vw,32px); }
+.hz-240 { --kf3530-duration-in: 720ms;  --kf3530-rise: clamp(12px,1.9vw,30px); }
+
+/* Section */
+.kf3530-section {
+  position: relative;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px -10px rgba(0,40,90,0.35), 0 2px 6px -2px rgba(0,40,90,0.25), inset 0 0 0 1px rgba(255,255,255,0.18);
+  padding: 2rem 0.9rem 2.2rem;
+  transition: opacity 700ms var(--kf3530-ease-soft), transform 700ms var(--kf3530-ease-soft);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 1600px;
+  perspective-origin: 50% 42%;
+  will-change: transform, opacity;
+}
+@media (min-width:640px){ .kf3530-section { padding:2.5rem 1.25rem 2.75rem; border-radius:1.5rem; }}
+@media (min-width:768px){ .kf3530-section { padding:3rem 2.5rem 3.25rem; }}
+.kf3530-section.is-hidden  { opacity:0; transform:translate3d(0,20px,0) scale(.98); }
+.kf3530-section.is-visible { opacity:1; transform:translate3d(0,0,0)   scale(1); }
+
+/* Header */
+.kf3530-header { text-align:center; margin-bottom:1.75rem; }
+.kf3530-heading { font-size:clamp(1.1rem,1.6vw + .9rem,2rem); font-weight:700; letter-spacing:.02em; color:#fff; margin:0 0 1rem; text-shadow:0 2px 4px rgba(0,0,0,0.35); }
+.kf3530-heading-underline { width:4rem; height:1px; margin:0 auto; background:linear-gradient(90deg,#0065B3,#4DB1D4,#0065B3); opacity:.85; }
+
+/* Grid */
+.kf3530-grid { display:grid; gap:0.75rem 0.75rem; grid-template-columns:1fr; }
+@media (min-width:768px){ .kf3530-grid { grid-template-columns:repeat(2,1fr); gap:1rem 1.75rem; }}
+
+/* Card */
+.kf3530-card {
+  position: relative;
+  padding: 1rem 1rem 1.05rem;
+  border-radius: .9rem;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: linear-gradient(135deg,rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.12) 55%, rgba(255,255,255,0.18) 100%);
+  box-shadow: 0 3px 14px -4px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.16);
+  overflow: hidden;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  --kf3530-depth-start: 240px; /* ещё меньше глубина для мягкости */
+  --kf3530-tilt-x: 6deg;      /* меньше наклон */
+  --kf3530-tilt-y: -3deg;
+  --kf3530-scale-start: .94;  /* ближе к финалу -> меньше рывок */
+  transform: translate3d(0,calc(var(--kf3530-rise)*0.35),0) scale(var(--kf3530-scale-start)) rotateX(calc(var(--kf3530-tilt-x)*-0.65)) rotateY(calc(var(--kf3530-tilt-y)*-0.65)) translateZ(var(--kf3530-depth-start));
+  opacity: 0;
+  filter: blur(6px) brightness(.9) saturate(.96);
+  will-change: transform, opacity, filter;
+  transition: transform 800ms cubic-bezier(.22,1,.28,1), box-shadow 900ms cubic-bezier(.22,1,.28,1), border-color 760ms var(--kf3530-ease-soft), background 880ms var(--kf3530-ease-soft);
+}
+@media (min-width:640px){ .kf3530-card { padding:1.15rem 1.15rem 1.25rem; border-radius:1.1rem; }}
+@media (min-width:768px){ .kf3530-card { padding:1.35rem 1.25rem 1.45rem; }}
+
+/* Visible / hidden (transition based like Warranty cards) */
+.kf3530-card { /* вход через transition вместо keyframes */
+  opacity:0;
+  transform:translate3d(0,72px,0) scale(.9) rotateX(8deg);
+  filter:blur(8px) brightness(.9) saturate(.95);
+  transition:
+    transform var(--kf3530-duration-in) cubic-bezier(.23,1,.32,1),
+    opacity   var(--kf3530-duration-in) cubic-bezier(.23,1,.32,1),
+    filter    calc(var(--kf3530-duration-in)*0.85) ease-out,
+    box-shadow 1s cubic-bezier(.23,1,.32,1),
+    background 1s cubic-bezier(.23,1,.32,1),
+    border-color .8s ease;
+  transition-delay: var(--stagger-delay,0ms);
+}
+.kf3530-card.is-visible {
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1) rotateX(0deg);
+  filter:blur(0) brightness(1) saturate(1);
+}
+.kf3530-card.is-hidden { opacity:0; }
+
+/* Убираем фоновые анимации сканирования если хотим максимально близко к Warranty — но оставим */
+
+/* Hover / active & decorative effects */
+.kf3530-card.is-visible:hover { --lift:-5px; transform:translate3d(0,var(--lift),18px) scale(1.006) rotateX(-0.9deg) rotateY(.5deg); border-color:rgba(255,255,255,0.42); background:linear-gradient(135deg,rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.18) 55%, rgba(255,255,255,0.30) 100%); box-shadow:0 20px 36px -16px rgba(0,90,160,0.5),0 8px 20px -8px rgba(0,90,160,0.35),0 0 0 1px rgba(255,255,255,0.32); }
+.kf3530-card.is-visible:active { transform:translate3d(0,-2px,10px) scale(.991); transition:transform 140ms var(--kf3530-ease-soft); }
+.kf3530-card.is-visible::after { content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; background:linear-gradient(120deg,rgba(0,150,255,0) 0%,rgba(0,152,255,0.5) 45%,rgba(0,210,160,0.55) 60%,rgba(0,150,255,0) 85%) center/200% 200% no-repeat; -webkit-mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000); -webkit-mask-composite:xor; mask-composite:exclude; opacity:0; transition:opacity 520ms var(--kf3530-ease-soft); pointer-events:none; }
+.kf3530-card.is-visible:hover::after { opacity:1; animation:kf3530-scan 3200ms linear infinite; }
+@keyframes kf3530-scan { 0% { background-position:0% 50%; } 100% { background-position:100% 50%; }}
+.kf3530-card.is-visible::before { content:""; position:absolute; inset:-3px; border-radius:inherit; background:radial-gradient(900px circle at 50% 55%, rgba(110,190,255,0.12) 0%, rgba(30,80,140,0.05) 40%, transparent 70%); opacity:0; transition:opacity 650ms var(--kf3530-ease-soft); }
+.kf3530-card.is-visible:hover::before { opacity:.45; }
+
+/* Icon & text */
+.kf3530-icon-wrap { width:2.2rem; height:2.2rem; min-width:2.2rem; display:flex; align-items:center; justify-content:center; border-radius:999px; background:linear-gradient(145deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08)); border:1px solid rgba(255,255,255,0.3); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.25), 0 2px 4px -1px rgba(0,0,0,0.45); }
+.kf3530-icon { color:#fff; filter:drop-shadow(0 2px 4px rgba(0,0,0,.45)); }
+@media (min-width:640px){ .kf3530-icon-wrap { width:2.4rem; height:2.4rem; }}
+@media (min-width:768px){ .kf3530-icon-wrap { width:2.2rem; height:2.2rem; }}
+.kf3530-title { font-size:0.85rem; line-height:1.25rem; font-weight:600; letter-spacing:.015em; margin:0 0 .4rem; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.4); }
+@media (min-width:640px){ .kf3530-title { font-size:0.95rem; }}
+@media (min-width:768px){ .kf3530-title { font-size:0.9rem; }}
+.kf3530-desc { font-size:0.70rem; line-height:1.15rem; letter-spacing:.01em; color:rgba(255,255,255,0.88); margin:0; font-weight:400; }
+@media (min-width:640px){ .kf3530-desc { font-size:0.78rem; line-height:1.25rem; }}
+@media (min-width:768px){ .kf3530-desc { font-size:0.78rem; }}
+
+/* Accessibility / motion prefs */
+@media (prefers-reduced-motion: no-preference) { .kf3530-card { will-change: transform, opacity; }}
+@media (prefers-reduced-motion: reduce) { .kf3530-card { animation:none !important; transition:none !important; transform:none !important; opacity:1 !important; filter:none !important; } .kf3530-card.is-hidden { opacity:0; } .kf3530-card.is-visible { opacity:1; } .kf3530-card.is-visible:hover { transform:none; } .kf3530-card.is-visible::before, .kf3530-card.is-visible::after { animation:none !important; }}
+
+/* Ultra-wide tweak */
+@media (min-width:1600px){ :root { --kf3530-rise: clamp(26px, 2.8vw, 56px); } .kf3530-title { font-size:0.95rem; } .kf3530-desc { font-size:0.8rem; }}
+
+/* Font rendering */
+.kf3530-card, .kf3530-card * { -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+
