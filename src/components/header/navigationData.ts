@@ -56,7 +56,6 @@ export const productSubmenuItems: NavItem[] = [
           {
             name: "Уровень доступа",
             path: "/products/switches/access",
-            icon: "Wifi",
             badge: "24-48 портов",
             items: [
               {
@@ -86,7 +85,6 @@ export const productSubmenuItems: NavItem[] = [
           {
             name: "Уровень распределения",
             path: "/products/switches/corporate-lan/distribution-level",
-            icon: "Network",
             badge: "Layer 3",
             items: [
               {
@@ -110,7 +108,6 @@ export const productSubmenuItems: NavItem[] = [
           {
             name: "Уровень ядра",
             path: "/products/switches/corporate-lan/core-level",
-            icon: "Zap",
             badge: "100G",
             items: [
               {
@@ -133,7 +130,6 @@ export const productSubmenuItems: NavItem[] = [
           {
             name: "Уровень Spine",
             path: "/products/switches/data-centers/spine-level",
-            icon: "GitBranch",
             badge: "Spine",
             items: [
               {
@@ -157,7 +153,6 @@ export const productSubmenuItems: NavItem[] = [
           {
             name: "Уровень Leaf",
             path: "/products/switches/data-centers/leaf-level",
-            icon: "HardDrive",
             badge: "Leaf",
             items: [
               {

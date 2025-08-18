@@ -176,9 +176,6 @@ const MobileCatalogNavigation: React.FC<MobileCatalogNavigationProps> = ({
               <div className="px-4 py-4">
                 {/* Основные категории */}
                 <div className="mb-4">
-                  <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 px-2">
-                    Основные разделы
-                  </h4>
                   <div className="grid grid-cols-2 gap-3">
                     {mobileNavigationData
                       .filter(item => !item.subcategory)
@@ -230,9 +227,6 @@ const MobileCatalogNavigation: React.FC<MobileCatalogNavigationProps> = ({
 
                 {/* Подкатегории */}
                 <div className="mb-4">
-                  <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 px-2">
-                    Уровни сети
-                  </h4>
                   <div className="space-y-2">
                     {mobileNavigationData
                       .filter(item => item.subcategory)

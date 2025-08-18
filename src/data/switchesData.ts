@@ -7,6 +7,7 @@ export interface SwitchModel {
     ports: string;
     power: string;
     throughput: string;
+  sfpSlots?: string; // добавлено: SFP / uplink слоты
     features: string[];
   };
   image: string;
@@ -25,6 +26,7 @@ export const switchesData: SwitchModel[] = [
       ports: "8 - 48 портов 10/100/1000Base-T",
       power: "PoE/PoE+ до 760Вт",
       throughput: "168 - 216 Гбит/с",
+  sfpSlots: "6 SFP/SFP+ слотов",
       features: ["VLAN", "QoS", "ACL", "SNMP"],
     },
     image:
@@ -41,6 +43,7 @@ export const switchesData: SwitchModel[] = [
       ports: "8 - 48 портов 10/100/1000Base-T",
       power: "PoE/PoE+ до 1440Вт",
       throughput: "168 - 216 Гбит/с",
+  sfpSlots: "6 SFP/SFP+ слотов",
       features: ["Advanced QoS", "Layer 3", "IPv6", "Security"],
     },
     image:
@@ -57,6 +60,7 @@ export const switchesData: SwitchModel[] = [
       ports: "24 - 48 портов 10/100/1000Base-T",
       power: "PoE/PoE+ до 1440Вт",
       throughput: "448 - 688 Гбит/с",
+  sfpSlots: "4 SFP+ uplink",
       features: ["802.1X", "NAC", "Advanced Security", "Stacking"],
     },
     image:
@@ -72,6 +76,7 @@ export const switchesData: SwitchModel[] = [
       ports: "?",
       power: "?",
       throughput: "560 - 640 Гбит/с",
+  sfpSlots: "2 SFP+",
       features: ["Web UI", "Basic L3", "Energy Saving", "Fanless"],
     },
     image:
@@ -90,6 +95,7 @@ export const switchesData: SwitchModel[] = [
       ports: "?",
       power: "?",
       throughput: "640 - 960 Гбит/с",
+  sfpSlots: "8 SFP+ / 2 QSFP",
       features: ["Модульность", "Hot Swap", "MLAG", "VSU"],
     },
     image:
@@ -106,6 +112,7 @@ export const switchesData: SwitchModel[] = [
       ports: "?",
       power: "?",
       throughput: "?",
+  sfpSlots: "?",
       features: ["Virtual Chassis", "EVPN", "VXLAN", "SDN Ready"],
     },
     image:
@@ -121,6 +128,7 @@ export const switchesData: SwitchModel[] = [
       ports: "?",
       power: "?",
       throughput: "?",
+  sfpSlots: "?",
       features: ["400G Ready", "AI/ML Optimization", "Zero Touch", "Telemetry"],
     },
     image:
@@ -138,6 +146,7 @@ export const switchesData: SwitchModel[] = [
       ports: "?",
       power: "?",
       throughput: "?",
+  sfpSlots: "?",
       features: ["BGP EVPN", "VXLAN", "Low Latency", "Telemetry"],
     },
     image:
@@ -153,6 +162,7 @@ export const switchesData: SwitchModel[] = [
       ports: "?",
       power: "?",
       throughput: "?",
+  sfpSlots: "?",
       features: ["ECMP", "BFD", "MPLS", "Segment Routing"],
     },
     image:
@@ -170,6 +180,7 @@ export const switchesData: SwitchModel[] = [
       ports: "?",
       power: "?",
       throughput: "?",
+  sfpSlots: "?",
       features: ["Container Support", "Micro-services", "Zero Touch", "APIs"],
     },
     image:
@@ -185,6 +196,7 @@ export const switchesData: SwitchModel[] = [
       ports: "?",
       power: "?",
       throughput: "?",
+  sfpSlots: "?",
       features: ["OpenFlow", "Docker", "Kubernetes", "Multi-tenancy"],
     },
     image:

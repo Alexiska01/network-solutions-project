@@ -5,7 +5,7 @@ import SwitchCard from "@/components/SwitchCard";
 import type { SwitchModel } from "@/data/switchesData";
 import SwitchesSearch from "@/components/SwitchesSearch";
 import s from "./CatalogGrid.module.css";
-import { Building, Server, Shield, Twitch as SwitchIcon, Cloud, Layers } from "lucide-react";
+// Удалены иконки Cloud и Layers по требованию — визуальные бейджи больше не нужны.
 
 /* ===== Types ===== */
 interface GroupedSwitches {
@@ -126,10 +126,9 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
   }, []);
 
   // Ревил карточек
-  const setAccessRef = useRevealOnce<HTMLDivElement>(6);
-  const setDistribRef = useRevealOnce<HTMLDivElement>(6);
-  const setSpineRef = useRevealOnce<HTMLDivElement>(6);
-  const setLeafRef = useRevealOnce<HTMLDivElement>(6);
+  const setCorporateRef = useRevealOnce<HTMLDivElement>(6);
+  // Единый реф для дата-центра (spine + leaf вместе)
+  const setDataCenterRef = useRevealOnce<HTMLDivElement>(6);
 
   // Утилита для заголовков / секций — небольшой reveal тоже
   const sectionClass = cn(s.section, s.revealBase);
@@ -144,39 +143,22 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
       {/* Корпоративные ЛВС */}
   <section id="corporate-lan" className={cn("mb-10 sm:mb-14", isMobile && "px-1.5")}> 
         <div className={sectionClass}>
-          <div className={cn("flex flex-col gap-3 mb-4", !isMobile && "sm:flex-row sm:items-center sm:gap-4")}>
-            <div className={s.badgeBlue}>
-              <Building className="text-white" style={{ width: 18, height: 18 }} />
-            </div>
-            <div className={cn(isMobile && "text-center")}>
-              <h2 className={cn("font-bold text-gray-900", isMobile ? "text-2xl leading-tight" : "text-2xl sm:text-3xl")}>
-                Коммутаторы для корпоративных ЛВС
-              </h2>
-            </div>
-          </div>
+          <div className={cn("mb-4", isMobile ? "text-center" : "")}> 
+            <h2 className={cn(
+              "font-bold text-gray-900",
+              isMobile
+                ? "text-xl tracking-tight leading-snug whitespace-nowrap"
+                : "text-2xl sm:text-3xl"
+            )}>Коммутаторы для корпоративных ЛВС</h2>
+          </div> 
         </div>
 
-        {/* Доступ */}
-        {groupedSwitches.corporateAccess.length > 0 && (
-          <div id="access-level" className={cn("mb-10 sm:mb-12", isMobile && "px-2")}>
-            <div className={sectionClass}>
-              <div className={cn("flex items-center gap-3 mb-4 sm:mb-6", isMobile && "justify-center")}> 
-                <div className={s.badgeCyan}>
-                  <SwitchIcon className="text-white" style={{ width: 18, height: 18 }} />
-                </div>
-                <h3 className={cn("font-bold text-gray-800", isMobile ? "text-xl text-center" : "text-xl sm:text-2xl")}>
-                  Коммутаторы уровня доступа
-                </h3>
-              </div>
-            </div>
-
+        {/* Объединённая сетка: access + distribution */}
+        { (groupedSwitches.corporateAccess.length + groupedSwitches.corporateDistribution.length) > 0 && (
+          <div id="corporate-all" className={cn("mb-10 sm:mb-12", isMobile && "px-2")}> 
             <div className={cn(s.cardGroup, !isMobile && "tabletGrid", isMobile ? "tight" : "", !isMobile && "gap-y-6") }>
-              {groupedSwitches.corporateAccess.map((sw, i) => (
-                <div
-                  key={sw.id}
-                  ref={(el) => setAccessRef(el, i)}
-                  className={cn(s.cardReveal, s.cardShell)}
-                >
+              {[...groupedSwitches.corporateAccess, ...groupedSwitches.corporateDistribution].map((sw, i) => (
+                <div key={sw.id} ref={(el) => setCorporateRef(el, i)} className={cn(s.cardReveal, s.cardShell)}>
                   <div className={s.cardInner}>
                     <SwitchCard switchData={sw} />
                   </div>
@@ -185,105 +167,30 @@ const CatalogGrid = ({ searchTerm, onSearchChange, groupedSwitches }: CatalogGri
             </div>
           </div>
         )}
-
-        {/* Распределение */}
-        {groupedSwitches.corporateDistribution.length > 0 && (
-          <div id="distribution-level" className={cn(isMobile && "px-2")}> 
-            <div className={sectionClass}> 
-              <div className={cn("flex items-center gap-3 mb-4 sm:mb-6", isMobile && "justify-center")}> 
-                <div className={s.badgeIndigo}> 
-                  <Shield className="text-white" style={{ width: 18, height: 18 }} /> 
-                </div> 
-                <h3 className={cn("font-bold text-gray-800", isMobile ? "text-xl text-center" : "text-2xl")}> 
-                  Коммутаторы уровня распределения 
-                </h3> 
-              </div> 
-            </div> 
-
-            <div className={cn(s.cardGroup, !isMobile && "tabletGrid", isMobile ? "tight" : "", !isMobile && "gap-y-6") }>
-              {groupedSwitches.corporateDistribution.map((sw, i) => ( 
-                <div 
-                  key={sw.id} 
-                  ref={(el) => setDistribRef(el, i)} 
-                  className={cn(s.cardReveal, s.cardShell)} 
-                > 
-                  <div className={s.cardInner}> 
-                    <SwitchCard switchData={sw} /> 
-                  </div> 
-                </div> 
-              ))} 
-            </div> 
-          </div> 
-        )}
-      </section>
-
-      {/* ЦОД */}
-  <section id="data-center" className={cn("mb-10 sm:mb-14", isMobile && "px-1.5")}> 
-        <div className={sectionClass}>
-          <div className={cn("flex gap-4 mb-4", isMobile ? "flex-col items-center text-center" : "items-center")}>
-            <div className={s.badgePurpleXL}>
-              <Server className="text-white" style={{ width: 24, height: 24 }} />
-            </div>
-            <div>
-              <h2 className={cn("font-bold text-gray-900", isMobile ? "text-2xl" : "text-3xl")}>
-                Центры обработки данных
-              </h2>
-            </div>
-          </div>
-        </div>
-
-        {/* Spine */}
-        {groupedSwitches.dataCenterSpine.length > 0 && (
-          <div id="spine-level" className={cn("mb-10 sm:mb-12", isMobile && "px-2")}>
+        {(groupedSwitches.dataCenterSpine.length + groupedSwitches.dataCenterLeaf.length) > 0 && (
+      <div id="datacenter-all" className={cn("mb-10 sm:mb-12", isMobile && "px-2", s.groupSpacing)}>
             <div className={sectionClass}>
-              <div className={cn("flex items-center gap-3 mb-4 sm:mb-6", isMobile && "justify-center")}> 
-                <div className={s.badgePurple}>
-                  <Cloud className="text-white" style={{ width: 18, height: 18 }} />
-                </div>
-                <h3 className={cn("font-bold text-gray-800", isMobile ? "text-xl" : "text-2xl")}>Spine</h3>
-              </div>
+        <h2 className={cn(
+          "font-bold text-gray-900",
+          s.spineHeadingSpacing,
+          isMobile
+            ? "text-xl tracking-tight leading-snug whitespace-nowrap text-center"
+            : "text-2xl sm:text-3xl"
+        )}>Коммутаторы для центров обработки</h2>
             </div>
 
             <div className={cn(s.cardGroup, !isMobile && "tabletGrid", isMobile ? "tight" : "", !isMobile && "gap-y-6") }>
-              {groupedSwitches.dataCenterSpine.map((sw, i) => ( 
-                <div 
-                  key={sw.id} 
-                  ref={(el) => setSpineRef(el, i)} 
+              {[...groupedSwitches.dataCenterSpine, ...groupedSwitches.dataCenterLeaf].map((sw, i) => ( 
+                <div
+                  key={sw.id}
+                  ref={(el) => setDataCenterRef(el, i)}
                   className={cn(s.cardReveal, s.cardShell)}
-                > 
-                  <div className={s.cardInner}> 
-                    <SwitchCard switchData={sw} /> 
-                  </div> 
-                </div> 
-              ))} 
-            </div> 
-          </div>
-        )}
-
-        {/* Leaf */}
-        {groupedSwitches.dataCenterLeaf.length > 0 && (
-          <div id="leaf-level" className={cn(isMobile && "px-2")}>
-            <div className={sectionClass}>
-              <div className={cn("flex items-center gap-3 mb-4 sm:mb-6", isMobile && "justify-center")}> 
-                <div className={s.badgeEmerald}>
-                  <Layers className="text-white" style={{ width: 18, height: 18 }} />
+                >
+                  <div className={s.cardInner}>
+                    <SwitchCard switchData={sw} />
+                  </div>
                 </div>
-                <h3 className={cn("font-bold text-gray-800", isMobile ? "text-xl" : "text-2xl")}>Leaf</h3>
-              </div>
-            </div>
-
-            <div className={cn(s.cardGroup, !isMobile && "tabletGrid", isMobile ? "tight" : "", !isMobile && "gap-y-6") }>
-              {groupedSwitches.dataCenterLeaf.map((sw, i) => ( 
-                <div 
-                  key={sw.id} 
-                  ref={(el) => setLeafRef(el, i)} 
-                  className={cn(s.cardReveal, s.cardShell)} 
-                > 
-                  <div className={s.cardInner}> 
-                    <SwitchCard switchData={sw} /> 
-                  </div> 
-                </div> 
-              ))} 
+              ))}
             </div> 
           </div>
         )}

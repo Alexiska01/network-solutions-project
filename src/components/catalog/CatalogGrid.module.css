@@ -106,14 +106,28 @@
 }
 
 /* ===== Карточки: reveal по скроллу, только transform+opacity ===== */
-@keyframes cg-fade-up {
-  from {
+/* Более мягкая "пружинная" анимация появления карточек */
+@keyframes cg-spring-up {
+  0% {
     opacity: 0;
-    transform: translateY(12px) scale(0.985);
+    transform: translateY(26px) scale(0.90) translateZ(0);
+    filter: saturate(.9) brightness(.96);
   }
-  to {
+  55% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(-6px) scale(1.018) translateZ(0);
+    filter: saturate(1.03) brightness(1.01);
+  }
+  72% {
+    transform: translateY(3px) scale(0.994) translateZ(0);
+  }
+  88% {
+    transform: translateY(-1px) scale(1.004) translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) translateZ(0);
+    filter: none;
   }
 }
 
@@ -130,8 +144,11 @@
 
 /* Как только добавили класс revealed — включая анимацию */
 .cardReveal.revealed {
-  animation: cg-fade-up calc(24 * var(--frame)) cubic-bezier(0.16, 1, 0.3, 1)
-    var(--delay) both;
+  /* Используем более длинную пружинную анимацию для воздушности */
+  animation: cg-spring-up calc(34 * var(--frame)) cubic-bezier(.22,.9,.25,1) var(--delay) both;
+  /* Лёгкая оптимизация сглаживания */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ВАЖНО: чтобы класс не выкинулся как “пустой” в CSS-module */
@@ -214,24 +231,36 @@
 }
 
 /* Accent line на hover (как в FeaturesSection) */
+/* Новая линия: без растягивания (scaleX) — чистая, без пиксельных артефактов */
+/* Прогресс-бар линия (заполнение слева направо при наведении) */
+@keyframes card-progress-fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
 .cardShell::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #3b82f6, #14b8a6);
-  transform: scaleX(0);
-  transform-origin: left;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg,#3b82f6 0%,#2563eb 20%,#14b8a6 60%,#10b981 100%);
   border-radius: 0 0 14px 14px;
-  transition: transform calc(16 * var(--frame))
-    cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: opacity calc(10 * var(--frame)) ease, box-shadow calc(30 * var(--frame)) ease;
+  will-change: width, opacity;
   z-index: 2;
+  pointer-events: none;
 }
-
 .cardShell:hover::after {
-  transform: scaleX(1);
+  opacity: 1;
+  animation: card-progress-fill 0.42s linear forwards;
+  box-shadow: 0 0 6px rgba(20,184,166,0.4), 0 0 14px rgba(59,130,246,0.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cardShell::after { width: 100%; opacity: 1; animation: none !important; }
+  .cardShell:hover::after { animation: none; }
 }
 /* Отключаем hover-анимации на устройствах без аппаратного hover (мобильные / touch) */
 @media (hover: none) {
@@ -254,24 +283,33 @@
 
 /* ===== Группы карточек (адаптивная сетка) ===== */
 .cardGroup {
-  --cg-gap: 1rem;
+  --cg-gap: .85rem; /* базовый компактный отступ между карточками */
   display: flex;
   flex-direction: column;
   gap: var(--cg-gap);
 }
 @media (min-width:640px){
-  .cardGroup.tabletGrid { display:grid; grid-template-columns: 1fr; }
-}
-@media (min-width:768px){
-  .cardGroup.tabletGrid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--cg-gap); }
+  .cardGroup.tabletGrid { display:grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media (min-width:1024px){
-  .cardGroup.tabletGrid { grid-template-columns: 1fr; } /* возвращаем одиночную колонку на десктопе для читабельности */
+  .cardGroup.tabletGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media (min-width:1280px){
-  .cardGroup.tabletGrid.wide3 { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .cardGroup.tabletGrid { grid-template-columns: repeat(3,minmax(0,1fr)); }
 }
 
-/* Регулировка gap через модификаторы (можно добавлять классы) */
-.cardGroup.tight { --cg-gap: .75rem; }
-.cardGroup.loose { --cg-gap: 1.5rem; }
+/* Модификаторы плотности */
+.cardGroup.tight { --cg-gap: .65rem; }
+.cardGroup.loose { --cg-gap: 1.15rem; }
+
+/* Единый вертикальный интервал между последовательными группами карточек внутри секции */
+.groupSpacing + .groupSpacing { margin-top: 1.5rem; } /* 24px */
+@media (min-width:640px){
+  .groupSpacing + .groupSpacing { margin-top: 1.5rem; }
+}
+
+/* Специальный увеличенный (на ~10%) нижний отступ для заголовка секции ЦОД */
+.spineHeadingSpacing { margin-bottom: 1.2rem; }
+@media (min-width:640px){
+  .spineHeadingSpacing { margin-bottom: 1.82rem; }
+}
