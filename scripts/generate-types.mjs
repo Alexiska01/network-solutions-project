@@ -1,27 +1,6 @@
 import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { z } from 'zod';
 import { zodToTs } from 'zod-to-ts';
-
-// NOTE: Лучше вынести общую схему в отдельный модуль и импортировать.
-const leadSchema = z.object({
-  name: z.string().min(1).max(200),
-  email: z.string().email().max(320),
-  phone: z.string().max(40).optional(),
-  role: z.string().optional(),
-  interest: z.string().optional(),
-  budget: z.string().optional(),
-  timeline: z.string().optional(),
-  subject: z.string().optional(),
-  message: z.string().min(1).max(5000),
-  consent: z.boolean().optional(),
-  utm_source: z.string().optional(),
-  utm_medium: z.string().optional(),
-  utm_campaign: z.string().optional(),
-  utm_content: z.string().optional(),
-  utm_term: z.string().optional(),
-  referrer: z.string().optional(),
-  website: z.string().optional()
-});
+import { leadSchema } from '../server/schema.js';
 
 const { node } = zodToTs(leadSchema, 'LeadInput');
 const outDir = 'src/types';
