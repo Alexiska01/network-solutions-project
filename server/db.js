@@ -2,10 +2,12 @@ import Database from 'better-sqlite3';
 import path from 'node:path';
 import fs from 'node:fs';
 
-const DB_DIR = path.resolve(process.cwd(), 'data');
-const DB_FILE = path.join(DB_DIR, 'leads.sqlite');
-
-if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
+// Позволяем переопределить путь к файлу БД через переменную окружения (для тестов можно :memory:)
+const DB_FILE = process.env.DB_FILE || (() => {
+  const dir = path.resolve(process.cwd(), 'data');
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  return path.join(dir, 'leads.sqlite');
+})();
 
 export const db = new Database(DB_FILE);
 
@@ -46,4 +48,8 @@ export function insertLead(lead) {
 
 export function getAllLeads() {
   return db.prepare('SELECT * FROM contact_leads ORDER BY id DESC').all();
+}
+
+export function deleteLeadByEmailOrId(email, id) {
+  return db.prepare('DELETE FROM contact_leads WHERE email = ? OR id = ?').run(email, id);
 }

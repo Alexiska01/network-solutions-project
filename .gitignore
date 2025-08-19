@@ -28,3 +28,7 @@ builds
 .env
 data/
 *.sqlite
+\n# Lead export artifacts & temp cleanup scripts
+leads*.csv
+scripts/delete-leads*.js
+scripts/delete-output*.txt
