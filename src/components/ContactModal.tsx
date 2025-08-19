@@ -208,45 +208,23 @@ export const ContactModal = ({ open, onClose }: ContactModalProps) => {
                     <input name="email" type="email" value={form.email} onChange={onChange} required className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base placeholder-gray-400 px-3 py-2.5" placeholder="you@example.com" />
                   </div>
                 </div>
-                <div className="grid sm:grid-cols-3 gap-5">
+                <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
                     <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Телефон</label>
                     <input name="phone" value={form.phone} onChange={onPhoneInput} inputMode="tel" className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base placeholder-gray-400 px-3 py-2.5" placeholder="+7 (___) ___-__-__" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Роль</label>
-                    <select name="role" value={form.role} onChange={onChange} className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base px-3 py-2.5">
-                      <option value="">—</option>
-                      <option>Инженер</option>
-                      <option>Руководитель IT</option>
-                      <option>Закупки</option>
-                      <option>Интегратор</option>
-                      <option>Другое</option>
-                    </select>
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Интерес</label>
                     <select name="interest" value={form.interest} onChange={onChange} className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base px-3 py-2.5">
                       <option value="">—</option>
                       <option>Закупка оборудования</option>
-                      
                       <option>Техподдержка</option>
                       <option>Партнерство</option>
                       <option>Консультация</option>
                     </select>
                   </div>
                 </div>
-                <div className="grid sm:grid-cols-3 gap-5">
-                  <div className="space-y-1.5">
-                    <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Бюджет</label>
-                    <select name="budget" value={form.budget} onChange={onChange} className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base px-3 py-2.5">
-                      <option value="">Не знаю</option>
-                      <option>до 1 млн ₽</option>
-                      <option>1–5 млн ₽</option>
-                      <option>5–10 млн ₽</option>
-                      <option>10+ млн ₽</option>
-                    </select>
-                  </div>
+                <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
                     <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Срок</label>
                     <select name="timeline" value={form.timeline} onChange={onChange} className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base px-3 py-2.5">
