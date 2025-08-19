@@ -1,0 +1,4 @@
+#!/bin/sh
+# Lightweight pre-commit hook that runs the project's pre-commit-check.cjs
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+node "$SCRIPT_DIR/../scripts/pre-commit-check.cjs"
