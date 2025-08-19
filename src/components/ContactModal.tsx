@@ -40,11 +40,8 @@ interface FormState {
   role: string;
   interest: string;
   budget: string;
-  timeline: string;
-  subject: string;
   message: string;
   consent: boolean;
-  fastTopic?: string;
 }
 
 const initialState: FormState = {
@@ -54,19 +51,13 @@ const initialState: FormState = {
   role: '',
   interest: '',
   budget: '',
-  timeline: '',
-  subject: '',
   message: '',
   consent: false,
 };
 
 const MAX_MESSAGE = 1200;
 
-const fastTopics = [
-  'Коммерческое предложение',
-  'Партнерство',
-  'Техническая консультация',
-];
+// fastTopics removed — subject field is not used
 
 export const ContactModal = ({ open, onClose }: ContactModalProps) => {
   const dialogRef = useRef<HTMLDivElement | null>(null);
@@ -98,9 +89,7 @@ export const ContactModal = ({ open, onClose }: ContactModalProps) => {
     setForm(f => ({ ...f, [name]: value }));
   };
 
-  const setFastTopic = (topic: string) => {
-    setForm(f => ({ ...f, subject: topic }));
-  };
+  // fast topic setter removed
 
   const formatPhone = (raw: string) => {
     // Simple +7 (XXX) XXX-XX-XX formatting
@@ -192,12 +181,7 @@ export const ContactModal = ({ open, onClose }: ContactModalProps) => {
             </div>
             {!submitted && (
               <form onSubmit={onSubmit} noValidate className="space-y-7" data-form="contact-modal">
-                {/* Fast topics */}
-                <div className="flex flex-wrap gap-2 -mt-2" aria-label="Быстрый выбор темы">
-                  {fastTopics.map(t => (
-                    <button type="button" key={t} onClick={() => setFastTopic(t)} className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${form.subject === t ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'border-gray-300 hover:border-blue-400 text-gray-600 bg-white/60 dark:bg-neutral-800/60'}`}>{t}</button>
-                  ))}
-                </div>
+                {/* Fast topics removed */}
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
                     <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Имя *</label>
@@ -224,22 +208,7 @@ export const ContactModal = ({ open, onClose }: ContactModalProps) => {
                     </select>
                   </div>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div className="space-y-1.5">
-                    <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Срок</label>
-                    <select name="timeline" value={form.timeline} onChange={onChange} className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base px-3 py-2.5">
-                      <option value="">—</option>
-                      <option>В течение месяца</option>
-                      <option>1–3 месяца</option>
-                      <option>3–6 месяцев</option>
-                      <option>6+ месяцев</option>
-                    </select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Тема</label>
-                    <input name="subject" value={form.subject} onChange={onChange} className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base placeholder-gray-400 px-3 py-2.5" placeholder="Кратко о запросе" />
-                  </div>
-                </div>
+                {/* Timeline and Subject removed by request */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
                     <label className="text-[0.95rem] sm:text-base font-medium text-gray-800 dark:text-gray-200">Сообщение *</label>
