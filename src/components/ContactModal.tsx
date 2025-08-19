@@ -64,7 +64,6 @@ const MAX_MESSAGE = 1200;
 
 const fastTopics = [
   'Коммерческое предложение',
-  'Пилот / тестирование',
   'Партнерство',
   'Техническая консультация',
 ];
@@ -230,7 +229,7 @@ export const ContactModal = ({ open, onClose }: ContactModalProps) => {
                     <select name="interest" value={form.interest} onChange={onChange} className="w-full rounded-md border-gray-300 dark:border-white/15 dark:bg-neutral-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 text-base px-3 py-2.5">
                       <option value="">—</option>
                       <option>Закупка оборудования</option>
-                      <option>Пилот / тест</option>
+                      
                       <option>Техподдержка</option>
                       <option>Партнерство</option>
                       <option>Консультация</option>
