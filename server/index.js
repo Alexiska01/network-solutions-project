@@ -27,7 +27,9 @@ app.get('/api/health', (req,res)=>res.json({ ok: true }));
 // CSV export (simple token auth): set EXPORT_TOKEN in env
 app.get('/api/admin/export', (req,res) => {
   const token = process.env.EXPORT_TOKEN;
-  if (!token || req.headers['authorization'] !== `Bearer ${token}`) {
+  const authHeader = req.headers['authorization'] || '';
+  const incomingToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
+  if (!token || incomingToken !== token) {
     return res.status(401).json({ ok:false, error:'Unauthorized' });
   }
   const rows = getAllLeads();
