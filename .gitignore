@@ -26,9 +26,5 @@ builds
 
 # Env & secrets
 .env
-.env.local
-.env.*.local
-
-# SQLite data
 data/
 *.sqlite
