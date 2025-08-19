@@ -30,14 +30,14 @@ navigator.serviceWorker.controller?.postMessage('trim-model-cache')
 | GET  | `/api/ready` | Readiness (DB check) |
 | GET  | `/metrics` | Prometheus metrics (default + `app_leads_total`) |
 
-### Lead Payload (simplified)
+### Lead Payload (current minimal UI)
 ```
 {
 	name: string,
 	email: string,
 	message: string,
-	phone?: string, role?: string, interest?: string,
-	budget?: string, timeline?: string, subject?: string,
+	phone?: string,
+	interest?: string,
 	consent?: boolean,
 	utm_source?: string, utm_medium?: string, utm_campaign?: string,
 	utm_content?: string, utm_term?: string,
@@ -45,6 +45,7 @@ navigator.serviceWorker.controller?.postMessage('trim-model-cache')
 	website?: string // honeypot: must stay empty
 }
 ```
+Removed legacy fields (role, budget, timeline, subject) from UI; backend still accepts them temporarily for backward compatibility.
 
 ### Validation
 Central Zod schema at `server/schema.js`. Types generated to `src/types/lead-input.d.ts` via `npm run types:gen`.
@@ -53,7 +54,6 @@ Central Zod schema at `server/schema.js`. Types generated to `src/types/lead-inp
 * `helmet` base headers (+ CSP configurable)  
 * Rate limiting: contact (20 / 10m IP), export (30 / 15m)  
 * Honeypot field `website` returns `{ ok:true, spam:true }` silently  
-* Token auth for export endpoint (`EXPORT_TOKEN`)  
 * Redacted logs (email, phone, auth header) with `pino`  
 * No secrets committed (.env ignored)
 
@@ -71,10 +71,12 @@ Add scrape job (Prometheus):
 | ---- | ------- |
 | `PORT` | API port (default 3001) |
 | `DB_FILE` | SQLite path (use `:memory:` for tests) |
-| `EXPORT_TOKEN` | Bearer token for CSV export |
-| `TELEGRAM_BOT_TOKEN` | Bot token (optional) |
-| `TELEGRAM_CHAT_ID` | Chat / channel id (optional) |
+| `EXPORT_SECRET_PLACEHOLDER` | Bearer token for CSV export (пример: your_token_here) |
+| `TG_BOT_TOKEN_PLACEHOLDER` | Bot token (optional, пример: your_token_here) |
+| `TG_CHAT_ID_PLACEHOLDER` | Chat / channel id (optional, пример: your_chat_id_here) |
 | `TELEGRAM_DISABLE` | Set `1` to skip Telegram send |
+| `TELEGRAM_MARKDOWN` | Set `1` to enable MarkdownV2 formatting |
+| `TELEGRAM_FORCE_PLAIN` | Set `1` to force plain text (overrides MARKDOWN) |
 | `LOG_LEVEL` | pino log level (info, debug, warn…) |
 
 ### Development Scripts
@@ -91,7 +93,7 @@ Add scrape job (Prometheus):
 Vitest integration tests use `DB_FILE=:memory:`.
 
 ### Export CSV
-`GET /api/admin/export` with header `Authorization: Bearer <EXPORT_TOKEN>`.
+`GET /api/admin/export` with header `Authorization: Bearer <your_token_here>`.
 
 ## Roadmap / Next Steps
 * Optional: Redis + BullMQ queue for Telegram (retry + buffering)

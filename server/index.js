@@ -55,7 +55,8 @@ export function createServer() {
   });
 
   app.get('/api/admin/export', exportLimiter, (req,res) => {
-    const token = process.env.EXPORT_TOKEN;
+  // Значение берётся из переменной окружения, не храните секреты в коде! (EXPORT_SECRET_PLACEHOLDER)
+  const token = process.env.EXPORT_SECRET;
     const authHeader = req.headers['authorization'] || '';
     const incomingToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
     if (!token || incomingToken !== token) {
@@ -71,10 +72,12 @@ export function createServer() {
 
   app.post('/api/contact', contactLimiter, async (req, res) => {
     try {
-      const raw = req.body || {};
+  const raw = req.body || {};
+  console.log('[debug] incoming body:', JSON.stringify(raw));
       if (raw.website) return res.json({ ok: true, spam: true }); // honeypot
       const parsed = leadSchema.safeParse(raw);
-      if (!parsed.success) {
+  console.log('[debug] validation result:', parsed);
+  if (!parsed.success) {
         return res.status(400).json({ ok:false, error:'Validation failed', issues: parsed.error.issues.map(i=>({ path:i.path.join('.'), message:i.message })) });
       }
       const data = parsed.data;
@@ -82,15 +85,15 @@ export function createServer() {
         name: data.name.trim(),
         email: data.email.trim(),
         phone: data.phone?.trim() || '',
-        role: data.role || '',
+        role: '',
         interest: data.interest || '',
-        budget: data.budget || '',
-        timeline: data.timeline || '',
-        subject: data.subject || '',
+        budget: '',
+        timeline: '',
+        subject: '',
         message: data.message.trim(),
         consent: data.consent ? 1 : 0,
-        ip: req.headers['x-forwarded-for']?.toString().split(',')[0].trim() || req.socket.remoteAddress || '',
-        user_agent: req.headers['user-agent'] || '',
+        ip: '',
+        user_agent: '',
         utm_source: data.utm_source || '',
         utm_medium: data.utm_medium || '',
         utm_campaign: data.utm_campaign || '',
@@ -98,16 +101,40 @@ export function createServer() {
         utm_term: data.utm_term || '',
         referrer: data.referrer || ''
       };
-  const inserted = insertLead(lead);
-  leadCounter.inc();
+  let inserted;
+  try {
+    console.log('[debug] lead to insert:', JSON.stringify(lead));
+    inserted = insertLead(lead);
+    console.log('[debug] insertLead result:', inserted);
+    leadCounter.inc();
+  } catch (e) {
+    const msg = '[insertLead error] ' + (e && e.stack || e);
+    console.error(msg);
+    try { require('fs').appendFileSync('insertLead-error.log', msg + '\n'); } catch {}
+    res.status(500).json({ ok: false, error: 'DB error', details: String(e && e.message || e) });
+    return;
+  }
       if (process.env.TELEGRAM_DISABLE !== '1') {
-        try { await sendTelegramLead({ ...lead, ...inserted }); } catch (err) { console.error('[telegram]', err.message); }
+        try {
+          // debug вывод укороченного сообщения (только часть) для диагностики markdown проблем
+          console.log('[telegram] preparing send. msg snippet:', lead.message.slice(0,80));
+          // Передаем только нужные поля (без ip и user_agent)
+          const { ip, user_agent, ...leadForTelegram } = { ...lead, ...inserted };
+          await sendTelegramLead(leadForTelegram);
+        } catch (err) { console.error('[telegram]', err.message); }
       }
       res.json({ ok: true, id: inserted.id });
     } catch (err) {
       console.error('[contact] unexpected', err);
       res.status(500).json({ ok:false, error:'Server error' });
     }
+  });
+
+  // Глобальный обработчик ошибок Express
+  // (добавлять после всех app.use/app.post)
+  app.use((err, req, res, next) => {
+    console.error('[global error handler]', err && err.stack || err);
+    res.status(500).json({ ok: false, error: 'Server error', details: String(err && err.message || err) });
   });
 
   return app;
