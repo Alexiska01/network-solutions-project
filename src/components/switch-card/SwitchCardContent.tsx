@@ -1,11 +1,9 @@
-import { motion } from "framer-motion";
 import SwitchCardImage from "./SwitchCardImage";
 import SwitchCardSpecs from "./SwitchCardSpecs";
 import { SwitchModel } from "@/data/switchesData";
 
 interface SwitchCardContentProps {
   switchData: SwitchModel;
-  isHovered: boolean;
   specs: Array<{
     icon: string;
     label: string;
@@ -13,29 +11,20 @@ interface SwitchCardContentProps {
   }>;
 }
 
-const SwitchCardContent = ({ 
-  switchData, 
-  isHovered, 
-  specs
-}: SwitchCardContentProps) => {
+const SwitchCardContent = ({ switchData, specs }: SwitchCardContentProps) => {
   return (
     <div className="flex h-full w-full">
       {/* Image Section (адаптивная ширина внутри SwitchCardImage) */}
       <SwitchCardImage
         src={switchData.image}
         alt={switchData.title}
-        isHovered={isHovered}
         isDesktop={true}
       />
       {/* Content Section */}
       <div className="flex-1 px-6 py-5 xl:py-6 flex flex-col justify-center">
-        <motion.h3
-          className="text-[1.2rem] md:text-[1.38rem] lg:text-[1.54rem] font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300 leading-snug tracking-tight"
-          animate={{ x: isHovered ? 4 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
+        <h3 className="text-[1.18rem] md:text-[1.34rem] lg:text-[1.48rem] font-semibold text-gray-900 mb-4 leading-snug tracking-tight transition-all duration-500 ease-out group-hover:text-blue-600 group-hover:translate-x-[3px] motion-reduce:transition-none">
           {switchData.title}
-        </motion.h3>
+        </h3>
         <SwitchCardSpecs specs={specs} className="scale-font-up" />
       </div>
     </div>

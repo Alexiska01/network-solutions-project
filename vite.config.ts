@@ -33,6 +33,18 @@ export default defineConfig(({ mode }) => {
   return {
     plugins,
     resolve: { alias: { '@': path.resolve(__dirname, './src') } },
-    server: { host: '0.0.0.0', port: 5173, allowedHosts: true, hmr: { overlay: false } }
+    server: {
+      host: '0.0.0.0',
+      port: 5173,
+      allowedHosts: true,
+      hmr: { overlay: false },
+      proxy: {
+        '/api': {
+          target: 'http://localhost:' + (process.env.API_PORT || '3001'),
+          changeOrigin: true,
+          timeout: 10000
+        }
+      }
+    }
   };
 });

@@ -1,23 +1,20 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 
 interface SwitchCardImageProps {
   src: string;
   alt: string;
-  isHovered: boolean;
   isMobile?: boolean;
   isDesktop?: boolean;
   className?: string;
 }
 
-const SwitchCardImage = ({ 
-  src, 
-  alt, 
-  isHovered, 
-  isMobile = false, 
+const SwitchCardImage = ({
+  src,
+  alt,
+  isMobile = false,
   isDesktop = false,
-  className = ""
+  className = "",
 }: SwitchCardImageProps) => {
   const [imgErrored, setImgErrored] = useState(false);
 
@@ -27,12 +24,10 @@ const SwitchCardImage = ({
         <div className="h-full bg-gradient-to-br from-gray-50 to-gray-100 rounded-l-2xl overflow-hidden relative flex items-center justify-center">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.03)_25%,rgba(59,130,246,0.03)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.03)_75%)] bg-[length:30px_30px]" />
           
-          <motion.img
+          <img
             src={src}
             alt={alt}
-            className="relative z-10 w-full h-full object-contain p-6"
-            animate={{ scale: isHovered ? 1.05 : 1 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="relative z-10 w-full h-full object-contain p-6 transition-transform duration-500 ease-out group-hover:scale-[1.05]"
             onError={() => setImgErrored(true)}
           />
 
@@ -60,12 +55,10 @@ const SwitchCardImage = ({
       <div className="aspect-[4/3] mb-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden relative shadow-sm">
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.03)_25%,rgba(59,130,246,0.03)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.03)_75%)] bg-[length:20px_20px]" />
 
-        <motion.img
+        <img
           src={src}
           alt={alt}
-          className="relative z-10 w-full h-full object-contain p-6"
-          animate={{ scale: isHovered ? 1.03 : 1 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="relative z-10 w-full h-full object-contain p-6 transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           onError={() => setImgErrored(true)}
         />
 
@@ -92,15 +85,10 @@ const SwitchCardImage = ({
     <div className={`aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center relative overflow-hidden p-4 ${className}`}>
       <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.05)_25%,rgba(59,130,246,0.05)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.05)_75%)] bg-[length:20px_20px]" />
 
-      <motion.img
+      <img
         src={src}
         alt={alt}
-  className="relative z-10 w-full h-full object-contain drop-shadow-lg"
-        animate={{
-          scale: isHovered ? 1.1 : 1,
-          rotateY: isHovered ? 15 : 0,
-        }}
-        transition={{ duration: 0.3 }}
+        className="relative z-10 w-full h-full object-contain drop-shadow-lg transition-transform duration-500 ease-out group-hover:scale-[1.08] group-hover:rotate-[1deg]"
         onError={() => setImgErrored(true)}
       />
 

@@ -30,7 +30,7 @@ export const switchesData: SwitchModel[] = [
       features: ["VLAN", "QoS", "ACL", "SNMP"],
     },
     image:
-      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
+      "/img/3530.png",
     link: "/products/switches/ids3530",
   },
   {
