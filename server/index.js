@@ -55,8 +55,8 @@ export function createServer() {
   });
 
   app.get('/api/admin/export', exportLimiter, (req,res) => {
-  // Значение берётся из переменной окружения, не храните секреты в коде! (EXPORT_SECRET_PLACEHOLDER)
-  const token = process.env.EXPORT_SECRET;
+  // Значение берётся из переменной окружения, не храните секреты в коде! (EXPORT_SECRET)
+  const token = process.env.EXPORT_TOKEN;
     const authHeader = req.headers['authorization'] || '';
     const incomingToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
     if (!token || incomingToken !== token) {

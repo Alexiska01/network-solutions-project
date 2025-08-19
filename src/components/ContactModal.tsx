@@ -239,12 +239,9 @@ export const ContactModal = ({ open, onClose }: ContactModalProps) => {
                 <div className="mx-auto h-14 w-14 rounded-full bg-gradient-to-br from-blue-600 to-indigo-500 flex items-center justify-center text-white text-2xl shadow-lg">✓</div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Заявка отправлена</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto">Мы получили ваше сообщение и свяжемся с вами в ближайшее рабочее время. Письмо‑подтверждение придёт на указанный email.</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto">Мы получили ваше сообщение и свяжемся с вами в ближайшее рабочее время.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <button onClick={close} className="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 active:bg-blue-600 text-white text-sm font-medium shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Закрыть</button>
-                  <button onClick={() => { setSubmitted(false); }} className="px-5 py-2.5 rounded-lg border border-gray-300 dark:border-white/15 text-gray-700 dark:text-gray-200 bg-white/70 dark:bg-neutral-800/60 hover:bg-gray-50 dark:hover:bg-neutral-800 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Отправить ещё</button>
-                </div>
+                {/* Кнопки убраны по запросу */}
               </div>
             )}
           </div>

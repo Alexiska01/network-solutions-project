@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, lazy, Suspense, useState } from "react";
+import GlobalContactModal from "@/components/GlobalContactModal";
 import Index from "./pages/Index";
 import ProductHero from "./components/home/ProductHero";
 import WelcomeScreen from "./components/WelcomeScreen";
@@ -32,7 +33,7 @@ const ModelIDS3730_24P_6X = lazy(() => import("./pages/ModelIDS3730_24P_6X"));
 const Partners = lazy(() => import("./pages/Partners"));
 // const ProductHero = lazy(() => import("./pages/ProductHero")); // Заменён на прямой импорт
 const NotFound = lazy(() => import("./pages/NotFound"));
-const ContactsPage = lazy(() => import("./pages/Contacts"));
+// const ContactsPage = lazy(() => import("./pages/Contacts"));
 const AccessSwitchesPage = lazy(() => import("./components/dostup/AccessSwitchesPage"));
 const WarrantyPage = lazy(() => import("./components/warranty/WarrantyPage"));
 
@@ -339,7 +340,7 @@ const App = () => {
                 element={<ModelIDS3730_24P_6X />}
               />
               <Route path="/product-hero" element={<ProductHero />} />
-              <Route path="/contacts" element={<ContactsPage />} />
+              {/* <Route path="/contacts" element={<ContactsPage />} /> */}
               <Route path="/products/switches/access" element={<AccessSwitchesPage />} />
               <Route path="/warranty" element={<WarrantyPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -348,6 +349,7 @@ const App = () => {
             </Routes>
           </Suspense>
         </BrowserRouter>
+        <GlobalContactModal />
       </TooltipProvider>
     </QueryClientProvider>
   );

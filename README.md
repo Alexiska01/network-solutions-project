@@ -71,9 +71,9 @@ Add scrape job (Prometheus):
 | ---- | ------- |
 | `PORT` | API port (default 3001) |
 | `DB_FILE` | SQLite path (use `:memory:` for tests) |
-| `EXPORT_SECRET_PLACEHOLDER` | Bearer token for CSV export (пример: your_token_here) |
-| `TG_BOT_TOKEN_PLACEHOLDER` | Bot token (optional, пример: your_token_here) |
-| `TG_CHAT_ID_PLACEHOLDER` | Chat / channel id (optional, пример: your_chat_id_here) |
+| `EXPORT_SECRET` | Bearer token for CSV export (пример: your_token_here) |
+| `TG_BOT_TOKEN` | Bot token (optional, пример: your_token_here) |
+| `TG_CHAT_ID` | Chat / channel id (optional, пример: your_chat_id_here) |
 | `TELEGRAM_DISABLE` | Set `1` to skip Telegram send |
 | `TELEGRAM_MARKDOWN` | Set `1` to enable MarkdownV2 formatting |
 | `TELEGRAM_FORCE_PLAIN` | Set `1` to force plain text (overrides MARKDOWN) |

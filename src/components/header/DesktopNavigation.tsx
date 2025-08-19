@@ -63,21 +63,43 @@ const DesktopNavigation = memo(
                   <span className="truncate desktop-nav-text-gpu">{item.name}</span>
                 </div>
               ) : (
-                <Link
-                  to={item.path}
-                  className="text-gray-700 px-3 py-2 text-sm font-normal whitespace-nowrap flex items-center space-x-2 h-[44px] lg:h-[54px] desktop-nav-link-gpu"
-                  onClick={handleNavItemClick}
-                  tabIndex={0}
-                >
-                  {item.icon && (
-                    <Icon
-                      name={item.icon as keyof typeof import('lucide-react')}
-                      size={16}
-                      className="desktop-nav-icon-gpu"
-                    />
-                  )}
-                  <span className="truncate desktop-nav-text-gpu">{item.name}</span>
-                </Link>
+                item.path === "/contacts" ? (
+                  <button
+                    type="button"
+                    className="text-gray-700 px-3 py-2 text-sm font-normal whitespace-nowrap flex items-center space-x-2 h-[44px] lg:h-[54px] desktop-nav-link-gpu bg-transparent border-0 cursor-pointer"
+                    onClick={e => {
+                      e.preventDefault();
+                      window.openContactModal && window.openContactModal();
+                      closeAllSubmenus();
+                    }}
+                    tabIndex={0}
+                  >
+                    {item.icon && (
+                      <Icon
+                        name={item.icon as keyof typeof import('lucide-react')}
+                        size={16}
+                        className="desktop-nav-icon-gpu"
+                      />
+                    )}
+                    <span className="truncate desktop-nav-text-gpu">{item.name}</span>
+                  </button>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className="text-gray-700 px-3 py-2 text-sm font-normal whitespace-nowrap flex items-center space-x-2 h-[44px] lg:h-[54px] desktop-nav-link-gpu"
+                    onClick={handleNavItemClick}
+                    tabIndex={0}
+                  >
+                    {item.icon && (
+                      <Icon
+                        name={item.icon as keyof typeof import('lucide-react')}
+                        size={16}
+                        className="desktop-nav-icon-gpu"
+                      />
+                    )}
+                    <span className="truncate desktop-nav-text-gpu">{item.name}</span>
+                  </Link>
+                )
               )
             )}
           </div>
