@@ -47,7 +47,7 @@ export const switchesData: SwitchModel[] = [
       features: ["Advanced QoS", "Layer 3", "IPv6", "Security"],
     },
     image:
-      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
+      "/img/3730.png",
     link: "/products/switches/ids3730",
   },
   {
@@ -64,7 +64,7 @@ export const switchesData: SwitchModel[] = [
       features: ["802.1X", "NAC", "Advanced Security", "Stacking"],
     },
     image:
-      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
+      "/img/4530.png",
     link: "/products/switches/ids4530",
   },
   {
@@ -73,14 +73,14 @@ export const switchesData: SwitchModel[] = [
     description: "Компактные коммутаторы доступа для малых и средних сетей",
     category: "access",
     specs: {
-      ports: "?",
-      power: "?",
+      ports: "24 mGig (100M/1G/2.5G/5G/10G)",
+      power: "UPOE+ — до 90 Вт на порт, 1440 Вт",
       throughput: "560 - 640 Гбит/с",
-  sfpSlots: "2 SFP+",
+  sfpSlots: "4 × 10G SFP+",
       features: ["Web UI", "Basic L3", "Energy Saving", "Fanless"],
     },
     image:
-      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
+      "/img/6012.png",
     link: "/products/switches/ids6012",
   },
 
@@ -99,7 +99,7 @@ export const switchesData: SwitchModel[] = [
       features: ["Модульность", "Hot Swap", "MLAG", "VSU"],
     },
     image:
-      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
+      "/img/6010.png",
     link: "/products/switches/ids6010",
   },
   {
