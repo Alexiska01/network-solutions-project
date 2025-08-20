@@ -3,9 +3,6 @@ import Icon from "@/components/ui/icon";
 import { useNavigate, Link } from "react-router-dom";
 import { useModelViewer } from "@/hooks/useModelViewer";
 import Professional3DViewer from "@/components/Professional3DViewer";
-import SpecTable from "@/components/SpecTable";
-import FeatureCard from "@/components/FeatureCard";
-import DetailedSpecCard from "@/components/DetailedSpecCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -82,16 +79,11 @@ const ModelIDS3530_48P_6XComponent = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-20">
           {/* Enhanced title section - Mobile Optimized */}
           <div className="text-center mb-8 md:mb-12 lg:mb-16">
-            <div className="inline-flex items-center px-3 md:px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-4 md:mb-6">
-              <Icon name="Cpu" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#00B5AD]" />
-              <span className="text-xs md:text-sm font-medium text-white/80">Промышленный коммутатор L3</span>
-            </div>
+            {/* Бейдж удалён */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent leading-tight">
               {ids353048p6xData.title}
             </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light max-w-3xl mx-auto px-4 sm:px-0">
-              Управляемый коммутатор уровня L3 с PoE+ и максимальной производительностью
-            </p>
+            {/* Подзаголовок удалён */}
           </div>
 
           {/* Mobile-First Layout */}
@@ -103,6 +95,7 @@ const ModelIDS3530_48P_6XComponent = () => {
                 modelPath={ids353048p6xData.modelPath}
                 indicatorsOn={indicatorsOn}
                 onToggleIndicators={toggleIndicators}
+                modelLoaded={modelLoaded}
               />
             </div>
 
@@ -125,43 +118,27 @@ const ModelIDS3530_48P_6XComponent = () => {
 
               {/* Key Features Cards - Mobile Optimized */}
               <div className="mt-4 md:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                {/* Можно кастомизировать содержимое карточек, если нужно */}
                 <div className="bg-gradient-to-br from-[#00B5AD]/20 to-[#0065B3]/20 backdrop-blur-sm rounded-xl border border-[#00B5AD]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
                     <Icon name="Zap" className="h-4 w-4 md:h-5 md:w-5 text-[#00B5AD] mr-2" />
-                    <span className="text-sm font-semibold text-white">PoE+</span>
+                    <span className="text-sm font-semibold text-white">PoE+ 760W</span>
                   </div>
-                  <p className="text-xs text-white/80">760W мощности для питания устройств</p>
+                  <p className="text-xs text-white/80">Надёжное питание для устройств</p>
                 </div>
                 <div className="bg-gradient-to-br from-[#0065B3]/20 to-[#1A2980]/20 backdrop-blur-sm rounded-xl border border-[#0065B3]/20 p-3 md:p-4">
                   <div className="flex items-center mb-2">
                     <Icon name="Network" className="h-4 w-4 md:h-5 md:w-5 text-[#0065B3] mr-2" />
-                    <span className="text-sm font-semibold text-white">L3</span>
+                    <span className="text-sm font-semibold text-white">10G SFP+</span>
                   </div>
-                  <p className="text-xs text-white/80">Полная поддержка маршрутизации</p>
+                  <p className="text-xs text-white/80">6 высокоскоростных портов</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Enhanced Action Buttons - Mobile Optimized */}
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-8 md:mt-12 justify-center px-4 sm:px-0">
-            <Button
-              size="lg"
-              className="w-full sm:w-auto bg-white text-[#1A2980] hover:bg-gray-50 active:bg-gray-100 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
-            >
-              <Icon name="FileText" className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
-              <span className="text-sm md:text-base">Документация</span>
-            </Button>
-            <Button
-              onClick={() => navigate("/partners")}
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] active:bg-white/90 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              <Icon name="ShoppingCart" className="h-5 w-5 mr-2" />
-              <span className="text-sm md:text-base">Запросить цену</span>
-            </Button>
-          </div>
+          {/* Кнопки удалены */}
         </div>
       </section>
 
@@ -201,7 +178,7 @@ const ModelIDS3530_48P_6XComponent = () => {
                   <div className="flex items-center mb-3 md:mb-6">
                     <div className="w-6 h-6 md:w-12 md:h-12 bg-gradient-to-br from-[#0065B3] to-[#00B5AD] rounded-lg md:rounded-xl flex items-center justify-center mr-2 md:mr-4 group-hover:scale-110 transition-transform duration-300">
                       <Icon 
-                        name={specGroup.icon} 
+                        name={specGroup.icon as keyof typeof import("lucide-react")}
                         className="h-3 w-3 md:h-6 md:w-6 text-white" 
                       />
                     </div>
