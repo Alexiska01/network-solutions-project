@@ -116,7 +116,7 @@ export const switchesData: SwitchModel[] = [
       features: ["Virtual Chassis", "EVPN", "VXLAN", "SDN Ready"],
     },
     image:
-      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
+      "/img/6030.png",
     link: "/products/switches/ids6030",
   },
   {
