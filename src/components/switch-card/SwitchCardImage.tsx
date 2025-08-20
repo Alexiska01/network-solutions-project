@@ -21,8 +21,7 @@ const SwitchCardImage = ({
   if (isDesktop) {
     return (
   <div className="relative flex-shrink-0 w-[51%] md:w-[49%] lg:w-[47%] xl:w-[46%] 2xl:w-[45%]">
-        <div className="h-full bg-gradient-to-br from-gray-50 to-gray-100 rounded-l-2xl overflow-hidden relative flex items-center justify-center">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.03)_25%,rgba(59,130,246,0.03)_50%,transparent_50%,transparent_75%,rgba(59,130,246,0.03)_75%)] bg-[length:30px_30px]" />
+  <div className="h-full bg-gradient-to-br from-gray-50 to-gray-100 rounded-l-2xl overflow-hidden relative flex items-center justify-center">
           
           <img
             src={src}

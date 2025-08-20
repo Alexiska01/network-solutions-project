@@ -177,14 +177,14 @@ export const switchesData: SwitchModel[] = [
     description: "Leaf-коммутаторы с высокой плотностью 100G портов",
     category: "leaf",
     specs: {
-      ports: "?",
-      power: "?",
+      ports: "32 слота 40G/100G QSFP/QSFP28",
+      power: "≤318 Вт",
       throughput: "?",
   sfpSlots: "?",
       features: ["Container Support", "Micro-services", "Zero Touch", "APIs"],
     },
     image:
-      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
+      "/img/6150.png",
     link: "/products/switches/ids6150",
   },
   {
@@ -200,7 +200,7 @@ export const switchesData: SwitchModel[] = [
       features: ["OpenFlow", "Docker", "Kubernetes", "Multi-tenancy"],
     },
     image:
-      "/img/13ff7ec9-5051-43db-a9ef-5676578906d5.jpg",
+      "/img/6130.png",
     link: "/products/switches/ids6130",
   },
 ];
