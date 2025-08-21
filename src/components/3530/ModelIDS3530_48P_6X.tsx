@@ -33,12 +33,6 @@ const ModelIDS3530_48P_6XComponent = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  {/* Продукты удалено */}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
                   <Link to="/switches">Коммутаторы</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -153,16 +147,9 @@ const ModelIDS3530_48P_6XComponent = () => {
         
         <div className="relative max-w-7xl mx-auto">
           <div className="text-center mb-8 md:mb-16">
-            <div className="inline-flex items-center px-3 md:px-4 py-2 bg-cyan-100 rounded-full mb-4 md:mb-6">
-              <Icon name="Database" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#0065B3]" />
-              <span className="text-xs md:text-sm font-semibold text-[#1A2980]">Полная спецификация</span>
-            </div>
             <h2 className="text-xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 md:mb-6">
               Технические характеристики
             </h2>
-            <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto px-4">
-              Детальная информация обо всех параметрах и возможностях коммутатора IDS3530-48P-6X
-            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">

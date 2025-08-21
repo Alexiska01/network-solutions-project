@@ -1,11 +1,9 @@
 import { Hotspot } from '../ViewerTypes';
 
 export const cameraPresets = {
-  default: "0deg 75deg 0.88m",
   front: "0deg 90deg 0.88m",
   back: "180deg 90deg 0.88m", 
   top: "0deg 0deg 1.2m",
-  ports: "45deg 85deg 0.7m",
   overview: "25deg 65deg 1.1m"
 };
 

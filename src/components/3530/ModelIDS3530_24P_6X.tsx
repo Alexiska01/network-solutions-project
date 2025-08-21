@@ -33,12 +33,6 @@ const ModelIDS3530_24P_6XComponent = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  {/* Продукты удалено */}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
                   <Link to="/switches">Коммутаторы</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -83,7 +77,7 @@ const ModelIDS3530_24P_6XComponent = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent leading-tight">
               {ids353024p6xData.title}
             </h1>
-            {/* Подзаголовок удалён */}
+
           </div>
 
           {/* Mobile-First Layout */}
@@ -153,16 +147,9 @@ const ModelIDS3530_24P_6XComponent = () => {
         
         <div className="relative max-w-7xl mx-auto">
           <div className="text-center mb-8 md:mb-16">
-            <div className="inline-flex items-center px-3 md:px-4 py-2 bg-cyan-100 rounded-full mb-4 md:mb-6">
-              <Icon name="Database" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#0065B3]" />
-              <span className="text-xs md:text-sm font-semibold text-[#1A2980]">Полная спецификация</span>
-            </div>
             <h2 className="text-xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 md:mb-6">
               Технические характеристики
             </h2>
-            <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto px-4">
-              Детальная информация обо всех параметрах и возможностях коммутатора IDS3530-24P-6X
-            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
@@ -236,70 +223,6 @@ const ModelIDS3530_24P_6XComponent = () => {
               <p className="text-xs md:text-sm text-gray-600">Работа в диапазоне температур от -40°C до +75°C</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Professional CTA Section */}
-      <section className="relative py-12 md:py-24 px-4 md:px-6 bg-gradient-to-br from-[#1A2980] via-[#0065B3] to-[#00B5AD] overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px]" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00B5AD] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#0065B3] rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse animation-delay-2000" />
-        
-        <div className="relative max-w-6xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center px-3 md:px-6 py-2 md:py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/40 mb-6 md:mb-8">
-            <Icon name="Sparkles" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#00B5AD]" />
-            <span className="text-xs md:text-sm font-semibold text-white">Готовы к внедрению</span>
-          </div>
-
-          {/* Heading */}
-          <h2 className="text-xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight px-2">
-            Получите{" "}
-            <span className="text-white">
-              профессиональную
-            </span>{" "}
-            консультацию
-          </h2>
-          
-
-          
-          {/* Benefits */}
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-6 mb-8 md:mb-12 text-white/90 px-4">
-            <div className="flex items-center justify-center">
-              <Icon name="CheckCircle" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#00B5AD]" />
-              <span className="text-xs md:text-sm">Бесплатная консультация</span>
-            </div>
-
-            <div className="flex items-center justify-center">
-              <Icon name="Users" className="h-4 w-4 md:h-5 md:w-5 mr-2 text-[#00B5AD]" />
-              <span className="text-xs md:text-sm">Персональный менеджер</span>
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-6 justify-center items-center px-4">
-            <Button
-              size="lg"
-              onClick={() => navigate("/partners")}
-              className="group relative w-full sm:w-auto bg-white text-[#1A2980] hover:bg-gray-100 active:bg-gray-200 font-semibold px-6 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
-            >
-              <Icon name="MessageSquare" className="h-5 w-5 md:h-6 md:w-6 mr-2 md:mr-3 group-hover:rotate-12 transition-transform" />
-              <span className="text-sm md:text-base">Связаться с партнером</span>
-              <div className="absolute inset-0 bg-white/20 rounded-xl md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
-            </Button>
-            
-            <Button
-              size="lg"
-              variant="outline"
-              className="group w-full sm:w-auto bg-white/20 backdrop-blur-sm border-2 border-white/60 text-white hover:bg-white hover:text-[#1A2980] active:bg-white/90 px-6 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl font-semibold shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              <Icon name="Phone" className="h-5 w-5 md:h-6 md:w-6 mr-2 md:mr-3 group-hover:scale-110 transition-transform" />
-              <span className="text-sm md:text-base">Получить консультацию</span>
-            </Button>
-          </div>
-
-
         </div>
       </section>
     </div>

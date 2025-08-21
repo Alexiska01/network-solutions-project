@@ -54,7 +54,7 @@ const CRITICAL_IMAGES: string[] = [
   // Локальные логотипы партнеров
   "/img/сател.png",
   "/img/логотип.png",
-  "/img/КРОК.png",
+  "/img/K2.png",
   "/img/Инфосэл.png",
   "/img/инлайн.png",
 ];

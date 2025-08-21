@@ -10,7 +10,6 @@ interface ViewerControlsProps {
   onCameraViewChange: (preset: string) => void;
   onBackgroundChange: (bg: string) => void;
   onToggleIndicators: () => void;
-  onTakeScreenshot: () => void;
   onResetView: () => void;
 }
 
@@ -22,7 +21,7 @@ const ViewerControls: React.FC<ViewerControlsProps> = ({
   onCameraViewChange,
   onBackgroundChange,
   onToggleIndicators,
-  onTakeScreenshot,
+  // onTakeScreenshot удалён
   onResetView,
 }) => {
   const getCameraPresetLabel = (preset: string) => {
@@ -81,13 +80,7 @@ const ViewerControls: React.FC<ViewerControlsProps> = ({
             <Icon name={indicatorsOn ? "Lightbulb" : "LightbulbOff"} size={16} />
           </button>
 
-          <button
-            onClick={onTakeScreenshot}
-            className={`p-2 rounded-lg transition-all ${getButtonColor(background, false)}`}
-            title="Сделать скриншот"
-          >
-            <Icon name="Camera" size={16} />
-          </button>
+          {/* Кнопка камеры (скриншота) удалена по требованию */}
 
           <button
             onClick={onResetView}

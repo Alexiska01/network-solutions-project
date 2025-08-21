@@ -41,7 +41,9 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
                 <img
                   src={partner.logo}
                   alt={partner.name}
-                  className="max-h-full max-w-full object-contain"
+                  className="max-h-full max-w-full object-center"
+                  style={{ imageRendering: 'auto' }}
+                  loading="eager"
                 />
               </div>
               <h2 className="text-lg font-bold text-white font-montserrat">
@@ -52,7 +54,7 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
 
           {/* Content */}
           <div className="p-3">
-            {/* Tags */}
+            {/* Tags (без category) */}
             <div className="flex flex-wrap gap-1.5 mb-4">
               <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-medium font-montserrat border border-blue-200">
                 📍 {partner.region}
@@ -61,9 +63,6 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
                 className={`px-2 py-1 rounded-md text-xs font-medium font-montserrat border ${getTypeColor(partner.type)}`}
               >
                 🏢 {partner.type}
-              </span>
-              <span className="px-2 py-1 bg-orange-50 text-orange-700 rounded-md text-xs font-medium font-montserrat border border-orange-200">
-                ⚡ {partner.category}
               </span>
             </div>
 

@@ -12,7 +12,7 @@ export interface Partner {
   logo: string;
   region: string;
   type: string;
-  category: string;
+  // category?: string;
   phone: string;
   email: string;
   website: string;

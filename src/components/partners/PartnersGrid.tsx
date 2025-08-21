@@ -7,7 +7,6 @@ interface PartnersGridProps {
   selectedFilters: {
     region: string;
     type: string;
-    category: string;
   };
   onPartnerClick: (partner: Partner) => void;
 }
@@ -23,7 +22,6 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
       logo: "/img/Инфосэл.png",
       region: "Россия",
       type: "Интегратор",
-      category: "Коммутаторы",
       phone: "+7 (495) 651-82-85",
       email: "info@infocellprint.ru",
       website: "https://infocellprint.ru",
@@ -34,19 +32,17 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
       logo: "/img/инлайн.png",
       region: "Россия",
       type: "Интегратор",
-      category: "Маршрутизаторы",
       phone: "+7 (495) 787-59-40",
       email: "info@inlinegroup.ru",
       website: "https://inlinegroup.ru",
     },
     {
       id: 3,
-      name: "КРОК",
-      logo: "/img/КРОК.png",
+      name: "К2 Интеграция",
+      logo: "/img/K2.png",
       region: "Россия",
       type: "Интегратор",
-      category: "Wi-Fi",
-      phone: "+7 (495) 974-22-74",
+      phone: "+7 (495) 974-10-64",
       email: "info@croc.ru",
       website: "https://www.croc.ru",
     },
@@ -56,7 +52,6 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
       logo: "/img/сател.png",
       region: "Россия",
       type: "Интегратор",
-      category: "Коммутаторы",
       phone: "+7 495 785-88-77",
       email: "office@satel.org",
       website: "https://satel.ru",
@@ -82,9 +77,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
       (selectedFilters.region === "All" ||
         partner.region === selectedFilters.region) &&
       (selectedFilters.type === "All" ||
-        partner.type === selectedFilters.type) &&
-      (selectedFilters.category === "All" ||
-        partner.category === selectedFilters.category)
+        partner.type === selectedFilters.type)
     );
   });
 
@@ -121,7 +114,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                 className={`group ${
                   partner.name === "Инфосэл" ||
                   partner.name === "Инлайн ГРУП" ||
-                  partner.name === "КРОК" ||
+                  partner.name === "К2 Интеграция" ||
                   partner.name === "САТЕЛ"
                     ? "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
                     : "bg-white"
@@ -132,7 +125,7 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                     <SafeImage
                       src={partner.logo}
                       alt={partner.name}
-                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "КРОК" ? "w-auto h-auto scale-50" : partner.name === "САТЕЛ" ? "w-auto h-auto scale-150" : "w-full h-full object-cover"} rounded-lg`}
+                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "К2 Интеграция" ? "w-auto h-auto scale-50" : partner.name === "САТЕЛ" ? "w-auto h-auto scale-150" : "w-full h-full object-cover"} rounded-lg`}
                     />
                     <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg -z-10"></div>
                   </div>

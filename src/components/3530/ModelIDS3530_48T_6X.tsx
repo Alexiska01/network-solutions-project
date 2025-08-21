@@ -33,12 +33,6 @@ const ModelIDS3530_48T_6XComponent = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  {/* Продукты удалено */}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
                   <Link to="/switches">Коммутаторы</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
