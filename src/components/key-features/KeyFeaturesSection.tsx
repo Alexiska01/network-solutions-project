@@ -88,9 +88,27 @@ const KeyFeaturesSection: React.FC<Props> = ({ features, heading, className }) =
       },
       { threshold: 0.15, rootMargin: "0px 0px -5% 0px" }
     );
-    cardRefs.current.forEach((el) => el && observerRef.current?.observe(el));
+    // Если хотя бы одна карточка уже полностью видна — показать все
+    let anyFullyVisible = false;
+  cardRefs.current.forEach((el) => {
+      if (!el) return;
+      observerRef.current?.observe(el);
+      const rect = el.getBoundingClientRect();
+      if (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      ) {
+        anyFullyVisible = true;
+      }
+    });
+    if (anyFullyVisible) {
+      // Показать все карточки (или строки)
+      setVisibleSet(new Set(Array.from({ length: features.length }, (_, i) => i)));
+    }
     return () => observerRef.current?.disconnect();
-  }, [rowSize, animationCycle, revealRow]);
+  }, [rowSize, animationCycle, revealRow, features.length]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
