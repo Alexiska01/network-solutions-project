@@ -1,0 +1,229 @@
+/* Shared Device Card CSS – premium styles used by all series */
+/* DeviceCard - World-Class Airiness Animations with No Text Jump */
+
+/* Premium Animation Tokens */
+:root {
+	--card-ease-ethereal: cubic-bezier(0.16, 1, 0.3, 1);
+	--card-ease-float: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	--card-ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+	--card-duration-breathe: clamp(800ms, 1200ms + 0.3vw, 1800ms);
+	--card-duration-float: clamp(600ms, 800ms + 0.2vw, 1200ms);
+	--card-amplitude-rise: clamp(24px, 3vw, 48px);
+	--card-amplitude-float: clamp(16px, 2vw, 32px);
+}
+
+/* Base State - Always Visible Foundation */
+.device-card-premium {
+	opacity:1 !important; visibility:visible !important; display:flex !important; position:relative; z-index:1;
+	backface-visibility:hidden; transform-style:preserve-3d; transform:translate3d(0,0,0);
+	contain:layout paint; font-synthesis:none; will-change:transform;
+	transition: transform 600ms cubic-bezier(0.25,0.46,0.45,0.94), border-color 500ms cubic-bezier(0.4,0,0.2,1), box-shadow 700ms cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+/* Hidden State - Before Intersection */
+.device-card-premium.is-hidden {
+	opacity: 0 !important;
+	transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.92) rotateX(8deg);
+	filter: blur(1px);
+}
+
+/* Visible State Trigger - Intersection Observer */
+@media (prefers-reduced-motion: no-preference) {
+	.device-card-premium.is-visible {
+	opacity: 1 !important; 
+	--card-lift: 0px; /* baseline */
+	transform: translate3d(0,var(--card-lift),0) scale(1) rotateX(0deg); 
+	filter: blur(0px); 
+	animation: card-breathe-in var(--card-duration-breathe) var(--card-ease-ethereal) both; 
+	animation-delay: var(--stagger-delay, 0ms); 
+	}
+}
+
+/* World-Class Entrance Animation */
+@keyframes card-breathe-in {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.88) rotateX(12deg) rotateY(-2deg);
+		filter: blur(2px) brightness(0.8);
+	}
+	20% {
+		opacity: 0.3;
+		transform: translate3d(0, calc(var(--card-amplitude-rise) * 0.6), 0) scale(0.94) rotateX(8deg) rotateY(-1deg);
+		filter: blur(1px) brightness(0.9);
+	}
+	60% {
+		opacity: 0.8;
+		transform: translate3d(0, calc(var(--card-amplitude-rise) * 0.15), 0) scale(0.99) rotateX(2deg) rotateY(0deg);
+		filter: blur(0.5px) brightness(0.98);
+	}
+	80% {
+		opacity: 0.95;
+		transform: translate3d(0, calc(var(--card-amplitude-rise) * -0.05), 0) scale(1.01) rotateX(-1deg);
+		filter: blur(0px) brightness(1);
+	}
+	100% {
+		opacity: 1;
+		transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg);
+		filter: blur(0px) brightness(1);
+	}
+}
+
+/* PRO HOVER 2.0 — Layered Lift, Chromatic Border Sweep, Soft Inner Glow */
+.device-card-premium.is-visible::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px; /* gradient border */
+	background: linear-gradient(140deg, rgba(0,123,255,0) 0%, rgba(0,123,255,0.25) 35%, rgba(0,200,170,0.35) 55%, rgba(0,123,255,0) 80%) center/200% 200% no-repeat;
+	-webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+	-webkit-mask-composite: xor; /* Safari */
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity 450ms var(--card-ease-gentle);
+	pointer-events: none;
+}
+
+.device-card-premium.is-visible:hover::after { opacity:1; animation: border-scan 3200ms linear infinite; }
+
+@keyframes border-scan {
+	0% { background-position: 0% 50%; }
+	100% { background-position: 100% 50%; }
+}
+
+/* Hover без scale для отсутствия дрожания */
+/* SOFT LIFT HOVER (мягкое приподнятие без дерганий) */
+.device-card-premium.is-visible:hover {
+	--card-lift: -3px;
+	transform: translate3d(0,var(--card-lift),0) scale(1);
+	box-shadow:0 16px 42px -14px rgba(15,60,120,.20),0 6px 18px -6px rgba(15,60,120,.12),0 0 0 1px rgba(120,170,230,.34);
+	border-color:rgba(96,165,250,.58);
+	transition: transform 460ms cubic-bezier(0.22,1,0.36,1), box-shadow 520ms cubic-bezier(0.22,1,0.36,1), border-color 480ms var(--card-ease-gentle);
+}
+
+/* Stable text (убрали подскакивание при выходе из :hover) */
+.device-card-premium h3,
+.device-card-premium .inline-flex { 
+	transform: translateY(0); /* базовое значение, чтобы не появлялось новое свойство только на hover */
+	transition: color 450ms var(--card-ease-gentle), filter 450ms var(--card-ease-gentle); 
+}
+.device-card-premium h3 { font-weight:600; }
+.device-card-premium.is-visible:hover h3 { font-weight:600; }
+.device-card-premium.is-visible:hover h3 { color:#0f3c78; }
+.device-card-premium.is-visible:hover .inline-flex { filter:brightness(1.05) saturate(1.05); }
+
+/* Smooth reset */
+/* Base (не hover) состояние */
+.device-card-premium.is-visible:not(:hover):not(:active) { --card-lift:0px; transform:translate3d(0,var(--card-lift),0) scale(1); box-shadow:0 2px 10px -4px rgba(15,60,120,.06),0 1px 3px rgba(0,0,0,.05),0 0 0 1px rgba(185,198,210,.42); border-color:rgba(203,213,225,0.7); transition: transform 520ms cubic-bezier(0.19,1,0.22,1), box-shadow 560ms cubic-bezier(0.19,1,0.22,1), border-color 550ms var(--card-ease-gentle); }
+
+/* Crisp text (без масштабов/blur) */
+.device-card-premium .card-text,
+.device-card-premium [data-role="text"],
+.device-card-premium [class*="text"] { transform:none !important; }
+
+/* Gentle Press */
+.device-card-premium.is-visible:active { --card-lift:-1px; transform:translate3d(0,var(--card-lift),0) scale(1); filter:brightness(.97); transition: transform 160ms cubic-bezier(0.4,0,0.2,1), filter 140ms cubic-bezier(0.4,0,0.2,1); }
+
+/* Smooth hover exit */
+/* (удален дубликат состояния reset для исключения конфликтов переходов) */
+
+/* Glow */
+.device-card-premium.is-visible::before {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border-radius: inherit;
+	background: radial-gradient(
+		800px circle at 50% 50%,
+		rgba(147, 197, 253, 0.03) 0%,
+		rgba(56, 110, 170, 0.02) 40%,
+		transparent 70%
+	);
+	opacity: 0;
+	z-index: -1;
+	transition: opacity 600ms var(--card-ease-gentle);
+}
+
+.device-card-premium.is-visible:hover::before {
+	opacity: 0.35;
+	pointer-events: none;
+}
+
+/* Text rendering insurance */
+.device-card-premium .card-text,
+.device-card-premium [data-role="text"],
+.device-card-premium [class*="text"] {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* High DPI Refinements */
+@media (min-resolution: 3dppx) {
+	:root {
+		--card-duration-breathe: clamp(600ms, 900ms + 0.2vw, 1400ms);
+		--card-amplitude-rise: clamp(18px, 2.5vw, 36px);
+		--card-amplitude-float: clamp(12px, 1.5vw, 24px);
+	}
+	.device-card-premium.is-hidden {
+		transform: translate3d(0, var(--card-amplitude-rise), 0) scale(0.94) rotateX(6deg);
+	}
+}
+
+/* Large Display Enhancement */
+@media (min-width: 1600px) {
+	:root {
+		--card-amplitude-rise: clamp(32px, 4vw, 64px);
+		--card-amplitude-float: clamp(20px, 2.5vw, 40px);
+	}
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--card-duration-breathe: 200ms;
+		--card-duration-float: 150ms;
+		--card-amplitude-rise: 4px;
+		--card-amplitude-float: 2px;
+	}
+	.device-card-premium.is-hidden {
+		opacity: 0 !important;
+		transform: translate3d(0, 4px, 0) scale(0.98);
+		filter: none;
+	}
+	.device-card-premium.is-visible {
+		animation: card-simple-in 200ms ease-out both;
+		animation-delay: calc(var(--stagger-delay, 0ms) * 0.3);
+	}
+	@keyframes card-simple-in {
+		from { opacity: 0; transform: translate3d(0, 4px, 0) scale(0.98); }
+		to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+	}
+	.device-card-premium.is-visible:hover { --card-lift:-2px; transform:translate3d(0,var(--card-lift),0) scale(1) !important; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+	.device-card-premium::before { display: none; }
+}
+
+/* Performance Optimization */
+.device-card-premium * {
+	backface-visibility: hidden;
+}
+
+/* Clickable state enhancements */
+.device-card-premium[data-clickable="true"] {
+	transition: box-shadow 600ms var(--card-ease-gentle), border-color 600ms var(--card-ease-gentle), transform 700ms var(--card-ease-float);
+}
+.device-card-premium[data-clickable="true"]:hover { /* unified with pro hover above */ }
+.device-card-premium[data-clickable="true"]:active { transform:translate3d(0,-1px,0); box-shadow:0 6px 18px -10px rgba(15,60,120,.20),0 0 0 1px rgba(96,165,250,.45); }
+.device-card-premium[data-clickable="true"]:focus-visible {
+	outline: none;
+	box-shadow:
+		0 0 0 2px #fff,
+		0 0 0 4px rgba(59,130,246,0.6);
+	border-color: #3b82f6;
+}
+.device-card-premium[data-clickable="true"] .card-hint-icon {
+	transition: transform 500ms var(--card-ease-gentle);
+}
+.device-card-premium[data-clickable="true"]:hover .card-hint-icon {
+	transform: translateX(4px);
+}

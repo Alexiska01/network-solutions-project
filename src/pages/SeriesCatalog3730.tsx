@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SeriesCatalog3730Component from "@/components/SeriesCatalog3730";
+import SeriesCatalog3730Component from "@/components/3730/SeriesCatalog3730";
 
 const SeriesCatalog3730 = () => {
   return (

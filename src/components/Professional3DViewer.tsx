@@ -21,7 +21,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   const [background, setBackground] = useState("studio");
   const [viewMode] = useState("explore");
   const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
-  const [cameraPreset, setCameraPreset] = useState("default");
+  const [cameraPreset, setCameraPreset] = useState("overview");
 
 
   // Debug modelLoaded prop changes
@@ -57,10 +57,10 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   };
 
   const resetView = () => {
-    setCameraPreset("default");
+    setCameraPreset("overview");
     setSelectedHotspot(null);
     if (modelRef.current) {
-      modelRef.current.cameraOrbit = cameraPresets.default;
+      modelRef.current.cameraOrbit = cameraPresets.overview;
       modelRef.current.fieldOfView = "25deg";
       
       const mv = modelRef.current as any;
@@ -70,7 +70,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
       
       setTimeout(() => {
         if (modelRef.current) {
-          modelRef.current.cameraOrbit = cameraPresets.default;
+          modelRef.current.cameraOrbit = cameraPresets.overview;
           modelRef.current.fieldOfView = "25deg";
           modelRef.current.jumpCameraToGoal();
         }
@@ -79,14 +79,14 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
   };
 
   const resetViewMobile = () => {
-    setCameraPreset("default");
+    setCameraPreset("overview");
     setSelectedHotspot(null);
     if (modelRef.current) {
       // Полный сброс для мобильной версии
       const mv = modelRef.current as any;
       
       // Сбрасываем все параметры камеры
-      modelRef.current.cameraOrbit = cameraPresets.default;
+      modelRef.current.cameraOrbit = cameraPresets.overview;
       modelRef.current.fieldOfView = "25deg";
       
       // Сбрасываем zoom к начальным границам
@@ -94,7 +94,7 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
       modelRef.current.maxCameraOrbit = "auto auto 2m";
       
       // Принудительно устанавливаем камеру на минимальное расстояние
-      const [theta, phi] = cameraPresets.default.split(' ');
+      const [theta, phi] = cameraPresets.overview.split(' ');
       modelRef.current.cameraOrbit = `${theta} ${phi} 0.8m`;
       
       if (mv.resetTurntableRotation) {
@@ -202,7 +202,6 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               onCameraViewChange={setCameraView}
               onBackgroundChange={setBackground}
               onToggleIndicators={onToggleIndicators}
-              onTakeScreenshot={takeScreenshot}
               onResetView={resetView}
             />
           </div>
@@ -217,7 +216,6 @@ const Professional3DViewer: React.FC<Professional3DViewerProps> = ({
               onCameraViewChange={setCameraView}
               onBackgroundChange={setBackground}
               onToggleIndicators={onToggleIndicators}
-              onTakeScreenshot={takeScreenshot}
               onResetView={resetViewMobile}
             />
           </div>

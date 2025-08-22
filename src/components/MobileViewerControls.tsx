@@ -11,7 +11,6 @@ interface MobileViewerControlsProps {
   onCameraViewChange: (preset: string) => void;
   onBackgroundChange: (bg: string) => void;
   onToggleIndicators: () => void;
-  onTakeScreenshot: () => void;
   onResetView: () => void;
 }
 
@@ -23,7 +22,6 @@ const MobileViewerControls: React.FC<MobileViewerControlsProps> = ({
   onCameraViewChange,
   onBackgroundChange,
   onToggleIndicators,
-  onTakeScreenshot,
   onResetView,
 }) => {
   const [showCameraMenu, setShowCameraMenu] = useState(false);
@@ -103,13 +101,7 @@ const MobileViewerControls: React.FC<MobileViewerControlsProps> = ({
               <Icon name="RotateCcw" size={18} />
             </button>
 
-            <button
-              onClick={onTakeScreenshot}
-              className="p-2.5 rounded-xl bg-white/10 text-white/70 active:bg-white/20 transition-all"
-              title="Сделать фото"
-            >
-              <Icon name="Download" size={18} />
-            </button>
+            {/* Кнопка снимка удалена по требованиям */}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-/* ===== HERO3530 PREMIUM SMOOTH CSS ANIMATIONS & GPU OPTIMIZATIONS ===== */
+/* ===== HERO SERIES PREMIUM SMOOTH CSS ANIMATIONS & GPU OPTIMIZATIONS ===== */
 
 /* ===== PREMIUM TIMING VARIABLES ===== */
 
@@ -755,8 +755,8 @@ body.refresh-240hz :root {
 }
 
 /* Ambient мягкая динамика фона hero */
-.hero-3530 { position: relative; }
-.hero-3530::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 80% at 70% 40%,rgba(0,121,182,.28),rgba(0,91,170,0) 70%); mix-blend-mode:screen; opacity:.5; animation:heroAmbientShift 9s ease-in-out infinite; will-change:transform; }
+.hero-series { position: relative; }
+.hero-series::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 80% at 70% 40%,rgba(0,121,182,.28),rgba(0,91,170,0) 70%); mix-blend-mode:screen; opacity:.5; animation:heroAmbientShift 9s ease-in-out infinite; will-change:transform; }
 @keyframes heroAmbientShift { 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,2px,0)} 100%{transform:translate3d(0,0,0)} }
 
 /* ===== HIDE DEFAULT MODEL-VIEWER PROGRESS BAR (используем свой лоадер) ===== */
