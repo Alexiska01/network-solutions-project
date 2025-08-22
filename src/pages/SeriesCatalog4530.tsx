@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SeriesCatalog4530Component from "@/components/SeriesCatalog4530";
+import SeriesCatalog4530Component from "@/components/4530/SeriesCatalog4530";
 
 const SeriesCatalog4530 = () => {
   return (

@@ -82,10 +82,10 @@ const DeviceCardBase: React.FC<Props> = ({ model, index, onNavigate, getSpecs })
       </div>
       <div className="px-3 sm:px-4 pb-3 flex-1">
         <div className="space-y-1.5 sm:space-y-2 text-[0.68rem] sm:text-[0.78rem] lg:text-[0.9rem]">
-          {(specs.baseTports > 0 || specs.sfpSlots > 0) && (
+          {specs.baseTports > 0 && (
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Base-T порты:</span>
-              <span className="font-medium">{specs.baseTports || "-"}</span>
+              <span className="font-medium">{specs.baseTports}</span>
             </div>
           )}
           {(specs.sfpSlots > 0 || specs.sfpPlusSlots > 0) && (
@@ -102,10 +102,12 @@ const DeviceCardBase: React.FC<Props> = ({ model, index, onNavigate, getSpecs })
             <span className="text-gray-600">Блоки питания:</span>
             <span className="font-medium">{specs.dualPsu ? 2 : 1}</span>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-gray-600">Пропускная способность:</span>
-            <span className="font-medium">{specs.throughput} Гбит/с</span>
-          </div>
+          {specs.throughput > 0 && (
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600">Пропускная способность:</span>
+              <span className="font-medium">{specs.throughput} Гбит/с</span>
+            </div>
+          )}
           {(specs.hasConsole || specs.hasUsb || specs.hasOob) && (
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Управление:</span>
