@@ -4,7 +4,7 @@ import { SafeImage } from "@/components/ui/safe-image";
 const Footer = () => {
   const quickLinks = [
     { name: "Оборудование iDATA", path: "/products" },
-    { name: "Гарантия и сервис", path: "/warranty" },
+    { name: "Сервис и гарантия", path: "/warranty" },
     { name: "Программное обеспечение", path: "/prormaning" },
     { name: "Документация", path: "/documentation" },
   ];

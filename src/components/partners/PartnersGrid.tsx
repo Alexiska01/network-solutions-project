@@ -15,6 +15,12 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
   selectedFilters,
   onPartnerClick,
 }) => {
+  const handleCardKeyDown = (partner: Partner) => (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onPartnerClick(partner);
+    }
+  };
   const allPartners: Partner[] = [
     {
       id: 1,
@@ -81,6 +87,15 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
     );
   });
 
+  // САТЕЛ должен идти первым в списке
+  const sortedPartners = [...filteredPartners].sort((a, b) => {
+    const aIsTarget = a.name.toLowerCase() === "сател" || a.name.toLowerCase() === "сател" || a.name === "САТЕЛ";
+    const bIsTarget = b.name.toLowerCase() === "сател" || b.name.toLowerCase() === "сател" || b.name === "САТЕЛ";
+    if (aIsTarget && !bIsTarget) return -1;
+    if (!aIsTarget && bIsTarget) return 1;
+    return 0;
+  });
+
   const getTypeColor = (type: string) => {
     switch (type) {
       case "Дистрибьютор":
@@ -107,10 +122,13 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
 
         {filteredPartners.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {filteredPartners.map((partner) => (
+            {sortedPartners.map((partner) => (
               <div
                 key={partner.id}
                 onClick={() => onPartnerClick(partner)}
+                onKeyDown={handleCardKeyDown(partner)}
+                role="button"
+                tabIndex={0}
                 className={`group ${
                   partner.name === "Инфосэл" ||
                   partner.name === "Инлайн ГРУП" ||
@@ -118,13 +136,17 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                   partner.name === "САТЕЛ"
                     ? "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
                     : "bg-white"
-                } rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden`}
+                } rounded-xl border border-gray-200 hover:border-[#0065B3] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0065B3] active:scale-[.99]`}
+                style={{ touchAction: 'manipulation' }}
               >
                 <div className="p-3 md:p-6">
-                  <div className="relative h-[140px] w-full mb-3 md:mb-4 bg-white border border-gray-200 rounded-lg overflow-hidden group-hover:border-blue-200 transition-colors flex items-center justify-center p-4">
+                  <div className="relative h-[110px] sm:h-[130px] lg:h-[140px] w-full mb-2 sm:mb-3 md:mb-4 bg-white border border-gray-200 rounded-lg overflow-hidden group-hover:border-blue-200 transition-colors flex items-center justify-center p-4">
                     <SafeImage
                       src={partner.logo}
                       alt={partner.name}
+                      loading="lazy"
+                      decoding="async"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "К2 Интеграция" ? "w-auto h-auto scale-50" : partner.name === "САТЕЛ" ? "w-auto h-auto scale-150" : "w-full h-full object-cover"} rounded-lg`}
                     />
                     <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg -z-10"></div>

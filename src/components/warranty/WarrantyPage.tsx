@@ -9,6 +9,7 @@ import '@/components/warranty/JourneyPath.css';
 import { WarrantyHero } from '@/components/warranty/sections/WarrantyHero';
 import { WarrantyInfoCard } from '@/components/warranty/sections/WarrantyInfoCard';
 import { CustomerJourney } from '@/components/warranty/sections/CustomerJourney';
+import { ServiceContacts } from '@/components/warranty/sections/ServiceContacts';
 
 const WarrantyPage: React.FC = () => {
   useEffect(() => {
@@ -38,6 +39,7 @@ const WarrantyPage: React.FC = () => {
       
   <WarrantyHero />
   <WarrantyInfoCard />
+  <ServiceContacts />
   <CustomerJourney />
 
       <Footer />

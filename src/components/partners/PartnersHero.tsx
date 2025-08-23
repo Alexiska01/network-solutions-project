@@ -140,6 +140,31 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
     return () => { /* таймеры чистятся внешним эффектом */ };
   }, [typingStarted, visibleCount, done, isDeleting, loop, instantReveal, chars, typingSpeed, speedVariance, punctuationExtraDelay, mobileSpeedMultiplier, eraseSpeed, loopDelay, isMobile]);
 
+  // Автоподгон шрифта для укладки в 4 строки на мобильных
+  useEffect(() => {
+    if (!isMobile) return;
+    const el = subtitleRef.current;
+    if (!el) return;
+    const resize = () => {
+      const style = window.getComputedStyle(el);
+      const lineHeight = parseFloat(style.lineHeight || '20');
+      const maxLines = 3;
+      const maxHeight = lineHeight * maxLines + 0.5; // небольшой запас
+      let fontSize = parseFloat(style.fontSize || '15');
+      const floor = 12; // не уменьшаем меньше 12px
+      // если сейчас выше 4 строк — уменьшаем, если ниже — не растим
+      // применяем только когда текст полностью показан или в процессе, чтобы не мешать анимации
+      let guard = 0;
+      while (el.scrollHeight > maxHeight && fontSize > floor && guard < 20) {
+        fontSize -= 0.5; guard++;
+        el.style.fontSize = fontSize + 'px';
+      }
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    return () => { window.removeEventListener('resize', resize); };
+  }, [isMobile, visibleCount, instantReveal]);
+
   // Если instantReveal активирован при смене subtitle
   useEffect(() => {
     if (instantReveal) {
@@ -181,14 +206,16 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
             <div className="partners-hero-separator mb-4" aria-hidden="true" />
             <p
               ref={subtitleRef}
-              className="partners-hero-description partners-hero-typewriter text-base sm:text-lg md:text-xl lg:text-[19px] font-light text-white/85 max-w-none"
+              className="partners-hero-description partners-hero-typewriter text-[15px] sm:text-lg md:text-xl lg:text-[19px] font-light text-white/85 max-w-none"
               aria-label={subtitle}
+              lang="ru"
               role="text"
             >
               {chars.map((ch, i) => {
                 if (i >= visibleCount && !instantReveal) return null;
                 const highlighted = isHighlightedChar(i);
-                const needsBreak = breakIndices.includes(i);
+                // Avoid breaking too close to edges on narrow screens
+                const needsBreak = breakIndices.includes(i) && (!isMobile || (i > 12 && i < chars.length - 12));
                 return (
                   <React.Fragment key={i}>
                     {needsBreak && <br />}

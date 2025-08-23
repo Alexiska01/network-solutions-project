@@ -1,0 +1,22 @@
+/* Full-bleed top gradient line for ServiceContacts section */
+.service-contacts-section { position: relative; }
+.service-contacts-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg,#2d368e,#00acad 55%,#2d368e);
+  opacity: .4;
+  pointer-events: none;
+}
+
+/* Accent glow interaction for links */
+.service-contacts-section .sc-glow-link {
+  position: relative;
+  transition: color .22s ease, text-shadow .22s ease;
+}
+.service-contacts-section .sc-glow-link:hover {
+  text-shadow: 0 0 6px color-mix(in oklab, var(--accent) 40%, white 60%);
+}

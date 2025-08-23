@@ -71,9 +71,9 @@
 
 /* Typewriter variant overrides */
 .partners-hero-typewriter { font-variant-ligatures:none; white-space:pre-wrap; display:inline-block; max-width:66ch; overflow:visible; filter:none; animation:none; opacity:1; transform:none; }
-.partners-hero-typewriter { line-height:1.25; --ph-lines:3; min-height:calc(1.25em * var(--ph-lines)); max-height:calc(1.25em * var(--ph-lines)); display:block; overflow:hidden; position:relative; }
+.partners-hero-typewriter { line-height:1.25; --ph-lines:3; min-height:calc(1.25em * var(--ph-lines)); max-height:calc(1.25em * var(--ph-lines)); display:block; overflow:hidden; position:relative; overflow-wrap:break-word; word-break:normal; hyphens:auto; -webkit-hyphens:auto; }
 .partners-hero-typewriter { position:relative; }
-.partners-hero-typewriter .ph-char { opacity:0; filter:blur(4px); transform:translateY(4px); animation: phCharIn .55s cubic-bezier(.22,.9,.3,1) forwards; animation-delay: calc(var(--ci)*4ms); display:inline-block; }
+.partners-hero-typewriter .ph-char { opacity:0; filter:blur(4px); transform:translateY(4px); animation: phCharIn .55s cubic-bezier(.22,.9,.3,1) forwards; animation-delay: calc(var(--ci)*4ms); display:inline; }
 .partners-hero-typewriter .ph-char-highlight { background:linear-gradient(90deg,rgba(255,255,255,.22),rgba(255,255,255,0)); border-radius:4px; box-shadow:0 0 0 1px rgba(255,255,255,.08); }
 @keyframes phCharIn { 0%{opacity:0;filter:blur(6px);transform:translateY(6px);} 70%{opacity:1;} 100%{opacity:1;filter:blur(0);transform:translateY(0);} }
 .ph-caret { font-weight:300; background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.3)); -webkit-background-clip:text; color:transparent; animation: phCaretBlink 1s steps(1,end) infinite, phCaretDrift 2.2s ease-in-out infinite; position:relative; top:1px; }
@@ -151,4 +151,23 @@
 /* Mobile slight adjustments */
 @media (max-width:768px){ .partners-hero-description{animation-duration:1.2s;animation-delay:.5s;} }
 @media (max-width:768px){ .partners-hero-alt:before{opacity:.3;} .partners-hero-alt:after{opacity:.4;} }
+
+/* Mobile fit for typewriter: 3 lines and slightly tighter leading */
+@media (max-width:768px){
+  .partners-hero-typewriter{ --ph-lines:3; line-height:1.22; min-height:calc(1.22em * var(--ph-lines)); max-height:calc(1.22em * var(--ph-lines)); }
+}
+/* Keep 3 lines even on very small screens */
+@media (max-width:380px){
+  .partners-hero-typewriter{ --ph-lines:3; line-height:1.2; min-height:calc(1.2em * var(--ph-lines)); max-height:calc(1.2em * var(--ph-lines)); }
+}
+
+/* Fluid typography for mobile for a perfect fit */
+@media (max-width:640px){
+  .partners-hero-typewriter{ font-size: clamp(13px, 3.5vw, 15px); letter-spacing: 0.003em; text-wrap: balance; }
+}
+
+/* Lighter per-char animation on mobile to reduce GPU cost */
+@media (max-width:640px){
+  .partners-hero-typewriter .ph-char { filter:none; animation-duration:.4s; }
+}
 
