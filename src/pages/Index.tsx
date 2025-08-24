@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import ProductHero from "@/components/home/ProductHero";
 import ProductsSection from "@/components/home/ProductsSection";
 import FeaturesSection from "@/components/home/FeaturesSection";
+import AwardsSection from "@/components/home/AwardsSection";
 import Footer from "@/components/Footer";
 import { modelCacheManager } from "@/utils/modelCacheManager";
 
@@ -29,6 +30,7 @@ const Index = () => {
       <ProductHero />
       <ProductsSection />
       <FeaturesSection />
+  <AwardsSection />
       <Footer />
     </div>
   );

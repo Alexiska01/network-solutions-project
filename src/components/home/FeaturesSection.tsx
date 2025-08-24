@@ -117,8 +117,16 @@ const FeaturesSection = () => {
       ref={sectionRef}
       className={`pt-3 pb-4 sm:pt-4 sm:pb-6 md:pt-6 md:pb-8 lg:pt-7 lg:pb-9 bg-gradient-to-b from-transparent via-gray-50/30 to-white relative overflow-hidden features-section refresh-${refreshRate}`}
     >
-      {/* Декоративный фон */}
-  <div className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 to-teal-50/20 pointer-events-none"></div>
+      {/* Декоративный фон (с плавным исчезновением к низу для seamless перехода) */}
+      <div
+        className="absolute inset-0 bg-gradient-to-br from-blue-100/35 via-blue-50/30 to-teal-50/20 pointer-events-none"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)",
+          maskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)",
+        }}
+      />
       
       <div className="max-w-7xl mx-auto px-3 sm:px-5 md:px-6 lg:px-8 relative">
         <div className="flex flex-col justify-center min-h-[320px] sm:min-h-[340px] md:min-h-[400px] lg:min-h-[440px]">
