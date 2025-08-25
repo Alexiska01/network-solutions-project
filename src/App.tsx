@@ -3,11 +3,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect, lazy, Suspense, useState } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import GlobalContactModal from "@/components/GlobalContactModal";
 import Index from "./pages/Index";
 import ProductHero from "./components/home/ProductHero";
-import WelcomeScreen from "./components/WelcomeScreen";
 
 // Model-viewer загружается в index.html через CDN
 
@@ -95,47 +94,6 @@ const PRELOAD_ROUTES = [
 // Scroll restoration controller удалён (отключён автоскролл)
 
 const App = () => {
-  const [showWelcome, setShowWelcome] = useState(false);
-
-  // Отслеживание закрытия/открытия сайта
-  useEffect(() => {
-    const STORAGE_KEY = 'lastVisitTime';
-    const ONE_HOUR = 60 * 60 * 1000; // 1 час в миллисекундах
-    
-    // При загрузке страницы проверяем последнее время посещения
-    const lastVisit = localStorage.getItem(STORAGE_KEY);
-    const currentTime = Date.now();
-    
-    if (!lastVisit) {
-      // Первое посещение - показываем WelcomeScreen
-      setShowWelcome(true);
-    } else {
-      const timeDifference = currentTime - parseInt(lastVisit);
-      if (timeDifference >= ONE_HOUR) {
-        setShowWelcome(true);
-      }
-    }
-    
-    // Сохраняем время при закрытии страницы
-    const handleBeforeUnload = () => {
-      localStorage.setItem(STORAGE_KEY, currentTime.toString());
-    };
-    
-    // Сохраняем время при скрытии страницы (переключение вкладок)
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        localStorage.setItem(STORAGE_KEY, Date.now().toString());
-      }
-    };
-    
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, []);
 
   // СУПЕР АГРЕССИВНАЯ ПРЕДЗАГРУЗКА для максимальной производительности
   useEffect(() => {
@@ -246,16 +204,6 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        {showWelcome && (
-          <WelcomeScreen
-            forceShow={true}
-            onComplete={() => {
-              setShowWelcome(false);
-              // Обновляем время последнего посещения при завершении Welcome
-              localStorage.setItem('lastVisitTime', Date.now().toString());
-            }}
-          />
-        )}
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Suspense
             fallback={
