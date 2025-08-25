@@ -1,4 +1,3 @@
-import Icon from "@/components/ui/icon";
 import { SafeImage } from "@/components/ui/safe-image";
 import { useEffect, useRef, useState } from "react";
 
@@ -76,18 +75,6 @@ const AwardsSection: React.FC = () => {
             <p>
               С 2025 года наша компания получила статус резидента инновационного центра «Сколково». Это признание подтверждает инновационный характер наших решений и открывает доступ к уникальной экосистеме развития технологий.
             </p>
-            <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-3 sm:gap-4">
-              <a
-                href="/img/Sk.pdf"
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 text-blue-700 hover:text-blue-800 underline-offset-4 hover:underline transition-colors"
-              >
-                <Icon name="FileText" size={16} className="opacity-80" />
-                PDF‑выписка
-              </a>
-            </div>
           </div>
         </div>
       </div>

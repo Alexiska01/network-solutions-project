@@ -140,16 +140,17 @@ const PartnersGrid: React.FC<PartnersGridProps> = ({
                 style={{ touchAction: 'manipulation' }}
               >
                 <div className="p-3 md:p-6">
-                  <div className="relative h-[110px] sm:h-[130px] lg:h-[140px] w-full mb-2 sm:mb-3 md:mb-4 bg-white border border-gray-200 rounded-lg overflow-hidden group-hover:border-blue-200 transition-colors flex items-center justify-center p-4">
+          <div className="relative h-[110px] sm:h-[130px] lg:h-[140px] w-full mb-2 sm:mb-3 md:mb-4 bg-white border border-gray-200 rounded-lg overflow-hidden group-hover:border-blue-200 transition-colors flex items-center justify-center p-4 will-change-transform">
                     <SafeImage
                       src={partner.logo}
                       alt={partner.name}
-                      loading="lazy"
-                      decoding="async"
+            loading="lazy"
+            decoding="async"
+                      fetchPriority="low"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className={`max-w-full max-h-full object-contain ${partner.name === "Инфосэл" || partner.name === "Инлайн ГРУП" ? "w-auto h-auto" : partner.name === "К2 Интеграция" ? "w-auto h-auto scale-50" : partner.name === "САТЕЛ" ? "w-auto h-auto scale-150" : "w-full h-full object-cover"} rounded-lg`}
+                      draggable={false}
+            className="block w-auto h-auto max-w-full max-h-full object-contain select-none rounded-lg [image-rendering:-webkit-optimize-contrast]"
                     />
-                    <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg -z-10"></div>
                   </div>
 
                   <h3 className="font-semibold text-gray-900 font-montserrat text-sm md:text-lg mb-2 md:mb-3 group-hover:text-[#0065B3] transition-colors">
